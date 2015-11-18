@@ -7,14 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E56CC0881BFD166200AAF973 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E56CC0871BFD166200AAF973 /* MapKit.framework */; };
+		E56CC08A1BFD22D800AAF973 /* HostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56CC0891BFD22D800AAF973 /* HostsViewController.swift */; };
+		E56CC08C1BFD2EC300AAF973 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56CC08B1BFD2EC300AAF973 /* TabBarController.swift */; };
+		E56CC08E1BFD2F8900AAF973 /* HostTabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56CC08D1BFD2F8900AAF973 /* HostTabBarItem.swift */; };
 		E5D96AF81BFB1CA700AFAFEE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D96AF71BFB1CA700AFAFEE /* AppDelegate.swift */; };
-		E5D96AFA1BFB1CA700AFAFEE /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D96AF91BFB1CA700AFAFEE /* FirstViewController.swift */; };
-		E5D96AFC1BFB1CA700AFAFEE /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D96AFB1BFB1CA700AFAFEE /* SecondViewController.swift */; };
 		E5D96AFF1BFB1CA700AFAFEE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5D96AFD1BFB1CA700AFAFEE /* Main.storyboard */; };
 		E5D96B011BFB1CA700AFAFEE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5D96B001BFB1CA700AFAFEE /* Assets.xcassets */; };
 		E5D96B041BFB1CA700AFAFEE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5D96B021BFB1CA700AFAFEE /* LaunchScreen.storyboard */; };
 		E5D96B0F1BFB1CA700AFAFEE /* WarmshowersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D96B0E1BFB1CA700AFAFEE /* WarmshowersTests.swift */; };
 		E5D96B1A1BFB1CA700AFAFEE /* WarmshowersUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D96B191BFB1CA700AFAFEE /* WarmshowersUITests.swift */; };
+		E5D96B281BFC493B00AFAFEE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D96B271BFC493B00AFAFEE /* LoginViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,10 +38,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E56CC0871BFD166200AAF973 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		E56CC0891BFD22D800AAF973 /* HostsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostsViewController.swift; sourceTree = "<group>"; };
+		E56CC08B1BFD2EC300AAF973 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		E56CC08D1BFD2F8900AAF973 /* HostTabBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostTabBarItem.swift; sourceTree = "<group>"; };
 		E5D96AF41BFB1CA700AFAFEE /* Warmshowers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Warmshowers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5D96AF71BFB1CA700AFAFEE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E5D96AF91BFB1CA700AFAFEE /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		E5D96AFB1BFB1CA700AFAFEE /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		E5D96AFE1BFB1CA700AFAFEE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E5D96B001BFB1CA700AFAFEE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E5D96B031BFB1CA700AFAFEE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -49,6 +54,7 @@
 		E5D96B151BFB1CA700AFAFEE /* WarmshowersUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WarmshowersUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5D96B191BFB1CA700AFAFEE /* WarmshowersUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmshowersUITests.swift; sourceTree = "<group>"; };
 		E5D96B1B1BFB1CA700AFAFEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E5D96B271BFC493B00AFAFEE /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E56CC0881BFD166200AAF973 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +86,7 @@
 		E5D96AEB1BFB1CA700AFAFEE = {
 			isa = PBXGroup;
 			children = (
+				E56CC0871BFD166200AAF973 /* MapKit.framework */,
 				E5D96AF61BFB1CA700AFAFEE /* Warmshowers */,
 				E5D96B0D1BFB1CA700AFAFEE /* WarmshowersTests */,
 				E5D96B181BFB1CA700AFAFEE /* WarmshowersUITests */,
@@ -100,12 +108,14 @@
 			isa = PBXGroup;
 			children = (
 				E5D96AF71BFB1CA700AFAFEE /* AppDelegate.swift */,
-				E5D96AF91BFB1CA700AFAFEE /* FirstViewController.swift */,
-				E5D96AFB1BFB1CA700AFAFEE /* SecondViewController.swift */,
 				E5D96AFD1BFB1CA700AFAFEE /* Main.storyboard */,
 				E5D96B001BFB1CA700AFAFEE /* Assets.xcassets */,
 				E5D96B021BFB1CA700AFAFEE /* LaunchScreen.storyboard */,
 				E5D96B051BFB1CA700AFAFEE /* Info.plist */,
+				E5D96B271BFC493B00AFAFEE /* LoginViewController.swift */,
+				E56CC0891BFD22D800AAF973 /* HostsViewController.swift */,
+				E56CC08B1BFD2EC300AAF973 /* TabBarController.swift */,
+				E56CC08D1BFD2F8900AAF973 /* HostTabBarItem.swift */,
 			);
 			path = Warmshowers;
 			sourceTree = "<group>";
@@ -197,6 +207,11 @@
 					E5D96AF31BFB1CA700AFAFEE = {
 						CreatedOnToolsVersion = 7.1;
 						DevelopmentTeam = RZGK26E8DQ;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					E5D96B091BFB1CA700AFAFEE = {
 						CreatedOnToolsVersion = 7.1;
@@ -262,9 +277,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E5D96AFC1BFB1CA700AFAFEE /* SecondViewController.swift in Sources */,
+				E5D96B281BFC493B00AFAFEE /* LoginViewController.swift in Sources */,
+				E56CC08C1BFD2EC300AAF973 /* TabBarController.swift in Sources */,
+				E56CC08E1BFD2F8900AAF973 /* HostTabBarItem.swift in Sources */,
+				E56CC08A1BFD22D800AAF973 /* HostsViewController.swift in Sources */,
 				E5D96AF81BFB1CA700AFAFEE /* AppDelegate.swift in Sources */,
-				E5D96AFA1BFB1CA700AFAFEE /* FirstViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -357,7 +374,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -396,6 +413,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -491,6 +509,7 @@
 				E5D96B201BFB1CA700AFAFEE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E5D96B211BFB1CA700AFAFEE /* Build configuration list for PBXNativeTarget "WarmshowersTests" */ = {
 			isa = XCConfigurationList;
@@ -499,6 +518,7 @@
 				E5D96B231BFB1CA700AFAFEE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E5D96B241BFB1CA700AFAFEE /* Build configuration list for PBXNativeTarget "WarmshowersUITests" */ = {
 			isa = XCConfigurationList;
@@ -507,6 +527,7 @@
 				E5D96B261BFB1CA700AFAFEE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
