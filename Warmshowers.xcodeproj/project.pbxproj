@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E54A572B1BFD664A000843A9 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E54A572A1BFD664A000843A9 /* Settings.bundle */; };
 		E56CC0881BFD166200AAF973 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E56CC0871BFD166200AAF973 /* MapKit.framework */; };
 		E56CC08A1BFD22D800AAF973 /* HostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56CC0891BFD22D800AAF973 /* HostsViewController.swift */; };
 		E56CC08C1BFD2EC300AAF973 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56CC08B1BFD2EC300AAF973 /* TabBarController.swift */; };
-		E56CC08E1BFD2F8900AAF973 /* HostTabBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56CC08D1BFD2F8900AAF973 /* HostTabBarItem.swift */; };
+		E56CC0901BFD496400AAF973 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56CC08F1BFD496400AAF973 /* SettingsTableViewController.swift */; };
+		E56CC0921BFD569500AAF973 /* SwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56CC0911BFD569500AAF973 /* SwitchTableViewCell.swift */; };
 		E5D96AF81BFB1CA700AFAFEE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D96AF71BFB1CA700AFAFEE /* AppDelegate.swift */; };
 		E5D96AFF1BFB1CA700AFAFEE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5D96AFD1BFB1CA700AFAFEE /* Main.storyboard */; };
 		E5D96B011BFB1CA700AFAFEE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5D96B001BFB1CA700AFAFEE /* Assets.xcassets */; };
@@ -38,10 +40,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E54A572A1BFD664A000843A9 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		E56CC0871BFD166200AAF973 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		E56CC0891BFD22D800AAF973 /* HostsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostsViewController.swift; sourceTree = "<group>"; };
 		E56CC08B1BFD2EC300AAF973 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
-		E56CC08D1BFD2F8900AAF973 /* HostTabBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostTabBarItem.swift; sourceTree = "<group>"; };
+		E56CC08F1BFD496400AAF973 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		E56CC0911BFD569500AAF973 /* SwitchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchTableViewCell.swift; sourceTree = "<group>"; };
 		E5D96AF41BFB1CA700AFAFEE /* Warmshowers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Warmshowers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5D96AF71BFB1CA700AFAFEE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E5D96AFE1BFB1CA700AFAFEE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -86,6 +90,7 @@
 		E5D96AEB1BFB1CA700AFAFEE = {
 			isa = PBXGroup;
 			children = (
+				E54A572A1BFD664A000843A9 /* Settings.bundle */,
 				E56CC0871BFD166200AAF973 /* MapKit.framework */,
 				E5D96AF61BFB1CA700AFAFEE /* Warmshowers */,
 				E5D96B0D1BFB1CA700AFAFEE /* WarmshowersTests */,
@@ -115,7 +120,8 @@
 				E5D96B271BFC493B00AFAFEE /* LoginViewController.swift */,
 				E56CC0891BFD22D800AAF973 /* HostsViewController.swift */,
 				E56CC08B1BFD2EC300AAF973 /* TabBarController.swift */,
-				E56CC08D1BFD2F8900AAF973 /* HostTabBarItem.swift */,
+				E56CC08F1BFD496400AAF973 /* SettingsTableViewController.swift */,
+				E56CC0911BFD569500AAF973 /* SwitchTableViewCell.swift */,
 			);
 			path = Warmshowers;
 			sourceTree = "<group>";
@@ -250,6 +256,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E54A572B1BFD664A000843A9 /* Settings.bundle in Resources */,
 				E5D96B041BFB1CA700AFAFEE /* LaunchScreen.storyboard in Resources */,
 				E5D96B011BFB1CA700AFAFEE /* Assets.xcassets in Resources */,
 				E5D96AFF1BFB1CA700AFAFEE /* Main.storyboard in Resources */,
@@ -279,9 +286,10 @@
 			files = (
 				E5D96B281BFC493B00AFAFEE /* LoginViewController.swift in Sources */,
 				E56CC08C1BFD2EC300AAF973 /* TabBarController.swift in Sources */,
-				E56CC08E1BFD2F8900AAF973 /* HostTabBarItem.swift in Sources */,
+				E56CC0901BFD496400AAF973 /* SettingsTableViewController.swift in Sources */,
 				E56CC08A1BFD22D800AAF973 /* HostsViewController.swift in Sources */,
 				E5D96AF81BFB1CA700AFAFEE /* AppDelegate.swift in Sources */,
+				E56CC0921BFD569500AAF973 /* SwitchTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
