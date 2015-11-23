@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		E54A572B1BFD664A000843A9 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E54A572A1BFD664A000843A9 /* Settings.bundle */; };
+		E54A572F1BFDC446000843A9 /* WSRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54A572E1BFDC446000843A9 /* WSRequests.swift */; };
+		E54A57311BFE6FB2000843A9 /* WSURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54A57301BFE6FB2000843A9 /* WSURL.swift */; };
+		E54A57341BFE830C000843A9 /* Host.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54A57331BFE830C000843A9 /* Host.swift */; };
+		E54A57381BFEC531000843A9 /* SpinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54A57371BFEC531000843A9 /* SpinnerView.swift */; };
 		E56CC0881BFD166200AAF973 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E56CC0871BFD166200AAF973 /* MapKit.framework */; };
 		E56CC08A1BFD22D800AAF973 /* HostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56CC0891BFD22D800AAF973 /* HostsViewController.swift */; };
 		E56CC08C1BFD2EC300AAF973 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56CC08B1BFD2EC300AAF973 /* TabBarController.swift */; };
@@ -41,6 +45,10 @@
 
 /* Begin PBXFileReference section */
 		E54A572A1BFD664A000843A9 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		E54A572E1BFDC446000843A9 /* WSRequests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSRequests.swift; sourceTree = "<group>"; };
+		E54A57301BFE6FB2000843A9 /* WSURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSURL.swift; sourceTree = "<group>"; };
+		E54A57331BFE830C000843A9 /* Host.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Host.swift; sourceTree = "<group>"; };
+		E54A57371BFEC531000843A9 /* SpinnerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinnerView.swift; sourceTree = "<group>"; };
 		E56CC0871BFD166200AAF973 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		E56CC0891BFD22D800AAF973 /* HostsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostsViewController.swift; sourceTree = "<group>"; };
 		E56CC08B1BFD2EC300AAF973 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -87,6 +95,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E54A57321BFE82F9000843A9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E54A57331BFE830C000843A9 /* Host.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		E54A57391C026D56000843A9 /* HTTPClient */ = {
+			isa = PBXGroup;
+			children = (
+				E54A57301BFE6FB2000843A9 /* WSURL.swift */,
+				E54A572E1BFDC446000843A9 /* WSRequests.swift */,
+			);
+			name = HTTPClient;
+			sourceTree = "<group>";
+		};
+		E54A573A1C026D96000843A9 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				E56CC0911BFD569500AAF973 /* SwitchTableViewCell.swift */,
+				E5D96B271BFC493B00AFAFEE /* LoginViewController.swift */,
+				E56CC0891BFD22D800AAF973 /* HostsViewController.swift */,
+				E56CC08B1BFD2EC300AAF973 /* TabBarController.swift */,
+				E56CC08F1BFD496400AAF973 /* SettingsTableViewController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
 		E5D96AEB1BFB1CA700AFAFEE = {
 			isa = PBXGroup;
 			children = (
@@ -112,16 +149,15 @@
 		E5D96AF61BFB1CA700AFAFEE /* Warmshowers */ = {
 			isa = PBXGroup;
 			children = (
+				E54A573A1C026D96000843A9 /* View Controllers */,
+				E54A57391C026D56000843A9 /* HTTPClient */,
+				E54A57371BFEC531000843A9 /* SpinnerView.swift */,
+				E54A57321BFE82F9000843A9 /* Model */,
 				E5D96AF71BFB1CA700AFAFEE /* AppDelegate.swift */,
 				E5D96AFD1BFB1CA700AFAFEE /* Main.storyboard */,
 				E5D96B001BFB1CA700AFAFEE /* Assets.xcassets */,
 				E5D96B021BFB1CA700AFAFEE /* LaunchScreen.storyboard */,
 				E5D96B051BFB1CA700AFAFEE /* Info.plist */,
-				E5D96B271BFC493B00AFAFEE /* LoginViewController.swift */,
-				E56CC0891BFD22D800AAF973 /* HostsViewController.swift */,
-				E56CC08B1BFD2EC300AAF973 /* TabBarController.swift */,
-				E56CC08F1BFD496400AAF973 /* SettingsTableViewController.swift */,
-				E56CC0911BFD569500AAF973 /* SwitchTableViewCell.swift */,
 			);
 			path = Warmshowers;
 			sourceTree = "<group>";
@@ -287,9 +323,13 @@
 				E5D96B281BFC493B00AFAFEE /* LoginViewController.swift in Sources */,
 				E56CC08C1BFD2EC300AAF973 /* TabBarController.swift in Sources */,
 				E56CC0901BFD496400AAF973 /* SettingsTableViewController.swift in Sources */,
+				E54A57311BFE6FB2000843A9 /* WSURL.swift in Sources */,
 				E56CC08A1BFD22D800AAF973 /* HostsViewController.swift in Sources */,
 				E5D96AF81BFB1CA700AFAFEE /* AppDelegate.swift in Sources */,
+				E54A57381BFEC531000843A9 /* SpinnerView.swift in Sources */,
 				E56CC0921BFD569500AAF973 /* SwitchTableViewCell.swift in Sources */,
+				E54A57341BFE830C000843A9 /* Host.swift in Sources */,
+				E54A572F1BFDC446000843A9 /* WSRequests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

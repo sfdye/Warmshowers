@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         // Override point for customization after application launch.
-        let isLoggedIn = true;
+        let isLoggedIn = false;
         let controllerId = isLoggedIn ? "TabBar" : "Login"
         let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let initVC = storyboard.instantiateViewControllerWithIdentifier(controllerId)

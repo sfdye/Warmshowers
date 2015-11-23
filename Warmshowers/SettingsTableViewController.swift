@@ -36,7 +36,7 @@ class SettingsTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -49,13 +49,22 @@ class SettingsTableViewController: UITableViewController {
         let label = "Wi-Fi Only"
         
         let cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath) as! SwitchTableViewCell
-        
-        if cell.label != nil {
-            cell.label!.text = label
-        }
-
+        cell.label!.text = label
 
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+        case 0:
+            return "Data"
+        case 1:
+            return "Units"
+        case 2:
+            return "Map"
+        default:
+            return ""
+        }
     }
     
     override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
