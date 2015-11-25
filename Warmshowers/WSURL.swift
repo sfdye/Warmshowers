@@ -8,6 +8,7 @@
 
 import Foundation
 
+// Class to provide URLs for the various warmshowers.org RESTful services
 class WSURL {
     static let sharedInstance = WSURL()
     

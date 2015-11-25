@@ -1,25 +1,31 @@
 //
-//  SettingsTableViewController.swift
+//  AccountTableViewController.swift
 //  Warmshowers
 //
-//  Created by Rajan Fernandez on 19/11/15.
+//  Created by Rajan Fernandez on 24/11/15.
 //  Copyright © 2015 Rajan Fernandez. All rights reserved.
 //
 
 import UIKit
 
-// TODO: - add: distance units options, route manager, wifi only, map source options
+let LOGOUT_CELL_ID = "Logout"
 
-let SWITCH_CELL_ID = "SwitchCell"
-
-class SettingsTableViewController: UITableViewController {
+class AccountTableViewController: UITableViewController, WSRequestAlert {
     
-    var wifiOnly = true
+    var user: WSUser?
+    
+    let httpClient = WSRequest()
+    
+    weak var appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
 
+    @IBAction func doneButtonPressed(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        tableView.registerClass(cellClass: SwitchTableViewCell, forCellReuseIdentifier: SWITCH_CELL_ID)
+        httpClient.alertViewController = self
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -36,7 +42,7 @@ class SettingsTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 3
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -44,33 +50,28 @@ class SettingsTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        let reuseIdentifier = SWITCH_CELL_ID
-        let label = "Wi-Fi Only"
-        
-        let cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath) as! SwitchTableViewCell
-        cell.label!.text = label
+        let cell = tableView.dequeueReusableCellWithIdentifier(LOGOUT_CELL_ID, forIndexPath: indexPath)
+
+        // Configure the cell...
 
         return cell
     }
     
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case 0:
-            return "Data"
-        case 1:
-            return "Units"
-        case 2:
-            return "Map"
-        default:
-            return ""
-        }
-    }
-    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        
+        
+        if cell?.reuseIdentifier == LOGOUT_CELL_ID {
+            
+            httpClient.logout({ (wasLoggedIn) -> Void in
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.appDelegate?.showLoginScreen()
+                })
+            })
+        }
+        
     }
-    
+
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -115,5 +116,15 @@ class SettingsTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    // MARK: - WSRequestAlert Delegate functions
+    
+    func requestAlert(title: String, message: String) {
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alertController, animated: true, completion: nil)
+        
+    }
 
 }

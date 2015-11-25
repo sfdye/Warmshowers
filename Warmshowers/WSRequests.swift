@@ -9,7 +9,7 @@
 import UIKit
 
 protocol WSRequestAlert {
-    func presentAlert(alert: UIAlertController)
+    func requestAlert(title: String, message: String)
 }
 
 class WSRequest {
@@ -23,61 +23,76 @@ class WSRequest {
     
     // General error handler
     func errorHandler(error: NSError) {
-        alert("Error", message: error.localizedDescription)
+        if alertViewController != nil {
+            self.alert("Error", message: error.localizedDescription)
+        }
     }
     
     // Handles http error codes
     func httpErrorHandler(response: NSHTTPURLResponse) {
         
-        var title = ""
-        var message = ""
-        let statusCode = response.statusCode
-        
-        switch statusCode {
-        case 401:
-            title = "Invalid Login"
-            message = "There was an error with your E-Mail/Password combination. Please try again."
-            break
-        default:
-            title = "Network Error"
-            message = "Sorry, an unknown error has occured"
+        if alertViewController != nil {
+            
+            let statusCode = response.statusCode
+            let title = "Network Error"
+            let message = "HTTP " + String(statusCode)
+            
+            self.alert(title, message: message)
+            
         }
-        
-        alert(title, message: message)
-        
     }
     
-    
-    // MARK: - Alert functions
-    
-    func alert(title: String, message: String, handler: ((UIAlertAction) -> (Void))? = nil) {
-        
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: handler))
-        
-        self.alertViewController?.presentAlert(alertController)
-        
+    // Gets the delegate view controller to show a pop up alert
+    func alert(title: String, message: String) {
+        dispatch_async(dispatch_get_main_queue(), {
+            self.alertViewController!.requestAlert(title, message: message)
+        })
     }
 
     
-    // MARK: - HTTP Request functions
+    // MARK: - HTTP Request utilities
     
     // Create a request
-    func makeRequest(url: NSURL, type: String, params: (Dictionary<String, String>)? = nil) -> NSMutableURLRequest {
+    func makeRequest(url: NSURL, type: String, params: (Dictionary<String, String>)? = nil, token: String? = nil) -> NSMutableURLRequest {
         
         let request = NSMutableURLRequest.init()
         request.URL = url
         request.HTTPMethod = type
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        //        request.addValue(session_name + "=" + sessid, forHTTPHeaderField: "Cookie")
+        
+        if request.URL == WSURL.TOKEN() {
+            request.addValue("text/plain", forHTTPHeaderField: "Accept")
+        } else {
+            request.addValue("application/json", forHTTPHeaderField: "Accept")
+        }
+        
+        if (request.URL != WSURL.LOGIN()) && (request.URL != WSURL.TOKEN()) {
+            
+            let sessionCookie = defaults.objectForKey(SESSION_COOKIE) as? String
+            
+            if sessionCookie != nil {
+                request.addValue(sessionCookie!, forHTTPHeaderField: "Cookie")
+            } else {
+                print("Could not add session cookie to the request.")
+            }
+
+            if token != nil {
+                request.addValue(token!, forHTTPHeaderField: "X-CSRF-Token")
+            } else {
+                print("Could not add a X-CSRF token to the request.")
+            }
+            
+        }
+        
         if params != nil {
             request.setBodyContent(params!)
         }
+        
         return request
+        
     }
     
     // General request function
-    func dataRequest(request: NSMutableURLRequest, success: (NSData?) -> Void) {
+    func dataRequest(request: NSMutableURLRequest, doWithReturnedData: (NSData?) -> Void) {
         
         let task = self.session.dataTaskWithRequest(request, completionHandler: { (data, response, error) in
             
@@ -85,8 +100,11 @@ class WSRequest {
                 
                 // error
                 self.errorHandler(error!)
+                return
+                
+            }
             
-            } else if response != nil {
+            if response != nil {
                 
                 // got response, check for http errors
                 
@@ -100,241 +118,101 @@ class WSRequest {
                 // handle data
                 if data != nil {
                     // got some data
-                    success(data)
-                } else {
-                    // no data
-                    self.alert("Error", message: "No data recieved from the server.")
+                    doWithReturnedData(data)
+                    return
                 }
                 
-            } else {
-                
-                // no response
-                self.alert("Error", message: "No response.")
-                
             }
-        })
+                
+            // no response or data is nil
+            self.alert("Error", message: "No response or data.")
             
+        })
+
         task.resume()
             
     }
-
     
-//    let task = session.dataTaskWithRequest(<#T##request: NSURLRequest##NSURLRequest#>, completionHandler: <#T##(NSData?, NSURLResponse?, NSError?) -> Void#>)
-//    
-//    // Create a post request
-//    class func requestWithCSRFToken(request: NSMutableURLRequest, params: (Dictionary<String, String>)? = nil, completion: (data: AnyObject?, response: AnyObject?, error: NSError?)) {
-//        
-//        self.getXCSRFTokenForRequest(request) { (token, error) -> () in
-//            
-//            if error != nil {
-//                // error getting token
-//                
-//            } else if token != nil {
-//                
-//                // got a token, make the request
-//                
-//                
-//            } else {
-//                // no error, but no token
-//            }
-//        }
-//    }
-    
-    
-    //++++++++++++++++++
-    
-//    // got token, make the request
-//    request.addValue(token!, forHTTPHeaderField: "X-CSRF-Token")
-//    
-//    let task = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
-//        
-//        if error != nil {
-//            completion(data: nil, response: nil, error: error)
-//        }
-//        else if response != nil {
-//            
-//            let httpResponse = response as! NSHTTPURLResponse
-//            if httpResponse.statusCode > 200 {
-//                // http error
-//                completion(data: nil, response: httpResponse, error: nil)
-//            } else {
-//                // http success
-//                do {
-//                    let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [])
-//                    print(json)
-//                    completion(data: json, response: response, error: nil)
-//                }
-//                catch {
-//                    print("Unable to convert data to json")
-//                    completion(data: nil, response: nil, error: nil)
-//                }
-//            }
-//            
-//        } else {
-//            // no response from the server
-//            completion(data: nil, response: nil, error: nil)
-//        }
-//        
-//    })
-    
-    //++++++++++++++++
-    
-    
-    
-//    // Create a get request
-//    func getRequest(url: NSURL) -> NSMutableURLRequest {
-//        let request = NSMutableURLRequest.init()
-//        request.URL = url
-//        request.addValue("application/json", forHTTPHeaderField: "Accept")
-//        request.HTTPMethod = "GET"
-//        return request
-//    }
-//    
-//    func requestWithCSRFToken(url: NSURL) -> NSMutableURLRequest {
-//        // get a CSRF Token from warmshowers.org
-//        let request = NSMutableURLRequest.init()
-//        request.URL = url
-//        request.addValue("application/json", forHTTPHeaderField: "Accept")
-//        request.HTTPMethod = "GET"
-//        return request
-//    }
-//    
-//    class func getXCSRFTokenForRequest(request: NSURLRequest, completion: (data: NSData?, response: NSURLResponse?, error: NSError?)) {
-//        let request = sharedInstance.getRequest(WSURL.TOKEN())
-//        let task = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
-//            completion(data, response: response, error: error)
-//            
-//            if error != nil
-//            {
-//                // error getting the token
-//                completion(token: nil, error: error)
-//            }
-//            else if data != nil
-//            {
-//                if let token = String(data: data!, encoding: NSUTF8StringEncoding)
-//                {
-//                    // got and decoded the token
-//                    completion(token: token, error: nil)
-//                }
-//                else
-//                {
-//                    completion(token: nil, error: nil)
-//                }
-//            }
-//        })
-//        task.resume()
-//    }
-//    
-    func login(username: String, password: String, success: (data: NSData?) -> Void) {
-        // assemble the request
-        let params = ["username" : username, "password" : password]
-        let request = self.makeRequest(WSURL.LOGIN(), type: "POST", params: params)
+    // For making requests that require a X_CSRF token in the header
+    func requestWithCSRFToken(url: NSURL, type: String, params: (Dictionary<String, String>)? = nil, doWithReturedData: (NSData?) -> Void) -> Void {
         
-        print("Login request sent")
+        // get a X-CSRF Token from warmshowers.org
+        let tokenRequest = makeRequest(WSURL.TOKEN(), type: "GET")
         
-        self.dataRequest(request) { (data) -> Void in
-            if data != nil {
-                success(data: data)
+        dataRequest(tokenRequest) { (tokenData) -> Void in
+            
+            if let token = String.init(data: tokenData!, encoding: NSUTF8StringEncoding) {
+                
+                let request = self.makeRequest(url, type: type, params: params, token: token)
+                
+                // make the actual request
+                print("Making a request to \(request.URL!) with token \(token)")
+                self.dataRequest(request, doWithReturnedData: doWithReturedData)
             }
         }
-        
-//        // create the data task
-//        let task = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
-//            if error != nil {
-//                completion(data: nil, response: nil, error: error)
-//            }
-//            else if response != nil {
-//                let httpResponse = response as! NSHTTPURLResponse
-//                if httpResponse.statusCode > 200 {
-//                    // http error
-//                    completion(data: nil, response: httpResponse, error: nil)
-//                } else {
-//                    // http success
-//                    do {
-//                        let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [])
-//                        print(json)
-//                        completion(data: json, response: response, error: nil)
-//                    }
-//                    catch {
-//                        print("Unable to convert data to json")
-//                        completion(data: nil, response: nil, error: nil)
-//                    }
-//                }
-//            } else {
-//                // no response from the server
-//                completion(data: nil, response: nil, error: nil)
-//            }
-//        })
-//        task.resume()
     }
     
-//    class func logout(completion: (data: AnyObject?, response: AnyObject?, error: NSError?)->()) {
-//        // assemble the request
-//        let request = sharedInstance.postRequestWithCSRFToken(WSURL.LOGOUT)
-//        // create the data task
-//        let task = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
-//            if error != nil {
-//                completion(data: nil, response: nil, error: error)
-//            }
-//            else if response != nil {
-//                let httpResponse = response as! NSHTTPURLResponse
-//                if httpResponse.statusCode > 200 {
-//                    // http error
-//                    completion(data: nil, response: httpResponse, error: nil)
-//                } else {
-//                    // http success
-//                    do {
-//                        let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [])
-//                        print(json)
-//                        completion(data: json, response: response, error: nil)
-//                    }
-//                    catch {
-//                        print("Unable to convert data to json")
-//                        completion(data: nil, response: nil, error: nil)
-//                    }
-//                }
-//            } else {
-//                // no response from the server
-//                completion(data: nil, response: nil, error: nil)
-//            }
-//        })
-//        task.resume()
-//    }
+    
+    // MARK: - Warmshowers RESTful API requests
+    
+    func login(username: String, password: String, doWithLoginData: (data: NSData?) -> Void) {
+
+        let params = ["username" : username, "password" : password]
+        let request = self.makeRequest(WSURL.LOGIN(), type: "POST", params: params)
+        dataRequest(request, doWithReturnedData: doWithLoginData)
+        
+    }
+    
+    func logout(doWithLogoutResponse: (wasLoggedIn: Bool) -> Void) {
+
+        requestWithCSRFToken(WSURL.LOGOUT(), type: "POST", doWithReturedData : { (data) -> Void in
+            
+            if data != nil {
+                
+                let json = self.jsonDataToDictionary(data!)
+                
+                if json != nil {
+                    
+                    let response = json!.objectAtIndex(0)
+                    print(response)
+                    
+                    if response as! Int == 1 {
+                        doWithLogoutResponse(wasLoggedIn: true)
+                        return
+                    }
+                }
+            }
+            
+            doWithLogoutResponse(wasLoggedIn: false)
+        })
+    }
     
     
+    // MARK: - Utilities
     
-    //    class func getUserInfo(uid: Int, completion: (data: AnyObject?, response: AnyObject?, error: NSError?)->()) {
-    //        WSRequest().getXCSRFToken { (token, error) -> () in
-    //            if error != nil
-    //            {
-    //                completion(data: nil, response: nil, error: error)
-    //            } else if token != nil
-    //            {
-    //                // build theh url
-    //                let url = WSRequest().USER_INFO_URL_BASE.URLByAppendingPathComponent(String(uid))
-    //                // assemble the request
-    //                let request = WSRequest().getRequest(url)
-    //                session.dataTaskWithRequest(request: request, completionHandler: { (data, response, error) -> Void in
-    //                    // pass on the data to the provided callback
-    //                    completion(data: data, response: response, error: error)
-    //                })
-    //            } else
-    //            {
-    //                completion(data:nil, response: nil, error: error)
-    //            }
-    //        }
-    //    }
-    
-    
+    // Convert NSData to a json dictionary
+    func jsonDataToDictionary(data: NSData?) -> AnyObject? {
+        
+        do {
+            let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [])
+            return json
+        } catch {
+            return nil
+        }
+        
+    }
     
 }
     
 // To create NSMutableRequests with a dictionary of post parameters
 extension NSMutableURLRequest {
+    
     func setBodyContent(params: Dictionary<String, String>) {
+        
         var requestBodyAsString = ""
         var firstOneAdded = false
         let paramKeys:Array<String> = Array(params.keys)
+        
         for paramKey in paramKeys {
             if(!firstOneAdded) {
                 requestBodyAsString += paramKey + "=" + params[paramKey]!
@@ -344,6 +222,9 @@ extension NSMutableURLRequest {
                 requestBodyAsString += "&" + paramKey + "=" + params[paramKey]!
             }
         }
+        
         self.HTTPBody = requestBodyAsString.dataUsingEncoding(NSUTF8StringEncoding)
+        
     }
+    
 }

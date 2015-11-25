@@ -8,27 +8,33 @@
 
 import UIKit
 
+// IDEAS / TODOs
+// - load gps files on map
+// - facebook integration for finding friends on map
+
+// keys
+let LOGIN_VC_ID = "Login"
+let TABBAR_VC_ID = "TabBar"
+let SESSION_COOKIE = "ws_session_cookie"
+let USERNAME = "ws_username"
+
+
+// global variables
+let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+let defaults = NSUserDefaults.standardUserDefaults()
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
-        // Override point for customization after application launch.
-        let isLoggedIn = false;
-        let controllerId = isLoggedIn ? "TabBar" : "Login"
-        let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        let initVC = storyboard.instantiateViewControllerWithIdentifier(controllerId)
-        self.window?.rootViewController = initVC
-//        
-//        if isLoggedIn {
-//            let initVC = storyboard.instantiateViewControllerWithIdentifier(controllerId)
-//            self.window?.rootViewController = initVC
-//        } else {
-//            self.window?.rootViewController = storyboard.instantiateInitialViewController()
-//        }
 
+        if !isLoggedin() {
+            showLoginScreen()
+        } else {
+            showMainApp()
+        }
         
         return true
     }
@@ -54,7 +60,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
+    
+    // MARK: - Utility functions
+    
+    // Checks if the user is logged in
+    func isLoggedin() -> Bool {
+        if defaults.objectForKey(SESSION_COOKIE) != nil {
+            return true
+        }
+        return false
+    }
+    
+    // Shows the login page instead of the main app
+    func showLoginScreen() {
+        let loginViewController = storyboard.instantiateViewControllerWithIdentifier(LOGIN_VC_ID)
+        self.window?.rootViewController = loginViewController
+    }
+    
+    // Shows the main app with the tab bar
+    func showMainApp() {
+        self.window?.rootViewController = storyboard.instantiateInitialViewController()
+    }
 
 }
 

@@ -9,14 +9,16 @@
 import UIKit
 
 class TabBarController: UITabBarController {
+    
+    var user: WSUser?
+    
+//    static func instantiate() -> TabBarController
+//    {
+//        return UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("TabBar") as! TabBarController
+//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-
-
-        // Do any additional setup after loading the view.
-        
         
         
     }
@@ -25,6 +27,8 @@ class TabBarController: UITabBarController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+
     
 
     /*

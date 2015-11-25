@@ -13,36 +13,27 @@ class LoginViewController: UIViewController, WSRequestAlert {
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
+    weak var appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
+    
     let httpClient = WSRequest()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        // set the http client delegate for error alerts
+        httpClient.alertViewController = self
         
         // load the default username
         let defaults = NSUserDefaults.standardUserDefaults()
-        if let username = defaults.objectForKey("ws_username") {
+        if let username = defaults.objectForKey(USERNAME) {
             usernameTextField.text = username as? String
         }
-        
-        // set the http client delegate for error alerts
-        self.httpClient.alertViewController = self
         
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    
-    func alert(title: String, message: String, handler: ((UIAlertAction) -> (Void))? = nil) {
-        
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: handler))
-        
-        self.presentViewController(alertController, animated: true, completion: nil)
-        
     }
 
     @IBAction func loginButton(sender: UIButton) {
@@ -65,107 +56,78 @@ class LoginViewController: UIViewController, WSRequestAlert {
         let username = usernameTextField.text!
         let password = passwordTextField.text!
         
-        self.httpClient.login(username, password: password, success: {data -> () in
-            print("Got data in main thread")
+        // log in
+        httpClient.login(username, password: password, doWithLoginData: {data -> () in
+
             if data != nil {
                 do {
-                    let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [])
-                    self.storeUsername()
-                    print(json)
+                    
+                    let loginData = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as? [String: AnyObject]
+                    
+                    if loginData != nil {
+                        
+                        // login sucessful, store the username and session cookie for later
+                        self.storeUsername()
+                        self.storeSessionCookie(loginData)
+//                        let user = loginData!["user"] as? [String: AnyObject]
+                        
+                        // switch the root view controller to the tabbar view controller
+                        dispatch_async(dispatch_get_main_queue(), {
+                            self.appDelegate?.showMainApp()
+                        })
+                        
+                    } else {
+                        
+                        self.alert("Error", message: "Could not complete the login process successfully.")
+                        
+                    }
+                    
                 } catch {
-                    self.alert("Error", message: "Login data could not be read")
+                    
+                    self.alert("Error", message: "Login data could not be read.")
+                    
                 }
             }
+            
         })
         
-//        WSRequest.login(username, password: password) { (data, response, error) -> () in
-//            if error != nil {
-//                self.errorAlert(error!)
-//                print(error)
-//            } else if response != nil {
-//                if data != nil {
-//                    // login success!
-//                    print("got data")
-//                    self.storeUsername()
-//                    
-//                    print(data?.valueForKey("sessid"))
-//                } else {
-//                    // handle bad response
-//                    self.errorAlert(response!)
-//                    print(response)
-//                }
-//            } else {
-//                // login unsuccessful
-//                print("No response from the server")
-//            }
-//        }
-        
-//        WSRequest.logout({ (data, response, error) -> () in
-//            if error != nil {
-//                self.errorAlert(error!)
-//                print(error)
-//            } else if response != nil {
-//                if data != nil {
-//                    // login success!
-//                    print("got data")
-//                    self.storeUsername()
-//                    
-//                    print(data?.valueForKey("sessid"))
-//                } else {
-//                    // handle bad response
-//                    self.errorAlert(response!)
-//                    print(response)
-//                }
-//            } else {
-//                // login unsuccessful
-//                print("No response from the server")
-//            }
-//        })
-        
-
     }
     
+    // MARK: - Utility functions
+    
     func storeUsername() {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setValue(usernameTextField.text, forKey: "ws_username")
+        defaults.setValue(usernameTextField.text, forKey: USERNAME)
         defaults.synchronize()
     }
     
-    func storeSessionCookie() {
+    func storeSessionCookie(loginData: [String: AnyObject]?) {
+        if loginData != nil {
+            let sessionName = loginData!["session_name"] as? String
+            let sessid = loginData!["sessid"] as? String
+            if (sessionName != nil) && (sessid != nil) {
+                let sessionCookie = sessionName! + "=" + sessid!
+                defaults.setValue(sessionCookie, forKey: SESSION_COOKIE)
+                defaults.synchronize()
+            }
+        }
+    }
+    
+    func alert(title: String, message: String, handler: ((UIAlertAction) -> Void)? = nil) {
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: handler))
+        self.presentViewController(alertController, animated: true, completion: nil)
         
     }
     
-    // MARK: - Alert functions
+    // MARK: - WSRequestAlert Delegate functions
     
-//    func alert(title: String, message: String, handler: ((UIAlertAction) -> (Void))? = nil) {
-//        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-//        alert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: handler))
-//        self.presentViewController(alert, animated: true, completion: nil)
-//    }
-//    
-//    func errorAlert(error: AnyObject) {
-//        var title = ""
-//        var message = ""
-//        if error is NSError {
-//            title = "Error"
-//            message = error.localizedDescription
-//        } else if error is NSHTTPURLResponse {
-//            if error.statusCode == 401 {
-//                title = "Invalid Login"
-//                message = "There was an error with your E-Mail/Password combination. Please try again."
-//            } else {
-//                title = "Network Error"
-//                message = NSHTTPURLResponse.localizedStringForStatusCode(error.statusCode)
-//            }
-//        } else {
-//            title = "Error"
-//            message = "Sorry, an unknown error has occured"
-//        }
-//        self.alert(title, message: message)
-//    }
-//    
-    func presentAlert(alert: UIAlertController) {
-        self.presentViewController(alert, animated: true, completion: nil)
+    func requestAlert(title: String, message: String) {
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alertController, animated: true, completion: nil)
+        
     }
     
     /*
