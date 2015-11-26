@@ -7,12 +7,15 @@
 //
 
 import UIKit
+import MapKit
 
 protocol WSRequestAlert {
     func requestAlert(title: String, message: String)
 }
 
 class WSRequest {
+    
+    let LIMIT: Int = 1000
     
     var alertViewController : WSRequestAlert?
     
@@ -22,14 +25,14 @@ class WSRequest {
     // MARK: - Error handlers
     
     // General error handler
-    func errorHandler(error: NSError) {
+    func errorAlert(error: NSError) {
         if alertViewController != nil {
             self.alert("Error", message: error.localizedDescription)
         }
     }
     
     // Handles http error codes
-    func httpErrorHandler(response: NSHTTPURLResponse) {
+    func httpErrorAlert(response: NSHTTPURLResponse) {
         
         if alertViewController != nil {
             
@@ -39,6 +42,25 @@ class WSRequest {
             
             self.alert(title, message: message)
             
+        }
+    }
+    
+    // General error and url response handler
+    func errorHandler(response: NSURLResponse?, error: NSError?) {
+        
+        if error != nil {
+            // show an error alert
+            self.errorAlert(error!)
+            return
+        }
+        
+        if response != nil {
+            // http error alert
+            let httpResponse = response as! NSHTTPURLResponse
+            if httpResponse.statusCode > 200 {
+                self.httpErrorAlert(httpResponse)
+                return
+            }
         }
     }
     
@@ -53,7 +75,7 @@ class WSRequest {
     // MARK: - HTTP Request utilities
     
     // Create a request
-    func makeRequest(url: NSURL, type: String, params: (Dictionary<String, String>)? = nil, token: String? = nil) -> NSMutableURLRequest {
+    func makeRequest(url: NSURL, type: String, params: [String: String]? = nil, token: String? = nil) -> NSMutableURLRequest {
         
         let request = NSMutableURLRequest.init()
         request.URL = url
@@ -92,62 +114,32 @@ class WSRequest {
     }
     
     // General request function
-    func dataRequest(request: NSMutableURLRequest, doWithReturnedData: (NSData?) -> Void) {
+    func dataRequest(request: NSMutableURLRequest, doWithResponse: (NSData?, NSURLResponse?, NSError?) -> Void) {
         
-        let task = self.session.dataTaskWithRequest(request, completionHandler: { (data, response, error) in
-            
-            if error != nil {
-                
-                // error
-                self.errorHandler(error!)
-                return
-                
-            }
-            
-            if response != nil {
-                
-                // got response, check for http errors
-                
-                // http error
-                let httpResponse = response as! NSHTTPURLResponse
-                if httpResponse.statusCode > 200 {
-                    self.httpErrorHandler(httpResponse)
-                    return
-                }
-                
-                // handle data
-                if data != nil {
-                    // got some data
-                    doWithReturnedData(data)
-                    return
-                }
-                
-            }
-                
-            // no response or data is nil
-            self.alert("Error", message: "No response or data.")
-            
-        })
-
+        let task = self.session.dataTaskWithRequest(request, completionHandler: doWithResponse)
+        
         task.resume()
-            
+        
     }
     
     // For making requests that require a X_CSRF token in the header
-    func requestWithCSRFToken(url: NSURL, type: String, params: (Dictionary<String, String>)? = nil, doWithReturedData: (NSData?) -> Void) -> Void {
+    func requestWithCSRFToken(url: NSURL, type: String, params: [String: String]? = nil, doWithResponse: (NSData?, NSURLResponse?, NSError?) -> Void) {
         
         // get a X-CSRF Token from warmshowers.org
         let tokenRequest = makeRequest(WSURL.TOKEN(), type: "GET")
         
-        dataRequest(tokenRequest) { (tokenData) -> Void in
+        dataRequest(tokenRequest) { (tokenData, response, error) -> Void in
             
             if let token = String.init(data: tokenData!, encoding: NSUTF8StringEncoding) {
-                
+
+                // make the actual request
                 let request = self.makeRequest(url, type: type, params: params, token: token)
                 
-                // make the actual request
                 print("Making a request to \(request.URL!) with token \(token)")
-                self.dataRequest(request, doWithReturnedData: doWithReturedData)
+                self.dataRequest(request, doWithResponse: doWithResponse)
+                
+            } else {
+                self.errorHandler(response, error: error)
             }
         }
     }
@@ -155,35 +147,70 @@ class WSRequest {
     
     // MARK: - Warmshowers RESTful API requests
     
-    func login(username: String, password: String, doWithLoginData: (data: NSData?) -> Void) {
+    func login(username: String, password: String, doWithLoginData: (loginData: [String: AnyObject]?) -> Void) {
 
         let params = ["username" : username, "password" : password]
         let request = self.makeRequest(WSURL.LOGIN(), type: "POST", params: params)
-        dataRequest(request, doWithReturnedData: doWithLoginData)
-        
-    }
-    
-    func logout(doWithLogoutResponse: (wasLoggedIn: Bool) -> Void) {
-
-        requestWithCSRFToken(WSURL.LOGOUT(), type: "POST", doWithReturedData : { (data) -> Void in
+        dataRequest(request, doWithResponse: { (data, response, error) -> Void in
             
-            if data != nil {
-                
-                let json = self.jsonDataToDictionary(data!)
-                
-                if json != nil {
-                    
-                    let response = json!.objectAtIndex(0)
-                    print(response)
-                    
-                    if response as! Int == 1 {
-                        doWithLogoutResponse(wasLoggedIn: true)
-                        return
-                    }
+            if data == nil {
+                self.errorHandler(response, error: error)
+            } else {
+                if let json = self.jsonDataToDictionary(data) {
+                    doWithLoginData(loginData: json)
                 }
             }
             
-            doWithLogoutResponse(wasLoggedIn: false)
+        })
+    }
+    
+    func logout(doWithLogoutResponse: (success: Bool) -> Void) {
+
+        requestWithCSRFToken(WSURL.LOGOUT(), type: "POST", doWithResponse : { (data, response, error) -> Void in
+            
+            if error != nil {
+                
+                self.errorAlert(error!)
+                doWithLogoutResponse(success: false)
+                return
+                
+            } else if response != nil {
+                
+                if let json = self.jsonDataToJSONObject(data!) {
+                    print("Logout request responded with: \(json)")
+                    doWithLogoutResponse(success: true)
+                    return
+                } else {
+                    
+                    // handle http errors
+                    let httpResponse = response as! NSHTTPURLResponse
+                    let statusCode = httpResponse.statusCode
+                    print("Logout request responded with: \(httpResponse)")
+                    if statusCode > 200 {
+                        if statusCode == 406 {
+                            // http 406: unauthorized. The user was already logged out
+                            doWithLogoutResponse(success: true)
+                            return
+                        } else {
+                            self.httpErrorAlert(httpResponse)
+                            doWithLogoutResponse(success: false)
+                            return
+                        }
+                    }
+                }
+            }
+        })
+    }
+    
+    // To update a map with annotations marking warmshowers member locations
+    func getHostDataForMapView(map: MKMapView, withHostData: (data: NSData?) -> Void) {
+        
+        let params = map.getWSMapRegion(LIMIT)
+        
+        requestWithCSRFToken(WSURL.LOCATION_SEARCH() , type: "POST", params: params, doWithResponse: { (data, response, error) -> Void in
+            
+            self.errorHandler(response, error: error)
+            withHostData(data: data)
         })
     }
     
@@ -191,14 +218,27 @@ class WSRequest {
     // MARK: - Utilities
     
     // Convert NSData to a json dictionary
-    func jsonDataToDictionary(data: NSData?) -> AnyObject? {
+    func jsonDataToJSONObject(data: NSData?) -> AnyObject? {
         
-        do {
-            let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [])
-            return json
-        } catch {
-            return nil
+        if data != nil {
+            do {
+                
+                let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [])
+                return json
+                
+            } catch {
+                alert("Error", message: "Failed converting JSON data.")
+            }
         }
+        return nil
+    }
+    
+    func jsonDataToDictionary(data: NSData?) -> [String: AnyObject]? {
+        
+        if let jsonDict = self.jsonDataToJSONObject(data) as? [String: AnyObject] {
+            return jsonDict
+        }
+        return nil
         
     }
     
@@ -207,7 +247,7 @@ class WSRequest {
 // To create NSMutableRequests with a dictionary of post parameters
 extension NSMutableURLRequest {
     
-    func setBodyContent(params: Dictionary<String, String>) {
+    func setBodyContent(params: [String: String]) {
         
         var requestBodyAsString = ""
         var firstOneAdded = false
@@ -224,6 +264,28 @@ extension NSMutableURLRequest {
         }
         
         self.HTTPBody = requestBodyAsString.dataUsingEncoding(NSUTF8StringEncoding)
+        
+    }
+    
+}
+
+extension MKMapView {
+    
+    func getWSMapRegion(limit: Int = 100) -> [String: String] {
+        
+        let region = self.region
+        
+        let regionLimits: [String: String] = [
+            "minlat": String(region.center.latitude - region.span.latitudeDelta / Double(2)),
+            "maxlat": String(region.center.latitude + region.span.latitudeDelta / Double(2)),
+            "minlon": String(region.center.longitude - region.span.longitudeDelta / Double(2)),
+            "maxlon": String(region.center.longitude + region.span.longitudeDelta / Double(2)),
+            "centerlat": String(region.center.latitude),
+            "centerlon": String(region.center.longitude),
+            "limit": String(limit)
+        ]
+        
+        return regionLimits
         
     }
     

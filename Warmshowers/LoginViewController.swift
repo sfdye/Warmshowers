@@ -57,40 +57,25 @@ class LoginViewController: UIViewController, WSRequestAlert {
         let password = passwordTextField.text!
         
         // log in
-        httpClient.login(username, password: password, doWithLoginData: {data -> () in
+        httpClient.login(username, password: password, doWithLoginData: {loginData -> () in
 
-            if data != nil {
-                do {
-                    
-                    let loginData = try NSJSONSerialization.JSONObjectWithData(data!, options: []) as? [String: AnyObject]
-                    
-                    if loginData != nil {
-                        
-                        // login sucessful, store the username and session cookie for later
-                        self.storeUsername()
-                        self.storeSessionCookie(loginData)
-//                        let user = loginData!["user"] as? [String: AnyObject]
-                        
-                        // switch the root view controller to the tabbar view controller
-                        dispatch_async(dispatch_get_main_queue(), {
-                            self.appDelegate?.showMainApp()
-                        })
-                        
-                    } else {
-                        
-                        self.alert("Error", message: "Could not complete the login process successfully.")
-                        
-                    }
-                    
-                } catch {
-                    
-                    self.alert("Error", message: "Login data could not be read.")
-                    
-                }
+            if loginData != nil {
+                
+                // login sucessful, store the username and session cookie for later
+                self.storeUsername()
+                self.storeSessionCookie(loginData)
+                // let user = loginData!["user"] as? [String: AnyObject]
+                
+                // switch the root view controller to the tabbar view controller
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.appDelegate?.showMainApp()
+                })
+                
+            } else {
+                self.alert("Error", message: "Could not complete the login process successfully.")
             }
             
         })
-        
     }
     
     // MARK: - Utility functions

@@ -63,13 +63,17 @@ class AccountTableViewController: UITableViewController, WSRequestAlert {
         
         if cell?.reuseIdentifier == LOGOUT_CELL_ID {
             
-            httpClient.logout({ (wasLoggedIn) -> Void in
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.appDelegate?.showLoginScreen()
-                })
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            
+            httpClient.logout({ (success) -> Void in
+                if success {
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        defaults.setObject(nil, forKey: SESSION_COOKIE)
+                        self.appDelegate?.showLoginScreen()
+                    })
+                }
             })
         }
-        
     }
 
     /*

@@ -99,5 +99,7 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This is required to show your location on the map.</string>
 </dict>
 </plist>

@@ -7,10 +7,17 @@
 //
 
 import UIKit
+import MapKit
 
-// IDEAS / TODOs
-// - load gps files on map
+// TODOs
+// !!! link up system settings to the app settings !!!
+// - fix logout problem: when http error, the apps still needs to show the login page
+
+// IDEAS
+// - load gps files on map - start with american adventure routes on WS
 // - facebook integration for finding friends on map
+// - add offline country option: downloads users in one country for offline use for a few days.
+
 
 // keys
 let LOGIN_VC_ID = "Login"

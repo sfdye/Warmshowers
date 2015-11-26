@@ -22,6 +22,7 @@ class WSUser {
     var comments: String? = nil
     var country: String? = nil
     var created: Int? = nil
+    var distance: Double? = nil;
     var email_opt_out: Int? = nil
     var fax_number: String? = nil
     var food: Bool = false
@@ -46,6 +47,10 @@ class WSUser {
     var postal_code: Int? = nil
     var preferred_notice: String? = nil
     var privatemsg_disabled: Bool = false
+    var profile_image_map_infoWindow: String? = nil             // a small photo for map annotation thumbnails
+    var profile_image_mobile_photo_456: String? = nil           // one size bigger
+    var profile_image_mobile_profile_photo_std: String? = nil   // same but cropped to standard size
+    var profile_image_profile_picture: String? = nil            // profile picture
     var province: String? = nil
     var sag: Bool = false
     var set_available_timestamp: Bool = false
@@ -63,6 +68,19 @@ class WSUser {
     
     init() {
         
+    }
+    
+    class func initWithDictionary(dict: [String: Any]) -> WSUser {
+        
+        let user = WSUser()
+        
+        let keys = dict.keys
+        for key in keys {
+            
+            
+        }
+        
+        return user
     }
     
 //    class func initWithJSONObject(json: AnyObject) {
