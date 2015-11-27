@@ -66,22 +66,22 @@ class WSUser {
     var uid: Int? = nil
     var workphone: String? = nil
     
-    init() {
-        
-    }
+//    init() {
+//        
+//    }
     
-    class func initWithDictionary(dict: [String: Any]) -> WSUser {
-        
-        let user = WSUser()
-        
-        let keys = dict.keys
-        for key in keys {
-            
-            
-        }
-        
-        return user
-    }
+//    class func initWithDictionary(dict: [String: Any]) -> WSUser {
+//        
+//        let user = WSUser()
+//        
+//        let keys = dict.keys
+//        for key in keys {
+//            
+//            
+//        }
+//        
+//        return user
+//    }
     
 //    class func initWithJSONObject(json: AnyObject) {
 //        self.init()

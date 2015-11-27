@@ -8,7 +8,6 @@
 
 import UIKit
 import MapKit
-import CoreLocation
 
 // TODOs
 // address this issue
@@ -38,34 +37,32 @@ class HostMapViewController: UIViewController, MKMapViewDelegate, WSRequestAlert
     // host data variables
     var hosts = [WSUserLocation]()
     
+    // pin clustering controller
+    private var clusteringController : KPClusteringController!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // allows the http client to diplay alerts through this view controller
         httpClient.alertViewController = self
         
-//        // Ask for Authorisation from the User.
-//        self.locationManager.requestAlwaysAuthorization()
-//        
-//        // For use in foreground
-//        self.locationManager.requestWhenInUseAuthorization()
-//        
-//        if CLLocationManager.locationServicesEnabled() {
-//            locationManager.delegate = self
-//            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-//            locationManager.startUpdatingLocation()
-//        }
-        
-        // update the map
-        let auth = CLLocationManager.authorizationStatus()
-        print(auth.rawValue)
+        // ask the users permission to use location services
         if CLLocationManager.authorizationStatus() == .NotDetermined {
             print("here")
             locationManager.requestWhenInUseAuthorization()
         }
         mapView.showsUserLocation = true
         
+        // pin clustering
+        let algorithm : KPGridClusteringAlgorithm = KPGridClusteringAlgorithm()
+        algorithm.annotationSize = CGSizeMake(25, 50)
+        algorithm.clusteringStrategy = KPGridClusteringAlgorithmStrategy.TwoPhase;
+        clusteringController = KPClusteringController(mapView: self.mapView, clusteringAlgorithm: algorithm)
+        clusteringController.delegate = self
+        clusteringController.setAnnotations(hosts)
         
+//        mapView.centerCoordinate = self.nycCoord()
         
     }
     
@@ -96,15 +93,14 @@ class HostMapViewController: UIViewController, MKMapViewDelegate, WSRequestAlert
                 let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
                 
                 dispatch_async(queue, { () -> Void in
-                    self.addHostsToMap(data!)
-                    
+                    self.updateHostList(data!)
                 })
             }
         }
     }
     
     // Adds hosts to the map with data from the web
-    func addHostsToMap(data: NSData) {
+    func updateHostList(data: NSData) {
         
         // parse the json
         if let json = self.httpClient.jsonDataToDictionary(data) {
@@ -119,9 +115,18 @@ class HostMapViewController: UIViewController, MKMapViewDelegate, WSRequestAlert
             }
         }
         
-        // add the hosts to the map
-        mapView.addAnnotations(hosts)
-        
+        // update the cluster controller on the main thread (otherwise it complains)
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.updateClusteringController()
+        })
+    }
+    
+    // Updates the pin clustering controller
+    func updateClusteringController() {
+        if self.hosts.count != 0 {
+            clusteringController.setAnnotations(hosts)
+            clusteringController.refresh(true)
+        }
     }
     
     
@@ -184,31 +189,84 @@ class HostMapViewController: UIViewController, MKMapViewDelegate, WSRequestAlert
     // Called for every annotation
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         
-        if let annotation = annotation as? WSUserLocation {
-            
-            let identifier = "pin"
-            
-            var view: MKPinAnnotationView
-            
-            if let dequeuedView = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier)
-                as? MKPinAnnotationView {
-                    dequeuedView.annotation = annotation
-                    view = dequeuedView
-            } else {
-                view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-                view.canShowCallout = true
-                view.calloutOffset = CGPoint(x: -5, y: 5)
-                view.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure) as UIView
-            }
-            return view
+//        if let annotation = annotation as? WSUserLocation {
+//            
+//            let identifier = "pin"
+//            
+//            var view: MKPinAnnotationView
+//            
+//            if let dequeuedView = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier)
+//                as? MKPinAnnotationView {
+//                    dequeuedView.annotation = annotation
+//                    view = dequeuedView
+//            } else {
+//                view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+//                view.canShowCallout = true
+//                view.calloutOffset = CGPoint(x: -5, y: 5)
+//                view.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure) as UIView
+//            }
+//            return view
+//        }
+//        return nil
+        
+        ///////// king pin example
+        
+        if annotation is MKUserLocation {
+            // return nil so map view draws "blue dot" for standard user location
+            return nil
         }
-        return nil
+        
+        var annotationView : MKPinAnnotationView?
+        
+        if annotation is KPAnnotation {
+            let a = annotation as! KPAnnotation
+            
+            if a.isCluster() {
+                annotationView = mapView.dequeueReusableAnnotationViewWithIdentifier("cluster") as? MKPinAnnotationView
+                
+                if (annotationView == nil) {
+                    annotationView = MKPinAnnotationView(annotation: a, reuseIdentifier: "cluster")
+                }
+                
+                annotationView!.pinTintColor = UIColor.purpleColor()
+            }
+                
+            else {
+                annotationView = mapView.dequeueReusableAnnotationViewWithIdentifier("pin") as? MKPinAnnotationView
+                
+                if (annotationView == nil) {
+                    annotationView = MKPinAnnotationView(annotation: a, reuseIdentifier: "pin")
+                }
+                
+                annotationView!.pinTintColor = UIColor.redColor()
+            }
+            
+            annotationView!.canShowCallout = true;
+        }
+        
+        return annotationView;
+        
     }
     
     // Moves the map to users location
     func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
         let userLocation = (locationManager.location?.coordinate)!
         mapView.setCenterCoordinate(userLocation , animated: true)
+    }
+    
+    // Called when a pin is selected
+    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
+        if view.annotation is KPAnnotation {
+            let cluster = view.annotation as! KPAnnotation
+            
+            if cluster.annotations.count > 1 {
+                let region = MKCoordinateRegionMakeWithDistance(cluster.coordinate,
+                    cluster.radius * 2.5,
+                    cluster.radius * 2.5)
+                
+                mapView.setRegion(region, animated: true)
+            }
+        }
     }
     
     // Called when the details button on an annotation is pressed
@@ -256,4 +314,12 @@ class HostMapViewController: UIViewController, MKMapViewDelegate, WSRequestAlert
     }
     */
 
+}
+
+// MARK: <CLControllerDelegate>
+
+extension HostMapViewController : KPClusteringControllerDelegate {
+    func clusteringControllerShouldClusterAnnotations(clusteringController: KPClusteringController!) -> Bool {
+        return true
+    }
 }
