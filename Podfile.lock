@@ -1,0 +1,19 @@
+PODS:
+  - kingpin (0.3.1)
+
+DEPENDENCIES:
+  - kingpin (from `https://github.com/itsbonczek/kingpin`)
+
+EXTERNAL SOURCES:
+  kingpin:
+    :git: https://github.com/itsbonczek/kingpin
+
+CHECKOUT OPTIONS:
+  kingpin:
+    :commit: 047b764c03bb32f2b379e74730238fe152f5a28c
+    :git: https://github.com/itsbonczek/kingpin
+
+SPEC CHECKSUMS:
+  kingpin: 52bb578006bdeb881db225e6ff1a4228375cbfbf
+
+COCOAPODS: 0.39.0
