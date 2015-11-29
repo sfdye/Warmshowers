@@ -23,8 +23,6 @@ import MapKit
 let LOGIN_VC_ID = "Login"
 let TABBAR_VC_ID = "TabBar"
 let SESSION_COOKIE = "ws_session_cookie"
-let USERNAME = "ws_username"
-
 
 // global variables
 let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)

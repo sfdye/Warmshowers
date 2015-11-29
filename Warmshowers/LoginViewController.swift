@@ -8,6 +8,9 @@
 
 import UIKit
 
+let USERNAME = "ws_username"
+let PASSWORD = "ws_password"
+
 class LoginViewController: UIViewController, WSRequestAlert {
     
     @IBOutlet weak var usernameTextField: UITextField!
@@ -57,25 +60,23 @@ class LoginViewController: UIViewController, WSRequestAlert {
         let password = passwordTextField.text!
         
         // log in
-        httpClient.login(username, password: password, doWithLoginData: {loginData -> () in
-
-            if loginData != nil {
+        httpClient.login(username, password: password) { (success) -> Void in
+            if success {
                 
                 // login sucessful, store the username and session cookie for later
                 self.storeUsername()
-                self.storeSessionCookie(loginData)
-                // let user = loginData!["user"] as? [String: AnyObject]
-                
+                self.storePassword()
                 // switch the root view controller to the tabbar view controller
                 dispatch_async(dispatch_get_main_queue(), {
                     self.appDelegate?.showMainApp()
                 })
                 
             } else {
-                self.alert("Error", message: "Could not complete the login process successfully.")
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.alert("Error", message: "Could not complete the login process successfully.")
+                })
             }
-            
-        })
+        }
     }
     
     // MARK: - Utility functions
@@ -85,16 +86,9 @@ class LoginViewController: UIViewController, WSRequestAlert {
         defaults.synchronize()
     }
     
-    func storeSessionCookie(loginData: [String: AnyObject]?) {
-        if loginData != nil {
-            let sessionName = loginData!["session_name"] as? String
-            let sessid = loginData!["sessid"] as? String
-            if (sessionName != nil) && (sessid != nil) {
-                let sessionCookie = sessionName! + "=" + sessid!
-                defaults.setValue(sessionCookie, forKey: SESSION_COOKIE)
-                defaults.synchronize()
-            }
-        }
+    func storePassword() {
+        defaults.setValue(passwordTextField.text, forKey: PASSWORD)
+        defaults.synchronize()
     }
     
     func alert(title: String, message: String, handler: ((UIAlertAction) -> Void)? = nil) {
@@ -112,7 +106,6 @@ class LoginViewController: UIViewController, WSRequestAlert {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
         self.presentViewController(alertController, animated: true, completion: nil)
-        
     }
     
     /*

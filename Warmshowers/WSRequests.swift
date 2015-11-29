@@ -31,14 +31,55 @@ class WSRequest {
         }
     }
     
+    // Check for http errors
+    func hasHTTPError(response: NSURLResponse) -> Bool {
+        
+        let httpResponse = response as! NSHTTPURLResponse
+        
+        if httpResponse.statusCode >= 400 {
+            return true
+        } else {
+            return false
+        }
+
+    }
+    
+    func hasFailedCSRF(data: NSData) -> Bool {
+        
+        do {
+            let json = try NSJSONSerialization.JSONObjectWithData(data, options: [])
+            let responseBody = json.objectAtIndex(0) as? String
+            if responseBody?.lowercaseString.rangeOfString("csrf validation failed") != nil {
+                print("Failed CSRF.")
+                return true
+            }
+        } catch {
+            print("Could not match CSRF failure message in response body.")
+        }
+        return false
+        
+    }
+    
     // Handles http error codes
-    func httpErrorAlert(response: NSHTTPURLResponse) {
+    func httpErrorAlert(data: NSData?, response: NSURLResponse) {
+        
+        let httpResponse = response as! NSHTTPURLResponse
+        let statusCode = httpResponse.statusCode
+        let title = "HTTP " + String(statusCode)
+        var message: String = ""
+        
+        if data != nil {
+            do {
+                let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [])
+                let response = json.objectAtIndex(0) as? String
+                if response != nil {
+                    message = response!
+                }
+            } catch {
+            }
+        }
         
         if alertViewController != nil {
-            
-            let statusCode = response.statusCode
-            let title = "Network Error"
-            let message = "HTTP " + String(statusCode)
             
             self.alert(title, message: message)
             
@@ -46,7 +87,7 @@ class WSRequest {
     }
     
     // General error and url response handler
-    func errorHandler(response: NSURLResponse?, error: NSError?) {
+    func errorHandler(data: NSData?, response: NSURLResponse?, error: NSError?) {
         
         if error != nil {
             // show an error alert
@@ -58,7 +99,7 @@ class WSRequest {
             // http error alert
             let httpResponse = response as! NSHTTPURLResponse
             if httpResponse.statusCode > 200 {
-                self.httpErrorAlert(httpResponse)
+                self.httpErrorAlert(data, response: httpResponse)
                 return
             }
         }
@@ -136,10 +177,35 @@ class WSRequest {
                 let request = self.makeRequest(url, type: type, params: params, token: token)
                 
                 print("Making a request to \(request.URL!) with token \(token)")
-                self.dataRequest(request, doWithResponse: doWithResponse)
+                self.dataRequest(request, doWithResponse: { (data, response, error) -> Void in
+                    
+                    // check for CSRF failure and retry if needed
+                    if response != nil {
+                        if self.hasHTTPError(response!) {
+                            
+                            print("HTTP error response recieved.")
+                            if self.hasFailedCSRF(data!) {
+                                
+                                // login again and retry
+                                print("Logging in again to retry the request")
+                                self.autologin({ () -> Void in
+                                    print("Retrying the request")
+                                    self.dataRequest(request, doWithResponse: doWithResponse)
+                                })
+                                
+                            } else {
+                                self.httpErrorAlert(data!, response: response!)
+                            }
+                        }
+                    }
+
+                    // else if there was no CSRF failure return for error handling
+                    doWithResponse(data, response, error)
+                    
+                })
                 
             } else {
-                self.errorHandler(response, error: error)
+                self.errorHandler(tokenData, response: response, error: error)
             }
         }
     }
@@ -147,21 +213,83 @@ class WSRequest {
     
     // MARK: - Warmshowers RESTful API requests
     
-    func login(username: String, password: String, doWithLoginData: (loginData: [String: AnyObject]?) -> Void) {
+    func login(username: String, password: String, doAfterLogin: (success: Bool) -> Void) {
 
         let params = ["username" : username, "password" : password]
         let request = self.makeRequest(WSURL.LOGIN(), type: "POST", params: params)
         dataRequest(request, doWithResponse: { (data, response, error) -> Void in
             
             if data == nil {
-                self.errorHandler(response, error: error)
+                self.errorHandler(data!, response: response, error: error)
             } else {
+                
+                print("Recieved login data")
+                // check for CSRF failure and retry if needed
+                if response != nil {
+                    if self.hasHTTPError(response!) {
+                        
+                        print("HTTP error response recieved.")
+                        let statusCode = (response as! NSHTTPURLResponse).statusCode
+                        if statusCode == 406 {
+                            
+                            // the user was already logged in
+                            do {
+                                let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [])
+                                let responseBody = json.objectAtIndex(0) as? String
+                                print(responseBody)
+                            } catch {
+                                
+                            }
+                        } else {
+                            self.httpErrorAlert(data!, response: response!)
+                        }
+                    }
+                }
+                
+                self.errorHandler(data!, response: response, error: error)
                 if let json = self.jsonDataToDictionary(data) {
-                    doWithLoginData(loginData: json)
+                    self.storeSessionCookie(json)
+                    doAfterLogin(success: true)
+                    return
                 }
             }
             
+            doAfterLogin(success: false)
+
         })
+    }
+    
+    func autologin(doAfterLogin: () -> Void) {
+        
+        let username = defaults.valueForKey(USERNAME)?.stringValue
+        let password = defaults.valueForKey(PASSWORD)?.stringValue
+        print(password)
+        if username != nil && password != nil {
+            
+            self.login(username!, password: password!) { (success) -> Void in
+                if success {
+                    doAfterLogin()
+                } else {
+                    self.alert("Error", message: "Could not complete the login process successfully.")
+                }
+            }
+            
+        } else {
+            print("Username or password not stored yet.")
+            self.alert("Network Error", message: "Could not retrieve data from warmshowers. Please try logging out and loggin in again")
+        }
+    }
+    
+    func storeSessionCookie(loginData: [String: AnyObject]?) {
+        if loginData != nil {
+            let sessionName = loginData!["session_name"] as? String
+            let sessid = loginData!["sessid"] as? String
+            if (sessionName != nil) && (sessid != nil) {
+                let sessionCookie = sessionName! + "=" + sessid!
+                defaults.setValue(sessionCookie, forKey: SESSION_COOKIE)
+                defaults.synchronize()
+            }
+        }
     }
     
     func logout(doWithLogoutResponse: (success: Bool) -> Void) {
@@ -192,7 +320,7 @@ class WSRequest {
                             doWithLogoutResponse(success: true)
                             return
                         } else {
-                            self.httpErrorAlert(httpResponse)
+                            self.httpErrorAlert(data!, response: httpResponse)
                             doWithLogoutResponse(success: false)
                             return
                         }
@@ -209,8 +337,10 @@ class WSRequest {
         
         requestWithCSRFToken(WSURL.LOCATION_SEARCH() , type: "POST", params: params, doWithResponse: { (data, response, error) -> Void in
             
-            self.errorHandler(response, error: error)
+            
+            self.errorHandler(data!, response: response, error: error)
             withHostData(data: data)
+            
         })
     }
     

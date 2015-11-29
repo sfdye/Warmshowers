@@ -68,6 +68,7 @@ class AccountTableViewController: UITableViewController, WSRequestAlert {
             httpClient.logout({ (success) -> Void in
                 if success {
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        defaults.setObject(nil, forKey: PASSWORD)
                         defaults.setObject(nil, forKey: SESSION_COOKIE)
                         self.appDelegate?.showLoginScreen()
                     })
