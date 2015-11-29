@@ -17,6 +17,8 @@ class AccountTableViewController: UITableViewController, WSRequestAlert {
     let httpClient = WSRequest()
     
     weak var appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
+    
+    var alertController: UIAlertController?
 
     @IBAction func doneButtonPressed(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -122,14 +124,20 @@ class AccountTableViewController: UITableViewController, WSRequestAlert {
     }
     */
     
+    
     // MARK: - WSRequestAlert Delegate functions
     
     func requestAlert(title: String, message: String) {
         
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
-        self.presentViewController(alertController, animated: true, completion: nil)
+        guard alertController == nil else {
+            return
+        }
         
+        alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        if alertController != nil {
+            alertController!.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
+            self.presentViewController(alertController!, animated: true, completion: { () -> Void in self.alertController = nil})
+        }
     }
 
 }

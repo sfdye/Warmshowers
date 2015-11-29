@@ -13,12 +13,23 @@ let PASSWORD = "ws_password"
 
 class LoginViewController: UIViewController, WSRequestAlert {
     
+    // MARK: Properties
+    
+    // Login text fields
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
+    // Reference to the app delegate for changing views after login
     weak var appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
     
+    // A http client for making the login request
     let httpClient = WSRequest()
+    
+    // An alert controller to display errors
+    var alertController: UIAlertController?
+    
+    
+    // MARK: View life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,11 +82,8 @@ class LoginViewController: UIViewController, WSRequestAlert {
                     self.appDelegate?.showMainApp()
                 })
                 
-            } else {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.alert("Error", message: "Could not complete the login process successfully.")
-                })
             }
+            // else: error will be displayed by the http client
         }
     }
     
@@ -93,9 +101,15 @@ class LoginViewController: UIViewController, WSRequestAlert {
     
     func alert(title: String, message: String, handler: ((UIAlertAction) -> Void)? = nil) {
         
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: handler))
-        self.presentViewController(alertController, animated: true, completion: nil)
+        guard alertController == nil else {
+            return
+        }
+        
+        alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        if alertController != nil {
+            alertController!.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
+            self.presentViewController(alertController!, animated: true, completion: { () -> Void in self.alertController = nil})
+        }
         
     }
     
@@ -103,9 +117,15 @@ class LoginViewController: UIViewController, WSRequestAlert {
     
     func requestAlert(title: String, message: String) {
         
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
-        self.presentViewController(alertController, animated: true, completion: nil)
+        guard alertController == nil else {
+            return
+        }
+
+        alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        if alertController != nil {
+            alertController!.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
+            self.presentViewController(alertController!, animated: true, completion: { () -> Void in self.alertController = nil})
+        }
     }
     
     /*

@@ -10,8 +10,9 @@ import UIKit
 import MapKit
 
 // TODOs
-// address this issue
+// address this issue (add gps routes to the map)
 // https://ro.warmshowers.org/node/112508
+// - make the pin clustering like the website and android app
 
 // add loading indicator to map view
 
@@ -23,6 +24,8 @@ enum MapSource {
 }
 
 class HostMapViewController: UIViewController, MKMapViewDelegate, WSRequestAlert, CLLocationManagerDelegate {
+    
+    // MARK: Properties
     
     @IBOutlet var mapView: MKMapView!
     
@@ -40,6 +43,8 @@ class HostMapViewController: UIViewController, MKMapViewDelegate, WSRequestAlert
     // pin clustering controller
     private var clusteringController : KPClusteringController!
     
+    
+    // MARK: View life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,7 +66,7 @@ class HostMapViewController: UIViewController, MKMapViewDelegate, WSRequestAlert
         clusteringController.delegate = self
         clusteringController.setAnnotations(hosts)
         
-//        mapView.centerCoordinate = self.nycCoord()
+        updateHostsOnMap()
         
     }
     
@@ -90,7 +95,6 @@ class HostMapViewController: UIViewController, MKMapViewDelegate, WSRequestAlert
             // update the mapView data source
             if data != nil {
                 let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-                
                 dispatch_async(queue, { () -> Void in
                     self.updateHostList(data!)
                 })
@@ -272,11 +276,11 @@ class HostMapViewController: UIViewController, MKMapViewDelegate, WSRequestAlert
     
     func requestAlert(title: String, message: String) {
         
-//        if self.presentationController != nil {
-//            let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-//            alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
-//            self.presentViewController(alertController, animated: true, completion: nil)
-//        }
+        if self.presentationController != nil {
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
     
     }
     
