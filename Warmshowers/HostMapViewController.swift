@@ -23,24 +23,32 @@ enum MapSource {
     case OpenStreetMaps
 }
 
-class HostMapViewController: UIViewController, MKMapViewDelegate, WSRequestAlert, CLLocationManagerDelegate {
+class HostMapViewController: UIViewController {
     
     // MARK: Properties
     
     @IBOutlet var mapView: MKMapView!
+    @IBOutlet var searchBar: UISearchBar!
     
     let httpClient = WSRequest()
     let locationManager = CLLocationManager()
     
-    // map source variables
+    // Map source variables
     var mapSource = MapSource.AppleMaps
     var mapOverlay: MKTileOverlay? = nil
     var overlay: MKTileOverlay? = nil
     
-    // host data variables
+    // Host data variables
     var hosts = [WSUserLocation]()
     
-    // pin clustering controller
+    // Alert controller to display errors
+    var alertController: UIAlertController?
+    
+    // Navigation bar items
+    let cancelButton = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: nil, action: nil)
+    let accountButton = UIBarButtonItem.init()
+    
+    // Pin clustering controller
     private var clusteringController : KPClusteringController!
     
     
@@ -49,24 +57,31 @@ class HostMapViewController: UIViewController, MKMapViewDelegate, WSRequestAlert
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // allows the http client to diplay alerts through this view controller
+        // Allows the http client to diplay alerts through this view controller
         httpClient.alertViewController = self
         
-        // ask the users permission to use location services
+        // Ask the users permission to use location services
         if CLLocationManager.authorizationStatus() == .NotDetermined {
             locationManager.requestWhenInUseAuthorization()
         }
         mapView.showsUserLocation = true
         
-        // pin clustering
+        // Set up the navigation bar
+        self.cancelButton.target = self
+        self.cancelButton.action = Selector("cancelButtonPressed")
+        self.accountButton.image = UIImage.init(named: "UserIcon")
+        self.accountButton.target = self
+        self.accountButton.action = Selector("accountButtonPressed")
+        self.navigationItem.setLeftBarButtonItem(accountButton, animated: false)
+        self.navigationItem.titleView = searchBar
+        
+        // Pin clustering
         let algorithm : KPGridClusteringAlgorithm = KPGridClusteringAlgorithm()
         algorithm.annotationSize = CGSizeMake(25, 50)
         algorithm.clusteringStrategy = KPGridClusteringAlgorithmStrategy.TwoPhase;
         clusteringController = KPClusteringController(mapView: self.mapView, clusteringAlgorithm: algorithm)
         clusteringController.delegate = self
         clusteringController.setAnnotations(hosts)
-        
-        updateHostsOnMap()
         
     }
     
@@ -76,16 +91,7 @@ class HostMapViewController: UIViewController, MKMapViewDelegate, WSRequestAlert
     }
     
     
-    // Checks if a user is already in the map data source
-    func userOnMap(uid: Int) -> Bool {
-        
-        for host in hosts {
-            if host.uid == uid {
-                return true
-            }
-        }
-        return false
-    }
+    // MARK: Map update methods
     
     // Updates the hosts shown on the map
     func updateHostsOnMap() {
@@ -133,7 +139,7 @@ class HostMapViewController: UIViewController, MKMapViewDelegate, WSRequestAlert
     }
     
     
-    // MARK: - Map source functions
+    // MARK: - Map source methods
     
     // changes the map source
     func switchToMapSource(source: MapSource) {
@@ -178,129 +184,33 @@ class HostMapViewController: UIViewController, MKMapViewDelegate, WSRequestAlert
         
     }
     
-    // MARK: - MKMapViewDelegate methods
+    // MARK: Navigation bar item methods
     
-    // Used to display tiles for maps other than Apple Maps
-    func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
-        if mapOverlay != nil {
-            return MKTileOverlayRenderer.init(overlay: overlay)
-        } else {
-            return MKTileOverlayRenderer.init();
+    func cancelButtonPressed() {
+        self.searchBar.resignFirstResponder()
+    }
+    
+    func accountButtonPressed() {
+        let accountTVC = storyboard?.instantiateViewControllerWithIdentifier("AccountNavigationController")
+        if accountTVC != nil {
+            self.presentViewController(accountTVC!, animated: true, completion: nil)
         }
     }
     
-    // Called for every annotation
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        
-        if annotation is MKUserLocation {
-            // return nil so map view draws "blue dot" for standard user location
-            return nil
-        }
-        
-        var annotationView : MKPinAnnotationView?
-        
-        if annotation is KPAnnotation {
-            let a = annotation as! KPAnnotation
-            
-            if a.isCluster() {
-                annotationView = mapView.dequeueReusableAnnotationViewWithIdentifier("cluster") as? MKPinAnnotationView
-                
-                if (annotationView == nil) {
-                    annotationView = MKPinAnnotationView(annotation: a, reuseIdentifier: "cluster")
-                }
-                
-                annotationView!.pinTintColor = UIColor.purpleColor()
-            }
-                
-            else {
-                annotationView = mapView.dequeueReusableAnnotationViewWithIdentifier("pin") as? MKPinAnnotationView
-                
-                if (annotationView == nil) {
-                    annotationView = MKPinAnnotationView(annotation: a, reuseIdentifier: "pin")
-                }
-                
-                annotationView!.pinTintColor = UIColor.redColor()
-            }
-            
-            annotationView!.canShowCallout = true;
-        }
-        
-        return annotationView;
-        
-    }
     
-    // Moves the map to users location
-    func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
-        let userLocation = (locationManager.location?.coordinate)!
-        mapView.setCenterCoordinate(userLocation , animated: true)
-    }
     
-    // Called when a pin is selected
-    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
-        if view.annotation is KPAnnotation {
-            let cluster = view.annotation as! KPAnnotation
-            
-            if cluster.annotations.count > 1 {
-                let region = MKCoordinateRegionMakeWithDistance(cluster.coordinate,
-                    cluster.radius * 2.5,
-                    cluster.radius * 2.5)
-                
-                mapView.setRegion(region, animated: true)
+    
+    // MARK: Utilities
+
+    // Checks if a user is already in the map data source
+    func userOnMap(uid: Int) -> Bool {
+        
+        for host in hosts {
+            if host.uid == uid {
+                return true
             }
         }
+        return false
     }
-    
-    // Called when the details button on an annotation is pressed
-//    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView,
-//        calloutAccessoryControlTapped control: UIControl) {
-//            let location = view.annotation as! Artwork
-//            let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
-//            // convert the location to a MKMapItem object and pass it to the maps app
-//            location.mapItem().openInMapsWithLaunchOptions(launchOptions)
-//    }
-    
-    // Called when the map view changes
-    func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        updateHostsOnMap()
-    }
-    
-    // MARK: - CLLocationMangerDelegate functions
-    
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
-        print("locations = \(locValue.latitude) \(locValue.longitude)")
-    }
-    
-    
-    // MARK: - WSRequestAlert Delegate functions
-    
-    func requestAlert(title: String, message: String) {
-        
-        if self.presentationController != nil {
-            let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-            alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
-            self.presentViewController(alertController, animated: true, completion: nil)
-        }
-    
-    }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-}
-
-// MARK: <CLControllerDelegate>
-
-extension HostMapViewController : KPClusteringControllerDelegate {
-    func clusteringControllerShouldClusterAnnotations(clusteringController: KPClusteringController!) -> Bool {
-        return true
-    }
 }

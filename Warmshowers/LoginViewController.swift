@@ -25,7 +25,7 @@ class LoginViewController: UIViewController, WSRequestAlert {
     // A http client for making the login request
     let httpClient = WSRequest()
     
-    // An alert controller to display errors
+    // Alert controller to display errors
     var alertController: UIAlertController?
     
     

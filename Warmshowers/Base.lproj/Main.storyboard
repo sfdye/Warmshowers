@@ -6,37 +6,38 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Host Map-->
+        <!--Host Map View Controller-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
                 <viewController id="9pv-A4-QxB" customClass="HostMapViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
-                    <mapView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" pitchEnabled="NO" id="fnh-y6-gWb">
+                    <mapView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" id="0cQ-GC-nJ7">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <animations/>
                         <connections>
-                            <outlet property="delegate" destination="9pv-A4-QxB" id="RU1-vy-rwp"/>
+                            <outlet property="delegate" destination="9pv-A4-QxB" id="uiZ-4S-Vv7"/>
                         </connections>
                     </mapView>
-                    <navigationItem key="navigationItem" title="Host Map" id="cHc-7U-xFe">
-                        <barButtonItem key="leftBarButtonItem" title="Item" image="UserIcon" style="plain" id="Lzi-iU-L2h">
-                            <connections>
-                                <segue destination="E9k-6c-lFN" kind="showDetail" id="JnO-k5-HaL"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="search" id="FFF-Bu-gaC">
-                            <connections>
-                                <segue destination="vnE-iT-SAo" kind="show" id="qoh-ob-cYW"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="cHc-7U-xFe"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="mapView" destination="fnh-y6-gWb" id="kQO-1V-KZl"/>
+                        <outlet property="mapView" destination="0cQ-GC-nJ7" id="icD-jg-s3i"/>
+                        <outlet property="searchBar" destination="wmf-5t-eMO" id="bvn-l2-mhp"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
+                <searchBar contentMode="redraw" id="wmf-5t-eMO">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <animations/>
+                    <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <outlet property="delegate" destination="9pv-A4-QxB" id="6Gs-u0-kgt"/>
+                    </connections>
+                </searchBar>
             </objects>
-            <point key="canvasLocation" x="1935" y="-938"/>
+            <point key="canvasLocation" x="1947" y="-938"/>
         </scene>
         <!--Messages-->
         <scene sceneID="WJK-eV-Y75">
@@ -338,25 +339,6 @@
             </objects>
             <point key="canvasLocation" x="1104" y="483"/>
         </scene>
-        <!--Host Search-->
-        <scene sceneID="diO-d5-R2l">
-            <objects>
-                <viewController title="Host Search" id="vnE-iT-SAo" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="er9-SO-juw"/>
-                        <viewControllerLayoutGuide type="bottom" id="0nM-PU-nVr"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="xjj-Gy-g6b">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zxM-Nh-Wea" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2708" y="-938"/>
-        </scene>
         <!--Account-->
         <scene sceneID="yHk-3J-1rW">
             <objects>
@@ -440,7 +422,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FFU-pi-jI9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3427" y="-1656"/>
+            <point key="canvasLocation" x="3419" y="-1573"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="nvt-00-EYu">
@@ -464,7 +446,7 @@
         <!--Account-->
         <scene sceneID="b7q-3y-1hD">
             <objects>
-                <navigationController title="Account" automaticallyAdjustsScrollViewInsets="NO" id="E9k-6c-lFN" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="AccountNavigationController" title="Account" automaticallyAdjustsScrollViewInsets="NO" id="E9k-6c-lFN" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Prv-AV-TxO">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -478,7 +460,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KLA-K6-mUk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2702" y="-1656"/>
+            <point key="canvasLocation" x="2694" y="-1573"/>
         </scene>
     </scenes>
     <resources>
@@ -488,6 +470,5 @@
         <image name="MessagesBarButtonIconSelected" width="25" height="25"/>
         <image name="SettingsBarButtonIcon" width="25" height="25"/>
         <image name="SettingsBarButtonIconSelected" width="25" height="25"/>
-        <image name="UserIcon" width="22" height="22"/>
     </resources>
 </document>
