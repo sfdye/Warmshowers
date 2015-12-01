@@ -343,6 +343,27 @@ class WSRequest {
         })
     }
     
+    // To get a count of unread messages
+    func getUnreadMessagesCount(withCount: (count: Int?) -> Void) {
+        
+        requestWithCSRFToken(WSURL.UNREAD_MESSAGE_COUNT() , type: "POST", retry: true, doWithResponse: { (data, response, error) -> Void in
+            
+            if data != nil {
+                let count = self.intFromJSONData(data)
+                withCount(count: count)
+            }
+        })
+    }
+
+    // To get all message threads
+    func getMessageThreads(withMessageThreadData: (data: NSData?) -> Void) {
+        
+        requestWithCSRFToken(WSURL.GET_ALL_MESSAGES() , type: "POST", retry: true, doWithResponse: { (data, response, error) -> Void in
+            
+                withMessageThreadData(data: data)
+            
+        })
+    }
     
     // MARK: - Utilities
     
@@ -369,6 +390,19 @@ class WSRequest {
         }
         return nil
         
+    }
+    
+    
+    
+    func intFromJSONData(data: NSData?) -> Int? {
+        
+        if let json = jsonDataToJSONObject(data) {
+            if json.count == 1 {
+                let count: Int? = json.objectAtIndex(0).integerValue
+                return count
+            }
+        }
+        return nil
     }
     
 }

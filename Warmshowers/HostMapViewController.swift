@@ -31,6 +31,7 @@ class HostMapViewController: UIViewController {
     @IBOutlet var searchBar: UISearchBar!
     
     let httpClient = WSRequest()
+    var alertController: UIAlertController?
     let locationManager = CLLocationManager()
     
     // Map source variables
@@ -40,9 +41,6 @@ class HostMapViewController: UIViewController {
     
     // Host data variables
     var hosts = [WSUserLocation]()
-    
-    // Alert controller to display errors
-    var alertController: UIAlertController?
     
     // Navigation bar items
     let cancelButton = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: nil, action: nil)
@@ -196,8 +194,6 @@ class HostMapViewController: UIViewController {
             self.presentViewController(accountTVC!, animated: true, completion: nil)
         }
     }
-    
-    
     
     
     // MARK: Utilities

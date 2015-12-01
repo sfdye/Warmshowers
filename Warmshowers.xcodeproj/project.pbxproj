@@ -19,6 +19,11 @@
 		E52E8AA71C0BDAE9000391AB /* HostMapViewController+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8AA61C0BDAE9000391AB /* HostMapViewController+UITableViewDelegate.swift */; };
 		E52E8AA91C0BDB18000391AB /* HostMapViewController+UITableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8AA81C0BDB18000391AB /* HostMapViewController+UITableViewDataSource.swift */; };
 		E52E8AAB1C0C2257000391AB /* HostMapViewController+UISearchBarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8AAA1C0C2257000391AB /* HostMapViewController+UISearchBarDelegate.swift */; };
+		E52E8AAF1C0D056D000391AB /* MessageThreadsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8AAE1C0D056D000391AB /* MessageThreadsTableViewController.swift */; };
+		E52E8AB11C0D0B1A000391AB /* MessageThreadTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8AB01C0D0B1A000391AB /* MessageThreadTableViewCell.swift */; };
+		E52E8AB31C0D0C57000391AB /* MessageThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8AB21C0D0C57000391AB /* MessageThread.swift */; };
+		E52E8AB51C0D0DDC000391AB /* MessageThreadsTableViewController+WSRequestAlerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8AB41C0D0DDC000391AB /* MessageThreadsTableViewController+WSRequestAlerts.swift */; };
+		E52E8AB71C0D180C000391AB /* MessageParticipant.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8AB61C0D180C000391AB /* MessageParticipant.swift */; };
 		E54A572B1BFD664A000843A9 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E54A572A1BFD664A000843A9 /* Settings.bundle */; };
 		E54A572F1BFDC446000843A9 /* WSRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54A572E1BFDC446000843A9 /* WSRequests.swift */; };
 		E54A57311BFE6FB2000843A9 /* WSURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54A57301BFE6FB2000843A9 /* WSURL.swift */; };
@@ -72,6 +77,11 @@
 		E52E8AA61C0BDAE9000391AB /* HostMapViewController+UITableViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HostMapViewController+UITableViewDelegate.swift"; sourceTree = "<group>"; };
 		E52E8AA81C0BDB18000391AB /* HostMapViewController+UITableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HostMapViewController+UITableViewDataSource.swift"; sourceTree = "<group>"; };
 		E52E8AAA1C0C2257000391AB /* HostMapViewController+UISearchBarDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HostMapViewController+UISearchBarDelegate.swift"; sourceTree = "<group>"; };
+		E52E8AAE1C0D056D000391AB /* MessageThreadsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageThreadsTableViewController.swift; sourceTree = "<group>"; };
+		E52E8AB01C0D0B1A000391AB /* MessageThreadTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageThreadTableViewCell.swift; sourceTree = "<group>"; };
+		E52E8AB21C0D0C57000391AB /* MessageThread.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageThread.swift; sourceTree = "<group>"; };
+		E52E8AB41C0D0DDC000391AB /* MessageThreadsTableViewController+WSRequestAlerts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadsTableViewController+WSRequestAlerts.swift"; sourceTree = "<group>"; };
+		E52E8AB61C0D180C000391AB /* MessageParticipant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageParticipant.swift; sourceTree = "<group>"; };
 		E54A572A1BFD664A000843A9 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		E54A572E1BFDC446000843A9 /* WSRequests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSRequests.swift; sourceTree = "<group>"; };
 		E54A57301BFE6FB2000843A9 /* WSURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSURL.swift; sourceTree = "<group>"; };
@@ -155,6 +165,8 @@
 			children = (
 				E54A57331BFE830C000843A9 /* WSUser.swift */,
 				E51397661C06945E00FD8EC1 /* WSUserLocation.swift */,
+				E52E8AB21C0D0C57000391AB /* MessageThread.swift */,
+				E52E8AB61C0D180C000391AB /* MessageParticipant.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -186,6 +198,9 @@
 				E52E8AA61C0BDAE9000391AB /* HostMapViewController+UITableViewDelegate.swift */,
 				E52E8AA81C0BDB18000391AB /* HostMapViewController+UITableViewDataSource.swift */,
 				E52E8AAA1C0C2257000391AB /* HostMapViewController+UISearchBarDelegate.swift */,
+				E52E8AAE1C0D056D000391AB /* MessageThreadsTableViewController.swift */,
+				E52E8AB01C0D0B1A000391AB /* MessageThreadTableViewCell.swift */,
+				E52E8AB41C0D0DDC000391AB /* MessageThreadsTableViewController+WSRequestAlerts.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -446,6 +461,8 @@
 				E56CC08C1BFD2EC300AAF973 /* TabBarController.swift in Sources */,
 				E52E8AA11C0BD38D000391AB /* HostMapViewController+UISearchControllerDelegate.swift in Sources */,
 				E56CC0901BFD496400AAF973 /* SettingsTableViewController.swift in Sources */,
+				E52E8AAF1C0D056D000391AB /* MessageThreadsTableViewController.swift in Sources */,
+				E52E8AB11C0D0B1A000391AB /* MessageThreadTableViewCell.swift in Sources */,
 				E52E8A9F1C0BD25A000391AB /* HostMapViewController+MKMapViewDelegate.swift in Sources */,
 				E54A57641C03E4A4000843A9 /* AccountTableViewController.swift in Sources */,
 				E54A57311BFE6FB2000843A9 /* WSURL.swift in Sources */,
@@ -457,11 +474,14 @@
 				E52E8AAB1C0C2257000391AB /* HostMapViewController+UISearchBarDelegate.swift in Sources */,
 				E52E8AA71C0BDAE9000391AB /* HostMapViewController+UITableViewDelegate.swift in Sources */,
 				E54A57381BFEC531000843A9 /* SpinnerView.swift in Sources */,
+				E52E8AB31C0D0C57000391AB /* MessageThread.swift in Sources */,
 				E56CC0921BFD569500AAF973 /* SwitchTableViewCell.swift in Sources */,
 				E54A57341BFE830C000843A9 /* WSUser.swift in Sources */,
 				E52E8A9D1C0BD1C6000391AB /* HostMapViewController+WSRequestAlerts.swift in Sources */,
 				E52E8AA51C0BD8BF000391AB /* HostMapViewController+UIUISearchResultsUpdating.swift in Sources */,
 				E54A572F1BFDC446000843A9 /* WSRequests.swift in Sources */,
+				E52E8AB51C0D0DDC000391AB /* MessageThreadsTableViewController+WSRequestAlerts.swift in Sources */,
+				E52E8AB71C0D180C000391AB /* MessageParticipant.swift in Sources */,
 				E52E8A9B1C0BCD03000391AB /* HostSearchController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
