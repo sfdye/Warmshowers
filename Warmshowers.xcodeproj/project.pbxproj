@@ -20,10 +20,11 @@
 		E52E8AA91C0BDB18000391AB /* HostMapViewController+UITableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8AA81C0BDB18000391AB /* HostMapViewController+UITableViewDataSource.swift */; };
 		E52E8AAB1C0C2257000391AB /* HostMapViewController+UISearchBarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8AAA1C0C2257000391AB /* HostMapViewController+UISearchBarDelegate.swift */; };
 		E52E8AAF1C0D056D000391AB /* MessageThreadsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8AAE1C0D056D000391AB /* MessageThreadsTableViewController.swift */; };
-		E52E8AB11C0D0B1A000391AB /* MessageThreadTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8AB01C0D0B1A000391AB /* MessageThreadTableViewCell.swift */; };
-		E52E8AB31C0D0C57000391AB /* MessageThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8AB21C0D0C57000391AB /* MessageThread.swift */; };
+		E52E8AB11C0D0B1A000391AB /* MessageThreadsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8AB01C0D0B1A000391AB /* MessageThreadsTableViewCell.swift */; };
 		E52E8AB51C0D0DDC000391AB /* MessageThreadsTableViewController+WSRequestAlerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8AB41C0D0DDC000391AB /* MessageThreadsTableViewController+WSRequestAlerts.swift */; };
-		E52E8AB71C0D180C000391AB /* MessageParticipant.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8AB61C0D180C000391AB /* MessageParticipant.swift */; };
+		E52E8ABE1C0E463D000391AB /* Warmshowers.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E52E8ABC1C0E463D000391AB /* Warmshowers.xcdatamodeld */; };
+		E52E8AC91C0E4A46000391AB /* MessageThread+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8AC71C0E4A46000391AB /* MessageThread+CoreDataProperties.swift */; };
+		E52E8ACA1C0E4A46000391AB /* MessageThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8AC81C0E4A46000391AB /* MessageThread.swift */; };
 		E54A572B1BFD664A000843A9 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E54A572A1BFD664A000843A9 /* Settings.bundle */; };
 		E54A572F1BFDC446000843A9 /* WSRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54A572E1BFDC446000843A9 /* WSRequests.swift */; };
 		E54A57311BFE6FB2000843A9 /* WSURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54A57301BFE6FB2000843A9 /* WSURL.swift */; };
@@ -35,6 +36,11 @@
 		E56CC08C1BFD2EC300AAF973 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56CC08B1BFD2EC300AAF973 /* TabBarController.swift */; };
 		E56CC0901BFD496400AAF973 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56CC08F1BFD496400AAF973 /* SettingsTableViewController.swift */; };
 		E56CC0921BFD569500AAF973 /* SwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56CC0911BFD569500AAF973 /* SwitchTableViewCell.swift */; };
+		E573D1731C0E5F5C004C3BFC /* Message+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E573D1711C0E5F5C004C3BFC /* Message+CoreDataProperties.swift */; };
+		E573D1741C0E5F5C004C3BFC /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = E573D1721C0E5F5C004C3BFC /* Message.swift */; };
+		E573D17A1C0E6106004C3BFC /* LoginViewController+WSRequestAlerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E573D1791C0E6106004C3BFC /* LoginViewController+WSRequestAlerts.swift */; };
+		E593CF3E1C1929540076A8B0 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593CF3C1C1929540076A8B0 /* User+CoreDataProperties.swift */; };
+		E593CF3F1C1929540076A8B0 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593CF3D1C1929540076A8B0 /* User.swift */; };
 		E5D96AF81BFB1CA700AFAFEE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D96AF71BFB1CA700AFAFEE /* AppDelegate.swift */; };
 		E5D96AFF1BFB1CA700AFAFEE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5D96AFD1BFB1CA700AFAFEE /* Main.storyboard */; };
 		E5D96B011BFB1CA700AFAFEE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5D96B001BFB1CA700AFAFEE /* Assets.xcassets */; };
@@ -78,10 +84,11 @@
 		E52E8AA81C0BDB18000391AB /* HostMapViewController+UITableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HostMapViewController+UITableViewDataSource.swift"; sourceTree = "<group>"; };
 		E52E8AAA1C0C2257000391AB /* HostMapViewController+UISearchBarDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HostMapViewController+UISearchBarDelegate.swift"; sourceTree = "<group>"; };
 		E52E8AAE1C0D056D000391AB /* MessageThreadsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageThreadsTableViewController.swift; sourceTree = "<group>"; };
-		E52E8AB01C0D0B1A000391AB /* MessageThreadTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageThreadTableViewCell.swift; sourceTree = "<group>"; };
-		E52E8AB21C0D0C57000391AB /* MessageThread.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageThread.swift; sourceTree = "<group>"; };
+		E52E8AB01C0D0B1A000391AB /* MessageThreadsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageThreadsTableViewCell.swift; sourceTree = "<group>"; };
 		E52E8AB41C0D0DDC000391AB /* MessageThreadsTableViewController+WSRequestAlerts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadsTableViewController+WSRequestAlerts.swift"; sourceTree = "<group>"; };
-		E52E8AB61C0D180C000391AB /* MessageParticipant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageParticipant.swift; sourceTree = "<group>"; };
+		E52E8ABD1C0E463D000391AB /* Warmshowers.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Warmshowers.xcdatamodel; sourceTree = "<group>"; };
+		E52E8AC71C0E4A46000391AB /* MessageThread+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThread+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E52E8AC81C0E4A46000391AB /* MessageThread.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageThread.swift; sourceTree = "<group>"; };
 		E54A572A1BFD664A000843A9 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		E54A572E1BFDC446000843A9 /* WSRequests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSRequests.swift; sourceTree = "<group>"; };
 		E54A57301BFE6FB2000843A9 /* WSURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSURL.swift; sourceTree = "<group>"; };
@@ -93,6 +100,11 @@
 		E56CC08B1BFD2EC300AAF973 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		E56CC08F1BFD496400AAF973 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		E56CC0911BFD569500AAF973 /* SwitchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchTableViewCell.swift; sourceTree = "<group>"; };
+		E573D1711C0E5F5C004C3BFC /* Message+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E573D1721C0E5F5C004C3BFC /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		E573D1791C0E6106004C3BFC /* LoginViewController+WSRequestAlerts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LoginViewController+WSRequestAlerts.swift"; sourceTree = "<group>"; };
+		E593CF3C1C1929540076A8B0 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E593CF3D1C1929540076A8B0 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E5D96AF41BFB1CA700AFAFEE /* Warmshowers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Warmshowers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5D96AF71BFB1CA700AFAFEE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E5D96AFE1BFB1CA700AFAFEE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -163,10 +175,15 @@
 		E54A57321BFE82F9000843A9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E52E8ABC1C0E463D000391AB /* Warmshowers.xcdatamodeld */,
+				E573D1711C0E5F5C004C3BFC /* Message+CoreDataProperties.swift */,
+				E573D1721C0E5F5C004C3BFC /* Message.swift */,
+				E52E8AC71C0E4A46000391AB /* MessageThread+CoreDataProperties.swift */,
+				E52E8AC81C0E4A46000391AB /* MessageThread.swift */,
 				E54A57331BFE830C000843A9 /* WSUser.swift */,
 				E51397661C06945E00FD8EC1 /* WSUserLocation.swift */,
-				E52E8AB21C0D0C57000391AB /* MessageThread.swift */,
-				E52E8AB61C0D180C000391AB /* MessageParticipant.swift */,
+				E593CF3C1C1929540076A8B0 /* User+CoreDataProperties.swift */,
+				E593CF3D1C1929540076A8B0 /* User.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -183,13 +200,23 @@
 		E54A573A1C026D96000843A9 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				E573D17B1C0E617C004C3BFC /* TabBarController */,
+				E573D1781C0E609C004C3BFC /* LoginViewController */,
+				E573D1771C0E6065004C3BFC /* SettingsTableViewController */,
+				E573D1761C0E5FD4004C3BFC /* MessageThreadsTableView */,
+				E573D1751C0E5FC8004C3BFC /* HostMapViewController */,
 				E56CC0911BFD569500AAF973 /* SwitchTableViewCell.swift */,
-				E5D96B271BFC493B00AFAFEE /* LoginViewController.swift */,
-				E56CC0891BFD22D800AAF973 /* HostMapViewController.swift */,
-				E56CC08B1BFD2EC300AAF973 /* TabBarController.swift */,
-				E56CC08F1BFD496400AAF973 /* SettingsTableViewController.swift */,
+				E54A57321BFE82F9000843A9 /* Model */,
 				E54A57631C03E4A4000843A9 /* AccountTableViewController.swift */,
 				E52E8A9A1C0BCD03000391AB /* HostSearchController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		E573D1751C0E5FC8004C3BFC /* HostMapViewController */ = {
+			isa = PBXGroup;
+			children = (
+				E56CC0891BFD22D800AAF973 /* HostMapViewController.swift */,
 				E52E8A9C1C0BD1C6000391AB /* HostMapViewController+WSRequestAlerts.swift */,
 				E52E8A9E1C0BD25A000391AB /* HostMapViewController+MKMapViewDelegate.swift */,
 				E52E8AA01C0BD38D000391AB /* HostMapViewController+UISearchControllerDelegate.swift */,
@@ -198,11 +225,43 @@
 				E52E8AA61C0BDAE9000391AB /* HostMapViewController+UITableViewDelegate.swift */,
 				E52E8AA81C0BDB18000391AB /* HostMapViewController+UITableViewDataSource.swift */,
 				E52E8AAA1C0C2257000391AB /* HostMapViewController+UISearchBarDelegate.swift */,
-				E52E8AAE1C0D056D000391AB /* MessageThreadsTableViewController.swift */,
-				E52E8AB01C0D0B1A000391AB /* MessageThreadTableViewCell.swift */,
-				E52E8AB41C0D0DDC000391AB /* MessageThreadsTableViewController+WSRequestAlerts.swift */,
 			);
-			name = "View Controllers";
+			name = HostMapViewController;
+			sourceTree = "<group>";
+		};
+		E573D1761C0E5FD4004C3BFC /* MessageThreadsTableView */ = {
+			isa = PBXGroup;
+			children = (
+				E52E8AAE1C0D056D000391AB /* MessageThreadsTableViewController.swift */,
+				E52E8AB41C0D0DDC000391AB /* MessageThreadsTableViewController+WSRequestAlerts.swift */,
+				E52E8AB01C0D0B1A000391AB /* MessageThreadsTableViewCell.swift */,
+			);
+			name = MessageThreadsTableView;
+			sourceTree = "<group>";
+		};
+		E573D1771C0E6065004C3BFC /* SettingsTableViewController */ = {
+			isa = PBXGroup;
+			children = (
+				E56CC08F1BFD496400AAF973 /* SettingsTableViewController.swift */,
+			);
+			name = SettingsTableViewController;
+			sourceTree = "<group>";
+		};
+		E573D1781C0E609C004C3BFC /* LoginViewController */ = {
+			isa = PBXGroup;
+			children = (
+				E5D96B271BFC493B00AFAFEE /* LoginViewController.swift */,
+				E573D1791C0E6106004C3BFC /* LoginViewController+WSRequestAlerts.swift */,
+			);
+			name = LoginViewController;
+			sourceTree = "<group>";
+		};
+		E573D17B1C0E617C004C3BFC /* TabBarController */ = {
+			isa = PBXGroup;
+			children = (
+				E56CC08B1BFD2EC300AAF973 /* TabBarController.swift */,
+			);
+			name = TabBarController;
 			sourceTree = "<group>";
 		};
 		E5D96AEB1BFB1CA700AFAFEE = {
@@ -236,7 +295,6 @@
 				E54A573A1C026D96000843A9 /* View Controllers */,
 				E54A57391C026D56000843A9 /* HTTPClient */,
 				E54A57371BFEC531000843A9 /* SpinnerView.swift */,
-				E54A57321BFE82F9000843A9 /* Model */,
 				E5D96AF71BFB1CA700AFAFEE /* AppDelegate.swift */,
 				E5D96AFD1BFB1CA700AFAFEE /* Main.storyboard */,
 				E5D96B001BFB1CA700AFAFEE /* Assets.xcassets */,
@@ -462,27 +520,33 @@
 				E52E8AA11C0BD38D000391AB /* HostMapViewController+UISearchControllerDelegate.swift in Sources */,
 				E56CC0901BFD496400AAF973 /* SettingsTableViewController.swift in Sources */,
 				E52E8AAF1C0D056D000391AB /* MessageThreadsTableViewController.swift in Sources */,
-				E52E8AB11C0D0B1A000391AB /* MessageThreadTableViewCell.swift in Sources */,
+				E52E8AB11C0D0B1A000391AB /* MessageThreadsTableViewCell.swift in Sources */,
 				E52E8A9F1C0BD25A000391AB /* HostMapViewController+MKMapViewDelegate.swift in Sources */,
 				E54A57641C03E4A4000843A9 /* AccountTableViewController.swift in Sources */,
 				E54A57311BFE6FB2000843A9 /* WSURL.swift in Sources */,
+				E52E8ABE1C0E463D000391AB /* Warmshowers.xcdatamodeld in Sources */,
 				E52E8AA91C0BDB18000391AB /* HostMapViewController+UITableViewDataSource.swift in Sources */,
+				E573D1741C0E5F5C004C3BFC /* Message.swift in Sources */,
 				E52E8AA31C0BD3F0000391AB /* HostMapViewController+KPClusteringControllerDelegate.swift in Sources */,
 				E56CC08A1BFD22D800AAF973 /* HostMapViewController.swift in Sources */,
 				E50FD8A21C053A42004D38A3 /* MapTileServerURLTemplate.swift in Sources */,
 				E5D96AF81BFB1CA700AFAFEE /* AppDelegate.swift in Sources */,
+				E573D1731C0E5F5C004C3BFC /* Message+CoreDataProperties.swift in Sources */,
+				E593CF3E1C1929540076A8B0 /* User+CoreDataProperties.swift in Sources */,
 				E52E8AAB1C0C2257000391AB /* HostMapViewController+UISearchBarDelegate.swift in Sources */,
 				E52E8AA71C0BDAE9000391AB /* HostMapViewController+UITableViewDelegate.swift in Sources */,
 				E54A57381BFEC531000843A9 /* SpinnerView.swift in Sources */,
-				E52E8AB31C0D0C57000391AB /* MessageThread.swift in Sources */,
+				E573D17A1C0E6106004C3BFC /* LoginViewController+WSRequestAlerts.swift in Sources */,
 				E56CC0921BFD569500AAF973 /* SwitchTableViewCell.swift in Sources */,
 				E54A57341BFE830C000843A9 /* WSUser.swift in Sources */,
+				E52E8ACA1C0E4A46000391AB /* MessageThread.swift in Sources */,
 				E52E8A9D1C0BD1C6000391AB /* HostMapViewController+WSRequestAlerts.swift in Sources */,
 				E52E8AA51C0BD8BF000391AB /* HostMapViewController+UIUISearchResultsUpdating.swift in Sources */,
 				E54A572F1BFDC446000843A9 /* WSRequests.swift in Sources */,
 				E52E8AB51C0D0DDC000391AB /* MessageThreadsTableViewController+WSRequestAlerts.swift in Sources */,
-				E52E8AB71C0D180C000391AB /* MessageParticipant.swift in Sources */,
+				E52E8AC91C0E4A46000391AB /* MessageThread+CoreDataProperties.swift in Sources */,
 				E52E8A9B1C0BCD03000391AB /* HostSearchController.swift in Sources */,
+				E593CF3F1C1929540076A8B0 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -735,6 +799,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		E52E8ABC1C0E463D000391AB /* Warmshowers.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E52E8ABD1C0E463D000391AB /* Warmshowers.xcdatamodel */,
+			);
+			currentVersion = E52E8ABD1C0E463D000391AB /* Warmshowers.xcdatamodel */;
+			path = Warmshowers.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = E5D96AEC1BFB1CA700AFAFEE /* Project object */;
 }

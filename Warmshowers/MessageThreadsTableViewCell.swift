@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MessageThreadTableViewCell: UITableViewCell {
+class MessageThreadsTableViewCell: UITableViewCell {
     
     // MARK: Properties
     

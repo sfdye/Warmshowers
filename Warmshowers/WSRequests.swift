@@ -21,6 +21,8 @@ class WSRequest {
     
     let session = NSURLSession.init(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
     
+    let defaults = (UIApplication.sharedApplication().delegate as! AppDelegate).defaults
+    
     
     // MARK: - Error handlers
     

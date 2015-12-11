@@ -11,7 +11,7 @@ import UIKit
 let USERNAME = "ws_username"
 let PASSWORD = "ws_password"
 
-class LoginViewController: UIViewController, WSRequestAlert {
+class LoginViewController: UIViewController {
     
     // MARK: Properties
     
@@ -20,7 +20,7 @@ class LoginViewController: UIViewController, WSRequestAlert {
     @IBOutlet weak var passwordTextField: UITextField!
     
     // Reference to the app delegate for changing views after login
-    weak var appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
+    weak var appDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate)
     
     // A http client for making the login request
     let httpClient = WSRequest()
@@ -90,11 +90,13 @@ class LoginViewController: UIViewController, WSRequestAlert {
     // MARK: - Utility functions
     
     func storeUsername() {
+        let defaults = appDelegate!.defaults
         defaults.setValue(usernameTextField.text, forKey: USERNAME)
         defaults.synchronize()
     }
     
     func storePassword() {
+        let defaults = appDelegate!.defaults
         defaults.setValue(passwordTextField.text, forKey: PASSWORD)
         defaults.synchronize()
     }
@@ -112,30 +114,5 @@ class LoginViewController: UIViewController, WSRequestAlert {
         }
         
     }
-    
-    // MARK: - WSRequestAlert Delegate functions
-    
-    func requestAlert(title: String, message: String) {
-        
-        guard alertController == nil else {
-            return
-        }
-
-        alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        if alertController != nil {
-            alertController!.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
-            self.presentViewController(alertController!, animated: true, completion: { () -> Void in self.alertController = nil})
-        }
-    }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

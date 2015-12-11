@@ -1,15 +1,14 @@
 //
-//  HostMapViewController+WSRequestAlerts.swift
+//  LoginViewController+WSRequestAlerts.swift
 //  Warmshowers
 //
-//  Created by Rajan Fernandez on 30/11/15.
+//  Created by Rajan Fernandez on 2/12/15.
 //  Copyright © 2015 Rajan Fernandez. All rights reserved.
 //
 
 import Foundation
 
-
-extension HostMapViewController: WSRequestAlert {
+extension LoginViewController : WSRequestAlert {
     
     // MARK: - WSRequestAlert Delegate functions
     
@@ -19,13 +18,13 @@ extension HostMapViewController: WSRequestAlert {
             return
         }
         
-        alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
         if alertController != nil {
-            alertController?.addAction(UIAlertAction(title: "Dismiss", style: .Default, handler: { (action) -> Void in
+            alertController?.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: { (action) -> Void in
                 self.alertController = nil
             }))
             self.presentViewController(alertController!, animated: true, completion: nil)
         }
     }
-    
+
 }

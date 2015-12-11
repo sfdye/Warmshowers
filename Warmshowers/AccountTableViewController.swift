@@ -16,7 +16,7 @@ class AccountTableViewController: UITableViewController, WSRequestAlert {
     
     let httpClient = WSRequest()
     
-    weak var appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
+    weak var appDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate)
     
     var alertController: UIAlertController?
 
@@ -70,6 +70,7 @@ class AccountTableViewController: UITableViewController, WSRequestAlert {
             httpClient.logout({ (success) -> Void in
                 if success {
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        let defaults = self.appDelegate!.defaults
                         defaults.setObject(nil, forKey: PASSWORD)
                         defaults.setObject(nil, forKey: SESSION_COOKIE)
                         self.appDelegate?.showLoginScreen()
