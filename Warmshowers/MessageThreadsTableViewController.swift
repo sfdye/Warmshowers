@@ -15,6 +15,9 @@ class MessageThreadsTableViewController: UITableViewController {
     
     let MESSAGE_THREAD_CELL_ID = "MessageThreadCell"
     
+    let defaults = NSUserDefaults.standardUserDefaults()
+    var currentUserUID: Int? = nil
+    
     let httpClient = WSRequest()
     var alertController: UIAlertController?
     
@@ -30,6 +33,9 @@ class MessageThreadsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // get the uid of the user
+        currentUserUID = Int(defaults.stringForKey(DEFAULTS_KEY_UID)!)
         
         // Allows the http client to diplay alerts through this view controller
         httpClient.alertViewController = self
@@ -58,8 +64,8 @@ class MessageThreadsTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier(MESSAGE_THREAD_CELL_ID, forIndexPath: indexPath) as! MessageThreadsTableViewCell
         
         let messageThread = messageThreads[indexPath.row]
-
-        cell.participants.text = messageThread.getParticipantString()
+        
+        cell.participants.text = messageThread.getParticipantString(currentUserUID)
         cell.subject.text = messageThread.subject
         cell.message.text = ""
         

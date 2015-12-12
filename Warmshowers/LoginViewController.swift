@@ -8,8 +8,8 @@
 
 import UIKit
 
-let USERNAME = "ws_username"
-let PASSWORD = "ws_password"
+let DEFAULTS_KEY_USERNAME = "ws_username"
+let DEFAULTS_KEY_PASSWORD = "ws_password"
 
 class LoginViewController: UIViewController {
     
@@ -39,7 +39,7 @@ class LoginViewController: UIViewController {
         
         // load the default username
         let defaults = NSUserDefaults.standardUserDefaults()
-        if let username = defaults.objectForKey(USERNAME) {
+        if let username = defaults.objectForKey(DEFAULTS_KEY_USERNAME) {
             usernameTextField.text = username as? String
         }
         
@@ -91,13 +91,13 @@ class LoginViewController: UIViewController {
     
     func storeUsername() {
         let defaults = appDelegate!.defaults
-        defaults.setValue(usernameTextField.text, forKey: USERNAME)
+        defaults.setValue(usernameTextField.text, forKey: DEFAULTS_KEY_USERNAME)
         defaults.synchronize()
     }
     
     func storePassword() {
         let defaults = appDelegate!.defaults
-        defaults.setValue(passwordTextField.text, forKey: PASSWORD)
+        defaults.setValue(passwordTextField.text, forKey: DEFAULTS_KEY_PASSWORD)
         defaults.synchronize()
     }
     

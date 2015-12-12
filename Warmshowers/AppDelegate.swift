@@ -23,7 +23,8 @@ import CoreData
 // Key constants
 let LOGIN_VC_ID = "Login"
 let TABBAR_VC_ID = "TabBar"
-let SESSION_COOKIE = "ws_session_cookie"
+let DEFAULTS_KEY_SESSION_COOKIE = "ws_session_cookie"
+let DEFAULTS_KEY_UID = "ws_uid"
 
 // Error types
 enum DataError : ErrorType {
@@ -81,7 +82,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Checks if the user is logged in
     func isLoggedin() -> Bool {
-        if defaults.objectForKey(SESSION_COOKIE) != nil {
+        if defaults.objectForKey(DEFAULTS_KEY_SESSION_COOKIE) != nil {
             return true
         }
         return false

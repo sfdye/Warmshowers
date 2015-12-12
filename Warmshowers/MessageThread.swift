@@ -60,7 +60,7 @@ class MessageThread: NSManagedObject {
     
     // Returns a string of the message thread participant names
     //
-    func getParticipantString() -> String {
+    func getParticipantString(currentUserUID: Int?) -> String {
         
         guard let users = participants?.allObjects else {
             return ""
@@ -69,12 +69,21 @@ class MessageThread: NSManagedObject {
         var pString = ""
         for user in users {
             if let participant = user as? User {
+                
+                // Omit the current user from the participants string
+                if currentUserUID != nil && participant.uid == currentUserUID {
+                    continue
+                }
+                
                 if pString != "" {
                     pString += ", "
                 }
                 if let name = participant.fullname {
                     pString += name
                 }
+                
+            } else {
+                print("Cast error")
             }
         }
         

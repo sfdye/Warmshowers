@@ -71,8 +71,8 @@ class AccountTableViewController: UITableViewController, WSRequestAlert {
                 if success {
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         let defaults = self.appDelegate!.defaults
-                        defaults.setObject(nil, forKey: PASSWORD)
-                        defaults.setObject(nil, forKey: SESSION_COOKIE)
+                        defaults.setObject(nil, forKey: DEFAULTS_KEY_PASSWORD)
+                        defaults.setObject(nil, forKey: DEFAULTS_KEY_SESSION_COOKIE)
                         self.appDelegate?.showLoginScreen()
                     })
                 }

@@ -58,12 +58,6 @@ class HostMapViewController: UIViewController {
         // Allows the http client to diplay alerts through this view controller
         httpClient.alertViewController = self
         
-        // Ask the users permission to use location services
-        if CLLocationManager.authorizationStatus() == .NotDetermined {
-            locationManager.requestWhenInUseAuthorization()
-        }
-        mapView.showsUserLocation = true
-        
         // Set up the navigation bar
         self.cancelButton.target = self
         self.cancelButton.action = Selector("cancelButtonPressed")
@@ -80,6 +74,16 @@ class HostMapViewController: UIViewController {
         clusteringController = KPClusteringController(mapView: self.mapView, clusteringAlgorithm: algorithm)
         clusteringController.delegate = self
         clusteringController.setAnnotations(hosts)
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        // Ask the users permission to use location services
+        if CLLocationManager.authorizationStatus() == .NotDetermined {
+            locationManager.requestWhenInUseAuthorization()
+        }
+        mapView.showsUserLocation = true
         
     }
     

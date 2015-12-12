@@ -13,6 +13,12 @@ protocol WSRequestAlert {
     func requestAlert(title: String, message: String)
 }
 
+enum HttpRequestError : ErrorType {
+    case NoSessionCookie
+    case NoCSRFToken
+    case JSONSerialisationFailure
+}
+
 class WSRequest {
     
     let LIMIT: Int = 1000
@@ -26,25 +32,25 @@ class WSRequest {
     
     // MARK: - Error handlers
     
-    // General error handler
-    func errorAlert(error: NSError) {
-        if alertViewController != nil {
-            self.alert("Error", message: error.localizedDescription)
-        }
-    }
-    
-    // Checks for http errors
-    func hasHTTPError(response: NSURLResponse) -> Bool {
-        
-        let httpResponse = response as! NSHTTPURLResponse
-        
-        if httpResponse.statusCode >= 400 {
-            return true
-        } else {
-            return false
-        }
-
-    }
+//    // General error handler
+//    func errorAlert(error: NSError) {
+//        if alertViewController != nil {
+//            self.alert("Error", message: error.localizedDescription)
+//        }
+//    }
+//    
+//    // Checks for http errors
+//    func hasHTTPError(response: NSURLResponse) -> Bool {
+//        
+//        let httpResponse = response as! NSHTTPURLResponse
+//        
+//        if httpResponse.statusCode >= 400 {
+//            return true
+//        } else {
+//            return false
+//        }
+//
+//    }
     
     // Checks for CSRF failure message
     func hasFailedCSRF(data: NSData) -> Bool {
@@ -55,7 +61,6 @@ class WSRequest {
             if json.count == 1 {
                 let responseBody = json.objectAtIndex(0) as? String
                 if responseBody?.lowercaseString.rangeOfString("csrf validation failed") != nil {
-                    print("Failed CSRF.")
                     return true
                 }
             }
@@ -66,66 +71,69 @@ class WSRequest {
         
     }
     
-    // Handles http error codes
-    func httpErrorAlert(data: NSData?, response: NSURLResponse) {
-        
-        let httpResponse = response as! NSHTTPURLResponse
-        let statusCode = httpResponse.statusCode
-        let title = "HTTP " + String(statusCode)
-        var message: String = ""
-        
-        if data != nil {
-            do {
-                let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [])
-                let response = json.objectAtIndex(0) as? String
-                if response != nil {
-                    message = response!
-                }
-            } catch {
-            }
-        }
-        
-        if alertViewController != nil {
-            self.alert(title, message: message)
-        }
-    }
+    //
     
-    // Displays general errors, returns false if there were no errors
-    func responseHasError(data: NSData?, response: NSURLResponse?, error: NSError?, silent: Bool = false) -> Bool {
-        
-        if error != nil {
-            
-            // An error occured
-            if !silent {
-                self.errorAlert(error!)
-            }
-            return true
-            
-        } else if response == nil {
-            
-            // No response
-            if !silent {
-                self.alert("Network Error", message: "No response")
-            }
-            return true
-            
-        }
-        
-        return false
-    }
+//    // Handles http error codes
+//    func httpErrorAlert(data: NSData?, response: NSURLResponse) {
+//        
+//        let httpResponse = response as! NSHTTPURLResponse
+//        let statusCode = httpResponse.statusCode
+//        let title = "HTTP " + String(statusCode)
+//        var message: String = ""
+//        
+//        if data != nil {
+//            do {
+//                let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [])
+//                let response = json.objectAtIndex(0) as? String
+//                if response != nil {
+//                    message = response!
+//                }
+//            } catch {
+//            }
+//        }
+//        
+//        if alertViewController != nil {
+//            self.alert(title, message: message)
+//        }
+//    }
     
-    // Gets the delegate view controller to show a pop up alert
-    func alert(title: String, message: String) {
-        dispatch_async(dispatch_get_main_queue(), {
-            self.alertViewController!.requestAlert(title, message: message)
-        })
-    }
+//    // Displays general errors, returns false if there were no errors
+//    func responseHasError(data: NSData?, response: NSURLResponse?, error: NSError?, silent: Bool = false) -> Bool {
+//        
+//        if error != nil {
+//            
+//            // An error occured
+//            if !silent {
+//                self.errorAlert(error!)
+//            }
+//            return true
+//            
+//        } else if response == nil {
+//            
+//            // No response
+//            if !silent {
+//                self.alert("Network Error", message: "No response")
+//            }
+//            return true
+//            
+//        }
+//        
+//        return false
+//    }
+    
+//    // Gets the delegate view controller to show a pop up alert
+//    func alert(title: String, message: String) {
+//        dispatch_async(dispatch_get_main_queue(), {
+//            self.alertViewController!.requestAlert(title, message: message)
+//        })
+//    }
 
     
     // MARK: - HTTP Request utilities
     
-    // Create a request
-    func makeRequest(url: NSURL, type: String, params: [String: String]? = nil, token: String? = nil) -> NSMutableURLRequest {
+    // Creates a request
+    //
+    func makeRequest(url: NSURL, type: String, params: [String: String]? = nil, token: String? = nil) -> NSMutableURLRequest? {
         
         let request = NSMutableURLRequest.init()
         request.URL = url
@@ -139,109 +147,113 @@ class WSRequest {
         
         if (request.URL != WSURL.LOGIN()) && (request.URL != WSURL.TOKEN()) {
             
-            let sessionCookie = defaults.objectForKey(SESSION_COOKIE) as? String
-            
-            if sessionCookie != nil {
-                request.addValue(sessionCookie!, forHTTPHeaderField: "Cookie")
+            // Add the session cookie to the header.
+            if let sessionCookie = defaults.objectForKey(DEFAULTS_KEY_SESSION_COOKIE) as? String {
+                request.addValue(sessionCookie, forHTTPHeaderField: "Cookie")
             } else {
-                print("Could not add session cookie to the request.")
+                print("Failed to add session cookie to request header")
+                return nil
             }
-
+            
+            // Add the CSRF token to the header.
             if token != nil {
                 request.addValue(token!, forHTTPHeaderField: "X-CSRF-Token")
             } else {
-                print("Could not add a X-CSRF token to the request.")
+                print("Failed to add X-CSRF toke to request header")
+                return nil
             }
             
         }
         
+        // Add the request parameters to the request body
         if params != nil {
             request.setBodyContent(params!)
         }
         
         return request
-        
     }
     
-    // General request function
+    // Executes a general http request
+    //
     func dataRequest(request: NSMutableURLRequest, doWithResponse: (NSData?, NSURLResponse?, NSError?) -> Void) {
-        
+        print(request)
         let task = self.session.dataTaskWithRequest(request, completionHandler: doWithResponse)
-        
         task.resume()
-        
     }
     
-    // For making requests that require a X_CSRF token in the header
-    func requestWithCSRFToken(url: NSURL, type: String, params: [String: String]? = nil, retry: Bool = false, doWithResponse: (NSData?, NSURLResponse?, NSError?) -> Void) {
+    // Requests a X-CSRF Token from the server
+    //
+    func tokenRequest(doWithToken: (token: String) -> Void) -> Void {
         
-        // get a X-CSRF Token from warmshowers.org
-        let tokenRequest = makeRequest(WSURL.TOKEN(), type: "GET")
-        dataRequest(tokenRequest) { (tokenData, response, error) -> Void in
+        if let tokenRequest = makeRequest(WSURL.TOKEN(), type: "GET") {
             
-            // Check the response for errors
-            if !self.responseHasError(tokenData, response: response, error: error, silent: retry) {
+            dataRequest(tokenRequest) { (tokenData, response, error) -> Void in
                 
-                // Decode the token and make the actual request
+                if error != nil {
+                    print("Error getting X-CSRF token")
+                    return
+                }
+                
                 if let token = String.init(data: tokenData!, encoding: NSUTF8StringEncoding) {
-                    
-                    let request = self.makeRequest(url, type: type, params: params, token: token)
-                    
-                    if !retry {
-                        print("Making final request to \(request.URL!) with token \(token)")
-                    } else {
-                        print("Making a request to \(request.URL!) with token \(token)")
-                    }
-                    
-                    self.dataRequest(request, doWithResponse: { (data, response, error) -> Void in
-                        
-                        // Check the response for errors
-                        if !self.responseHasError(data, response: response, error: error, silent: retry) {
-                            
-                            // Check for CSRF failure and retry if needed
-                            if self.hasFailedCSRF(data!) && retry {
-                                
-                                // Login again and retry (if it is not a logout request)
-                                print("Logging in again to retry the request")
-                                if request.URL != WSURL.LOGOUT() {
-                                    
-                                    self.autologin({ () -> Void in
-                                        
-                                        print("Retrying the request")
-                                        self.requestWithCSRFToken(url, type: type, params: params, retry: false, doWithResponse: { (data, response, error) -> Void in
-                                            
-                                            // Check the response for errors
-                                            if !self.responseHasError(tokenData, response: response, error: error) {
-                                                
-                                                // Sucessful retry
-                                                doWithResponse(data, response, error)
-                                                
-                                            }
-                                            
-                                            
-                                        })
-                                    })
-                                    
-                                } else {
-                                    // Continue with the logout
-                                    doWithResponse(data, response, error)
-                                }
-                                
-                            } else {
-                                // Successful first attempt or unsuccessful final attempt
-                                doWithResponse(data, response, error)
-                                
-                            }
-                            
-                        }
-                    })
-
+                    doWithToken(token: token)
                 } else {
                     print("Could not decode token data")
                 }
-                
             }
         }
+    }
+    
+    // Makes requests with a X-CSRF token in the header
+    //
+    func requestWithCSRFToken(url: NSURL, type: String, params: [String: String]? = nil, retry: Bool = false, doWithResponse: (NSData?, NSURLResponse?, NSError?) -> Void) {
+        
+        // Request a X-CSRF token from the server
+        tokenRequest { (token) -> Void in
+
+            if let request = self.makeRequest(url, type: type, params: params, token: token) {
+
+                self.dataRequest(request, doWithResponse: { (data, response, error) -> Void in
+                    
+                    // Check for CSRF failure and retry if needed
+                    if self.hasFailedCSRF(data!) && (request.URL != WSURL.LOGOUT()) && retry {
+                        
+                        // Login again to get a new session cookie
+                        self.autoLogin({ () -> Void in
+                            
+                            // Retry the request.
+                            self.requestWithCSRFToken(url, type: type, params: params, retry: false, doWithResponse: { (data, response, error) -> Void in
+                                
+                                    // Return final response for handling
+                                    doWithResponse(data, response, error)
+                            })
+                        })
+                        
+                    } else {
+                        
+                        // Return the successful first response or error for handling
+                        doWithResponse(data, response, error)
+                    }
+                    
+                })
+            }
+        }
+    }
+    
+    // Processes the response from a login request and returns true for a successful login
+    func autoProcessLoginResponse(data: NSData?, response: NSURLResponse?, error: NSError?) -> Bool {
+        
+        if error != nil {
+            print("Auto-login failed due to an error")
+        }
+        
+        if data != nil {
+            if let json = self.jsonDataToDictionary(data) {
+                self.storeSessionData(json)
+                return true
+            }
+        }
+        
+        return false
     }
     
     
@@ -250,59 +262,55 @@ class WSRequest {
     func login(username: String, password: String, doAfterLogin: (success: Bool) -> Void) {
 
         let params = ["username" : username, "password" : password]
-        let request = self.makeRequest(WSURL.LOGIN(), type: "POST", params: params)
-        dataRequest(request, doWithResponse: { (data, response, error) -> Void in
-            
-            print("Received login response")
-            
-            if self.hasHTTPError(response!) {
-                
-                // Got a response, but with a HTTP error
-                self.httpErrorAlert(data, response: response!)
-                
-            } else if data != nil {
-
-                if let json = self.jsonDataToDictionary(data) {
-                    
-                    self.storeSessionCookie(json)
-                    doAfterLogin(success: true)
-                    
-                }
-                
-            }
-            
-        })
+        if let request = self.makeRequest(WSURL.LOGIN(), type: "POST", params: params) {
+            dataRequest(request, doWithResponse: { (data, response, error) -> Void in
+                let success = self.autoProcessLoginResponse(data, response: response, error: error)
+                doAfterLogin(success: success)
+            })
+        }
     }
 
-    func autologin(doAfterLogin: () -> Void) {
+    func autoLogin(doAfterLogin: () -> Void) {
         
-        let username = defaults.stringForKey(USERNAME)
-        let password = defaults.stringForKey(PASSWORD)
+        let username = defaults.stringForKey(DEFAULTS_KEY_USERNAME)
+        let password = defaults.stringForKey(DEFAULTS_KEY_PASSWORD)
         
         if username != nil && password != nil {
             
-            self.login(username!, password: password!) { (success) -> Void in
+            self.login(username!, password: password!) { (success: Bool) -> Void in
                 if success {
+                    print("Autologin succeeded")
                     doAfterLogin()
                 }
-                // Else: Do nothing. Errors have been handled by self.dataRequest
             }
             
         } else {
-            // Do nothing. Errors will been handled by self.dataRequest on the second attempt
             print("Autologin failed. Username or password not stored yet.")
         }
     }
     
-    func storeSessionCookie(loginData: [String: AnyObject]?) {
+    func storeSessionData(loginData: [String: AnyObject]?) {
         if loginData != nil {
+            
+            // Store the session cookie
             let sessionName = loginData!["session_name"] as? String
             let sessid = loginData!["sessid"] as? String
             if (sessionName != nil) && (sessid != nil) {
                 let sessionCookie = sessionName! + "=" + sessid!
-                defaults.setValue(sessionCookie, forKey: SESSION_COOKIE)
-                defaults.synchronize()
+                defaults.setValue(sessionCookie, forKey: DEFAULTS_KEY_SESSION_COOKIE)
+                
             }
+            
+            // Store the users uid
+            if let user = loginData!["user"] {
+                if let uid = user["uid"] {
+                    defaults.setValue(uid, forKey: DEFAULTS_KEY_UID)
+                }
+            }
+            
+            // Save the session data
+            defaults.synchronize()
+            
         }
     }
     
