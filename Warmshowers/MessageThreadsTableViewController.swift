@@ -35,7 +35,7 @@ class MessageThreadsTableViewController: UITableViewController {
         super.viewDidLoad()
         
         // get the uid of the user
-        currentUserUID = Int(defaults.stringForKey(DEFAULTS_KEY_UID)!)
+        // currentUserUID = Int(defaults.stringForKey(DEFAULTS_KEY_UID)!)
         
         // Allows the http client to diplay alerts through this view controller
         httpClient.alertViewController = self
