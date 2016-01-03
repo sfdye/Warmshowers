@@ -9,9 +9,6 @@
 import UIKit
 
 class AvailiblityTableViewCell: UITableViewCell {
-    
-    let WSCOLOR_AVAILIBLE_GREEN = UIColor(red: 1/255, green: 158/255, blue: 60/255, alpha: 1)
-    let WSCOLOR_NOT_AVAILIBLE_RED = UIColor.redColor()
 
     func configureAsCurrentlyAvailible(userInfo: AnyObject?) {
         
@@ -28,10 +25,10 @@ class AvailiblityTableViewCell: UITableViewCell {
         
         if notavailible {
             textLabel?.text = "Unavailible"
-            self.backgroundColor = WSCOLOR_NOT_AVAILIBLE_RED
+            self.backgroundColor = WSCOLOR_RED
         } else {
             textLabel?.text = "Currently Availible"
-            self.backgroundColor = WSCOLOR_AVAILIBLE_GREEN
+            self.backgroundColor = WSCOLOR_GREEN
         }
     }
     

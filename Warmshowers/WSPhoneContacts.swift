@@ -1,5 +1,5 @@
 //
-//  PhoneContacts.swift
+//  WSPhoneContacts.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 1/01/16.
@@ -8,9 +8,9 @@
 
 import Foundation
 
-struct PhoneContacts {
+struct WSPhoneContacts {
     
-    var numbers = [PhoneNumber]()
+    var numbers = [WSPhoneNumber]()
     var count: Int { return numbers.count }
     
     mutating func update(userData: AnyObject?) {
@@ -36,7 +36,7 @@ struct PhoneContacts {
             }
             
             if number != nil {
-                self.numbers.append(PhoneNumber(number: number!, type: type))
+                self.numbers.append(WSPhoneNumber(number: number!, type: type))
             }
         }
     }

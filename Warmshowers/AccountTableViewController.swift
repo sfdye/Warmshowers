@@ -15,13 +15,15 @@ import CoreData
 let IMAGE_CELL_ID = "Photo"
 let AVAILIBLITY_CELL_ID = "Availible"
 let ACCOUNT_DETAIL_CELL_ID = "AccountDetail"
-let FEEDBACK_CELL_ID = "Feedback"
+let FEEDBACK_COUNT_CELL_ID = "FeedbackCount"
 let SEGMENT_CELL_ID = "Segment"
 let ABOUT_CELL_ID = "About"
 let HOSTINGINFO_CELL_ID = "HostingInfo"
 let OFFER_HEADING_CELL_ID = "OfferHeading"
 let OFFER_CELL_ID = "Offer"
 let PHONE_CELL_ID = "Phone"
+
+let FEEDBACK_SEGUE_ID = "ToFeedback"
 
 enum HostProfileTab {
     case About
@@ -36,9 +38,9 @@ class AccountTableViewController: UITableViewController {
     var uid: Int?
     var info: AnyObject?
     var feedback: AnyObject?
-    var hostingInfo: HostingInfo = HostingInfo()
-    var offers: Offers = Offers()
-    var phoneNumbers: PhoneContacts = PhoneContacts()
+    var hostingInfo: WSHostingInfo = WSHostingInfo()
+    var offers: WSOffers = WSOffers()
+    var phoneNumbers: WSPhoneContacts = WSPhoneContacts()
     var user: User?
     var photo: UIImage?
     
@@ -87,24 +89,12 @@ class AccountTableViewController: UITableViewController {
 
             // Get the users profile
             httpClient.getUserInfo(uid!, doWithUserInfo: { (info) -> Void in
-                if info != nil {
-                    self.updateWithUserInfo(info!)
-                    // Parse the profile data
-                    let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-                    dispatch_async(queue, { () -> Void in
-                        self.saveUserInfo(info!)
-                    })
-                }
+                self.updateWithUserInfo(info)
             })
             
             // Get the users feedback
             httpClient.getUserFeedback(uid!, doWithUserFeedback: { (feedback) -> Void in
-                self.feedback = feedback
-                if feedback != nil {
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 1, inSection: 2)], withRowAnimation: UITableViewRowAnimation.Automatic)
-                    })
-                }
+                self.updateWithFeedback(feedback)
             })
             
         } else {
@@ -117,11 +107,28 @@ class AccountTableViewController: UITableViewController {
     }
     
     func updateWithUserInfo(info: AnyObject?) {
-        self.info = info
-        print(info)
-        self.offers.update(info)
-        self.hostingInfo.update(info)
-        self.phoneNumbers.update(info)
+        if let info = info {
+            self.info = info
+            print(info)
+            self.offers.update(info)
+            self.hostingInfo.update(info)
+            self.phoneNumbers.update(info)
+            // Parse the profile data
+            let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+            dispatch_async(queue, { () -> Void in
+                self.saveUserInfo(info)
+            })
+        }
+    }
+    
+    func updateWithFeedback(feedback: AnyObject?) {
+        if let feedback = feedback {
+            self.feedback = feedback
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 2)], withRowAnimation: UITableViewRowAnimation.Automatic)
+            })
+        }
+        
     }
     
     func userIsLoggedIn() -> Bool {
@@ -333,6 +340,9 @@ class AccountTableViewController: UITableViewController {
 //        print("running")
 //    }
     
+    
+    // MARK: Tableview Delegate
+    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let cell = tableView.cellForRowAtIndexPath(indexPath)
@@ -340,8 +350,6 @@ class AccountTableViewController: UITableViewController {
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
         }
     }
-    
-    // MARK: Tableview Delegate
     
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return CGFloat.min
@@ -373,21 +381,29 @@ class AccountTableViewController: UITableViewController {
         }
     }
 
+    // MARK: Navigation
     
-    // MARK: - WSRequestAlert Delegate functions
-    
-    func requestAlert(title: String, message: String) {
-        
-        guard alertController == nil else {
-            return
-        }
-        
-        alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        if alertController != nil {
-            alertController!.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
-            self.presentViewController(alertController!, animated: true, completion: { () -> Void in self.alertController = nil})
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == FEEDBACK_SEGUE_ID {
+            let feedbackVC = segue.destinationViewController as! FeedbackTableViewController
+            feedbackVC.parseFeedbackJSON(self.feedback)
         }
     }
+    
+//    // MARK: - WSRequestAlert Delegate functions
+//    
+//    func requestAlert(title: String, message: String) {
+//        
+//        guard alertController == nil else {
+//            return
+//        }
+//        
+//        alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+//        if alertController != nil {
+//            alertController!.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
+//            self.presentViewController(alertController!, animated: true, completion: { () -> Void in self.alertController = nil})
+//        }
+//    }
     
     // MARK: Utilities
     
@@ -431,5 +447,7 @@ class AccountTableViewController: UITableViewController {
         navigationItem.title = user!.fullname
         tableView.reloadData()
     }
+    
+    
 
 }

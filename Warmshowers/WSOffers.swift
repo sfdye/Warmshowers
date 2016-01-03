@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Offers {
+struct WSOffers {
     
     var allValues = [Bool](count: 8, repeatedValue: false)
     var stringValues: [String] = [

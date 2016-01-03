@@ -16,7 +16,7 @@ class PhoneTableViewCell: UITableViewCell {
     @IBOutlet var messageIcon: UIImageView!
     
     // Configures the table view cell for a given phone number object
-    func setWithPhoneNumber(phoneNumber: PhoneNumber) {
+    func setWithPhoneNumber(phoneNumber: WSPhoneNumber) {
         phoneNumberLabel.text = phoneNumber.number
         numberTypeLabel.text = phoneNumber.description
         switch phoneNumber.type {

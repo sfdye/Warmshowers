@@ -1,5 +1,5 @@
 //
-//  PhoneNumber.swift
+//  WSPhoneNumber.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 1/01/16.
@@ -14,7 +14,7 @@ enum PhoneNumberType: Int {
     case Work
 }
 
-struct PhoneNumber {
+struct WSPhoneNumber {
     
     var number: String
     var type: PhoneNumberType

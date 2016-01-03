@@ -26,6 +26,11 @@ let TABBAR_VC_ID = "TabBar"
 let DEFAULTS_KEY_SESSION_COOKIE = "ws_session_cookie"
 let DEFAULTS_KEY_UID = "ws_uid"
 
+// Colors
+let WSCOLOR_GREEN = UIColor(red: 1/255, green: 158/255, blue: 60/255, alpha: 1)
+let WSCOLOR_RED = UIColor.redColor()
+let WSCOLOR_ORANGE = UIColor.orangeColor()
+
 // Error types
 enum DataError : ErrorType {
     case InvalidInput

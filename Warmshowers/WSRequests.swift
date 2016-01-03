@@ -270,6 +270,7 @@ class WSRequest {
     }
     
     // Retrieves an image
+    //
     func getImageWithURL(url: String, doWithImage: (image: UIImage?) -> Void ) {
         
         if let url = NSURL(string: url) {
@@ -282,6 +283,8 @@ class WSRequest {
                 if data != nil {
                     let image = UIImage(data: data!)
                     doWithImage(image: image)
+                } else {
+                    print("Image request failed for url \(request.URL)")
                 }
             })
         }
@@ -406,6 +409,23 @@ class WSRequest {
                     let userObject = self.jsonDataToJSONObject(data)
                     doWithUserInfo(info: userObject)
                 }
+            }
+        }
+    }
+    
+    // To get the thumbnail size profile image of a user with their uid
+    //
+    func getUserThumbnailImage(uid: Int, doWithImage: (image: UIImage?) -> Void) {
+        
+        getUserInfo(uid) { (info) -> Void in
+            if info != nil {
+                if let url = info?.valueForKey("profile_image_map_infoWindow") as? String {
+                    self.getImageWithURL(url, doWithImage: { (image) -> Void in
+                        doWithImage(image: image)
+                    })
+                }
+            } else {
+                print("Failed to get user object for thumbnail image request")
             }
         }
     }

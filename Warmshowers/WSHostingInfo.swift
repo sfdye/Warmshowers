@@ -1,5 +1,5 @@
 //
-//  HostingInfo.swift
+//  WSHostingInfo.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 1/01/16.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct HostingInfo {
+struct WSHostingInfo {
     
     var titleValues: [String] = [
         "Maximum Guests",
