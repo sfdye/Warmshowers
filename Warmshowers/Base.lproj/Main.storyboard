@@ -828,7 +828,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="139.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="PhoneIcon" translatesAutoresizingMaskIntoConstraints="NO" id="WYB-Zl-Hi8">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="ThumbnailPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="WYB-Zl-Hi8">
                                             <rect key="frame" x="16" y="16" width="65" height="61"/>
                                             <animations/>
                                             <constraints>
@@ -952,5 +952,6 @@
         <image name="PhoneIcon" width="22" height="22"/>
         <image name="SettingsBarButtonIcon" width="25" height="25"/>
         <image name="SettingsBarButtonIconSelected" width="25" height="25"/>
+        <image name="ThumbnailPlaceholder" width="50" height="50"/>
     </resources>
 </document>
