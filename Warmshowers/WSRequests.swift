@@ -30,7 +30,7 @@ class WSRequest {
     let defaults = (UIApplication.sharedApplication().delegate as! AppDelegate).defaults
     
     
-    // MARK: - Error handlers
+    // MARK: - Error checkers/handlers
     
 //    // General error handler
 //    func errorAlert(error: NSError) {
@@ -133,19 +133,11 @@ class WSRequest {
     
     // Creates a request
     //
-    func makeRequest(url: NSURL, type: String, params: [String: String]? = nil, token: String? = nil) -> NSMutableURLRequest? {
+    func buildRequest(service: WSRestfulService, params: [String: String]? = nil, token: String? = nil) -> NSMutableURLRequest? {
         
-        let request = NSMutableURLRequest.init()
-        request.URL = url
-        request.HTTPMethod = type
+        let request = NSMutableURLRequest.withWSRestfulService(service)
         
-        if request.URL == WSURL.TOKEN() {
-            request.addValue("text/plain", forHTTPHeaderField: "Accept")
-        } else {
-            request.addValue("application/json", forHTTPHeaderField: "Accept")
-        }
-        
-        if (request.URL != WSURL.LOGIN()) && (request.URL != WSURL.TOKEN()) {
+        if (service.type != .login) && (service.method != .get) {
             
             // Add the session cookie to the header.
             if let sessionCookie = defaults.objectForKey(DEFAULTS_KEY_SESSION_COOKIE) as? String {
@@ -159,7 +151,7 @@ class WSRequest {
             if token != nil {
                 request.addValue(token!, forHTTPHeaderField: "X-CSRF-Token")
             } else {
-                print("Failed to add X-CSRF toke to request header")
+                print("Failed to add X-CSRF token to request header")
                 return nil
             }
             
@@ -181,11 +173,31 @@ class WSRequest {
         task.resume()
     }
     
+    // Checks a request response and evaluates if retrying the request (after logging in again) is neccessary
+    //
+    func shouldRetryRequest(data: NSData?, response: NSURLResponse?, error: NSError?) -> Bool {
+    
+        // CSRF Failure
+        if self.hasFailedCSRF(data!) {
+            return true
+        }
+        
+        // http failure codes
+        let httpResponse = response as! NSHTTPURLResponse
+        // 403: Forbidden -> need to re-login and try again
+        if httpResponse.statusCode == 403 {
+            return true
+        }
+        
+        return false
+        
+    }
+    
     // Requests a X-CSRF Token from the server
     //
     func tokenRequest(doWithToken: (token: String) -> Void) -> Void {
         
-        if let tokenRequest = makeRequest(WSURL.TOKEN(), type: "GET") {
+        if let tokenRequest = buildRequest(WSRestfulService(type: .token)!) {
             
             dataRequest(tokenRequest) { (tokenData, response, error) -> Void in
                 
@@ -205,23 +217,23 @@ class WSRequest {
     
     // Makes requests with a X-CSRF token in the header
     //
-    func requestWithCSRFToken(url: NSURL, type: String, params: [String: String]? = nil, retry: Bool = false, doWithResponse: (NSData?, NSURLResponse?, NSError?) -> Void) {
+    func requestWithCSRFToken(service: WSRestfulService, params: [String: String]? = nil, retry: Bool = false, doWithResponse: (NSData?, NSURLResponse?, NSError?) -> Void) {
         
         // Request a X-CSRF token from the server
         tokenRequest { (token) -> Void in
 
-            if let request = self.makeRequest(url, type: type, params: params, token: token) {
+            if let request = self.buildRequest(service, params: params, token: token) {
 
                 self.dataRequest(request, doWithResponse: { (data, response, error) -> Void in
                     
-                    // Check for CSRF failure and retry if needed
-                    if self.hasFailedCSRF(data!) && (request.URL != WSURL.LOGOUT()) && retry {
-                        
+                    // Retry the request if neccessary
+                    if self.shouldRetryRequest(data, response: response, error: error) && (request.URL != WSURL.LOGOUT()) && retry {
+
                         // Login again to get a new session cookie
                         self.autoLogin({ () -> Void in
                             
                             // Retry the request.
-                            self.requestWithCSRFToken(url, type: type, params: params, retry: false, doWithResponse: { (data, response, error) -> Void in
+                            self.requestWithCSRFToken(service, params: params, retry: false, doWithResponse: { (data, response, error) -> Void in
                                 
                                     // Return final response for handling
                                     doWithResponse(data, response, error)
@@ -240,6 +252,7 @@ class WSRequest {
     }
     
     // Processes the response from a login request and returns true for a successful login
+    //
     func autoProcessLoginResponse(data: NSData?, response: NSURLResponse?, error: NSError?) -> Bool {
         
         if error != nil {
@@ -256,20 +269,42 @@ class WSRequest {
         return false
     }
     
+    // Retrieves an image
+    func getImageWithURL(url: String, doWithImage: (image: UIImage?) -> Void ) {
+        
+        if let url = NSURL(string: url) {
+            
+            let request = NSMutableURLRequest.init()
+            request.URL = url
+            request.HTTPMethod = "GET"
+            
+            dataRequest(request, doWithResponse: { (data, response, error) -> Void in
+                if data != nil {
+                    let image = UIImage(data: data!)
+                    doWithImage(image: image)
+                }
+            })
+        }
+    }
+    
     
     // MARK: - Warmshowers RESTful API requests
     
+    // Login request that takes a new username and password
+    //
     func login(username: String, password: String, doAfterLogin: (success: Bool) -> Void) {
 
         let params = ["username" : username, "password" : password]
-        if let request = self.makeRequest(WSURL.LOGIN(), type: "POST", params: params) {
+        if let request = self.buildRequest(WSRestfulService(type: .login)!, params: params) {
             dataRequest(request, doWithResponse: { (data, response, error) -> Void in
                 let success = self.autoProcessLoginResponse(data, response: response, error: error)
                 doAfterLogin(success: success)
             })
         }
     }
-
+    
+    // To login automatically using a saved username and password
+    //
     func autoLogin(doAfterLogin: () -> Void) {
         
         let username = defaults.stringForKey(DEFAULTS_KEY_USERNAME)
@@ -289,6 +324,180 @@ class WSRequest {
         }
     }
     
+    // Logout of warmshowers
+    //
+    func logout(doWithLogoutResponse: (success: Bool) -> Void) {
+        
+        let service = WSRestfulService(type: .logout)!
+
+        requestWithCSRFToken(service, doWithResponse : { (data, response, error) -> Void in
+            
+            if let json = self.jsonDataToJSONObject(data!) {
+                
+                print("Logout request responded with: \(json)")
+                doWithLogoutResponse(success: true)
+                return
+                
+            } else {
+                
+                let httpResponse = response as! NSHTTPURLResponse
+                print("Logout request responded with: \(httpResponse)")
+                if httpResponse.statusCode == 406 {
+                    // http 406: unauthorized. The user was already logged out
+                    doWithLogoutResponse(success: true)
+                    return
+                }
+
+            }
+
+            doWithLogoutResponse(success: false)
+
+        })
+    }
+
+    // To search for hosts with a map region
+    //
+    func getHostDataForMapView(map: MKMapView, withHostData: (data: NSData?) -> Void) {
+        
+        let service = WSRestfulService(type: .searchByLocation)!
+        var params = map.getWSMapRegion()
+        params["limit"] = String(LIMIT)
+        
+        requestWithCSRFToken(service, params: params, retry: true, doWithResponse: { (data, response, error) -> Void in
+
+            withHostData(data: data)
+            
+        })
+    }
+    
+    // To search for hosts with a keyword
+    //
+    func getHostDataForKeyword(keyword: String, offset: Int = 0, withHostData: (data: NSData?) -> Void) {
+        
+        let service = WSRestfulService(type: .searchByKeyword)!
+        var params = [String: String]()
+        params["keyword"] = keyword
+        params["offset"] = String(offset)
+        params["limit"] = String(LIMIT)
+        
+        requestWithCSRFToken(service, params: params, retry: true, doWithResponse: { (data, response, error) -> Void in
+            
+            withHostData(data: data)
+            
+        })
+    }
+    
+    // To get a users info with their uid
+    //
+    func getUserInfo(uid: Int, doWithUserInfo: (info: AnyObject?) -> Void) {
+        
+        let service = WSRestfulService(type: .userInfo, uid: uid)!
+        
+        if let request = buildRequest(service) {
+            
+            dataRequest(request) { (data, response, error) -> Void in
+                
+                if error != nil {
+                    print("Error getting user info")
+                    return
+                }
+                
+                if data != nil {
+                    let userObject = self.jsonDataToJSONObject(data)
+                    doWithUserInfo(info: userObject)
+                }
+            }
+        }
+    }
+    
+    // To get feedback on a user
+    //
+    func getUserFeedback(uid: Int, doWithUserFeedback: (feedback: AnyObject?) -> Void) {
+        
+        let service = WSRestfulService(type: .userFeedback, uid: uid)!
+        
+        if let request = buildRequest(service) {
+        
+            dataRequest(request) { (data, response, error) -> Void in
+
+                if error != nil {
+                    print("Error getting user feedback")
+                    return
+                }
+                
+                if data != nil {
+                    let userFeedback = self.jsonDataToJSONObject(data)
+                    doWithUserFeedback(feedback: userFeedback)
+                }
+            }
+        }
+    }
+    
+    // To create feedback on a user
+    //
+    
+    
+    // To send a new message
+    //
+    
+    
+    // To reply to a existing message
+    //
+
+    
+    // To get a count of unread messages
+    //
+    func getUnreadMessagesCount(withCount: (count: Int?) -> Void) {
+        
+        let service = WSRestfulService(type: .unreadMessageCount)!
+        
+        requestWithCSRFToken(service, retry: true, doWithResponse: { (data, response, error) -> Void in
+            
+            if data != nil {
+                let count = self.intFromJSONData(data)
+                withCount(count: count)
+            }
+        })
+    }
+
+    // To get all message threads
+    //
+    func getAllMessageThreads(withMessageThreadData: (data: NSData?) -> Void) {
+        
+        let service = WSRestfulService(type: .getAllMessageThreads)!
+        
+        requestWithCSRFToken(service, retry: true, doWithResponse: { (data, response, error) -> Void in
+            
+                withMessageThreadData(data: data)
+            
+        })
+    }
+    
+    // To get a single message thread
+    //
+    func getMessageThread(threadID: Int, withMessageThreadData: (data: NSData?) -> Void) {
+        
+        let service = WSRestfulService(type: .getMessageThread)!
+        var params = [String: String]()
+        params["thread_id"] = String(threadID)
+        
+        requestWithCSRFToken(service, params: params, retry: true, doWithResponse: { (data, response, error) -> Void in
+            
+            withMessageThreadData(data: data)
+            
+        })
+    }
+
+    
+    // To mark a message thread as read or unread
+    //
+    
+    
+    
+    // MARK: - Utilities
+    
+    // Stores a session name and cookie obtained from login
+    //
     func storeSessionData(loginData: [String: AnyObject]?) {
         if loginData != nil {
             
@@ -314,70 +523,8 @@ class WSRequest {
         }
     }
     
-    func logout(doWithLogoutResponse: (success: Bool) -> Void) {
-
-        requestWithCSRFToken(WSURL.LOGOUT(), type: "POST", doWithResponse : { (data, response, error) -> Void in
-            
-            if let json = self.jsonDataToJSONObject(data!) {
-                
-                print("Logout request responded with: \(json)")
-                doWithLogoutResponse(success: true)
-                return
-                
-            } else {
-                
-                let httpResponse = response as! NSHTTPURLResponse
-                print("Logout request responded with: \(httpResponse)")
-                if httpResponse.statusCode == 406 {
-                    // http 406: unauthorized. The user was already logged out
-                    doWithLogoutResponse(success: true)
-                    return
-                }
-
-            }
-
-            doWithLogoutResponse(success: false)
-
-        })
-    }
-
-    // To update a map with annotations marking warmshowers member locations
-    func getHostDataForMapView(map: MKMapView, withHostData: (data: NSData?) -> Void) {
-        
-        let params = map.getWSMapRegion(LIMIT)
-        
-        requestWithCSRFToken(WSURL.LOCATION_SEARCH() , type: "POST", params: params, retry: true, doWithResponse: { (data, response, error) -> Void in
-
-            withHostData(data: data)
-            
-        })
-    }
-    
-    // To get a count of unread messages
-    func getUnreadMessagesCount(withCount: (count: Int?) -> Void) {
-        
-        requestWithCSRFToken(WSURL.UNREAD_MESSAGE_COUNT() , type: "POST", retry: true, doWithResponse: { (data, response, error) -> Void in
-            
-            if data != nil {
-                let count = self.intFromJSONData(data)
-                withCount(count: count)
-            }
-        })
-    }
-
-    // To get all message threads
-    func getMessageThreads(withMessageThreadData: (data: NSData?) -> Void) {
-        
-        requestWithCSRFToken(WSURL.GET_ALL_MESSAGES() , type: "POST", retry: true, doWithResponse: { (data, response, error) -> Void in
-            
-                withMessageThreadData(data: data)
-            
-        })
-    }
-    
-    // MARK: - Utilities
-    
     // Convert NSData to a json dictionary
+    //
     func jsonDataToJSONObject(data: NSData?) -> AnyObject? {
         
         if data != nil {
@@ -393,6 +540,8 @@ class WSRequest {
         return nil
     }
     
+    // Convert NSData to a dictionary
+    //
     func jsonDataToDictionary(data: NSData?) -> [String: AnyObject]? {
         
         if let jsonDict = self.jsonDataToJSONObject(data) as? [String: AnyObject] {
@@ -402,8 +551,8 @@ class WSRequest {
         
     }
     
-    
-    
+    // Checks if JSON data contains just an integer and returns it (or nil)
+    //
     func intFromJSONData(data: NSData?) -> Int? {
         
         if let json = jsonDataToJSONObject(data) {
@@ -418,8 +567,11 @@ class WSRequest {
 }
     
 // To create NSMutableRequests with a dictionary of post parameters
+//
 extension NSMutableURLRequest {
     
+    // To convert a dictionary of post parameters into a parameter string and sets the string as the http body
+    //
     func setBodyContent(params: [String: String]) {
         
         var requestBodyAsString = ""
@@ -440,10 +592,30 @@ extension NSMutableURLRequest {
         
     }
     
+    // Initialises a NSMutableURLRequest for a particular Warmshowers Restful service
+    //
+    class func withWSRestfulService(service: WSRestfulService) -> NSMutableURLRequest {
+        
+        let request = NSMutableURLRequest.init()
+        request.URL = service.url
+        request.HTTPMethod = service.methodAsString
+        
+        if service.type == .token {
+            request.addValue("text/plain", forHTTPHeaderField: "Accept")
+        } else {
+            request.addValue("application/json", forHTTPHeaderField: "Accept")
+        }
+        
+        return request
+    }
+    
 }
 
 extension MKMapView {
     
+    // Returns the current coordinate limits of a mapview
+    // Used for getting hosts in the current displayed region in getHostDataForMapView
+    //
     func getWSMapRegion(limit: Int = 100) -> [String: String] {
         
         let region = self.region
@@ -454,8 +626,7 @@ extension MKMapView {
             "minlon": String(region.center.longitude - region.span.longitudeDelta / Double(2)),
             "maxlon": String(region.center.longitude + region.span.longitudeDelta / Double(2)),
             "centerlat": String(region.center.latitude),
-            "centerlon": String(region.center.longitude),
-            "limit": String(limit)
+            "centerlon": String(region.center.longitude)
         ]
         
         return regionLimits

@@ -10,6 +10,10 @@ import Foundation
 import MapKit
 import Contacts
 
+enum WSUserLocationError: ErrorType {
+    case InvalidInput
+}
+
 class WSUserLocation : NSObject, MKAnnotation {
     
     var city: String? = nil
@@ -22,67 +26,71 @@ class WSUserLocation : NSObject, MKAnnotation {
     var province: String? = nil
     var profile_image_map_infoWindow: String? = nil
     var street: String? = nil
-    var uid: Int? = nil
+    var uid: Int
     
-    init(coordinate: CLLocationCoordinate2D) {
-        self.coordinate = coordinate
+    override init() {
+        coordinate = CLLocationCoordinate2D()
+        uid = 0
     }
     
     // initialises a WSUserLocation instance with json data
-    class func initWithObject(userData: AnyObject) -> WSUserLocation? {
-        
-        let lat = userData.valueForKey("latitude")?.doubleValue
-        let lon = userData.valueForKey("longitude")?.doubleValue
-        if lat == nil || lon == nil {
-            return nil
-        }
-        
-        let user = WSUserLocation.init(coordinate: CLLocationCoordinate2D.init(latitude: lat!, longitude: lon!))
-        
-        user.uid = userData.valueForKey("uid")?.integerValue
+    convenience init?(userData: AnyObject) {
+        self.init()
         
         // At a minimum, the object must have a uid, latitude and longitude
-        if user.uid == nil {
-            print("here")
-            return nil
+        guard let lat = userData.valueForKey("latitude")?.doubleValue,
+            let lon = userData.valueForKey("longitude")?.doubleValue,
+            let uid = userData.valueForKey("uid")?.integerValue
+            else {
+                return nil
         }
         
-        user.city = userData.valueForKey("city")?.stringValue
-        user.country = userData.valueForKey("country")?.stringValue
-        user.distance = userData.valueForKey("distance")?.doubleValue
-        user.fullname = userData.valueForKey("fullname")?.stringValue
-        user.name = userData.valueForKey("name")?.stringValue
-        user.notcurrentlyavailable = userData.valueForKey("notcurrentlyavailable")?.boolValue
-        user.province = userData.valueForKey("province")?.stringValue
-        user.profile_image_map_infoWindow = userData.valueForKey("profile_image_map_infoWindow")?.stringValue
-        user.street = userData.valueForKey("street")?.stringValue
+        self.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+        self.uid = uid
         
-        return user
-
+        if let data = userData as? NSDictionary {
+            city = data.valueForKey("city") as? String
+            country = data.valueForKey("country") as? String
+            distance = data.valueForKey("distance")?.doubleValue
+            fullname = data.valueForKey("fullname") as? String
+            name = data.valueForKey("name") as? String
+            notcurrentlyavailable = userData.valueForKey("notcurrentlyavailable")?.boolValue
+            province = userData.valueForKey("province") as? String
+            profile_image_map_infoWindow = userData.valueForKey("profile_image_map_infoWindow") as? String
+            street = userData.valueForKey("street") as? String
+        }
+        
     }
     
     
     // MARK: - MKAnnotation protocol methods
     
     var title: String? {
-        return self.fullname
+        return fullname
     }
     
     var subtitle: String? {
         
         var subtitle: String? = ""
-        
-        if self.city != nil {
-            subtitle! += self.city!
+            
+        if distance != nil {
+            subtitle! += String(format: "within %.0f metres", arguments: [distance!])
+//            if (city != nil) || (country != nil) {
+//                subtitle! += " at "
+//            }
         }
-        
-        if self.country != nil {
-            if subtitle != "" {
-                subtitle! += ", \(self.country!)"
-            } else {
-                subtitle! += self.country!
-            }
-        }
+
+//        if city != nil {
+//            subtitle! += city!
+//        }
+//        
+//        if country != nil {
+//            if subtitle != "" {
+//                subtitle! += ", \(country!)"
+//            } else {
+//                subtitle! += country!
+//            }
+//        }
         
         return subtitle
  

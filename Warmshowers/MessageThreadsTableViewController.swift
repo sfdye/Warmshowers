@@ -15,6 +15,8 @@ class MessageThreadsTableViewController: UITableViewController {
     
     let MESSAGE_THREAD_CELL_ID = "MessageThreadCell"
     
+    @IBOutlet var segmentControl: UISegmentedControl!
+    
     let defaults = NSUserDefaults.standardUserDefaults()
     var currentUserUID: Int? = nil
     
@@ -35,7 +37,7 @@ class MessageThreadsTableViewController: UITableViewController {
         super.viewDidLoad()
         
         // get the uid of the user
-        // currentUserUID = Int(defaults.stringForKey(DEFAULTS_KEY_UID)!)
+        currentUserUID = Int(defaults.stringForKey(DEFAULTS_KEY_UID)!)
         
         // Allows the http client to diplay alerts through this view controller
         httpClient.alertViewController = self
@@ -83,7 +85,7 @@ class MessageThreadsTableViewController: UITableViewController {
     //
     func updateMessageThreads() {
         
-        httpClient.getMessageThreads({ (data) -> Void in
+        httpClient.getAllMessageThreads({ (data) -> Void in
             
             if data != nil {
                 let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
@@ -284,5 +286,25 @@ class MessageThreadsTableViewController: UITableViewController {
 //
 //        return mt
 //    }
+    
+    // MARK: Segment control
 
+    @IBAction func segmentControlDidChange(sender: AnyObject) {
+        
+        let segment = sender as! UISegmentedControl
+        
+        switch segment.selectedSegmentIndex {
+        case 0:
+            print("inbox")
+        case 1:
+            print("sent")
+        case 2:
+            print("all")
+        case 3:
+            print("requests")
+        default:
+            return
+        }
+        
+    }
 }

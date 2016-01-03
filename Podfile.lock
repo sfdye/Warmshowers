@@ -1,19 +1,27 @@
 PODS:
   - kingpin (0.3.1)
+  - MBProgressHUD (0.9.1)
 
 DEPENDENCIES:
   - kingpin (from `https://github.com/itsbonczek/kingpin`)
+  - MBProgressHUD (from `https://github.com/jdg/MBProgressHUD.git`)
 
 EXTERNAL SOURCES:
   kingpin:
     :git: https://github.com/itsbonczek/kingpin
+  MBProgressHUD:
+    :git: https://github.com/jdg/MBProgressHUD.git
 
 CHECKOUT OPTIONS:
   kingpin:
     :commit: 047b764c03bb32f2b379e74730238fe152f5a28c
     :git: https://github.com/itsbonczek/kingpin
+  MBProgressHUD:
+    :commit: 2fbcbae6a28b770a572b8bd08d93f8db23e786a6
+    :git: https://github.com/jdg/MBProgressHUD.git
 
 SPEC CHECKSUMS:
   kingpin: 52bb578006bdeb881db225e6ff1a4228375cbfbf
+  MBProgressHUD: c34da5f231d7c38b8bc9d2cb08f81509d0bea7b0
 
 COCOAPODS: 0.39.0

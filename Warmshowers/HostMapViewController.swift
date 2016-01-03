@@ -7,7 +7,9 @@
 //
 
 import UIKit
+import CoreData
 import MapKit
+import kingpin
 
 // TODOs
 // address this issue (add gps routes to the map)
@@ -33,6 +35,9 @@ class HostMapViewController: UIViewController {
     let httpClient = WSRequest()
     var alertController: UIAlertController?
     let locationManager = CLLocationManager()
+    
+    let defaults = (UIApplication.sharedApplication().delegate as! AppDelegate).defaults
+    let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     
     // Map source variables
     var mapSource = MapSource.AppleMaps
@@ -117,8 +122,8 @@ class HostMapViewController: UIViewController {
         if let json = self.httpClient.jsonDataToDictionary(data) {
             if let accounts = json["accounts"] as? NSArray {
                 for account in accounts {
-                    if let user = WSUserLocation.initWithObject(account) {
-                        if !self.userOnMap(user.uid!) {
+                    if let user = WSUserLocation(userData: account) {
+                        if !self.userOnMap(user.uid) {
                             self.hosts.append(user)
                         }
                     }
@@ -186,19 +191,32 @@ class HostMapViewController: UIViewController {
         
     }
     
-    // MARK: Navigation bar item methods
+    // MARK: Navigation methods
     
     func cancelButtonPressed() {
         self.searchBar.resignFirstResponder()
     }
     
     func accountButtonPressed() {
-        let accountTVC = storyboard?.instantiateViewControllerWithIdentifier("AccountNavigationController")
-        if accountTVC != nil {
-            self.presentViewController(accountTVC!, animated: true, completion: nil)
-        }
+        let uid = defaults.integerForKey(DEFAULTS_KEY_UID)
+        showAccount(uid)
     }
     
+    func showAccount(uid: Int) {
+        let accountNC = storyboard?.instantiateViewControllerWithIdentifier("AccountNavigationController") as! UINavigationController
+        let accountTVC = accountNC.viewControllers.first as! AccountTableViewController
+        accountTVC.uid = uid
+        self.presentViewController(accountNC, animated: true, completion: nil)
+    }
+    
+    func showHostList(uids: [Int]) {
+        // TODO: UPDATE TO SEGUE TO A LIST OF HOSTS
+//        let accountNC = storyboard?.instantiateViewControllerWithIdentifier("AccountNavigationController") as! UINavigationController
+//        let accountTVC = accountNC.viewControllers.first as! AccountTableViewController
+//        accountTVC.uid = uid
+//        self.presentViewController(accountNC, animated: true, completion: nil)
+    }
+
     
     // MARK: Utilities
 
@@ -212,5 +230,21 @@ class HostMapViewController: UIViewController {
         }
         return false
     }
+    
+//    func getUserByUID(uid: Int) -> User? {
+//        
+//        let request = NSFetchRequest(entityName: "User")
+//        request.predicate = NSPredicate(format: "uid == %i", uid)
+//        
+//        // Try to find message thread in the store
+//        do {
+//            let user = try moc.executeFetchRequest(request).first as? User
+//            return user
+//        } catch {
+//            print("Failed to find user")
+//            return nil
+////            throw CoreDataError.FailedFetchReqeust
+//        }
+//    }
 
 }

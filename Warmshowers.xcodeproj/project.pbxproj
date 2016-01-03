@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3F819FD0B6D015BCBEF502DE /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B96F22140E248565D85D33D /* libPods.a */; };
 		E50FD8A21C053A42004D38A3 /* MapTileServerURLTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50FD8A11C053A42004D38A3 /* MapTileServerURLTemplate.swift */; };
 		E51397671C06945E00FD8EC1 /* WSUserLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51397661C06945E00FD8EC1 /* WSUserLocation.swift */; };
 		E52E8A9B1C0BCD03000391AB /* HostSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8A9A1C0BCD03000391AB /* HostSearchController.swift */; };
@@ -41,6 +40,13 @@
 		E573D17A1C0E6106004C3BFC /* LoginViewController+WSRequestAlerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E573D1791C0E6106004C3BFC /* LoginViewController+WSRequestAlerts.swift */; };
 		E593CF3E1C1929540076A8B0 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593CF3C1C1929540076A8B0 /* User+CoreDataProperties.swift */; };
 		E593CF3F1C1929540076A8B0 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E593CF3D1C1929540076A8B0 /* User.swift */; };
+		E5967B9F1C3490740037F4B7 /* Offers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967B9E1C3490740037F4B7 /* Offers.swift */; };
+		E5967BA11C35D59C0037F4B7 /* HostingInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967BA01C35D59C0037F4B7 /* HostingInfo.swift */; };
+		E5967BA31C361A9F0037F4B7 /* PhoneTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967BA21C361A9F0037F4B7 /* PhoneTableViewCell.swift */; };
+		E5967BA51C361D2B0037F4B7 /* PhoneContacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967BA41C361D2B0037F4B7 /* PhoneContacts.swift */; };
+		E5967BA71C3620470037F4B7 /* PhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967BA61C3620470037F4B7 /* PhoneNumber.swift */; };
+		E5967BA91C36910C0037F4B7 /* AvailiblityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967BA81C36910C0037F4B7 /* AvailiblityTableViewCell.swift */; };
+		E5967BAB1C38814F0037F4B7 /* WSTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967BAA1C38814F0037F4B7 /* WSTime.swift */; };
 		E5D96AF81BFB1CA700AFAFEE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D96AF71BFB1CA700AFAFEE /* AppDelegate.swift */; };
 		E5D96AFF1BFB1CA700AFAFEE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5D96AFD1BFB1CA700AFAFEE /* Main.storyboard */; };
 		E5D96B011BFB1CA700AFAFEE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5D96B001BFB1CA700AFAFEE /* Assets.xcassets */; };
@@ -48,6 +54,15 @@
 		E5D96B0F1BFB1CA700AFAFEE /* WarmshowersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D96B0E1BFB1CA700AFAFEE /* WarmshowersTests.swift */; };
 		E5D96B1A1BFB1CA700AFAFEE /* WarmshowersUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D96B191BFB1CA700AFAFEE /* WarmshowersUITests.swift */; };
 		E5D96B281BFC493B00AFAFEE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D96B271BFC493B00AFAFEE /* LoginViewController.swift */; };
+		E5F6F30A1C2B36930000A87E /* WSRestfulService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6F3091C2B36930000A87E /* WSRestfulService.swift */; };
+		E5F6F30D1C2FE2770000A87E /* AccountDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6F30C1C2FE2770000A87E /* AccountDetailTableViewCell.swift */; };
+		E5F6F30F1C2FE3360000A87E /* ProfileImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6F30E1C2FE3360000A87E /* ProfileImageTableViewCell.swift */; };
+		E5F6F3111C3122740000A87E /* HostingInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6F3101C3122740000A87E /* HostingInfoTableViewCell.swift */; };
+		E5F6F3131C3124230000A87E /* HostOfferTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6F3121C3124230000A87E /* HostOfferTableViewCell.swift */; };
+		E5F6F3151C313F340000A87E /* SegmentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6F3141C313F340000A87E /* SegmentTableViewCell.swift */; };
+		E5F6F3171C3140BD0000A87E /* AboutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6F3161C3140BD0000A87E /* AboutTableViewCell.swift */; };
+		E5F6F3191C3289060000A87E /* AccountTableViewController+SegmentTableViewCellActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6F3181C3289060000A87E /* AccountTableViewController+SegmentTableViewCellActions.swift */; };
+		F7C27CFBDC875EAEF018DAAC /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A17687885A5BDB7132D6EBF2 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,7 +84,7 @@
 
 /* Begin PBXFileReference section */
 		67B2E52709A5EFB71A7262A4 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		6B96F22140E248565D85D33D /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		A17687885A5BDB7132D6EBF2 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3FB3CCF89A82EEE1EDC2F21 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		E50FD8A11C053A42004D38A3 /* MapTileServerURLTemplate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapTileServerURLTemplate.swift; sourceTree = "<group>"; };
 		E51397661C06945E00FD8EC1 /* WSUserLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSUserLocation.swift; sourceTree = "<group>"; };
@@ -105,6 +120,13 @@
 		E573D1791C0E6106004C3BFC /* LoginViewController+WSRequestAlerts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LoginViewController+WSRequestAlerts.swift"; sourceTree = "<group>"; };
 		E593CF3C1C1929540076A8B0 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E593CF3D1C1929540076A8B0 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		E5967B9E1C3490740037F4B7 /* Offers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Offers.swift; sourceTree = "<group>"; };
+		E5967BA01C35D59C0037F4B7 /* HostingInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostingInfo.swift; sourceTree = "<group>"; };
+		E5967BA21C361A9F0037F4B7 /* PhoneTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneTableViewCell.swift; sourceTree = "<group>"; };
+		E5967BA41C361D2B0037F4B7 /* PhoneContacts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneContacts.swift; sourceTree = "<group>"; };
+		E5967BA61C3620470037F4B7 /* PhoneNumber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneNumber.swift; sourceTree = "<group>"; };
+		E5967BA81C36910C0037F4B7 /* AvailiblityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvailiblityTableViewCell.swift; sourceTree = "<group>"; };
+		E5967BAA1C38814F0037F4B7 /* WSTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSTime.swift; sourceTree = "<group>"; };
 		E5D96AF41BFB1CA700AFAFEE /* Warmshowers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Warmshowers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5D96AF71BFB1CA700AFAFEE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E5D96AFE1BFB1CA700AFAFEE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -118,6 +140,14 @@
 		E5D96B191BFB1CA700AFAFEE /* WarmshowersUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmshowersUITests.swift; sourceTree = "<group>"; };
 		E5D96B1B1BFB1CA700AFAFEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5D96B271BFC493B00AFAFEE /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		E5F6F3091C2B36930000A87E /* WSRestfulService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSRestfulService.swift; sourceTree = "<group>"; };
+		E5F6F30C1C2FE2770000A87E /* AccountDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountDetailTableViewCell.swift; sourceTree = "<group>"; };
+		E5F6F30E1C2FE3360000A87E /* ProfileImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageTableViewCell.swift; sourceTree = "<group>"; };
+		E5F6F3101C3122740000A87E /* HostingInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostingInfoTableViewCell.swift; sourceTree = "<group>"; };
+		E5F6F3121C3124230000A87E /* HostOfferTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostOfferTableViewCell.swift; sourceTree = "<group>"; };
+		E5F6F3141C313F340000A87E /* SegmentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentTableViewCell.swift; sourceTree = "<group>"; };
+		E5F6F3161C3140BD0000A87E /* AboutTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutTableViewCell.swift; sourceTree = "<group>"; };
+		E5F6F3181C3289060000A87E /* AccountTableViewController+SegmentTableViewCellActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AccountTableViewController+SegmentTableViewCellActions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,7 +156,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E56CC0881BFD166200AAF973 /* MapKit.framework in Frameworks */,
-				3F819FD0B6D015BCBEF502DE /* libPods.a in Frameworks */,
+				F7C27CFBDC875EAEF018DAAC /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,7 +189,7 @@
 		D6001CC5D7394753D8ED4DB7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				6B96F22140E248565D85D33D /* libPods.a */,
+				A17687885A5BDB7132D6EBF2 /* Pods.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -175,15 +205,21 @@
 		E54A57321BFE82F9000843A9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				E52E8ABC1C0E463D000391AB /* Warmshowers.xcdatamodeld */,
-				E573D1711C0E5F5C004C3BFC /* Message+CoreDataProperties.swift */,
 				E573D1721C0E5F5C004C3BFC /* Message.swift */,
-				E52E8AC71C0E4A46000391AB /* MessageThread+CoreDataProperties.swift */,
+				E573D1711C0E5F5C004C3BFC /* Message+CoreDataProperties.swift */,
 				E52E8AC81C0E4A46000391AB /* MessageThread.swift */,
+				E52E8AC71C0E4A46000391AB /* MessageThread+CoreDataProperties.swift */,
+				E52E8A9E1C0BD25A000391AB /* HostMapViewController+MKMapViewDelegate.swift */,
+				E593CF3D1C1929540076A8B0 /* User.swift */,
+				E593CF3C1C1929540076A8B0 /* User+CoreDataProperties.swift */,
+				E52E8ABC1C0E463D000391AB /* Warmshowers.xcdatamodeld */,
 				E54A57331BFE830C000843A9 /* WSUser.swift */,
 				E51397661C06945E00FD8EC1 /* WSUserLocation.swift */,
-				E593CF3C1C1929540076A8B0 /* User+CoreDataProperties.swift */,
-				E593CF3D1C1929540076A8B0 /* User.swift */,
+				E5967B9E1C3490740037F4B7 /* Offers.swift */,
+				E5967BA01C35D59C0037F4B7 /* HostingInfo.swift */,
+				E5967BA41C361D2B0037F4B7 /* PhoneContacts.swift */,
+				E5967BA61C3620470037F4B7 /* PhoneNumber.swift */,
+				E5967BAA1C38814F0037F4B7 /* WSTime.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -193,13 +229,15 @@
 			children = (
 				E54A57301BFE6FB2000843A9 /* WSURL.swift */,
 				E54A572E1BFDC446000843A9 /* WSRequests.swift */,
+				E5F6F3091C2B36930000A87E /* WSRestfulService.swift */,
 			);
 			name = HTTPClient;
 			sourceTree = "<group>";
 		};
-		E54A573A1C026D96000843A9 /* View Controllers */ = {
+		E54A573A1C026D96000843A9 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				E5F6F30B1C2FE2360000A87E /* AccountViewController */,
 				E573D17B1C0E617C004C3BFC /* TabBarController */,
 				E573D1781C0E609C004C3BFC /* LoginViewController */,
 				E573D1771C0E6065004C3BFC /* SettingsTableViewController */,
@@ -207,10 +245,9 @@
 				E573D1751C0E5FC8004C3BFC /* HostMapViewController */,
 				E56CC0911BFD569500AAF973 /* SwitchTableViewCell.swift */,
 				E54A57321BFE82F9000843A9 /* Model */,
-				E54A57631C03E4A4000843A9 /* AccountTableViewController.swift */,
 				E52E8A9A1C0BCD03000391AB /* HostSearchController.swift */,
 			);
-			name = "View Controllers";
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 		E573D1751C0E5FC8004C3BFC /* HostMapViewController */ = {
@@ -218,7 +255,6 @@
 			children = (
 				E56CC0891BFD22D800AAF973 /* HostMapViewController.swift */,
 				E52E8A9C1C0BD1C6000391AB /* HostMapViewController+WSRequestAlerts.swift */,
-				E52E8A9E1C0BD25A000391AB /* HostMapViewController+MKMapViewDelegate.swift */,
 				E52E8AA01C0BD38D000391AB /* HostMapViewController+UISearchControllerDelegate.swift */,
 				E52E8AA21C0BD3F0000391AB /* HostMapViewController+KPClusteringControllerDelegate.swift */,
 				E52E8AA41C0BD8BF000391AB /* HostMapViewController+UIUISearchResultsUpdating.swift */,
@@ -291,16 +327,13 @@
 		E5D96AF61BFB1CA700AFAFEE /* Warmshowers */ = {
 			isa = PBXGroup;
 			children = (
-				E50FD8A01C053A24004D38A3 /* Map */,
-				E54A573A1C026D96000843A9 /* View Controllers */,
-				E54A57391C026D56000843A9 /* HTTPClient */,
-				E54A57371BFEC531000843A9 /* SpinnerView.swift */,
 				E5D96AF71BFB1CA700AFAFEE /* AppDelegate.swift */,
-				E5D96AFD1BFB1CA700AFAFEE /* Main.storyboard */,
-				E5D96B001BFB1CA700AFAFEE /* Assets.xcassets */,
-				E5D96B021BFB1CA700AFAFEE /* LaunchScreen.storyboard */,
-				E5D96B051BFB1CA700AFAFEE /* Info.plist */,
-				E52E8A991C071CE8000391AB /* kingpin-Bridging-Header.h */,
+				E54A573A1C026D96000843A9 /* Controllers */,
+				E54A57391C026D56000843A9 /* HTTPClient */,
+				E50FD8A01C053A24004D38A3 /* Map */,
+				E54A57371BFEC531000843A9 /* SpinnerView.swift */,
+				E5F6F3041C28EC780000A87E /* Supporting Files */,
+				E5F6F3031C28EC550000A87E /* Views */,
 			);
 			path = Warmshowers;
 			sourceTree = "<group>";
@@ -321,6 +354,42 @@
 				E5D96B1B1BFB1CA700AFAFEE /* Info.plist */,
 			);
 			path = WarmshowersUITests;
+			sourceTree = "<group>";
+		};
+		E5F6F3031C28EC550000A87E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E5D96AFD1BFB1CA700AFAFEE /* Main.storyboard */,
+				E5D96B021BFB1CA700AFAFEE /* LaunchScreen.storyboard */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		E5F6F3041C28EC780000A87E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E5D96B001BFB1CA700AFAFEE /* Assets.xcassets */,
+				E5D96B051BFB1CA700AFAFEE /* Info.plist */,
+				E52E8A991C071CE8000391AB /* kingpin-Bridging-Header.h */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E5F6F30B1C2FE2360000A87E /* AccountViewController */ = {
+			isa = PBXGroup;
+			children = (
+				E54A57631C03E4A4000843A9 /* AccountTableViewController.swift */,
+				E5F6F30C1C2FE2770000A87E /* AccountDetailTableViewCell.swift */,
+				E5F6F30E1C2FE3360000A87E /* ProfileImageTableViewCell.swift */,
+				E5F6F3101C3122740000A87E /* HostingInfoTableViewCell.swift */,
+				E5F6F3121C3124230000A87E /* HostOfferTableViewCell.swift */,
+				E5F6F3141C313F340000A87E /* SegmentTableViewCell.swift */,
+				E5F6F3161C3140BD0000A87E /* AboutTableViewCell.swift */,
+				E5F6F3181C3289060000A87E /* AccountTableViewController+SegmentTableViewCellActions.swift */,
+				E5967BA21C361A9F0037F4B7 /* PhoneTableViewCell.swift */,
+				E5967BA81C36910C0037F4B7 /* AvailiblityTableViewCell.swift */,
+			);
+			name = AccountViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -514,37 +583,52 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5967BAB1C38814F0037F4B7 /* WSTime.swift in Sources */,
 				E51397671C06945E00FD8EC1 /* WSUserLocation.swift in Sources */,
+				E5F6F3171C3140BD0000A87E /* AboutTableViewCell.swift in Sources */,
+				E5967BA51C361D2B0037F4B7 /* PhoneContacts.swift in Sources */,
 				E5D96B281BFC493B00AFAFEE /* LoginViewController.swift in Sources */,
+				E5F6F3131C3124230000A87E /* HostOfferTableViewCell.swift in Sources */,
 				E56CC08C1BFD2EC300AAF973 /* TabBarController.swift in Sources */,
 				E52E8AA11C0BD38D000391AB /* HostMapViewController+UISearchControllerDelegate.swift in Sources */,
 				E56CC0901BFD496400AAF973 /* SettingsTableViewController.swift in Sources */,
 				E52E8AAF1C0D056D000391AB /* MessageThreadsTableViewController.swift in Sources */,
 				E52E8AB11C0D0B1A000391AB /* MessageThreadsTableViewCell.swift in Sources */,
 				E52E8A9F1C0BD25A000391AB /* HostMapViewController+MKMapViewDelegate.swift in Sources */,
+				E5967B9F1C3490740037F4B7 /* Offers.swift in Sources */,
 				E54A57641C03E4A4000843A9 /* AccountTableViewController.swift in Sources */,
 				E54A57311BFE6FB2000843A9 /* WSURL.swift in Sources */,
 				E52E8ABE1C0E463D000391AB /* Warmshowers.xcdatamodeld in Sources */,
+				E5967BA11C35D59C0037F4B7 /* HostingInfo.swift in Sources */,
 				E52E8AA91C0BDB18000391AB /* HostMapViewController+UITableViewDataSource.swift in Sources */,
 				E573D1741C0E5F5C004C3BFC /* Message.swift in Sources */,
 				E52E8AA31C0BD3F0000391AB /* HostMapViewController+KPClusteringControllerDelegate.swift in Sources */,
+				E5F6F30D1C2FE2770000A87E /* AccountDetailTableViewCell.swift in Sources */,
 				E56CC08A1BFD22D800AAF973 /* HostMapViewController.swift in Sources */,
 				E50FD8A21C053A42004D38A3 /* MapTileServerURLTemplate.swift in Sources */,
+				E5F6F30F1C2FE3360000A87E /* ProfileImageTableViewCell.swift in Sources */,
 				E5D96AF81BFB1CA700AFAFEE /* AppDelegate.swift in Sources */,
 				E573D1731C0E5F5C004C3BFC /* Message+CoreDataProperties.swift in Sources */,
+				E5967BA31C361A9F0037F4B7 /* PhoneTableViewCell.swift in Sources */,
 				E593CF3E1C1929540076A8B0 /* User+CoreDataProperties.swift in Sources */,
 				E52E8AAB1C0C2257000391AB /* HostMapViewController+UISearchBarDelegate.swift in Sources */,
 				E52E8AA71C0BDAE9000391AB /* HostMapViewController+UITableViewDelegate.swift in Sources */,
+				E5F6F3111C3122740000A87E /* HostingInfoTableViewCell.swift in Sources */,
 				E54A57381BFEC531000843A9 /* SpinnerView.swift in Sources */,
 				E573D17A1C0E6106004C3BFC /* LoginViewController+WSRequestAlerts.swift in Sources */,
+				E5F6F3191C3289060000A87E /* AccountTableViewController+SegmentTableViewCellActions.swift in Sources */,
 				E56CC0921BFD569500AAF973 /* SwitchTableViewCell.swift in Sources */,
+				E5F6F3151C313F340000A87E /* SegmentTableViewCell.swift in Sources */,
 				E54A57341BFE830C000843A9 /* WSUser.swift in Sources */,
 				E52E8ACA1C0E4A46000391AB /* MessageThread.swift in Sources */,
+				E5967BA71C3620470037F4B7 /* PhoneNumber.swift in Sources */,
 				E52E8A9D1C0BD1C6000391AB /* HostMapViewController+WSRequestAlerts.swift in Sources */,
 				E52E8AA51C0BD8BF000391AB /* HostMapViewController+UIUISearchResultsUpdating.swift in Sources */,
 				E54A572F1BFDC446000843A9 /* WSRequests.swift in Sources */,
+				E5F6F30A1C2B36930000A87E /* WSRestfulService.swift in Sources */,
 				E52E8AB51C0D0DDC000391AB /* MessageThreadsTableViewController+WSRequestAlerts.swift in Sources */,
 				E52E8AC91C0E4A46000391AB /* MessageThread+CoreDataProperties.swift in Sources */,
+				E5967BA91C36910C0037F4B7 /* AvailiblityTableViewCell.swift in Sources */,
 				E52E8A9B1C0BCD03000391AB /* HostSearchController.swift in Sources */,
 				E593CF3F1C1929540076A8B0 /* User.swift in Sources */,
 			);
@@ -696,6 +780,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.Warmshowers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Warmshowers/kingpin-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -708,6 +793,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.Warmshowers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Warmshowers/kingpin-Bridging-Header.h";
 			};
 			name = Release;
 		};

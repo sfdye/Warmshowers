@@ -8,6 +8,11 @@
 
 import Foundation
 
+enum WSURLError : ErrorType {
+    case InvalidInput
+    case UnrecognisedWSServiceType
+}
+
 // Class to provide URLs for the various warmshowers.org RESTful services
 class WSURL {
     static let sharedInstance = WSURL()
@@ -59,7 +64,7 @@ class WSURL {
     }
     
     // to send a message (but not sending replies to messages)
-    class func SEND_MESSAGE () -> NSURL {
+    class func NEW_MESSAGE () -> NSURL {
         return BASE.URLByAppendingPathComponent("/services/rest/message/send")
     }
     
@@ -74,7 +79,7 @@ class WSURL {
     }
     
     // to get all messages for a user
-    class func GET_ALL_MESSAGES () -> NSURL {
+    class func GET_ALL_MESSAGE_THREADS () -> NSURL {
         return BASE.URLByAppendingPathComponent("/services/rest/message/get")
     }
     
@@ -86,6 +91,46 @@ class WSURL {
     // to mark a message thread as read
     class func MARK_REPLY_AS_READ () -> NSURL {
         return BASE.URLByAppendingPathComponent("/services/rest/message/markThreadRead")
+    }
+    
+    class func forServiceType(service: WSRestfulServiceType, uid: Int? = nil) throws -> NSURL {
+        
+        switch service {
+        case .token:
+            return WSURL.TOKEN()
+        case .login:
+            return WSURL.LOGIN()
+        case .logout:
+            return WSURL.LOGOUT()
+        case .searchByLocation:
+            return WSURL.LOCATION_SEARCH()
+        case .searchByKeyword:
+            return WSURL.KEYWORD_SEARCH()
+        case .userInfo:
+            guard let uid = uid else {
+                throw WSURLError.InvalidInput
+            }
+            return WSURL.USER_INFO(uid)
+        case .userFeedback:
+            guard let uid = uid else {
+                throw WSURLError.InvalidInput
+            }
+            return WSURL.USER_FEEDBACK(uid)
+        case .createFeedback:
+            return WSURL.CREATE_FEEDBACK()
+        case .newMessage:
+            return WSURL.NEW_MESSAGE()
+        case .replyToMessage:
+            return WSURL.REPLY_MESSAGE()
+        case .unreadMessageCount:
+            return WSURL.UNREAD_MESSAGE_COUNT()
+        case .getAllMessageThreads:
+            return WSURL.GET_ALL_MESSAGE_THREADS()
+        case .getMessageThread:
+            return WSURL.GET_MESSAGE_THREAD()
+        case .markReplyAsRead:
+            return WSURL.MARK_REPLY_AS_READ()
+        }
     }
 
 }

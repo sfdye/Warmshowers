@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 extension HostMapViewController: WSRequestAlert {
     
     // MARK: - WSRequestAlert Delegate functions

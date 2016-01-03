@@ -7,124 +7,372 @@
 //
 
 import UIKit
+import CoreData
 
-let LOGOUT_CELL_ID = "Logout"
+// #759DEB - background blue
+// #304767
 
-class AccountTableViewController: UITableViewController, WSRequestAlert {
+let IMAGE_CELL_ID = "Photo"
+let AVAILIBLITY_CELL_ID = "Availible"
+let ACCOUNT_DETAIL_CELL_ID = "AccountDetail"
+let FEEDBACK_CELL_ID = "Feedback"
+let SEGMENT_CELL_ID = "Segment"
+let ABOUT_CELL_ID = "About"
+let HOSTINGINFO_CELL_ID = "HostingInfo"
+let OFFER_HEADING_CELL_ID = "OfferHeading"
+let OFFER_CELL_ID = "Offer"
+let PHONE_CELL_ID = "Phone"
+
+enum HostProfileTab {
+    case About
+    case Hosting
+    case Contact
+}
+
+class AccountTableViewController: UITableViewController {
     
-    var user: WSUser?
+    let PHOTO_KEY = "profile_image_mobile_profile_photo_std"
+    
+    var uid: Int?
+    var info: AnyObject?
+    var feedback: AnyObject?
+    var hostingInfo: HostingInfo = HostingInfo()
+    var offers: Offers = Offers()
+    var phoneNumbers: PhoneContacts = PhoneContacts()
+    var user: User?
+    var photo: UIImage?
+    
+    var tab: HostProfileTab = .About
+    
+    var actionAlert = UIAlertController()
     
     let httpClient = WSRequest()
+    
+    let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     
     weak var appDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate)
     
     var alertController: UIAlertController?
+    
+    let table: [[[String: AnyObject]]] = [
+        // section 0
+        [
+            ["cellID": IMAGE_CELL_ID, "cellType": ProfileImageTableViewCell.self],
+//            ["cellID": ACCOUNT_DETAIL_CELL_ID],
+//            ["cellID": ACCOUNT_DETAIL_CELL_ID],
+//            ["cellID": FEEDBACK_CELL_ID]
+        ],
+        // section 1
+        [
+            ["cellType": SEGMENT_CELL_ID]
+        ]
+    ]
 
     @IBAction func doneButtonPressed(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    @IBAction func actionButtonPressed(sender: AnyObject) {
+        self.presentViewController(actionAlert, animated: true, completion: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        httpClient.alertViewController = self
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    // MARK: - Table view data source
-
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(LOGOUT_CELL_ID, forIndexPath: indexPath)
-
-        // Configure the cell...
-
-        return cell
-    }
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        navigationItem.title = ""
         
+        configureActions()
         
-        if cell?.reuseIdentifier == LOGOUT_CELL_ID {
-            
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
-            
-            httpClient.logout({ (success) -> Void in
-                if success {
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        let defaults = self.appDelegate!.defaults
-                        defaults.setObject(nil, forKey: DEFAULTS_KEY_PASSWORD)
-                        defaults.setObject(nil, forKey: DEFAULTS_KEY_SESSION_COOKIE)
-                        self.appDelegate?.showLoginScreen()
+        if uid != nil {
+
+            // Get the users profile
+            httpClient.getUserInfo(uid!, doWithUserInfo: { (info) -> Void in
+                if info != nil {
+                    self.updateWithUserInfo(info!)
+                    // Parse the profile data
+                    let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+                    dispatch_async(queue, { () -> Void in
+                        self.saveUserInfo(info!)
                     })
                 }
             })
+            
+            // Get the users feedback
+            httpClient.getUserFeedback(uid!, doWithUserFeedback: { (feedback) -> Void in
+                self.feedback = feedback
+                if feedback != nil {
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 1, inSection: 2)], withRowAnimation: UITableViewRowAnimation.Automatic)
+                    })
+                }
+            })
+            
+        } else {
+            print("No uid")
+        }
+        
+        // configure the tableview
+        tableView.rowHeight = UITableViewAutomaticDimension
+
+    }
+    
+    func updateWithUserInfo(info: AnyObject?) {
+        self.info = info
+        print(info)
+        self.offers.update(info)
+        self.hostingInfo.update(info)
+        self.phoneNumbers.update(info)
+    }
+    
+    func userIsLoggedIn() -> Bool {
+        if let uid = uid {
+            let defaults = self.appDelegate!.defaults
+            let currentUserUID = defaults.valueForKey(DEFAULTS_KEY_UID)?.integerValue
+            if uid == currentUserUID {
+                return true
+            }
+        }
+        return false
+    }
+    
+    func configureActions() {
+        
+        // Common actions
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        actionAlert.addAction(cancelAction)
+        
+        if userIsLoggedIn() {
+            
+            // Options for the current user
+            
+            let logoutAction = UIAlertAction(title: "Logout", style: .Default) { (logoutAction) -> Void in
+                // Logout and return the login screeen
+                self.httpClient.logout({ (success) -> Void in
+                    if success {
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            let defaults = self.appDelegate!.defaults
+                            defaults.setObject(nil, forKey: DEFAULTS_KEY_PASSWORD)
+                            defaults.setObject(nil, forKey: DEFAULTS_KEY_UID)
+                            defaults.setObject(nil, forKey: DEFAULTS_KEY_SESSION_COOKIE)
+                            self.appDelegate?.showLoginScreen()
+                        })
+                    }
+                })
+            }
+            actionAlert.addAction(logoutAction)
+            
+        } else {
+            
+            // Options for any other user
+            
+            let messageAction = UIAlertAction(title: "Send Message", style: .Default) { (messageAction) -> Void in
+                // Present componse message view here
+                print("new message")
+            }
+            actionAlert.addAction(messageAction)
+            let provideFeedbackAction = UIAlertAction(title: "Provide Feedback", style: .Default) { (messageAction) -> Void in
+                // Present componse message view here
+                print("provide feedback")
+            }
+            actionAlert.addAction(provideFeedbackAction)
+            
+        }
+
+    }
+    
+    // Returns the number of feedbacks for the user (or nil if feedback could not be retrieved from the server)
+    func numberOfFeedbacks() -> Int? {
+        if feedback != nil {
+            if let recommendations = feedback!.valueForKey("recommendations") {
+                return recommendations.count
+            }
+        }
+        return nil
+    }
+
+    // MARK: - Tableview Data Source
+
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 4
+    }
+
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+        case 0:
+            return 2
+        case 1:
+            return 3
+        case 2:
+            return 2
+        case 3:
+            switch tab {
+            case .About:
+                return 1
+            case .Hosting:
+                var cells = hostingInfo.count
+                if offers.count > 0 {
+                    cells += 1 + offers.count
+                }
+                return cells
+            case .Contact:
+                return phoneNumbers.count
+            }
+        default:
+            return 0
         }
     }
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        switch indexPath.section {
+        case 0:
+            switch indexPath.row {
+            case 0:
+                // Photo
+                let cell = tableView.dequeueReusableCellWithIdentifier(IMAGE_CELL_ID, forIndexPath: indexPath) as! ProfileImageTableViewCell
+                cell.nameLabel.text = user?.fullname
+                cell.profileImage.image = photo
+                return cell
+            case 1:
+                // Availiblity
+                let cell = tableView.dequeueReusableCellWithIdentifier(AVAILIBLITY_CELL_ID, forIndexPath: indexPath) as! AvailiblityTableViewCell
+                cell.configureAsCurrentlyAvailible(info)
+                return cell
+            default:
+                let cell = UITableViewCell(style: .Default, reuseIdentifier: nil)
+                return cell
+            }
+            
+        case 1:
+            // Account details
+            switch indexPath.row {
+            case 0:
+                // Memeber for ...
+                let cell = tableView.dequeueReusableCellWithIdentifier(ACCOUNT_DETAIL_CELL_ID, forIndexPath: indexPath) as! AccountDetailTableViewCell
+                cell.configureAsMemberFor(info)
+                return cell
+            case 1:
+                // Active ... ago
+                let cell = tableView.dequeueReusableCellWithIdentifier(ACCOUNT_DETAIL_CELL_ID, forIndexPath: indexPath) as! AccountDetailTableViewCell
+                cell.configureAsActiveAgo(info)
+                return cell
+            case 2:
+                // Languages spoken: ...
+                let cell = tableView.dequeueReusableCellWithIdentifier(ACCOUNT_DETAIL_CELL_ID, forIndexPath: indexPath) as! AccountDetailTableViewCell
+                cell.configureAsLanguageSpoken(info)
+                return cell
+            default:
+                let cell = UITableViewCell(style: .Default, reuseIdentifier: nil)
+                return cell
+            }
+        case 2:
+            // Feedback and tab cells
+            switch indexPath.row {
+            case 0:
+                // Feedback
+                let cell = tableView.dequeueReusableCellWithIdentifier(FEEDBACK_CELL_ID, forIndexPath: indexPath)
+                if let nof = self.numberOfFeedbacks() {
+                    cell.textLabel?.text = String(format: "Feedback (%i)", arguments: [nof])
+                } else {
+                    cell.textLabel?.text = "Feedback"
+                }
+                return cell
+            case 1:
+                // Info tabs
+                let cell = tableView.dequeueReusableCellWithIdentifier(SEGMENT_CELL_ID, forIndexPath: indexPath) as! SegmentTableViewCell
+                cell.delegate = self
+                return cell
+            default:
+                let cell = UITableViewCell(style: .Default, reuseIdentifier: nil)
+                return cell
+            }
+        case 3:
+            // Information tabs
+            let row = indexPath.row
+            switch tab {
+            case .About:
+                // About tab
+                let cell = tableView.dequeueReusableCellWithIdentifier(ABOUT_CELL_ID, forIndexPath: indexPath) as! AboutTableViewCell
+                if info != nil {
+                    cell.aboutLabel.text = info!.valueForKey("comments") as? String
+                } else {
+                    cell.aboutLabel.text = nil
+                }
+                return cell
+            case .Hosting:
+                // Hosting tab
+                if row < hostingInfo.count {
+                    let cell = tableView.dequeueReusableCellWithIdentifier(HOSTINGINFO_CELL_ID, forIndexPath: indexPath) as! HostingInfoTableViewCell
+                    cell.title = hostingInfo.titleValues[row]
+                    cell.info = hostingInfo.infoValues[row]
+                    return cell
+                } else if row == hostingInfo.count {
+                    let cell = tableView.dequeueReusableCellWithIdentifier(OFFER_HEADING_CELL_ID, forIndexPath: indexPath)
+                    return cell
+                } else {
+                    let cell = tableView.dequeueReusableCellWithIdentifier(OFFER_CELL_ID, forIndexPath: indexPath) as! HostOfferTableViewCell
+                    cell.offer = offers.offerAtIndex(row - 5)
+                    return cell
+                }
+            case .Contact:
+                // Contact tab
+                let cell = tableView.dequeueReusableCellWithIdentifier(PHONE_CELL_ID, forIndexPath: indexPath) as! PhoneTableViewCell
+                cell.setWithPhoneNumber(phoneNumbers.numbers[row])
+                return cell
+                
+            }
+        default:
+            let cell = UITableViewCell(style: .Default, reuseIdentifier: nil)
+            return cell
+            
+        }
+        
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
+//    func configurePhotoCell() {
+//        print("running")
+//    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        if cell?.reuseIdentifier == SEGMENT_CELL_ID {
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        }
+    }
+    
+    // MARK: Tableview Delegate
+    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return CGFloat.min
+    }
+    
+    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        switch section {
+        case 0:
+            return CGFloat.min
+        case 1:
+            return CGFloat.init(15)
+        case 1:
+            return CGFloat.init(15)
+        case 3:
+            return CGFloat.init(20)
+        default:
+            return CGFloat.min
+        }
+    }
+    
+    override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        switch indexPath.section {
+        case 0:
+            return 400
+        case 1:
+            return 44
+        default:
+            return 44
+        }
+    }
+
     
     // MARK: - WSRequestAlert Delegate functions
     
@@ -139,6 +387,49 @@ class AccountTableViewController: UITableViewController, WSRequestAlert {
             alertController!.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
             self.presentViewController(alertController!, animated: true, completion: { () -> Void in self.alertController = nil})
         }
+    }
+    
+    // MARK: Utilities
+    
+    // Saves user profile data to the store and reloads the view
+    func saveUserInfo(info: AnyObject) {
+        
+        user = NSEntityDescription.insertNewObjectForEntityForName("User", inManagedObjectContext: moc) as? User
+        
+        if user != nil {
+            
+            user!.updateFromJSON(info)
+            
+            // Get the users profile image
+            if let imageURL = info[self.PHOTO_KEY] as? String {
+                httpClient.getImageWithURL(imageURL, doWithImage: { (image) -> Void in
+                    self.photo = image
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+                    })
+                })
+            }
+            
+            // save user to the store
+            do {
+                try moc.save()
+            } catch {
+                print("Could not save MOC.")
+            }
+            
+            // reload the view
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.reload()
+            })
+            
+        }
+    }
+    
+    // Reloads the view
+    func reload() {
+        
+        navigationItem.title = user!.fullname
+        tableView.reloadData()
     }
 
 }

@@ -34,4 +34,12 @@ class User: NSManagedObject {
         self.uid = uid
  
     }
+    
+    func updateFromJSON(json: AnyObject) {
+        
+        self.fullname = json.valueForKey("fullname") as? String
+        self.name = json.valueForKey("name") as? String
+        self.uid = json.valueForKey("uid")?.integerValue
+        
+    }
 }

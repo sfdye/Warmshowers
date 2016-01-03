@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import kingpin
 
 extension HostMapViewController: MKMapViewDelegate {
     
@@ -31,28 +32,38 @@ extension HostMapViewController: MKMapViewDelegate {
         
         var annotationView : MKPinAnnotationView?
         
-        if annotation is KPAnnotation {
-            let a = annotation as! KPAnnotation
+        if let a = annotation as? KPAnnotation {
             
             if a.isCluster() {
-                annotationView = mapView.dequeueReusableAnnotationViewWithIdentifier("cluster") as? MKPinAnnotationView
                 
-                if (annotationView == nil) {
+                // Clustered host map pins
+                if let dequeueView = mapView.dequeueReusableAnnotationViewWithIdentifier("cluster") as? MKPinAnnotationView {
+                    annotationView = dequeueView
+                } else {
                     annotationView = MKPinAnnotationView(annotation: a, reuseIdentifier: "cluster")
+                    
                 }
                 
+                // Purple pins for clusters
                 annotationView!.pinTintColor = UIColor.purpleColor()
             }
                 
             else {
-                annotationView = mapView.dequeueReusableAnnotationViewWithIdentifier("pin") as? MKPinAnnotationView
                 
-                if (annotationView == nil) {
-                    annotationView = MKPinAnnotationView(annotation: a, reuseIdentifier: "pin")
+                // Single host map pins
+                if let dequeuedView = mapView.dequeueReusableAnnotationViewWithIdentifier("pin") as? MKPinAnnotationView {
+                    annotationView = dequeuedView
+                } else {
+                    annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "pin")
                 }
                 
+                // Red pins for single hosts
                 annotationView!.pinTintColor = UIColor.redColor()
             }
+            
+            // Add an accessory button to the annotation
+            let button = UIButton(type: UIButtonType.DetailDisclosure)
+            annotationView?.rightCalloutAccessoryView = button
             
             annotationView!.canShowCallout = true;
         }
@@ -67,29 +78,48 @@ extension HostMapViewController: MKMapViewDelegate {
         mapView.setCenterCoordinate(userLocation , animated: true)
     }
     
-    // Called when a pin is selected
-    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
-        if view.annotation is KPAnnotation {
-            let cluster = view.annotation as! KPAnnotation
-            
-            if cluster.annotations.count > 1 {
-                let region = MKCoordinateRegionMakeWithDistance(cluster.coordinate,
-                    cluster.radius * 2.5,
-                    cluster.radius * 2.5)
-                
-                mapView.setRegion(region, animated: true)
-            }
-        }
-    }
+//    // Called when a pin is selected
+//    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
+//        if view.annotation is KPAnnotation {
+////            let cluster = view.annotation as! KPAnnotation
+//            
+//            // zooms to location
+////            if cluster.annotations.count > 1 {
+////                let region = MKCoordinateRegionMakeWithDistance(cluster.coordinate,
+////                    cluster.radius * 2.5,
+////                    cluster.radius * 2.5)
+////                
+////                mapView.setRegion(region, animated: true)
+////            }
+////        }
+//    }
     
     // Called when the details button on an annotation is pressed
-    //    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView,
-    //        calloutAccessoryControlTapped control: UIControl) {
-    //            let location = view.annotation as! Artwork
-    //            let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
-    //            // convert the location to a MKMapItem object and pass it to the maps app
-    //            location.mapItem().openInMapsWithLaunchOptions(launchOptions)
-    //    }
+    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView,
+        calloutAccessoryControlTapped control: UIControl) {
+            
+            if let kpAnnotation = view.annotation as? KPAnnotation {
+                if view.reuseIdentifier == "cluster" {
+                    
+                    // Show a list of the clustered hosts
+                    var uids: [Int] = []
+                    for annotation in kpAnnotation.annotations {
+                        if let host = annotation as? WSUserLocation {
+                            uids.append(host.uid)
+                        }
+                    }
+                    showHostList(uids)
+                    
+                } else {
+                    
+                    // Show the host profile
+                    if let userLocation = kpAnnotation.annotations.first as? WSUserLocation {
+                        let uid = userLocation.uid
+                        showAccount(uid)
+                    }
+                }
+            }
+    }
     
     // Called when the map view changes
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
