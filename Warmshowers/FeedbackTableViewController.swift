@@ -18,6 +18,7 @@ class FeedbackTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         tableView.rowHeight = UITableViewAutomaticDimension
+        // TODO - update the estimate
         tableView.estimatedRowHeight = 140
     }
     
@@ -49,7 +50,6 @@ class FeedbackTableViewController: UITableViewController {
         }
         
         return cell
-
     }
     
 //    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

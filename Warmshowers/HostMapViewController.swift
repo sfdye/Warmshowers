@@ -122,7 +122,7 @@ class HostMapViewController: UIViewController {
         if let json = self.httpClient.jsonDataToDictionary(data) {
             if let accounts = json["accounts"] as? NSArray {
                 for account in accounts {
-                    if let user = WSUserLocation(userData: account) {
+                    if let user = WSUserLocation(json: account) {
                         if !self.userOnMap(user.uid) {
                             self.hosts.append(user)
                         }

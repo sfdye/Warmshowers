@@ -14,50 +14,56 @@ enum WSUserLocationError: ErrorType {
     case InvalidInput
 }
 
-class WSUserLocation : NSObject, MKAnnotation {
+class WSUserLocation : WSUser, MKAnnotation {
     
     var city: String? = nil
     var country: String? = nil
     var distance: Double? = nil
-    var fullname: String? = nil
     var coordinate: CLLocationCoordinate2D
-    var name: String? = nil
     var notcurrentlyavailable: Bool? = nil
     var province: String? = nil
     var profile_image_map_infoWindow: String? = nil
     var street: String? = nil
-    var uid: Int
     
-    override init() {
-        coordinate = CLLocationCoordinate2D()
-        uid = 0
+    init(fullname: String, name: String, uid: Int, lat: Double, lon: Double) {
+        self.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+        super.init(fullname: fullname, name: name, uid: uid)
+    }
+    
+    init(user: WSUser, location: CLLocationCoordinate2D) {
+        self.coordinate = location
+        super.init(fullname: user.fullname, name: user.name, uid: user.uid)
     }
     
     // initialises a WSUserLocation instance with json data
-    convenience init?(userData: AnyObject) {
-        self.init()
+    init?(json: AnyObject) {
+        
+        self.coordinate = CLLocationCoordinate2D()
+        super.init(fullname: "", name: "", uid: 0)
         
         // At a minimum, the object must have a uid, latitude and longitude
-        guard let lat = userData.valueForKey("latitude")?.doubleValue,
-            let lon = userData.valueForKey("longitude")?.doubleValue,
-            let uid = userData.valueForKey("uid")?.integerValue
+        guard let fullname = json.valueForKey("fullname") as? String,
+              let name = json.valueForKey("name") as? String,
+              let uid = json.valueForKey("laundry")?.integerValue,
+              let lat = json.valueForKey("latitude")?.doubleValue,
+              let lon = json.valueForKey("longitude")?.doubleValue
             else {
                 return nil
         }
         
-        self.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+        self.fullname = fullname
+        self.name = name
         self.uid = uid
+        self.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
         
-        if let data = userData as? NSDictionary {
+        if let data = json as? NSDictionary {
             city = data.valueForKey("city") as? String
             country = data.valueForKey("country") as? String
             distance = data.valueForKey("distance")?.doubleValue
-            fullname = data.valueForKey("fullname") as? String
-            name = data.valueForKey("name") as? String
-            notcurrentlyavailable = userData.valueForKey("notcurrentlyavailable")?.boolValue
-            province = userData.valueForKey("province") as? String
-            profile_image_map_infoWindow = userData.valueForKey("profile_image_map_infoWindow") as? String
-            street = userData.valueForKey("street") as? String
+            notcurrentlyavailable = json.valueForKey("notcurrentlyavailable")?.boolValue
+            province = json.valueForKey("province") as? String
+            profile_image_map_infoWindow = json.valueForKey("profile_image_map_infoWindow") as? String
+            street = json.valueForKey("street") as? String
         }
         
     }

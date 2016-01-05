@@ -36,7 +36,9 @@ class FeedbackTableViewCell: UITableViewCell {
     
     func setDate(date: NSDate) {
         let formatter = NSDateFormatter()
-        formatter.dateStyle = .MediumStyle
+        let template = "ddMMMyyyy"
+        let locale = NSLocale.currentLocale()
+        formatter.dateFormat = NSDateFormatter.dateFormatFromTemplate(template, options: 0, locale: locale)
         dateLabel.text = formatter.stringFromDate(date)
     }
     

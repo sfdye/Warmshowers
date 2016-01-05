@@ -527,7 +527,6 @@ class WSRequest {
             if (sessionName != nil) && (sessid != nil) {
                 let sessionCookie = sessionName! + "=" + sessid!
                 defaults.setValue(sessionCookie, forKey: DEFAULTS_KEY_SESSION_COOKIE)
-                
             }
             
             // Store the users uid

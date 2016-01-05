@@ -19,10 +19,13 @@ import CoreData
 // - facebook integration for finding friends on map
 // - add offline country option: downloads users in one country for offline use for a few days.
 
-
-// Key constants
+// View controller identifiers
 let LOGIN_VC_ID = "Login"
 let TABBAR_VC_ID = "TabBar"
+
+// Defaults keys
+let DEFAULTS_KEY_USERNAME = "ws_username"
+let DEFAULTS_KEY_PASSWORD = "ws_password"
 let DEFAULTS_KEY_SESSION_COOKIE = "ws_session_cookie"
 let DEFAULTS_KEY_UID = "ws_uid"
 
@@ -39,6 +42,7 @@ enum DataError : ErrorType {
 
 enum CoreDataError : ErrorType {
     case FailedFetchReqeust
+    case NotInStore
 }
 
 @UIApplicationMain
@@ -102,6 +106,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Shows the main app with the tab bar
     func showMainApp() {
         self.window?.rootViewController = storyboard.instantiateInitialViewController()
+    }
+    
+    func logout() {
+        
+        // Clear the appropriate defaults
+        defaults.setObject(nil, forKey: DEFAULTS_KEY_PASSWORD)
+        defaults.setObject(nil, forKey: DEFAULTS_KEY_UID)
+        defaults.setObject(nil, forKey: DEFAULTS_KEY_SESSION_COOKIE)
+        
+        // Clear the database
+        // TODO: clear the coredata persistant store
+        
+        // Go to the login screen
+        showLoginScreen()
     }
     
     // MARK: - Core Data stack

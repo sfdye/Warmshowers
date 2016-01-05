@@ -41,7 +41,7 @@ class AccountTableViewController: UITableViewController {
     var hostingInfo: WSHostingInfo = WSHostingInfo()
     var offers: WSOffers = WSOffers()
     var phoneNumbers: WSPhoneContacts = WSPhoneContacts()
-    var user: User?
+    var user: CDWSUser?
     var photo: UIImage?
     
     var tab: HostProfileTab = .About
@@ -157,11 +157,7 @@ class AccountTableViewController: UITableViewController {
                 self.httpClient.logout({ (success) -> Void in
                     if success {
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            let defaults = self.appDelegate!.defaults
-                            defaults.setObject(nil, forKey: DEFAULTS_KEY_PASSWORD)
-                            defaults.setObject(nil, forKey: DEFAULTS_KEY_UID)
-                            defaults.setObject(nil, forKey: DEFAULTS_KEY_SESSION_COOKIE)
-                            self.appDelegate?.showLoginScreen()
+                            self.appDelegate?.logout()
                         })
                     }
                 })
@@ -383,7 +379,16 @@ class AccountTableViewController: UITableViewController {
 
     // MARK: Navigation
     
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+        if identifier == FEEDBACK_SEGUE_ID {
+            return (feedback != nil) ? true : false
+        } else {
+            return true
+        }
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        segue
         if segue.identifier == FEEDBACK_SEGUE_ID {
             let feedbackVC = segue.destinationViewController as! FeedbackTableViewController
             feedbackVC.parseFeedbackJSON(self.feedback)
@@ -410,7 +415,7 @@ class AccountTableViewController: UITableViewController {
     // Saves user profile data to the store and reloads the view
     func saveUserInfo(info: AnyObject) {
         
-        user = NSEntityDescription.insertNewObjectForEntityForName("User", inManagedObjectContext: moc) as? User
+        user = NSEntityDescription.insertNewObjectForEntityForName("CDWSUser", inManagedObjectContext: moc) as? CDWSUser
         
         if user != nil {
             

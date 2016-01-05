@@ -8,9 +8,6 @@
 
 import UIKit
 
-let DEFAULTS_KEY_USERNAME = "ws_username"
-let DEFAULTS_KEY_PASSWORD = "ws_password"
-
 class LoginViewController: UIViewController {
     
     // MARK: Properties

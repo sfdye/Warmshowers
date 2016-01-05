@@ -1,38 +1,38 @@
 //
-//  User.swift
+//  CDWSUser.swift
 //  Warmshowers
 //
-//  Created by Rajan Fernandez on 10/12/15.
-//  Copyright © 2015 Rajan Fernandez. All rights reserved.
+//  Created by Rajan Fernandez on 4/01/16.
+//  Copyright © 2016 Rajan Fernandez. All rights reserved.
 //
 
 import Foundation
 import CoreData
 
-enum MessageParticipantError : ErrorType {
+enum CDWSMessageParticipantError : ErrorType {
     case FailedValueForKey(key: String)
 }
 
-class User: NSManagedObject {
+class CDWSUser: NSManagedObject {
     
     func updateFromMessageParticipantJSON(json: AnyObject) throws {
         
         guard let fullname = json.valueForKey("fullname") as? String else {
-            throw MessageThreadError.FailedValueForKey(key: "count")
+            throw CDWSMessageParticipantError.FailedValueForKey(key: "fullname")
         }
         
         guard let name = json.valueForKey("name") as? String else {
-            throw MessageThreadError.FailedValueForKey(key: "count")
+            throw CDWSMessageParticipantError.FailedValueForKey(key: "name")
         }
         
         guard let uid = json.valueForKey("uid")?.integerValue else {
-            throw MessageThreadError.FailedValueForKey(key: "count")
+            throw CDWSMessageParticipantError.FailedValueForKey(key: "uid")
         }
         
         self.fullname = fullname
         self.name = name
         self.uid = uid
- 
+        
     }
     
     func updateFromJSON(json: AnyObject) {
@@ -42,4 +42,5 @@ class User: NSManagedObject {
         self.uid = json.valueForKey("uid")?.integerValue
         
     }
+    
 }

@@ -1,59 +1,59 @@
 //
-//  MessageThread.swift
+//  CDWSMessageThread.swift
 //  Warmshowers
 //
-//  Created by Rajan Fernandez on 2/12/15.
-//  Copyright © 2015 Rajan Fernandez. All rights reserved.
+//  Created by Rajan Fernandez on 4/01/16.
+//  Copyright © 2016 Rajan Fernandez. All rights reserved.
 //
 
 import Foundation
 import CoreData
 
-enum MessageThreadError : ErrorType {
+enum CDWSMessageThreadError : ErrorType {
     case FailedValueForKey(key: String)
 }
 
-class MessageThread: NSManagedObject {
+class CDWSMessageThread: NSManagedObject {
 
     // Updates all fields of the message thread with JSON data
     //
     func updateWithJSON(json: AnyObject, AndParticipantSet participants: NSSet) throws {
         
         guard let count = json.valueForKey("count")?.integerValue else {
-            throw MessageThreadError.FailedValueForKey(key: "count")
+            throw CDWSMessageThreadError.FailedValueForKey(key: "count")
         }
-
+        
         guard let has_tokens = json.valueForKey("has_tokens")?.integerValue else {
-            throw MessageThreadError.FailedValueForKey(key: "has_tokens")
+            throw CDWSMessageThreadError.FailedValueForKey(key: "has_tokens")
         }
         
         guard let is_new = json.valueForKey("is_new")?.integerValue else {
-            throw MessageThreadError.FailedValueForKey(key: "is_new")
+            throw CDWSMessageThreadError.FailedValueForKey(key: "is_new")
         }
         
-        guard let last_updated = json.valueForKey("last_updated")?.integerValue else {
-            throw MessageThreadError.FailedValueForKey(key: "last_updated")
+        guard let last_updated = json.valueForKey("last_updated")?.doubleValue else {
+            throw CDWSMessageThreadError.FailedValueForKey(key: "last_updated")
         }
         
         guard let subject = json.valueForKey("subject") as? String else {
-            throw MessageThreadError.FailedValueForKey(key: "subject")
+            throw CDWSMessageThreadError.FailedValueForKey(key: "subject")
         }
         
         guard let thread_id = json.valueForKey("thread_id")?.integerValue else {
-            throw MessageThreadError.FailedValueForKey(key: "thread_id")
+            throw CDWSMessageThreadError.FailedValueForKey(key: "thread_id")
         }
         
-        guard let thread_started = json.valueForKey("thread_started")?.integerValue else {
-            throw MessageThreadError.FailedValueForKey(key: "thread_started")
+        guard let thread_started = json.valueForKey("thread_started")?.doubleValue else {
+            throw CDWSMessageThreadError.FailedValueForKey(key: "thread_started")
         }
         
         self.count = count
         self.has_tokens = has_tokens
         self.is_new = is_new
-        self.last_updated = last_updated
+        self.last_updated = NSDate(timeIntervalSince1970: last_updated)
         self.subject = subject
         self.thread_id = thread_id
-        self.thread_started = thread_started
+        self.thread_started = NSDate(timeIntervalSince1970: thread_started)
         self.participants = participants
         
     }
@@ -68,7 +68,7 @@ class MessageThread: NSManagedObject {
         
         var pString = ""
         for user in users {
-            if let participant = user as? User {
+            if let participant = user as? CDWSUser {
                 
                 // Omit the current user from the participants string
                 if currentUserUID != nil && participant.uid == currentUserUID {
