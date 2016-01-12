@@ -16,8 +16,7 @@ class ComposeMessageTableViewController: UITableViewController {
     
     let detailCellHeight: CGFloat = 40.0
     
-    var recipients = [CDWSUser]()
-    var subject: String = ""
+    var message: CDWSMessage?
     
     var replyThreadID: Int?
     
@@ -52,14 +51,17 @@ class ComposeMessageTableViewController: UITableViewController {
             let cell = tableView.dequeueReusableCellWithIdentifier(COMPOSE_MESSAGE_DETAIL_CELL_ID, forIndexPath: indexPath) as! ComposeMessageDetailTableViewCell
             cell.detailLabel!.text = "To:"
             cell.detailTextField!.text = getRecipientString()
+            cell.userInteractionEnabled = false
             return cell
         case 1:
             let cell = tableView.dequeueReusableCellWithIdentifier(COMPOSE_MESSAGE_DETAIL_CELL_ID, forIndexPath: indexPath) as! ComposeMessageDetailTableViewCell
             cell.detailLabel!.text = "Subject:"
-            cell.detailTextField!.text = subject
+            cell.detailTextField!.text = message?.thread?.subject
+            cell.detailTextField!.delegate = self
             return cell
         default:
             let cell = tableView.dequeueReusableCellWithIdentifier(COMPOSE_MESSAGE_BODY_CELL_ID, forIndexPath: indexPath) as! ComposeMessageBodyTableViewCell
+            cell.textView.delegate = self
             return cell
         }
     }
@@ -77,7 +79,7 @@ class ComposeMessageTableViewController: UITableViewController {
     
     func getRecipientString() -> String {
         
-        guard recipients.count != 0 else {
+        guard let recipients = message?.recipients?.allObjects as? [CDWSUser] where recipients.count != 0 else {
             return ""
         }
         
@@ -92,16 +94,39 @@ class ComposeMessageTableViewController: UITableViewController {
         return recipientString
     }
     
-    func initialiseAsNewMessageToUser(uid: Int) {
+    func initialiseAsNewMessageToUser(user: CDWSUser) {
         
+        // Set the navigation title
+        navigationItem.title = "New Message"
         
+        // Set up the message model
+        self.message = NSEntityDescription.insertNewObjectForEntityForName("CDWSMessage", inManagedObjectContext: moc) as? CDWSMessage
+        self.message?.thread = NSEntityDescription.insertNewObjectForEntityForName("CDWSMessageThread", inManagedObjectContext: moc) as? CDWSMessageThread
+        self.message?.recipients = NSSet(array: [user])
+        
+        // Set the subject text field as the first responder
+        tableView.reloadData()
+        let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 0)) as! ComposeMessageDetailTableViewCell
+        cell.detailTextField.becomeFirstResponder()
     }
     
     func initialiseAsReplyToMessage(message: CDWSMessage) {
         
-        replyThreadID = message.thread!.thread_id!.integerValue
-        recipients = [message.author!]
-        subject = message.thread!.subject!
+        // Set the navigation title
+        navigationItem.title = "Reply"
+        
+        // Set up the message model
+        self.message = NSEntityDescription.insertNewObjectForEntityForName("CDWSMessage", inManagedObjectContext: moc) as? CDWSMessage
+        self.message?.thread = NSEntityDescription.insertNewObjectForEntityForName("CDWSMessageThread", inManagedObjectContext: moc) as? CDWSMessageThread
+        self.message?.thread?.thread_id = message.thread?.thread_id
+        self.message?.recipients = NSSet(array: [message.author!])
+        self.message?.thread?.subject = message.thread?.subject
+        
+        // Set the body text view as the first responded
+        tableView.reloadData()
+        let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 2, inSection: 0)) as! ComposeMessageBodyTableViewCell
+        cell.textView.becomeFirstResponder()
+        tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: .Bottom, animated: false)
     }
     
     
@@ -117,18 +142,87 @@ class ComposeMessageTableViewController: UITableViewController {
     
     @IBAction func sendButtonPressed(sender: AnyObject?) {
         
-        // TODO send the reply
-        guard let threadID = replyThreadID else {
-            return
-        }
+        self.view.endEditing(true)
         
-//        guard let body = ... else {
-//            return
-//        }
-//        
-//        httpRequest.replyToMessage(threadID, body: body) { (success) -> Void in
-//            <#code#>
-//        }
+        if let threadID = message?.thread?.thread_id?.integerValue where threadID > 0 {
+            
+            // Send message as a reply on an existing thread
+            
+            guard let body = message?.body where body != "" else {
+                let alert = UIAlertController(title: "Could not send message.", message: "Message has no content.", preferredStyle: .Alert)
+                let okAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
+                alert.addAction(okAction)
+                self.presentViewController(alert, animated: true, completion: nil)
+                return
+            }
+            
+//            TODO raise hud
+            
+            httpRequest.replyToMessage(threadID, body: body) { (success) -> Void in
+                
+                // remove the hud
+                
+                if success {
+                    self.moc.deleteObject(self.message!)
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+                    })
+                    self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+                } else {
+                    let alert = UIAlertController(title: "Could not send message.", message: "Sorry, an error occured while sending you message. Please check you are connected to the internet and try again later.", preferredStyle: .Alert)
+                    let okAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
+                    alert.addAction(okAction)
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+            }
+            
+        } else {
+            
+            // Send as a new message
+            
+            guard message?.recipients != nil else {
+                let alert = UIAlertController(title: "Could not send message.", message: "Message has no recipients.", preferredStyle: .Alert)
+                let okAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
+                alert.addAction(okAction)
+                self.presentViewController(alert, animated: true, completion: nil)
+                return
+            }
+            
+            guard message?.thread?.subject != nil else {
+                let alert = UIAlertController(title: "Could not send message.", message: "Message has no subject.", preferredStyle: .Alert)
+                let okAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
+                alert.addAction(okAction)
+                self.presentViewController(alert, animated: true, completion: nil)
+                return
+            }
+            
+            guard let body = message?.body where body != "" else {
+                let alert = UIAlertController(title: "Could not send message.", message: "Message has no content.", preferredStyle: .Alert)
+                let okAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
+                alert.addAction(okAction)
+                self.presentViewController(alert, animated: true, completion: nil)
+                return
+            }
+            
+            // TODO raise hud
+            
+            httpRequest.sendNewMessage(message!, completion: { (success) -> Void in
+                
+                // remove the hud
+                
+                if success {
+                    self.moc.deleteObject(self.message!)
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+                    })
+                } else {
+                    let alert = UIAlertController(title: "Could not send message.", message: "Sorry, an error occured while sending you message. Please check you are connected to the internet and try again later.", preferredStyle: .Alert)
+                    let okAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
+                    alert.addAction(okAction)
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+            })
+        }
     }
 
 }

@@ -46,6 +46,8 @@
 		E56CC08C1BFD2EC300AAF973 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56CC08B1BFD2EC300AAF973 /* TabBarController.swift */; };
 		E56CC0901BFD496400AAF973 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56CC08F1BFD496400AAF973 /* SettingsTableViewController.swift */; };
 		E56CC0921BFD569500AAF973 /* SwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56CC0911BFD569500AAF973 /* SwitchTableViewCell.swift */; };
+		E5700C521C44CB64008C8A87 /* ComposeMessageTableViewController+UITextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5700C511C44CB64008C8A87 /* ComposeMessageTableViewController+UITextViewDelegate.swift */; };
+		E5700C541C44EE51008C8A87 /* ComposeMessageTableViewController+UITextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5700C531C44EE51008C8A87 /* ComposeMessageTableViewController+UITextFieldDelegate.swift */; };
 		E573D17A1C0E6106004C3BFC /* LoginViewController+WSRequestAlerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E573D1791C0E6106004C3BFC /* LoginViewController+WSRequestAlerts.swift */; };
 		E5967B9F1C3490740037F4B7 /* WSOffers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967B9E1C3490740037F4B7 /* WSOffers.swift */; };
 		E5967BA11C35D59C0037F4B7 /* WSHostingInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967BA01C35D59C0037F4B7 /* WSHostingInfo.swift */; };
@@ -144,6 +146,8 @@
 		E56CC08B1BFD2EC300AAF973 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		E56CC08F1BFD496400AAF973 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		E56CC0911BFD569500AAF973 /* SwitchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchTableViewCell.swift; sourceTree = "<group>"; };
+		E5700C511C44CB64008C8A87 /* ComposeMessageTableViewController+UITextViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ComposeMessageTableViewController+UITextViewDelegate.swift"; sourceTree = "<group>"; };
+		E5700C531C44EE51008C8A87 /* ComposeMessageTableViewController+UITextFieldDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ComposeMessageTableViewController+UITextFieldDelegate.swift"; sourceTree = "<group>"; };
 		E573D1791C0E6106004C3BFC /* LoginViewController+WSRequestAlerts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LoginViewController+WSRequestAlerts.swift"; sourceTree = "<group>"; };
 		E5967B9E1C3490740037F4B7 /* WSOffers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSOffers.swift; sourceTree = "<group>"; };
 		E5967BA01C35D59C0037F4B7 /* WSHostingInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSHostingInfo.swift; sourceTree = "<group>"; };
@@ -244,6 +248,8 @@
 				E54276701C3CA8E800047029 /* ComposeMessageTableViewController.swift */,
 				E54276721C3E0CC900047029 /* ComposeMessageDetailTableViewCell.swift */,
 				E54276741C3E0CE200047029 /* ComposeMessageBodyTableViewCell.swift */,
+				E5700C511C44CB64008C8A87 /* ComposeMessageTableViewController+UITextViewDelegate.swift */,
+				E5700C531C44EE51008C8A87 /* ComposeMessageTableViewController+UITextFieldDelegate.swift */,
 			);
 			name = ComposeMessageTabelViewController;
 			sourceTree = "<group>";
@@ -703,6 +709,7 @@
 				E542768A1C41AAAF00047029 /* WSRecommendationMonths.swift in Sources */,
 				E5F6F30F1C2FE3360000A87E /* ProfileImageTableViewCell.swift in Sources */,
 				E5D96AF81BFB1CA700AFAFEE /* AppDelegate.swift in Sources */,
+				E5700C521C44CB64008C8A87 /* ComposeMessageTableViewController+UITextViewDelegate.swift in Sources */,
 				E54276881C3E83E500047029 /* CreateFeedbackTableViewController+UIPickerViewDataSource.swift in Sources */,
 				E542767E1C3E544600047029 /* WSRecommendationRating.swift in Sources */,
 				E5967BB21C38A11E0037F4B7 /* FeedbackTableViewController.swift in Sources */,
@@ -733,6 +740,7 @@
 				E54276901C44956F00047029 /* CreateFeedbackTableViewController+UITextViewDelegate.swift in Sources */,
 				E54276861C3E78E000047029 /* CreateFeedbackTableViewController+UIPickerViewDelegate.swift in Sources */,
 				E5967BCD1C39DBC00037F4B7 /* CDWSMessage.swift in Sources */,
+				E5700C541C44EE51008C8A87 /* ComposeMessageTableViewController+UITextFieldDelegate.swift in Sources */,
 				E5967BA91C36910C0037F4B7 /* AvailiblityTableViewCell.swift in Sources */,
 				E52E8A9B1C0BCD03000391AB /* HostSearchController.swift in Sources */,
 			);

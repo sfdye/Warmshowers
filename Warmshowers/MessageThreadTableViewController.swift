@@ -50,14 +50,16 @@ class MessageThreadTableViewController: UITableViewController {
         
         // Set the view title
         navigationItem.title = messageThread?.subject
-
-        
-        // Update the data source
-        update()
         
         // Configure the table view
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 104
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        
+        // Update the data source
+        update()
     }
     
     

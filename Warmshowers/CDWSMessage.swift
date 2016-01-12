@@ -15,23 +15,6 @@ enum CDWSMessageError : ErrorType {
 
 class CDWSMessage: NSManagedObject {
     
-//    var author: CDWSUser? {
-//        if let uid = self.author_uid as? Int {
-//            if let participants = self.thread?.participants {
-//                let predicate = NSPredicate(format: "uid == %i", uid)
-//                let users = participants.filteredSetUsingPredicate(predicate)
-//                if users.count > 0 {
-//                    if let user = users.first as? CDWSUser{
-//                        return user
-//                    }
-//                } else {
-//                    print("Warning: No users in the store with uid \(uid)")
-//                }
-//            }
-//        }
-//        return nil
-//    }
-    
     var authorName: String? {
         if let author = self.author {
             return author.fullname

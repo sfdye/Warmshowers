@@ -544,6 +544,17 @@ class WSRequest {
         
         requestWithCSRFToken(service, params: params, retry: true, doWithResponse: { (data, response, error) -> Void in
             
+            guard let httpResponse = response as? NSHTTPURLResponse where data != nil && error == nil else {
+                completion(success: false)
+                return
+            }
+            
+            guard httpResponse.statusCode == 200 else {
+                completion(success: false)
+                return
+            }
+            
+            completion(success: true)
         })
     }
 
@@ -559,6 +570,17 @@ class WSRequest {
         
         requestWithCSRFToken(service, params: params, retry: true, doWithResponse: { (data, response, error) -> Void in
             
+            guard let httpResponse = response as? NSHTTPURLResponse where data != nil && error == nil else {
+                completion(success: false)
+                return
+            }
+            
+            guard httpResponse.statusCode == 200 else {
+                completion(success: false)
+                return
+            }
+            
+            completion(success: true)
         })
     }
 

@@ -43,8 +43,8 @@ class AccountTableViewController: UITableViewController {
     var hostingInfo: WSHostingInfo = WSHostingInfo()
     var offers: WSOffers = WSOffers()
     var phoneNumbers: WSPhoneContacts = WSPhoneContacts()
-    var user: CDWSUser?
     var photo: UIImage?
+    var user: CDWSUser?
     
     var tab: HostProfileTab = .About
     
@@ -96,38 +96,67 @@ class AccountTableViewController: UITableViewController {
     }
     
     func updateWithUserInfo(info: AnyObject?) {
-        if let info = info {
-            self.info = info
-            self.offers.update(info)
-            self.hostingInfo.update(info)
-            self.phoneNumbers.update(info)
-            // Parse the profile data
-            let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-            dispatch_async(queue, { () -> Void in
-                self.saveUserInfo(info)
-            })
-        }
-    }
-    
-    func updateWithFeedback(feedback: AnyObject?) {
-        if let feedback = feedback {
-            self.feedback = feedback
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 2)], withRowAnimation: UITableViewRowAnimation.Automatic)
-            })
+        
+        guard let info = info  else {
+            return
         }
         
+        self.info = info
+        self.offers.update(info)
+        self.hostingInfo.update(info)
+        self.phoneNumbers.update(info)
+        
+        // Get the users profile photo
+        let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
+        dispatch_async(queue) { () -> Void in
+            self.getProfileImage()
+        }
+        
+        reload()
+    }
+    
+    //
+    func updateWithFeedback(feedback: AnyObject?) {
+        
+        guard let feedback = feedback else {
+            return
+        }
+        self.feedback = feedback
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 2)], withRowAnimation: UITableViewRowAnimation.Automatic)
+        })
+    }
+    
+    // Downloads the users profile photo and updates the view
+    func getProfileImage() {
+
+        guard let imageURL = info?.valueForKey(PHOTO_KEY) as? String else {
+            return
+        }
+        
+        // Get the users profile image
+        httpRequest.getImageWithURL(imageURL, doWithImage: { (image) -> Void in
+            self.photo = image
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+            })
+        })
     }
     
     func userIsLoggedIn() -> Bool {
-        if let uid = uid {
-            let defaults = self.appDelegate!.defaults
-            let currentUserUID = defaults.valueForKey(DEFAULTS_KEY_UID)?.integerValue
-            if uid == currentUserUID {
-                return true
-            }
+        
+        guard let uid = uid,
+            let defaults = self.appDelegate?.defaults
+        else {
+            return false
         }
-        return false
+        
+        let currentUserUID = defaults.valueForKey(DEFAULTS_KEY_UID)?.integerValue
+        if uid == currentUserUID {
+            return true
+        } else {
+            return false
+        }
     }
     
     func configureActions() {
@@ -173,12 +202,16 @@ class AccountTableViewController: UITableViewController {
     
     // Returns the number of feedbacks for the user (or nil if feedback could not be retrieved from the server)
     func numberOfFeedbacks() -> Int? {
-        if feedback != nil {
-            if let recommendations = feedback!.valueForKey("recommendations") {
-                return recommendations.count
-            }
+        
+        guard let feedback = feedback else {
+            return nil
         }
-        return nil
+        
+        guard let recommendations = feedback.valueForKey("recommendations") else {
+            return nil
+        }
+        
+        return recommendations.count
     }
 
     // MARK: - Tableview Data Source
@@ -221,8 +254,15 @@ class AccountTableViewController: UITableViewController {
             case 0:
                 // Photo
                 let cell = tableView.dequeueReusableCellWithIdentifier(IMAGE_CELL_ID, forIndexPath: indexPath) as! ProfileImageTableViewCell
-                cell.nameLabel.text = user?.fullname
-                cell.profileImage.image = photo
+                if let photo = photo {
+                    cell.nameLabel.text = self.info?.valueForKey("fullname") as? String
+                    cell.nameLabel.textColor = UIColor.whiteColor()
+                    cell.profileImage.image = photo
+                    cell.profileImage.contentMode = .ScaleAspectFill
+                } else {
+                    cell.nameLabel.text = self.info?.valueForKey("fullname") as? String
+                    cell.nameLabel.textColor = UIColor.blackColor()
+                }
                 return cell
             case 1:
                 // Availiblity
@@ -320,10 +360,6 @@ class AccountTableViewController: UITableViewController {
         
     }
     
-//    func configurePhotoCell() {
-//        print("running")
-//    }
-    
     
     // MARK: Tableview Delegate
     
@@ -370,9 +406,9 @@ class AccountTableViewController: UITableViewController {
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         switch identifier {
         case FEEDBACK_SEGUE_ID:
-            return feedback != nil ? true : false
+            return feedback != nil
         case SEND_NEW_MESSAGE_SEGUE_ID:
-            return uid != nil ? true : false
+            return info != nil
         case PROVIDE_FEEDBACK_SEGUE_ID:
             return info?.valueForKey("name") as? String != nil ? true : false
         default:
@@ -389,7 +425,8 @@ class AccountTableViewController: UITableViewController {
         if segue.identifier == SEND_NEW_MESSAGE_SEGUE_ID {
             let navVC = segue.destinationViewController as! UINavigationController
             let composeMessageVC = navVC.viewControllers.first as! ComposeMessageTableViewController
-            composeMessageVC.initialiseAsNewMessageToUser(uid!)
+            saveUserInfo(info!)
+            composeMessageVC.initialiseAsNewMessageToUser(user!)
         }
         if segue.identifier == PROVIDE_FEEDBACK_SEGUE_ID {
             let navVC = segue.destinationViewController as! UINavigationController
@@ -400,64 +437,29 @@ class AccountTableViewController: UITableViewController {
     }
 
     
-//    // MARK: - WSRequestAlert Delegate functions
-//    
-//    func requestAlert(title: String, message: String) {
-//        
-//        guard alertController == nil else {
-//            return
-//        }
-//        
-//        alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-//        if alertController != nil {
-//            alertController!.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
-//            self.presentViewController(alertController!, animated: true, completion: { () -> Void in self.alertController = nil})
-//        }
-//    }
-    
     // MARK: Utilities
     
     // Saves user profile data to the store and reloads the view
     func saveUserInfo(info: AnyObject) {
         
-        user = NSEntityDescription.insertNewObjectForEntityForName("CDWSUser", inManagedObjectContext: moc) as? CDWSUser
+        self.user = NSEntityDescription.insertNewObjectForEntityForName("CDWSUser", inManagedObjectContext: moc) as? CDWSUser
         
-        if user != nil {
-            
-            user!.updateFromJSON(info)
-            
-            // Get the users profile image
-            if let imageURL = info[self.PHOTO_KEY] as? String {
-                httpRequest.getImageWithURL(imageURL, doWithImage: { (image) -> Void in
-                    self.photo = image
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
-                    })
-                })
-            }
-            
-            // save user to the store
-            do {
-                try moc.save()
-            } catch {
-                print("Could not save MOC.")
-            }
-            
-            // reload the view
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.reload()
-            })
-            
+        user?.updateFromJSON(info)
+        
+        // save user to the store
+        do {
+            try moc.save()
+        } catch {
+            print("Could not save MOC.")
         }
     }
     
     // Reloads the view
     func reload() {
-        
-        navigationItem.title = user!.fullname
-        tableView.reloadData()
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.navigationItem.title = self.info?.valueForKey("name") as? String
+            self.tableView.reloadData()
+        })
     }
     
-    
-
 }

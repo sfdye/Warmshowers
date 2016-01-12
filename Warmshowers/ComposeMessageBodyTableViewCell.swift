@@ -10,7 +10,6 @@ import UIKit
 
 class ComposeMessageBodyTableViewCell: UITableViewCell {
     
-    @IBOutlet var bodyTextField: UITextField!
+    @IBOutlet var textView: UITextView!
 
-    
 }

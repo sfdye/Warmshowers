@@ -36,13 +36,16 @@ class MessageThreadsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // update the store
-        update()
-        
         // set the refresh controller for the tableview
         refreshController.addTarget(self, action: Selector("update"), forControlEvents: UIControlEvents.ValueChanged)
         self.refreshControl = self.refreshController
         
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        
+        // Update the data source
+        update()
     }
     
     // MARK: - Table view data source
@@ -83,6 +86,8 @@ class MessageThreadsTableViewController: UITableViewController {
             } else {
                 // TODO check for internet connection here and diplay an alert
 //                self.httpRequest.checkReachability()
+                self.refreshController.endRefreshing()
+                self.fetchAndReload()
             }
         })
     }

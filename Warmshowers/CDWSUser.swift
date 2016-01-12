@@ -25,7 +25,7 @@ class CDWSUser: NSManagedObject {
             throw CDWSMessageParticipantError.FailedValueForKey(key: "name")
         }
         
-        guard let uid = json.valueForKey("uid")?.integerValue else {
+        guard let uid = json.valueForKey("uid")?.integerValue else { 
             throw CDWSMessageParticipantError.FailedValueForKey(key: "uid")
         }
         

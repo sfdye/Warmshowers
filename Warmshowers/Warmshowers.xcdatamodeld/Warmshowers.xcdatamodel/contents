@@ -17,7 +17,7 @@
         <attribute name="subject" attributeType="String" syncable="YES"/>
         <attribute name="thread_id" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="thread_started" attributeType="Date" syncable="YES"/>
-        <relationship name="messages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDWSMessage" inverseName="thread" inverseEntity="CDWSMessage" syncable="YES"/>
+        <relationship name="messages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDWSMessage" inverseName="thread" inverseEntity="CDWSMessage" syncable="YES"/>
         <relationship name="participants" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CDWSUser" inverseName="threads" inverseEntity="CDWSUser" syncable="YES"/>
     </entity>
     <entity name="CDWSUser" representedClassName=".CDWSUser" syncable="YES">
@@ -31,7 +31,7 @@
     </entity>
     <elements>
         <element name="CDWSMessage" positionX="-162" positionY="-144" width="128" height="150"/>
-        <element name="CDWSMessageThread" positionX="-342" positionY="-144" width="128" height="178"/>
+        <element name="CDWSMessageThread" positionX="-342" positionY="-144" width="128" height="180"/>
         <element name="CDWSUser" positionX="-162" positionY="9" width="128" height="150"/>
     </elements>
 </model>

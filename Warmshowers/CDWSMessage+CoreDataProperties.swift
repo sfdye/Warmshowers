@@ -2,7 +2,7 @@
 //  CDWSMessage+CoreDataProperties.swift
 //  Warmshowers
 //
-//  Created by Rajan Fernandez on 7/01/16.
+//  Created by Rajan Fernandez on 12/01/16.
 //  Copyright © 2016 Rajan Fernandez. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -19,7 +19,7 @@ extension CDWSMessage {
     @NSManaged var message_id: NSNumber?
     @NSManaged var timestamp: NSDate?
     @NSManaged var author: CDWSUser?
-    @NSManaged var thread: CDWSMessageThread?
     @NSManaged var recipients: NSSet?
+    @NSManaged var thread: CDWSMessageThread?
 
 }

@@ -2,7 +2,7 @@
 //  CDWSUser+CoreDataProperties.swift
 //  Warmshowers
 //
-//  Created by Rajan Fernandez on 5/01/16.
+//  Created by Rajan Fernandez on 12/01/16.
 //  Copyright © 2016 Rajan Fernandez. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -18,8 +18,8 @@ extension CDWSUser {
     @NSManaged var image: NSObject?
     @NSManaged var name: String?
     @NSManaged var uid: NSNumber?
+    @NSManaged var recieved_messages: NSSet?
     @NSManaged var sent_messages: NSSet?
     @NSManaged var threads: NSSet?
-    @NSManaged var recieved_messages: NSSet?
 
 }
