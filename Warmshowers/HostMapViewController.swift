@@ -60,9 +60,6 @@ class HostMapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Allows the http client to diplay alerts through this view controller
-        httpRequest.alertViewController = self
-        
         // Set up the navigation bar
         self.cancelButton.target = self
         self.cancelButton.action = Selector("cancelButtonPressed")

@@ -16,6 +16,7 @@ class MessageThreadsTableViewCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var participantsLabel: UILabel!
     @IBOutlet weak var subjectLabel: UILabel!
+    @IBOutlet weak var newDot: UIImageView!
     var threadID: Int!
     
     func configureWithMessageThread(messageThread: CDWSMessageThread, andCurrentUserUID uid: Int) {
@@ -25,6 +26,11 @@ class MessageThreadsTableViewCell: UITableViewCell {
         setDate(messageThread.last_updated)
         self.participantsLabel.text = messageThread.getParticipantString(uid)
         self.subjectLabel.text = messageThread.subject
+        if messageThread.is_new != 0 {
+            newDot.hidden = false
+        } else {
+            newDot.hidden = true
+        }
     }
     
     func setDate(date: NSDate?) {

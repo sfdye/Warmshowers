@@ -31,9 +31,6 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // set the http client delegate for error alerts
-        httpRequest.alertViewController = self
-        
         // load the default username
         let defaults = NSUserDefaults.standardUserDefaults()
         if let username = defaults.objectForKey(DEFAULTS_KEY_USERNAME) {

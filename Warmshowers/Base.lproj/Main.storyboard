@@ -85,6 +85,14 @@
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="NewMessageDot" translatesAutoresizingMaskIntoConstraints="NO" id="8iH-Fn-1Oi">
+                                            <rect key="frame" x="8" y="8" width="14" height="14"/>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="14" id="2MF-TA-3Jf"/>
+                                                <constraint firstAttribute="width" constant="14" id="dho-0m-Spr"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <animations/>
                                     <constraints>
@@ -92,8 +100,10 @@
                                         <constraint firstAttribute="trailing" secondItem="yzh-PZ-B1Z" secondAttribute="trailing" constant="12" id="66h-dr-Aqo"/>
                                         <constraint firstItem="T7v-7U-ynR" firstAttribute="leading" secondItem="q7c-xx-uI1" secondAttribute="leading" id="AMf-fG-mwK"/>
                                         <constraint firstAttribute="trailing" secondItem="q7c-xx-uI1" secondAttribute="trailing" constant="12" id="CeE-Oa-9KP"/>
+                                        <constraint firstItem="GLC-nj-Xhz" firstAttribute="centerY" secondItem="8iH-Fn-1Oi" secondAttribute="centerY" id="H3H-z9-8mb"/>
                                         <constraint firstItem="yzh-PZ-B1Z" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="GLC-nj-Xhz" secondAttribute="trailing" constant="10" id="HK1-Cy-Ogb"/>
-                                        <constraint firstItem="GLC-nj-Xhz" firstAttribute="leading" secondItem="0FB-G0-OoW" secondAttribute="leading" constant="30" id="Uz1-IL-6nf"/>
+                                        <constraint firstItem="GLC-nj-Xhz" firstAttribute="leading" secondItem="8iH-Fn-1Oi" secondAttribute="trailing" constant="8" id="KhX-R6-24W"/>
+                                        <constraint firstItem="8iH-Fn-1Oi" firstAttribute="leading" secondItem="0FB-G0-OoW" secondAttribute="leadingMargin" constant="4" id="P2g-io-bge"/>
                                         <constraint firstItem="T7v-7U-ynR" firstAttribute="trailing" secondItem="q7c-xx-uI1" secondAttribute="trailing" id="buY-Od-ABv"/>
                                         <constraint firstItem="T7v-7U-ynR" firstAttribute="top" secondItem="GLC-nj-Xhz" secondAttribute="bottom" constant="2" id="g1X-SQ-eXV"/>
                                         <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="q7c-xx-uI1" secondAttribute="bottom" constant="8" id="hZF-Mx-osZ"/>
@@ -106,6 +116,7 @@
                                 <connections>
                                     <outlet property="bodyPreviewLabel" destination="q7c-xx-uI1" id="Khg-9E-5dO"/>
                                     <outlet property="dateLabel" destination="yzh-PZ-B1Z" id="a7f-LY-NYX"/>
+                                    <outlet property="newDot" destination="8iH-Fn-1Oi" id="86c-Mo-B6B"/>
                                     <outlet property="participantsLabel" destination="GLC-nj-Xhz" id="emO-Zz-bha"/>
                                     <outlet property="subjectLabel" destination="T7v-7U-ynR" id="Qdd-dJ-bst"/>
                                     <segue destination="MJt-qp-NJY" kind="show" identifier="ToMessageThread" id="T4w-LT-wmd"/>
@@ -1412,11 +1423,12 @@
         <image name="MessageIcon" width="22" height="22"/>
         <image name="MessagesBarButtonIcon" width="25" height="25"/>
         <image name="MessagesBarButtonIconSelected" width="25" height="25"/>
+        <image name="NewMessageDot" width="20" height="20"/>
         <image name="PhoneIcon" width="22" height="22"/>
-        <image name="ProfilePhotoPlaceholder" width="148" height="151"/>
+        <image name="ProfilePhotoPlaceholder" width="74" height="75"/>
         <image name="SettingsBarButtonIcon" width="25" height="25"/>
         <image name="SettingsBarButtonIconSelected" width="25" height="25"/>
-        <image name="ThumbnailPlaceholder" width="50" height="50"/>
+        <image name="ThumbnailPlaceholder" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="1RT-Kj-eKu"/>

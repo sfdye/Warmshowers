@@ -19,11 +19,9 @@ enum HttpRequestError : ErrorType {
     case JSONSerialisationFailure
 }
 
-class WSRequest {
+struct WSRequest {
     
     let LIMIT: Int = 1000
-    
-    var alertViewController : WSRequestAlert?
     
     let session = NSURLSession.init(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
     
@@ -31,26 +29,6 @@ class WSRequest {
     
     
     // MARK: - Error checkers/handlers
-    
-//    // General error handler
-//    func errorAlert(error: NSError) {
-//        if alertViewController != nil {
-//            self.alert("Error", message: error.localizedDescription)
-//        }
-//    }
-//    
-//    // Checks for http errors
-//    func hasHTTPError(response: NSURLResponse) -> Bool {
-//        
-//        let httpResponse = response as! NSHTTPURLResponse
-//        
-//        if httpResponse.statusCode >= 400 {
-//            return true
-//        } else {
-//            return false
-//        }
-//
-//    }
     
     // Checks for CSRF failure message
     func hasFailedCSRF(data: NSData) -> Bool {
@@ -70,66 +48,22 @@ class WSRequest {
         return false
         
     }
-    
-    //
-    
-//    // Handles http error codes
-//    func httpErrorAlert(data: NSData?, response: NSURLResponse) {
-//        
-//        let httpResponse = response as! NSHTTPURLResponse
-//        let statusCode = httpResponse.statusCode
-//        let title = "HTTP " + String(statusCode)
-//        var message: String = ""
-//        
-//        if data != nil {
-//            do {
-//                let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [])
-//                let response = json.objectAtIndex(0) as? String
-//                if response != nil {
-//                    message = response!
-//                }
-//            } catch {
-//            }
-//        }
-//        
-//        if alertViewController != nil {
-//            self.alert(title, message: message)
-//        }
-//    }
-    
-//    // Displays general errors, returns false if there were no errors
-//    func responseHasError(data: NSData?, response: NSURLResponse?, error: NSError?, silent: Bool = false) -> Bool {
-//        
-//        if error != nil {
-//            
-//            // An error occured
-//            if !silent {
-//                self.errorAlert(error!)
-//            }
-//            return true
-//            
-//        } else if response == nil {
-//            
-//            // No response
-//            if !silent {
-//                self.alert("Network Error", message: "No response")
-//            }
-//            return true
-//            
-//        }
-//        
-//        return false
-//    }
-    
-//    // Gets the delegate view controller to show a pop up alert
-//    func alert(title: String, message: String) {
-//        dispatch_async(dispatch_get_main_queue(), {
-//            self.alertViewController!.requestAlert(title, message: message)
-//        })
-//    }
 
     
     // MARK: - HTTP Request utilities
+    
+    // Cancels all tasks in the session
+    //
+    func cancelAllTasks() {
+        
+        session.getAllTasksWithCompletionHandler { (sessionTasks) -> Void in
+            
+            for task in sessionTasks {
+                print("cancelling task \(task)")
+                task.cancel()
+            }
+        }
+    }
     
     // Creates a request
     //
@@ -176,43 +110,64 @@ class WSRequest {
     // Checks a request response and evaluates if retrying the request (after logging in again) is neccessary
     //
     func shouldRetryRequest(data: NSData?, response: NSURLResponse?, error: NSError?) -> Bool {
-    
+        
+        // No data or response recieved
+        guard let data = data, let response = response else {
+            return true
+        }
+        
         // CSRF Failure
-        if self.hasFailedCSRF(data!) {
+        if self.hasFailedCSRF(data) {
             return true
         }
         
         // http failure codes
         let httpResponse = response as! NSHTTPURLResponse
+        
         // 403: Forbidden -> need to re-login and try again
         if httpResponse.statusCode == 403 {
             return true
         }
         
         return false
-        
     }
     
     // Requests a X-CSRF Token from the server
     //
     func tokenRequest(doWithToken: (token: String) -> Void) -> Void {
         
-        if let tokenRequest = buildRequest(WSRestfulService(type: .token)!) {
+        let service = WSRestfulService(type: .token)!
+        
+        request(service) { (data, response, error) -> Void in
             
-            dataRequest(tokenRequest) { (tokenData, response, error) -> Void in
-                
-                if error != nil {
-                    print("Error getting X-CSRF token")
-                    return
-                }
-                
-                if let token = String.init(data: tokenData!, encoding: NSUTF8StringEncoding) {
-                    doWithToken(token: token)
-                } else {
-                    print("Could not decode token data")
-                }
+            guard error == nil else {
+                print("Error getting X-CSRF token")
+                return
+            }
+            
+            guard let data = data else {
+                print("No data recieved from token request")
+                return
+            }
+            
+            if let token = String.init(data: data, encoding: NSUTF8StringEncoding) {
+                doWithToken(token: token)
+            } else {
+                print("Could not decode token data")
             }
         }
+    }
+    
+    // Makes a normal get request
+    //
+    func request(service: WSRestfulService, params: [String: String]? = nil, doWithResponse: (NSData?, NSURLResponse?, NSError?) -> Void) {
+        
+        if let request = buildRequest(service) {
+            dataRequest(request, doWithResponse: doWithResponse)
+        } else {
+            print("Failed to build http request")
+        }
+        
     }
     
     // Makes requests with a X-CSRF token in the header
@@ -251,12 +206,14 @@ class WSRequest {
         }
     }
     
+    
     // Processes the response from a login request and returns true for a successful login
     //
     func autoProcessLoginResponse(data: NSData?, response: NSURLResponse?, error: NSError?) -> Bool {
         
-        if error != nil {
+        guard error == nil else {
             print("Auto-login failed due to an error")
+            return false
         }
         
         if data != nil {
@@ -296,13 +253,13 @@ class WSRequest {
     // Login request that takes a new username and password
     //
     func login(username: String, password: String, doAfterLogin: (success: Bool) -> Void) {
-
+        
+        let service = WSRestfulService(type: .login)!
         let params = ["username" : username, "password" : password]
-        if let request = self.buildRequest(WSRestfulService(type: .login)!, params: params) {
-            dataRequest(request, doWithResponse: { (data, response, error) -> Void in
-                let success = self.autoProcessLoginResponse(data, response: response, error: error)
-                doAfterLogin(success: success)
-            })
+        
+        requestWithCSRFToken(service, params: params) { (data, response, error) -> Void in
+            let success = self.autoProcessLoginResponse(data, response: response, error: error)
+            doAfterLogin(success: success)
         }
     }
     
@@ -363,13 +320,12 @@ class WSRequest {
     func getHostDataForMapView(map: MKMapView, withHostData: (data: NSData?) -> Void) {
         
         let service = WSRestfulService(type: .searchByLocation)!
+        
         var params = map.getWSMapRegion()
         params["limit"] = String(LIMIT)
         
         requestWithCSRFToken(service, params: params, retry: true, doWithResponse: { (data, response, error) -> Void in
-
             withHostData(data: data)
-            
         })
     }
     
@@ -384,9 +340,7 @@ class WSRequest {
         params["limit"] = String(LIMIT)
         
         requestWithCSRFToken(service, params: params, retry: true, doWithResponse: { (data, response, error) -> Void in
-            
             withHostData(data: data)
-            
         })
     }
     
@@ -396,19 +350,16 @@ class WSRequest {
         
         let service = WSRestfulService(type: .userInfo, uid: uid)!
         
-        if let request = buildRequest(service) {
+        request(service) { (data, response, error) -> Void in
             
-            dataRequest(request) { (data, response, error) -> Void in
-                
-                if error != nil {
-                    print("Error getting user info")
-                    return
-                }
-                
-                if data != nil {
-                    let userObject = self.jsonDataToJSONObject(data)
-                    doWithUserInfo(info: userObject)
-                }
+            if error != nil {
+                print("Error getting user info")
+                return
+            }
+            
+            if data != nil {
+                let userObject = self.jsonDataToJSONObject(data)
+                doWithUserInfo(info: userObject)
             }
         }
     }
@@ -436,19 +387,15 @@ class WSRequest {
         
         let service = WSRestfulService(type: .userFeedback, uid: uid)!
         
-        if let request = buildRequest(service) {
-        
-            dataRequest(request) { (data, response, error) -> Void in
-
-                if error != nil {
-                    print("Error getting user feedback")
-                    return
-                }
-                
-                if data != nil {
-                    let userFeedback = self.jsonDataToJSONObject(data)
-                    doWithUserFeedback(feedback: userFeedback)
-                }
+        request(service) { (data, response, error) -> Void in
+            if error != nil {
+                print("Error getting user feedback")
+                return
+            }
+            
+            if data != nil {
+                let userFeedback = self.jsonDataToJSONObject(data)
+                doWithUserFeedback(feedback: userFeedback)
             }
         }
     }
@@ -483,29 +430,6 @@ class WSRequest {
             completion(success: true)
         })
     }
-    
-    // data from successfull feedback submissison
-//    {
-//    nid = 129484;
-//    uri = "https://www.warmshowers.org/services/rest/node/129484";
-//    }
-    
-    //    Optional(<NSHTTPURLResponse: 0x7f96579f52d0> { URL: https://www.warmshowers.org/services/rest/node } { status code: 200, headers {
-    //    "Cache-Control" = "no-cache";
-    //    Connection = "keep-alive";
-    //    "Content-Encoding" = gzip;
-    //    "Content-Type" = "application/json";
-    //    Date = "Tue, 12 Jan 2016 00:59:06 GMT";
-    //    Expires = "Thu, 01 Jan 1970 00:00:01 GMT";
-    //    "Keep-Alive" = "timeout=75";
-    //    Server = nginx;
-    //    "Transfer-Encoding" = Identity;
-    //    Vary = "Accept-Encoding, Accept";
-    //    "X-Content-Options" = nosniff;
-    //    "X-Frame-Options" = SAMEORIGIN;
-    //    "X-Powered-By" = "PHP/5.6.16-2+deb.sury.org~precise+1";
-    //    "X-XSS-Protection" = "1; mode=block";
-    //    } })
     
     // To send a new message
     //
@@ -629,7 +553,9 @@ class WSRequest {
     
     // To mark a message thread as read or unread
     //
-    
+    func markMessageThread(thread: CDWSMessageThread, read: Bool = true, withResponse: (data: NSData) -> Void) {
+        
+    }
     
     
     // MARK: - Utilities
@@ -656,7 +582,6 @@ class WSRequest {
             
             // Save the session data
             defaults.synchronize()
-            
         }
     }
     
@@ -685,7 +610,6 @@ class WSRequest {
             return jsonDict
         }
         return nil
-        
     }
     
     // Checks if JSON data contains just an integer and returns it (or nil)
@@ -726,7 +650,6 @@ extension NSMutableURLRequest {
         }
         
         self.HTTPBody = requestBodyAsString.dataUsingEncoding(NSUTF8StringEncoding)
-        
     }
     
     // Initialises a NSMutableURLRequest for a particular Warmshowers Restful service
@@ -748,6 +671,9 @@ extension NSMutableURLRequest {
     
 }
 
+
+// To get the map bounds when searching for hosts
+//
 extension MKMapView {
     
     // Returns the current coordinate limits of a mapview
@@ -767,7 +693,6 @@ extension MKMapView {
         ]
         
         return regionLimits
-        
     }
     
 }

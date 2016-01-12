@@ -39,7 +39,6 @@
 		E54A572F1BFDC446000843A9 /* WSRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54A572E1BFDC446000843A9 /* WSRequests.swift */; };
 		E54A57311BFE6FB2000843A9 /* WSURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54A57301BFE6FB2000843A9 /* WSURL.swift */; };
 		E54A57341BFE830C000843A9 /* WSUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54A57331BFE830C000843A9 /* WSUser.swift */; };
-		E54A57381BFEC531000843A9 /* SpinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54A57371BFEC531000843A9 /* SpinnerView.swift */; };
 		E54A57641C03E4A4000843A9 /* AccountTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54A57631C03E4A4000843A9 /* AccountTableViewController.swift */; };
 		E56CC0881BFD166200AAF973 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E56CC0871BFD166200AAF973 /* MapKit.framework */; };
 		E56CC08A1BFD22D800AAF973 /* HostMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56CC0891BFD22D800AAF973 /* HostMapViewController.swift */; };
@@ -139,7 +138,6 @@
 		E54A572E1BFDC446000843A9 /* WSRequests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSRequests.swift; sourceTree = "<group>"; };
 		E54A57301BFE6FB2000843A9 /* WSURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSURL.swift; sourceTree = "<group>"; };
 		E54A57331BFE830C000843A9 /* WSUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSUser.swift; sourceTree = "<group>"; };
-		E54A57371BFEC531000843A9 /* SpinnerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinnerView.swift; sourceTree = "<group>"; };
 		E54A57631C03E4A4000843A9 /* AccountTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountTableViewController.swift; sourceTree = "<group>"; };
 		E56CC0871BFD166200AAF973 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		E56CC0891BFD22D800AAF973 /* HostMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostMapViewController.swift; sourceTree = "<group>"; };
@@ -295,14 +293,14 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
-		E54A57391C026D56000843A9 /* HTTPClient */ = {
+		E54A57391C026D56000843A9 /* HTTP */ = {
 			isa = PBXGroup;
 			children = (
 				E54A57301BFE6FB2000843A9 /* WSURL.swift */,
 				E54A572E1BFDC446000843A9 /* WSRequests.swift */,
 				E5F6F3091C2B36930000A87E /* WSRestfulService.swift */,
 			);
-			name = HTTPClient;
+			name = HTTP;
 			sourceTree = "<group>";
 		};
 		E54A573A1C026D96000843A9 /* Controllers */ = {
@@ -422,9 +420,8 @@
 				E5D96AF71BFB1CA700AFAFEE /* AppDelegate.swift */,
 				E54A57321BFE82F9000843A9 /* Model */,
 				E54A573A1C026D96000843A9 /* Controllers */,
-				E54A57391C026D56000843A9 /* HTTPClient */,
+				E54A57391C026D56000843A9 /* HTTP */,
 				E50FD8A01C053A24004D38A3 /* Map */,
-				E54A57371BFEC531000843A9 /* SpinnerView.swift */,
 				E5F6F3041C28EC780000A87E /* Supporting Files */,
 				E5F6F3031C28EC550000A87E /* Views */,
 			);
@@ -721,7 +718,6 @@
 				E52E8AA71C0BDAE9000391AB /* HostMapViewController+UITableViewDelegate.swift in Sources */,
 				E5F6F3111C3122740000A87E /* HostingInfoTableViewCell.swift in Sources */,
 				E5967BCE1C39DBC00037F4B7 /* CDWSUser+CoreDataProperties.swift in Sources */,
-				E54A57381BFEC531000843A9 /* SpinnerView.swift in Sources */,
 				E573D17A1C0E6106004C3BFC /* LoginViewController+WSRequestAlerts.swift in Sources */,
 				E5F6F3191C3289060000A87E /* AccountTableViewController+SegmentTableViewCellActions.swift in Sources */,
 				E54276781C3E374400047029 /* CreateFeedbackTableViewController.swift in Sources */,

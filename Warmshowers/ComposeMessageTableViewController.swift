@@ -137,7 +137,7 @@ class ComposeMessageTableViewController: UITableViewController {
         
         // Show a warning message if the message body has some content
         guard let body = message?.body where body != "" else {
-            let alert = UIAlertController(title: nil, message: "Are you sure you want to discard the current feedback?", preferredStyle: .Alert)
+            let alert = UIAlertController(title: nil, message: "Are you sure you want to discard the current message?", preferredStyle: .Alert)
             let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
             alert.addAction(cancelAction)
             let continueAction = UIAlertAction(title: "Continue", style: .Default) { (continueAction) -> Void in
@@ -249,6 +249,8 @@ class ComposeMessageTableViewController: UITableViewController {
     func showHUD() {
         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         hud.labelText = "Sending message ..."
+        hud.dimBackground = true
+        hud.removeFromSuperViewOnHide = true
     }
     
     func hideHUD() {

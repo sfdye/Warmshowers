@@ -10,10 +10,19 @@ import UIKit
 import MapKit
 import CoreData
 
-// TODOs
+// FIRST TODOs
+// queue http requests - ask paul for advice later
+// host keyword search functionality
+// show host list when you click on group pins
 // !!! link up system settings to the app settings !!!
-// - fix logout problem: when http error, the apps still needs to show the login page
-//
+// mark new message threads + tab bar icon badge
+// fix MOC saving bug: when you send a message and go back to message threads is fails to save to the store
+
+
+// LATER TODOs
+// background message check and app icon bagde/ notifications
+// add message sorter
+// add distance units option
 
 // IDEAS
 // - load gps files on map - start with american adventure routes on WS
