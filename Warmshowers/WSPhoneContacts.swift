@@ -23,7 +23,7 @@ struct WSPhoneContacts {
         
         for key in keys {
             let number = numberForKey(key, inData: userData)
-            let type: PhoneNumberType
+            let type: WSPhoneNumberType
             switch key {
             case "homephone":
                 type = .Home

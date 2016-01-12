@@ -15,10 +15,11 @@ import CoreData
 extension CDWSUser {
 
     @NSManaged var fullname: String?
+    @NSManaged var image: NSObject?
     @NSManaged var name: String?
     @NSManaged var uid: NSNumber?
-    @NSManaged var image: NSObject?
+    @NSManaged var sent_messages: NSSet?
     @NSManaged var threads: NSSet?
-    @NSManaged var messages: NSSet?
+    @NSManaged var recieved_messages: NSSet?
 
 }

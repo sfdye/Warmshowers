@@ -21,7 +21,7 @@ extension CDWSMessageThread {
     @NSManaged var subject: String?
     @NSManaged var thread_id: NSNumber?
     @NSManaged var thread_started: NSDate?
-    @NSManaged var participants: NSSet?
     @NSManaged var messages: NSSet?
+    @NSManaged var participants: NSSet?
 
 }

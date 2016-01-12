@@ -20,7 +20,7 @@ class LoginViewController: UIViewController {
     weak var appDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate)
     
     // A http client for making the login request
-    let httpClient = WSRequest()
+    let httpRequest = WSRequest()
     
     // Alert controller to display errors
     var alertController: UIAlertController?
@@ -32,7 +32,7 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         
         // set the http client delegate for error alerts
-        httpClient.alertViewController = self
+        httpRequest.alertViewController = self
         
         // load the default username
         let defaults = NSUserDefaults.standardUserDefaults()
@@ -68,7 +68,7 @@ class LoginViewController: UIViewController {
         let password = passwordTextField.text!
         
         // log in
-        httpClient.login(username, password: password) { (success) -> Void in
+        httpRequest.login(username, password: password) { (success) -> Void in
             if success {
                 
                 // login sucessful, store the username and session cookie for later

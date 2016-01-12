@@ -21,7 +21,7 @@ class MessageThreadsTableViewController: UITableViewController {
         return defaults.integerForKey(DEFAULTS_KEY_UID)
     }
     
-    let httpClient = WSRequest()
+    let httpRequest = WSRequest()
     
     let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     
@@ -37,10 +37,10 @@ class MessageThreadsTableViewController: UITableViewController {
         super.viewDidLoad()
         
         // update the store
-        updateMessageThreads()
+        update()
         
         // set the refresh controller for the tableview
-        refreshController.addTarget(self, action: Selector("updateMessageThreads"), forControlEvents: UIControlEvents.ValueChanged)
+        refreshController.addTarget(self, action: Selector("update"), forControlEvents: UIControlEvents.ValueChanged)
         self.refreshControl = self.refreshController
         
     }
@@ -71,15 +71,18 @@ class MessageThreadsTableViewController: UITableViewController {
     
     // Requests all messages threads from the server and updates the store.
     //
-    func updateMessageThreads() {
+    func update() {
         
-        httpClient.getAllMessageThreads({ (data) -> Void in
+        httpRequest.getAllMessageThreads({ (data) -> Void in
             
             if data != nil {
                 let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
                 dispatch_async(queue, { () -> Void in
                     self.parseMessageThreads(data!)
                 })
+            } else {
+                // TODO check for internet connection here and diplay an alert
+//                self.httpRequest.checkReachability()
             }
         })
     }
@@ -95,7 +98,7 @@ class MessageThreadsTableViewController: UITableViewController {
         messageThreads = [CDWSMessageThread]()
         
         // parse the json
-        if let json = self.httpClient.jsonDataToJSONObject(data) {
+        if let json = self.httpRequest.jsonDataToJSONObject(data) {
             if let threadsJSON = json as? NSArray {
                 for threadJSON in threadsJSON {
                     do {

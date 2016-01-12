@@ -8,52 +8,25 @@
 
 import Foundation
 
-enum WSRecommendationRating {
-    case Positive
-    case Negative
-    case Neutral
-    
-    func asString() -> String {
-        switch self {
-        case .Positive:
-            return "Positive"
-        case .Negative:
-            return "Negative"
-        case .Neutral:
-            return "Neutral"
-        }
-    }
-}
-
-enum WSRecommendationFor {
-    case Guest
-    case Host
-    case MetTravelling
-    case Other
-    
-    func asString() -> String {
-        switch self {
-        case .Guest:
-            return "Guest"
-        case .Host:
-            return "Host"
-        case .MetTravelling:
-            return "Met Travelling"
-        case .Other:
-            return "Other"
-        }
-    }
-}
-
 struct WSRecommendation {
     
-    var body: String
-    var date: NSDate
-    var recommendationFor: WSRecommendationFor
-    var rating: WSRecommendationRating
-    var author: WSUser
-    var recommendedUserUID: Int
+    var body: String = ""
+    var date: NSDate = NSDate()
+    var recommendationFor: WSRecommendationFor = .Host
+    var rating: WSRecommendationRating = .Positive
+    var author: WSUser?
+    var recommendedUserUID: Int?
     var authorImage: UIImage?
+    var month: Int {
+        let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
+        return calendar.components([.Month], fromDate: date).month
+    }
+    var year: Int {
+        let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
+        return calendar.components([.Year], fromDate: date).year
+    }
+    
+    init() { }
     
     init?(json: AnyObject) {
         
@@ -77,8 +50,8 @@ struct WSRecommendation {
             self.recommendationFor = .Guest
         case "Host":
             self.recommendationFor = .Host
-        case "Met_Travelling":
-            self.recommendationFor = .MetTravelling
+        case "Met Traveling":
+            self.recommendationFor = .MetTraveling
         case "Other":
             self.recommendationFor = .Other
         default:

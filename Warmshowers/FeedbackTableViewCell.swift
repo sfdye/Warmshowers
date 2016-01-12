@@ -14,14 +14,16 @@ class FeedbackTableViewCell: UITableViewCell {
     @IBOutlet var authorNameLabel: UILabel!
     @IBOutlet var dateLabel: UILabel!
     @IBOutlet var ratingLabel: UILabel!
+    @IBOutlet var forLabel: UILabel!
     @IBOutlet var bodyLabel: UILabel!
     let formatter = NSDateFormatter()
     
     func configureWithFeedback(feedback: WSRecommendation) {
         setAuthorThumbnailImage(feedback.authorImage)
-        authorNameLabel.text = feedback.author.fullname
+        authorNameLabel.text = feedback.author?.fullname
         setDate(feedback.date)
         setRating(feedback.rating)
+        setAuthorType(feedback.recommendationFor)
         bodyLabel.text = feedback.body
     }
     
@@ -43,7 +45,7 @@ class FeedbackTableViewCell: UITableViewCell {
     }
     
     func setRating(rating: WSRecommendationRating) {
-        ratingLabel.text = rating.asString()
+        ratingLabel.text = rating.rawValue
         switch rating {
         case .Positive:
             ratingLabel.textColor = WSCOLOR_GREEN
@@ -54,4 +56,14 @@ class FeedbackTableViewCell: UITableViewCell {
         }
     }
     
+    func setAuthorType(recommendationFor: WSRecommendationFor) {
+        switch recommendationFor {
+        case .Guest:
+            forLabel.text = "Host, "
+        case .Host:
+            forLabel.text = "Guest, "
+        default:
+            forLabel.text = recommendationFor.rawValue + ", "
+        }
+    }
 }

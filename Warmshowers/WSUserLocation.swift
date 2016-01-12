@@ -44,7 +44,7 @@ class WSUserLocation : WSUser, MKAnnotation {
         // At a minimum, the object must have a uid, latitude and longitude
         guard let fullname = json.valueForKey("fullname") as? String,
               let name = json.valueForKey("name") as? String,
-              let uid = json.valueForKey("laundry")?.integerValue,
+              let uid = json.valueForKey("uid")?.integerValue,
               let lat = json.valueForKey("latitude")?.doubleValue,
               let lon = json.valueForKey("longitude")?.doubleValue
             else {

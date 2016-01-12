@@ -78,7 +78,7 @@ struct WSTimeInterval {
         var time = self.time
         var count = 0
         var string = ""
-        let units: [TimeUnit] = [.years, .months, .weeks, .days, .hours, .months, .seconds]
+        let units: [TimeUnit] = [.years, .months, .weeks, .days, .hours, .minutes, .seconds]
         
         func done() -> Bool {
             return (count >= maxUnitsInString) ? true : false

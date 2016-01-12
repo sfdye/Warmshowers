@@ -19,13 +19,15 @@ class PhoneTableViewCell: UITableViewCell {
     func setWithPhoneNumber(phoneNumber: WSPhoneNumber) {
         phoneNumberLabel.text = phoneNumber.number
         numberTypeLabel.text = phoneNumber.description
+        
+        // TODO: link phone numbers to phone app and show icons below
         switch phoneNumber.type {
         case .Home, .Work:
-            phoneIcon.hidden = false
+            phoneIcon.hidden = true //false
             messageIcon.hidden = true
         case .Mobile:
-            phoneIcon.hidden = false
-            messageIcon.hidden = false
+            phoneIcon.hidden = true //false
+            messageIcon.hidden = true //false
         }
     }
 

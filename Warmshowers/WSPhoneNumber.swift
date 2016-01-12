@@ -8,16 +8,10 @@
 
 import Foundation
 
-enum PhoneNumberType: Int {
-    case Home
-    case Mobile
-    case Work
-}
-
 struct WSPhoneNumber {
     
     var number: String
-    var type: PhoneNumberType
+    var type: WSPhoneNumberType
     var description: String {
         switch type {
         case .Home:
@@ -29,7 +23,7 @@ struct WSPhoneNumber {
         }
     }
     
-    init(number: String, type: PhoneNumberType) {
+    init(number: String, type: WSPhoneNumberType) {
         self.number = number
         self.type = type
     }

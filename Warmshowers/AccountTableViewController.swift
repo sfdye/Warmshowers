@@ -24,6 +24,8 @@ let OFFER_CELL_ID = "Offer"
 let PHONE_CELL_ID = "Phone"
 
 let FEEDBACK_SEGUE_ID = "ToFeedback"
+let SEND_NEW_MESSAGE_SEGUE_ID = "ToSendNewMessage"
+let PROVIDE_FEEDBACK_SEGUE_ID = "ToProvideFeedback"
 
 enum HostProfileTab {
     case About
@@ -48,7 +50,7 @@ class AccountTableViewController: UITableViewController {
     
     var actionAlert = UIAlertController()
     
-    let httpClient = WSRequest()
+    let httpRequest = WSRequest()
     
     let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     
@@ -56,19 +58,6 @@ class AccountTableViewController: UITableViewController {
     
     var alertController: UIAlertController?
     
-    let table: [[[String: AnyObject]]] = [
-        // section 0
-        [
-            ["cellID": IMAGE_CELL_ID, "cellType": ProfileImageTableViewCell.self],
-//            ["cellID": ACCOUNT_DETAIL_CELL_ID],
-//            ["cellID": ACCOUNT_DETAIL_CELL_ID],
-//            ["cellID": FEEDBACK_CELL_ID]
-        ],
-        // section 1
-        [
-            ["cellType": SEGMENT_CELL_ID]
-        ]
-    ]
 
     @IBAction func doneButtonPressed(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -88,12 +77,12 @@ class AccountTableViewController: UITableViewController {
         if uid != nil {
 
             // Get the users profile
-            httpClient.getUserInfo(uid!, doWithUserInfo: { (info) -> Void in
+            httpRequest.getUserInfo(uid!, doWithUserInfo: { (info) -> Void in
                 self.updateWithUserInfo(info)
             })
             
             // Get the users feedback
-            httpClient.getUserFeedback(uid!, doWithUserFeedback: { (feedback) -> Void in
+            httpRequest.getUserFeedback(uid!, doWithUserFeedback: { (feedback) -> Void in
                 self.updateWithFeedback(feedback)
             })
             
@@ -109,7 +98,6 @@ class AccountTableViewController: UITableViewController {
     func updateWithUserInfo(info: AnyObject?) {
         if let info = info {
             self.info = info
-            print(info)
             self.offers.update(info)
             self.hostingInfo.update(info)
             self.phoneNumbers.update(info)
@@ -154,7 +142,7 @@ class AccountTableViewController: UITableViewController {
             
             let logoutAction = UIAlertAction(title: "Logout", style: .Default) { (logoutAction) -> Void in
                 // Logout and return the login screeen
-                self.httpClient.logout({ (success) -> Void in
+                self.httpRequest.logout({ (success) -> Void in
                     if success {
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
                             self.appDelegate?.logout()
@@ -169,13 +157,13 @@ class AccountTableViewController: UITableViewController {
             // Options for any other user
             
             let messageAction = UIAlertAction(title: "Send Message", style: .Default) { (messageAction) -> Void in
-                // Present componse message view here
-                print("new message")
+                // Present compose message view
+                self.performSegueWithIdentifier(SEND_NEW_MESSAGE_SEGUE_ID, sender: nil)
             }
             actionAlert.addAction(messageAction)
             let provideFeedbackAction = UIAlertAction(title: "Provide Feedback", style: .Default) { (messageAction) -> Void in
-                // Present componse message view here
-                print("provide feedback")
+                // Present provide feeback view
+                self.performSegueWithIdentifier(PROVIDE_FEEDBACK_SEGUE_ID, sender: nil)
             }
             actionAlert.addAction(provideFeedbackAction)
             
@@ -380,9 +368,14 @@ class AccountTableViewController: UITableViewController {
     // MARK: Navigation
     
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
-        if identifier == FEEDBACK_SEGUE_ID {
-            return (feedback != nil) ? true : false
-        } else {
+        switch identifier {
+        case FEEDBACK_SEGUE_ID:
+            return feedback != nil ? true : false
+        case SEND_NEW_MESSAGE_SEGUE_ID:
+            return uid != nil ? true : false
+        case PROVIDE_FEEDBACK_SEGUE_ID:
+            return info?.valueForKey("name") as? String != nil ? true : false
+        default:
             return true
         }
     }
@@ -393,7 +386,19 @@ class AccountTableViewController: UITableViewController {
             let feedbackVC = segue.destinationViewController as! FeedbackTableViewController
             feedbackVC.parseFeedbackJSON(self.feedback)
         }
+        if segue.identifier == SEND_NEW_MESSAGE_SEGUE_ID {
+            let navVC = segue.destinationViewController as! UINavigationController
+            let composeMessageVC = navVC.viewControllers.first as! ComposeMessageTableViewController
+            composeMessageVC.initialiseAsNewMessageToUser(uid!)
+        }
+        if segue.identifier == PROVIDE_FEEDBACK_SEGUE_ID {
+            let navVC = segue.destinationViewController as! UINavigationController
+            let createFeedbackVC = navVC.viewControllers.first as! CreateFeedbackTableViewController
+            createFeedbackVC.userName = info?.valueForKey("name") as? String
+            createFeedbackVC.feedback.recommendedUserUID = uid
+        }
     }
+
     
 //    // MARK: - WSRequestAlert Delegate functions
 //    
@@ -423,7 +428,7 @@ class AccountTableViewController: UITableViewController {
             
             // Get the users profile image
             if let imageURL = info[self.PHOTO_KEY] as? String {
-                httpClient.getImageWithURL(imageURL, doWithImage: { (image) -> Void in
+                httpRequest.getImageWithURL(imageURL, doWithImage: { (image) -> Void in
                     self.photo = image
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)

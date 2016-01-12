@@ -12,11 +12,13 @@ let FEEDBACK_CELL_ID = "Feedback"
 
 class FeedbackTableViewController: UITableViewController {
     
-    let httpClient = WSRequest()
+    let httpRequest = WSRequest()
     
     var feedback: [WSRecommendation]?
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
         tableView.rowHeight = UITableViewAutomaticDimension
         // TODO - update the estimate
         tableView.estimatedRowHeight = 140
@@ -85,8 +87,6 @@ class FeedbackTableViewController: UITableViewController {
             return
         }
         
-        print(json)
-        
         let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
         dispatch_async(queue) { () -> Void in
             if let allRecommendations = json.valueForKey("recommendations") as? NSArray {
@@ -118,11 +118,11 @@ class FeedbackTableViewController: UITableViewController {
             return
         }
         
-        httpClient.getUserThumbnailImage(self.feedback![index].author.uid) { (image) -> Void in
+        httpRequest.getUserThumbnailImage(self.feedback![index].author!.uid) { (image) -> Void in
             if image != nil {
                 self.feedback![index].authorImage = image
             } else {
-                print("Failed to get thumbnail for user \(self.feedback![index].author.fullname)")
+                print("Failed to get thumbnail for user \(self.feedback![index].author!.fullname)")
             }
             whenDone()
         }

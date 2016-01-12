@@ -22,10 +22,19 @@ class MessageThreadsTableViewCell: UITableViewCell {
         self.threadID = messageThread.thread_id?.integerValue
         // TODO setup body preview
         self.bodyPreviewLabel.text = ""
-        // TODO setup message thread last edited date
-        self.dateLabel.text = ""
+        setDate(messageThread.last_updated)
         self.participantsLabel.text = messageThread.getParticipantString(uid)
         self.subjectLabel.text = messageThread.subject
+    }
+    
+    func setDate(date: NSDate?) {
+        if date != nil {
+            let formatter = NSDateFormatter()
+            let template = "HHmmddMMMyyyy"
+            let locale = NSLocale.currentLocale()
+            formatter.dateFormat = NSDateFormatter.dateFormatFromTemplate(template, options: 0, locale: locale)
+            dateLabel.text = formatter.stringFromDate(date!)
+        }
     }
 
 }

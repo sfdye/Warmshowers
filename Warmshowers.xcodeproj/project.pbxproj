@@ -21,6 +21,20 @@
 		E52E8AAF1C0D056D000391AB /* MessageThreadsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8AAE1C0D056D000391AB /* MessageThreadsTableViewController.swift */; };
 		E52E8AB11C0D0B1A000391AB /* MessageThreadsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8AB01C0D0B1A000391AB /* MessageThreadsTableViewCell.swift */; };
 		E52E8ABE1C0E463D000391AB /* Warmshowers.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E52E8ABC1C0E463D000391AB /* Warmshowers.xcdatamodeld */; };
+		E54276711C3CA8E800047029 /* ComposeMessageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54276701C3CA8E800047029 /* ComposeMessageTableViewController.swift */; };
+		E54276731C3E0CC900047029 /* ComposeMessageDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54276721C3E0CC900047029 /* ComposeMessageDetailTableViewCell.swift */; };
+		E54276751C3E0CE200047029 /* ComposeMessageBodyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54276741C3E0CE200047029 /* ComposeMessageBodyTableViewCell.swift */; };
+		E54276781C3E374400047029 /* CreateFeedbackTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54276771C3E374400047029 /* CreateFeedbackTableViewController.swift */; };
+		E542767C1C3E4C2A00047029 /* FeedbackOptionPickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E542767B1C3E4C2A00047029 /* FeedbackOptionPickerTableViewCell.swift */; };
+		E542767E1C3E544600047029 /* WSRecommendationRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = E542767D1C3E544600047029 /* WSRecommendationRating.swift */; };
+		E54276801C3E546E00047029 /* WSRecommendationFor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E542767F1C3E546E00047029 /* WSRecommendationFor.swift */; };
+		E54276821C3E54BA00047029 /* WSPhoneNumberType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54276811C3E54BA00047029 /* WSPhoneNumberType.swift */; };
+		E54276861C3E78E000047029 /* CreateFeedbackTableViewController+UIPickerViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54276851C3E78E000047029 /* CreateFeedbackTableViewController+UIPickerViewDelegate.swift */; };
+		E54276881C3E83E500047029 /* CreateFeedbackTableViewController+UIPickerViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54276871C3E83E500047029 /* CreateFeedbackTableViewController+UIPickerViewDataSource.swift */; };
+		E542768A1C41AAAF00047029 /* WSRecommendationMonths.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54276891C41AAAF00047029 /* WSRecommendationMonths.swift */; };
+		E542768C1C41B10300047029 /* FeedbackOptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E542768B1C41B10300047029 /* FeedbackOptionTableViewCell.swift */; };
+		E542768E1C44947300047029 /* FeedbackBodyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E542768D1C44947300047029 /* FeedbackBodyTableViewCell.swift */; };
+		E54276901C44956F00047029 /* CreateFeedbackTableViewController+UITextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E542768F1C44956F00047029 /* CreateFeedbackTableViewController+UITextViewDelegate.swift */; };
 		E54A572B1BFD664A000843A9 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E54A572A1BFD664A000843A9 /* Settings.bundle */; };
 		E54A572F1BFDC446000843A9 /* WSRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54A572E1BFDC446000843A9 /* WSRequests.swift */; };
 		E54A57311BFE6FB2000843A9 /* WSURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54A57301BFE6FB2000843A9 /* WSURL.swift */; };
@@ -105,6 +119,20 @@
 		E52E8AAE1C0D056D000391AB /* MessageThreadsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageThreadsTableViewController.swift; sourceTree = "<group>"; };
 		E52E8AB01C0D0B1A000391AB /* MessageThreadsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageThreadsTableViewCell.swift; sourceTree = "<group>"; };
 		E52E8ABD1C0E463D000391AB /* Warmshowers.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Warmshowers.xcdatamodel; sourceTree = "<group>"; };
+		E54276701C3CA8E800047029 /* ComposeMessageTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeMessageTableViewController.swift; sourceTree = "<group>"; };
+		E54276721C3E0CC900047029 /* ComposeMessageDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeMessageDetailTableViewCell.swift; sourceTree = "<group>"; };
+		E54276741C3E0CE200047029 /* ComposeMessageBodyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeMessageBodyTableViewCell.swift; sourceTree = "<group>"; };
+		E54276771C3E374400047029 /* CreateFeedbackTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateFeedbackTableViewController.swift; sourceTree = "<group>"; };
+		E542767B1C3E4C2A00047029 /* FeedbackOptionPickerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackOptionPickerTableViewCell.swift; sourceTree = "<group>"; };
+		E542767D1C3E544600047029 /* WSRecommendationRating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSRecommendationRating.swift; sourceTree = "<group>"; };
+		E542767F1C3E546E00047029 /* WSRecommendationFor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSRecommendationFor.swift; sourceTree = "<group>"; };
+		E54276811C3E54BA00047029 /* WSPhoneNumberType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSPhoneNumberType.swift; sourceTree = "<group>"; };
+		E54276851C3E78E000047029 /* CreateFeedbackTableViewController+UIPickerViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CreateFeedbackTableViewController+UIPickerViewDelegate.swift"; sourceTree = "<group>"; };
+		E54276871C3E83E500047029 /* CreateFeedbackTableViewController+UIPickerViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CreateFeedbackTableViewController+UIPickerViewDataSource.swift"; sourceTree = "<group>"; };
+		E54276891C41AAAF00047029 /* WSRecommendationMonths.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSRecommendationMonths.swift; sourceTree = "<group>"; };
+		E542768B1C41B10300047029 /* FeedbackOptionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackOptionTableViewCell.swift; sourceTree = "<group>"; };
+		E542768D1C44947300047029 /* FeedbackBodyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackBodyTableViewCell.swift; sourceTree = "<group>"; };
+		E542768F1C44956F00047029 /* CreateFeedbackTableViewController+UITextViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CreateFeedbackTableViewController+UITextViewDelegate.swift"; sourceTree = "<group>"; };
 		E54A572A1BFD664A000843A9 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		E54A572E1BFDC446000843A9 /* WSRequests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSRequests.swift; sourceTree = "<group>"; };
 		E54A57301BFE6FB2000843A9 /* WSURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSURL.swift; sourceTree = "<group>"; };
@@ -210,24 +238,52 @@
 			name = Map;
 			sourceTree = "<group>";
 		};
+		E542766F1C3CA8B100047029 /* ComposeMessageTabelViewController */ = {
+			isa = PBXGroup;
+			children = (
+				E54276701C3CA8E800047029 /* ComposeMessageTableViewController.swift */,
+				E54276721C3E0CC900047029 /* ComposeMessageDetailTableViewCell.swift */,
+				E54276741C3E0CE200047029 /* ComposeMessageBodyTableViewCell.swift */,
+			);
+			name = ComposeMessageTabelViewController;
+			sourceTree = "<group>";
+		};
+		E54276761C3E371000047029 /* CreateFeedbackTableViewController */ = {
+			isa = PBXGroup;
+			children = (
+				E54276771C3E374400047029 /* CreateFeedbackTableViewController.swift */,
+				E542767B1C3E4C2A00047029 /* FeedbackOptionPickerTableViewCell.swift */,
+				E54276851C3E78E000047029 /* CreateFeedbackTableViewController+UIPickerViewDelegate.swift */,
+				E54276871C3E83E500047029 /* CreateFeedbackTableViewController+UIPickerViewDataSource.swift */,
+				E542768B1C41B10300047029 /* FeedbackOptionTableViewCell.swift */,
+				E542768D1C44947300047029 /* FeedbackBodyTableViewCell.swift */,
+				E542768F1C44956F00047029 /* CreateFeedbackTableViewController+UITextViewDelegate.swift */,
+			);
+			name = CreateFeedbackTableViewController;
+			sourceTree = "<group>";
+		};
 		E54A57321BFE82F9000843A9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E5967BC71C39DBC00037F4B7 /* CDWSMessage.swift */,
+				E5967BC61C39DBC00037F4B7 /* CDWSMessage+CoreDataProperties.swift */,
+				E5967BC51C39DBC00037F4B7 /* CDWSMessageThread.swift */,
+				E5967BC41C39DBC00037F4B7 /* CDWSMessageThread+CoreDataProperties.swift */,
+				E5967BC91C39DBC00037F4B7 /* CDWSUser.swift */,
+				E5967BC81C39DBC00037F4B7 /* CDWSUser+CoreDataProperties.swift */,
 				E52E8ABC1C0E463D000391AB /* Warmshowers.xcdatamodeld */,
-				E54A57331BFE830C000843A9 /* WSUser.swift */,
-				E51397661C06945E00FD8EC1 /* WSUserLocation.swift */,
-				E5967B9E1C3490740037F4B7 /* WSOffers.swift */,
 				E5967BA01C35D59C0037F4B7 /* WSHostingInfo.swift */,
+				E5967B9E1C3490740037F4B7 /* WSOffers.swift */,
 				E5967BA41C361D2B0037F4B7 /* WSPhoneContacts.swift */,
 				E5967BA61C3620470037F4B7 /* WSPhoneNumber.swift */,
-				E5967BAA1C38814F0037F4B7 /* WSTimeInterval.swift */,
 				E5967BB31C38A8ED0037F4B7 /* WSRecommendation.swift */,
-				E5967BC41C39DBC00037F4B7 /* CDWSMessageThread+CoreDataProperties.swift */,
-				E5967BC51C39DBC00037F4B7 /* CDWSMessageThread.swift */,
-				E5967BC61C39DBC00037F4B7 /* CDWSMessage+CoreDataProperties.swift */,
-				E5967BC71C39DBC00037F4B7 /* CDWSMessage.swift */,
-				E5967BC81C39DBC00037F4B7 /* CDWSUser+CoreDataProperties.swift */,
-				E5967BC91C39DBC00037F4B7 /* CDWSUser.swift */,
+				E542767F1C3E546E00047029 /* WSRecommendationFor.swift */,
+				E542767D1C3E544600047029 /* WSRecommendationRating.swift */,
+				E5967BAA1C38814F0037F4B7 /* WSTimeInterval.swift */,
+				E54A57331BFE830C000843A9 /* WSUser.swift */,
+				E51397661C06945E00FD8EC1 /* WSUserLocation.swift */,
+				E54276811C3E54BA00047029 /* WSPhoneNumberType.swift */,
+				E54276891C41AAAF00047029 /* WSRecommendationMonths.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -245,6 +301,8 @@
 		E54A573A1C026D96000843A9 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				E54276761C3E371000047029 /* CreateFeedbackTableViewController */,
+				E542766F1C3CA8B100047029 /* ComposeMessageTabelViewController */,
 				E5967BB91C3921F40037F4B7 /* MessageThreadTableViewController */,
 				E5967BAC1C38A0A30037F4B7 /* FeedbackTableViewController */,
 				E5F6F30B1C2FE2360000A87E /* AccountViewController */,
@@ -262,15 +320,15 @@
 		E573D1751C0E5FC8004C3BFC /* HostMapViewController */ = {
 			isa = PBXGroup;
 			children = (
-				E52E8A9E1C0BD25A000391AB /* HostMapViewController+MKMapViewDelegate.swift */,
 				E56CC0891BFD22D800AAF973 /* HostMapViewController.swift */,
-				E52E8A9C1C0BD1C6000391AB /* HostMapViewController+WSRequestAlerts.swift */,
-				E52E8AA01C0BD38D000391AB /* HostMapViewController+UISearchControllerDelegate.swift */,
 				E52E8AA21C0BD3F0000391AB /* HostMapViewController+KPClusteringControllerDelegate.swift */,
-				E52E8AA41C0BD8BF000391AB /* HostMapViewController+UIUISearchResultsUpdating.swift */,
-				E52E8AA61C0BDAE9000391AB /* HostMapViewController+UITableViewDelegate.swift */,
-				E52E8AA81C0BDB18000391AB /* HostMapViewController+UITableViewDataSource.swift */,
+				E52E8A9E1C0BD25A000391AB /* HostMapViewController+MKMapViewDelegate.swift */,
 				E52E8AAA1C0C2257000391AB /* HostMapViewController+UISearchBarDelegate.swift */,
+				E52E8AA01C0BD38D000391AB /* HostMapViewController+UISearchControllerDelegate.swift */,
+				E52E8AA81C0BDB18000391AB /* HostMapViewController+UITableViewDataSource.swift */,
+				E52E8AA61C0BDAE9000391AB /* HostMapViewController+UITableViewDelegate.swift */,
+				E52E8AA41C0BD8BF000391AB /* HostMapViewController+UIUISearchResultsUpdating.swift */,
+				E52E8A9C1C0BD1C6000391AB /* HostMapViewController+WSRequestAlerts.swift */,
 			);
 			name = HostMapViewController;
 			sourceTree = "<group>";
@@ -612,6 +670,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E5967BAB1C38814F0037F4B7 /* WSTimeInterval.swift in Sources */,
+				E542767C1C3E4C2A00047029 /* FeedbackOptionPickerTableViewCell.swift in Sources */,
 				E51397671C06945E00FD8EC1 /* WSUserLocation.swift in Sources */,
 				E5F6F3171C3140BD0000A87E /* AboutTableViewCell.swift in Sources */,
 				E5967BA51C361D2B0037F4B7 /* WSPhoneContacts.swift in Sources */,
@@ -629,6 +688,7 @@
 				E54A57641C03E4A4000843A9 /* AccountTableViewController.swift in Sources */,
 				E54A57311BFE6FB2000843A9 /* WSURL.swift in Sources */,
 				E52E8ABE1C0E463D000391AB /* Warmshowers.xcdatamodeld in Sources */,
+				E54276801C3E546E00047029 /* WSRecommendationFor.swift in Sources */,
 				E5967BBD1C39BFF30037F4B7 /* MessageTableViewCell.swift in Sources */,
 				E5967BA11C35D59C0037F4B7 /* WSHostingInfo.swift in Sources */,
 				E5967BCA1C39DBC00037F4B7 /* CDWSMessageThread+CoreDataProperties.swift in Sources */,
@@ -638,8 +698,13 @@
 				E5F6F30D1C2FE2770000A87E /* AccountDetailTableViewCell.swift in Sources */,
 				E56CC08A1BFD22D800AAF973 /* HostMapViewController.swift in Sources */,
 				E50FD8A21C053A42004D38A3 /* MapTileServerURLTemplate.swift in Sources */,
+				E54276821C3E54BA00047029 /* WSPhoneNumberType.swift in Sources */,
+				E54276751C3E0CE200047029 /* ComposeMessageBodyTableViewCell.swift in Sources */,
+				E542768A1C41AAAF00047029 /* WSRecommendationMonths.swift in Sources */,
 				E5F6F30F1C2FE3360000A87E /* ProfileImageTableViewCell.swift in Sources */,
 				E5D96AF81BFB1CA700AFAFEE /* AppDelegate.swift in Sources */,
+				E54276881C3E83E500047029 /* CreateFeedbackTableViewController+UIPickerViewDataSource.swift in Sources */,
+				E542767E1C3E544600047029 /* WSRecommendationRating.swift in Sources */,
 				E5967BB21C38A11E0037F4B7 /* FeedbackTableViewController.swift in Sources */,
 				E5967BA31C361A9F0037F4B7 /* PhoneTableViewCell.swift in Sources */,
 				E52E8AAB1C0C2257000391AB /* HostMapViewController+UISearchBarDelegate.swift in Sources */,
@@ -650,16 +715,23 @@
 				E54A57381BFEC531000843A9 /* SpinnerView.swift in Sources */,
 				E573D17A1C0E6106004C3BFC /* LoginViewController+WSRequestAlerts.swift in Sources */,
 				E5F6F3191C3289060000A87E /* AccountTableViewController+SegmentTableViewCellActions.swift in Sources */,
+				E54276781C3E374400047029 /* CreateFeedbackTableViewController.swift in Sources */,
+				E54276731C3E0CC900047029 /* ComposeMessageDetailTableViewCell.swift in Sources */,
 				E5967BCC1C39DBC00037F4B7 /* CDWSMessage+CoreDataProperties.swift in Sources */,
+				E54276711C3CA8E800047029 /* ComposeMessageTableViewController.swift in Sources */,
+				E542768E1C44947300047029 /* FeedbackBodyTableViewCell.swift in Sources */,
 				E56CC0921BFD569500AAF973 /* SwitchTableViewCell.swift in Sources */,
 				E5F6F3151C313F340000A87E /* SegmentTableViewCell.swift in Sources */,
 				E54A57341BFE830C000843A9 /* WSUser.swift in Sources */,
 				E5967BA71C3620470037F4B7 /* WSPhoneNumber.swift in Sources */,
 				E52E8A9D1C0BD1C6000391AB /* HostMapViewController+WSRequestAlerts.swift in Sources */,
+				E542768C1C41B10300047029 /* FeedbackOptionTableViewCell.swift in Sources */,
 				E52E8AA51C0BD8BF000391AB /* HostMapViewController+UIUISearchResultsUpdating.swift in Sources */,
 				E54A572F1BFDC446000843A9 /* WSRequests.swift in Sources */,
 				E5F6F30A1C2B36930000A87E /* WSRestfulService.swift in Sources */,
 				E5967BCB1C39DBC00037F4B7 /* CDWSMessageThread.swift in Sources */,
+				E54276901C44956F00047029 /* CreateFeedbackTableViewController+UITextViewDelegate.swift in Sources */,
+				E54276861C3E78E000047029 /* CreateFeedbackTableViewController+UIPickerViewDelegate.swift in Sources */,
 				E5967BCD1C39DBC00037F4B7 /* CDWSMessage.swift in Sources */,
 				E5967BA91C36910C0037F4B7 /* AvailiblityTableViewCell.swift in Sources */,
 				E52E8A9B1C0BCD03000391AB /* HostSearchController.swift in Sources */,

@@ -32,7 +32,7 @@ class HostMapViewController: UIViewController {
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var searchBar: UISearchBar!
     
-    let httpClient = WSRequest()
+    let httpRequest = WSRequest()
     var alertController: UIAlertController?
     let locationManager = CLLocationManager()
     
@@ -61,7 +61,7 @@ class HostMapViewController: UIViewController {
         super.viewDidLoad()
         
         // Allows the http client to diplay alerts through this view controller
-        httpClient.alertViewController = self
+        httpRequest.alertViewController = self
         
         // Set up the navigation bar
         self.cancelButton.target = self
@@ -103,7 +103,7 @@ class HostMapViewController: UIViewController {
     // Updates the hosts shown on the map
     func updateHostsOnMap() {
         
-        httpClient.getHostDataForMapView(mapView) { (data) -> Void in
+        httpRequest.getHostDataForMapView(mapView) { (data) -> Void in
             
             // update the mapView data source
             if data != nil {
@@ -119,7 +119,7 @@ class HostMapViewController: UIViewController {
     func updateHostList(data: NSData) {
         
         // parse the json
-        if let json = self.httpClient.jsonDataToDictionary(data) {
+        if let json = self.httpRequest.jsonDataToDictionary(data) {
             if let accounts = json["accounts"] as? NSArray {
                 for account in accounts {
                     if let user = WSUserLocation(json: account) {

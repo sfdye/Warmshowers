@@ -455,16 +455,113 @@ class WSRequest {
     
     // To create feedback on a user
     //
+    func createUserFeedback(feedback: WSRecommendation, userName: String, completion: (success: Bool) -> Void ) {
+        
+        let service = WSRestfulService(type: .createFeedback)!
+        
+        var params = [String: String]()
+        params["node[type]"] = "trust_referral"
+        params["node[field_member_i_trust][0][uid][uid]"] = userName
+        params["node[field_rating][value]"] = feedback.rating.rawValue
+        params["node[body]"] = feedback.body
+        params["node[field_guest_or_host][value]"] = feedback.recommendationFor.rawValue
+        params["node[field_hosting_date][0][value][year]"] = String(feedback.year)
+        params["node[field_hosting_date][0][value][month]"] = String(feedback.month)
+        
+        requestWithCSRFToken(service, params: params, retry: true, doWithResponse: { (data, response, error) -> Void in
+            
+            guard let httpResponse = response as? NSHTTPURLResponse where data != nil && error == nil else {
+                completion(success: false)
+                return
+            }
+            
+            guard httpResponse.statusCode == 200 else {
+                completion(success: false)
+                return
+            }
+            
+            completion(success: true)
+        })
+    }
     
+    // data from successfull feedback submissison
+//    {
+//    nid = 129484;
+//    uri = "https://www.warmshowers.org/services/rest/node/129484";
+//    }
+    
+    //    Optional(<NSHTTPURLResponse: 0x7f96579f52d0> { URL: https://www.warmshowers.org/services/rest/node } { status code: 200, headers {
+    //    "Cache-Control" = "no-cache";
+    //    Connection = "keep-alive";
+    //    "Content-Encoding" = gzip;
+    //    "Content-Type" = "application/json";
+    //    Date = "Tue, 12 Jan 2016 00:59:06 GMT";
+    //    Expires = "Thu, 01 Jan 1970 00:00:01 GMT";
+    //    "Keep-Alive" = "timeout=75";
+    //    Server = nginx;
+    //    "Transfer-Encoding" = Identity;
+    //    Vary = "Accept-Encoding, Accept";
+    //    "X-Content-Options" = nosniff;
+    //    "X-Frame-Options" = SAMEORIGIN;
+    //    "X-Powered-By" = "PHP/5.6.16-2+deb.sury.org~precise+1";
+    //    "X-XSS-Protection" = "1; mode=block";
+    //    } })
     
     // To send a new message
     //
-    
-    
+    func sendNewMessage(message: CDWSMessage, completion: (success: Bool) -> Void) {
+        
+        func makeRecipientString(message: CDWSMessage) -> String? {
+            
+            guard let recipients = message.recipients where recipients.count > 0 else {
+                return nil
+            }
+            
+            var recipientString = ""
+            for user in recipients {
+                if recipientString == "" {
+                    recipientString += user.name
+                } else {
+                    recipientString += "," + user.name
+                }
+            }
+            return recipientString
+        }
+        
+        guard let recipients = makeRecipientString(message),
+              let subject = message.thread?.subject,
+              let body = message.body
+            else {
+                return
+        }
+        
+        let service = WSRestfulService(type: .newMessage)!
+        
+        var params = [String: String]()
+        params["recipients"] = recipients
+        params["subject"] = subject
+        params["body"] = body
+        
+        requestWithCSRFToken(service, params: params, retry: true, doWithResponse: { (data, response, error) -> Void in
+            
+        })
+    }
+
     // To reply to a existing message
     //
+    func replyToMessage(threadID: Int, body: String, completion: (success: Bool) -> Void) {
+        
+        let service = WSRestfulService(type: .replyToMessage)!
+        
+        var params = [String: String]()
+        params["thread_id"] = String(threadID)
+        params["body"] = body
+        
+        requestWithCSRFToken(service, params: params, retry: true, doWithResponse: { (data, response, error) -> Void in
+            
+        })
+    }
 
-    
     // To get a count of unread messages
     //
     func getUnreadMessagesCount(withCount: (count: Int?) -> Void) {
@@ -507,7 +604,6 @@ class WSRequest {
             
         })
     }
-
     
     // To mark a message thread as read or unread
     //

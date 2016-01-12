@@ -12,9 +12,11 @@ import CoreData
 let MESSAGE_FROM_USER_CELL_ID = "MessageFromUser"
 let MESSAGE_FROM_SELF_CELL_ID = "MessageFromSelf"
 
+let REPLY_TO_MESSAGE_SEGUE_ID = "ToReplyToMessage"
+
 class MessageThreadTableViewController: UITableViewController {
     
-    let httpClient = WSRequest()
+    let httpRequest = WSRequest()
     
     var threadID: Int? = nil
     var messageThread: CDWSMessageThread? = nil
@@ -29,6 +31,7 @@ class MessageThreadTableViewController: UITableViewController {
     }
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         
         guard let threadID = threadID else {
             return
@@ -44,6 +47,10 @@ class MessageThreadTableViewController: UITableViewController {
         } catch {
             print("Could not get the message thread from the store")
         }
+        
+        // Set the view title
+        navigationItem.title = messageThread?.subject
+
         
         // Update the data source
         update()
@@ -81,6 +88,26 @@ class MessageThreadTableViewController: UITableViewController {
     }
     
     
+    // MARK: Navigation
+    
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+        if identifier == REPLY_TO_MESSAGE_SEGUE_ID {
+            if messages.count != 0 {
+                return true
+            }
+        }
+        return false
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == REPLY_TO_MESSAGE_SEGUE_ID {
+            let navVC = segue.destinationViewController as! UINavigationController
+            let composeMessageVC = navVC.viewControllers.first as! ComposeMessageTableViewController
+            composeMessageVC.initialiseAsReplyToMessage(messages.last!)
+        }
+    }
+    
+    
     // MARK: Utility methods
     
     // Downloads the messages, updates the store and the table view data source
@@ -91,7 +118,7 @@ class MessageThreadTableViewController: UITableViewController {
             return
         }
         
-        httpClient.getMessageThread(threadID, withMessageThreadData: { (data) -> Void in
+        httpRequest.getMessageThread(threadID, withMessageThreadData: { (data) -> Void in
             let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
             dispatch_async(queue, { () -> Void in
                 self.updateDataSourceWithData(data)
@@ -112,7 +139,7 @@ class MessageThreadTableViewController: UITableViewController {
         authors = [CDWSUser]()
         
         // Parse the json
-        if let json = self.httpClient.jsonDataToJSONObject(data) {
+        if let json = self.httpRequest.jsonDataToJSONObject(data) {
             if let messagesJSON = json.valueForKey("messages") as? NSArray {
                 for messageJSON in messagesJSON {
                     do {
@@ -152,7 +179,7 @@ class MessageThreadTableViewController: UITableViewController {
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
             self.tableView.reloadData()
             let finalMessageRow = self.messages.count - 1
-            self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: finalMessageRow, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: false)
+            self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: finalMessageRow, inSection: 0), atScrollPosition: UITableViewScrollPosition.Bottom, animated: false)
         }
     }
     
@@ -165,7 +192,7 @@ class MessageThreadTableViewController: UITableViewController {
 
                 let uid = author.uid!.integerValue
                 
-                httpClient.getUserThumbnailImage(uid, doWithImage: { (image) -> Void in
+                httpRequest.getUserThumbnailImage(uid, doWithImage: { (image) -> Void in
                     if let image = image {
                         author.image = image
                         do {
