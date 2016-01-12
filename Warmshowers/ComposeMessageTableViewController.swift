@@ -135,7 +135,18 @@ class ComposeMessageTableViewController: UITableViewController {
 
     @IBAction func cancelButtonPressed(sender: AnyObject?) {
         
-        // TODO add a warning alert here if the message is not empty
+        // Show a warning message if the message body has some content
+        guard let body = message?.body where body != "" else {
+            let alert = UIAlertController(title: nil, message: "Are you sure you want to discard the current feedback?", preferredStyle: .Alert)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+            alert.addAction(cancelAction)
+            let continueAction = UIAlertAction(title: "Continue", style: .Default) { (continueAction) -> Void in
+                self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+            }
+            alert.addAction(continueAction)
+            self.presentViewController(alert, animated: true, completion: nil)
+            return
+        }
         
         navigationController?.dismissViewControllerAnimated(true, completion: nil)
         
