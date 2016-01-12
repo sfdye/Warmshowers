@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import MBProgressHUD
 
 let COMPOSE_MESSAGE_DETAIL_CELL_ID = "ComposeMessageDetail"
 let COMPOSE_MESSAGE_BODY_CELL_ID = "ComposeMessageBody"
@@ -69,9 +70,9 @@ class ComposeMessageTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.section == 0 && indexPath.row == 2 {
             return tableView.bounds.height - 2 * detailCellHeight - (navigationController?.navigationBar.bounds.height)!
+        } else {
+            return detailCellHeight
         }
-        let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0))
-        return detailCellHeight
     }
     
     
@@ -156,11 +157,13 @@ class ComposeMessageTableViewController: UITableViewController {
                 return
             }
             
-//            TODO raise hud
+            // Show the spinner
+            showHUD()
             
             httpRequest.replyToMessage(threadID, body: body) { (success) -> Void in
                 
-                // remove the hud
+                // Remove the spinner
+                self.hideHUD()
                 
                 if success {
                     self.moc.deleteObject(self.message!)
@@ -172,7 +175,9 @@ class ComposeMessageTableViewController: UITableViewController {
                     let alert = UIAlertController(title: "Could not send message.", message: "Sorry, an error occured while sending you message. Please check you are connected to the internet and try again later.", preferredStyle: .Alert)
                     let okAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
                     alert.addAction(okAction)
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    })
                 }
             }
             
@@ -188,7 +193,7 @@ class ComposeMessageTableViewController: UITableViewController {
                 return
             }
             
-            guard message?.thread?.subject != nil else {
+            guard let subject = message?.thread?.subject where subject != "" else {
                 let alert = UIAlertController(title: "Could not send message.", message: "Message has no subject.", preferredStyle: .Alert)
                 let okAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
                 alert.addAction(okAction)
@@ -204,25 +209,41 @@ class ComposeMessageTableViewController: UITableViewController {
                 return
             }
             
-            // TODO raise hud
+            // Show the spinner
+            showHUD()
             
             httpRequest.sendNewMessage(message!, completion: { (success) -> Void in
                 
-                // remove the hud
-                
+                // Remove the spinner
+                self.hideHUD()
+
                 if success {
                     self.moc.deleteObject(self.message!)
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
                     })
                 } else {
-                    let alert = UIAlertController(title: "Could not send message.", message: "Sorry, an error occured while sending you message. Please check you are connected to the internet and try again later.", preferredStyle: .Alert)
+                    let alert = UIAlertController(title: "Could not send message.", message: "Sorry, an error occured while sending your message. Please check you are connected to the internet then try again later.", preferredStyle: .Alert)
                     let okAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
                     alert.addAction(okAction)
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    })
+                    
                 }
             })
         }
+    }
+    
+    func showHUD() {
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud.labelText = "Sending message ..."
+    }
+    
+    func hideHUD() {
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            MBProgressHUD.hideHUDForView(self.view, animated: true)
+        })
     }
 
 }

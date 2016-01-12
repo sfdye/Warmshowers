@@ -148,6 +148,7 @@
 		E56CC0911BFD569500AAF973 /* SwitchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchTableViewCell.swift; sourceTree = "<group>"; };
 		E5700C511C44CB64008C8A87 /* ComposeMessageTableViewController+UITextViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ComposeMessageTableViewController+UITextViewDelegate.swift"; sourceTree = "<group>"; };
 		E5700C531C44EE51008C8A87 /* ComposeMessageTableViewController+UITextFieldDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ComposeMessageTableViewController+UITextFieldDelegate.swift"; sourceTree = "<group>"; };
+		E5700C551C44F083008C8A87 /* MBProgressHUD-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD-Bridging-Header.h"; sourceTree = "<group>"; };
 		E573D1791C0E6106004C3BFC /* LoginViewController+WSRequestAlerts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LoginViewController+WSRequestAlerts.swift"; sourceTree = "<group>"; };
 		E5967B9E1C3490740037F4B7 /* WSOffers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSOffers.swift; sourceTree = "<group>"; };
 		E5967BA01C35D59C0037F4B7 /* WSHostingInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSHostingInfo.swift; sourceTree = "<group>"; };
@@ -463,6 +464,7 @@
 				E5D96B001BFB1CA700AFAFEE /* Assets.xcassets */,
 				E5D96B051BFB1CA700AFAFEE /* Info.plist */,
 				E52E8A991C071CE8000391AB /* kingpin-Bridging-Header.h */,
+				E5700C551C44F083008C8A87 /* MBProgressHUD-Bridging-Header.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
