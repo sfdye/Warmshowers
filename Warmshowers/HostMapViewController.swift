@@ -80,6 +80,12 @@ class HostMapViewController: UIViewController {
         clusteringController.delegate = self
         clusteringController.setAnnotations(hosts)
         
+        // Centre the map on the user's location
+        if let userLocation = locationManager.location?.coordinate {
+            let region = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1))
+            mapView.setRegion(region, animated: true)
+        }
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -192,16 +198,7 @@ class HostMapViewController: UIViewController {
     }
     
     func accountButtonPressed() {
-        let uid = defaults.integerForKey(DEFAULTS_KEY_UID)
-        showAccount(uid)
-    }
-    
-    func showAccount(uid: Int) {
-        
-        let accountNC = storyboard?.instantiateViewControllerWithIdentifier("AccountNavigationController") as! UINavigationController
-        let accountTVC = accountNC.viewControllers.first as! AccountTableViewController
-        accountTVC.uid = uid
-        self.presentViewController(accountNC, animated: true, completion: nil)
+        performSegueWithIdentifier(TO_USER_ACCOUNT_SEGUE_ID, sender: nil)
     }
     
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
@@ -221,11 +218,17 @@ class HostMapViewController: UIViewController {
         
         switch segue.identifier! {
         case TO_USER_ACCOUNT_SEGUE_ID:
-            let kpAnnotation = sender as! KPAnnotation
-            let userLocation = kpAnnotation.annotations.first as? WSUserLocation
+            
             let navVC = segue.destinationViewController as! UINavigationController
             let accountTVC = navVC.viewControllers.first as! AccountTableViewController
-            accountTVC.uid = userLocation?.uid
+            
+            if let kpAnnotation = sender as? KPAnnotation {
+                let userLocation = kpAnnotation.annotations.first as? WSUserLocation
+                accountTVC.uid = userLocation?.uid
+            } else {
+                let uid = defaults.integerForKey(DEFAULTS_KEY_UID)
+                accountTVC.uid = uid
+            }
             
         case TO_HOST_LIST_SEGUE_ID:
             let kpAnnotation = sender as! KPAnnotation
@@ -237,14 +240,6 @@ class HostMapViewController: UIViewController {
         default:
             return
         }
-    }
-    
-    func showHostList(uids: [Int]) {
-        // TODO: UPDATE TO SEGUE TO A LIST OF HOSTS
-//        let accountNC = storyboard?.instantiateViewControllerWithIdentifier("AccountNavigationController") as! UINavigationController
-//        let accountTVC = accountNC.viewControllers.first as! AccountTableViewController
-//        accountTVC.uid = uid
-//        self.presentViewController(accountNC, animated: true, completion: nil)
     }
 
     
@@ -260,21 +255,5 @@ class HostMapViewController: UIViewController {
         }
         return false
     }
-    
-//    func getUserByUID(uid: Int) -> User? {
-//        
-//        let request = NSFetchRequest(entityName: "User")
-//        request.predicate = NSPredicate(format: "uid == %i", uid)
-//        
-//        // Try to find message thread in the store
-//        do {
-//            let user = try moc.executeFetchRequest(request).first as? User
-//            return user
-//        } catch {
-//            print("Failed to find user")
-//            return nil
-////            throw CoreDataError.FailedFetchReqeust
-//        }
-//    }
 
 }

@@ -11,7 +11,7 @@ import MapKit
 import CoreData
 
 // FIRST TODOs
-// queue http requests
+// queue http requests - ask paul for advice
 // host keyword search functionality
 // !!! link up system settings to the app settings !!!
 // mark new message threads + tab bar icon badge

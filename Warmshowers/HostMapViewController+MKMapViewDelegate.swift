@@ -72,11 +72,11 @@ extension HostMapViewController: MKMapViewDelegate {
         
     }
     
-    // Moves the map to users location
-    func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
-        let userLocation = (locationManager.location?.coordinate)!
-        mapView.setCenterCoordinate(userLocation , animated: true)
-    }
+//    // Moves the map to users location
+//    func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
+//        let userLocation = (locationManager.location?.coordinate)!
+//        mapView.setCenterCoordinate(userLocation , animated: true)
+//    }
     
 //    // Called when a pin is selected
 //    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {

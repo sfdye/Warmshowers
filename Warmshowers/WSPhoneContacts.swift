@@ -19,7 +19,7 @@ struct WSPhoneContacts {
             return
         }
         
-        let keys = ["homephone", "mobilehone", "workphone"]
+        let keys = ["homephone", "mobilephone", "workphone"]
         
         for key in keys {
             let number = numberForKey(key, inData: userData)
