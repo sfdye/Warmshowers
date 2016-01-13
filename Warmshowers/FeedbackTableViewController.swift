@@ -12,7 +12,7 @@ let FEEDBACK_CELL_ID = "Feedback"
 
 class FeedbackTableViewController: UITableViewController {
     
-    let httpRequest = WSRequest()
+    
     
     var feedback: [WSRecommendation]?
     
@@ -118,7 +118,7 @@ class FeedbackTableViewController: UITableViewController {
             return
         }
         
-        httpRequest.getUserThumbnailImage(self.feedback![index].author!.uid) { (image) -> Void in
+        WSRequest.getUserThumbnailImage(self.feedback![index].author!.uid) { (image) -> Void in
             if image != nil {
                 self.feedback![index].authorImage = image
             } else {

@@ -21,7 +21,7 @@ class MessageThreadsTableViewController: UITableViewController {
         return defaults.integerForKey(DEFAULTS_KEY_UID)
     }
     
-    let httpRequest = WSRequest()
+    
     
     let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     
@@ -76,7 +76,7 @@ class MessageThreadsTableViewController: UITableViewController {
     //
     func update() {
         
-        httpRequest.getAllMessageThreads({ (data) -> Void in
+        WSRequest.getAllMessageThreads({ (data) -> Void in
             
             if data != nil {
                 let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
@@ -85,7 +85,7 @@ class MessageThreadsTableViewController: UITableViewController {
                 })
             } else {
                 // TODO check for internet connection here and diplay an alert
-//                self.httpRequest.checkReachability()
+//                WSRequest.checkReachability()
                 self.refreshController.endRefreshing()
                 self.fetchAndReload()
             }
@@ -103,7 +103,7 @@ class MessageThreadsTableViewController: UITableViewController {
         messageThreads = [CDWSMessageThread]()
         
         // parse the json
-        if let json = self.httpRequest.jsonDataToJSONObject(data) {
+        if let json = WSRequest.jsonDataToJSONObject(data) {
             if let threadsJSON = json as? NSArray {
                 for threadJSON in threadsJSON {
                     do {

@@ -20,7 +20,7 @@ class LoginViewController: UIViewController {
     weak var appDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate)
     
     // A http client for making the login request
-    let httpRequest = WSRequest()
+    
     
     // Alert controller to display errors
     var alertController: UIAlertController?
@@ -65,7 +65,7 @@ class LoginViewController: UIViewController {
         let password = passwordTextField.text!
         
         // log in
-        httpRequest.login(username, password: password) { (success) -> Void in
+        WSRequest.login(username, password: password) { (success) -> Void in
             if success {
                 
                 // login sucessful, store the username and session cookie for later

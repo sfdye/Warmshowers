@@ -50,8 +50,6 @@ class AccountTableViewController: UITableViewController {
     
     var actionAlert = UIAlertController()
     
-    let httpRequest = WSRequest()
-    
     let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     
     weak var appDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate)
@@ -69,12 +67,12 @@ class AccountTableViewController: UITableViewController {
         if uid != nil {
 
             // Get the users profile
-            httpRequest.getUserInfo(uid!, doWithUserInfo: { (info) -> Void in
+            WSRequest.getUserInfo(uid!, doWithUserInfo: { (info) -> Void in
                 self.updateWithUserInfo(info)
             })
             
             // Get the users feedback
-            httpRequest.getUserFeedback(uid!, doWithUserFeedback: { (feedback) -> Void in
+            WSRequest.getUserFeedback(uid!, doWithUserFeedback: { (feedback) -> Void in
                 self.updateWithFeedback(feedback)
             })
             
@@ -127,7 +125,7 @@ class AccountTableViewController: UITableViewController {
         }
         
         // Get the users profile image
-        httpRequest.getImageWithURL(imageURL, doWithImage: { (image) -> Void in
+        WSRequest.getImageWithURL(imageURL, doWithImage: { (image) -> Void in
             self.photo = image
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
@@ -173,7 +171,7 @@ class AccountTableViewController: UITableViewController {
             
             let logoutAction = UIAlertAction(title: "Logout", style: .Default) { (logoutAction) -> Void in
                 // Logout and return the login screeen
-                self.httpRequest.logout({ (success) -> Void in
+                WSRequest.logout({ (success) -> Void in
                     if success {
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
                             self.appDelegate?.logout()

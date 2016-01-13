@@ -16,7 +16,7 @@ let REPLY_TO_MESSAGE_SEGUE_ID = "ToReplyToMessage"
 
 class MessageThreadTableViewController: UITableViewController {
     
-    let httpRequest = WSRequest()
+    
     
     var threadID: Int? = nil
     var messageThread: CDWSMessageThread? = nil
@@ -120,7 +120,7 @@ class MessageThreadTableViewController: UITableViewController {
             return
         }
         
-        httpRequest.getMessageThread(threadID, withMessageThreadData: { (data) -> Void in
+        WSRequest.getMessageThread(threadID, withMessageThreadData: { (data) -> Void in
             let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
             dispatch_async(queue, { () -> Void in
                 self.updateDataSourceWithData(data)
@@ -141,7 +141,7 @@ class MessageThreadTableViewController: UITableViewController {
         authors = [CDWSUser]()
         
         // Parse the json
-        if let json = self.httpRequest.jsonDataToJSONObject(data) {
+        if let json = WSRequest.jsonDataToJSONObject(data) {
             if let messagesJSON = json.valueForKey("messages") as? NSArray {
                 for messageJSON in messagesJSON {
                     do {
@@ -194,7 +194,7 @@ class MessageThreadTableViewController: UITableViewController {
 
                 let uid = author.uid!.integerValue
                 
-                httpRequest.getUserThumbnailImage(uid, doWithImage: { (image) -> Void in
+                WSRequest.getUserThumbnailImage(uid, doWithImage: { (image) -> Void in
                     if let image = image {
                         author.image = image
                         do {

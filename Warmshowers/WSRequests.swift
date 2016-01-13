@@ -21,17 +21,18 @@ enum HttpRequestError : ErrorType {
 
 struct WSRequest {
     
-    let LIMIT: Int = 1000
+    static let MapSearchLimit: Int = 1000
+    static let KeywordSearchLimit: Int = 5
     
-    let session = NSURLSession.init(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
+    static let session = NSURLSession.init(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
     
-    let defaults = (UIApplication.sharedApplication().delegate as! AppDelegate).defaults
+    static let defaults = (UIApplication.sharedApplication().delegate as! AppDelegate).defaults
     
     
     // MARK: - Error checkers/handlers
     
     // Checks for CSRF failure message
-    func hasFailedCSRF(data: NSData) -> Bool {
+    static func hasFailedCSRF(data: NSData) -> Bool {
         
         do {
             let json = try NSJSONSerialization.JSONObjectWithData(data, options: [])
@@ -54,7 +55,7 @@ struct WSRequest {
     
     // Cancels all tasks in the session
     //
-    func cancelAllTasks() {
+    static func cancelAllTasks() {
         
         session.getAllTasksWithCompletionHandler { (sessionTasks) -> Void in
             
@@ -67,7 +68,7 @@ struct WSRequest {
     
     // Creates a request
     //
-    func buildRequest(service: WSRestfulService, params: [String: String]? = nil, token: String? = nil) -> NSMutableURLRequest? {
+    static func buildRequest(service: WSRestfulService, params: [String: String]? = nil, token: String? = nil) -> NSMutableURLRequest? {
         
         let request = NSMutableURLRequest.withWSRestfulService(service)
         
@@ -101,7 +102,7 @@ struct WSRequest {
     
     // Executes a general http request
     //
-    func dataRequest(request: NSMutableURLRequest, doWithResponse: (NSData?, NSURLResponse?, NSError?) -> Void) {
+    static func dataRequest(request: NSMutableURLRequest, doWithResponse: (NSData?, NSURLResponse?, NSError?) -> Void) {
         print(request)
         let task = self.session.dataTaskWithRequest(request, completionHandler: doWithResponse)
         task.resume()
@@ -109,7 +110,7 @@ struct WSRequest {
     
     // Checks a request response and evaluates if retrying the request (after logging in again) is neccessary
     //
-    func shouldRetryRequest(data: NSData?, response: NSURLResponse?, error: NSError?) -> Bool {
+    static func shouldRetryRequest(data: NSData?, response: NSURLResponse?, error: NSError?) -> Bool {
         
         // No data or response recieved
         guard let data = data, let response = response else {
@@ -134,7 +135,7 @@ struct WSRequest {
     
     // Requests a X-CSRF Token from the server
     //
-    func tokenRequest(doWithToken: (token: String) -> Void) -> Void {
+    static func tokenRequest(doWithToken: (token: String) -> Void) -> Void {
         
         let service = WSRestfulService(type: .token)!
         
@@ -160,7 +161,7 @@ struct WSRequest {
     
     // Makes a normal get request
     //
-    func request(service: WSRestfulService, params: [String: String]? = nil, doWithResponse: (NSData?, NSURLResponse?, NSError?) -> Void) {
+    static func request(service: WSRestfulService, params: [String: String]? = nil, doWithResponse: (NSData?, NSURLResponse?, NSError?) -> Void) {
         
         if let request = buildRequest(service) {
             dataRequest(request, doWithResponse: doWithResponse)
@@ -172,7 +173,7 @@ struct WSRequest {
     
     // Makes requests with a X-CSRF token in the header
     //
-    func requestWithCSRFToken(service: WSRestfulService, params: [String: String]? = nil, retry: Bool = false, doWithResponse: (NSData?, NSURLResponse?, NSError?) -> Void) {
+    static func requestWithCSRFToken(service: WSRestfulService, params: [String: String]? = nil, retry: Bool = false, doWithResponse: (NSData?, NSURLResponse?, NSError?) -> Void) {
         
         // Request a X-CSRF token from the server
         tokenRequest { (token) -> Void in
@@ -209,7 +210,7 @@ struct WSRequest {
     
     // Processes the response from a login request and returns true for a successful login
     //
-    func autoProcessLoginResponse(data: NSData?, response: NSURLResponse?, error: NSError?) -> Bool {
+    static func autoProcessLoginResponse(data: NSData?, response: NSURLResponse?, error: NSError?) -> Bool {
         
         guard error == nil else {
             print("Auto-login failed due to an error")
@@ -228,7 +229,7 @@ struct WSRequest {
     
     // Retrieves an image
     //
-    func getImageWithURL(url: String, doWithImage: (image: UIImage?) -> Void ) {
+    static func getImageWithURL(url: String, doWithImage: (image: UIImage?) -> Void ) {
         
         if let url = NSURL(string: url) {
             
@@ -252,7 +253,7 @@ struct WSRequest {
     
     // Login request that takes a new username and password
     //
-    func login(username: String, password: String, doAfterLogin: (success: Bool) -> Void) {
+    static func login(username: String, password: String, doAfterLogin: (success: Bool) -> Void) {
         
         let service = WSRestfulService(type: .login)!
         let params = ["username" : username, "password" : password]
@@ -265,7 +266,7 @@ struct WSRequest {
     
     // To login automatically using a saved username and password
     //
-    func autoLogin(doAfterLogin: () -> Void) {
+    static func autoLogin(doAfterLogin: () -> Void) {
         
         let username = defaults.stringForKey(DEFAULTS_KEY_USERNAME)
         let password = defaults.stringForKey(DEFAULTS_KEY_PASSWORD)
@@ -286,7 +287,7 @@ struct WSRequest {
     
     // Logout of warmshowers
     //
-    func logout(doWithLogoutResponse: (success: Bool) -> Void) {
+    static func logout(doWithLogoutResponse: (success: Bool) -> Void) {
         
         let service = WSRestfulService(type: .logout)!
 
@@ -317,36 +318,136 @@ struct WSRequest {
 
     // To search for hosts with a map region
     //
-    func getHostDataForMapView(map: MKMapView, withHostData: (data: NSData?) -> Void) {
+    static func getHostDataForMapView(map: MKMapView, withHostData: (data: NSData?) -> Void) {
         
         let service = WSRestfulService(type: .searchByLocation)!
         
         var params = map.getWSMapRegion()
-        params["limit"] = String(LIMIT)
+        params["limit"] = String(MapSearchLimit)
         
         requestWithCSRFToken(service, params: params, retry: true, doWithResponse: { (data, response, error) -> Void in
             withHostData(data: data)
         })
+        
+        // EXAMPLE JSON FOR USER LOCATION OBJECTS
+//            {
+//                access = 1424441219;
+//                city = Caracas;
+//                country = ve;
+//                created = 1360693669;
+//                distance = "1589.2337810280335";
+//                fullname = "Ximena Carrasco";
+//                latitude = "10.491016";
+//                login = 1424441033;
+//                longitude = "-66.902061";
+//                name = "Mena Carrasco";
+//                notcurrentlyavailable = 0;
+//                picture = 142728;
+//                position = "10.491016,-66.902061";
+//                "postal_code" = 1011;
+//                "profile_image_map_infoWindow" = "https://www.warmshowers.org/files/styles/map_infoWindow/public/pictures/picture-42795.jpg?itok=YdnATdzn";
+//                "profile_image_mobile_photo_456" = "https://www.warmshowers.org/files/styles/mobile_photo_456/public/pictures/picture-42795.jpg?itok=ti5zeS1Y";
+//                "profile_image_mobile_profile_photo_std" = "https://www.warmshowers.org/files/styles/mobile_profile_photo_std/public/pictures/picture-42795.jpg?itok=dQL6cIAv";
+//                "profile_image_profile_picture" = "https://www.warmshowers.org/files/styles/profile_picture/public/pictures/picture-42795.jpg?itok=xdkN20GR";
+//                province = a;
+//                source = 5;
+//                street = "";
+//                uid = 42795;
+//        }
+        
     }
     
     // To search for hosts with a keyword
     //
-    func getHostDataForKeyword(keyword: String, offset: Int = 0, withHostData: (data: NSData?) -> Void) {
+    static func getHostDataForKeyword(keyword: String, offset: Int = 0, withHostData: (data: NSData?) -> Void) {
         
         let service = WSRestfulService(type: .searchByKeyword)!
         var params = [String: String]()
         params["keyword"] = keyword
         params["offset"] = String(offset)
-        params["limit"] = String(LIMIT)
+        params["limit"] = String(KeywordSearchLimit)
         
         requestWithCSRFToken(service, params: params, retry: true, doWithResponse: { (data, response, error) -> Void in
             withHostData(data: data)
         })
+        
+        // EXAMPLE JSON FOR USER OBJECT
+        //        {
+        //            URL = "";
+        //            access = 1421382979;
+        //            additional = "Sinhagad Road";
+        //            becomeavailable = 1419577200;
+        //            bed = 1;
+        //            bikeshop = 200m;
+        //            campground = "no campgrounds in India";
+        //            city = Pune;
+        //            "comment_notify_settings" =     {
+        //                "comment_notify" = 1;
+        //                "node_notify" = 1;
+        //                uid = 122;
+        //            };
+        //            comments = "I and my wife, Shiwanee will be happy to host you. starting from finding your way into town, we can help you with planning hiking/biking excursions in the nearby hills, plan any other tours in our state, book tickets, help with logistics etc.
+        //            \nWe are both employed in the computer software industry. Hosting is not our business. We do it only because we think it is our duty towards fellow tourers.";
+        //            country = in;
+        //            created = 1020060000;
+        //            "email_opt_out" = 0;
+        //            "fax_number" = "";
+        //            food = 1;
+        //            fullname = "Sujay N. Patankar";
+        //            "hide_donation_status" = "<null>";
+        //            homephone = "+91-20-24308058";
+        //            howdidyouhear = "Touring list on phred.org";
+        //            kitchenuse = 1;
+        //            language = "en-working";
+        //            languagesspoken = "English, Marathi, Hindi";
+        //            "last_unavailability_pester" = 0;
+        //            latitude = "18.492674";
+        //            laundry = 1;
+        //            lawnspace = 0;
+        //            login = 1421382979;
+        //            longitude = "73.833532";
+        //            maxcyclists = 2;
+        //            mobilephone = "+91-9881071197";
+        //            motel = "2 Km";
+        //            name = "thepunekar@yahoo.com";
+        //            notcurrentlyavailable = 0;
+        //            picture =     {
+        //                fid = 130548;
+        //                filemime = "image/jpeg";
+        //                filename = "picture-122.jpg";
+        //                filesize = 17956;
+        //                status = 1;
+        //                timestamp = 1444780947;
+        //                uid = 122;
+        //                uri = "public://pictures/picture-122.jpg";
+        //            };
+        //            "postal_code" = 411030;
+        //            "preferred_notice" = asap;
+        //            "profile_image_map_infoWindow" = "https://www.warmshowers.org/files/styles/map_infoWindow/public/pictures/picture-122.jpg?itok=5jf5hr3T";
+        //            "profile_image_mobile_photo_456" = "https://www.warmshowers.org/files/styles/mobile_photo_456/public/pictures/picture-122.jpg?itok=d_J4Kkg8";
+        //            "profile_image_mobile_profile_photo_std" = "https://www.warmshowers.org/files/styles/mobile_profile_photo_std/public/pictures/picture-122.jpg?itok=oB3VzV-W";
+        //            "profile_image_profile_picture" = "https://www.warmshowers.org/files/styles/profile_picture/public/pictures/picture-122.jpg?itok=h4VyrE9N";
+        //            province = mm;
+        //            sag = 1;
+        //            "set_available_timestamp" = 0;
+        //            "set_unavailable_timestamp" = 0;
+        //            shower = 1;
+        //            signature = "";
+        //            "signature_format" = 1;
+        //            source = 1;
+        //            status = 1;
+        //            storage = 1;
+        //            street = "15, Vastushree, Behind IBP Petrol Pump,";
+        //            theme = "";
+        //            timezone = "Asia/Kolkata";
+        //            uid = 122;
+        //            workphone = "+91-20-42003150";
+        //        }
     }
     
     // To get a users info with their uid
     //
-    func getUserInfo(uid: Int, doWithUserInfo: (info: AnyObject?) -> Void) {
+    static func getUserInfo(uid: Int, doWithUserInfo: (info: AnyObject?) -> Void) {
         
         let service = WSRestfulService(type: .userInfo, uid: uid)!
         
@@ -366,7 +467,7 @@ struct WSRequest {
     
     // To get the thumbnail size profile image of a user with their uid
     //
-    func getUserThumbnailImage(uid: Int, doWithImage: (image: UIImage?) -> Void) {
+    static func getUserThumbnailImage(uid: Int, doWithImage: (image: UIImage?) -> Void) {
         
         getUserInfo(uid) { (info) -> Void in
             if info != nil {
@@ -383,7 +484,7 @@ struct WSRequest {
     
     // To get feedback on a user
     //
-    func getUserFeedback(uid: Int, doWithUserFeedback: (feedback: AnyObject?) -> Void) {
+    static func getUserFeedback(uid: Int, doWithUserFeedback: (feedback: AnyObject?) -> Void) {
         
         let service = WSRestfulService(type: .userFeedback, uid: uid)!
         
@@ -402,7 +503,7 @@ struct WSRequest {
     
     // To create feedback on a user
     //
-    func createUserFeedback(feedback: WSRecommendation, userName: String, completion: (success: Bool) -> Void ) {
+    static func createUserFeedback(feedback: WSRecommendation, userName: String, completion: (success: Bool) -> Void ) {
         
         let service = WSRestfulService(type: .createFeedback)!
         
@@ -433,7 +534,7 @@ struct WSRequest {
     
     // To send a new message
     //
-    func sendNewMessage(message: CDWSMessage, completion: (success: Bool) -> Void) {
+    static func sendNewMessage(message: CDWSMessage, completion: (success: Bool) -> Void) {
         
         func makeRecipientString(message: CDWSMessage) -> String? {
             
@@ -484,7 +585,7 @@ struct WSRequest {
 
     // To reply to a existing message
     //
-    func replyToMessage(threadID: Int, body: String, completion: (success: Bool) -> Void) {
+    static func replyToMessage(threadID: Int, body: String, completion: (success: Bool) -> Void) {
         
         let service = WSRestfulService(type: .replyToMessage)!
         
@@ -510,7 +611,7 @@ struct WSRequest {
 
     // To get a count of unread messages
     //
-    func getUnreadMessagesCount(withCount: (count: Int?) -> Void) {
+    static func getUnreadMessagesCount(withCount: (count: Int?) -> Void) {
         
         let service = WSRestfulService(type: .unreadMessageCount)!
         
@@ -525,7 +626,7 @@ struct WSRequest {
 
     // To get all message threads
     //
-    func getAllMessageThreads(withMessageThreadData: (data: NSData?) -> Void) {
+    static func getAllMessageThreads(withMessageThreadData: (data: NSData?) -> Void) {
         
         let service = WSRestfulService(type: .getAllMessageThreads)!
         
@@ -538,7 +639,7 @@ struct WSRequest {
     
     // To get a single message thread
     //
-    func getMessageThread(threadID: Int, withMessageThreadData: (data: NSData?) -> Void) {
+    static func getMessageThread(threadID: Int, withMessageThreadData: (data: NSData?) -> Void) {
         
         let service = WSRestfulService(type: .getMessageThread)!
         var params = [String: String]()
@@ -562,7 +663,7 @@ struct WSRequest {
     
     // Stores a session name and cookie obtained from login
     //
-    func storeSessionData(loginData: [String: AnyObject]?) {
+    static func storeSessionData(loginData: [String: AnyObject]?) {
         if loginData != nil {
             
             // Store the session cookie
@@ -587,7 +688,7 @@ struct WSRequest {
     
     // Convert NSData to a json dictionary
     //
-    func jsonDataToJSONObject(data: NSData?) -> AnyObject? {
+    static func jsonDataToJSONObject(data: NSData?) -> AnyObject? {
         
         if data != nil {
             do {
@@ -604,7 +705,7 @@ struct WSRequest {
     
     // Convert NSData to a dictionary
     //
-    func jsonDataToDictionary(data: NSData?) -> [String: AnyObject]? {
+    static func jsonDataToDictionary(data: NSData?) -> [String: AnyObject]? {
         
         if let jsonDict = self.jsonDataToJSONObject(data) as? [String: AnyObject] {
             return jsonDict
@@ -614,7 +715,7 @@ struct WSRequest {
     
     // Checks if JSON data contains just an integer and returns it (or nil)
     //
-    func intFromJSONData(data: NSData?) -> Int? {
+    static func intFromJSONData(data: NSData?) -> Int? {
         
         if let json = jsonDataToJSONObject(data) {
             if json.count == 1 {

@@ -171,7 +171,7 @@ class ComposeMessageTableViewController: UITableViewController {
             // Show the spinner
             showHUD()
             
-            httpRequest.replyToMessage(threadID, body: body) { (success) -> Void in
+            WSRequest.replyToMessage(threadID, body: body) { (success) -> Void in
                 
                 // Remove the spinner
                 self.hideHUD()
@@ -223,7 +223,7 @@ class ComposeMessageTableViewController: UITableViewController {
             // Show the spinner
             showHUD()
             
-            httpRequest.sendNewMessage(message!, completion: { (success) -> Void in
+            WSRequest.sendNewMessage(message!, completion: { (success) -> Void in
                 
                 // Remove the spinner
                 self.hideHUD()

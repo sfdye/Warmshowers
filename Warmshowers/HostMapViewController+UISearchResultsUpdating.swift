@@ -12,6 +12,11 @@ extension HostMapViewController : UISearchResultsUpdating {
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         
+        guard let keyword = searchController.searchBar.text where keyword != "" else {
+            return
+        }
+        
+        updateSearchResultsWithKeyword(keyword)
     }
     
 }

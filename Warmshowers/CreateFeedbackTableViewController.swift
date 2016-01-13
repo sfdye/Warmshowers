@@ -34,7 +34,7 @@ class CreateFeedbackTableViewController: UITableViewController {
     let PlaceholderFeedback = "Type your feedback here."
     
     // HTTP Request client
-    let httpRequest = WSRequest()
+    
 
     
     // MARK: View life cycle
@@ -270,7 +270,7 @@ class CreateFeedbackTableViewController: UITableViewController {
         // show the hud
         
         // Submit the feedback
-        httpRequest.createUserFeedback(feedback, userName: userName) { (success) -> Void in
+        WSRequest.createUserFeedback(feedback, userName: userName) { (success) -> Void in
             
             // remove the hud
             

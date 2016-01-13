@@ -33,9 +33,10 @@ class HostMapViewController: UIViewController {
     // MARK: Properties
     
     @IBOutlet var mapView: MKMapView!
-    @IBOutlet var searchBar: UISearchBar!
+//    @IBOutlet var searchBar: UISearchBar!
+    @IBOutlet var tableView: UITableView!
     
-    let httpRequest = WSRequest()
+    
     var alertController: UIAlertController?
     let locationManager = CLLocationManager()
     
@@ -48,7 +49,8 @@ class HostMapViewController: UIViewController {
     var overlay: MKTileOverlay? = nil
     
     // Host data variables
-    var hosts = [WSUserLocation]()
+    var hostsOnMap = [WSUserLocation]()
+    var hostsInTable = [WSUserLocation]()
     
     // Navigation bar items
     let cancelButton = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: nil, action: nil)
@@ -56,6 +58,9 @@ class HostMapViewController: UIViewController {
     
     // Pin clustering controller
     private var clusteringController : KPClusteringController!
+    
+    // Search controller
+    var searchController: UISearchController!
     
     
     // MARK: View life cycle
@@ -70,7 +75,7 @@ class HostMapViewController: UIViewController {
         self.accountButton.target = self
         self.accountButton.action = Selector("accountButtonPressed")
         self.navigationItem.setLeftBarButtonItem(accountButton, animated: false)
-        self.navigationItem.titleView = searchBar
+        
         
         // Pin clustering
         let algorithm : KPGridClusteringAlgorithm = KPGridClusteringAlgorithm()
@@ -78,7 +83,21 @@ class HostMapViewController: UIViewController {
         algorithm.clusteringStrategy = KPGridClusteringAlgorithmStrategy.TwoPhase;
         clusteringController = KPClusteringController(mapView: self.mapView, clusteringAlgorithm: algorithm)
         clusteringController.delegate = self
-        clusteringController.setAnnotations(hosts)
+        clusteringController.setAnnotations(hostsOnMap)
+        
+        // Mapview
+        mapView.delegate = self
+        
+        // Table view
+        tableView.dataSource = self
+        
+        // Search controller
+        searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        definesPresentationContext = true
+//        self.navigationItem.titleView = searchController.searchBar
+        tableView.tableHeaderView = searchController.searchBar
         
         // Centre the map on the user's location
         if let userLocation = locationManager.location?.coordinate {
@@ -101,35 +120,54 @@ class HostMapViewController: UIViewController {
     // MARK: Map update methods
     
     // Updates the hosts shown on the map
+    //
     func updateHostsOnMap() {
         
-        httpRequest.getHostDataForMapView(mapView) { (data) -> Void in
+        WSRequest.getHostDataForMapView(mapView) { (data) -> Void in
             
-            // update the mapView data source
+            // Update the mapView data source
             if data != nil {
                 let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
                 dispatch_async(queue, { () -> Void in
-                    self.updateHostList(data!)
+                    self.updateMapDataSource(data!)
+                })
+            }
+        }
+    }
+    
+    // Updates the hosts to be shown in the table view
+    //
+    func updateSearchResultsWithKeyword(keyword: String) {
+        
+        WSRequest.getHostDataForKeyword(keyword, offset: 0) { (data) -> Void in
+            
+            // Update the tableView data source
+            if data != nil {
+                let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+                dispatch_async(queue, { () -> Void in
+                    self.updateTableViewDataSource(data!)
                 })
             }
         }
     }
     
     // Adds hosts to the map with data from the web
-    func updateHostList(data: NSData) {
+    //
+    func updateMapDataSource(data: NSData) {
         
         // parse the json
-        if let json = self.httpRequest.jsonDataToDictionary(data) {
+        if let json = WSRequest.jsonDataToDictionary(data) {
             if let accounts = json["accounts"] as? NSArray {
                 for account in accounts {
                     if let user = WSUserLocation(json: account) {
                         if !self.userOnMap(user.uid) {
-                            self.hosts.append(user)
+                            self.hostsOnMap.append(user)
                         }
                     }
                 }
             }
         }
+        
         
         // update the cluster controller on the main thread (otherwise it complains)
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -137,10 +175,37 @@ class HostMapViewController: UIViewController {
         })
     }
     
+    // Adds hosts to search results with data from the web
+    //
+    func updateTableViewDataSource(data: NSData) {
+        
+//        
+        
+        var hosts = [WSUserLocation]()
+        
+        // parse the json
+        if let json = WSRequest.jsonDataToDictionary(data) {
+            if let accounts = json["accounts"] as? NSDictionary {
+                for (_, account) in accounts {
+                    print(account)
+                    if let user = WSUserLocation(json: account) {
+                        hosts.append(user)
+                    }
+                }
+            }
+        }
+        
+        hostsInTable = hosts
+        
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.tableView.reloadData()
+        })
+    }
+    
     // Updates the pin clustering controller
     func updateClusteringController() {
-        if self.hosts.count != 0 {
-            clusteringController.setAnnotations(hosts)
+        if self.hostsOnMap.count != 0 {
+            clusteringController.setAnnotations(hostsOnMap)
             clusteringController.refresh(true)
         }
     }
@@ -194,7 +259,7 @@ class HostMapViewController: UIViewController {
     // MARK: Navigation methods
     
     func cancelButtonPressed() {
-        self.searchBar.resignFirstResponder()
+        self.searchController.searchBar.resignFirstResponder()
     }
     
     func accountButtonPressed() {
@@ -248,7 +313,7 @@ class HostMapViewController: UIViewController {
     // Checks if a user is already in the map data source
     func userOnMap(uid: Int) -> Bool {
         
-        for host in hosts {
+        for host in hostsOnMap {
             if host.uid == uid {
                 return true
             }

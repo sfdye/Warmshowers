@@ -24,12 +24,4 @@ extension HostMapViewController : UISearchBarDelegate {
         
     }
     
-    
-    
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        
-        // search request here
-        
-    }
-    
 }
