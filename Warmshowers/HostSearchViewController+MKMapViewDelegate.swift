@@ -1,5 +1,5 @@
 //
-//  HostMapViewController+CLLocationManagerDelegate.swift
+//  HostSearchViewController+CLLocationManagerDelegate.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 30/11/15.
@@ -9,7 +9,7 @@
 import Foundation
 import kingpin
 
-extension HostMapViewController: MKMapViewDelegate {
+extension HostSearchViewController: MKMapViewDelegate {
     
     // MARK: - MKMapViewDelegate methods
     

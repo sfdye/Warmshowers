@@ -1,5 +1,5 @@
 //
-//  HostMapViewController+UI.swift
+//  HostSearchViewController+UI.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 30/11/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension HostMapViewController : UISearchResultsUpdating {
+extension HostSearchViewController : UISearchResultsUpdating {
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         

@@ -1,5 +1,5 @@
 //
-//  HostMapViewController+UISearchControllerDelegate.swift
+//  HostSearchViewController+UISearchControllerDelegate.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 30/11/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension HostMapViewController : UISearchControllerDelegate {
+extension HostSearchViewController : UISearchControllerDelegate {
     
     
 }

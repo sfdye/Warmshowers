@@ -28,7 +28,7 @@ enum MapSource {
 let TO_USER_ACCOUNT_SEGUE_ID = "ToUserAccount"
 let TO_HOST_LIST_SEGUE_ID = "ToHostList"
 
-class HostMapViewController: UIViewController {
+class HostSearchViewController: UIViewController {
     
     // MARK: Properties
     

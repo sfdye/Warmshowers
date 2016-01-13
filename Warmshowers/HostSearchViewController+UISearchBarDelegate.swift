@@ -1,5 +1,5 @@
 //
-//  HostMapViewController+UISearchBar.swift
+//  HostSearchViewController+UISearchBar.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 30/11/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension HostMapViewController : UISearchBarDelegate {
+extension HostSearchViewController : UISearchBarDelegate {
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
 

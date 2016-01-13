@@ -1,5 +1,5 @@
 //
-//  HostMapViewController+UITableViewDataSource.swift
+//  HostSearchViewController+UITableViewDataSource.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 30/11/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension HostMapViewController : UITableViewDataSource {
+extension HostSearchViewController : UITableViewDataSource {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if searchController.active && searchController.searchBar.text != "" {

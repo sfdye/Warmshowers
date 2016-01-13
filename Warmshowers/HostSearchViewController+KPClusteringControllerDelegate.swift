@@ -1,5 +1,5 @@
 //
-//  HostMapViewController+CL.swift
+//  HostSearchViewController+CL.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 30/11/15.
@@ -9,7 +9,7 @@
 import Foundation
 import kingpin
 
-extension HostMapViewController : KPClusteringControllerDelegate {
+extension HostSearchViewController : KPClusteringControllerDelegate {
     
     // MARK: KPClusteringControllerDelegate
     
