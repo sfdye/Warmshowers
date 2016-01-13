@@ -95,28 +95,17 @@ extension HostMapViewController: MKMapViewDelegate {
 //    }
     
     // Called when the details button on an annotation is pressed
+    //
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView,
         calloutAccessoryControlTapped control: UIControl) {
             
             if let kpAnnotation = view.annotation as? KPAnnotation {
                 if view.reuseIdentifier == "cluster" {
-                    
                     // Show a list of the clustered hosts
-                    var uids: [Int] = []
-                    for annotation in kpAnnotation.annotations {
-                        if let host = annotation as? WSUserLocation {
-                            uids.append(host.uid)
-                        }
-                    }
-                    showHostList(uids)
-                    
+                    performSegueWithIdentifier(TO_HOST_LIST_SEGUE_ID, sender: kpAnnotation)
                 } else {
-                    
                     // Show the host profile
-                    if let userLocation = kpAnnotation.annotations.first as? WSUserLocation {
-                        let uid = userLocation.uid
-                        showAccount(uid)
-                    }
+                    performSegueWithIdentifier(TO_USER_ACCOUNT_SEGUE_ID, sender: kpAnnotation)
                 }
             }
     }

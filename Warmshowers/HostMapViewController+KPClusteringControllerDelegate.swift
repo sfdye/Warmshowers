@@ -20,7 +20,7 @@ extension HostMapViewController : KPClusteringControllerDelegate {
     func clusteringController(clusteringController: KPClusteringController!, configureAnnotationForDisplay annotation: KPAnnotation!) {
         if annotation.isCluster() {
             annotation.title = String(format: "%i Hosts", arguments: [annotation.annotations.count])
-            annotation.subtitle = String(format: "within %0.f metres", arguments: [annotation.radius])
+            annotation.subtitle = String(format: "within %0.f km", arguments: [annotation.radius/1000])
         } else {
             if let host = annotation.annotations.first as? WSUserLocation {
                 annotation.title = host.title

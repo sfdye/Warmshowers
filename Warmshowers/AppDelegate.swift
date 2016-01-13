@@ -11,9 +11,8 @@ import MapKit
 import CoreData
 
 // FIRST TODOs
-// queue http requests - ask paul for advice later
+// queue http requests
 // host keyword search functionality
-// show host list when you click on group pins
 // !!! link up system settings to the app settings !!!
 // mark new message threads + tab bar icon badge
 // fix MOC saving bug: when you send a message and go back to message threads is fails to save to the store

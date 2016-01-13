@@ -58,20 +58,12 @@ class AccountTableViewController: UITableViewController {
     
     var alertController: UIAlertController?
     
-
-    @IBAction func doneButtonPressed(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    @IBAction func actionButtonPressed(sender: AnyObject) {
-        self.presentViewController(actionAlert, animated: true, completion: nil)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.title = ""
         
+        configureDoneButton()
         configureActions()
         
         if uid != nil {
@@ -159,6 +151,16 @@ class AccountTableViewController: UITableViewController {
         }
     }
     
+    // Sets up a done button if one is needed
+    //
+    func configureDoneButton() {
+        if navigationController?.viewControllers.count < 2 {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: Selector("doneButtonPressed"))
+        }
+    }
+    
+    // Configures the popover menu for when the action button is pressed
+    //
     func configureActions() {
         
         // Common actions
@@ -402,6 +404,14 @@ class AccountTableViewController: UITableViewController {
     }
 
     // MARK: Navigation
+    
+    func doneButtonPressed() {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    @IBAction func actionButtonPressed(sender: AnyObject) {
+        self.presentViewController(actionAlert, animated: true, completion: nil)
+    }
     
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         switch identifier {

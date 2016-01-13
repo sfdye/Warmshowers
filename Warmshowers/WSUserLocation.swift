@@ -24,6 +24,12 @@ class WSUserLocation : WSUser, MKAnnotation {
     var province: String? = nil
     var profile_image_map_infoWindow: String? = nil
     var street: String? = nil
+    var address: String {
+        var address: String = ""
+        address.appendWithComma(city)
+        address.appendWithComma(country)
+        return address
+    }
     
     init(fullname: String, name: String, uid: Int, lat: Double, lon: Double) {
         self.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
@@ -80,7 +86,7 @@ class WSUserLocation : WSUser, MKAnnotation {
         var subtitle: String? = ""
             
         if distance != nil {
-            subtitle! += String(format: "within %.0f metres", arguments: [distance!])
+            subtitle! += String(format: "within %.0f kilometres", arguments: [distance!])
 //            if (city != nil) || (country != nil) {
 //                subtitle! += " at "
 //            }
@@ -102,15 +108,24 @@ class WSUserLocation : WSUser, MKAnnotation {
  
     }
     
-//    // annotation callout info button opens this mapItem in Maps app
-//    func mapItem() -> MKMapItem {
-//        let addressDictionary = [String(CNPostalAddressStreetKey): self.subtitle!]
-//        // make a MKPlacemark object with the location coordinates
-//        let placemark = MKPlacemark(coordinate: coordinate!, addressDictionary: addressDictionary)
-//        // convert to a MKMapItem
-//        let mapItem = MKMapItem(placemark: placemark)
-//        mapItem.name = title
-//        return mapItem
-//    }
+    // MARK: Utilities
     
+//    func appendWithComma()
+    
+}
+
+extension String {
+    
+    mutating func appendWithComma(other: String?) {
+        
+        guard let other = other else {
+            return
+        }
+        
+        if self == "" {
+            self += other
+        } else {
+            self += ", " + other
+        }
+    }
 }

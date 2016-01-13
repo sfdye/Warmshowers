@@ -25,6 +25,9 @@ enum MapSource {
     case OpenStreetMaps
 }
 
+let TO_USER_ACCOUNT_SEGUE_ID = "ToUserAccount"
+let TO_HOST_LIST_SEGUE_ID = "ToHostList"
+
 class HostMapViewController: UIViewController {
     
     // MARK: Properties
@@ -86,14 +89,8 @@ class HostMapViewController: UIViewController {
             locationManager.requestWhenInUseAuthorization()
         }
         mapView.showsUserLocation = true
-        
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
+
     
     // MARK: Map update methods
     
@@ -200,10 +197,46 @@ class HostMapViewController: UIViewController {
     }
     
     func showAccount(uid: Int) {
+        
         let accountNC = storyboard?.instantiateViewControllerWithIdentifier("AccountNavigationController") as! UINavigationController
         let accountTVC = accountNC.viewControllers.first as! AccountTableViewController
         accountTVC.uid = uid
         self.presentViewController(accountNC, animated: true, completion: nil)
+    }
+    
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+        switch identifier {
+        case TO_USER_ACCOUNT_SEGUE_ID:
+            print(sender is KPAnnotation)
+            return sender is KPAnnotation
+        case TO_HOST_LIST_SEGUE_ID:
+            print(sender is KPAnnotation)
+            return sender is KPAnnotation
+        default:
+            return true
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        
+        switch segue.identifier! {
+        case TO_USER_ACCOUNT_SEGUE_ID:
+            let kpAnnotation = sender as! KPAnnotation
+            let userLocation = kpAnnotation.annotations.first as? WSUserLocation
+            let navVC = segue.destinationViewController as! UINavigationController
+            let accountTVC = navVC.viewControllers.first as! AccountTableViewController
+            accountTVC.uid = userLocation?.uid
+            
+        case TO_HOST_LIST_SEGUE_ID:
+            let kpAnnotation = sender as! KPAnnotation
+            let users = Array(kpAnnotation.annotations) as? [WSUserLocation]
+            let navVC = segue.destinationViewController as! UINavigationController
+            let hostListTVC = navVC.viewControllers.first as! HostListTableViewController
+            hostListTVC.users = users
+
+        default:
+            return
+        }
     }
     
     func showHostList(uids: [Int]) {
