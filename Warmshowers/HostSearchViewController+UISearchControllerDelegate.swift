@@ -10,5 +10,12 @@ import Foundation
 
 extension HostSearchViewController : UISearchControllerDelegate {
     
+    func didPresentSearchController(searchController: UISearchController) {
+        showTableView()
+    }
+    
+    func didDismissSearchController(searchController: UISearchController) {
+        showMapView()
+    }
     
 }

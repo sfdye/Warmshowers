@@ -11,9 +11,7 @@ import UIKit
 let FEEDBACK_CELL_ID = "Feedback"
 
 class FeedbackTableViewController: UITableViewController {
-    
-    
-    
+
     var feedback: [WSRecommendation]?
     
     override func viewDidLoad() {
@@ -44,10 +42,17 @@ class FeedbackTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier(FEEDBACK_CELL_ID, forIndexPath: indexPath) as! FeedbackTableViewCell
         if feedback != nil {
             cell.configureWithFeedback(feedback![indexPath.row])
+            
+            // Download the user thumbnail
             if feedback![indexPath.row].authorImage == nil {
-                self.getAuthorImageForFeedbackAtIndex(indexPath.row, whenDone: { () -> Void in
-                    self.reloadRowAtIndexPath(indexPath)
-                })
+                
+                // Delay new downloads until the tableview has stopped moving
+                if tableView.dragging == false && tableView.decelerating == false {
+                    self.getAuthorImageForFeedbackAtIndex(indexPath.row, whenDone: { () -> Void in
+                        self.reloadRowAtIndexPath(indexPath)
+                    })
+                }
+                
             }
         }
         

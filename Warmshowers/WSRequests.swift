@@ -22,7 +22,7 @@ enum HttpRequestError : ErrorType {
 struct WSRequest {
     
     static let MapSearchLimit: Int = 1000
-    static let KeywordSearchLimit: Int = 5
+    static let KeywordSearchLimit: Int = 50
     
     static let session = NSURLSession.init(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
     

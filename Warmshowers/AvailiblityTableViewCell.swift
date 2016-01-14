@@ -25,10 +25,10 @@ class AvailiblityTableViewCell: UITableViewCell {
         
         if notavailible {
             textLabel?.text = "Unavailible"
-            self.backgroundColor = WSCOLOR_RED
+            self.backgroundColor = WSColor.NotAvailible
         } else {
             textLabel?.text = "Currently Availible"
-            self.backgroundColor = WSCOLOR_GREEN
+            self.backgroundColor = WSColor.Availible
         }
     }
     

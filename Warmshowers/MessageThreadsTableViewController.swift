@@ -21,8 +21,6 @@ class MessageThreadsTableViewController: UITableViewController {
         return defaults.integerForKey(DEFAULTS_KEY_UID)
     }
     
-    
-    
     let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     
     var messageThreads = [CDWSMessageThread]()

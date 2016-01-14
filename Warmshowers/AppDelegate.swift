@@ -12,10 +12,9 @@ import CoreData
 
 // FIRST TODOs
 // queue http requests - ask paul for advice
-// host keyword search functionality
 // !!! link up system settings to the app settings !!!
 // mark new message threads + tab bar icon badge
-// fix MOC saving bug: when you send a message and go back to message threads is fails to save to the store
+// finish settings vc
 
 
 // LATER TODOs
@@ -37,11 +36,6 @@ let DEFAULTS_KEY_USERNAME = "ws_username"
 let DEFAULTS_KEY_PASSWORD = "ws_password"
 let DEFAULTS_KEY_SESSION_COOKIE = "ws_session_cookie"
 let DEFAULTS_KEY_UID = "ws_uid"
-
-// Colors
-let WSCOLOR_GREEN = UIColor(red: 1/255, green: 158/255, blue: 60/255, alpha: 1)
-let WSCOLOR_RED = UIColor.redColor()
-let WSCOLOR_ORANGE = UIColor.orangeColor()
 
 // Error types
 enum DataError : ErrorType {

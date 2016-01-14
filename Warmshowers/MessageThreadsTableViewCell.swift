@@ -36,7 +36,7 @@ class MessageThreadsTableViewCell: UITableViewCell {
     func setDate(date: NSDate?) {
         if date != nil {
             let formatter = NSDateFormatter()
-            let template = "HHmmddMMMyyyy"
+            let template = "dd/MM/yy"
             let locale = NSLocale.currentLocale()
             formatter.dateFormat = NSDateFormatter.dateFormatFromTemplate(template, options: 0, locale: locale)
             dateLabel.text = formatter.stringFromDate(date!)

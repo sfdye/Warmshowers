@@ -60,6 +60,7 @@ class AccountTableViewController: UITableViewController {
         super.viewDidLoad()
         
         navigationItem.title = ""
+        navigationItem.leftBarButtonItem?.tintColor = WSColor.LightGrey
         
         configureDoneButton()
         configureActions()

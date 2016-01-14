@@ -33,9 +33,7 @@ class HostSearchViewController: UIViewController {
     // MARK: Properties
     
     @IBOutlet var mapView: MKMapView!
-//    @IBOutlet var searchBar: UISearchBar!
     @IBOutlet var tableView: UITableView!
-    
     
     var alertController: UIAlertController?
     let locationManager = CLLocationManager()
@@ -53,8 +51,8 @@ class HostSearchViewController: UIViewController {
     var hostsInTable = [WSUserLocation]()
     
     // Navigation bar items
-    let cancelButton = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: nil, action: nil)
-    let accountButton = UIBarButtonItem.init()
+    var searchButton: UIBarButtonItem!
+    var accountButton: UIBarButtonItem!
     
     // Pin clustering controller
     private var clusteringController : KPClusteringController!
@@ -68,36 +66,19 @@ class HostSearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Set up the navigation bar
-        self.cancelButton.target = self
-        self.cancelButton.action = Selector("cancelButtonPressed")
-        self.accountButton.image = UIImage.init(named: "UserIcon")
-        self.accountButton.target = self
-        self.accountButton.action = Selector("accountButtonPressed")
-        self.navigationItem.setLeftBarButtonItem(accountButton, animated: false)
-        
-        
-        // Pin clustering
-        let algorithm : KPGridClusteringAlgorithm = KPGridClusteringAlgorithm()
-        algorithm.annotationSize = CGSizeMake(25, 50)
-        algorithm.clusteringStrategy = KPGridClusteringAlgorithmStrategy.TwoPhase;
-        clusteringController = KPClusteringController(mapView: self.mapView, clusteringAlgorithm: algorithm)
-        clusteringController.delegate = self
-        clusteringController.setAnnotations(hostsOnMap)
-        
         // Mapview
         mapView.delegate = self
+        showMapView()
         
         // Table view
         tableView.dataSource = self
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 44
         
-        // Search controller
-        searchController = UISearchController(searchResultsController: nil)
-        searchController.searchResultsUpdater = self
-        searchController.dimsBackgroundDuringPresentation = false
-        definesPresentationContext = true
-//        self.navigationItem.titleView = searchController.searchBar
-        tableView.tableHeaderView = searchController.searchBar
+        // Configure components
+        configureNavigationItem()
+        configureClusteringController()
+        configureSearchController()
         
         // Centre the map on the user's location
         if let userLocation = locationManager.location?.coordinate {
@@ -114,6 +95,36 @@ class HostSearchViewController: UIViewController {
             locationManager.requestWhenInUseAuthorization()
         }
         mapView.showsUserLocation = true
+    }
+    
+    func configureNavigationItem() {
+        
+        // Navigation buttons
+        searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: Selector("searchButtonPressed"))
+        accountButton = UIBarButtonItem(image: UIImage.init(named: "UserIcon"), style: .Plain, target: self, action: Selector("accountButtonPressed"))
+        navigationItem.setLeftBarButtonItem(accountButton, animated: false)
+        navigationItem.setRightBarButtonItem(searchButton, animated: false)
+        
+    }
+    
+    func configureSearchController() {
+        
+        // Set up the search controller
+        searchController = UISearchController(searchResultsController: nil)
+        searchController.delegate = self
+        searchController.searchResultsUpdater = self
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchBar.barTintColor = WSColor.NavbarGrey
+    }
+    
+    func configureClusteringController() {
+        let algorithm : KPGridClusteringAlgorithm = KPGridClusteringAlgorithm()
+        algorithm.annotationSize = CGSizeMake(25, 50)
+        algorithm.clusteringStrategy = KPGridClusteringAlgorithmStrategy.TwoPhase;
+        clusteringController = KPClusteringController(mapView: self.mapView, clusteringAlgorithm: algorithm)
+        clusteringController.delegate = self
+        clusteringController.setAnnotations(hostsOnMap)
     }
 
     
@@ -168,7 +179,6 @@ class HostSearchViewController: UIViewController {
             }
         }
         
-        
         // update the cluster controller on the main thread (otherwise it complains)
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.updateClusteringController()
@@ -179,15 +189,13 @@ class HostSearchViewController: UIViewController {
     //
     func updateTableViewDataSource(data: NSData) {
         
-//        
-        
         var hosts = [WSUserLocation]()
         
         // parse the json
         if let json = WSRequest.jsonDataToDictionary(data) {
             if let accounts = json["accounts"] as? NSDictionary {
                 for (_, account) in accounts {
-                    print(account)
+//                    print(account)se
                     if let user = WSUserLocation(json: account) {
                         hosts.append(user)
                     }
@@ -258,8 +266,12 @@ class HostSearchViewController: UIViewController {
     
     // MARK: Navigation methods
     
-    func cancelButtonPressed() {
-        self.searchController.searchBar.resignFirstResponder()
+    func searchButtonPressed() {
+        hostsInTable = [WSUserLocation]()
+        tableView.reloadData()
+        presentViewController(searchController, animated: true, completion: nil)
+        searchController.active = true
+        didPresentSearchController(searchController)
     }
     
     func accountButtonPressed() {
@@ -319,6 +331,20 @@ class HostSearchViewController: UIViewController {
             }
         }
         return false
+    }
+    
+    // Changes between the mapView and tableView
+    //
+    func showMapView() {
+        UIView.transitionWithView(tableView, duration: 0.1, options: .TransitionCrossDissolve, animations: { () -> Void in
+            self.tableView.hidden = true
+            }, completion: nil)
+    }
+    
+    func showTableView() {
+        UIView.transitionWithView(tableView, duration: 0.1, options: .TransitionCrossDissolve, animations: { () -> Void in
+            self.tableView.hidden = false
+            }, completion: nil)
     }
 
 }

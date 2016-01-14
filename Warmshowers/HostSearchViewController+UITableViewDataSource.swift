@@ -19,9 +19,8 @@ extension HostSearchViewController : UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .Default, reuseIdentifier: "HostCell")
-        print(hostsInTable[indexPath.row].fullname)
-        cell.textLabel!.text = hostsInTable[indexPath.row].fullname
+        let cell = tableView.dequeueReusableCellWithIdentifier("HostList", forIndexPath: indexPath) as! HostListTableViewCell
+        cell.nameLabel.text = hostsInTable[indexPath.row].fullname
         return cell
     }
     

@@ -48,11 +48,11 @@ class FeedbackTableViewCell: UITableViewCell {
         ratingLabel.text = rating.rawValue
         switch rating {
         case .Positive:
-            ratingLabel.textColor = WSCOLOR_GREEN
+            ratingLabel.textColor = WSColor.Positive
         case .Negative:
-            ratingLabel.textColor = WSCOLOR_RED
+            ratingLabel.textColor = WSColor.Negative
         case .Neutral:
-            ratingLabel.textColor = WSCOLOR_ORANGE
+            ratingLabel.textColor = WSColor.Neutral
         }
     }
     
