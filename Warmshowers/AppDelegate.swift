@@ -15,6 +15,7 @@ import CoreData
 // !!! link up system settings to the app settings !!!
 // mark new message threads + tab bar icon badge
 // finish settings vc
+// factor out lazy image table functionality
 
 
 // LATER TODOs

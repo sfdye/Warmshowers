@@ -14,7 +14,7 @@ enum WSUserLocationError: ErrorType {
     case InvalidInput
 }
 
-class WSUserLocation : WSUser, MKAnnotation {
+class WSUserLocation : WSUser, MKAnnotation, WSLazyImageDataSource {
     
     var city: String? = nil
     var country: String? = nil
@@ -76,7 +76,7 @@ class WSUserLocation : WSUser, MKAnnotation {
     }
     
     
-    // MARK: - MKAnnotation protocol methods
+    // MARK: - MKAnnotation protocol properties
     
     var title: String? {
         return fullname
@@ -108,6 +108,19 @@ class WSUserLocation : WSUser, MKAnnotation {
         return subtitle
  
     }
+    
+    // MARK: WSLazyImageObject protocol properties
+    
+    var lazyImageURL: String? { return thumbnailImageURL }
+    var lazyImage: UIImage? {
+        get {
+            return thumbnailImage
+        }
+        set(newImage) {
+            thumbnailImage = newImage
+        }
+    }
+    
     
     // MARK: Utilities
     

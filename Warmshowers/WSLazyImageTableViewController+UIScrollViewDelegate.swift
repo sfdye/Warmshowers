@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  WSLazyImageTableViewController+UITableViewDelegate.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 15/01/16.
@@ -8,16 +8,16 @@
 
 import Foundation
 
-extension HostListTableViewController {
+extension WSLazyImageTableViewController {
     
     override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if !decelerate {
-            loadThumbnailsForUsersOnScreen()
+            loadImagesForObjectsOnScreen()
         }
     }
     
     override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-        loadThumbnailsForUsersOnScreen()
+        loadImagesForObjectsOnScreen()
     }
     
 }

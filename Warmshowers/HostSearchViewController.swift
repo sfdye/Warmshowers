@@ -317,8 +317,8 @@ class HostSearchViewController: UIViewController {
             let users = Array(kpAnnotation.annotations) as! [WSUserLocation]
             let navVC = segue.destinationViewController as! UINavigationController
             let hostListTVC = navVC.viewControllers.first as! HostListTableViewController
-            hostListTVC.users = users
-
+            hostListTVC.lazyImageObjects = users
+            hostListTVC.placeHolderImageName = "ThumbnailPlaceholder"
         default:
             return
         }

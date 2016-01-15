@@ -10,57 +10,43 @@ import Foundation
 
 class WSImageDownloader : NSObject {
     
-    var user: WSUserLocation?
+    var object: WSLazyImageDataSource?
     var task = NSURLSessionDataTask()
+    var placeHolderImage: UIImage?
     var completionHandler: (() -> Void)?
     
     override init() {
         super.init()
     }
     
-    // Downloads the users thumbnail image an stores in in the user object
+    // Downloads the objects image an stores in in the object object
     //
     func startDownload() {
         
-        guard let user = user where user.thumbnailImageURL != nil else {
+        guard var object = object where object.lazyImageURL != nil else {
             return
         }
         
-        guard let url = NSURL(string: user.thumbnailImageURL!) else {
+        guard let url = NSURL(string: object.lazyImageURL!) else {
             return
         }
         
         let session = NSURLSession.init(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
         
         task = session.dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
-            
-            guard let placeHolderImage = UIImage(named: "ThumbnailPlaceholder") else {
-                self.completionHandler?()
-                return
-            }
 
-            // No data. Leave the user image as nil to try again later.
+            // No data. Use the placeholder image instead
             guard let data = data else {
-                
-                // Valid response, the user doesn't have a profile image.
-                // Use the placeholder instead.
-                if let response = response as? NSHTTPURLResponse {
-                    if response.statusCode == 200 {
-                        
-                    }
-                }
-                // Else leave the image as nil so that the view tries to get the image again later.
-                user.thumbnailImage = placeHolderImage
+                object.lazyImage = self.placeHolderImage
                 self.completionHandler?()
                 return
             }
             
             // Set the image
             if let image = UIImage(data: data) {
-                user.thumbnailImage = image
+                object.lazyImage = image
             } else {
-                print("setting placeholder")
-                user.thumbnailImage = placeHolderImage
+                object.lazyImage = self.placeHolderImage
             }
             
             self.completionHandler?()

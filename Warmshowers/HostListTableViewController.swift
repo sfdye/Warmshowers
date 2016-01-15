@@ -11,10 +11,9 @@ import UIKit
 let ToUserAccountSegueID = "FromListToUserAccount"
 let HostListCellID = "HostList"
 
-class HostListTableViewController: UITableViewController {
+class HostListTableViewController: WSLazyImageTableViewController {
     
-    var users = [WSUserLocation]()
-    var thumbnailDownloadsInProgress = [NSIndexPath: WSImageDownloader]()
+    var users: [AnyObject] { return lazyImageObjects }
     
     // MARK: View life cycle
     
@@ -25,56 +24,18 @@ class HostListTableViewController: UITableViewController {
             self.navigationItem.title = "\(users.count) Hosts"
         } else {
             self.navigationItem.title = "Hosts"
+            // No users in the data source. Dismiss the view with an error message
+            let alert = UIAlertController(title: "Sorry, an error occured.", message: nil, preferredStyle: .Alert)
+            let okAction = UIAlertAction(title: "OK", style: .Default, handler: { (okAction) -> Void in
+                self.dismissViewControllerAnimated(true, completion: nil)
+            })
+            alert.addAction(okAction)
+            self.presentViewController(alert, animated: true, completion: nil)
         }
         
         // Configure the table view
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 44
-        
-    }
-    
-    
-    // MARK: Utiliies 
-    
-    // Downloads a users thumbnail size profile image and updates the table view data source
-    //
-    func startThumbnailDownload(user: WSUserLocation, indexPath: NSIndexPath) {
-        
-        if thumbnailDownloadsInProgress[indexPath] == nil {
-            
-            // Create and start a thumbnailDownloader object
-            let thumbnailDownloader = WSImageDownloader()
-            thumbnailDownloader.user = user
-            thumbnailDownloader.completionHandler = {
-                
-                // Update the cell with the users profile image
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    // Sometimes this cast failes for the first screen of the tableview, but i don't know why.
-                    if let cell = self.tableView.cellForRowAtIndexPath(indexPath) as? HostListTableViewCell {
-                        cell.profileImage.image = user.thumbnailImage
-                    }
-                })
-                
-                // Remove the downloader object from the downloads
-                self.thumbnailDownloadsInProgress.removeValueForKey(indexPath)
-            }
-            thumbnailDownloadsInProgress[indexPath] = thumbnailDownloader
-            thumbnailDownloader.startDownload()
-        }
-    }
-    
-    // Tries to download all the profile images for the users on the screen
-    func loadThumbnailsForUsersOnScreen() {
-        
-        guard let visiblePaths = tableView.indexPathsForVisibleRows else {
-            return
-        }
-        for indexPath in visiblePaths {
-            let user = users[indexPath.row]
-            if user.thumbnailImage == nil {
-                startThumbnailDownload(user, indexPath: indexPath)
-            }
-        }
+        tableView.estimatedRowHeight = 74 
     }
     
     // MARK: Navigation
@@ -84,16 +45,18 @@ class HostListTableViewController: UITableViewController {
     }
     
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
-        let cell = sender as! HostListTableViewCell
-        let row = tableView.indexPathForCell(cell)!.row
-        return users.count > row
+        if let cell = sender as? HostListTableViewCell {
+            if let _ = cell.uid {
+                return true
+            }
+        }
+        return false
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let cell = sender as! HostListTableViewCell
-        let row = tableView.indexPathForCell(cell)!.row
-        let accountTVC = segue.destinationViewController as! AccountTableViewController
-        accountTVC.uid = users[row].uid
+        let cell = sender as? HostListTableViewCell
+        let accountVC = segue.destinationViewController as! AccountTableViewController
+        accountVC.uid = cell?.uid
     }
     
 
