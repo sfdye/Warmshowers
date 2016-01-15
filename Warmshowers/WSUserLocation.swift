@@ -22,7 +22,7 @@ class WSUserLocation : WSUser, MKAnnotation {
     var coordinate: CLLocationCoordinate2D
     var notcurrentlyavailable: Bool? = nil
     var province: String? = nil
-    var profile_image_map_infoWindow: String? = nil
+    var thumbnailImageURL: String? = nil
     var street: String? = nil
     var address: String {
         var address: String = ""
@@ -30,6 +30,7 @@ class WSUserLocation : WSUser, MKAnnotation {
         address.appendWithComma(country)
         return address
     }
+    var thumbnailImage: UIImage?
     
     init(fullname: String, name: String, uid: Int, lat: Double, lon: Double) {
         self.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
@@ -68,7 +69,7 @@ class WSUserLocation : WSUser, MKAnnotation {
             distance = data.valueForKey("distance")?.doubleValue
             notcurrentlyavailable = json.valueForKey("notcurrentlyavailable")?.boolValue
             province = json.valueForKey("province") as? String
-            profile_image_map_infoWindow = json.valueForKey("profile_image_map_infoWindow") as? String
+            thumbnailImageURL = json.valueForKey("profile_image_map_infoWindow") as? String
             street = json.valueForKey("street") as? String
         }
         

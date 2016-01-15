@@ -72,6 +72,9 @@
 		E5D96B1A1BFB1CA700AFAFEE /* WarmshowersUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D96B191BFB1CA700AFAFEE /* WarmshowersUITests.swift */; };
 		E5D96B281BFC493B00AFAFEE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D96B271BFC493B00AFAFEE /* LoginViewController.swift */; };
 		E5DA03A71C46FCBB00FAD1D7 /* WSColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03A61C46FCBB00FAD1D7 /* WSColor.swift */; };
+		E5DA03CB1C48534300FAD1D7 /* WSImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03CA1C48534300FAD1D7 /* WSImageDownloader.swift */; };
+		E5DA03CD1C4862DC00FAD1D7 /* HostListTableViewController+UIScrollViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03CC1C4862DC00FAD1D7 /* HostListTableViewController+UIScrollViewDelegate.swift */; };
+		E5DA03CF1C48633300FAD1D7 /* HostListTableViewController+UITableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03CE1C48633300FAD1D7 /* HostListTableViewController+UITableViewDataSource.swift */; };
 		E5F6F30A1C2B36930000A87E /* WSRestfulService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6F3091C2B36930000A87E /* WSRestfulService.swift */; };
 		E5F6F30D1C2FE2770000A87E /* AccountDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6F30C1C2FE2770000A87E /* AccountDetailTableViewCell.swift */; };
 		E5F6F30F1C2FE3360000A87E /* ProfileImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6F30E1C2FE3360000A87E /* ProfileImageTableViewCell.swift */; };
@@ -177,6 +180,9 @@
 		E5D96B1B1BFB1CA700AFAFEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5D96B271BFC493B00AFAFEE /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		E5DA03A61C46FCBB00FAD1D7 /* WSColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSColor.swift; sourceTree = "<group>"; };
+		E5DA03CA1C48534300FAD1D7 /* WSImageDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSImageDownloader.swift; sourceTree = "<group>"; };
+		E5DA03CC1C4862DC00FAD1D7 /* HostListTableViewController+UIScrollViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HostListTableViewController+UIScrollViewDelegate.swift"; sourceTree = "<group>"; };
+		E5DA03CE1C48633300FAD1D7 /* HostListTableViewController+UITableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HostListTableViewController+UITableViewDataSource.swift"; sourceTree = "<group>"; };
 		E5F6F3091C2B36930000A87E /* WSRestfulService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSRestfulService.swift; sourceTree = "<group>"; };
 		E5F6F30C1C2FE2770000A87E /* AccountDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountDetailTableViewCell.swift; sourceTree = "<group>"; };
 		E5F6F30E1C2FE3360000A87E /* ProfileImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageTableViewCell.swift; sourceTree = "<group>"; };
@@ -297,6 +303,7 @@
 				E54A57301BFE6FB2000843A9 /* WSURL.swift */,
 				E54A572E1BFDC446000843A9 /* WSRequests.swift */,
 				E5F6F3091C2B36930000A87E /* WSRestfulService.swift */,
+				E5DA03CA1C48534300FAD1D7 /* WSImageDownloader.swift */,
 			);
 			name = HTTP;
 			sourceTree = "<group>";
@@ -324,6 +331,8 @@
 			children = (
 				E5700C571C45C057008C8A87 /* HostListTableViewController.swift */,
 				E5700C591C45C961008C8A87 /* HostListTableViewCell.swift */,
+				E5DA03CC1C4862DC00FAD1D7 /* HostListTableViewController+UIScrollViewDelegate.swift */,
+				E5DA03CE1C48633300FAD1D7 /* HostListTableViewController+UITableViewDataSource.swift */,
 			);
 			name = HostListTableViewController;
 			sourceTree = "<group>";
@@ -699,6 +708,8 @@
 				E54A57641C03E4A4000843A9 /* AccountTableViewController.swift in Sources */,
 				E54A57311BFE6FB2000843A9 /* WSURL.swift in Sources */,
 				E52E8ABE1C0E463D000391AB /* Warmshowers.xcdatamodeld in Sources */,
+				E5DA03CF1C48633300FAD1D7 /* HostListTableViewController+UITableViewDataSource.swift in Sources */,
+				E5DA03CB1C48534300FAD1D7 /* WSImageDownloader.swift in Sources */,
 				E54276801C3E546E00047029 /* WSRecommendationFor.swift in Sources */,
 				E5967BBD1C39BFF30037F4B7 /* MessageTableViewCell.swift in Sources */,
 				E5967BA11C35D59C0037F4B7 /* WSHostingInfo.swift in Sources */,
@@ -723,6 +734,7 @@
 				E5F6F3111C3122740000A87E /* HostingInfoTableViewCell.swift in Sources */,
 				E5967BCE1C39DBC00037F4B7 /* CDWSUser+CoreDataProperties.swift in Sources */,
 				E573D17A1C0E6106004C3BFC /* LoginViewController+WSRequestAlerts.swift in Sources */,
+				E5DA03CD1C4862DC00FAD1D7 /* HostListTableViewController+UIScrollViewDelegate.swift in Sources */,
 				E5F6F3191C3289060000A87E /* AccountTableViewController+SegmentTableViewCellActions.swift in Sources */,
 				E54276781C3E374400047029 /* CreateFeedbackTableViewController.swift in Sources */,
 				E54276731C3E0CC900047029 /* ComposeMessageDetailTableViewCell.swift in Sources */,

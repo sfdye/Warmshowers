@@ -14,10 +14,5 @@ class HostListTableViewCell: UITableViewCell {
     @IBOutlet var locationLabel: UILabel!
     @IBOutlet var profileImage: UIImageView!
     var uid: Int?
-    
-    func configureWithUserLocation(location: WSUserLocation) {
-        nameLabel.text = location.fullname
-        locationLabel.text = location.address
-    }
 
 }

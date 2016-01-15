@@ -195,7 +195,6 @@ class HostSearchViewController: UIViewController {
         if let json = WSRequest.jsonDataToDictionary(data) {
             if let accounts = json["accounts"] as? NSDictionary {
                 for (_, account) in accounts {
-//                    print(account)se
                     if let user = WSUserLocation(json: account) {
                         hosts.append(user)
                     }
@@ -284,8 +283,12 @@ class HostSearchViewController: UIViewController {
             print(sender is KPAnnotation)
             return sender is KPAnnotation
         case TO_HOST_LIST_SEGUE_ID:
-            print(sender is KPAnnotation)
-            return sender is KPAnnotation
+            if let kpAnnotation = sender as? KPAnnotation {
+                if let _ = Array(kpAnnotation.annotations) as? [WSUserLocation] {
+                    return true
+                }
+            }
+            return false
         default:
             return true
         }
@@ -294,6 +297,7 @@ class HostSearchViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         switch segue.identifier! {
+            
         case TO_USER_ACCOUNT_SEGUE_ID:
             
             let navVC = segue.destinationViewController as! UINavigationController
@@ -308,8 +312,9 @@ class HostSearchViewController: UIViewController {
             }
             
         case TO_HOST_LIST_SEGUE_ID:
+            
             let kpAnnotation = sender as! KPAnnotation
-            let users = Array(kpAnnotation.annotations) as? [WSUserLocation]
+            let users = Array(kpAnnotation.annotations) as! [WSUserLocation]
             let navVC = segue.destinationViewController as! UINavigationController
             let hostListTVC = navVC.viewControllers.first as! HostListTableViewController
             hostListTVC.users = users
