@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol WSLazyImageDataSource {
+protocol WSLazyImage {
     var lazyImageURL: String? { get }
     var lazyImage: UIImage? { get set }
 }

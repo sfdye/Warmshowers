@@ -8,20 +8,11 @@
 
 import UIKit
 
-class HostListTableViewCell: UITableViewCell, WSLazyImageTableViewCell {
+class HostListTableViewCell: UITableViewCell {
     
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var locationLabel: UILabel!
     @IBOutlet var profileImage: UIImageView!
     var uid: Int?
-    
-    var lazyImage: UIImage? {
-        get {
-            return profileImage.image
-        }
-        set(newImage) {
-            profileImage.image = newImage
-        }
-    }
     
 }

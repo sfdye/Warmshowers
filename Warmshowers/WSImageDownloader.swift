@@ -10,7 +10,7 @@ import Foundation
 
 class WSImageDownloader : NSObject {
     
-    var object: WSLazyImageDataSource?
+    var object: WSLazyImage?
     var task = NSURLSessionDataTask()
     var placeHolderImage: UIImage?
     var completionHandler: (() -> Void)?

@@ -11,6 +11,7 @@ import MapKit
 import CoreData
 
 // FIRST TODOs
+// convert host search table to lazyimageTVC
 // queue http requests - ask paul for advice
 // !!! link up system settings to the app settings !!!
 // mark new message threads + tab bar icon badge

@@ -15,10 +15,12 @@ extension HostListTableViewController {
         
         setLazyImageForCell(cell, atIndexPath: indexPath)
         
-        if let user = users[indexPath.row] as? WSUserLocation, let cell = cell as? HostListTableViewCell {
-            cell.nameLabel.text = user.fullname
-            cell.locationLabel.text = user.address
-            cell.uid = user.uid
+        if users.count > 0 {
+            if let user = users[indexPath.row] as? WSUserLocation, let cell = cell as? HostListTableViewCell {
+                cell.nameLabel.text = user.fullname
+                cell.locationLabel.text = user.address
+                cell.uid = user.uid
+            }
         }
         
         return cell

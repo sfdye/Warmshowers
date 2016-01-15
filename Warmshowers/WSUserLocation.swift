@@ -14,7 +14,7 @@ enum WSUserLocationError: ErrorType {
     case InvalidInput
 }
 
-class WSUserLocation : WSUser, MKAnnotation, WSLazyImageDataSource {
+class WSUserLocation : WSUser {
     
     var city: String? = nil
     var country: String? = nil
@@ -72,59 +72,7 @@ class WSUserLocation : WSUser, MKAnnotation, WSLazyImageDataSource {
             thumbnailImageURL = json.valueForKey("profile_image_map_infoWindow") as? String
             street = json.valueForKey("street") as? String
         }
-        
     }
-    
-    
-    // MARK: - MKAnnotation protocol properties
-    
-    var title: String? {
-        return fullname
-    }
-    
-    var subtitle: String? {
-        
-        var subtitle: String? = ""
-            
-        if distance != nil {
-            subtitle! += String(format: "within %.0f kilometres", arguments: [distance!])
-//            if (city != nil) || (country != nil) {
-//                subtitle! += " at "
-//            }
-        }
-
-//        if city != nil {
-//            subtitle! += city!
-//        }
-//        
-//        if country != nil {
-//            if subtitle != "" {
-//                subtitle! += ", \(country!)"
-//            } else {
-//                subtitle! += country!
-//            }
-//        }
-        
-        return subtitle
- 
-    }
-    
-    // MARK: WSLazyImageObject protocol properties
-    
-    var lazyImageURL: String? { return thumbnailImageURL }
-    var lazyImage: UIImage? {
-        get {
-            return thumbnailImage
-        }
-        set(newImage) {
-            thumbnailImage = newImage
-        }
-    }
-    
-    
-    // MARK: Utilities
-    
-//    func appendWithComma()
     
 }
 

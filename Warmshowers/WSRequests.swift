@@ -53,18 +53,18 @@ struct WSRequest {
     
     // MARK: - HTTP Request utilities
     
-    // Cancels all tasks in the session
-    //
-    static func cancelAllTasks() {
-        
-        session.getAllTasksWithCompletionHandler { (sessionTasks) -> Void in
-            
-            for task in sessionTasks {
-                print("cancelling task \(task)")
-                task.cancel()
-            }
-        }
-    }
+//    // Cancels all tasks in the session
+//    //
+//    static func cancelAllTasks() {
+//        
+//        session.getAllTasksWithCompletionHandler { (sessionTasks) -> Void in
+//            
+//            for task in sessionTasks {
+//                print("cancelling task \(task)")
+//                task.cancel()
+//            }
+//        }
+//    }
     
     // Creates a request
     //

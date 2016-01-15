@@ -12,20 +12,20 @@ import CoreData
 // #759DEB - background blue
 // #304767
 
-let IMAGE_CELL_ID = "Photo"
-let AVAILIBLITY_CELL_ID = "Availible"
-let ACCOUNT_DETAIL_CELL_ID = "AccountDetail"
-let FEEDBACK_COUNT_CELL_ID = "FeedbackCount"
-let SEGMENT_CELL_ID = "Segment"
-let ABOUT_CELL_ID = "About"
-let HOSTINGINFO_CELL_ID = "HostingInfo"
-let OFFER_HEADING_CELL_ID = "OfferHeading"
-let OFFER_CELL_ID = "Offer"
-let PHONE_CELL_ID = "Phone"
+let ImageCellID = "Photo"
+let AvailibilityCellID = "Availible"
+let AccountDetailCellID = "AccountDetail"
+let FeedbackCountCellID = "FeedbackCount"
+let SegmentCellID = "Segment"
+let AboutCellID = "About"
+let HostingInfoCellID = "HostingInfo"
+let OfferHeadingCellID = "OfferHeading"
+let OfferCellID = "Offer"
+let PhoneCellID = "Phone"
 
-let FEEDBACK_SEGUE_ID = "ToFeedback"
-let SEND_NEW_MESSAGE_SEGUE_ID = "ToSendNewMessage"
-let PROVIDE_FEEDBACK_SEGUE_ID = "ToProvideFeedback"
+let ToFeedbackSegueID = "ToFeedback"
+let ToSendNewMessageSegueID = "ToSendNewMessage"
+let ToProvideFeeedbackSegueID = "ToProvideFeedback"
 
 enum HostProfileTab {
     case About
@@ -39,10 +39,10 @@ class AccountTableViewController: UITableViewController {
     
     var uid: Int?
     var info: AnyObject?
-    var feedback: AnyObject?
-    var hostingInfo: WSHostingInfo = WSHostingInfo()
-    var offers: WSOffers = WSOffers()
-    var phoneNumbers: WSPhoneContacts = WSPhoneContacts()
+    var feedback = [WSRecommendation]()
+    var hostingInfo = WSHostingInfo()
+    var offers = WSOffers()
+    var phoneNumbers = WSPhoneContacts()
     var photo: UIImage?
     var user: CDWSUser?
     
@@ -107,15 +107,49 @@ class AccountTableViewController: UITableViewController {
     }
     
     //
-    func updateWithFeedback(feedback: AnyObject?) {
+    func updateWithFeedback(json: AnyObject?) {
         
-        guard let feedback = feedback else {
+        guard let json = json else {
             return
         }
+        
+        var feedback = [WSRecommendation]()
+        
+        // Parse the data
+        if let allRecommendations = json.valueForKey("recommendations") as? NSArray {
+            for recommendationObject in allRecommendations {
+                if let recommendationJSON = recommendationObject.valueForKey("recommendation") {
+                    if let recommendation = WSRecommendation(json: recommendationJSON) {
+                        feedback.append(recommendation)
+                    }
+                }
+            }
+        }
+        
+        // Set the feedback and update the table view
         self.feedback = feedback
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 2)], withRowAnimation: UITableViewRowAnimation.Automatic)
         })
+        
+        // Update the feedback with user thumbnail urls
+        for feedback in self.feedback {
+            
+            guard let uid = feedback.author?.uid else {
+                return
+            }
+            
+            WSRequest.getUserInfo(uid, doWithUserInfo: { (info) -> Void in
+                
+                guard let info = info else {
+                    return
+                }
+                
+                if let user = WSUserLocation(json: info) {
+                    feedback.authorImageURL = user.thumbnailImageURL
+                }
+            })
+        }
     }
     
     // Downloads the users profile photo and updates the view
@@ -188,33 +222,18 @@ class AccountTableViewController: UITableViewController {
             
             let messageAction = UIAlertAction(title: "Send Message", style: .Default) { (messageAction) -> Void in
                 // Present compose message view
-                self.performSegueWithIdentifier(SEND_NEW_MESSAGE_SEGUE_ID, sender: nil)
+                self.performSegueWithIdentifier(ToSendNewMessageSegueID, sender: nil)
             }
             actionAlert.addAction(messageAction)
             let provideFeedbackAction = UIAlertAction(title: "Provide Feedback", style: .Default) { (messageAction) -> Void in
                 // Present provide feeback view
-                self.performSegueWithIdentifier(PROVIDE_FEEDBACK_SEGUE_ID, sender: nil)
+                self.performSegueWithIdentifier(ToProvideFeeedbackSegueID, sender: nil)
             }
             actionAlert.addAction(provideFeedbackAction)
-            
         }
-
     }
     
-    // Returns the number of feedbacks for the user (or nil if feedback could not be retrieved from the server)
-    func numberOfFeedbacks() -> Int? {
-        
-        guard let feedback = feedback else {
-            return nil
-        }
-        
-        guard let recommendations = feedback.valueForKey("recommendations") else {
-            return nil
-        }
-        
-        return recommendations.count
-    }
-
+    
     // MARK: - Tableview Data Source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -254,7 +273,7 @@ class AccountTableViewController: UITableViewController {
             switch indexPath.row {
             case 0:
                 // Photo
-                let cell = tableView.dequeueReusableCellWithIdentifier(IMAGE_CELL_ID, forIndexPath: indexPath) as! ProfileImageTableViewCell
+                let cell = tableView.dequeueReusableCellWithIdentifier(ImageCellID, forIndexPath: indexPath) as! ProfileImageTableViewCell
                 if let photo = photo {
                     cell.nameLabel.text = self.info?.valueForKey("fullname") as? String
                     cell.nameLabel.textColor = UIColor.whiteColor()
@@ -267,7 +286,7 @@ class AccountTableViewController: UITableViewController {
                 return cell
             case 1:
                 // Availiblity
-                let cell = tableView.dequeueReusableCellWithIdentifier(AVAILIBLITY_CELL_ID, forIndexPath: indexPath) as! AvailiblityTableViewCell
+                let cell = tableView.dequeueReusableCellWithIdentifier(AvailibilityCellID, forIndexPath: indexPath) as! AvailiblityTableViewCell
                 cell.configureAsCurrentlyAvailible(info)
                 return cell
             default:
@@ -280,17 +299,17 @@ class AccountTableViewController: UITableViewController {
             switch indexPath.row {
             case 0:
                 // Memeber for ...
-                let cell = tableView.dequeueReusableCellWithIdentifier(ACCOUNT_DETAIL_CELL_ID, forIndexPath: indexPath) as! AccountDetailTableViewCell
+                let cell = tableView.dequeueReusableCellWithIdentifier(AccountDetailCellID, forIndexPath: indexPath) as! AccountDetailTableViewCell
                 cell.configureAsMemberFor(info)
                 return cell
             case 1:
                 // Active ... ago
-                let cell = tableView.dequeueReusableCellWithIdentifier(ACCOUNT_DETAIL_CELL_ID, forIndexPath: indexPath) as! AccountDetailTableViewCell
+                let cell = tableView.dequeueReusableCellWithIdentifier(AccountDetailCellID, forIndexPath: indexPath) as! AccountDetailTableViewCell
                 cell.configureAsActiveAgo(info)
                 return cell
             case 2:
                 // Languages spoken: ...
-                let cell = tableView.dequeueReusableCellWithIdentifier(ACCOUNT_DETAIL_CELL_ID, forIndexPath: indexPath) as! AccountDetailTableViewCell
+                let cell = tableView.dequeueReusableCellWithIdentifier(AccountDetailCellID, forIndexPath: indexPath) as! AccountDetailTableViewCell
                 cell.configureAsLanguageSpoken(info)
                 return cell
             default:
@@ -302,16 +321,16 @@ class AccountTableViewController: UITableViewController {
             switch indexPath.row {
             case 0:
                 // Feedback
-                let cell = tableView.dequeueReusableCellWithIdentifier(FEEDBACK_CELL_ID, forIndexPath: indexPath)
-                if let nof = self.numberOfFeedbacks() {
-                    cell.textLabel?.text = String(format: "Feedback (%i)", arguments: [nof])
+                let cell = tableView.dequeueReusableCellWithIdentifier(FeedbackCountCellID, forIndexPath: indexPath)
+                if feedback.count > 0 {
+                    cell.textLabel?.text = String(format: "Feedback (%i)", arguments: [feedback.count])
                 } else {
                     cell.textLabel?.text = "Feedback"
                 }
                 return cell
             case 1:
                 // Info tabs
-                let cell = tableView.dequeueReusableCellWithIdentifier(SEGMENT_CELL_ID, forIndexPath: indexPath) as! SegmentTableViewCell
+                let cell = tableView.dequeueReusableCellWithIdentifier(SegmentCellID, forIndexPath: indexPath) as! SegmentTableViewCell
                 cell.delegate = self
                 return cell
             default:
@@ -324,7 +343,7 @@ class AccountTableViewController: UITableViewController {
             switch tab {
             case .About:
                 // About tab
-                let cell = tableView.dequeueReusableCellWithIdentifier(ABOUT_CELL_ID, forIndexPath: indexPath) as! AboutTableViewCell
+                let cell = tableView.dequeueReusableCellWithIdentifier(AboutCellID, forIndexPath: indexPath) as! AboutTableViewCell
                 if info != nil {
                     cell.aboutLabel.text = info!.valueForKey("comments") as? String
                 } else {
@@ -334,21 +353,21 @@ class AccountTableViewController: UITableViewController {
             case .Hosting:
                 // Hosting tab
                 if row < hostingInfo.count {
-                    let cell = tableView.dequeueReusableCellWithIdentifier(HOSTINGINFO_CELL_ID, forIndexPath: indexPath) as! HostingInfoTableViewCell
+                    let cell = tableView.dequeueReusableCellWithIdentifier(HostingInfoCellID, forIndexPath: indexPath) as! HostingInfoTableViewCell
                     cell.title = hostingInfo.titleValues[row]
                     cell.info = hostingInfo.infoValues[row]
                     return cell
                 } else if row == hostingInfo.count {
-                    let cell = tableView.dequeueReusableCellWithIdentifier(OFFER_HEADING_CELL_ID, forIndexPath: indexPath)
+                    let cell = tableView.dequeueReusableCellWithIdentifier(OfferHeadingCellID, forIndexPath: indexPath)
                     return cell
                 } else {
-                    let cell = tableView.dequeueReusableCellWithIdentifier(OFFER_CELL_ID, forIndexPath: indexPath) as! HostOfferTableViewCell
+                    let cell = tableView.dequeueReusableCellWithIdentifier(OfferCellID, forIndexPath: indexPath) as! HostOfferTableViewCell
                     cell.offer = offers.offerAtIndex(row - 5)
                     return cell
                 }
             case .Contact:
                 // Contact tab
-                let cell = tableView.dequeueReusableCellWithIdentifier(PHONE_CELL_ID, forIndexPath: indexPath) as! PhoneTableViewCell
+                let cell = tableView.dequeueReusableCellWithIdentifier(PhoneCellID, forIndexPath: indexPath) as! PhoneTableViewCell
                 cell.setWithPhoneNumber(phoneNumbers.numbers[row])
                 return cell
                 
@@ -367,7 +386,7 @@ class AccountTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let cell = tableView.cellForRowAtIndexPath(indexPath)
-        if cell?.reuseIdentifier == SEGMENT_CELL_ID {
+        if cell?.reuseIdentifier == SegmentCellID {
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
         }
     }
@@ -414,11 +433,11 @@ class AccountTableViewController: UITableViewController {
     
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         switch identifier {
-        case FEEDBACK_SEGUE_ID:
-            return feedback != nil
-        case SEND_NEW_MESSAGE_SEGUE_ID:
+        case ToFeedbackSegueID:
+            return feedback.count > 0
+        case ToSendNewMessageSegueID:
             return info != nil
-        case PROVIDE_FEEDBACK_SEGUE_ID:
+        case ToProvideFeeedbackSegueID:
             return info?.valueForKey("name") as? String != nil ? true : false
         default:
             return true
@@ -427,21 +446,22 @@ class AccountTableViewController: UITableViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         segue
-        if segue.identifier == FEEDBACK_SEGUE_ID {
+        if segue.identifier == ToFeedbackSegueID {
             let feedbackVC = segue.destinationViewController as! FeedbackTableViewController
-            feedbackVC.parseFeedbackJSON(self.feedback)
+            feedbackVC.lazyImageObjects = feedback
+            feedbackVC.placeHolderImageName = "ThumbnailPlaceholder"
         }
-        if segue.identifier == SEND_NEW_MESSAGE_SEGUE_ID {
+        if segue.identifier == ToSendNewMessageSegueID {
             let navVC = segue.destinationViewController as! UINavigationController
             let composeMessageVC = navVC.viewControllers.first as! ComposeMessageTableViewController
             saveUserInfo(info!)
             composeMessageVC.initialiseAsNewMessageToUser(user!)
         }
-        if segue.identifier == PROVIDE_FEEDBACK_SEGUE_ID {
+        if segue.identifier == ToProvideFeeedbackSegueID {
             let navVC = segue.destinationViewController as! UINavigationController
             let createFeedbackVC = navVC.viewControllers.first as! CreateFeedbackTableViewController
             createFeedbackVC.userName = info?.valueForKey("name") as? String
-            createFeedbackVC.feedback.recommendedUserUID = uid
+            createFeedbackVC.feedback.recommendedUserUID = uid!
         }
     }
 

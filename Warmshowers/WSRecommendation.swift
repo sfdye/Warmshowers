@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct WSRecommendation {
+class WSRecommendation {
     
     var body: String = ""
     var date: NSDate = NSDate()
@@ -16,6 +16,7 @@ struct WSRecommendation {
     var rating: WSRecommendationRating = .Positive
     var author: WSUser?
     var recommendedUserUID: Int?
+    var authorImageURL: String?
     var authorImage: UIImage?
     var month: Int {
         let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
@@ -26,7 +27,7 @@ struct WSRecommendation {
         return calendar.components([.Year], fromDate: date).year
     }
     
-    init() { }
+    init() {}
     
     init?(json: AnyObject) {
         

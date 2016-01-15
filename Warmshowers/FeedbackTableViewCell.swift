@@ -19,7 +19,7 @@ class FeedbackTableViewCell: UITableViewCell {
     let formatter = NSDateFormatter()
     
     func configureWithFeedback(feedback: WSRecommendation) {
-        setAuthorThumbnailImage(feedback.authorImage)
+//        setAuthorThumbnailImage(feedback.authorImage)
         authorNameLabel.text = feedback.author?.fullname
         setDate(feedback.date)
         setRating(feedback.rating)
@@ -27,14 +27,14 @@ class FeedbackTableViewCell: UITableViewCell {
         bodyLabel.text = feedback.body
     }
     
-    func setAuthorThumbnailImage(image: UIImage?) {
-        
-        guard image != nil else {
-            return
-        }
-        
-        self.authorImage.image = image!
-    }
+//    func setAuthorThumbnailImage(image: UIImage?) {
+//        
+//        guard image != nil else {
+//            return
+//        }
+//        
+//        self.authorImage.image = image!
+//    }
     
     func setDate(date: NSDate) {
         let formatter = NSDateFormatter()

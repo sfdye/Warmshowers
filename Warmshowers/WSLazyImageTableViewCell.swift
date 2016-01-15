@@ -11,9 +11,3 @@ import UIKit
 protocol WSLazyImageTableViewCell {
     var lazyImage: UIImage? { get set }
 }
-
-//class WSLazyImageTableViewCell: UITableViewCell {
-//    
-//    var lazyImageView: UIImageView!
-//
-//}

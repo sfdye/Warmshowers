@@ -77,10 +77,14 @@
 		E5DA03D41C48893400FAD1D7 /* WSLazyImageTableViewController+UIScrollViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03D31C48893400FAD1D7 /* WSLazyImageTableViewController+UIScrollViewDelegate.swift */; };
 		E5DA03D61C48899700FAD1D7 /* WSLazyImageTableViewController+UITableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03D51C48899700FAD1D7 /* WSLazyImageTableViewController+UITableViewDataSource.swift */; };
 		E5DA03D81C488AE900FAD1D7 /* WSLazyImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03D71C488AE900FAD1D7 /* WSLazyImageTableViewCell.swift */; };
-		E5DA03DA1C488CA000FAD1D7 /* WSLazyImageDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03D91C488CA000FAD1D7 /* WSLazyImageDataSource.swift */; };
-		E5DA03DC1C489A2100FAD1D7 /* WSLazyImageTableViewController+WSLazyImageTableViewCellConfigurer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03DB1C489A2100FAD1D7 /* WSLazyImageTableViewController+WSLazyImageTableViewCellConfigurer.swift */; };
-		E5DA03DE1C489B1E00FAD1D7 /* WSLazyImageTableViewCellConfigurer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03DD1C489B1E00FAD1D7 /* WSLazyImageTableViewCellConfigurer.swift */; };
+		E5DA03DA1C488CA000FAD1D7 /* WSLazyImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03D91C488CA000FAD1D7 /* WSLazyImage.swift */; };
 		E5DA03E01C490ECC00FAD1D7 /* HostListTableViewController+UITableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03DF1C490ECC00FAD1D7 /* HostListTableViewController+UITableViewDataSource.swift */; };
+		E5DA03E21C49185000FAD1D7 /* WSUserLocation+WSLazyImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03E11C49185000FAD1D7 /* WSUserLocation+WSLazyImage.swift */; };
+		E5DA03E41C49187600FAD1D7 /* WSUserLocation+MKAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03E31C49187600FAD1D7 /* WSUserLocation+MKAnnotation.swift */; };
+		E5DA03E61C49A5CA00FAD1D7 /* WSRecommendation+WSLazyImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03E51C49A5CA00FAD1D7 /* WSRecommendation+WSLazyImage.swift */; };
+		E5DA03E81C49AE5300FAD1D7 /* HostListTableViewCell+WSLazyImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03E71C49AE5300FAD1D7 /* HostListTableViewCell+WSLazyImageTableViewCell.swift */; };
+		E5DA03EA1C49AF1000FAD1D7 /* FeedbackTableViewCell+WSLazyImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03E91C49AF1000FAD1D7 /* FeedbackTableViewCell+WSLazyImageTableViewCell.swift */; };
+		E5DA03EC1C49BA3000FAD1D7 /* FeedbackTableViewController+UITableViewCellDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03EB1C49BA3000FAD1D7 /* FeedbackTableViewController+UITableViewCellDataSource.swift */; };
 		E5F6F30A1C2B36930000A87E /* WSRestfulService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6F3091C2B36930000A87E /* WSRestfulService.swift */; };
 		E5F6F30D1C2FE2770000A87E /* AccountDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6F30C1C2FE2770000A87E /* AccountDetailTableViewCell.swift */; };
 		E5F6F30F1C2FE3360000A87E /* ProfileImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6F30E1C2FE3360000A87E /* ProfileImageTableViewCell.swift */; };
@@ -191,10 +195,14 @@
 		E5DA03D31C48893400FAD1D7 /* WSLazyImageTableViewController+UIScrollViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSLazyImageTableViewController+UIScrollViewDelegate.swift"; sourceTree = "<group>"; };
 		E5DA03D51C48899700FAD1D7 /* WSLazyImageTableViewController+UITableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSLazyImageTableViewController+UITableViewDataSource.swift"; sourceTree = "<group>"; };
 		E5DA03D71C488AE900FAD1D7 /* WSLazyImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSLazyImageTableViewCell.swift; sourceTree = "<group>"; };
-		E5DA03D91C488CA000FAD1D7 /* WSLazyImageDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSLazyImageDataSource.swift; sourceTree = "<group>"; };
-		E5DA03DB1C489A2100FAD1D7 /* WSLazyImageTableViewController+WSLazyImageTableViewCellConfigurer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSLazyImageTableViewController+WSLazyImageTableViewCellConfigurer.swift"; sourceTree = "<group>"; };
-		E5DA03DD1C489B1E00FAD1D7 /* WSLazyImageTableViewCellConfigurer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSLazyImageTableViewCellConfigurer.swift; sourceTree = "<group>"; };
+		E5DA03D91C488CA000FAD1D7 /* WSLazyImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSLazyImage.swift; sourceTree = "<group>"; };
 		E5DA03DF1C490ECC00FAD1D7 /* HostListTableViewController+UITableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HostListTableViewController+UITableViewDataSource.swift"; sourceTree = "<group>"; };
+		E5DA03E11C49185000FAD1D7 /* WSUserLocation+WSLazyImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSUserLocation+WSLazyImage.swift"; sourceTree = "<group>"; };
+		E5DA03E31C49187600FAD1D7 /* WSUserLocation+MKAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSUserLocation+MKAnnotation.swift"; sourceTree = "<group>"; };
+		E5DA03E51C49A5CA00FAD1D7 /* WSRecommendation+WSLazyImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSRecommendation+WSLazyImage.swift"; sourceTree = "<group>"; };
+		E5DA03E71C49AE5300FAD1D7 /* HostListTableViewCell+WSLazyImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HostListTableViewCell+WSLazyImageTableViewCell.swift"; sourceTree = "<group>"; };
+		E5DA03E91C49AF1000FAD1D7 /* FeedbackTableViewCell+WSLazyImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FeedbackTableViewCell+WSLazyImageTableViewCell.swift"; sourceTree = "<group>"; };
+		E5DA03EB1C49BA3000FAD1D7 /* FeedbackTableViewController+UITableViewCellDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FeedbackTableViewController+UITableViewCellDataSource.swift"; sourceTree = "<group>"; };
 		E5F6F3091C2B36930000A87E /* WSRestfulService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSRestfulService.swift; sourceTree = "<group>"; };
 		E5F6F30C1C2FE2770000A87E /* AccountDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountDetailTableViewCell.swift; sourceTree = "<group>"; };
 		E5F6F30E1C2FE3360000A87E /* ProfileImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageTableViewCell.swift; sourceTree = "<group>"; };
@@ -305,6 +313,9 @@
 				E51397661C06945E00FD8EC1 /* WSUserLocation.swift */,
 				E54276811C3E54BA00047029 /* WSPhoneNumberType.swift */,
 				E54276891C41AAAF00047029 /* WSRecommendationMonths.swift */,
+				E5DA03E11C49185000FAD1D7 /* WSUserLocation+WSLazyImage.swift */,
+				E5DA03E31C49187600FAD1D7 /* WSUserLocation+MKAnnotation.swift */,
+				E5DA03E51C49A5CA00FAD1D7 /* WSRecommendation+WSLazyImage.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -345,6 +356,7 @@
 				E5700C571C45C057008C8A87 /* HostListTableViewController.swift */,
 				E5700C591C45C961008C8A87 /* HostListTableViewCell.swift */,
 				E5DA03DF1C490ECC00FAD1D7 /* HostListTableViewController+UITableViewDataSource.swift */,
+				E5DA03E71C49AE5300FAD1D7 /* HostListTableViewCell+WSLazyImageTableViewCell.swift */,
 			);
 			name = HostListTableViewController;
 			sourceTree = "<group>";
@@ -402,6 +414,8 @@
 			children = (
 				E5967BB11C38A11E0037F4B7 /* FeedbackTableViewController.swift */,
 				E5967BB71C38C0FA0037F4B7 /* FeedbackTableViewCell.swift */,
+				E5DA03E91C49AF1000FAD1D7 /* FeedbackTableViewCell+WSLazyImageTableViewCell.swift */,
+				E5DA03EB1C49BA3000FAD1D7 /* FeedbackTableViewController+UITableViewCellDataSource.swift */,
 			);
 			name = FeedbackTableViewController;
 			sourceTree = "<group>";
@@ -478,9 +492,7 @@
 				E5DA03D31C48893400FAD1D7 /* WSLazyImageTableViewController+UIScrollViewDelegate.swift */,
 				E5DA03D51C48899700FAD1D7 /* WSLazyImageTableViewController+UITableViewDataSource.swift */,
 				E5DA03D71C488AE900FAD1D7 /* WSLazyImageTableViewCell.swift */,
-				E5DA03D91C488CA000FAD1D7 /* WSLazyImageDataSource.swift */,
-				E5DA03DB1C489A2100FAD1D7 /* WSLazyImageTableViewController+WSLazyImageTableViewCellConfigurer.swift */,
-				E5DA03DD1C489B1E00FAD1D7 /* WSLazyImageTableViewCellConfigurer.swift */,
+				E5DA03D91C488CA000FAD1D7 /* WSLazyImage.swift */,
 			);
 			name = WSLazyImageTableVIewController;
 			sourceTree = "<group>";
@@ -716,19 +728,21 @@
 			files = (
 				E5967BAB1C38814F0037F4B7 /* WSTimeInterval.swift in Sources */,
 				E542767C1C3E4C2A00047029 /* FeedbackOptionPickerTableViewCell.swift in Sources */,
-				E5DA03DE1C489B1E00FAD1D7 /* WSLazyImageTableViewCellConfigurer.swift in Sources */,
 				E51397671C06945E00FD8EC1 /* WSUserLocation.swift in Sources */,
 				E5F6F3171C3140BD0000A87E /* AboutTableViewCell.swift in Sources */,
 				E5967BA51C361D2B0037F4B7 /* WSPhoneContacts.swift in Sources */,
 				E5D96B281BFC493B00AFAFEE /* LoginViewController.swift in Sources */,
+				E5DA03EA1C49AF1000FAD1D7 /* FeedbackTableViewCell+WSLazyImageTableViewCell.swift in Sources */,
 				E5F6F3131C3124230000A87E /* HostOfferTableViewCell.swift in Sources */,
 				E56CC08C1BFD2EC300AAF973 /* TabBarController.swift in Sources */,
 				E5DA03D61C48899700FAD1D7 /* WSLazyImageTableViewController+UITableViewDataSource.swift in Sources */,
 				E52E8AA11C0BD38D000391AB /* HostSearchViewController+UISearchControllerDelegate.swift in Sources */,
 				E56CC0901BFD496400AAF973 /* SettingsTableViewController.swift in Sources */,
 				E52E8AAF1C0D056D000391AB /* MessageThreadsTableViewController.swift in Sources */,
+				E5DA03EC1C49BA3000FAD1D7 /* FeedbackTableViewController+UITableViewCellDataSource.swift in Sources */,
 				E52E8AB11C0D0B1A000391AB /* MessageThreadsTableViewCell.swift in Sources */,
 				E5967BB81C38C0FA0037F4B7 /* FeedbackTableViewCell.swift in Sources */,
+				E5DA03E61C49A5CA00FAD1D7 /* WSRecommendation+WSLazyImage.swift in Sources */,
 				E5700C5A1C45C961008C8A87 /* HostListTableViewCell.swift in Sources */,
 				E5DA03E01C490ECC00FAD1D7 /* HostListTableViewController+UITableViewDataSource.swift in Sources */,
 				E52E8A9F1C0BD25A000391AB /* HostSearchViewController+MKMapViewDelegate.swift in Sources */,
@@ -740,6 +754,7 @@
 				E5DA03CB1C48534300FAD1D7 /* WSImageDownloader.swift in Sources */,
 				E54276801C3E546E00047029 /* WSRecommendationFor.swift in Sources */,
 				E5967BBD1C39BFF30037F4B7 /* MessageTableViewCell.swift in Sources */,
+				E5DA03E41C49187600FAD1D7 /* WSUserLocation+MKAnnotation.swift in Sources */,
 				E5967BA11C35D59C0037F4B7 /* WSHostingInfo.swift in Sources */,
 				E5967BCA1C39DBC00037F4B7 /* CDWSMessageThread+CoreDataProperties.swift in Sources */,
 				E5DA03D41C48893400FAD1D7 /* WSLazyImageTableViewController+UIScrollViewDelegate.swift in Sources */,
@@ -747,7 +762,7 @@
 				E5967BCF1C39DBC00037F4B7 /* CDWSUser.swift in Sources */,
 				E52E8AA31C0BD3F0000391AB /* HostSearchViewController+KPClusteringControllerDelegate.swift in Sources */,
 				E5F6F30D1C2FE2770000A87E /* AccountDetailTableViewCell.swift in Sources */,
-				E5DA03DA1C488CA000FAD1D7 /* WSLazyImageDataSource.swift in Sources */,
+				E5DA03DA1C488CA000FAD1D7 /* WSLazyImage.swift in Sources */,
 				E56CC08A1BFD22D800AAF973 /* HostSearchViewController.swift in Sources */,
 				E50FD8A21C053A42004D38A3 /* MapTileServerURLTemplate.swift in Sources */,
 				E54276821C3E54BA00047029 /* WSPhoneNumberType.swift in Sources */,
@@ -755,6 +770,7 @@
 				E5DA03D11C4887E700FAD1D7 /* WSLazyImageTableViewController.swift in Sources */,
 				E54276751C3E0CE200047029 /* ComposeMessageBodyTableViewCell.swift in Sources */,
 				E542768A1C41AAAF00047029 /* WSRecommendationMonths.swift in Sources */,
+				E5DA03E81C49AE5300FAD1D7 /* HostListTableViewCell+WSLazyImageTableViewCell.swift in Sources */,
 				E5F6F30F1C2FE3360000A87E /* ProfileImageTableViewCell.swift in Sources */,
 				E5D96AF81BFB1CA700AFAFEE /* AppDelegate.swift in Sources */,
 				E5700C521C44CB64008C8A87 /* ComposeMessageTableViewController+UITextViewDelegate.swift in Sources */,
@@ -780,8 +796,8 @@
 				E542768C1C41B10300047029 /* FeedbackOptionTableViewCell.swift in Sources */,
 				E52E8AA51C0BD8BF000391AB /* HostSearchViewController+UISearchResultsUpdating.swift in Sources */,
 				E54A572F1BFDC446000843A9 /* WSRequests.swift in Sources */,
+				E5DA03E21C49185000FAD1D7 /* WSUserLocation+WSLazyImage.swift in Sources */,
 				E5F6F30A1C2B36930000A87E /* WSRestfulService.swift in Sources */,
-				E5DA03DC1C489A2100FAD1D7 /* WSLazyImageTableViewController+WSLazyImageTableViewCellConfigurer.swift in Sources */,
 				E5DA03A71C46FCBB00FAD1D7 /* WSColor.swift in Sources */,
 				E5967BCB1C39DBC00037F4B7 /* CDWSMessageThread.swift in Sources */,
 				E54276901C44956F00047029 /* CreateFeedbackTableViewController+UITextViewDelegate.swift in Sources */,

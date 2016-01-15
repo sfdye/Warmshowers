@@ -19,17 +19,23 @@ class WSLazyImageTableViewController: UITableViewController {
         }
         return UIImage(named: placeHolderImageName)
     }
-
     
+    
+    // View life cycle
+    
+    deinit {
+        terminateAllDownloads()
+    }
+
     // MARK: Utiliies
     
-    func getLazyImageDataSourceForIndexPath(indexPath: NSIndexPath) -> WSLazyImageDataSource? {
+    func getLazyImageDataSourceForIndexPath(indexPath: NSIndexPath) -> WSLazyImage? {
         
         guard lazyImageObjects.count > indexPath.row else {
             return nil
         }
         
-        return lazyImageObjects[indexPath.row] as? WSLazyImageDataSource
+        return lazyImageObjects[indexPath.row] as? WSLazyImage
     }
     
     // Sets the images for a table view cell at a given index path as either the image provided by the LazyImage data source or a placeholder
@@ -54,7 +60,7 @@ class WSLazyImageTableViewController: UITableViewController {
     
     // Downloads a objects image size profile image and updates the table view data source
     //
-    func startImageDownload(object: WSLazyImageDataSource, indexPath: NSIndexPath) {
+    func startImageDownload(object: WSLazyImage, indexPath: NSIndexPath) {
         
         if imageDownloadsInProgress[indexPath] == nil {
             
@@ -89,12 +95,20 @@ class WSLazyImageTableViewController: UITableViewController {
         }
         
         for indexPath in visiblePaths {
-            if let object = lazyImageObjects[indexPath.row] as? WSLazyImageDataSource {
+            if let object = lazyImageObjects[indexPath.row] as? WSLazyImage {
                 if object.lazyImage == nil {
                     startImageDownload(object, indexPath: indexPath)
                 }
             }
         }
+    }
+    
+    // Terminates all image downloads
+    func terminateAllDownloads() {
+        for (_, download) in imageDownloadsInProgress {
+            download.cancelDownload()
+        }
+        imageDownloadsInProgress.removeAll()
     }
     
 }

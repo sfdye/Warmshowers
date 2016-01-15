@@ -8,129 +8,19 @@
 
 import UIKit
 
-let FEEDBACK_CELL_ID = "Feedback"
+let FeedbackCellID = "Feedback"
 
-class FeedbackTableViewController: UITableViewController {
+class FeedbackTableViewController: WSLazyImageTableViewController {
 
-    var feedback: [WSRecommendation]?
+    var feedback: [AnyObject] { return lazyImageObjects }
+    
+    // MARK: View life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.rowHeight = UITableViewAutomaticDimension
-        // TODO - update the estimate
-        tableView.estimatedRowHeight = 140
-    }
-    
-    
-    // MARK: - Tableview Data Source
-    
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if feedback != nil {
-            return feedback!.count
-        } else {
-            return 0
-        }
-    }
-    
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCellWithIdentifier(FEEDBACK_CELL_ID, forIndexPath: indexPath) as! FeedbackTableViewCell
-        if feedback != nil {
-            cell.configureWithFeedback(feedback![indexPath.row])
-            
-            // Download the user thumbnail
-            if feedback![indexPath.row].authorImage == nil {
-                
-                // Delay new downloads until the tableview has stopped moving
-                if tableView.dragging == false && tableView.decelerating == false {
-                    self.getAuthorImageForFeedbackAtIndex(indexPath.row, whenDone: { () -> Void in
-                        self.reloadRowAtIndexPath(indexPath)
-                    })
-                }
-                
-            }
-        }
-        
-        return cell
-    }
-    
-//    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        
-//        let cell = tableView.cellForRowAtIndexPath(indexPath)
-//        if cell?.reuseIdentifier == SEGMENT_CELL_ID {
-//            tableView.deselectRowAtIndexPath(indexPath, animated: true)
-//        }
-//    }
-    
-    
-    // MARK: Utilities
-    
-    // Reloads the table view
-    //
-    func reload() {
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
-            self.tableView.reloadData()
-        }
-    }
-    
-    func reloadRowAtIndexPath(indexPath: NSIndexPath) {
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-        })
-    }
-    
-    // Parses JSON to set the table data source feedback array
-    //
-    func parseFeedbackJSON(json: AnyObject?) {
-        
-        guard let json = json else {
-            return
-        }
-        
-        let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-        dispatch_async(queue) { () -> Void in
-            if let allRecommendations = json.valueForKey("recommendations") as? NSArray {
-                for recommendationObject in allRecommendations {
-                    if let recommendationJSON = recommendationObject.valueForKey("recommendation") {
-                        if let recommendation = WSRecommendation(json: recommendationJSON) {
-                            if self.feedback == nil {
-                                self.feedback = [recommendation]
-                            } else {
-                                self.feedback!.append(recommendation)
-                            }
-                        }
-                    }
-                }
-            }
-            self.reload()
-        }
-    }
-    
-    // Gets the author thumbnail for a given feedback object
-    //
-    func getAuthorImageForFeedbackAtIndex(index: Int, whenDone: () -> Void) {
-        
-        guard feedback != nil else {
-            return
-        }
-        
-        guard index < feedback!.count else {
-            return
-        }
-        
-        WSRequest.getUserThumbnailImage(self.feedback![index].author!.uid) { (image) -> Void in
-            if image != nil {
-                self.feedback![index].authorImage = image
-            } else {
-                print("Failed to get thumbnail for user \(self.feedback![index].author!.fullname)")
-            }
-            whenDone()
-        }
+        tableView.estimatedRowHeight = 122
     }
 
 }
