@@ -1,5 +1,5 @@
 //
-//  LazyImageTableViewController.swift
+//  WSLazyImageTableViewController.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 15/01/16.
@@ -8,10 +8,19 @@
 
 import UIKit
 
+/* 
+WSLazyImageTableViewController is a table view controller that loads images as required.
+Its based on the apple example LazyTableImages.
+To prepare a WSLazyImageTableViewController
+1. Set your data source object to the property 'lazyImageObject'
+2. Set the 'placeHolderImageName' property if you have a placeholder image you would like to display if the actual image could not be retrieved.
+3. Set the dataSource that conforms to WSLazyTableViewDataSource
+ */
+
 class WSLazyImageTableViewController: UITableViewController {
     
     var lazyImageObjects = [AnyObject]()
-    var imageDownloadsInProgress = [NSIndexPath: WSImageDownloader]()
+    var imageDownloadsInProgress = [NSIndexPath: WSLazyImageDownloader]()
     var placeHolderImageName: String?
     var placeHolderImage: UIImage? {
         guard let placeHolderImageName = placeHolderImageName else {
@@ -19,11 +28,16 @@ class WSLazyImageTableViewController: UITableViewController {
         }
         return UIImage(named: placeHolderImageName)
     }
-    
-    
+    var dataSource: WSLazyImageTableViewDataSource!
+        
     // View life cycle
     
     deinit {
+        terminateAllDownloads()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
         terminateAllDownloads()
     }
 
@@ -62,10 +76,14 @@ class WSLazyImageTableViewController: UITableViewController {
     //
     func startImageDownload(object: WSLazyImage, indexPath: NSIndexPath) {
         
+        guard let _ = object.lazyImageURL else {
+            return
+        }
+
         if imageDownloadsInProgress[indexPath] == nil {
             
             // Create and start a imageDownloader object
-            let imageDownloader = WSImageDownloader()
+            let imageDownloader = WSLazyImageDownloader()
             imageDownloader.object = object
             imageDownloader.placeHolderImage = placeHolderImage
             imageDownloader.completionHandler = {
@@ -77,10 +95,11 @@ class WSLazyImageTableViewController: UITableViewController {
                         cell.lazyImage = object.lazyImage
                     }
                 })
-                
+
                 // Remove the downloader object from the downloads
                 self.imageDownloadsInProgress.removeValueForKey(indexPath)
             }
+            
             imageDownloadsInProgress[indexPath] = imageDownloader
             imageDownloader.startDownload()
         }
@@ -106,9 +125,16 @@ class WSLazyImageTableViewController: UITableViewController {
     // Terminates all image downloads
     func terminateAllDownloads() {
         for (_, download) in imageDownloadsInProgress {
+            print(download)
             download.cancelDownload()
         }
         imageDownloadsInProgress.removeAll()
+    }
+    
+    // Clears the table data source
+    func clearTable() {
+        terminateAllDownloads()
+        lazyImageObjects = [AnyObject]()
     }
     
 }
