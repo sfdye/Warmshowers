@@ -72,7 +72,7 @@
 		E5D96B1A1BFB1CA700AFAFEE /* WarmshowersUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D96B191BFB1CA700AFAFEE /* WarmshowersUITests.swift */; };
 		E5D96B281BFC493B00AFAFEE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D96B271BFC493B00AFAFEE /* LoginViewController.swift */; };
 		E5DA03A71C46FCBB00FAD1D7 /* WSColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03A61C46FCBB00FAD1D7 /* WSColor.swift */; };
-		E5DA03CB1C48534300FAD1D7 /* WSImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03CA1C48534300FAD1D7 /* WSImageDownloader.swift */; };
+		E5DA03CB1C48534300FAD1D7 /* WSLazyImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03CA1C48534300FAD1D7 /* WSLazyImageDownloader.swift */; };
 		E5DA03D11C4887E700FAD1D7 /* WSLazyImageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03D01C4887E700FAD1D7 /* WSLazyImageTableViewController.swift */; };
 		E5DA03D41C48893400FAD1D7 /* WSLazyImageTableViewController+UIScrollViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03D31C48893400FAD1D7 /* WSLazyImageTableViewController+UIScrollViewDelegate.swift */; };
 		E5DA03D61C48899700FAD1D7 /* WSLazyImageTableViewController+UITableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03D51C48899700FAD1D7 /* WSLazyImageTableViewController+UITableViewDataSource.swift */; };
@@ -88,6 +88,9 @@
 		E5DA03EE1C49C66A00FAD1D7 /* Sue Ellen Francisco.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E5DA03ED1C49C59500FAD1D7 /* Sue Ellen Francisco.ttf */; };
 		E5DA03F01C49C7A200FAD1D7 /* WSFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03EF1C49C7A200FAD1D7 /* WSFont.swift */; };
 		E5DA03F21C49FA6500FAD1D7 /* WSLazyImageTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03F11C49FA6500FAD1D7 /* WSLazyImageTableViewDataSource.swift */; };
+		E5DA03F41C4A412C00FAD1D7 /* WSDataDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03F31C4A412C00FAD1D7 /* WSDataDownloader.swift */; };
+		E5DA03F81C4A488E00FAD1D7 /* WSGetHostsOnMapOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03F71C4A488E00FAD1D7 /* WSGetHostsOnMapOperation.swift */; };
+		E5DA03FA1C4A4FE100FAD1D7 /* WSGetHostsForKeywordOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03F91C4A4FE100FAD1D7 /* WSGetHostsForKeywordOperation.swift */; };
 		E5F6F30A1C2B36930000A87E /* WSRestfulService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6F3091C2B36930000A87E /* WSRestfulService.swift */; };
 		E5F6F30D1C2FE2770000A87E /* AccountDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6F30C1C2FE2770000A87E /* AccountDetailTableViewCell.swift */; };
 		E5F6F30F1C2FE3360000A87E /* ProfileImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6F30E1C2FE3360000A87E /* ProfileImageTableViewCell.swift */; };
@@ -193,7 +196,7 @@
 		E5D96B1B1BFB1CA700AFAFEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5D96B271BFC493B00AFAFEE /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		E5DA03A61C46FCBB00FAD1D7 /* WSColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSColor.swift; sourceTree = "<group>"; };
-		E5DA03CA1C48534300FAD1D7 /* WSImageDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSImageDownloader.swift; sourceTree = "<group>"; };
+		E5DA03CA1C48534300FAD1D7 /* WSLazyImageDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSLazyImageDownloader.swift; sourceTree = "<group>"; };
 		E5DA03D01C4887E700FAD1D7 /* WSLazyImageTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSLazyImageTableViewController.swift; sourceTree = "<group>"; };
 		E5DA03D31C48893400FAD1D7 /* WSLazyImageTableViewController+UIScrollViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSLazyImageTableViewController+UIScrollViewDelegate.swift"; sourceTree = "<group>"; };
 		E5DA03D51C48899700FAD1D7 /* WSLazyImageTableViewController+UITableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSLazyImageTableViewController+UITableViewDataSource.swift"; sourceTree = "<group>"; };
@@ -209,6 +212,9 @@
 		E5DA03ED1C49C59500FAD1D7 /* Sue Ellen Francisco.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Sue Ellen Francisco.ttf"; sourceTree = "<group>"; };
 		E5DA03EF1C49C7A200FAD1D7 /* WSFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSFont.swift; sourceTree = "<group>"; };
 		E5DA03F11C49FA6500FAD1D7 /* WSLazyImageTableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSLazyImageTableViewDataSource.swift; sourceTree = "<group>"; };
+		E5DA03F31C4A412C00FAD1D7 /* WSDataDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSDataDownloader.swift; sourceTree = "<group>"; };
+		E5DA03F71C4A488E00FAD1D7 /* WSGetHostsOnMapOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSGetHostsOnMapOperation.swift; sourceTree = "<group>"; };
+		E5DA03F91C4A4FE100FAD1D7 /* WSGetHostsForKeywordOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSGetHostsForKeywordOperation.swift; sourceTree = "<group>"; };
 		E5F6F3091C2B36930000A87E /* WSRestfulService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSRestfulService.swift; sourceTree = "<group>"; };
 		E5F6F30C1C2FE2770000A87E /* AccountDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountDetailTableViewCell.swift; sourceTree = "<group>"; };
 		E5F6F30E1C2FE3360000A87E /* ProfileImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageTableViewCell.swift; sourceTree = "<group>"; };
@@ -332,7 +338,10 @@
 				E54A57301BFE6FB2000843A9 /* WSURL.swift */,
 				E54A572E1BFDC446000843A9 /* WSRequests.swift */,
 				E5F6F3091C2B36930000A87E /* WSRestfulService.swift */,
-				E5DA03CA1C48534300FAD1D7 /* WSImageDownloader.swift */,
+				E5DA03CA1C48534300FAD1D7 /* WSLazyImageDownloader.swift */,
+				E5DA03F31C4A412C00FAD1D7 /* WSDataDownloader.swift */,
+				E5DA03F71C4A488E00FAD1D7 /* WSGetHostsOnMapOperation.swift */,
+				E5DA03F91C4A4FE100FAD1D7 /* WSGetHostsForKeywordOperation.swift */,
 			);
 			name = HTTP;
 			sourceTree = "<group>";
@@ -760,15 +769,17 @@
 				E5967BBB1C3922170037F4B7 /* MessageThreadTableViewController.swift in Sources */,
 				E5967B9F1C3490740037F4B7 /* WSOffers.swift in Sources */,
 				E54A57641C03E4A4000843A9 /* AccountTableViewController.swift in Sources */,
+				E5DA03F81C4A488E00FAD1D7 /* WSGetHostsOnMapOperation.swift in Sources */,
 				E54A57311BFE6FB2000843A9 /* WSURL.swift in Sources */,
 				E5DA03F01C49C7A200FAD1D7 /* WSFont.swift in Sources */,
 				E52E8ABE1C0E463D000391AB /* Warmshowers.xcdatamodeld in Sources */,
-				E5DA03CB1C48534300FAD1D7 /* WSImageDownloader.swift in Sources */,
+				E5DA03CB1C48534300FAD1D7 /* WSLazyImageDownloader.swift in Sources */,
 				E54276801C3E546E00047029 /* WSRecommendationFor.swift in Sources */,
 				E5967BBD1C39BFF30037F4B7 /* MessageTableViewCell.swift in Sources */,
 				E5DA03E41C49187600FAD1D7 /* WSUserLocation+MKAnnotation.swift in Sources */,
 				E5967BA11C35D59C0037F4B7 /* WSHostingInfo.swift in Sources */,
 				E5967BCA1C39DBC00037F4B7 /* CDWSMessageThread+CoreDataProperties.swift in Sources */,
+				E5DA03FA1C4A4FE100FAD1D7 /* WSGetHostsForKeywordOperation.swift in Sources */,
 				E5DA03D41C48893400FAD1D7 /* WSLazyImageTableViewController+UIScrollViewDelegate.swift in Sources */,
 				E52E8AA91C0BDB18000391AB /* HostSearchViewController+WSLazyImageTableViewDataSource.swift in Sources */,
 				E5967BCF1C39DBC00037F4B7 /* CDWSUser.swift in Sources */,
@@ -796,6 +807,7 @@
 				E573D17A1C0E6106004C3BFC /* LoginViewController+WSRequestAlerts.swift in Sources */,
 				E5F6F3191C3289060000A87E /* AccountTableViewController+SegmentTableViewCellActions.swift in Sources */,
 				E54276781C3E374400047029 /* CreateFeedbackTableViewController.swift in Sources */,
+				E5DA03F41C4A412C00FAD1D7 /* WSDataDownloader.swift in Sources */,
 				E54276731C3E0CC900047029 /* ComposeMessageDetailTableViewCell.swift in Sources */,
 				E5967BCC1C39DBC00037F4B7 /* CDWSMessage+CoreDataProperties.swift in Sources */,
 				E54276711C3CA8E800047029 /* ComposeMessageTableViewController.swift in Sources */,

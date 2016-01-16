@@ -1,5 +1,5 @@
 //
-//  WSImageDownloader.swift
+//  WSLazyImageDownloader.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 15/01/16.
@@ -8,12 +8,10 @@
 
 import Foundation
 
-class WSImageDownloader : NSObject {
+class WSLazyImageDownloader : WSDataDownloader {
     
     var object: WSLazyImage?
-    var task = NSURLSessionDataTask()
     var placeHolderImage: UIImage?
-    var completionHandler: (() -> Void)?
     
     override init() {
         super.init()
@@ -32,8 +30,6 @@ class WSImageDownloader : NSObject {
             completionHandler?()
             return
         }
-        
-        let session = NSURLSession.init(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
         
         task = session.dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
             
@@ -56,11 +52,5 @@ class WSImageDownloader : NSObject {
 
         task.resume()
     }
-
-    // Cancels the download task
-    //
-    func cancelDownload() {
-        print(task.state)
-        task.cancel()
-    }
+    
 }

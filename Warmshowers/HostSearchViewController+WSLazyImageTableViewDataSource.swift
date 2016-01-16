@@ -12,7 +12,7 @@ extension HostSearchViewController : WSLazyImageTableViewDataSource {
     
     func lazyImageCellForIndexPath(indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(HostListCellID, forIndexPath: indexPath)
-        if hostsInTable.count > 0 {
+        if hostsInTable.count > 0 && hostsInTable.count > indexPath.row {
             let user = hostsInTable[indexPath.row]
             if let cell = cell as? HostListTableViewCell {
                 cell.nameLabel.text = user.fullname

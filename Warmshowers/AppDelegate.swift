@@ -11,13 +11,14 @@ import MapKit
 import CoreData
 
 // FIRST TODOs
-// convert host search table to lazyimageTVC
+// work out how to make nsoperations with cancalable completion handlers
+// fix distance subtitles
 // queue http requests - ask paul for advice
 // !!! link up system settings to the app settings !!!
 // mark new message threads + tab bar icon badge
 // finish settings vc
-// factor out lazy image table functionality
-
+// put user password in keychain
+// add google translate feature to account view, translate from 'detect language' to system language
 
 // LATER TODOs
 // background message check and app icon bagde/ notifications

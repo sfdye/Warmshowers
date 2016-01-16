@@ -69,6 +69,7 @@
                                             <outlet property="locationLabel" destination="LpK-Va-oN3" id="bKC-HU-oVF"/>
                                             <outlet property="nameLabel" destination="Y4R-V8-Pc8" id="ZHB-ly-KML"/>
                                             <outlet property="profileImage" destination="1cJ-r2-gaJ" id="D1U-Tn-Czs"/>
+                                            <segue destination="nEv-Yc-3Kx" kind="showDetail" identifier="SearchResultsToUserAccount" id="chp-Mq-xSE"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -92,7 +93,7 @@
                     <connections>
                         <outlet property="mapView" destination="aHH-7b-NBG" id="bgr-hX-9Hz"/>
                         <outlet property="tableView" destination="ugj-VG-eZs" id="Sab-Lj-q31"/>
-                        <segue destination="nEv-Yc-3Kx" kind="showDetail" identifier="ToUserAccount" id="hkh-3S-gg7"/>
+                        <segue destination="nEv-Yc-3Kx" kind="showDetail" identifier="MapToUserAccount" id="hkh-3S-gg7"/>
                         <segue destination="JpQ-pS-sYY" kind="showDetail" identifier="ToHostList" id="Aa5-lT-YEz"/>
                     </connections>
                 </viewController>
@@ -1459,6 +1460,7 @@
         <image name="ThumbnailPlaceholder" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="chp-Mq-xSE"/>
         <segue reference="BZz-ra-FxF"/>
         <segue reference="1RT-Kj-eKu"/>
     </inferredMetricsTieBreakers>

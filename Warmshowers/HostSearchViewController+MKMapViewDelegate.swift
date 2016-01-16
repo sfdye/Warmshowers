@@ -102,10 +102,10 @@ extension HostSearchViewController: MKMapViewDelegate {
             if let kpAnnotation = view.annotation as? KPAnnotation {
                 if view.reuseIdentifier == "cluster" {
                     // Show a list of the clustered hosts
-                    performSegueWithIdentifier(TO_HOST_LIST_SEGUE_ID, sender: kpAnnotation)
+                    performSegueWithIdentifier(ToHostListSegueID, sender: kpAnnotation)
                 } else {
                     // Show the host profile
-                    performSegueWithIdentifier(TO_USER_ACCOUNT_SEGUE_ID, sender: kpAnnotation)
+                    performSegueWithIdentifier(MapToUserAccountSegueID, sender: kpAnnotation)
                 }
             }
     }

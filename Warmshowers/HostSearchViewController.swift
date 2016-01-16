@@ -25,19 +25,22 @@ enum MapSource {
     case OpenStreetMaps
 }
 
-let TO_USER_ACCOUNT_SEGUE_ID = "ToUserAccount"
-let TO_HOST_LIST_SEGUE_ID = "ToHostList"
+let MapToUserAccountSegueID = "MapToUserAccount"
+let ResultsToUserAccountSegueID = "SearchResultsToUserAccount"
+let ToHostListSegueID = "ToHostList"
 
 class HostSearchViewController: UIViewController {
     
     // MARK: Properties
     
+    let locationManager = CLLocationManager()
+    
+    let queue = NSOperationQueue()
+    
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var tableView: UITableView!
     var tableViewController = WSLazyImageTableViewController()
-    
-    let locationManager = CLLocationManager()
-    
+
     // Map source variables
     var mapSource = MapSource.AppleMaps
     var mapOverlay: MKTileOverlay? = nil
@@ -45,6 +48,7 @@ class HostSearchViewController: UIViewController {
     
     // Host data variables
     var hostsOnMap = [WSUserLocation]()
+//    var hostsOnMapDownloader: WSHostDownloader? = nil
     var hostsInTable: [WSUserLocation] {
         get {
             return tableViewController.lazyImageObjects as! [WSUserLocation]
@@ -53,6 +57,7 @@ class HostSearchViewController: UIViewController {
             tableViewController.lazyImageObjects = newValue
         }
     }
+//    var hostsInTableDownloader: WSHostDownloader? = nil
     
     // Navigation bar items
     var searchButton: UIBarButtonItem!
@@ -92,13 +97,14 @@ class HostSearchViewController: UIViewController {
         configureNavigationItem()
         configureClusteringController()
         configureSearchController()
+        configureQueue()
         
         // Centre the map on the user's location
         if let userLocation = locationManager.location?.coordinate {
             let region = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1))
             mapView.setRegion(region, animated: true)
+            updateHostsOnMap()
         }
-        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -143,6 +149,10 @@ class HostSearchViewController: UIViewController {
         clusteringController.delegate = self
         clusteringController.setAnnotations(hostsOnMap)
     }
+    
+    func configureQueue() {
+        queue.maxConcurrentOperationCount = 1
+    }
 
     
     // MARK: Map update methods
@@ -151,87 +161,65 @@ class HostSearchViewController: UIViewController {
     //
     func updateHostsOnMap() {
         
-        WSRequest.getHostDataForMapView(mapView) { (data) -> Void in
+        // Clear the operation queue
+        queue.cancelAllOperations()
+        
+        // Update the map annotation data source
+        let operation = WSGetHostsOnMapOperation(mapView: mapView)
+        
+        operation.success = { (hostsOnMap) -> Void in
             
-            // Update the mapView data source
-            if let data = data {
-                self.updateMapDataSource(data)
-            }
+            self.hostsOnMap = hostsOnMap
+            // update the cluster controller on the main thread
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.updateClusteringController()
+            })
         }
+        
+        operation.failure = {
+            // TODO failure action here
+        }
+        
+        queue.addOperation(operation)
     }
     
     // Updates the hosts to be shown in the table view
     //
     func updateSearchResultsWithKeyword(keyword: String) {
         
+        // Clear the operation queue
+        queue.cancelAllOperations()
+        
         // Cancel all thumbnail downloads
         tableViewController.clearTable()
         
-        // Get the new search results
-        WSRequest.getHostDataForKeyword(keyword, offset: 0) { (data) -> Void in
+        // Update the map annotation data source
+        let operation = WSGetHostsForKeywordOperation(keyword: keyword)
+        
+        operation.success = { (hosts) -> Void in
             
-            // Update the tableView data source
-            if let data = data {
-                self.updateTableViewDataSource(data)
-            }
-        }
-    }
-    
-    // Adds hosts to the map with data from the web
-    //
-    func updateMapDataSource(data: NSData) {
-        
-        // parse the json
-        if let json = WSRequest.jsonDataToDictionary(data) {
-            if let accounts = json["accounts"] as? NSArray {
-                for account in accounts {
-                    if let user = WSUserLocation(json: account) {
-                        if !self.userOnMap(user.uid) {
-                            self.hostsOnMap.append(user)
-                        }
-                    }
-                }
-            }
+            self.hostsInTable = hosts
+            // update the cluster controller on the main thread
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.tableView.reloadData()
+            })
         }
         
-        // update the cluster controller on the main thread (otherwise it complains)
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            self.updateClusteringController()
-        })
-    }
-    
-    // Adds hosts to search results with data from the web
-    //
-    func updateTableViewDataSource(data: NSData) {
-        
-        var hosts = [WSUserLocation]()
-        
-        // parse the json
-        if let json = WSRequest.jsonDataToDictionary(data) {
-            if let accounts = json["accounts"] as? NSDictionary {
-                for (_, account) in accounts {
-                    if let user = WSUserLocation(json: account) {
-                        hosts.append(user)
-                    }
-                }
-            }
+        operation.failure = {
+            // TODO failure action here
         }
         
-        hostsInTable = hosts
-        
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            self.tableView.reloadData()
-        })
+        queue.addOperation(operation)
     }
     
     // Updates the pin clustering controller
     func updateClusteringController() {
-        if self.hostsOnMap.count != 0 {
+        if hostsOnMap.count != 0 {
+            print(hostsOnMap.count)
             clusteringController.setAnnotations(hostsOnMap)
             clusteringController.refresh(true)
         }
     }
-    
     
     // MARK: - Map source methods
     
@@ -289,21 +277,38 @@ class HostSearchViewController: UIViewController {
     }
     
     func accountButtonPressed() {
-        performSegueWithIdentifier(TO_USER_ACCOUNT_SEGUE_ID, sender: nil)
+        performSegueWithIdentifier(ToUserAccountSegueID, sender: nil)
     }
     
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         switch identifier {
-        case TO_USER_ACCOUNT_SEGUE_ID:
-            print(sender is KPAnnotation)
-            return sender is KPAnnotation
-        case TO_HOST_LIST_SEGUE_ID:
+        case ToUserAccountSegueID:
+            
+            if let kpAnnotation = sender as? KPAnnotation {
+                if let _ = kpAnnotation.annotations.first as? WSUserLocation {
+                    return true
+                }
+            }
+            return false
+            
+        case ResultsToUserAccountSegueID:
+            
+            if let cell = sender as? HostListTableViewCell {
+                if let _ = cell.uid {
+                    return true
+                }
+            }
+            return false
+            
+        case MapToUserAccountSegueID:
+            
             if let kpAnnotation = sender as? KPAnnotation {
                 if let _ = Array(kpAnnotation.annotations) as? [WSUserLocation] {
                     return true
                 }
             }
             return false
+            
         default:
             return true
         }
@@ -313,7 +318,7 @@ class HostSearchViewController: UIViewController {
         
         switch segue.identifier! {
             
-        case TO_USER_ACCOUNT_SEGUE_ID:
+        case MapToUserAccountSegueID:
             
             let navVC = segue.destinationViewController as! UINavigationController
             let accountTVC = navVC.viewControllers.first as! AccountTableViewController
@@ -327,7 +332,16 @@ class HostSearchViewController: UIViewController {
                 accountTVC.uid = uid
             }
             
-        case TO_HOST_LIST_SEGUE_ID:
+        case ResultsToUserAccountSegueID:
+            
+            let navVC = segue.destinationViewController as! UINavigationController
+            let accountTVC = navVC.viewControllers.first as! AccountTableViewController
+            
+            if let cell = sender as? HostListTableViewCell {
+                accountTVC.uid = cell.uid
+            }
+            
+        case ToHostListSegueID:
             
             let kpAnnotation = sender as! KPAnnotation
             let users = Array(kpAnnotation.annotations) as! [WSUserLocation]
