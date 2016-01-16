@@ -19,6 +19,7 @@ class HostListTableViewController: WSLazyImageTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        dataSource = self
         
         if users.count > 0 {
             self.navigationItem.title = "\(users.count) Hosts"
@@ -58,6 +59,4 @@ class HostListTableViewController: WSLazyImageTableViewController {
         let accountVC = segue.destinationViewController as! AccountTableViewController
         accountVC.uid = cell?.uid
     }
-    
-
 }

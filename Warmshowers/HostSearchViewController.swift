@@ -34,12 +34,9 @@ class HostSearchViewController: UIViewController {
     
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var tableView: UITableView!
+    var tableViewController = WSLazyImageTableViewController()
     
-    var alertController: UIAlertController?
     let locationManager = CLLocationManager()
-    
-    let defaults = (UIApplication.sharedApplication().delegate as! AppDelegate).defaults
-    let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     
     // Map source variables
     var mapSource = MapSource.AppleMaps
@@ -48,7 +45,14 @@ class HostSearchViewController: UIViewController {
     
     // Host data variables
     var hostsOnMap = [WSUserLocation]()
-    var hostsInTable = [WSUserLocation]()
+    var hostsInTable: [WSUserLocation] {
+        get {
+            return tableViewController.lazyImageObjects as! [WSUserLocation]
+        }
+        set(newValue) {
+            tableViewController.lazyImageObjects = newValue
+        }
+    }
     
     // Navigation bar items
     var searchButton: UIBarButtonItem!
@@ -59,7 +63,7 @@ class HostSearchViewController: UIViewController {
     
     // Search controller
     var searchController: UISearchController!
-    
+    var searchBar: UISearchBar!
     
     // MARK: View life cycle
     
@@ -74,9 +78,15 @@ class HostSearchViewController: UIViewController {
         showMapView()
         
         // Table view
-        tableView.dataSource = self
+        tableViewController.tableView = tableView
+        tableViewController.dataSource = self
+        tableViewController.placeHolderImageName = "ThumbnailPlaceholder"
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 44
+        
+        // Search controller and bar
+        searchController = UISearchController(searchResultsController: nil)
+        searchBar = searchController.searchBar
         
         // Configure components
         configureNavigationItem()
@@ -113,13 +123,16 @@ class HostSearchViewController: UIViewController {
     
     func configureSearchController() {
         
-        // Set up the search controller
-        searchController = UISearchController(searchResultsController: nil)
+        // Search controller
         searchController.delegate = self
         searchController.searchResultsUpdater = self
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.dimsBackgroundDuringPresentation = false
-        searchController.searchBar.barTintColor = WSColor.NavbarGrey
+        
+        // Search bar
+        searchBar.barTintColor = WSColor.NavbarGrey
+        searchBar.tintColor = WSColor.Blue
+        searchBar.placeholder = "Search by name, email or town"
     }
     
     func configureClusteringController() {
@@ -141,11 +154,8 @@ class HostSearchViewController: UIViewController {
         WSRequest.getHostDataForMapView(mapView) { (data) -> Void in
             
             // Update the mapView data source
-            if data != nil {
-                let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-                dispatch_async(queue, { () -> Void in
-                    self.updateMapDataSource(data!)
-                })
+            if let data = data {
+                self.updateMapDataSource(data)
             }
         }
     }
@@ -154,14 +164,15 @@ class HostSearchViewController: UIViewController {
     //
     func updateSearchResultsWithKeyword(keyword: String) {
         
+        // Cancel all thumbnail downloads
+        tableViewController.clearTable()
+        
+        // Get the new search results
         WSRequest.getHostDataForKeyword(keyword, offset: 0) { (data) -> Void in
             
             // Update the tableView data source
-            if data != nil {
-                let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-                dispatch_async(queue, { () -> Void in
-                    self.updateTableViewDataSource(data!)
-                })
+            if let data = data {
+                self.updateTableViewDataSource(data)
             }
         }
     }
@@ -311,6 +322,7 @@ class HostSearchViewController: UIViewController {
                 let userLocation = kpAnnotation.annotations.first as? WSUserLocation
                 accountTVC.uid = userLocation?.uid
             } else {
+                let defaults = (UIApplication.sharedApplication().delegate as! AppDelegate).defaults
                 let uid = defaults.integerForKey(DEFAULTS_KEY_UID)
                 accountTVC.uid = uid
             }

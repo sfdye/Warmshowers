@@ -69,11 +69,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             showMainApp()
         }
         
-        let fontFamilies = UIFont.familyNames()
-        for font in fontFamilies {
-            print(UIFont.fontNamesForFamilyName(font))
-        }
-        
         return true
     }
     

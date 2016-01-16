@@ -18,6 +18,7 @@ class FeedbackTableViewController: WSLazyImageTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        dataSource = self
         
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 122

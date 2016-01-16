@@ -91,7 +91,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="mapView" destination="aHH-7b-NBG" id="bgr-hX-9Hz"/>
-                        <outlet property="tableView" destination="ugj-VG-eZs" id="S0Y-B9-hxF"/>
+                        <outlet property="tableView" destination="ugj-VG-eZs" id="Sab-Lj-q31"/>
                         <segue destination="nEv-Yc-3Kx" kind="showDetail" identifier="ToUserAccount" id="hkh-3S-gg7"/>
                         <segue destination="JpQ-pS-sYY" kind="showDetail" identifier="ToHostList" id="Aa5-lT-YEz"/>
                     </connections>

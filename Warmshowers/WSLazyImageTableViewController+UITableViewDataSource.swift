@@ -19,11 +19,8 @@ extension WSLazyImageTableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
-        
+        let cell = dataSource.lazyImageCellForIndexPath(indexPath)
         setLazyImageForCell(cell, atIndexPath: indexPath)
-        
         return cell
     }
-
 }

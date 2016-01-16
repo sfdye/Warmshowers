@@ -8,18 +8,13 @@
 
 import Foundation
 
-extension FeedbackTableViewController {
+extension FeedbackTableViewController : WSLazyImageTableViewDataSource {
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
+    func lazyImageCellForIndexPath(indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(FeedbackCellID, forIndexPath: indexPath)
-        
-        setLazyImageForCell(cell, atIndexPath: indexPath)
-        
         if let feedback = feedback[indexPath.row] as? WSRecommendation, let cell = cell as? FeedbackTableViewCell {
             cell.configureWithFeedback(feedback)
         }
-        
         return cell
     }
     

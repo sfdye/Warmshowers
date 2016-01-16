@@ -24,24 +24,26 @@ class WSImageDownloader : NSObject {
     func startDownload() {
         
         guard var object = object where object.lazyImageURL != nil else {
+            completionHandler?()
             return
         }
         
         guard let url = NSURL(string: object.lazyImageURL!) else {
+            completionHandler?()
             return
         }
         
         let session = NSURLSession.init(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
         
         task = session.dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
-
+            
             // No data. Use the placeholder image instead
             guard let data = data else {
                 object.lazyImage = self.placeHolderImage
                 self.completionHandler?()
                 return
             }
-            
+
             // Set the image
             if let image = UIImage(data: data) {
                 object.lazyImage = image
@@ -51,13 +53,14 @@ class WSImageDownloader : NSObject {
             
             self.completionHandler?()
         })
-        
+
         task.resume()
     }
 
     // Cancels the download task
     //
     func cancelDownload() {
+        print(task.state)
         task.cancel()
     }
 }

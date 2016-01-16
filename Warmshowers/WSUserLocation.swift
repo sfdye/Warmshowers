@@ -27,7 +27,9 @@ class WSUserLocation : WSUser {
     var address: String {
         var address: String = ""
         address.appendWithComma(city)
-        address.appendWithComma(country)
+        if let country = country {
+            address.appendWithComma(country.uppercaseString)
+        }
         return address
     }
     var thumbnailImage: UIImage?
