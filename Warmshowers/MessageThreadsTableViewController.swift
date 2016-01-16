@@ -34,14 +34,20 @@ class MessageThreadsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.title = "Messages"
+        
         // set the refresh controller for the tableview
         refreshController.addTarget(self, action: Selector("update"), forControlEvents: UIControlEvents.ValueChanged)
         self.refreshControl = self.refreshController
         
     }
     
+    override func viewWillAppear(animated: Bool) {
+        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: WSColor.Green,
+            NSFontAttributeName: WSFont.SueEllenFrancisco(26)]
+    }
+    
     override func viewDidAppear(animated: Bool) {
-        
         // Update the data source
         update()
     }

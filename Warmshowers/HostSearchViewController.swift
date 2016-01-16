@@ -66,6 +66,9 @@ class HostSearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // View title
+        navigationItem.title = "Host Search"
+        
         // Mapview
         mapView.delegate = self
         showMapView()
@@ -99,12 +102,13 @@ class HostSearchViewController: UIViewController {
     
     func configureNavigationItem() {
         
-        // Navigation buttons
-        searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: Selector("searchButtonPressed"))
+        // Left button
         accountButton = UIBarButtonItem(image: UIImage.init(named: "UserIcon"), style: .Plain, target: self, action: Selector("accountButtonPressed"))
         navigationItem.setLeftBarButtonItem(accountButton, animated: false)
-        navigationItem.setRightBarButtonItem(searchButton, animated: false)
         
+        // Right button
+        searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: Selector("searchButtonPressed"))
+        navigationItem.setRightBarButtonItem(searchButton, animated: false)
     }
     
     func configureSearchController() {

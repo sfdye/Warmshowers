@@ -85,6 +85,8 @@
 		E5DA03E81C49AE5300FAD1D7 /* HostListTableViewCell+WSLazyImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03E71C49AE5300FAD1D7 /* HostListTableViewCell+WSLazyImageTableViewCell.swift */; };
 		E5DA03EA1C49AF1000FAD1D7 /* FeedbackTableViewCell+WSLazyImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03E91C49AF1000FAD1D7 /* FeedbackTableViewCell+WSLazyImageTableViewCell.swift */; };
 		E5DA03EC1C49BA3000FAD1D7 /* FeedbackTableViewController+UITableViewCellDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03EB1C49BA3000FAD1D7 /* FeedbackTableViewController+UITableViewCellDataSource.swift */; };
+		E5DA03EE1C49C66A00FAD1D7 /* Sue Ellen Francisco.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E5DA03ED1C49C59500FAD1D7 /* Sue Ellen Francisco.ttf */; };
+		E5DA03F01C49C7A200FAD1D7 /* WSFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03EF1C49C7A200FAD1D7 /* WSFont.swift */; };
 		E5F6F30A1C2B36930000A87E /* WSRestfulService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6F3091C2B36930000A87E /* WSRestfulService.swift */; };
 		E5F6F30D1C2FE2770000A87E /* AccountDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6F30C1C2FE2770000A87E /* AccountDetailTableViewCell.swift */; };
 		E5F6F30F1C2FE3360000A87E /* ProfileImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6F30E1C2FE3360000A87E /* ProfileImageTableViewCell.swift */; };
@@ -203,6 +205,8 @@
 		E5DA03E71C49AE5300FAD1D7 /* HostListTableViewCell+WSLazyImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HostListTableViewCell+WSLazyImageTableViewCell.swift"; sourceTree = "<group>"; };
 		E5DA03E91C49AF1000FAD1D7 /* FeedbackTableViewCell+WSLazyImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FeedbackTableViewCell+WSLazyImageTableViewCell.swift"; sourceTree = "<group>"; };
 		E5DA03EB1C49BA3000FAD1D7 /* FeedbackTableViewController+UITableViewCellDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FeedbackTableViewController+UITableViewCellDataSource.swift"; sourceTree = "<group>"; };
+		E5DA03ED1C49C59500FAD1D7 /* Sue Ellen Francisco.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Sue Ellen Francisco.ttf"; sourceTree = "<group>"; };
+		E5DA03EF1C49C7A200FAD1D7 /* WSFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSFont.swift; sourceTree = "<group>"; };
 		E5F6F3091C2B36930000A87E /* WSRestfulService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSRestfulService.swift; sourceTree = "<group>"; };
 		E5F6F30C1C2FE2770000A87E /* AccountDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountDetailTableViewCell.swift; sourceTree = "<group>"; };
 		E5F6F30E1C2FE3360000A87E /* ProfileImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageTableViewCell.swift; sourceTree = "<group>"; };
@@ -334,18 +338,18 @@
 		E54A573A1C026D96000843A9 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				E5DA03D21C48891400FAD1D7 /* WSLazyImageTableVIewController */,
-				E5700C561C45C02E008C8A87 /* HostListTableViewController */,
-				E54276761C3E371000047029 /* CreateFeedbackTableViewController */,
-				E542766F1C3CA8B100047029 /* ComposeMessageTabelViewController */,
-				E5967BB91C3921F40037F4B7 /* MessageThreadTableViewController */,
-				E5967BAC1C38A0A30037F4B7 /* FeedbackTableViewController */,
 				E5F6F30B1C2FE2360000A87E /* AccountViewController */,
-				E573D17B1C0E617C004C3BFC /* TabBarController */,
-				E573D1781C0E609C004C3BFC /* LoginViewController */,
-				E573D1771C0E6065004C3BFC /* SettingsTableViewController */,
-				E573D1761C0E5FD4004C3BFC /* MessageThreadsTableView */,
+				E542766F1C3CA8B100047029 /* ComposeMessageTabelViewController */,
+				E54276761C3E371000047029 /* CreateFeedbackTableViewController */,
+				E5967BAC1C38A0A30037F4B7 /* FeedbackTableViewController */,
+				E5700C561C45C02E008C8A87 /* HostListTableViewController */,
 				E573D1751C0E5FC8004C3BFC /* HostSearchViewController */,
+				E573D1781C0E609C004C3BFC /* LoginViewController */,
+				E573D1761C0E5FD4004C3BFC /* MessageThreadsTableView */,
+				E5967BB91C3921F40037F4B7 /* MessageThreadTableViewController */,
+				E573D1771C0E6065004C3BFC /* SettingsTableViewController */,
+				E573D17B1C0E617C004C3BFC /* TabBarController */,
+				E5DA03D21C48891400FAD1D7 /* WSLazyImageTableVIewController */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -457,10 +461,10 @@
 			isa = PBXGroup;
 			children = (
 				E5D96AF71BFB1CA700AFAFEE /* AppDelegate.swift */,
-				E54A57321BFE82F9000843A9 /* Model */,
 				E54A573A1C026D96000843A9 /* Controllers */,
 				E54A57391C026D56000843A9 /* HTTP */,
 				E50FD8A01C053A24004D38A3 /* Map */,
+				E54A57321BFE82F9000843A9 /* Model */,
 				E5F6F3041C28EC780000A87E /* Supporting Files */,
 				E5F6F3031C28EC550000A87E /* Views */,
 			);
@@ -488,11 +492,11 @@
 		E5DA03D21C48891400FAD1D7 /* WSLazyImageTableVIewController */ = {
 			isa = PBXGroup;
 			children = (
+				E5DA03D91C488CA000FAD1D7 /* WSLazyImage.swift */,
+				E5DA03D71C488AE900FAD1D7 /* WSLazyImageTableViewCell.swift */,
 				E5DA03D01C4887E700FAD1D7 /* WSLazyImageTableViewController.swift */,
 				E5DA03D31C48893400FAD1D7 /* WSLazyImageTableViewController+UIScrollViewDelegate.swift */,
 				E5DA03D51C48899700FAD1D7 /* WSLazyImageTableViewController+UITableViewDataSource.swift */,
-				E5DA03D71C488AE900FAD1D7 /* WSLazyImageTableViewCell.swift */,
-				E5DA03D91C488CA000FAD1D7 /* WSLazyImage.swift */,
 			);
 			name = WSLazyImageTableVIewController;
 			sourceTree = "<group>";
@@ -503,6 +507,7 @@
 				E5D96AFD1BFB1CA700AFAFEE /* Main.storyboard */,
 				E5D96B021BFB1CA700AFAFEE /* LaunchScreen.storyboard */,
 				E5DA03A61C46FCBB00FAD1D7 /* WSColor.swift */,
+				E5DA03EF1C49C7A200FAD1D7 /* WSFont.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -514,6 +519,7 @@
 				E5D96B051BFB1CA700AFAFEE /* Info.plist */,
 				E52E8A991C071CE8000391AB /* kingpin-Bridging-Header.h */,
 				E5700C551C44F083008C8A87 /* MBProgressHUD-Bridging-Header.h */,
+				E5DA03ED1C49C59500FAD1D7 /* Sue Ellen Francisco.ttf */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -653,6 +659,7 @@
 				E54A572B1BFD664A000843A9 /* Settings.bundle in Resources */,
 				E5D96B041BFB1CA700AFAFEE /* LaunchScreen.storyboard in Resources */,
 				E5D96B011BFB1CA700AFAFEE /* Assets.xcassets in Resources */,
+				E5DA03EE1C49C66A00FAD1D7 /* Sue Ellen Francisco.ttf in Resources */,
 				E5D96AFF1BFB1CA700AFAFEE /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -750,6 +757,7 @@
 				E5967B9F1C3490740037F4B7 /* WSOffers.swift in Sources */,
 				E54A57641C03E4A4000843A9 /* AccountTableViewController.swift in Sources */,
 				E54A57311BFE6FB2000843A9 /* WSURL.swift in Sources */,
+				E5DA03F01C49C7A200FAD1D7 /* WSFont.swift in Sources */,
 				E52E8ABE1C0E463D000391AB /* Warmshowers.xcdatamodeld in Sources */,
 				E5DA03CB1C48534300FAD1D7 /* WSImageDownloader.swift in Sources */,
 				E54276801C3E546E00047029 /* WSRecommendationFor.swift in Sources */,

@@ -16,8 +16,6 @@ let REPLY_TO_MESSAGE_SEGUE_ID = "ToReplyToMessage"
 
 class MessageThreadTableViewController: UITableViewController {
     
-    
-    
     var threadID: Int? = nil
     var messageThread: CDWSMessageThread? = nil
     var messages = [CDWSMessage]()
@@ -50,6 +48,11 @@ class MessageThreadTableViewController: UITableViewController {
         
         // Set the view title
         navigationItem.title = messageThread?.subject
+        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: WSColor.DarkBlue,
+             NSFontAttributeName: WSFont.SueEllenFrancisco(18)]
+        
+        // Force the back button to plain style
+        // TODO
         
         // Configure the table view
         tableView.rowHeight = UITableViewAutomaticDimension

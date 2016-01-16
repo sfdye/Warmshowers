@@ -13,6 +13,8 @@ class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tabBar.tintColor = WSColor.Blue
+        
     }
 
     override func didReceiveMemoryWarning() {

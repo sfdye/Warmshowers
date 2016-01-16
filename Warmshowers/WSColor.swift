@@ -13,6 +13,7 @@ struct WSColor {
     // General styling colors
     static var LightGrey = WSColor.colorFromHexString("F4F6F6")
     static var Blue = WSColor.colorFromHexString("266ACF")
+    static var DarkBlue = WSColor.colorFromHexString("304767")
     static var Green = WSColor.colorFromHexString("009835")
     
     // Positivity colors

@@ -60,6 +60,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let defaults = NSUserDefaults.standardUserDefaults()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+        configureGlobalViewSettings()
 
         if !isLoggedin() {
             showLoginScreen()
@@ -67,7 +69,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             showMainApp()
         }
         
+        let fontFamilies = UIFont.familyNames()
+        for font in fontFamilies {
+            print(UIFont.fontNamesForFamilyName(font))
+        }
+        
         return true
+    }
+    
+    func configureGlobalViewSettings() {
+        
+        // Navigation bars
+        UINavigationBar.appearance().tintColor = WSColor.Blue
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: WSColor.Green,
+            NSFontAttributeName: WSFont.SueEllenFrancisco(26)]
+        UINavigationBar.appearance().setTitleVerticalPositionAdjustment(6, forBarMetrics: .Default)
     }
 
     func applicationWillResignActive(application: UIApplication) {
