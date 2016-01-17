@@ -11,7 +11,6 @@ import MapKit
 import CoreData
 
 // FIRST TODOs
-// work out how to make nsoperations with cancalable completion handlers
 // fix distance subtitles
 // queue http requests - ask paul for advice
 // !!! link up system settings to the app settings !!!
@@ -19,6 +18,7 @@ import CoreData
 // finish settings vc
 // put user password in keychain
 // add google translate feature to account view, translate from 'detect language' to system language
+// add link to help in settings
 
 // LATER TODOs
 // background message check and app icon bagde/ notifications

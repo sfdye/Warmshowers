@@ -23,6 +23,11 @@ class WSGetHostsOnMapOperation : NSOperation {
         
         WSRequest.getHostDataForMapView(mapView) { (data) -> Void in
             
+            // About if the operation was cancelled
+            guard self.cancelled == false else {
+                return
+            }
+            
             // Update the mapView data source
             if let data = data {
                 
@@ -39,7 +44,8 @@ class WSGetHostsOnMapOperation : NSOperation {
                     }
                 }
                 
-                if hosts.count > 0 {
+                
+                if hosts.count > 0 && self.cancelled == false {
                     self.success?(hosts: hosts)
                 }
             }

@@ -60,8 +60,8 @@
                                                 <constraint firstItem="LpK-Va-oN3" firstAttribute="top" secondItem="Y4R-V8-Pc8" secondAttribute="bottom" constant="2" id="mND-E2-nXM"/>
                                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="1cJ-r2-gaJ" secondAttribute="bottom" constant="12" id="sNb-oe-cim"/>
                                                 <constraint firstItem="Y4R-V8-Pc8" firstAttribute="top" secondItem="w5a-Xb-WK4" secondAttribute="top" constant="12" id="u9H-mS-NxW"/>
-                                                <constraint firstAttribute="trailing" secondItem="Y4R-V8-Pc8" secondAttribute="trailing" constant="18" id="w3p-KA-wEs"/>
-                                                <constraint firstAttribute="trailing" secondItem="LpK-Va-oN3" secondAttribute="trailing" constant="18" id="wDC-YS-yHm"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Y4R-V8-Pc8" secondAttribute="trailing" constant="18" id="w3p-KA-wEs"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="LpK-Va-oN3" secondAttribute="trailing" constant="18" id="wDC-YS-yHm"/>
                                                 <constraint firstItem="1cJ-r2-gaJ" firstAttribute="leading" secondItem="w5a-Xb-WK4" secondAttribute="leading" constant="18" id="wGm-9n-5Bn"/>
                                             </constraints>
                                         </tableViewCellContentView>

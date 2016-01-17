@@ -169,7 +169,9 @@ class HostSearchViewController: UIViewController {
         
         operation.success = { (hostsOnMap) -> Void in
             
+            // Set the new hosts in the annotations data source
             self.hostsOnMap = hostsOnMap
+            
             // update the cluster controller on the main thread
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.updateClusteringController()
@@ -188,7 +190,9 @@ class HostSearchViewController: UIViewController {
     func updateSearchResultsWithKeyword(keyword: String) {
         
         // Clear the operation queue
+        print(queue.operationCount)
         queue.cancelAllOperations()
+        print(queue.operationCount)
         
         // Cancel all thumbnail downloads
         tableViewController.clearTable()
@@ -215,7 +219,6 @@ class HostSearchViewController: UIViewController {
     // Updates the pin clustering controller
     func updateClusteringController() {
         if hostsOnMap.count != 0 {
-            print(hostsOnMap.count)
             clusteringController.setAnnotations(hostsOnMap)
             clusteringController.refresh(true)
         }
@@ -277,12 +280,12 @@ class HostSearchViewController: UIViewController {
     }
     
     func accountButtonPressed() {
-        performSegueWithIdentifier(ToUserAccountSegueID, sender: nil)
+        performSegueWithIdentifier(MapToUserAccountSegueID, sender: nil)
     }
     
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         switch identifier {
-        case ToUserAccountSegueID:
+        case MapToUserAccountSegueID:
             
             if let kpAnnotation = sender as? KPAnnotation {
                 if let _ = kpAnnotation.annotations.first as? WSUserLocation {
@@ -300,7 +303,7 @@ class HostSearchViewController: UIViewController {
             }
             return false
             
-        case MapToUserAccountSegueID:
+        case ToHostListSegueID:
             
             if let kpAnnotation = sender as? KPAnnotation {
                 if let _ = Array(kpAnnotation.annotations) as? [WSUserLocation] {

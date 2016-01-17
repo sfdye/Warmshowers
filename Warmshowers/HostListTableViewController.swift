@@ -8,7 +8,6 @@
 
 import UIKit
 
-let ToUserAccountSegueID = "FromListToUserAccount"
 let HostListCellID = "HostList"
 
 class HostListTableViewController: WSLazyImageTableViewController {

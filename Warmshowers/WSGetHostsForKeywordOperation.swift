@@ -24,6 +24,12 @@ class WSGetHostsForKeywordOperation : NSOperation {
         // Get the new search results
         WSRequest.getHostDataForKeyword(keyword, offset: 0) { (data) -> Void in
             
+            print(self.cancelled)
+            // About if the operation was cancelled
+            guard self.cancelled == false else {
+                return
+            }
+            
             // Update the tableView data source
             if let data = data {
                 
@@ -40,7 +46,8 @@ class WSGetHostsForKeywordOperation : NSOperation {
                     }
                 }
                 
-                if hosts.count > 0 {
+                print(self.cancelled)
+                if hosts.count > 0 && self.cancelled == false {
                     self.success?(hosts: hosts)
                 }
             }
