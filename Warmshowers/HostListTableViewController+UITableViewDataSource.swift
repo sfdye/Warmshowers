@@ -18,7 +18,7 @@ extension HostListTableViewController : WSLazyImageTableViewDataSource {
 //        if users.count > 0 {
 //            if let user = users[indexPath.row] as? WSUserLocation, let cell = cell as? HostListTableViewCell {
 //                cell.nameLabel.text = user.fullname
-//                cell.locationLabel.text = user.address
+//                cell.locationLabel.text = user.shortAddress
 //                cell.uid = user.uid
 //            }
 //        }
@@ -31,7 +31,7 @@ extension HostListTableViewController : WSLazyImageTableViewDataSource {
         if users.count > 0 {
             if let user = users[indexPath.row] as? WSUserLocation, let cell = cell as? HostListTableViewCell {
                 cell.nameLabel.text = user.fullname
-                cell.locationLabel.text = user.address
+                cell.locationLabel.text = user.shortAddress
                 cell.uid = user.uid
             }
         }

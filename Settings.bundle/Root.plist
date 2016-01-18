@@ -7,26 +7,10 @@
 	<key>PreferenceSpecifiers</key>
 	<array>
 		<dict>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-			<key>Title</key>
-			<string>Settings</string>
-		</dict>
-		<dict>
-			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
-			<key>Title</key>
-			<string>Wi-Fi Only</string>
-			<key>Key</key>
-			<string>wifi_only</string>
-			<key>DefaultValue</key>
-			<false/>
-		</dict>
-		<dict>
 			<key>Titles</key>
 			<array>
 				<string>Metric</string>
-				<string>Imperial</string>
+				<string>US</string>
 			</array>
 			<key>Type</key>
 			<string>PSMultiValueSpecifier</string>
@@ -39,7 +23,7 @@
 			<key>Values</key>
 			<array>
 				<string>metric</string>
-				<string>imperial</string>
+				<string>us</string>
 			</array>
 		</dict>
 	</array>

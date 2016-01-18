@@ -73,16 +73,17 @@ struct WSRequest {
         let request = NSMutableURLRequest.withWSRestfulService(service)
         
         // Add the session cookie to the header.
-        if let sessionCookie = defaults.objectForKey(DEFAULTS_KEY_SESSION_COOKIE) as? String {
-            request.addValue(sessionCookie, forHTTPHeaderField: "Cookie")
-        } else {
-            print("Failed to add session cookie to request header")
-            return nil
+        if (service.type != .login && service.type != .token) {
+            if let sessionCookie = defaults.objectForKey(DEFAULTS_KEY_SESSION_COOKIE) as? String {
+                request.addValue(sessionCookie, forHTTPHeaderField: "Cookie")
+            } else {
+                print("Failed to add session cookie to request header")
+                return nil
+            }
         }
         
-        if (service.type != .login) && (service.method != .get) {
-            
-            // Add the CSRF token to the header.
+        // Add the CSRF token to the header.
+        if (service.method != .get) {
             if token != nil {
                 request.addValue(token!, forHTTPHeaderField: "X-CSRF-Token")
             } else {
@@ -90,7 +91,7 @@ struct WSRequest {
                 return nil
             }
         }
-        
+
         // Add the request parameters to the request body
         if params != nil {
             request.setBodyContent(params!)
@@ -216,13 +217,20 @@ struct WSRequest {
             return false
         }
         
-        if data != nil {
-            if let json = self.jsonDataToDictionary(data) {
-                self.storeSessionData(json)
-                return true
-            }
+        guard let data = data, let response = response else {
+            print("Nil data or response to login request")
+            return false
         }
         
+        let httpResponse = response as! NSHTTPURLResponse
+        if httpResponse.statusCode == 401 {
+            print("Unauthorized login")
+        }
+        
+        if let json = self.jsonDataToDictionary(data) {
+            self.storeSessionData(json)
+            return true
+        }
         return false
     }
     

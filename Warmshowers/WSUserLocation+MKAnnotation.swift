@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MapKit
 
 extension WSUserLocation : MKAnnotation {
     
@@ -15,14 +16,7 @@ extension WSUserLocation : MKAnnotation {
     }
     
     var subtitle: String? {
-        
-        var subtitle: String? = ""
-        
-        if distance != nil {
-            subtitle! += String(format: "within %.0f kilometres", arguments: [distance!])
-        }
-        
-        return subtitle
+        return shortAddress
     }
 
 }

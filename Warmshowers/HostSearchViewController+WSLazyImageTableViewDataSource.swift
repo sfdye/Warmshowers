@@ -16,7 +16,7 @@ extension HostSearchViewController : WSLazyImageTableViewDataSource {
             let user = hostsInTable[indexPath.row]
             if let cell = cell as? HostListTableViewCell {
                 cell.nameLabel.text = user.fullname
-                cell.locationLabel.text = user.address
+                cell.locationLabel.text = user.shortAddress
                 cell.uid = user.uid
             }
         }

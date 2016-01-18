@@ -16,15 +16,28 @@ enum WSUserLocationError: ErrorType {
 
 class WSUserLocation : WSUser {
     
-    var city: String? = nil
-    var country: String? = nil
-    var distance: Double? = nil
+    var additional: String?
+    var city: String?
+    var country: String?
+    var distance: Double?
+    var distanceToUser: CLLocationDistance? {
+        get {
+            let lm = CLLocationManager()
+            if let location = lm.location {
+                return location.distanceFromLocation(self.location)
+            }
+            return nil
+        }
+    }
     var coordinate: CLLocationCoordinate2D
-    var notcurrentlyavailable: Bool? = nil
-    var province: String? = nil
-    var thumbnailImageURL: String? = nil
+    var location: CLLocation { return CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude) }
+    var notcurrentlyavailable: Bool?
+    var postCode: String?
+    var province: String?
+    var thumbnailImageURL: String?
     var street: String? = nil
-    var address: String {
+    var thumbnailImage: UIImage?
+    var shortAddress: String {
         var address: String = ""
         address.appendWithComma(city)
         if let country = country {
@@ -32,7 +45,18 @@ class WSUserLocation : WSUser {
         }
         return address
     }
-    var thumbnailImage: UIImage?
+    var address: String {
+        var address: String = ""
+        address.appendWithNewLine(street)
+        address.appendWithNewLine(additional)
+        address.appendWithNewLine(city)
+        address.appendWithSpace(postCode)
+        // address.appendWithNewLine(province)
+        if let country = country {
+            address.appendWithComma(country.uppercaseString)
+        }
+        return address
+    }
     
     init(fullname: String, name: String, uid: Int, lat: Double, lon: Double) {
         self.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
@@ -66,10 +90,12 @@ class WSUserLocation : WSUser {
         self.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
         
         if let data = json as? NSDictionary {
+            additional = data.valueForKey("additional") as? String
             city = data.valueForKey("city") as? String
             country = data.valueForKey("country") as? String
             distance = data.valueForKey("distance")?.doubleValue
             notcurrentlyavailable = json.valueForKey("notcurrentlyavailable")?.boolValue
+            postCode = data.valueForKey("postal_code") as? String
             province = json.valueForKey("province") as? String
             thumbnailImageURL = json.valueForKey("profile_image_map_infoWindow") as? String
             street = json.valueForKey("street") as? String
@@ -80,7 +106,7 @@ class WSUserLocation : WSUser {
 
 extension String {
     
-    mutating func appendWithComma(other: String?) {
+    mutating func appendWithCharacter(character: Character, other: String?) {
         
         guard let other = other else {
             return
@@ -89,7 +115,24 @@ extension String {
         if self == "" {
             self += other
         } else {
-            self += ", " + other
+            self += String(character)
+            if character != "\n" {
+                self += " "
+            }
+            self += other
         }
     }
+    
+    mutating func appendWithComma(other: String?) {
+        appendWithCharacter(",", other: other)
+    }
+    
+    mutating func appendWithNewLine(other: String?) {
+        appendWithCharacter("\n", other: other)
+    }
+    
+    mutating func appendWithSpace(other: String?) {
+        appendWithCharacter(" ", other: other)
+    }
+    
 }

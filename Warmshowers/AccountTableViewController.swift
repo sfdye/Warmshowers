@@ -39,12 +39,13 @@ class AccountTableViewController: UITableViewController {
     
     var uid: Int?
     var info: AnyObject?
+    var user: WSUserLocation?
     var feedback = [WSRecommendation]()
     var hostingInfo = WSHostingInfo()
     var offers = WSOffers()
     var phoneNumbers = WSPhoneContacts()
     var photo: UIImage?
-    var user: CDWSUser?
+    var recipient: CDWSUser?
     
     var tab: HostProfileTab = .About
     
@@ -91,6 +92,8 @@ class AccountTableViewController: UITableViewController {
         }
 
         self.info = info
+        self.user = WSUserLocation(json: info)
+        print(user?.distanceToUser)
         self.offers.update(info)
         self.hostingInfo.update(info)
         self.phoneNumbers.update(info)
@@ -253,12 +256,15 @@ class AccountTableViewController: UITableViewController {
             case .Hosting:
                 var cells = hostingInfo.count
                 if offers.count > 0 {
-                    print(offers.count)
                     cells += 1 + offers.count
                 }
                 return cells
             case .Contact:
-                return phoneNumbers.count
+                var cells = phoneNumbers.count
+                if user != nil {
+                    cells++
+                }
+                return cells
             }
         default:
             return 0
@@ -369,10 +375,18 @@ class AccountTableViewController: UITableViewController {
                 }
             case .Contact:
                 // Contact tab
+                var phoneRow = row
+                if let user = user {
+                    if row == 0 {
+                        let cell = tableView.dequeueReusableCellWithIdentifier(AboutCellID, forIndexPath: indexPath) as! AboutTableViewCell
+                        cell.aboutLabel.text =  user.address
+                        return cell
+                    }
+                    phoneRow--
+                }
                 let cell = tableView.dequeueReusableCellWithIdentifier(PhoneCellID, forIndexPath: indexPath) as! PhoneTableViewCell
-                cell.setWithPhoneNumber(phoneNumbers.numbers[row])
+                cell.setWithPhoneNumber(phoneNumbers.numbers[phoneRow])
                 return cell
-                
             }
         default:
             let cell = UITableViewCell(style: .Default, reuseIdentifier: nil)
@@ -457,7 +471,7 @@ class AccountTableViewController: UITableViewController {
             let navVC = segue.destinationViewController as! UINavigationController
             let composeMessageVC = navVC.viewControllers.first as! ComposeMessageTableViewController
             saveUserInfo(info!)
-            composeMessageVC.initialiseAsNewMessageToUser(user!)
+            composeMessageVC.initialiseAsNewMessageToUser(recipient!)
         }
         if segue.identifier == ToProvideFeeedbackSegueID {
             let navVC = segue.destinationViewController as! UINavigationController
@@ -473,9 +487,9 @@ class AccountTableViewController: UITableViewController {
     // Saves user profile data to the store and reloads the view
     func saveUserInfo(info: AnyObject) {
         
-        self.user = NSEntityDescription.insertNewObjectForEntityForName("CDWSUser", inManagedObjectContext: moc) as? CDWSUser
+        self.recipient = NSEntityDescription.insertNewObjectForEntityForName("CDWSUser", inManagedObjectContext: moc) as? CDWSUser
         
-        user?.updateFromJSON(info)
+        recipient?.updateFromJSON(info)
         
         // save user to the store
         do {

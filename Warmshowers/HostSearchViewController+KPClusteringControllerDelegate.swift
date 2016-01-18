@@ -20,7 +20,8 @@ extension HostSearchViewController : KPClusteringControllerDelegate {
     func clusteringController(clusteringController: KPClusteringController!, configureAnnotationForDisplay annotation: KPAnnotation!) {
         if annotation.isCluster() {
             annotation.title = String(format: "%i Hosts", arguments: [annotation.annotations.count])
-            annotation.subtitle = String(format: "within %0.f km", arguments: [annotation.radius/1000])
+            let radius = WSDistance(metres: annotation.radius)
+            annotation.subtitle = String(format: "within %@", arguments: [radius.stringWithUnits(WSSettings.metric())])            
         } else {
             if let host = annotation.annotations.first as? WSUserLocation {
                 annotation.title = host.title
@@ -28,16 +29,5 @@ extension HostSearchViewController : KPClusteringControllerDelegate {
             }
         }
     }
-    
-//    -(void)clusteringController:(KPClusteringController *)clusteringController configureAnnotationForDisplay:(KPAnnotation *)annotation {
-//    if ([annotation isCluster]) {
-//    annotation.title = [NSString stringWithFormat:@"%lu hosts", (unsigned long)annotation.annotations.count];
-//    annotation.subtitle = [NSString stringWithFormat:@"within %.0f meters", annotation.radius];
-//    } else {
-//    Host *host = [[annotation annotations] anyObject];
-//    [annotation setTitle:[host title]];
-//    [annotation setSubtitle:[host subtitle]];
-//    }
-//    }
 
 }

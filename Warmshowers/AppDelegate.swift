@@ -11,19 +11,18 @@ import MapKit
 import CoreData
 
 // FIRST TODOs
-// account view: fix hosting tab layout, finish contact tab
-// fix distance subtitles
 // !!! link up system settings to the app settings !!!
-// mark new message threads + tab bar icon badge
 // finish settings vc
 // put user password in keychain
-// add google translate feature to account view, translate from 'detect language' to system language
+
 // add link to help in settings
 
 // LATER TODOs
+// login screen layout and error messages
 // background message check and app icon bagde/ notifications
+// mark new message threads + tab bar icon badge
 // add message sorter
-// add distance units option
+// add google translate feature to account view, translate from 'detect language' to system language
 
 // IDEAS
 // - load gps files on map - start with american adventure routes on WS

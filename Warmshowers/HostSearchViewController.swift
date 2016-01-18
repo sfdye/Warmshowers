@@ -48,7 +48,6 @@ class HostSearchViewController: UIViewController {
     
     // Host data variables
     var hostsOnMap = [WSUserLocation]()
-//    var hostsOnMapDownloader: WSHostDownloader? = nil
     var hostsInTable: [WSUserLocation] {
         get {
             return tableViewController.lazyImageObjects as! [WSUserLocation]
@@ -57,7 +56,6 @@ class HostSearchViewController: UIViewController {
             tableViewController.lazyImageObjects = newValue
         }
     }
-//    var hostsInTableDownloader: WSHostDownloader? = nil
     
     // Navigation bar items
     var searchButton: UIBarButtonItem!
@@ -99,12 +97,12 @@ class HostSearchViewController: UIViewController {
         configureSearchController()
         configureQueue()
         
-        // Centre the map on the user's location
-        if let userLocation = locationManager.location?.coordinate {
-            let region = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1))
-            mapView.setRegion(region, animated: true)
-            updateHostsOnMap()
-        }
+//        // Centre the map on the user's location
+//        if let userLocation = locationManager.location?.coordinate {
+//            let region = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1))
+//            mapView.setRegion(region, animated: true)
+//            updateHostsOnMap()
+//        }
     }
     
     override func viewWillAppear(animated: Bool) {
