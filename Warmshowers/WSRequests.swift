@@ -135,26 +135,23 @@ struct WSRequest {
     
     // Requests a X-CSRF Token from the server
     //
-    static func tokenRequest(doWithToken: (token: String) -> Void) -> Void {
+    static func tokenRequest(doWithToken: (token: String?, response: NSURLResponse?, error: NSError?) -> Void) -> Void {
         
         let service = WSRestfulService(type: .token)!
         
         request(service) { (data, response, error) -> Void in
             
-            guard error == nil else {
+            guard let data = data, let _ = response where error == nil else {
                 print("Error getting X-CSRF token")
-                return
-            }
-            
-            guard let data = data else {
-                print("No data recieved from token request")
+                doWithToken(token: nil, response: response, error: error)
                 return
             }
             
             if let token = String.init(data: data, encoding: NSUTF8StringEncoding) {
-                doWithToken(token: token)
+                doWithToken(token: token, response: response, error: nil)
             } else {
                 print("Could not decode token data")
+                doWithToken(token: nil, response: response, error: error)
             }
         }
     }
@@ -176,7 +173,12 @@ struct WSRequest {
     static func requestWithCSRFToken(service: WSRestfulService, params: [String: String]? = nil, retry: Bool = false, doWithResponse: (NSData?, NSURLResponse?, NSError?) -> Void) {
         
         // Request a X-CSRF token from the server
-        tokenRequest { (token) -> Void in
+        tokenRequest { (token, response, error) -> Void in
+            
+            guard let token = token where error == nil else {
+                doWithResponse(nil, response, error)
+                return
+            }
 
             if let request = self.buildRequest(service, params: params, token: token) {
 
@@ -300,26 +302,24 @@ struct WSRequest {
 
         requestWithCSRFToken(service, doWithResponse : { (data, response, error) -> Void in
             
-            if let json = self.jsonDataToJSONObject(data!) {
-                
-                print("Logout request responded with: \(json)")
+            guard let data = data, let httpResponse = response as? NSHTTPURLResponse where error == nil else {
+                doWithLogoutResponse(success: false)
+                return
+            }
+            
+            if let _ = self.jsonDataToJSONObject(data) {
                 doWithLogoutResponse(success: true)
                 return
-                
             } else {
-                
-                let httpResponse = response as! NSHTTPURLResponse
                 print("Logout request responded with: \(httpResponse)")
                 if httpResponse.statusCode == 406 {
                     // http 406: unauthorized. The user was already logged out
                     doWithLogoutResponse(success: true)
                     return
                 }
-
             }
-
+            
             doWithLogoutResponse(success: false)
-
         })
     }
 

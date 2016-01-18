@@ -15,15 +15,7 @@ import kingpin
 // address this issue (add gps routes to the map)
 // https://ro.warmshowers.org/node/112508
 // - make the pin clustering like the website and android app
-
 // add loading indicator to map view
-
-
-enum MapSource {
-    case AppleMaps
-    case OpenCycleMaps
-    case OpenStreetMaps
-}
 
 let MapToUserAccountSegueID = "MapToUserAccount"
 let ResultsToUserAccountSegueID = "SearchResultsToUserAccount"
@@ -45,7 +37,7 @@ class HostSearchViewController: UIViewController {
     var tableViewController = WSLazyImageTableViewController()
 
     // Map source variables
-    var mapSource = MapSource.AppleMaps
+    var mapSource = WSMapSource.AppleMaps
     var mapOverlay: MKTileOverlay? = nil
     var overlay: MKTileOverlay? = nil
     
@@ -106,6 +98,10 @@ class HostSearchViewController: UIViewController {
 //            mapView.setRegion(region, animated: true)
 //            updateHostsOnMap()
 //        }
+        
+        switchToMapSource(mapSource)
+        
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -231,7 +227,7 @@ class HostSearchViewController: UIViewController {
     // MARK: - Map source methods
     
     // changes the map source
-    func switchToMapSource(source: MapSource) {
+    func switchToMapSource(source: WSMapSource) {
         self.mapSource = source
         setMapOverlay()
     }

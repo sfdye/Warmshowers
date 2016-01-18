@@ -207,11 +207,9 @@ class AccountTableViewController: UITableViewController {
             let logoutAction = UIAlertAction(title: "Logout", style: .Default) { (logoutAction) -> Void in
                 // Logout and return the login screeen
                 WSRequest.logout({ (success) -> Void in
-                    if success {
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            self.appDelegate?.logout()
-                        })
-                    }
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.appDelegate?.logout()
+                    })
                 })
             }
             actionAlert.addAction(logoutAction)

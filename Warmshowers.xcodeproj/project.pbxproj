@@ -95,6 +95,7 @@
 		E5DA03FF1C4CA9CF00FAD1D7 /* WSDistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03FE1C4CA9CF00FAD1D7 /* WSDistance.swift */; };
 		E5DA04011C4CDE6500FAD1D7 /* SpinnerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA04001C4CDE6500FAD1D7 /* SpinnerTableViewCell.swift */; };
 		E5DA04031C4CE6B500FAD1D7 /* NoHostsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA04021C4CE6B500FAD1D7 /* NoHostsTableViewCell.swift */; };
+		E5DA04051C4DA8D000FAD1D7 /* WSMapSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA04041C4DA8D000FAD1D7 /* WSMapSource.swift */; };
 		E5F6F30A1C2B36930000A87E /* WSRestfulService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6F3091C2B36930000A87E /* WSRestfulService.swift */; };
 		E5F6F30D1C2FE2770000A87E /* AccountDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6F30C1C2FE2770000A87E /* AccountDetailTableViewCell.swift */; };
 		E5F6F30F1C2FE3360000A87E /* ProfileImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6F30E1C2FE3360000A87E /* ProfileImageTableViewCell.swift */; };
@@ -223,6 +224,7 @@
 		E5DA03FE1C4CA9CF00FAD1D7 /* WSDistance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSDistance.swift; sourceTree = "<group>"; };
 		E5DA04001C4CDE6500FAD1D7 /* SpinnerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinnerTableViewCell.swift; sourceTree = "<group>"; };
 		E5DA04021C4CE6B500FAD1D7 /* NoHostsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoHostsTableViewCell.swift; sourceTree = "<group>"; };
+		E5DA04041C4DA8D000FAD1D7 /* WSMapSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSMapSource.swift; sourceTree = "<group>"; };
 		E5F6F3091C2B36930000A87E /* WSRestfulService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSRestfulService.swift; sourceTree = "<group>"; };
 		E5F6F30C1C2FE2770000A87E /* AccountDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountDetailTableViewCell.swift; sourceTree = "<group>"; };
 		E5F6F30E1C2FE3360000A87E /* ProfileImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageTableViewCell.swift; sourceTree = "<group>"; };
@@ -281,6 +283,7 @@
 			isa = PBXGroup;
 			children = (
 				E50FD8A11C053A42004D38A3 /* MapTileServerURLTemplate.swift */,
+				E5DA04041C4DA8D000FAD1D7 /* WSMapSource.swift */,
 			);
 			name = Map;
 			sourceTree = "<group>";
@@ -781,6 +784,7 @@
 				E56CC0901BFD496400AAF973 /* SettingsTableViewController.swift in Sources */,
 				E52E8AAF1C0D056D000391AB /* MessageThreadsTableViewController.swift in Sources */,
 				E5DA03EC1C49BA3000FAD1D7 /* FeedbackTableViewController+UITableViewCellDataSource.swift in Sources */,
+				E5DA04051C4DA8D000FAD1D7 /* WSMapSource.swift in Sources */,
 				E52E8AB11C0D0B1A000391AB /* MessageThreadsTableViewCell.swift in Sources */,
 				E5967BB81C38C0FA0037F4B7 /* FeedbackTableViewCell.swift in Sources */,
 				E5DA03E61C49A5CA00FAD1D7 /* WSRecommendation+WSLazyImage.swift in Sources */,

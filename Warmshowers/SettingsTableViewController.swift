@@ -15,24 +15,25 @@ Help
 
  */
 
-let SwitchCellID = "SwitchCell"
-let DisclosureCellID = "DisclosureCell"
+let LogoutCellID = "Logout"
+let SwitchCellID = "Switch"
+let DisclosureCellID = "Disclosure"
 
 class SettingsTableViewController: UITableViewController {
     
     var wifiOnly = true
     
     var settings = [
-        [
-            "section_title" : "Map",
-            "cells" : [
-                [
-                    "title" : "Contact",
-                    "cell_id": DisclosureCellID,
-                    "tag" : 20
-                ]
-            ]
-        ],
+//        [
+//            "section_title" : "Map",
+//            "cells" : [
+//                [
+//                    "title" : "Source",
+//                    "cell_id": DisclosureCellID,
+//                    "tag" : 00
+//                ]
+//            ]
+//        ],
         [
             "section_title" : "Warmshowers.org",
             "cells" : Array([
@@ -55,6 +56,15 @@ class SettingsTableViewController: UITableViewController {
                     "title" : "Contact",
                     "cell_id": DisclosureCellID,
                     "tag" : 20
+                ]
+            ]
+        ],
+        [
+            "cells" : [
+                [
+                    "title" : "Logout",
+                    "cell_id": LogoutCellID,
+                    "tag" : 30
                 ]
             ]
         ]
@@ -90,6 +100,10 @@ class SettingsTableViewController: UITableViewController {
             cell.detailTextLabel!.text = contents?["detail"] as? String
             cell.tag = contents!["tag"] as! Int
             return cell
+        case LogoutCellID:
+            let cell = tableView.dequeueReusableCellWithIdentifier(cellID, forIndexPath: indexPath)
+            cell.tag = contents!["tag"] as! Int
+            return cell
         default:
             let cell = UITableViewCell(style: .Default, reuseIdentifier: nil)
             return cell
@@ -110,7 +124,14 @@ class SettingsTableViewController: UITableViewController {
                 UIApplication.sharedApplication().openURL(NSURL(string: "https://www.warmshowers.org/faq")!)
             case 20:
                 UIApplication.sharedApplication().openURL(NSURL(string: "mailto:rajan.fernandez@hotmail.com?subject=Warmshowers%20app")!)
-                return
+            case 30:
+                // Logout and return the login screeen
+                let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
+                WSRequest.logout({ (success) -> Void in
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        appDelegate?.logout()
+                    })
+                })
             default:
                 return
             }
