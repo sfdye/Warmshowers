@@ -54,8 +54,6 @@ class AccountTableViewController: UITableViewController {
     
     weak var appDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate)
     
-    var alertController: UIAlertController?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -91,7 +89,7 @@ class AccountTableViewController: UITableViewController {
         guard let info = info  else {
             return
         }
-        
+
         self.info = info
         self.offers.update(info)
         self.hostingInfo.update(info)

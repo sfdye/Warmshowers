@@ -11,8 +11,8 @@ import MapKit
 import CoreData
 
 // FIRST TODOs
+// account view: fix hosting tab layout, finish contact tab
 // fix distance subtitles
-// queue http requests - ask paul for advice
 // !!! link up system settings to the app settings !!!
 // mark new message threads + tab bar icon badge
 // finish settings vc

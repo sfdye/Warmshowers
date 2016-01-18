@@ -72,15 +72,15 @@ struct WSRequest {
         
         let request = NSMutableURLRequest.withWSRestfulService(service)
         
+        // Add the session cookie to the header.
+        if let sessionCookie = defaults.objectForKey(DEFAULTS_KEY_SESSION_COOKIE) as? String {
+            request.addValue(sessionCookie, forHTTPHeaderField: "Cookie")
+        } else {
+            print("Failed to add session cookie to request header")
+            return nil
+        }
+        
         if (service.type != .login) && (service.method != .get) {
-            
-            // Add the session cookie to the header.
-            if let sessionCookie = defaults.objectForKey(DEFAULTS_KEY_SESSION_COOKIE) as? String {
-                request.addValue(sessionCookie, forHTTPHeaderField: "Cookie")
-            } else {
-                print("Failed to add session cookie to request header")
-                return nil
-            }
             
             // Add the CSRF token to the header.
             if token != nil {
@@ -89,7 +89,6 @@ struct WSRequest {
                 print("Failed to add X-CSRF token to request header")
                 return nil
             }
-            
         }
         
         // Add the request parameters to the request body

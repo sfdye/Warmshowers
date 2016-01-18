@@ -556,7 +556,7 @@
                                     <segue destination="rgL-BL-hqm" kind="show" identifier="ToFeedback" id="gWM-dr-ADs"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Segment" rowHeight="58" id="Zdq-5c-R79" customClass="SegmentTableViewCell" customModule="Warmshowers" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Segment" rowHeight="58" id="Zdq-5c-R79" customClass="SegmentTableViewCell" customModule="Warmshowers" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="477.5" width="600" height="58"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Zdq-5c-R79" id="hgw-AW-Bps">
@@ -729,7 +729,7 @@
                                     <outlet property="offerLabel" destination="fdr-P1-SPC" id="AFG-My-7iQ"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Phone" rowHeight="54" id="eN6-YS-1gd" customClass="PhoneTableViewCell" customModule="Warmshowers" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Phone" rowHeight="54" id="eN6-YS-1gd" customClass="PhoneTableViewCell" customModule="Warmshowers" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="686.5" width="600" height="54"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eN6-YS-1gd" id="X2v-QM-aAt">
