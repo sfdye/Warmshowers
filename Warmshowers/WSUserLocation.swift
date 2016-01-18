@@ -51,9 +51,8 @@ class WSUserLocation : WSUser {
         address.appendWithNewLine(additional)
         address.appendWithNewLine(city)
         address.appendWithSpace(postCode)
-        // address.appendWithNewLine(province)
         if let country = country {
-            address.appendWithComma(country.uppercaseString)
+            address.appendWithNewLine(country.uppercaseString)
         }
         return address
     }

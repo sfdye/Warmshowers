@@ -93,6 +93,8 @@
 		E5DA03FA1C4A4FE100FAD1D7 /* WSGetHostsForKeywordOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03F91C4A4FE100FAD1D7 /* WSGetHostsForKeywordOperation.swift */; };
 		E5DA03FD1C4C947100FAD1D7 /* WSSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03FC1C4C947100FAD1D7 /* WSSettings.swift */; };
 		E5DA03FF1C4CA9CF00FAD1D7 /* WSDistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03FE1C4CA9CF00FAD1D7 /* WSDistance.swift */; };
+		E5DA04011C4CDE6500FAD1D7 /* SpinnerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA04001C4CDE6500FAD1D7 /* SpinnerTableViewCell.swift */; };
+		E5DA04031C4CE6B500FAD1D7 /* NoHostsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA04021C4CE6B500FAD1D7 /* NoHostsTableViewCell.swift */; };
 		E5F6F30A1C2B36930000A87E /* WSRestfulService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6F3091C2B36930000A87E /* WSRestfulService.swift */; };
 		E5F6F30D1C2FE2770000A87E /* AccountDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6F30C1C2FE2770000A87E /* AccountDetailTableViewCell.swift */; };
 		E5F6F30F1C2FE3360000A87E /* ProfileImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6F30E1C2FE3360000A87E /* ProfileImageTableViewCell.swift */; };
@@ -219,6 +221,8 @@
 		E5DA03F91C4A4FE100FAD1D7 /* WSGetHostsForKeywordOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSGetHostsForKeywordOperation.swift; sourceTree = "<group>"; };
 		E5DA03FC1C4C947100FAD1D7 /* WSSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSSettings.swift; sourceTree = "<group>"; };
 		E5DA03FE1C4CA9CF00FAD1D7 /* WSDistance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSDistance.swift; sourceTree = "<group>"; };
+		E5DA04001C4CDE6500FAD1D7 /* SpinnerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinnerTableViewCell.swift; sourceTree = "<group>"; };
+		E5DA04021C4CE6B500FAD1D7 /* NoHostsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoHostsTableViewCell.swift; sourceTree = "<group>"; };
 		E5F6F3091C2B36930000A87E /* WSRestfulService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSRestfulService.swift; sourceTree = "<group>"; };
 		E5F6F30C1C2FE2770000A87E /* AccountDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountDetailTableViewCell.swift; sourceTree = "<group>"; };
 		E5F6F30E1C2FE3360000A87E /* ProfileImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageTableViewCell.swift; sourceTree = "<group>"; };
@@ -390,6 +394,8 @@
 				E52E8AA01C0BD38D000391AB /* HostSearchViewController+UISearchControllerDelegate.swift */,
 				E52E8AA81C0BDB18000391AB /* HostSearchViewController+WSLazyImageTableViewDataSource.swift */,
 				E52E8AA41C0BD8BF000391AB /* HostSearchViewController+UISearchResultsUpdating.swift */,
+				E5DA04001C4CDE6500FAD1D7 /* SpinnerTableViewCell.swift */,
+				E5DA04021C4CE6B500FAD1D7 /* NoHostsTableViewCell.swift */,
 			);
 			name = HostSearchViewController;
 			sourceTree = "<group>";
@@ -781,6 +787,7 @@
 				E5700C5A1C45C961008C8A87 /* HostListTableViewCell.swift in Sources */,
 				E5DA03FF1C4CA9CF00FAD1D7 /* WSDistance.swift in Sources */,
 				E5DA03E01C490ECC00FAD1D7 /* HostListTableViewController+UITableViewDataSource.swift in Sources */,
+				E5DA04031C4CE6B500FAD1D7 /* NoHostsTableViewCell.swift in Sources */,
 				E52E8A9F1C0BD25A000391AB /* HostSearchViewController+MKMapViewDelegate.swift in Sources */,
 				E5967BBB1C3922170037F4B7 /* MessageThreadTableViewController.swift in Sources */,
 				E5967B9F1C3490740037F4B7 /* WSOffers.swift in Sources */,
@@ -812,6 +819,7 @@
 				E5DA03E81C49AE5300FAD1D7 /* HostListTableViewCell+WSLazyImageTableViewCell.swift in Sources */,
 				E5F6F30F1C2FE3360000A87E /* ProfileImageTableViewCell.swift in Sources */,
 				E5D96AF81BFB1CA700AFAFEE /* AppDelegate.swift in Sources */,
+				E5DA04011C4CDE6500FAD1D7 /* SpinnerTableViewCell.swift in Sources */,
 				E5700C521C44CB64008C8A87 /* ComposeMessageTableViewController+UITextViewDelegate.swift in Sources */,
 				E54276881C3E83E500047029 /* CreateFeedbackTableViewController+UIPickerViewDataSource.swift in Sources */,
 				E542767E1C3E544600047029 /* WSRecommendationRating.swift in Sources */,

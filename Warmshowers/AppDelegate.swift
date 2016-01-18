@@ -11,7 +11,8 @@ import MapKit
 import CoreData
 
 // FIRST TODOs
-// !!! link up system settings to the app settings !!!
+// search input needs debouncing
+// add a user profile image placeholder
 // finish settings vc
 // put user password in keychain
 

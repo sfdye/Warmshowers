@@ -8,6 +8,7 @@
 
 import Foundation
 
-protocol WSLazyImageTableViewDataSource {
+@objc protocol WSLazyImageTableViewDataSource {
+    optional func numberOfRowsInSection(section: Int) -> Int
     func lazyImageCellForIndexPath(indexPath: NSIndexPath) -> UITableViewCell
 }

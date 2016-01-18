@@ -15,7 +15,11 @@ extension WSLazyImageTableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return lazyImageObjects.count
+        if dataSource.numberOfRowsInSection != nil {
+            return dataSource.numberOfRowsInSection!(section)
+        } else {
+            return lazyImageObjects.count
+        }
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

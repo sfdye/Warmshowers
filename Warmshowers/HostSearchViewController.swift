@@ -28,14 +28,17 @@ enum MapSource {
 let MapToUserAccountSegueID = "MapToUserAccount"
 let ResultsToUserAccountSegueID = "SearchResultsToUserAccount"
 let ToHostListSegueID = "ToHostList"
+let SpinnerCellID = "Spinner"
+let NoHostsCellID = "NoHosts"
 
 class HostSearchViewController: UIViewController {
     
     // MARK: Properties
     
     let locationManager = CLLocationManager()
-    
     let queue = NSOperationQueue()
+    
+    var debounceTimer: NSTimer?
     
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var tableView: UITableView!
@@ -85,7 +88,7 @@ class HostSearchViewController: UIViewController {
         tableViewController.dataSource = self
         tableViewController.placeHolderImageName = "ThumbnailPlaceholder"
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 44
+        tableView.estimatedRowHeight = 74
         
         // Search controller and bar
         searchController = UISearchController(searchResultsController: nil)
@@ -185,15 +188,17 @@ class HostSearchViewController: UIViewController {
     
     // Updates the hosts to be shown in the table view
     //
-    func updateSearchResultsWithKeyword(keyword: String) {
+    func updateSearchResultsWithKeyword() {
         
+        guard let keyword = searchController.searchBar.text else {
+            return
+        }
+
         // Clear the operation queue
-        print(queue.operationCount)
         queue.cancelAllOperations()
-        print(queue.operationCount)
         
-        // Cancel all thumbnail downloads
-        tableViewController.clearTable()
+        // Clear the debounce timer
+        debounceTimer = nil
         
         // Update the map annotation data source
         let operation = WSGetHostsForKeywordOperation(keyword: keyword)
@@ -201,7 +206,8 @@ class HostSearchViewController: UIViewController {
         operation.success = { (hosts) -> Void in
             
             self.hostsInTable = hosts
-            // update the cluster controller on the main thread
+
+            // update the results table on the main thread
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.tableView.reloadData()
             })

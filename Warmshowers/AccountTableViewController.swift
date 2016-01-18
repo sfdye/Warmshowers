@@ -93,7 +93,6 @@ class AccountTableViewController: UITableViewController {
 
         self.info = info
         self.user = WSUserLocation(json: info)
-        print(user?.distanceToUser)
         self.offers.update(info)
         self.hostingInfo.update(info)
         self.phoneNumbers.update(info)

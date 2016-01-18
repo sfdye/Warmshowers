@@ -126,16 +126,16 @@ class WSLazyImageTableViewController: UITableViewController {
     // Terminates all image downloads
     func terminateAllDownloads() {
         for (_, download) in imageDownloadsInProgress {
-            print(download)
             download.cancelDownload()
         }
         imageDownloadsInProgress.removeAll()
     }
     
-    // Clears the table data source
+    // Clears the table data source and reloads the table as blank
     func clearTable() {
         terminateAllDownloads()
         lazyImageObjects = [AnyObject]()
+        tableView.reloadData()
     }
     
 }
