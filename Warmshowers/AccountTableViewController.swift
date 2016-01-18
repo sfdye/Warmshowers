@@ -253,6 +253,7 @@ class AccountTableViewController: UITableViewController {
             case .Hosting:
                 var cells = hostingInfo.count
                 if offers.count > 0 {
+                    print(offers.count)
                     cells += 1 + offers.count
                 }
                 return cells
@@ -351,14 +352,17 @@ class AccountTableViewController: UITableViewController {
             case .Hosting:
                 // Hosting tab
                 if row < hostingInfo.count {
+                    // Display host info
                     let cell = tableView.dequeueReusableCellWithIdentifier(HostingInfoCellID, forIndexPath: indexPath) as! HostingInfoTableViewCell
                     cell.title = hostingInfo.titleValues[row]
                     cell.info = hostingInfo.infoValues[row]
                     return cell
                 } else if row == hostingInfo.count {
+                    // Display "This host may offer"
                     let cell = tableView.dequeueReusableCellWithIdentifier(OfferHeadingCellID, forIndexPath: indexPath)
                     return cell
                 } else {
+                    // Display an offer
                     let cell = tableView.dequeueReusableCellWithIdentifier(OfferCellID, forIndexPath: indexPath) as! HostOfferTableViewCell
                     cell.offer = offers.offerAtIndex(row - 5)
                     return cell

@@ -31,8 +31,8 @@ class HostingInfoTableViewCell: UITableViewCell {
             return infoLabel.text
         }
         set(newInfo) {
-            guard newInfo != nil else {
-                self.infoLabel.text = nil
+            guard newInfo != nil && newInfo != "" else {
+                self.infoLabel.text = "-"
                 return
             }
             self.infoLabel.text = newInfo!

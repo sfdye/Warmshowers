@@ -101,20 +101,30 @@ struct WSOffers {
     //
     func offerAtIndex(index: Int) -> String? {
         
-        guard index < (count - 1) else {
+        guard let indexes = offerIndexes() where index < indexes.count else {
             return nil
         }
         
-        var trueIndex: Int = 0
+        return stringValues[indexes[index]]
+    }
+    
+    // Returns the indexes of the true offers in an array
+    // Returns nil if there are no true offers
+    func offerIndexes() -> [Int]? {
+        
+        guard self.count > 0 else{
+            return nil
+        }
+        
+        var indexes = [Int]()
         
         for (i, value) in allValues.enumerate() {
-            if value && trueIndex == index {
-                return stringValues[i]
-            } else {
-                trueIndex++
+            if value {
+                indexes.append(i)
             }
         }
-        return nil
+
+        return indexes
     }
 
 }
