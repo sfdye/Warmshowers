@@ -97,10 +97,12 @@ class WSLazyImageTableViewController: UITableViewController {
                 })
 
                 // Remove the downloader object from the downloads
+                print("deleting for \(indexPath.row)")
                 self.imageDownloadsInProgress.removeValueForKey(indexPath)
             }
             
             imageDownloadsInProgress[indexPath] = imageDownloader
+            print("set for \(indexPath.row)")
             imageDownloader.startDownload()
         }
     }
