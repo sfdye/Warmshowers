@@ -11,12 +11,11 @@ import MapKit
 import CoreData
 
 // FIRST TODOs
-// search input needs debouncing
+// finish settings vc - add link to help in settings
+// tidy up mail checking methods, splitview for messages?
 // add a user profile image placeholder
-// finish settings vc
+// map search debouncing
 // put user password in keychain
-
-// add link to help in settings
 
 // LATER TODOs
 // login screen layout and error messages

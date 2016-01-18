@@ -8,14 +8,58 @@
 
 import UIKit
 
-// TODO: - add: distance units options, route manager, wifi only, map source options
+/*
 
-let SWITCH_CELL_ID = "SwitchCell"
+About
+Help
+
+ */
+
+let SwitchCellID = "SwitchCell"
+let DisclosureCellID = "DisclosureCell"
 
 class SettingsTableViewController: UITableViewController {
     
     var wifiOnly = true
-
+    
+    var settings = [
+        [
+            "section_title" : "Map",
+            "cells" : [
+                [
+                    "title" : "Contact",
+                    "cell_id": DisclosureCellID,
+                    "tag" : 20
+                ]
+            ]
+        ],
+        [
+            "section_title" : "Warmshowers.org",
+            "cells" : Array([
+                [
+                    "title" : "Visit the website",
+                    "cell_id": DisclosureCellID,
+                    "tag" : 10
+                ],
+                [
+                    "title": "FAQ",
+                    "cell_id": DisclosureCellID,
+                    "tag" : 11
+                ]
+            ])
+        ],
+        [
+            "section_title" : "Help",
+            "cells" : [
+                [
+                    "title" : "Contact",
+                    "cell_id": DisclosureCellID,
+                    "tag" : 20
+                ]
+            ]
+        ]
+    ]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Settings"
@@ -24,39 +68,53 @@ class SettingsTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 3
+        return settings.count
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return settings[section]["cells"]!.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        let reuseIdentifier = SWITCH_CELL_ID
-        let label = "Wi-Fi Only"
-        
-        let cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath) as! SwitchTableViewCell
-        cell.label!.text = label
-
-        return cell
+        let contents = settings[indexPath.section]["cells"]?[indexPath.row]
+        let cellID = contents?["cell_id"] as! String
+        switch cellID  {
+        case SwitchCellID:
+            let cell = tableView.dequeueReusableCellWithIdentifier(cellID, forIndexPath: indexPath) as! SwitchTableViewCell
+            cell.label?.text = contents?["title"] as? String
+            cell.tag = contents!["tag"] as! Int
+            return cell
+        case DisclosureCellID:
+            let cell = tableView.dequeueReusableCellWithIdentifier(cellID, forIndexPath: indexPath)
+            cell.textLabel!.text = contents?["title"] as? String
+            cell.detailTextLabel!.text = contents?["detail"] as? String
+            cell.tag = contents!["tag"] as! Int
+            return cell
+        default:
+            let cell = UITableViewCell(style: .Default, reuseIdentifier: nil)
+            return cell
+        }
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case 0:
-            return "Data"
-        case 1:
-            return "Units"
-        case 2:
-            return "Map"
-        default:
-            return ""
-        }
+        return settings[section]["section_title"] as? String
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        if let cell = tableView.cellForRowAtIndexPath(indexPath){
+            switch cell.tag {
+            case 10:
+                UIApplication.sharedApplication().openURL(NSURL(string: "https://www.warmshowers.org")!)
+            case 11:
+                UIApplication.sharedApplication().openURL(NSURL(string: "https://www.warmshowers.org/faq")!)
+            case 20:
+                UIApplication.sharedApplication().openURL(NSURL(string: "mailto:rajan.fernandez@hotmail.com?subject=Warmshowers%20app")!)
+                return
+            default:
+                return
+            }
+        }
     }
     
     /*
@@ -76,31 +134,6 @@ class SettingsTableViewController: UITableViewController {
         } else if editingStyle == .Insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
     }
     */
 
