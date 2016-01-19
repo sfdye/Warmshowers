@@ -92,6 +92,12 @@ class HostSearchViewController: UIViewController {
         configureSearchController()
         configureQueue()
         
+        // Ask the users permission to use location services
+        if CLLocationManager.authorizationStatus() == .NotDetermined {
+            locationManager.requestWhenInUseAuthorization()
+        }
+        mapView.showsUserLocation = true
+        
 //        // Centre the map on the user's location
 //        if let userLocation = locationManager.location?.coordinate {
 //            let region = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1))
@@ -100,17 +106,11 @@ class HostSearchViewController: UIViewController {
 //        }
         
         switchToMapSource(mapSource)
-        
-        
     }
     
     override func viewWillAppear(animated: Bool) {
         
-        // Ask the users permission to use location services
-        if CLLocationManager.authorizationStatus() == .NotDetermined {
-            locationManager.requestWhenInUseAuthorization()
-        }
-        mapView.showsUserLocation = true
+        
     }
     
     func configureNavigationItem() {

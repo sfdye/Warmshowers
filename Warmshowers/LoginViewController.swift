@@ -16,16 +16,14 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
+    
     // Reference to the app delegate for changing views after login
     weak var appDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate)
-    
-    // A http client for making the login request
-    
     
     // Alert controller to display errors
     var alertController: UIAlertController?
     
-    
+
     // MARK: View life cycle
     
     override func viewDidLoad() {
@@ -79,6 +77,12 @@ class LoginViewController: UIViewController {
             }
             // else: error will be displayed by the http client
         }
+    }
+    
+    // Method to take the user to the Warmshowers sign up page when the 'create account' button is pressed
+    //
+    @IBAction func createAccountButtonPressed(sender: UIButton) {
+        UIApplication.sharedApplication().openURL(NSURL(string: "https://www.warmshowers.org/user/register")!)
     }
     
     // MARK: - Utility functions

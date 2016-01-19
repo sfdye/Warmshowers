@@ -45,7 +45,6 @@
 		E5700C541C44EE51008C8A87 /* ComposeMessageTableViewController+UITextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5700C531C44EE51008C8A87 /* ComposeMessageTableViewController+UITextFieldDelegate.swift */; };
 		E5700C581C45C057008C8A87 /* HostListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5700C571C45C057008C8A87 /* HostListTableViewController.swift */; };
 		E5700C5A1C45C961008C8A87 /* HostListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5700C591C45C961008C8A87 /* HostListTableViewCell.swift */; };
-		E573D17A1C0E6106004C3BFC /* LoginViewController+WSRequestAlerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E573D1791C0E6106004C3BFC /* LoginViewController+WSRequestAlerts.swift */; };
 		E5967B9F1C3490740037F4B7 /* WSOffers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967B9E1C3490740037F4B7 /* WSOffers.swift */; };
 		E5967BA11C35D59C0037F4B7 /* WSHostingInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967BA01C35D59C0037F4B7 /* WSHostingInfo.swift */; };
 		E5967BA31C361A9F0037F4B7 /* PhoneTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967BA21C361A9F0037F4B7 /* PhoneTableViewCell.swift */; };
@@ -169,7 +168,6 @@
 		E5700C551C44F083008C8A87 /* MBProgressHUD-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD-Bridging-Header.h"; sourceTree = "<group>"; };
 		E5700C571C45C057008C8A87 /* HostListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostListTableViewController.swift; sourceTree = "<group>"; };
 		E5700C591C45C961008C8A87 /* HostListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostListTableViewCell.swift; sourceTree = "<group>"; };
-		E573D1791C0E6106004C3BFC /* LoginViewController+WSRequestAlerts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LoginViewController+WSRequestAlerts.swift"; sourceTree = "<group>"; };
 		E5967B9E1C3490740037F4B7 /* WSOffers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSOffers.swift; sourceTree = "<group>"; };
 		E5967BA01C35D59C0037F4B7 /* WSHostingInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSHostingInfo.swift; sourceTree = "<group>"; };
 		E5967BA21C361A9F0037F4B7 /* PhoneTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneTableViewCell.swift; sourceTree = "<group>"; };
@@ -427,7 +425,6 @@
 			isa = PBXGroup;
 			children = (
 				E5D96B271BFC493B00AFAFEE /* LoginViewController.swift */,
-				E573D1791C0E6106004C3BFC /* LoginViewController+WSRequestAlerts.swift */,
 			);
 			name = LoginViewController;
 			sourceTree = "<group>";
@@ -836,7 +833,6 @@
 				E5967BB41C38A8ED0037F4B7 /* WSRecommendation.swift in Sources */,
 				E5F6F3111C3122740000A87E /* HostingInfoTableViewCell.swift in Sources */,
 				E5967BCE1C39DBC00037F4B7 /* CDWSUser+CoreDataProperties.swift in Sources */,
-				E573D17A1C0E6106004C3BFC /* LoginViewController+WSRequestAlerts.swift in Sources */,
 				E5F6F3191C3289060000A87E /* AccountTableViewController+SegmentTableViewCellActions.swift in Sources */,
 				E54276781C3E374400047029 /* CreateFeedbackTableViewController.swift in Sources */,
 				E5DA03F41C4A412C00FAD1D7 /* WSDataDownloader.swift in Sources */,

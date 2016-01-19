@@ -11,9 +11,9 @@ import MapKit
 import CoreData
 
 // FIRST TODOs
+// login screen error messages
 // tidy up mail checking methods, splitview for messages?
 // put user password in keychain
-// login screen layout and error messages
 
 // LATER TODOs
 // map search debouncing
