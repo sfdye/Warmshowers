@@ -14,6 +14,10 @@ import CoreData
 // login screen error messages
 // tidy up mail checking methods, splitview for messages?
 // put user password in keychain
+// fixe host list search table results sync issues
+// order host search by distance from user
+// fix account view for ipad
+
 
 // LATER TODOs
 // map search debouncing
@@ -21,6 +25,7 @@ import CoreData
 // mark new message threads + tab bar icon badge
 // add message sorter
 // add google translate feature to account view, translate from 'detect language' to system language
+// search filters, i.e. by country
 
 // IDEAS
 // - load gps files on map - start with american adventure routes on WS

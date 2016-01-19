@@ -1477,7 +1477,6 @@
                                         </label>
                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Message body" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Ti4-3w-KlQ">
                                             <rect key="frame" x="14" y="77" width="557" height="105"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
@@ -1499,6 +1498,7 @@
                                         <constraint firstItem="Bp1-9S-ZqY" firstAttribute="leading" secondItem="Ti4-3w-KlQ" secondAttribute="leading" id="kog-Bg-fB3"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" red="0.95686274509803915" green="0.96470588235294119" blue="0.96470588235294119" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <outlet property="authorImageView" destination="Bp1-9S-ZqY" id="UkT-Oe-aom"/>
                                     <outlet property="bodyTextView" destination="Ti4-3w-KlQ" id="c6b-bb-B1S"/>
@@ -1614,7 +1614,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="chp-Mq-xSE"/>
+        <segue reference="Lua-AG-L6Z"/>
         <segue reference="BZz-ra-FxF"/>
-        <segue reference="1RT-Kj-eKu"/>
     </inferredMetricsTieBreakers>
 </document>
