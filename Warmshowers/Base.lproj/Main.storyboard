@@ -32,7 +32,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="73.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ThumbnailPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="1cJ-r2-gaJ">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="ThumbnailPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="1cJ-r2-gaJ">
                                                     <rect key="frame" x="18" y="12" width="50" height="50"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="50" id="qne-J1-KRs"/>
@@ -51,21 +51,37 @@
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ush-CM-tTY" customClass="WSColoredDot" customModule="Warmshowers" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="31" width="12" height="12"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="12" id="5RP-dx-ygM"/>
+                                                        <constraint firstAttribute="height" constant="12" id="A7k-XV-uSI"/>
+                                                    </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="color">
+                                                            <color key="value" red="0.0039215686269999999" green="0.61960784310000006" blue="0.23529411759999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="Y4R-V8-Pc8" firstAttribute="leading" secondItem="1cJ-r2-gaJ" secondAttribute="trailing" constant="18" id="1oc-bj-did"/>
+                                                <constraint firstItem="Ush-CM-tTY" firstAttribute="leading" secondItem="w5a-Xb-WK4" secondAttribute="leading" constant="8" id="50l-u5-u3Z"/>
+                                                <constraint firstItem="1cJ-r2-gaJ" firstAttribute="leading" secondItem="Ush-CM-tTY" secondAttribute="trailing" constant="8" id="JA3-hl-tfq"/>
                                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="LpK-Va-oN3" secondAttribute="bottom" constant="12" id="MXg-rL-SlE"/>
                                                 <constraint firstItem="1cJ-r2-gaJ" firstAttribute="top" secondItem="w5a-Xb-WK4" secondAttribute="top" constant="12" id="TeV-tw-CcC"/>
+                                                <constraint firstItem="Ush-CM-tTY" firstAttribute="centerY" secondItem="1cJ-r2-gaJ" secondAttribute="centerY" id="XHM-yN-9Pi"/>
                                                 <constraint firstItem="Y4R-V8-Pc8" firstAttribute="leading" secondItem="LpK-Va-oN3" secondAttribute="leading" id="eUe-ap-Z55"/>
                                                 <constraint firstItem="LpK-Va-oN3" firstAttribute="top" secondItem="Y4R-V8-Pc8" secondAttribute="bottom" constant="2" id="mND-E2-nXM"/>
                                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="1cJ-r2-gaJ" secondAttribute="bottom" constant="12" id="sNb-oe-cim"/>
                                                 <constraint firstItem="Y4R-V8-Pc8" firstAttribute="top" secondItem="w5a-Xb-WK4" secondAttribute="top" constant="12" id="u9H-mS-NxW"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Y4R-V8-Pc8" secondAttribute="trailing" constant="18" id="w3p-KA-wEs"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="LpK-Va-oN3" secondAttribute="trailing" constant="18" id="wDC-YS-yHm"/>
-                                                <constraint firstItem="1cJ-r2-gaJ" firstAttribute="leading" secondItem="w5a-Xb-WK4" secondAttribute="leading" constant="18" id="wGm-9n-5Bn"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="availibleDot" destination="Ush-CM-tTY" id="szS-ZQ-ItW"/>
                                             <outlet property="locationLabel" destination="LpK-Va-oN3" id="bKC-HU-oVF"/>
                                             <outlet property="nameLabel" destination="Y4R-V8-Pc8" id="ZHB-ly-KML"/>
                                             <outlet property="profileImage" destination="1cJ-r2-gaJ" id="D1U-Tn-Czs"/>
@@ -189,7 +205,7 @@
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uAU-wd-X2K" customClass="ColoredDot" customModule="Warmshowers" customModuleProvider="target">
+                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uAU-wd-X2K" customClass="WSColoredDot" customModule="Warmshowers" customModuleProvider="target">
                                             <rect key="frame" x="8" y="8" width="14" height="14"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
@@ -223,7 +239,7 @@
                                 <connections>
                                     <outlet property="bodyPreviewLabel" destination="q7c-xx-uI1" id="Khg-9E-5dO"/>
                                     <outlet property="dateLabel" destination="yzh-PZ-B1Z" id="a7f-LY-NYX"/>
-                                    <outlet property="newDot" destination="uAU-wd-X2K" id="9Nh-k6-f59"/>
+                                    <outlet property="newDot" destination="uAU-wd-X2K" id="5yF-ph-s6h"/>
                                     <outlet property="participantsLabel" destination="GLC-nj-Xhz" id="emO-Zz-bha"/>
                                     <outlet property="subjectLabel" destination="T7v-7U-ynR" id="Qdd-dJ-bst"/>
                                     <segue destination="MJt-qp-NJY" kind="show" identifier="ToMessageThread" id="T4w-LT-wmd"/>

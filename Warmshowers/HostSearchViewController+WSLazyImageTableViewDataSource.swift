@@ -27,16 +27,22 @@ extension HostSearchViewController : WSLazyImageTableViewDataSource {
             let cell = tableView.dequeueReusableCellWithIdentifier(NoHostsCellID, forIndexPath: indexPath) as! NoHostsTableViewCell
             return cell
         } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier(HostListCellID, forIndexPath: indexPath)
             if hostsInTable.count > 0 && hostsInTable.count > indexPath.row {
+                let cell = tableView.dequeueReusableCellWithIdentifier(HostListCellID, forIndexPath: indexPath) as! HostListTableViewCell
                 let user = hostsInTable[indexPath.row]
-                if let cell = cell as? HostListTableViewCell {
-                    cell.nameLabel.text = user.fullname
-                    cell.locationLabel.text = user.shortAddress
-                    cell.uid = user.uid
-                }
+                cell.nameLabel.text = user.fullname
+                cell.locationLabel.text = user.shortAddress
+                cell.setNotAvailible(user.notcurrentlyavailable)
+                cell.uid = user.uid
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCellWithIdentifier(HostListCellID, forIndexPath: indexPath) as! HostListTableViewCell
+                cell.nameLabel.text = nil
+                cell.locationLabel.text = nil
+                cell.imageView!.image = nil
+                cell.availibleDot!.hidden = true
+                return cell
             }
-            return cell
         }
     }
 }
