@@ -16,8 +16,14 @@ class MessageThreadsTableViewCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var participantsLabel: UILabel!
     @IBOutlet weak var subjectLabel: UILabel!
-    @IBOutlet weak var newDot: UIImageView!
+    @IBOutlet weak var newDot: ColoredDot!
     var threadID: Int!
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        newDot.color = WSColor.Blue
+        newDot.setNeedsDisplay()
+    }
     
     func configureWithMessageThread(messageThread: CDWSMessageThread, andCurrentUserUID uid: Int) {
         self.threadID = messageThread.thread_id?.integerValue
