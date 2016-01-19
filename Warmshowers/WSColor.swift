@@ -12,6 +12,7 @@ struct WSColor {
     
     // General styling colors
     static var LightGrey = WSColor.colorFromHexString("F4F6F6")
+    static var MediumGrey = UIColor.grayColor()
     static var DarkGrey = UIColor.darkGrayColor()
     static var Blue = WSColor.colorFromHexString("266ACF")
     static var DarkBlue = WSColor.colorFromHexString("304767")

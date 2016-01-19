@@ -14,7 +14,7 @@ class NoHostsTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         noHostsLabel.text = "No Hosts"
-        noHostsLabel.font = WSFont.SueEllenFrancisco(26)
-        noHostsLabel.textColor = WSColor.DarkBlue
+        noHostsLabel.font = WSFont.SueEllenFrancisco(22)
+        noHostsLabel.textColor = WSColor.MediumGrey
     }
 }

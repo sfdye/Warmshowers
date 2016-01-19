@@ -11,14 +11,12 @@ import MapKit
 import CoreData
 
 // FIRST TODOs
-// finish settings vc - add link to help in settings
 // tidy up mail checking methods, splitview for messages?
-// add a user profile image placeholder
-// map search debouncing
 // put user password in keychain
+// login screen layout and error messages
 
 // LATER TODOs
-// login screen layout and error messages
+// map search debouncing
 // background message check and app icon bagde/ notifications
 // mark new message threads + tab bar icon badge
 // add message sorter

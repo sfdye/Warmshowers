@@ -279,11 +279,12 @@ class AccountTableViewController: UITableViewController {
                 if let photo = photo {
                     cell.nameLabel.text = self.info?.valueForKey("fullname") as? String
                     cell.nameLabel.textColor = UIColor.whiteColor()
+                    cell.noImageLabel.hidden = true
                     cell.profileImage.image = photo
                     cell.profileImage.contentMode = .ScaleAspectFill
                 } else {
                     cell.nameLabel.text = self.info?.valueForKey("fullname") as? String
-                    cell.nameLabel.textColor = UIColor.blackColor()
+                    cell.nameLabel.textColor = WSColor.DarkBlue
                 }
                 return cell
             case 1:
