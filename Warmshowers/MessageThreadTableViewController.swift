@@ -143,8 +143,14 @@ class MessageThreadTableViewController: UITableViewController {
         }
         
         WSRequest.markMessageThread(threadID) { (data) -> Void in
-            let json = WSRequest.jsonDataToJSONObject(data)
-            print(json)
+            
+            // On success update the local model
+            self.messageThread?.is_new = false
+            do {
+                try self.moc.save()
+            } catch {
+                print("failed")
+            }
         }
     }
     

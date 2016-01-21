@@ -139,8 +139,13 @@ class MessageThreadsTableViewController: UITableViewController {
         }
         
         if needsUpdate {
+            // Update all message threads
             showHUD()
             update()
+        } else {
+            // Just reload to update the read indicators and the tab bar badge
+            tableView.reloadData()
+            updateTabBarBadge()
         }
     }
     
@@ -206,6 +211,9 @@ class MessageThreadsTableViewController: UITableViewController {
     // Requests all messages threads from the server and updates the store.
     //
     func update() {
+        
+        // Set the last updated record
+        lastUpdated = NSDate()
         
         // Clear the context / table view data source
         messageThreads = [CDWSMessageThread]()
@@ -465,11 +473,33 @@ class MessageThreadsTableViewController: UITableViewController {
                 // Reload the table view
                 self.tableView.reloadData()
                 
+                // Count the updated threads
+                self.updateTabBarBadge()
+                
                 // Hide refreshing indicators and show any error alerts that were set
                 self.refreshController.endRefreshing()
                 self.hideHUD()
                 self.showAlert()
             })
+        }
+    }
+    
+    func numberOfUnreadThreads() -> Int {
+        var count: Int = 0
+        for thread in messageThreads {
+            if thread.is_new!.boolValue {
+                count++
+            }
+        }
+        return count
+    }
+    
+    func updateTabBarBadge() {
+        let unread = self.numberOfUnreadThreads()
+        if unread > 0 {
+            self.navigationController?.tabBarItem.badgeValue = String(unread)
+        } else {
+            self.navigationController?.tabBarItem.badgeValue = nil
         }
     }
     
