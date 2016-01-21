@@ -17,7 +17,7 @@ let REPLY_TO_MESSAGE_SEGUE_ID = "ToReplyToMessage"
 class MessageThreadTableViewController: UITableViewController {
     
     var threadID: Int? = nil
-    var messageThread: CDWSMessageThread? = nil
+    var messageThread: CDWSMessageThread?
     var messages = [CDWSMessage]()
     var authors = [CDWSUser]()
     
@@ -31,20 +31,20 @@ class MessageThreadTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard let threadID = threadID else {
-            return
-        }
-        
-        // Insert the message thread in the context
-        let request = NSFetchRequest(entityName: "CDWSMessageThread")
-        request.predicate = NSPredicate(format: "thread_id == %i", threadID)
-        do {
-            if let threads = try moc.executeFetchRequest(request) as? [CDWSMessageThread] {
-                messageThread = threads.first
-            }
-        } catch {
-            print("Could not get the message thread from the store")
-        }
+//        guard let threadID = threadID else {
+//            return
+//        }
+//        
+//        // Insert the message thread in the context
+//        let request = NSFetchRequest(entityName: "MessageThread")
+//        request.predicate = NSPredicate(format: "thread_id == %i", threadID)
+//        do {
+//            if let threads = try moc.executeFetchRequest(request) as? [CDWSMessageThread] {
+//                messageThread = threads.first
+//            }
+//        } catch {
+//            print("Could not get the message thread from the store")
+//        }
         
         // Set the view title
         navigationItem.title = messageThread?.subject
@@ -62,7 +62,7 @@ class MessageThreadTableViewController: UITableViewController {
     override func viewDidAppear(animated: Bool) {
         
         // Update the data source
-        update()
+//        update()
     }
     
     
@@ -258,7 +258,7 @@ class MessageThreadTableViewController: UITableViewController {
     //
     func getMessageWithMessageID(message_id: Int) throws -> CDWSMessage {
         
-        let request = NSFetchRequest(entityName: "CDWSMessage")
+        let request = NSFetchRequest(entityName: "Message")
         request.predicate = NSPredicate(format: "message_id == %i", message_id)
         
         // Try to find message thread in the store
@@ -274,7 +274,7 @@ class MessageThreadTableViewController: UITableViewController {
         }
         
         // Message thread wasn't in the store, so create a new managed object
-        let message = NSEntityDescription.insertNewObjectForEntityForName("CDWSMessage", inManagedObjectContext: moc) as! CDWSMessage
+        let message = NSEntityDescription.insertNewObjectForEntityForName("Message", inManagedObjectContext: moc) as! CDWSMessage
         return message
     }
     
@@ -284,7 +284,7 @@ class MessageThreadTableViewController: UITableViewController {
     //
     func getUserWithUID(uid: Int) throws -> CDWSUser {
         
-        let request = NSFetchRequest(entityName: "CDWSUser")
+        let request = NSFetchRequest(entityName: "User")
         request.predicate = NSPredicate(format: "uid == %i", uid)
         
         // Try to find the user in the store
@@ -300,7 +300,7 @@ class MessageThreadTableViewController: UITableViewController {
         }
         
         // User wasn't in the store, so create a new managed object
-        let user = NSEntityDescription.insertNewObjectForEntityForName("CDWSUser", inManagedObjectContext: moc) as! CDWSUser
+        let user = NSEntityDescription.insertNewObjectForEntityForName("User", inManagedObjectContext: moc) as! CDWSUser
         return user
         
     }

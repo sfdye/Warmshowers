@@ -495,15 +495,17 @@ class MessageThreadsTableViewController: UITableViewController {
     }
     
     func showHUD() {
-        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        let view = (UIApplication.sharedApplication().delegate as! AppDelegate).window?.rootViewController?.view
+        let hud = MBProgressHUD.showHUDAddedTo(view, animated: true)
         hud.labelText = "Updating messages ..."
         hud.dimBackground = true
         hud.removeFromSuperViewOnHide = true
     }
     
     func hideHUD() {
+        let view = (UIApplication.sharedApplication().delegate as! AppDelegate).window?.rootViewController?.view
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            MBProgressHUD.hideHUDForView(self.view, animated: true)
+            MBProgressHUD.hideHUDForView(view, animated: true)
         })
     }
     
@@ -521,9 +523,24 @@ class MessageThreadsTableViewController: UITableViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == MESSAGE_SEGUE_ID {
-            let messageThreadVC = segue.destinationViewController as! MessageThreadTableViewController
+            
+            // Get the message thread from the table view data source
             let cell = sender as! MessageThreadsTableViewCell
-//            messageThreadVC.threadID = cell.threadID
+            let indexPath = tableView.indexPathForCell(cell)
+            let messageThread = messageThreads[indexPath!.row] as CDWSMessageThread
+            var messages = messageThread.messages?.allObjects as! [CDWSMessage]
+            let authors = messageThread.participants?.allObjects as! [CDWSUser]
+            
+            // Sort the messages by date
+            messages.sortInPlace({
+                return $0.timestamp!.laterDate($1.timestamp!).isEqualToDate($1.timestamp!)
+            })
+            
+            // Assign the message thread data to the destination view controller
+            let messageThreadVC = segue.destinationViewController as! MessageThreadTableViewController
+            messageThreadVC.messageThread = messageThread
+            messageThreadVC.messages = messages
+            messageThreadVC.authors = authors
         }
     }
     

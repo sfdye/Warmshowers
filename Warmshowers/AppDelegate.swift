@@ -204,42 +204,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Deletes everything in the store
     func clearStore() throws {
         
-        // TODO: figure out why this batch delete doesn't work
-//        let entities = managedObjectModel.entitiesByName.keys
-//        
-//        for entity in entities {
-//            
-//            let fetchRequest = NSFetchRequest(entityName: entity)
-//            let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-//            
-//            do {
-//                try persistentStoreCoordinator.executeRequest(deleteRequest, withContext: managedObjectContext)
-//            }
-//        }
-        
-        let moc = managedObjectContext
-        var request = NSFetchRequest(entityName: "MessageThread")
-        do {
-            let threads = try moc.executeFetchRequest(request) as! [CDWSMessageThread]
-            for thread in threads {
-                moc.deleteObject(thread)
+        let entities = managedObjectModel.entitiesByName.keys
+        var request: NSFetchRequest
+        for entity in entities {
+            request = NSFetchRequest(entityName: entity)
+            do {
+                let objects = try managedObjectContext.executeFetchRequest(request) as Array
+                for object in objects {
+                    managedObjectContext.deleteObject(object as! NSManagedObject)
+                }
+                do {
+                    try managedObjectContext.save()
+                }
             }
-        } catch {
-            print("failed")
-        }
-        request = NSFetchRequest(entityName: "User")
-        do {
-            let users = try moc.executeFetchRequest(request) as! [CDWSUser]
-            for user in users {
-                moc.deleteObject(user)
-            }
-        } catch {
-            print("failed")
-        }
-        do {
-            try moc.save()
-        } catch {
-            print("failed save")
         }
     }
     

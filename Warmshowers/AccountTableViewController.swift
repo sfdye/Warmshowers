@@ -214,7 +214,7 @@ class AccountTableViewController: UITableViewController {
                         try self.appDelegate?.clearStore()
                     } catch {
                         // Suggest that the user delete the app for privacy
-                        let alert = UIAlertController(title: "Data Error", message: "Sorry, an error occured while removing your messages from this iPhone. If you would like to remove your Warmshowers messages from this iPhone please try deleting the Warmshowers app.", preferredStyle: .Alert)
+                        let alert = UIAlertController(title: "Data Error", message: "Sorry, an error occured while removing your messages from this iPhone during the logout process. If you would like to remove your Warmshowers messages from this iPhone please try deleting the Warmshowers app.", preferredStyle: .Alert)
                         let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
                         alert.addAction(okAction)
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
