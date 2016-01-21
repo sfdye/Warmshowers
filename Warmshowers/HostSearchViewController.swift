@@ -108,9 +108,8 @@ class HostSearchViewController: UIViewController {
         switchToMapSource(mapSource)
     }
     
-    override func viewWillAppear(animated: Bool) {
-        
-        
+    override func viewWillDisappear(animated: Bool) {
+        queue.cancelAllOperations()
     }
     
     func configureNavigationItem() {

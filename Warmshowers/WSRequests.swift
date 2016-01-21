@@ -68,7 +68,7 @@ struct WSRequest {
     
     // Creates a request
     //
-    static func buildRequest(service: WSRestfulService, params: [String: String]? = nil, token: String? = nil) -> NSMutableURLRequest? {
+    static func requestWithService(service: WSRestfulService, params: [String: String]? = nil, token: String? = nil) -> NSMutableURLRequest? {
         
         let request = NSMutableURLRequest.withWSRestfulService(service)
         
@@ -83,7 +83,7 @@ struct WSRequest {
         }
         
         // Add the CSRF token to the header.
-        if (service.method != .get) {
+        if (service.type != .login && service.method != .get) {
             if token != nil {
                 request.addValue(token!, forHTTPHeaderField: "X-CSRF-Token")
             } else {
@@ -160,7 +160,7 @@ struct WSRequest {
     //
     static func request(service: WSRestfulService, params: [String: String]? = nil, doWithResponse: (NSData?, NSURLResponse?, NSError?) -> Void) {
         
-        if let request = buildRequest(service) {
+        if let request = requestWithService(service) {
             dataRequest(request, doWithResponse: doWithResponse)
         } else {
             print("Failed to build http request")
@@ -180,7 +180,7 @@ struct WSRequest {
                 return
             }
 
-            if let request = self.buildRequest(service, params: params, token: token) {
+            if let request = self.requestWithService(service, params: params, token: token) {
 
                 self.dataRequest(request, doWithResponse: { (data, response, error) -> Void in
                     
@@ -191,11 +191,7 @@ struct WSRequest {
                         self.autoLogin({ () -> Void in
                             
                             // Retry the request.
-                            self.requestWithCSRFToken(service, params: params, retry: false, doWithResponse: { (data, response, error) -> Void in
-                                
-                                    // Return final response for handling
-                                    doWithResponse(data, response, error)
-                            })
+                            self.requestWithCSRFToken(service, params: params, retry: false, doWithResponse: doWithResponse)
                         })
                         
                     } else {
@@ -215,7 +211,7 @@ struct WSRequest {
     static func autoProcessLoginResponse(data: NSData?, response: NSURLResponse?, error: NSError?) -> Bool {
         
         guard error == nil else {
-            print("Auto-login failed due to an error")
+            print("Login failed due to an error")
             return false
         }
         
@@ -262,14 +258,17 @@ struct WSRequest {
     
     // Login request that takes a new username and password
     //
-    static func login(username: String, password: String, doAfterLogin: (success: Bool) -> Void) {
+    static func login(username: String, password: String, doAfterLogin: (success: Bool, response: NSURLResponse?, error: NSError?) -> Void) {
         
         let service = WSRestfulService(type: .login)!
         let params = ["username" : username, "password" : password]
         
         requestWithCSRFToken(service, params: params) { (data, response, error) -> Void in
-            let success = self.autoProcessLoginResponse(data, response: response, error: error)
-            doAfterLogin(success: success)
+            if self.autoProcessLoginResponse(data, response: response, error: error) {
+                doAfterLogin(success: true, response: nil, error: nil)
+            } else {
+                doAfterLogin(success: false, response: response, error: error)
+            }
         }
     }
     
@@ -282,7 +281,7 @@ struct WSRequest {
         
         if username != nil && password != nil {
             
-            self.login(username!, password: password!) { (success: Bool) -> Void in
+            self.login(username!, password: password!) { (success, response, error) -> Void in
                 if success {
                     print("Autologin succeeded")
                     doAfterLogin()
@@ -653,9 +652,7 @@ struct WSRequest {
         params["thread_id"] = String(threadID)
         
         requestWithCSRFToken(service, params: params, retry: true, doWithResponse: { (data, response, error) -> Void in
-            
             withMessageThreadData(data: data)
-            
         })
     }
     
@@ -697,15 +694,15 @@ struct WSRequest {
     //
     static func jsonDataToJSONObject(data: NSData?) -> AnyObject? {
         
-        if data != nil {
-            do {
-                
-                let json = try NSJSONSerialization.JSONObjectWithData(data!, options: [])
-                return json
-                
-            } catch {
-                print("Failed converting JSON data.")
-            }
+        guard let data = data else {
+            return nil
+        }
+        
+        do {
+            let json = try NSJSONSerialization.JSONObjectWithData(data, options: [])
+            return json
+        } catch {
+            print("Failed converting JSON data.")
         }
         return nil
     }

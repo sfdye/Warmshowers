@@ -17,7 +17,7 @@ class CDWSMessageThread: NSManagedObject {
 
     // Updates all fields of the message thread with JSON data
     //
-    func updateWithJSON(json: AnyObject, AndParticipantSet participants: NSSet) throws {
+    func updateWithJSON(json: AnyObject) throws {
         
         guard let count = json.valueForKey("count")?.integerValue else {
             throw CDWSMessageThreadError.FailedValueForKey(key: "count")
@@ -54,8 +54,6 @@ class CDWSMessageThread: NSManagedObject {
         self.subject = subject
         self.thread_id = thread_id
         self.thread_started = NSDate(timeIntervalSince1970: thread_started)
-        self.participants = participants
-        
     }
     
     // Returns a string of the message thread participant names
@@ -88,6 +86,47 @@ class CDWSMessageThread: NSManagedObject {
         }
         
         return pString
+    }
+    
+    // Returns true if the message count doesn't match the number of messages relationships
+    //
+    func needsUpdating() -> Bool {
+        return count != messages!.count
+    }
+    
+    // Returns the lastest message or nil if there are no messages
+    //
+    func lastestMessage() -> CDWSMessage? {
+        
+        guard var messages = self.messages?.allObjects as? [CDWSMessage] where messages.count > 0 else {
+            return nil
+        }
+        
+        // Sort the messages to latest first
+        messages.sortInPlace {
+            return $0.timestamp!.laterDate($1.timestamp!).isEqualToDate($0.timestamp!)
+        }
+        
+        return messages.first
+    }
+    
+    // Returns a thread participant with the uid or nil if the user is not a participant
+    func participantWithUID(uid: Int) -> CDWSUser? {
+        
+        guard let participants = participants where participants.count > 0 else {
+            return nil
+        }
+        
+        let results = participants.filter { (user) -> Bool in
+            let user = user as! CDWSUser
+            return user.uid == uid
+        }
+        if results.count > 0 {
+            let user = results.first as? CDWSUser
+            return user
+        } else {
+            return nil
+        }
     }
 
 }

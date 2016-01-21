@@ -17,35 +17,20 @@ class MessageThreadsTableViewCell: UITableViewCell {
     @IBOutlet weak var participantsLabel: UILabel!
     @IBOutlet weak var subjectLabel: UILabel!
     @IBOutlet weak var newDot: WSColoredDot!
-    var threadID: Int!
-    
+        
     override func awakeFromNib() {
         super.awakeFromNib()
         newDot.color = WSColor.Blue
         newDot.setNeedsDisplay()
     }
     
-    func configureWithMessageThread(messageThread: CDWSMessageThread, andCurrentUserUID uid: Int) {
-        self.threadID = messageThread.thread_id?.integerValue
-        // TODO setup body preview
-        self.bodyPreviewLabel.text = ""
-        setDate(messageThread.last_updated)
-        self.participantsLabel.text = messageThread.getParticipantString(uid)
-        self.subjectLabel.text = messageThread.subject
-        if messageThread.is_new != 0 {
-            newDot.hidden = false
-        } else {
-            newDot.hidden = true
-        }
-    }
-    
     func setDate(date: NSDate?) {
         if date != nil {
-            let formatter = NSDateFormatter()
-            let template = "dd/MM/yy"
-            let locale = NSLocale.currentLocale()
-            formatter.dateFormat = NSDateFormatter.dateFormatFromTemplate(template, options: 0, locale: locale)
-            dateLabel.text = formatter.stringFromDate(date!)
+        let formatter = NSDateFormatter()
+        let template = "dd/MM/yy"
+        let locale = NSLocale.currentLocale()
+        formatter.dateFormat = NSDateFormatter.dateFormatFromTemplate(template, options: 0, locale: locale)
+        dateLabel.text = formatter.stringFromDate(date!)
         }
     }
 

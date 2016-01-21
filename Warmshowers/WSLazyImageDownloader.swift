@@ -19,15 +19,15 @@ class WSLazyImageDownloader : WSDataDownloader {
     
     // Downloads the objects image an stores in in the object object
     //
-    func startDownload() {
+    func start() {
         
         guard var object = object where object.lazyImageURL != nil else {
-            completionHandler?()
+            failure?()
             return
         }
         
         guard let url = NSURL(string: object.lazyImageURL!) else {
-            completionHandler?()
+            failure?()
             return
         }
         
@@ -36,7 +36,7 @@ class WSLazyImageDownloader : WSDataDownloader {
             // No data. Use the placeholder image instead
             guard let data = data else {
                 object.lazyImage = self.placeHolderImage
-                self.completionHandler?()
+                self.failure?()
                 return
             }
 
@@ -47,7 +47,7 @@ class WSLazyImageDownloader : WSDataDownloader {
                 object.lazyImage = self.placeHolderImage
             }
             
-            self.completionHandler?()
+            self.success?()
         })
 
         task.resume()

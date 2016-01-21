@@ -147,6 +147,7 @@ class MessageThreadTableViewController: UITableViewController {
         if let json = WSRequest.jsonDataToJSONObject(data) {
             if let messagesJSON = json.valueForKey("messages") as? NSArray {
                 for messageJSON in messagesJSON {
+                    print(messageJSON)
                     do {
                         let message = try messageWithJSON(messageJSON)
                         addMessageToDataSource(message)
@@ -241,7 +242,7 @@ class MessageThreadTableViewController: UITableViewController {
 
         // Update the message thread managed object.
         do {
-            try message.updateWithJSON(json, andAuthor: author)
+            try message.updateWithJSON(json)
             message.thread = messageThread
             message.author = author
         } catch {

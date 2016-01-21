@@ -12,8 +12,9 @@ class WSDataDownloader : NSObject {
     
     let session = NSURLSession.init(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
     
-    var task = NSURLSessionDataTask()
-    var completionHandler: (() -> Void)?
+    var task =  NSURLSessionDataTask()
+    var success: (() -> Void)?
+    var failure: (() -> Void)?
     
     override init() {
         super.init()

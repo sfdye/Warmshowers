@@ -33,7 +33,7 @@ class CDWSMessage: NSManagedObject {
     
     // Updates all fields of the message thread with JSON data
     //
-    func updateWithJSON(json: AnyObject, andAuthor author: CDWSUser) throws {
+    func updateWithJSON(json: AnyObject) throws {
         
         guard let body = json.valueForKey("body") as? String else {
             throw CDWSMessageThreadError.FailedValueForKey(key: "count")
@@ -55,6 +55,5 @@ class CDWSMessage: NSManagedObject {
         self.message_id = message_id
         self.timestamp = NSDate(timeIntervalSince1970: timestamp)
         self.is_new = is_new
-        self.author = author
     }
 }

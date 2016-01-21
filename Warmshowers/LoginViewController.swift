@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class LoginViewController: UIViewController {
     
@@ -62,11 +63,18 @@ class LoginViewController: UIViewController {
         let username = usernameTextField.text!
         let password = passwordTextField.text!
         
+        // Show the spinner
+        showHUD()
+        
         // log in
-        WSRequest.login(username, password: password) { (success) -> Void in
+        WSRequest.login(username, password: password) { (success, response, error) -> Void in
+            
+            // Remove the spinner
+            self.hideHUD()
+            
             if success {
                 
-                // login sucessful, store the username and session cookie for later
+                // Login sucessful: store the username and session cookie for later
                 self.storeUsername()
                 self.storePassword()
                 // switch the root view controller to the tabbar view controller
@@ -74,8 +82,27 @@ class LoginViewController: UIViewController {
                     self.appDelegate?.showMainApp()
                 })
                 
+            } else {
+                
+                let alert: UIAlertController
+                let message: String
+                
+                if let error = error {
+                    message  = error.localizedDescription
+                } else if let response = response as? NSHTTPURLResponse where response.statusCode == 401 {
+                    message = "Please check your username and password are correct"
+                } else {
+                    message = "Please check that your username and password are correct, and that you are connected to the internet"
+                }
+                
+                // Login failed: show an error message
+                alert = UIAlertController(title: "Login failed", message: message, preferredStyle: .Alert)
+                let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                alert.addAction(okAction)
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.presentViewController(alert, animated: true, completion: nil)
+                })
             }
-            // else: error will be displayed by the http client
         }
     }
     
@@ -111,6 +138,19 @@ class LoginViewController: UIViewController {
             self.presentViewController(alertController!, animated: true, completion: { () -> Void in self.alertController = nil})
         }
         
+    }
+    
+    func showHUD() {
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud.labelText = "Logging in ..."
+        hud.dimBackground = true
+        hud.removeFromSuperViewOnHide = true
+    }
+    
+    func hideHUD() {
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            MBProgressHUD.hideHUDForView(self.view, animated: true)
+        })
     }
 
 }

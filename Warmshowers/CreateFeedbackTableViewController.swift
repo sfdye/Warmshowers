@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 let FEEDBACK_OPTION_CELL_ID = "FeedbackOption"
 let FEEDBACK_OPTION_PICKER_CELL_ID = "FeedbackOptionPicker"
@@ -266,13 +267,14 @@ class CreateFeedbackTableViewController: UITableViewController {
             return
         }
         
-        // TODO add HUD
-        // show the hud
+        // Show the spinner
+        showHUD()
         
         // Submit the feedback
         WSRequest.createUserFeedback(feedback, userName: userName) { (success) -> Void in
             
-            // remove the hud
+            // Remove the spinner
+            self.hideHUD()
             
             if success {
                 self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
@@ -283,6 +285,19 @@ class CreateFeedbackTableViewController: UITableViewController {
                 self.presentViewController(alert, animated: true, completion: nil)
             }
         }
+    }
+    
+    func showHUD() {
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud.labelText = "Submitting feedback ..."
+        hud.dimBackground = true
+        hud.removeFromSuperViewOnHide = true
+    }
+    
+    func hideHUD() {
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            MBProgressHUD.hideHUDForView(self.view, animated: true)
+        })
     }
 
 }

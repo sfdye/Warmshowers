@@ -86,7 +86,7 @@ class WSLazyImageTableViewController: UITableViewController {
             let imageDownloader = WSLazyImageDownloader()
             imageDownloader.object = object
             imageDownloader.placeHolderImage = placeHolderImage
-            imageDownloader.completionHandler = {
+            imageDownloader.success = {
                 
                 // Update the cell with the objects profile image
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -100,9 +100,13 @@ class WSLazyImageTableViewController: UITableViewController {
                 // TODO: Sometimes the code breaks here with an unexpected nil
                 self.imageDownloadsInProgress.removeValueForKey(indexPath)
             }
+            imageDownloader.failure = {
+                print("Failed to get image.")
+                self.imageDownloadsInProgress.removeValueForKey(indexPath)
+            }
             
             imageDownloadsInProgress[indexPath] = imageDownloader
-            imageDownloader.startDownload()
+            imageDownloader.start()
         }
     }
     
