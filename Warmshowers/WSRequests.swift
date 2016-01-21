@@ -658,8 +658,21 @@ struct WSRequest {
     
     // To mark a message thread as read or unread
     //
-    func markMessageThread(thread: CDWSMessageThread, read: Bool = true, withResponse: (data: NSData) -> Void) {
+    static func markMessageThread(threadID: Int, read: Bool = true, withResponse: (data: NSData) -> Void) {
         
+        let service = WSRestfulService(type: .markMessage)!
+        var params = [String: String]()
+        params["thread_id"] = String(threadID)
+        // status: 0 = read, 1 = unread
+        params["status"] = String((!read).hashValue)
+        
+        requestWithCSRFToken(service, params: params, retry: true, doWithResponse: { (data, response, error) -> Void in
+            
+            guard let data = data else {
+                return
+            }
+            withResponse(data: data)
+        })
     }
     
     

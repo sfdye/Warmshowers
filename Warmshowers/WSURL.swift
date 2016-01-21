@@ -128,7 +128,7 @@ class WSURL {
             return WSURL.GET_ALL_MESSAGE_THREADS()
         case .getMessageThread:
             return WSURL.GET_MESSAGE_THREAD()
-        case .markReplyAsRead:
+        case .markMessage:
             return WSURL.MARK_REPLY_AS_READ()
         }
     }

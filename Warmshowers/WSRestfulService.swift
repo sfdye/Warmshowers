@@ -22,7 +22,7 @@ enum WSRestfulServiceType {
     case unreadMessageCount
     case getAllMessageThreads
     case getMessageThread
-    case markReplyAsRead
+    case markMessage
 }
 
 enum HttpMethod {

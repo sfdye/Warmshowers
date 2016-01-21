@@ -134,7 +134,7 @@ class MessageThreadsTableViewController: UITableViewController {
         // Update the message threads if more than 10 minutes has elapsed
         if lastUpdated == nil {
             needsUpdate = true
-        } else if lastUpdated!.timeIntervalSinceNow > 2 {
+        } else if lastUpdated!.timeIntervalSinceNow > 600 {
             needsUpdate = true
         }
         

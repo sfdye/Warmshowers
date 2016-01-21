@@ -32,6 +32,7 @@ class MessageThreadTableViewController: UITableViewController {
         super.viewDidLoad()
         
         updateAuthorImages()
+        markAsRead()
         
         // Set the view title
         navigationItem.title = messageThread?.subject
@@ -106,7 +107,6 @@ class MessageThreadTableViewController: UITableViewController {
                     if let image = image {
                         author.image = image
                         do {
-                            print("here")
                             try self.moc.save()
                             self.reloadMessagesWithAuthorUID(uid)
                         } catch {
@@ -132,6 +132,19 @@ class MessageThreadTableViewController: UITableViewController {
         
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
             self.tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+        }
+    }
+    
+    // Mark message thread as read
+    func markAsRead() {
+        
+        guard let threadID = messageThread?.thread_id!.integerValue else {
+            return
+        }
+        
+        WSRequest.markMessageThread(threadID) { (data) -> Void in
+            let json = WSRequest.jsonDataToJSONObject(data)
+            print(json)
         }
     }
     
