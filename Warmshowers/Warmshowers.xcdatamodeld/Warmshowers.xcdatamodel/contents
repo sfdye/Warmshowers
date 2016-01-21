@@ -23,6 +23,7 @@
     <entity name="User" representedClassName=".CDWSUser" syncable="YES">
         <attribute name="fullname" attributeType="String" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="image_url" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="uid" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <relationship name="recieved_messages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" inverseName="recipients" inverseEntity="Message" syncable="YES"/>
@@ -32,6 +33,6 @@
     <elements>
         <element name="Message" positionX="-162" positionY="-144" width="128" height="150"/>
         <element name="MessageThread" positionX="-342" positionY="-144" width="128" height="180"/>
-        <element name="User" positionX="-162" positionY="9" width="128" height="150"/>
+        <element name="User" positionX="-162" positionY="9" width="128" height="165"/>
     </elements>
 </model>

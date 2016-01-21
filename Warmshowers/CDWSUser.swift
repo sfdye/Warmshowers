@@ -13,7 +13,21 @@ enum CDWSMessageParticipantError : ErrorType {
     case FailedValueForKey(key: String)
 }
 
-class CDWSUser: NSManagedObject {
+class CDWSUser: NSManagedObject, WSLazyImage {
+    
+    var lazyImageURL: String? {
+        get {
+            return image_url
+        }
+    }
+    var lazyImage: UIImage? {
+        get {
+            return image as? UIImage
+        }
+        set(newImage) {
+            image = newImage
+        }
+    }
     
     func updateFromMessageParticipantJSON(json: AnyObject) throws {
         
@@ -32,7 +46,6 @@ class CDWSUser: NSManagedObject {
         self.fullname = fullname
         self.name = name
         self.uid = uid
-        
     }
     
     func updateFromJSON(json: AnyObject) {
@@ -40,7 +53,7 @@ class CDWSUser: NSManagedObject {
         self.fullname = json.valueForKey("fullname") as? String
         self.name = json.valueForKey("name") as? String
         self.uid = json.valueForKey("uid")?.integerValue
-        
+        self.image_url = json.valueForKey("profile_image_map_infoWindow") as? String
     }
     
 }
