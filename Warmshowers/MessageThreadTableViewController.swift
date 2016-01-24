@@ -31,13 +31,10 @@ class MessageThreadTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        updateAuthorImages()
-        markAsRead()
-        
         // Set the view title
         navigationItem.title = messageThread?.subject
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: WSColor.DarkBlue,
-             NSFontAttributeName: WSFont.SueEllenFrancisco(18)]
+            NSFontAttributeName: WSFont.SueEllenFrancisco(18)]
         
         // Force the back button to plain style
         // TODO
@@ -45,6 +42,10 @@ class MessageThreadTableViewController: UITableViewController {
         // Configure the table view
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 104
+        
+        // Update the model
+        updateAuthorImages()
+        markAsRead()
     }
     
     
@@ -153,6 +154,5 @@ class MessageThreadTableViewController: UITableViewController {
             }
         }
     }
-    
     
 }

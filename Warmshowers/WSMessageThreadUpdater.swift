@@ -46,8 +46,6 @@ class WSMessageThreadUpdater : WSRequestWithCSRFToken {
             return
         }
         
-//        var params = [String: String]()
-//        params["thread_id"] = String(threadID)
         let params: [String: String] = ["thread_id": String(threadID)]
 
         guard let request = WSRequest.requestWithService(service, params: params, token: token) else {
@@ -92,9 +90,16 @@ class WSMessageThreadUpdater : WSRequestWithCSRFToken {
                 }
             }
             
+            // Update the message thread
             self.messageThread.messages = NSSet(array: messages)
             
-            self.success?()
+            // Save the updates to the store
+            do {
+                try self.moc.save()
+                self.success?()
+            } catch {
+                self.failure?()
+            }
         })
         task.resume()
     }

@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15C50" minimumToolsVersion="Xcode 7.0">
     <entity name="Message" representedClassName=".CDWSMessage" syncable="YES">
-        <attribute name="body" attributeType="String" syncable="YES"/>
-        <attribute name="is_new" attributeType="Boolean" syncable="YES"/>
-        <attribute name="message_id" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="timestamp" attributeType="Date" syncable="YES"/>
+        <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="is_new" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="message_id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="timestamp" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="author" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="sent_messages" inverseEntity="User" syncable="YES"/>
         <relationship name="recipients" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="recieved_messages" inverseEntity="User" syncable="YES"/>
         <relationship name="thread" maxCount="1" deletionRule="Nullify" destinationEntity="MessageThread" inverseName="messages" inverseEntity="MessageThread" syncable="YES"/>
     </entity>
     <entity name="MessageThread" representedClassName=".CDWSMessageThread" syncable="YES">
-        <attribute name="count" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="has_tokens" attributeType="Boolean" syncable="YES"/>
-        <attribute name="is_new" attributeType="Boolean" syncable="YES"/>
+        <attribute name="count" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="has_tokens" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="is_new" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="last_updated" attributeType="Date" syncable="YES"/>
-        <attribute name="subject" attributeType="String" syncable="YES"/>
+        <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="thread_id" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="thread_started" attributeType="Date" syncable="YES"/>
+        <attribute name="thread_started" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Message" inverseName="thread" inverseEntity="Message" syncable="YES"/>
         <relationship name="participants" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="threads" inverseEntity="User" syncable="YES"/>
     </entity>

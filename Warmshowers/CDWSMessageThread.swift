@@ -88,9 +88,11 @@ class CDWSMessageThread: NSManagedObject {
         return pString
     }
     
-    // Returns true if the message count doesn't match the number of messages relationships
+    // Returns true if:
+    // a. the message count doesn't match the number of messages relationships
+    // b. the last updated date doesn't match the record in the store (when json is provided)
     //
-    func needsUpdating() -> Bool {
+    func needsUpdating(json: AnyObject? = nil) -> Bool {
         return count != messages!.count
     }
     
@@ -117,16 +119,25 @@ class CDWSMessageThread: NSManagedObject {
             return nil
         }
         
-        let results = participants.filter { (user) -> Bool in
-            let user = user as! CDWSUser
-            return user.uid == uid
-        }
-        if results.count > 0 {
-            let user = results.first as? CDWSUser
+        let predicate = NSPredicate(format: "uid == %i", uid)
+        if let user = participants.filteredSetUsingPredicate(predicate).first as? CDWSUser {
             return user
         } else {
             return nil
         }
+        
+//        let results = participants.filter { (user) -> Bool in
+//            if let user = user as? CDWSUser {
+//                return true
+//            }
+//            return user.uid == uid
+//        }
+//        if results.count > 0 {
+//            let user = results.first as? CDWSUser
+//            return user
+//        } else {
+//            return nil
+//        }
     }
 
 }

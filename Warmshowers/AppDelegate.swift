@@ -11,18 +11,17 @@ import MapKit
 import CoreData
 
 // FIRST TODOs
-// login screen error messages
+// fix message reply date bug
+// fix map loading errors
 // tidy up mail checking methods, splitview for messages?
 // put user password in keychain
-// fixe host list search table results sync issues
+// fix host list search table results sync issues
 // order host search by distance from user
-// fix account view for ipad
-
+// fix views for ipad
 
 // LATER TODOs
 // map search debouncing
 // background message check and app icon bagde/ notifications
-// mark new message threads + tab bar icon badge
 // add message sorter
 // add google translate feature to account view, translate from 'detect language' to system language
 // search filters, i.e. by country
@@ -41,6 +40,11 @@ let DEFAULTS_KEY_USERNAME = "ws_username"
 let DEFAULTS_KEY_PASSWORD = "ws_password"
 let DEFAULTS_KEY_SESSION_COOKIE = "ws_session_cookie"
 let DEFAULTS_KEY_UID = "ws_uid"
+
+// Core data entity names
+let MessageThreadsEntityName = "MessageThread"
+let MessagesEntityName = "Message"
+let UsersEntityName = "User"
 
 // Error types
 enum DataError : ErrorType {
@@ -195,8 +199,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 // Replace this implementation with code to handle the error appropriately.
                 // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
                 let nserror = error as NSError
-                NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
-                abort()
+                print("Core data save error: \(nserror.localizedDescription)")
+                print(nserror.userInfo)
             }
         }
     }

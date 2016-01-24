@@ -101,8 +101,8 @@ class ComposeMessageTableViewController: UITableViewController {
         navigationItem.title = "New Message"
         
         // Set up the message model
-        self.message = NSEntityDescription.insertNewObjectForEntityForName("CDWSMessage", inManagedObjectContext: moc) as? CDWSMessage
-        self.message?.thread = NSEntityDescription.insertNewObjectForEntityForName("CDWSMessageThread", inManagedObjectContext: moc) as? CDWSMessageThread
+        self.message = NSEntityDescription.insertNewObjectForEntityForName("Message", inManagedObjectContext: moc) as? CDWSMessage
+        self.message?.thread = NSEntityDescription.insertNewObjectForEntityForName("MessageThread", inManagedObjectContext: moc) as? CDWSMessageThread
         self.message?.recipients = NSSet(array: [user])
         
         // Set the subject text field as the first responder
@@ -117,8 +117,8 @@ class ComposeMessageTableViewController: UITableViewController {
         navigationItem.title = "Reply"
         
         // Set up the message model
-        self.message = NSEntityDescription.insertNewObjectForEntityForName("CDWSMessage", inManagedObjectContext: moc) as? CDWSMessage
-        self.message?.thread = NSEntityDescription.insertNewObjectForEntityForName("CDWSMessageThread", inManagedObjectContext: moc) as? CDWSMessageThread
+        self.message = NSEntityDescription.insertNewObjectForEntityForName("Message", inManagedObjectContext: moc) as? CDWSMessage
+        self.message?.thread = NSEntityDescription.insertNewObjectForEntityForName("MessageThread", inManagedObjectContext: moc) as? CDWSMessageThread
         self.message?.thread?.thread_id = message.thread?.thread_id
         self.message?.recipients = NSSet(array: [message.author!])
         self.message?.thread?.subject = message.thread?.subject
