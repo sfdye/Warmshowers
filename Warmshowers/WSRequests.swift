@@ -9,9 +9,9 @@
 import UIKit
 import MapKit
 
-protocol WSRequestAlert {
-    func requestAlert(title: String, message: String)
-}
+//protocol WSRequestAlert {
+//    func requestAlert(title: String, message: String)
+//}
 
 enum HttpRequestError : ErrorType {
     case NoSessionCookie

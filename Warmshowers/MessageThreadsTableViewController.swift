@@ -27,6 +27,7 @@ class MessageThreadsTableViewController: UITableViewController {
     
     var messageThreads = [CDWSMessageThread]()
     var messageThreadUpdater: WSMessageThreadsUpdater!
+    var queue = NSOperationQueue()
     
     var refreshController = UIRefreshControl()
     var lastUpdated: NSDate?
@@ -45,6 +46,9 @@ class MessageThreadsTableViewController: UITableViewController {
         refreshController.addTarget(self, action: Selector("startUpdates"), forControlEvents: UIControlEvents.ValueChanged)
         self.refreshControl = self.refreshController
         
+        // Set up the message parsing queue
+        queue.maxConcurrentOperationCount = 1
+        
         // Set up the message thread updater
         messageThreadUpdater = WSMessageThreadsUpdater(moc: moc)
         messageThreadUpdater.success = {
@@ -52,12 +56,19 @@ class MessageThreadsTableViewController: UITableViewController {
             self.updateDataSource()
             self.updateTabBarBadge()
             self.updateMessages()
-            self.reloadIfUpdatesAreFinished() 
+            self.reloadIfUpdatesAreFinished()
         }
         messageThreadUpdater.failure = {
-            self.setFailedUpdateAlert()
-            self.showAlert()
+            if let error = self.messageThreadUpdater.error {
+                self.alert = UIAlertController(title: "Failed to update messages", message: error.localizedDescription, preferredStyle: .Alert)
+                let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                self.alert!.addAction(okAction)
+            } else {
+                self.setFailedUpdateAlert()
+            }
+            self.refreshController.endRefreshing()
             self.hideHUD()
+            self.showAlert()
         }
         
         // Table view autolayout options
@@ -194,7 +205,7 @@ class MessageThreadsTableViewController: UITableViewController {
             return
         }
         
-        let messageUpdater = WSMessageThreadUpdater(messageThread: messageThread, inManagedObjectContext: moc)
+        let messageUpdater = WSMessageThreadUpdater(messageThread: messageThread, inManagedObjectContext: moc, queue: queue)
         messageUpdater.success = {
             completion?()
             self.updateFinishedForThreadID(threadID)
@@ -285,10 +296,10 @@ class MessageThreadsTableViewController: UITableViewController {
         }
         
         dispatch_async(dispatch_get_main_queue(), {
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.presentViewController(alert, animated: true, completion: { () -> Void in
+                self.alert = nil
+            })
         })
-        
-        self.alert = nil
     }
     
     // Shows the progress hud coving the whoel screen
@@ -296,7 +307,11 @@ class MessageThreadsTableViewController: UITableViewController {
     func showHUD() {
         let view = (UIApplication.sharedApplication().delegate as! AppDelegate).window?.rootViewController?.view
         let hud = MBProgressHUD.showHUDAddedTo(view, animated: true)
+        hud.color = WSColor.NavbarGrey
         hud.labelText = "Updating messages ..."
+        hud.labelColor = WSColor.Green
+        hud.labelFont = WSFont.SueEllenFrancisco(22)
+        hud.activityIndicatorColor = WSColor.DarkBlue
         hud.dimBackground = true
         hud.removeFromSuperViewOnHide = true
     }

@@ -67,6 +67,7 @@
 		E5967BCE1C39DBC00037F4B7 /* CDWSUser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967BC81C39DBC00037F4B7 /* CDWSUser+CoreDataProperties.swift */; };
 		E5967BCF1C39DBC00037F4B7 /* CDWSUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967BC91C39DBC00037F4B7 /* CDWSUser.swift */; };
 		E5A9F11C1C532BC5006D6499 /* WSMessageThreadsUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A9F11B1C532BC5006D6499 /* WSMessageThreadsUpdater.swift */; };
+		E5A9F11E1C55E536006D6499 /* WSSaveMessagesToStoreOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A9F11D1C55E536006D6499 /* WSSaveMessagesToStoreOperation.swift */; };
 		E5D96AF81BFB1CA700AFAFEE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D96AF71BFB1CA700AFAFEE /* AppDelegate.swift */; };
 		E5D96AFF1BFB1CA700AFAFEE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5D96AFD1BFB1CA700AFAFEE /* Main.storyboard */; };
 		E5D96B011BFB1CA700AFAFEE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5D96B001BFB1CA700AFAFEE /* Assets.xcassets */; };
@@ -194,6 +195,7 @@
 		E5967BC81C39DBC00037F4B7 /* CDWSUser+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDWSUser+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E5967BC91C39DBC00037F4B7 /* CDWSUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CDWSUser.swift; sourceTree = "<group>"; };
 		E5A9F11B1C532BC5006D6499 /* WSMessageThreadsUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSMessageThreadsUpdater.swift; sourceTree = "<group>"; };
+		E5A9F11D1C55E536006D6499 /* WSSaveMessagesToStoreOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSSaveMessagesToStoreOperation.swift; sourceTree = "<group>"; };
 		E5D96AF41BFB1CA700AFAFEE /* Warmshowers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Warmshowers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5D96AF71BFB1CA700AFAFEE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E5D96AFE1BFB1CA700AFAFEE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -366,6 +368,7 @@
 				E557D86B1C50482200226E84 /* WSCSRFTokenGetter.swift */,
 				E557D86D1C504DCF00226E84 /* WSRequestWithCSRFToken.swift */,
 				E5A9F11B1C532BC5006D6499 /* WSMessageThreadsUpdater.swift */,
+				E5A9F11D1C55E536006D6499 /* WSSaveMessagesToStoreOperation.swift */,
 			);
 			name = HTTP;
 			sourceTree = "<group>";
@@ -845,6 +848,7 @@
 				E54276881C3E83E500047029 /* CreateFeedbackTableViewController+UIPickerViewDataSource.swift in Sources */,
 				E542767E1C3E544600047029 /* WSRecommendationRating.swift in Sources */,
 				E5967BB21C38A11E0037F4B7 /* FeedbackTableViewController.swift in Sources */,
+				E5A9F11E1C55E536006D6499 /* WSSaveMessagesToStoreOperation.swift in Sources */,
 				E5967BA31C361A9F0037F4B7 /* PhoneTableViewCell.swift in Sources */,
 				E5967BB41C38A8ED0037F4B7 /* WSRecommendation.swift in Sources */,
 				E5F6F3111C3122740000A87E /* HostingInfoTableViewCell.swift in Sources */,

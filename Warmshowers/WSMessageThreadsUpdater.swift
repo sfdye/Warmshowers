@@ -14,6 +14,7 @@ import CoreData
 class WSMessageThreadsUpdater : WSRequestWithCSRFToken {
     
     var moc: NSManagedObjectContext!
+    var error: NSError?
     
     init(moc: NSManagedObjectContext) {
         super.init()
@@ -38,6 +39,7 @@ class WSMessageThreadsUpdater : WSRequestWithCSRFToken {
             
             // Guard against failed http requests
             guard let data = data, let _ = response where error == nil else {
+                self.error = error
                 self.failure?()
                 return
             }
@@ -50,7 +52,8 @@ class WSMessageThreadsUpdater : WSRequestWithCSRFToken {
             do {
                 try self.updateMessageThreadsInStore(json)
                 self.success?()
-            } catch {
+            } catch let error {
+                self.error = error as NSError
                 self.failure?()
             }
         })
@@ -60,8 +63,6 @@ class WSMessageThreadsUpdater : WSRequestWithCSRFToken {
     // Parses JSON containing message threads
     //
     func updateMessageThreadsInStore(json: AnyObject) throws {
-        
-        // Helper method to return a thread with a
         
         guard let json = json as? NSArray else {
             throw DataError.InvalidInput
@@ -112,14 +113,22 @@ class WSMessageThreadsUpdater : WSRequestWithCSRFToken {
             threads.append(thread)
         }
         
+        print("deleting threads")
         // Delete all threads that are not in the json
-        for (index, thread) in threads.enumerate().reverse() {
+        var indexesToDelete = [Int]()
+        for (index, thread) in threads.enumerate() {
             let threadID = thread.thread_id!.integerValue
             if !currentThreadIDs.contains(threadID) {
-                moc.deleteObject(thread)
-                threads.removeAtIndex(index)
+                indexesToDelete.append(index)
             }
         }
+        for index in indexesToDelete {
+            let thread = threads[index]
+            moc.deleteObject(thread)
+            threads.removeAtIndex(index)
+        }
+        print("saving")
+        
 
         // Save the message threads to the store
         do {
