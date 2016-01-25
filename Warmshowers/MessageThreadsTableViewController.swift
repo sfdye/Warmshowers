@@ -67,7 +67,7 @@ class MessageThreadsTableViewController: UITableViewController {
                 self.setFailedUpdateAlert()
             }
             self.refreshController.endRefreshing()
-            self.hideHUD()
+            WSProgressHUD.hide()
             self.showAlert()
         }
         
@@ -151,7 +151,7 @@ class MessageThreadsTableViewController: UITableViewController {
     // Starts updating message threads
     //
     func startUpdates() {
-        showHUD()
+        WSProgressHUD.show("Updating messages ...")
         messageThreadUpdater.start()
     }
     
@@ -248,7 +248,7 @@ class MessageThreadsTableViewController: UITableViewController {
                 
                 // Hide refreshing indicators and show any error alerts that were set
                 self.refreshController.endRefreshing()
-                self.hideHUD()
+                WSProgressHUD.hide()
                 self.showAlert()
             })
         }
@@ -299,29 +299,6 @@ class MessageThreadsTableViewController: UITableViewController {
             self.presentViewController(alert, animated: true, completion: { () -> Void in
                 self.alert = nil
             })
-        })
-    }
-    
-    // Shows the progress hud coving the whoel screen
-    //
-    func showHUD() {
-        let view = (UIApplication.sharedApplication().delegate as! AppDelegate).window?.rootViewController?.view
-        let hud = MBProgressHUD.showHUDAddedTo(view, animated: true)
-        hud.color = WSColor.NavbarGrey
-        hud.labelText = "Updating messages ..."
-        hud.labelColor = WSColor.Green
-        hud.labelFont = WSFont.SueEllenFrancisco(22)
-        hud.activityIndicatorColor = WSColor.DarkBlue
-        hud.dimBackground = true
-        hud.removeFromSuperViewOnHide = true
-    }
-    
-    // Hides the progress hud
-    //
-    func hideHUD() {
-        let view = (UIApplication.sharedApplication().delegate as! AppDelegate).window?.rootViewController?.view
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            MBProgressHUD.hideHUDForView(view, animated: true)
         })
     }
     
