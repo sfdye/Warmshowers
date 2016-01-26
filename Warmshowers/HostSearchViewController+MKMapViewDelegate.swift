@@ -11,8 +11,6 @@ import kingpin
 
 extension HostSearchViewController: MKMapViewDelegate {
     
-    // MARK: - MKMapViewDelegate methods
-    
     // Used to display tiles for maps other than Apple Maps
     func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
         if mapOverlay != nil {
@@ -31,9 +29,7 @@ extension HostSearchViewController: MKMapViewDelegate {
         }
         
         var annotationView : MKPinAnnotationView?
-        
         if let a = annotation as? KPAnnotation {
-            
             if a.isCluster() {
                 
                 // Clustered host map pins
@@ -41,7 +37,6 @@ extension HostSearchViewController: MKMapViewDelegate {
                     annotationView = dequeueView
                 } else {
                     annotationView = MKPinAnnotationView(annotation: a, reuseIdentifier: "cluster")
-                    
                 }
                 
                 // Purple pins for clusters
@@ -69,7 +64,6 @@ extension HostSearchViewController: MKMapViewDelegate {
         }
         
         return annotationView;
-        
     }
     
 //    // Moves the map to users location

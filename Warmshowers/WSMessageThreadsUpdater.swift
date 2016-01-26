@@ -11,53 +11,33 @@ import CoreData
 
 // This class is for downloading message thread data from warmshowers and updating the persistant store
 //
-class WSMessageThreadsUpdater : WSRequestWithCSRFToken {
+class WSMessageThreadsUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
     
     var moc: NSManagedObjectContext!
-    var error: NSError?
     
     init(moc: NSManagedObjectContext) {
         super.init()
+        requestDelegate = self
         self.moc = moc
     }
     
-    // Downloads messages and updates the thread
-    //
-    override func request() {
+    func requestForDownload() -> NSURLRequest? {
+        let service = WSRestfulService(type: .getAllMessageThreads)!
+        let request = WSRequest.requestWithService(service, token: token)
+        return request
+    }
+    
+    func doWithData(data: NSData) {
         
-        guard let token = tokenGetter.token, let service = WSRestfulService(type: .getAllMessageThreads) else {
-            failure?()
+        guard let json = dataAsJSON() else {
             return
         }
         
-        guard let request = WSRequest.requestWithService(service, token: token) else {
-            failure?()
-            return
+        do {
+            try self.updateMessageThreadsInStore(json)
+        } catch let error {
+            self.error = error as NSError
         }
-        
-        task = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
-            
-            // Guard against failed http requests
-            guard let data = data, let _ = response where error == nil else {
-                self.error = error
-                self.failure?()
-                return
-            }
-            
-            guard let json = WSRequest.jsonDataToJSONObject(data) else {
-                self.failure?()
-                return
-            }
-            
-            do {
-                try self.updateMessageThreadsInStore(json)
-                self.success?()
-            } catch let error {
-                self.error = error as NSError
-                self.failure?()
-            }
-        })
-        task.resume()
     }
     
     // Parses JSON containing message threads
@@ -78,13 +58,11 @@ class WSMessageThreadsUpdater : WSRequestWithCSRFToken {
         // Parse the json
         var currentThreadIDs = [Int]()
         for threadJSON in json {
-            
             // Fail parsing if a message thread doesn't have an ID as it will cause problems later
             guard let threadID = threadJSON.valueForKey("thread_id")?.integerValue else {
                 throw DataError.InvalidInput
             }
             currentThreadIDs.append(threadID)
-            
             // If the thread exists in the mocel update it and move on
             if let thread = threads.filter({ $0.thread_id == threadID }).first {
                 do {
@@ -113,7 +91,6 @@ class WSMessageThreadsUpdater : WSRequestWithCSRFToken {
             threads.append(thread)
         }
         
-        print("deleting threads")
         // Delete all threads that are not in the json
         var indexesToDelete = [Int]()
         for (index, thread) in threads.enumerate() {
@@ -127,9 +104,7 @@ class WSMessageThreadsUpdater : WSRequestWithCSRFToken {
             moc.deleteObject(thread)
             threads.removeAtIndex(index)
         }
-        print("saving")
         
-
         // Save the message threads to the store
         do {
             try moc.save()

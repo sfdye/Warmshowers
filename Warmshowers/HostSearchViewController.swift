@@ -29,9 +29,9 @@ class HostSearchViewController: UIViewController {
     
     let locationManager = CLLocationManager()
     let queue = NSOperationQueue()
-    
     var debounceTimer: NSTimer?
     
+    // Main view components / controllers
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var tableView: UITableView!
     var tableViewController = WSLazyImageTableViewController()
@@ -43,6 +43,7 @@ class HostSearchViewController: UIViewController {
     
     // Host data variables
     var hostsOnMap = [WSUserLocation]()
+    var mapUpdater: WSHostsOnMapUpdater?
     var hostsInTable: [WSUserLocation] {
         get {
             return tableViewController.lazyImageObjects as! [WSUserLocation]
@@ -86,26 +87,24 @@ class HostSearchViewController: UIViewController {
         searchController = UISearchController(searchResultsController: nil)
         searchBar = searchController.searchBar
         
-        // Configure components
-        configureNavigationItem()
-        configureClusteringController()
-        configureSearchController()
-        configureQueue()
-        
         // Ask the users permission to use location services
         if CLLocationManager.authorizationStatus() == .NotDetermined {
             locationManager.requestWhenInUseAuthorization()
         }
         mapView.showsUserLocation = true
         
-//        // Centre the map on the user's location
-//        if let userLocation = locationManager.location?.coordinate {
-//            let region = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1))
-//            mapView.setRegion(region, animated: true)
-//            updateHostsOnMap()
-//        }
+        // Configure components
+        configureNavigationItem()
+        configureClusteringController()
+        configureSearchController()
+        configureQueue()
         
-        switchToMapSource(mapSource)
+        // Centre the map on the user's location
+        if let userLocation = locationManager.location?.coordinate {
+            let region = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1))
+            mapView.setRegion(region, animated: true)
+            updateHostsOnMap()
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -143,7 +142,7 @@ class HostSearchViewController: UIViewController {
         algorithm.clusteringStrategy = KPGridClusteringAlgorithmStrategy.TwoPhase;
         clusteringController = KPClusteringController(mapView: self.mapView, clusteringAlgorithm: algorithm)
         clusteringController.delegate = self
-        clusteringController.setAnnotations(hostsOnMap)
+//        clusteringController.setAnnotations(hostsOnMap)
     }
     
     func configureQueue() {
@@ -156,30 +155,36 @@ class HostSearchViewController: UIViewController {
     // Updates the hosts shown on the map
     //
     func updateHostsOnMap() {
-        
-        // Clear the operation queue
-        queue.cancelAllOperations()
-        
-        // Update the map annotation data source
-        let operation = WSGetHostsOnMapOperation(mapView: mapView)
-        
-        operation.success = { (hostsOnMap) -> Void in
-            
-            // Set the new hosts in the annotations data source
-            self.hostsOnMap = hostsOnMap
-            
-            // update the cluster controller on the main thread
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.updateClusteringController()
-            })
+        if mapUpdater == nil {
+            mapUpdater = WSHostsOnMapUpdater(hostsOnMap: hostsOnMap, mapView: mapView)
+            mapUpdater?.success = {
+                // update the cluster controller on the main thread
+                self.hostsOnMap = self.mapUpdater!.hostsOnMap
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.updateClusteringController()
+                })
+                self.mapUpdater = nil
+            }
+            mapUpdater?.failure = {
+                print(self.mapUpdater!.error?.localizedDescription)
+            }
+            mapUpdater?.tokenGetter.start()
+        } else {
+            mapUpdater?.cancel()
+            mapUpdater?.start()
         }
-        
-        operation.failure = {
-            // TODO failure action here
-        }
-        
-        queue.addOperation(operation)
     }
+    
+    // Updates the pin clustering controller
+    func updateClusteringController() {
+        if hostsOnMap.count != 0 {
+            clusteringController.setAnnotations(hostsOnMap)
+            clusteringController.refresh(true)
+        }
+    }
+
+    
+    // MARK: Search by keyword methods
     
     // Updates the hosts to be shown in the table view
     //
@@ -197,7 +202,6 @@ class HostSearchViewController: UIViewController {
         
         // Update the map annotation data source
         let operation = WSGetHostsForKeywordOperation(keyword: keyword)
-        
         operation.success = { (hosts) -> Void in
             
             self.hostsInTable = hosts
@@ -207,7 +211,6 @@ class HostSearchViewController: UIViewController {
                 self.tableView.reloadData()
             })
         }
-        
         operation.failure = {
             // TODO failure action here
         }
@@ -215,13 +218,6 @@ class HostSearchViewController: UIViewController {
         queue.addOperation(operation)
     }
     
-    // Updates the pin clustering controller
-    func updateClusteringController() {
-        if hostsOnMap.count != 0 {
-            clusteringController.setAnnotations(hostsOnMap)
-            clusteringController.refresh(true)
-        }
-    }
     
     // MARK: - Map source methods
     

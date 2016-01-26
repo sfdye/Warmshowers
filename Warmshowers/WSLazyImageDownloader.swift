@@ -8,49 +8,41 @@
 
 import Foundation
 
-class WSLazyImageDownloader : WSDataDownloader {
+class WSLazyImageDownloader : WSRequester, WSRequestDelegate {
     
     var object: WSLazyImage?
     var placeHolderImage: UIImage?
     
     override init() {
         super.init()
+        requestDelegate = self
     }
     
-    // Downloads the objects image an stores in in the object object
-    //
-    func start() {
+    func requestForDownload() -> NSURLRequest? {
         
-        guard var object = object where object.lazyImageURL != nil else {
-            failure?()
-            return
+        guard let object = object where object.lazyImageURL != nil else {
+            return nil
         }
         
         guard let url = NSURL(string: object.lazyImageURL!) else {
-            failure?()
-            return
+            return nil
         }
         
-        task = session.dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
-            
-            // No data. Use the placeholder image instead
-            guard let data = data else {
-                object.lazyImage = self.placeHolderImage
-                self.failure?()
-                return
-            }
-
-            // Set the image
-            if let image = UIImage(data: data) {
-                object.lazyImage = image
-            } else {
-                object.lazyImage = self.placeHolderImage
-            }
-            
-            self.success?()
-        })
-
-        task.resume()
+        let request = NSURLRequest(URL: url)
+        return request
+    }
+    
+    func doWithData(data: NSData) {
+        // Set the image
+        if let image = UIImage(data: data) {
+            object?.lazyImage = image
+        } else {
+            object?.lazyImage = self.placeHolderImage
+        }
+    }
+    
+    override func nilDataAction() {
+        object?.lazyImage = self.placeHolderImage
     }
     
 }

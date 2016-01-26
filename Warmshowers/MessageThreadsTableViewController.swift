@@ -152,7 +152,7 @@ class MessageThreadsTableViewController: UITableViewController {
     //
     func startUpdates() {
         WSProgressHUD.show("Updating messages ...")
-        messageThreadUpdater.start()
+        messageThreadUpdater.tokenGetter.start()
     }
     
     // Fetches all messages from the store and updates the tableview data

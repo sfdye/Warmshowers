@@ -66,7 +66,7 @@ struct WSRequest {
 //        }
 //    }
     
-    // Creates a request
+    // Creates a request for a warmshowers restful service
     //
     static func requestWithService(service: WSRestfulService, params: [String: String]? = nil, token: String? = nil) -> NSMutableURLRequest? {
         

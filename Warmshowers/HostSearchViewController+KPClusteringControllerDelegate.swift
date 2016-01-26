@@ -11,8 +11,6 @@ import kingpin
 
 extension HostSearchViewController : KPClusteringControllerDelegate {
     
-    // MARK: KPClusteringControllerDelegate
-    
     func clusteringControllerShouldClusterAnnotations(clusteringController: KPClusteringController!) -> Bool {
         return true
     }

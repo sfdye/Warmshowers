@@ -8,32 +8,27 @@
 
 import Foundation
 
-class WSCSRFTokenGetter : WSDataDownloader {
+class WSCSRFTokenGetter : WSRequester, WSRequestDelegate {
     
     var token: String?
     
-    func start() {
-        
-        let service = WSRestfulService.init(type: .token)
-        let request = WSRequest.requestWithService(service!)
-        
-        task = session.dataTaskWithRequest(request!, completionHandler: { (data, response, error) -> Void in
-            
-            guard let data = data, let _ = response where error == nil else {
-                print("Error getting X-CSRF token: Cancelling request")
-                self.failure?()
-                return
-            }
-            
-            if let token = String.init(data: data, encoding: NSUTF8StringEncoding) {
-                self.token = token
-                self.success?()
-            } else {
-                print("Could not decode token data")
-                self.failure?()
-            }
-        })
-        task.resume()
+    override init() {
+        super.init()
+        requestDelegate = self
+    }
+    
+    func requestForDownload() -> NSURLRequest? {
+        let service = WSRestfulService.init(type: .token)!
+        let request = WSRequest.requestWithService(service)
+        return request
+    }
+    
+    func doWithData(data: NSData) {
+        if let token = String.init(data: data, encoding: NSUTF8StringEncoding) {
+            self.token = token
+        } else {
+            error = NSError(domain: "WSRequesterDomain", code: 10, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Failed to decode token data.", comment: "")])
+        }
     }
     
 }

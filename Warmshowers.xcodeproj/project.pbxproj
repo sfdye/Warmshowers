@@ -69,6 +69,9 @@
 		E5A9F11C1C532BC5006D6499 /* WSMessageThreadsUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A9F11B1C532BC5006D6499 /* WSMessageThreadsUpdater.swift */; };
 		E5A9F11E1C55E536006D6499 /* WSSaveMessagesToStoreOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A9F11D1C55E536006D6499 /* WSSaveMessagesToStoreOperation.swift */; };
 		E5A9F1211C55F79A006D6499 /* WSProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A9F1201C55F79A006D6499 /* WSProgressHUD.swift */; };
+		E5A9F1231C561971006D6499 /* WSHostsOnMapUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A9F1221C561971006D6499 /* WSHostsOnMapUpdater.swift */; };
+		E5AF67061C56C24B00AC17A1 /* WSRequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AF67051C56C24B00AC17A1 /* WSRequestDelegate.swift */; };
+		E5AF67081C56DD7F00AC17A1 /* WSLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AF67071C56DD7F00AC17A1 /* WSLoginManager.swift */; };
 		E5D96AF81BFB1CA700AFAFEE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D96AF71BFB1CA700AFAFEE /* AppDelegate.swift */; };
 		E5D96AFF1BFB1CA700AFAFEE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5D96AFD1BFB1CA700AFAFEE /* Main.storyboard */; };
 		E5D96B011BFB1CA700AFAFEE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5D96B001BFB1CA700AFAFEE /* Assets.xcassets */; };
@@ -93,7 +96,7 @@
 		E5DA03EE1C49C66A00FAD1D7 /* Sue Ellen Francisco.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E5DA03ED1C49C59500FAD1D7 /* Sue Ellen Francisco.ttf */; };
 		E5DA03F01C49C7A200FAD1D7 /* WSFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03EF1C49C7A200FAD1D7 /* WSFont.swift */; };
 		E5DA03F21C49FA6500FAD1D7 /* WSLazyImageTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03F11C49FA6500FAD1D7 /* WSLazyImageTableViewDataSource.swift */; };
-		E5DA03F41C4A412C00FAD1D7 /* WSDataDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03F31C4A412C00FAD1D7 /* WSDataDownloader.swift */; };
+		E5DA03F41C4A412C00FAD1D7 /* WSRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03F31C4A412C00FAD1D7 /* WSRequester.swift */; };
 		E5DA03F81C4A488E00FAD1D7 /* WSGetHostsOnMapOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03F71C4A488E00FAD1D7 /* WSGetHostsOnMapOperation.swift */; };
 		E5DA03FA1C4A4FE100FAD1D7 /* WSGetHostsForKeywordOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03F91C4A4FE100FAD1D7 /* WSGetHostsForKeywordOperation.swift */; };
 		E5DA03FD1C4C947100FAD1D7 /* WSSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03FC1C4C947100FAD1D7 /* WSSettings.swift */; };
@@ -198,6 +201,9 @@
 		E5A9F11B1C532BC5006D6499 /* WSMessageThreadsUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSMessageThreadsUpdater.swift; sourceTree = "<group>"; };
 		E5A9F11D1C55E536006D6499 /* WSSaveMessagesToStoreOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSSaveMessagesToStoreOperation.swift; sourceTree = "<group>"; };
 		E5A9F1201C55F79A006D6499 /* WSProgressHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSProgressHUD.swift; sourceTree = "<group>"; };
+		E5A9F1221C561971006D6499 /* WSHostsOnMapUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSHostsOnMapUpdater.swift; sourceTree = "<group>"; };
+		E5AF67051C56C24B00AC17A1 /* WSRequestDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSRequestDelegate.swift; sourceTree = "<group>"; };
+		E5AF67071C56DD7F00AC17A1 /* WSLoginManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSLoginManager.swift; sourceTree = "<group>"; };
 		E5D96AF41BFB1CA700AFAFEE /* Warmshowers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Warmshowers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5D96AF71BFB1CA700AFAFEE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E5D96AFE1BFB1CA700AFAFEE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -228,7 +234,7 @@
 		E5DA03ED1C49C59500FAD1D7 /* Sue Ellen Francisco.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Sue Ellen Francisco.ttf"; sourceTree = "<group>"; };
 		E5DA03EF1C49C7A200FAD1D7 /* WSFont.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSFont.swift; sourceTree = "<group>"; };
 		E5DA03F11C49FA6500FAD1D7 /* WSLazyImageTableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSLazyImageTableViewDataSource.swift; sourceTree = "<group>"; };
-		E5DA03F31C4A412C00FAD1D7 /* WSDataDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSDataDownloader.swift; sourceTree = "<group>"; };
+		E5DA03F31C4A412C00FAD1D7 /* WSRequester.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSRequester.swift; sourceTree = "<group>"; };
 		E5DA03F71C4A488E00FAD1D7 /* WSGetHostsOnMapOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSGetHostsOnMapOperation.swift; sourceTree = "<group>"; };
 		E5DA03F91C4A4FE100FAD1D7 /* WSGetHostsForKeywordOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSGetHostsForKeywordOperation.swift; sourceTree = "<group>"; };
 		E5DA03FC1C4C947100FAD1D7 /* WSSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSSettings.swift; sourceTree = "<group>"; };
@@ -363,7 +369,7 @@
 				E54A572E1BFDC446000843A9 /* WSRequests.swift */,
 				E5F6F3091C2B36930000A87E /* WSRestfulService.swift */,
 				E5DA03CA1C48534300FAD1D7 /* WSLazyImageDownloader.swift */,
-				E5DA03F31C4A412C00FAD1D7 /* WSDataDownloader.swift */,
+				E5DA03F31C4A412C00FAD1D7 /* WSRequester.swift */,
 				E5DA03F71C4A488E00FAD1D7 /* WSGetHostsOnMapOperation.swift */,
 				E5DA03F91C4A4FE100FAD1D7 /* WSGetHostsForKeywordOperation.swift */,
 				E557D8691C50421B00226E84 /* WSMessageThreadUpdater.swift */,
@@ -371,6 +377,9 @@
 				E557D86D1C504DCF00226E84 /* WSRequestWithCSRFToken.swift */,
 				E5A9F11B1C532BC5006D6499 /* WSMessageThreadsUpdater.swift */,
 				E5A9F11D1C55E536006D6499 /* WSSaveMessagesToStoreOperation.swift */,
+				E5A9F1221C561971006D6499 /* WSHostsOnMapUpdater.swift */,
+				E5AF67051C56C24B00AC17A1 /* WSRequestDelegate.swift */,
+				E5AF67071C56DD7F00AC17A1 /* WSLoginManager.swift */,
 			);
 			name = HTTP;
 			sourceTree = "<group>";
@@ -865,9 +874,10 @@
 				E5967BB41C38A8ED0037F4B7 /* WSRecommendation.swift in Sources */,
 				E5F6F3111C3122740000A87E /* HostingInfoTableViewCell.swift in Sources */,
 				E5967BCE1C39DBC00037F4B7 /* CDWSUser+CoreDataProperties.swift in Sources */,
+				E5AF67081C56DD7F00AC17A1 /* WSLoginManager.swift in Sources */,
 				E5F6F3191C3289060000A87E /* AccountTableViewController+SegmentTableViewCellActions.swift in Sources */,
 				E54276781C3E374400047029 /* CreateFeedbackTableViewController.swift in Sources */,
-				E5DA03F41C4A412C00FAD1D7 /* WSDataDownloader.swift in Sources */,
+				E5DA03F41C4A412C00FAD1D7 /* WSRequester.swift in Sources */,
 				E54276731C3E0CC900047029 /* ComposeMessageDetailTableViewCell.swift in Sources */,
 				E5967BCC1C39DBC00037F4B7 /* CDWSMessage+CoreDataProperties.swift in Sources */,
 				E54276711C3CA8E800047029 /* ComposeMessageTableViewController.swift in Sources */,
@@ -884,11 +894,13 @@
 				E5F6F30A1C2B36930000A87E /* WSRestfulService.swift in Sources */,
 				E5DA03A71C46FCBB00FAD1D7 /* WSColor.swift in Sources */,
 				E5967BCB1C39DBC00037F4B7 /* CDWSMessageThread.swift in Sources */,
+				E5AF67061C56C24B00AC17A1 /* WSRequestDelegate.swift in Sources */,
 				E54276901C44956F00047029 /* CreateFeedbackTableViewController+UITextViewDelegate.swift in Sources */,
 				E54276861C3E78E000047029 /* CreateFeedbackTableViewController+UIPickerViewDelegate.swift in Sources */,
 				E5967BCD1C39DBC00037F4B7 /* CDWSMessage.swift in Sources */,
 				E5700C541C44EE51008C8A87 /* ComposeMessageTableViewController+UITextFieldDelegate.swift in Sources */,
 				E5967BA91C36910C0037F4B7 /* AvailiblityTableViewCell.swift in Sources */,
+				E5A9F1231C561971006D6499 /* WSHostsOnMapUpdater.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
