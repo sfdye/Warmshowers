@@ -40,6 +40,7 @@ class MessageThreadsTableViewController: UITableViewController {
         super.viewDidLoad()
         
         navigationItem.title = "Messages"
+        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: WSColor.Green, NSFontAttributeName: WSFont.SueEllenFrancisco(26)]
         
         // Set the refresh controller for the tableview
         let refreshController = UIRefreshControl()
@@ -71,7 +72,7 @@ class MessageThreadsTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: WSFont.SueEllenFrancisco(26)]
+        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: WSColor.Green, NSFontAttributeName: WSFont.SueEllenFrancisco(26)]
     }
     
     override func viewDidAppear(animated: Bool) {

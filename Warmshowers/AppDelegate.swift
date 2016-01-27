@@ -11,6 +11,7 @@ import MapKit
 import CoreData
 
 // FIRST TODOs
+// fix message deleting on logout
 // trigger a message view reloads after sending a reply message
 // fix map loading errors
 // put user password in keychain
