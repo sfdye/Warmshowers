@@ -21,7 +21,7 @@ let MapToUserAccountSegueID = "MapToUserAccount"
 let ResultsToUserAccountSegueID = "SearchResultsToUserAccount"
 let ToHostListSegueID = "ToHostList"
 let SpinnerCellID = "Spinner"
-let NoHostsCellID = "NoHosts"
+let PlaceholderCellID = "Placeholder"
 
 class HostSearchViewController: UIViewController {
     
@@ -171,7 +171,6 @@ class HostSearchViewController: UIViewController {
             mapUpdater?.tokenGetter.start()
         } else {
             mapUpdater?.cancel()
-            mapUpdater?.start()
         }
     }
     
@@ -326,7 +325,7 @@ class HostSearchViewController: UIViewController {
                 accountTVC.uid = userLocation?.uid
             } else {
                 let defaults = (UIApplication.sharedApplication().delegate as! AppDelegate).defaults
-                let uid = defaults.integerForKey(DEFAULTS_KEY_UID)
+                let uid = defaults.integerForKey(defaults_key_uid)
                 accountTVC.uid = uid
             }
             

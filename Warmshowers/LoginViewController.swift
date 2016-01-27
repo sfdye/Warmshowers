@@ -32,7 +32,7 @@ class LoginViewController: UIViewController {
         
         // load the default username
         let defaults = NSUserDefaults.standardUserDefaults()
-        if let username = defaults.objectForKey(DEFAULTS_KEY_USERNAME) {
+        if let username = defaults.objectForKey(defaults_key_username) {
             usernameTextField.text = username as? String
         }
         
@@ -116,13 +116,13 @@ class LoginViewController: UIViewController {
     
     func storeUsername() {
         let defaults = appDelegate!.defaults
-        defaults.setValue(usernameTextField.text, forKey: DEFAULTS_KEY_USERNAME)
+        defaults.setValue(usernameTextField.text, forKey: defaults_key_username)
         defaults.synchronize()
     }
     
     func storePassword() {
         let defaults = appDelegate!.defaults
-        defaults.setValue(passwordTextField.text, forKey: DEFAULTS_KEY_PASSWORD)
+        defaults.setValue(passwordTextField.text, forKey: defaults_key_password)
         defaults.synchronize()
     }
     

@@ -24,7 +24,8 @@ extension HostSearchViewController : WSLazyImageTableViewDataSource {
             cell.startSpinner()
             return cell
         } else if hostsInTable.count == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier(NoHostsCellID, forIndexPath: indexPath) as! NoHostsTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(PlaceholderCellID, forIndexPath: indexPath) as! PlaceholderTableViewCell
+            cell.placeholderLabel.text = "No Hosts"
             return cell
         } else {
             if hostsInTable.count > 0 && hostsInTable.count > indexPath.row {

@@ -1,5 +1,5 @@
 //
-//  ComposeMessageTableViewController+UITextViewDelegate.swift
+//  ComposeMessageViewController+UITextViewDelegate.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 12/01/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension ComposeMessageTableViewController : UITextViewDelegate {
+extension ComposeMessageViewController : UITextViewDelegate {
     
     func textViewDidChange(textView: UITextView) {
         
@@ -26,11 +26,11 @@ extension ComposeMessageTableViewController : UITextViewDelegate {
         }
         
         // Update the model
-        message?.body = textView.text
+        body = textView.text
     }
     
     func textViewDidEndEditing(textView: UITextView) {
-        message?.body = textView.text
+        body = textView.text
     }
     
 }

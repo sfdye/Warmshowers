@@ -19,7 +19,7 @@ class MessageThreadsTableViewController: UITableViewController {
 
     var currentUserUID: Int {
         let defaults = NSUserDefaults.standardUserDefaults()
-        return defaults.integerForKey(DEFAULTS_KEY_UID)
+        return defaults.integerForKey(defaults_key_uid)
     }
     
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -59,13 +59,7 @@ class MessageThreadsTableViewController: UITableViewController {
             self.reloadIfUpdatesAreFinished()
         }
         messageThreadUpdater.failure = {
-            if let error = self.messageThreadUpdater.error {
-                self.alert = UIAlertController(title: "Failed to update messages", message: error.localizedDescription, preferredStyle: .Alert)
-                let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-                self.alert!.addAction(okAction)
-            } else {
-                self.setFailedUpdateAlert()
-            }
+            self.setFailedUpdateAlert(self.messageThreadUpdater.error)
             self.refreshController.endRefreshing()
             WSProgressHUD.hide()
             self.showAlert()
@@ -93,6 +87,7 @@ class MessageThreadsTableViewController: UITableViewController {
         }
         
         if needsUpdate {
+            WSProgressHUD.show("Updating messages ...")
             startUpdates()
         } else {
             // Just reload to update the read indicators and the tab bar badge
@@ -108,37 +103,49 @@ class MessageThreadsTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return messageThreads.count
+        if messageThreads.count == 0 {
+            return 1
+        } else {
+            return messageThreads.count
+        }
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier(MESSAGE_THREAD_CELL_ID, forIndexPath: indexPath) as! MessageThreadsTableViewCell
-        
-        let messageThread = messageThreads[indexPath.row]
-        
-        cell.participantsLabel.text = messageThread.getParticipantString(currentUserUID)
-        cell.subjectLabel.text = messageThread.subject
-        cell.setDate(messageThread.last_updated)
-        
-        if messageThread.is_new != 0 {
-            cell.newDot.hidden = false
+        if messageThreads.count == 0 {
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier(PlaceholderCellID, forIndexPath: indexPath) as! PlaceholderTableViewCell
+            cell.placeholderLabel.text = "No Messages"
+            return cell
+            
         } else {
-            cell.newDot.hidden = true
-        }
-        
-        if let latest = messageThread.lastestMessage() {
-            // set the body preview
-            if var preview = latest.body {
-                preview += "\n"
-                // TODO remove blank lines from the message body so the preview doens't display blanks
-                cell.bodyPreviewLabel.text = preview
+            let cell = tableView.dequeueReusableCellWithIdentifier(MESSAGE_THREAD_CELL_ID, forIndexPath: indexPath) as! MessageThreadsTableViewCell
+            
+            let messageThread = messageThreads[indexPath.row]
+            
+            cell.participantsLabel.text = messageThread.getParticipantString(currentUserUID)
+            cell.subjectLabel.text = messageThread.subject
+            cell.setDate(messageThread.last_updated)
+            
+            if messageThread.is_new != 0 {
+                cell.newDot.hidden = false
+            } else {
+                cell.newDot.hidden = true
             }
-        } else {
-            cell.bodyPreviewLabel.text = ""
+            
+            if let latest = messageThread.lastestMessage() {
+                // set the body preview
+                if var preview = latest.body {
+                    preview += "\n"
+                    // TODO remove blank lines from the message body so the preview doens't display blanks
+                    cell.bodyPreviewLabel.text = preview
+                }
+            } else {
+                cell.bodyPreviewLabel.text = ""
+            }
+            
+            return cell
         }
-        
-        return cell
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -151,7 +158,6 @@ class MessageThreadsTableViewController: UITableViewController {
     // Starts updating message threads
     //
     func startUpdates() {
-        WSProgressHUD.show("Updating messages ...")
         messageThreadUpdater.tokenGetter.start()
     }
     
@@ -199,7 +205,7 @@ class MessageThreadsTableViewController: UITableViewController {
     
     // Sets an updater for a message thread, but does not start it
     //
-    func setUpdaterForThread(messageThread: CDWSMessageThread, completion: (() -> Void)? = nil ) {
+    func setUpdaterForThread(messageThread: CDWSMessageThread) {
         
         guard let threadID = messageThread.thread_id?.integerValue else {
             return
@@ -207,12 +213,12 @@ class MessageThreadsTableViewController: UITableViewController {
         
         let messageUpdater = WSMessageThreadUpdater(messageThread: messageThread, inManagedObjectContext: moc, queue: queue)
         messageUpdater.success = {
-            completion?()
             self.updateFinishedForThreadID(threadID)
         }
         messageUpdater.failure = {
+            let messageUpdater = self.updatesInProgress[threadID]
+            self.setFailedUpdateAlert(messageUpdater?.error)
             self.updateFinishedForThreadID(threadID)
-            self.setFailedUpdateAlert()
         }
         updatesInProgress[threadID] = messageUpdater
     }
@@ -226,7 +232,7 @@ class MessageThreadsTableViewController: UITableViewController {
         }
         
         for (_, update) in updatesInProgress {
-            update.start()
+            update.tokenGetter.start()
         }
     }
     
@@ -281,10 +287,16 @@ class MessageThreadsTableViewController: UITableViewController {
     
     // Sets an failed update alert to be displayed at the end of the updates
     //
-    func setFailedUpdateAlert() {
-        alert = UIAlertController(title: "Failed to update messages", message: "Please check that you are connected to the internet and try again", preferredStyle: .Alert)
-        let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-        alert!.addAction(okAction)
+    func setFailedUpdateAlert(error: NSError? = nil) {
+        if alert == nil {
+            var message: String = "Please check that you are connected to the internet and try again."
+            if let error = error {
+                message = error.localizedDescription
+            }
+            alert = UIAlertController(title: "Failed to update messages", message: message, preferredStyle: .Alert)
+            let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            alert!.addAction(okAction)
+        }
     }
     
     // Presents any alerts set during message updates

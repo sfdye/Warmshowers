@@ -44,18 +44,21 @@ class WSRequester : NSObject {
     // Starts the download and parsing process
     //
     func start() {
-        
+
         guard shouldStart() == true else {
-            error = NSError(domain: "WSRequesterDomain", code: 0, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Request aborted", comment: "")])
+            if error == nil {
+                error = NSError(domain: "WSRequesterDomain", code: 0, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Request aborted", comment: "")])
+            }
             end()
             return
         }
-    
+
         guard let request = requestDelegate.requestForDownload() else {
             error = NSError(domain: "WSRequesterDomain", code: 1, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Nil Request", comment: "")])
+            end()
             return
         }
-
+        print(request)
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         task = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
             self.data = data
@@ -91,17 +94,14 @@ class WSRequester : NSObject {
                 nilDataAction()
                 end()
             }
-        case 401:
-            // Unauthorised. 
+        default:
+            // HTTP bad reesponse
             if shouldRetryRequest() {
                 retryReqeust()
             } else {
-                error = NSError(domain: "WSRequesterDomain", code: 3, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Unauthorised", comment: "")])
+                error = NSError(domain: "WSRequesterDomain", code: 3, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("HTTP request failed with status code \(httpResponse.statusCode)", comment: "")])
                 end()
             }
-        default:
-            error = NSError(domain: "WSRequesterDomain", code: 4, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("HTTP request failed with status code \(httpResponse.statusCode)", comment: "")])
-            end()
         }
         
     }
@@ -140,7 +140,6 @@ class WSRequester : NSObject {
     //
     func nilDataAction() {
         error = NSError(domain: "WSRequesterDomain", code: 5, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("HTTP request recieved a successful response but with no data", comment: "")])
-        end()
     }
     
     func shouldCallCompletionHandler() -> Bool {
@@ -150,7 +149,9 @@ class WSRequester : NSObject {
     // Runs at the end of a request and calls eith success or failure callbacks
     //
     func end() {
+        print("ending")
         if shouldCallCompletionHandler() {
+            print("thou")
             if error != nil {
                 failure?()
             } else {

@@ -23,6 +23,17 @@ class WSRequestWithCSRFToken : WSRequester {
         tokenGetter.failure = self.failure
     }
     
+    // Prevents the request starting without a CSRF token
+    //
+    override func shouldStart() -> Bool {
+        if token == nil {
+            error = NSError(domain: "WSRequesterDomain", code: 9, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Request aborted with no CSRF token", comment: "")])
+            return false
+        } else {
+            return true
+        }
+    }
+    
     override func shouldRetryRequest() -> Bool {
         if !finalAttempt {
             finalAttempt = true
@@ -39,14 +50,9 @@ class WSRequestWithCSRFToken : WSRequester {
         }
         loginManager.failure = {
             self.error = self.loginManager.error
+            self.end()
         }
         loginManager.start()
-    }
-    
-    // Starts the request
-    //
-    override func shouldStart() -> Bool {
-        return token != nil
     }
 
 }

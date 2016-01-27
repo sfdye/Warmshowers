@@ -176,7 +176,7 @@ class AccountTableViewController: UITableViewController {
             return false
         }
         
-        let currentUserUID = defaults.valueForKey(DEFAULTS_KEY_UID)?.integerValue
+        let currentUserUID = defaults.valueForKey(defaults_key_uid)?.integerValue
         if uid == currentUserUID {
             return true
         } else {
@@ -297,11 +297,14 @@ class AccountTableViewController: UITableViewController {
                     cell.nameLabel.text = self.info?.valueForKey("fullname") as? String
                     cell.nameLabel.textColor = UIColor.whiteColor()
                     cell.noImageLabel.hidden = true
+                    cell.profileImage.hidden = false
                     cell.profileImage.image = photo
                     cell.profileImage.contentMode = .ScaleAspectFill
                 } else {
                     cell.nameLabel.text = self.info?.valueForKey("fullname") as? String
                     cell.nameLabel.textColor = WSColor.DarkBlue
+                    cell.profileImage.hidden = true
+                    cell.noImageLabel.hidden = false
                 }
                 return cell
             case 1:
@@ -463,20 +466,20 @@ class AccountTableViewController: UITableViewController {
     }
     
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+        print(identifier)
         switch identifier {
         case ToFeedbackSegueID:
             return feedback.count > 0
         case ToSendNewMessageSegueID:
-            return info != nil
+            return recipient != nil
         case ToProvideFeeedbackSegueID:
             return info?.valueForKey("name") as? String != nil ? true : false
         default:
-            return true
+            return false
         }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        segue
         if segue.identifier == ToFeedbackSegueID {
             let feedbackVC = segue.destinationViewController as! FeedbackTableViewController
             feedbackVC.lazyImageObjects = feedback
@@ -484,9 +487,17 @@ class AccountTableViewController: UITableViewController {
         }
         if segue.identifier == ToSendNewMessageSegueID {
             let navVC = segue.destinationViewController as! UINavigationController
-            let composeMessageVC = navVC.viewControllers.first as! ComposeMessageTableViewController
-            saveUserInfo(info!)
-            composeMessageVC.initialiseAsNewMessageToUser(recipient!)
+            let composeMessageVC = navVC.viewControllers.first as! ComposeMessageViewController
+            if info != nil {
+                do {
+                    try saveUserInfo(info!)
+                    if let recipient = recipient {
+                        composeMessageVC.initialiseAsNewMessageToUser([recipient])
+                    }
+                } catch {
+                    print("Failed to get user for compose message view")
+                }
+            }
         }
         if segue.identifier == ToProvideFeeedbackSegueID {
             let navVC = segue.destinationViewController as! UINavigationController
@@ -500,18 +511,44 @@ class AccountTableViewController: UITableViewController {
     // MARK: Utilities
     
     // Saves user profile data to the store and reloads the view
-    func saveUserInfo(info: AnyObject) {
+    func saveUserInfo(info: AnyObject) throws {
         
-        self.recipient = NSEntityDescription.insertNewObjectForEntityForName("CDWSUser", inManagedObjectContext: moc) as? CDWSUser
+        guard let uid = uid else {
+            throw DataError.InvalidInput
+        }
+
+        // Get user from the
+        do {
+            try recipient = getUserWithUID(uid)
+        }
         
         recipient?.updateFromJSON(info)
-        
+
         // save user to the store
         do {
             try moc.save()
-        } catch {
-            print("Could not save MOC.")
         }
+    }
+    
+    // Checks if a user is already in the store by uid.
+    // Returns the existing user, or a new user inserted into the MOC.
+    //
+    func getUserWithUID(uid: Int) throws -> CDWSUser {
+        
+        let request = NSFetchRequest(entityName: "User")
+        request.predicate = NSPredicate(format: "uid == %i", uid)
+        
+        // Try to find the user in the store
+        do {
+            if let user = try moc.executeFetchRequest(request).first as? CDWSUser {
+                return user
+            }
+        }
+        
+        // User wasn't in the store, so create a new managed object
+        let user = NSEntityDescription.insertNewObjectForEntityForName("User", inManagedObjectContext: moc) as! CDWSUser
+        
+        return user
     }
     
     // Reloads the view

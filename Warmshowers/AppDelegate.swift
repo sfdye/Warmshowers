@@ -36,10 +36,10 @@ let LOGIN_VC_ID = "Login"
 let TABBAR_VC_ID = "TabBar"
 
 // Defaults keys
-let DEFAULTS_KEY_USERNAME = "ws_username"
-let DEFAULTS_KEY_PASSWORD = "ws_password"
-let DEFAULTS_KEY_SESSION_COOKIE = "ws_session_cookie"
-let DEFAULTS_KEY_UID = "ws_uid"
+let defaults_key_username = "ws_username"
+let defaults_key_password = "ws_password"
+let defaults_key_session_cookie = "ws_session_cookie"
+let defaults_key_uid = "ws_uid"
 
 // Core data entity names
 let MessageThreadsEntityName = "MessageThread"
@@ -114,7 +114,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Checks if the user is logged in
     func isLoggedin() -> Bool {
-        if defaults.objectForKey(DEFAULTS_KEY_SESSION_COOKIE) != nil {
+        if defaults.objectForKey(defaults_key_session_cookie) != nil {
             return true
         }
         return false
@@ -134,9 +134,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func logout() {
         
         // Clear the appropriate defaults
-        defaults.setObject(nil, forKey: DEFAULTS_KEY_PASSWORD)
-        defaults.setObject(nil, forKey: DEFAULTS_KEY_UID)
-        defaults.setObject(nil, forKey: DEFAULTS_KEY_SESSION_COOKIE)
+        defaults.setObject(nil, forKey: defaults_key_password)
+        defaults.setObject(nil, forKey: defaults_key_uid)
+        defaults.setObject(nil, forKey: defaults_key_session_cookie)
         
         // Go to the login screen
         showLoginScreen()
@@ -208,10 +208,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Deletes everything in the store
     func clearStore() throws {
         
+        // Roll back changes stored in the context
+        if managedObjectContext.hasChanges {
+            managedObjectContext.rollback()
+            
+        }
+        do {
+            try managedObjectContext.save()
+        }
+        
         let entities = managedObjectModel.entitiesByName.keys
         var request: NSFetchRequest
+        
+        // Cycle through entities and delete all entries
         for entity in entities {
             request = NSFetchRequest(entityName: entity)
+            print(entity)
             do {
                 let objects = try managedObjectContext.executeFetchRequest(request) as Array
                 for object in objects {
@@ -221,6 +233,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     try managedObjectContext.save()
                 }
             }
+            print("cleared")
         }
     }
     

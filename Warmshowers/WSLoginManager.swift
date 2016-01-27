@@ -22,8 +22,8 @@ class WSLoginManager : WSRequester, WSRequestDelegate {
     
     convenience override init() {
         let defaults = (UIApplication.sharedApplication().delegate as! AppDelegate).defaults
-        let username = defaults.stringForKey(DEFAULTS_KEY_USERNAME)!
-        let password = defaults.stringForKey(DEFAULTS_KEY_PASSWORD)!
+        let username = defaults.stringForKey(defaults_key_username)!
+        let password = defaults.stringForKey(defaults_key_password)!
         self.init(username: username, password: password)
     }
     
@@ -52,11 +52,11 @@ class WSLoginManager : WSRequester, WSRequestDelegate {
         
         // Store the session data
         let sessionCookie = sessionName + "=" + sessid
-        defaults.setValue(sessionCookie, forKey: DEFAULTS_KEY_SESSION_COOKIE)
+        defaults.setValue(sessionCookie, forKey: defaults_key_session_cookie)
         
         // Store the users uid
         if let uid = user["uid"] {
-            defaults.setValue(uid, forKey: DEFAULTS_KEY_UID)
+            defaults.setValue(uid, forKey: defaults_key_uid)
         }
         
         // Save the session data

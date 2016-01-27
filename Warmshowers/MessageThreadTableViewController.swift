@@ -25,7 +25,7 @@ class MessageThreadTableViewController: UITableViewController {
     
     var currentUserUID: Int? {
         let defaults = NSUserDefaults.standardUserDefaults()
-        return defaults.integerForKey(DEFAULTS_KEY_UID)
+        return defaults.integerForKey(defaults_key_uid)
     }
     
     override func viewDidLoad() {
@@ -76,9 +76,7 @@ class MessageThreadTableViewController: UITableViewController {
     
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         if identifier == REPLY_TO_MESSAGE_SEGUE_ID {
-            if messages.count >  0 {
-                return true
-            }
+            return messageThread != nil
         }
         return false
     }
@@ -86,9 +84,8 @@ class MessageThreadTableViewController: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == REPLY_TO_MESSAGE_SEGUE_ID {
             let navVC = segue.destinationViewController as! UINavigationController
-            let composeMessageVC = navVC.viewControllers.first as! ComposeMessageTableViewController
-            let messageToReply = messages.last!
-            composeMessageVC.initialiseAsReplyToMessage(messageToReply)
+            let composeMessageVC = navVC.viewControllers.first as! ComposeMessageViewController
+            composeMessageVC.initialiseAsReplyOnMessageThread(messageThread!)
         }
     }
     

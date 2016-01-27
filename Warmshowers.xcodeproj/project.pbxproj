@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		E50FD8A21C053A42004D38A3 /* MapTileServerURLTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50FD8A11C053A42004D38A3 /* MapTileServerURLTemplate.swift */; };
 		E51397671C06945E00FD8EC1 /* WSUserLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51397661C06945E00FD8EC1 /* WSUserLocation.swift */; };
+		E52A07271C580B1C006F80A5 /* ComposeMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A07261C580B1C006F80A5 /* ComposeMessageViewController.swift */; };
 		E52E8A9F1C0BD25A000391AB /* HostSearchViewController+MKMapViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8A9E1C0BD25A000391AB /* HostSearchViewController+MKMapViewDelegate.swift */; };
 		E52E8AA11C0BD38D000391AB /* HostSearchViewController+UISearchControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8AA01C0BD38D000391AB /* HostSearchViewController+UISearchControllerDelegate.swift */; };
 		E52E8AA31C0BD3F0000391AB /* HostSearchViewController+KPClusteringControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8AA21C0BD3F0000391AB /* HostSearchViewController+KPClusteringControllerDelegate.swift */; };
@@ -17,7 +18,6 @@
 		E52E8AAF1C0D056D000391AB /* MessageThreadsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8AAE1C0D056D000391AB /* MessageThreadsTableViewController.swift */; };
 		E52E8AB11C0D0B1A000391AB /* MessageThreadsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8AB01C0D0B1A000391AB /* MessageThreadsTableViewCell.swift */; };
 		E52E8ABE1C0E463D000391AB /* Warmshowers.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E52E8ABC1C0E463D000391AB /* Warmshowers.xcdatamodeld */; };
-		E54276711C3CA8E800047029 /* ComposeMessageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54276701C3CA8E800047029 /* ComposeMessageTableViewController.swift */; };
 		E54276731C3E0CC900047029 /* ComposeMessageDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54276721C3E0CC900047029 /* ComposeMessageDetailTableViewCell.swift */; };
 		E54276751C3E0CE200047029 /* ComposeMessageBodyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54276741C3E0CE200047029 /* ComposeMessageBodyTableViewCell.swift */; };
 		E54276781C3E374400047029 /* CreateFeedbackTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54276771C3E374400047029 /* CreateFeedbackTableViewController.swift */; };
@@ -44,8 +44,8 @@
 		E56CC08C1BFD2EC300AAF973 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56CC08B1BFD2EC300AAF973 /* TabBarController.swift */; };
 		E56CC0901BFD496400AAF973 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56CC08F1BFD496400AAF973 /* SettingsTableViewController.swift */; };
 		E56CC0921BFD569500AAF973 /* SwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56CC0911BFD569500AAF973 /* SwitchTableViewCell.swift */; };
-		E5700C521C44CB64008C8A87 /* ComposeMessageTableViewController+UITextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5700C511C44CB64008C8A87 /* ComposeMessageTableViewController+UITextViewDelegate.swift */; };
-		E5700C541C44EE51008C8A87 /* ComposeMessageTableViewController+UITextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5700C531C44EE51008C8A87 /* ComposeMessageTableViewController+UITextFieldDelegate.swift */; };
+		E5700C521C44CB64008C8A87 /* ComposeMessageViewController+UITextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5700C511C44CB64008C8A87 /* ComposeMessageViewController+UITextViewDelegate.swift */; };
+		E5700C541C44EE51008C8A87 /* ComposeMessageViewController+UITextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5700C531C44EE51008C8A87 /* ComposeMessageViewController+UITextFieldDelegate.swift */; };
 		E5700C581C45C057008C8A87 /* HostListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5700C571C45C057008C8A87 /* HostListTableViewController.swift */; };
 		E5700C5A1C45C961008C8A87 /* HostListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5700C591C45C961008C8A87 /* HostListTableViewCell.swift */; };
 		E5967B9F1C3490740037F4B7 /* WSOffers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967B9E1C3490740037F4B7 /* WSOffers.swift */; };
@@ -72,6 +72,9 @@
 		E5A9F1231C561971006D6499 /* WSHostsOnMapUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A9F1221C561971006D6499 /* WSHostsOnMapUpdater.swift */; };
 		E5AF67061C56C24B00AC17A1 /* WSRequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AF67051C56C24B00AC17A1 /* WSRequestDelegate.swift */; };
 		E5AF67081C56DD7F00AC17A1 /* WSLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AF67071C56DD7F00AC17A1 /* WSLoginManager.swift */; };
+		E5AF670A1C576C6300AC17A1 /* ComposeMessageViewController+UITableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AF67091C576C6300AC17A1 /* ComposeMessageViewController+UITableViewDataSource.swift */; };
+		E5AF670C1C576CAE00AC17A1 /* ComposeMessageViewController+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AF670B1C576CAE00AC17A1 /* ComposeMessageViewController+UITableViewDelegate.swift */; };
+		E5AF670E1C5775B100AC17A1 /* WSMessageSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AF670D1C5775B100AC17A1 /* WSMessageSender.swift */; };
 		E5D96AF81BFB1CA700AFAFEE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D96AF71BFB1CA700AFAFEE /* AppDelegate.swift */; };
 		E5D96AFF1BFB1CA700AFAFEE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5D96AFD1BFB1CA700AFAFEE /* Main.storyboard */; };
 		E5D96B011BFB1CA700AFAFEE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5D96B001BFB1CA700AFAFEE /* Assets.xcassets */; };
@@ -102,7 +105,7 @@
 		E5DA03FD1C4C947100FAD1D7 /* WSSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03FC1C4C947100FAD1D7 /* WSSettings.swift */; };
 		E5DA03FF1C4CA9CF00FAD1D7 /* WSDistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03FE1C4CA9CF00FAD1D7 /* WSDistance.swift */; };
 		E5DA04011C4CDE6500FAD1D7 /* SpinnerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA04001C4CDE6500FAD1D7 /* SpinnerTableViewCell.swift */; };
-		E5DA04031C4CE6B500FAD1D7 /* NoHostsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA04021C4CE6B500FAD1D7 /* NoHostsTableViewCell.swift */; };
+		E5DA04031C4CE6B500FAD1D7 /* PlaceholderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA04021C4CE6B500FAD1D7 /* PlaceholderTableViewCell.swift */; };
 		E5DA04051C4DA8D000FAD1D7 /* WSMapSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA04041C4DA8D000FAD1D7 /* WSMapSource.swift */; };
 		E5DA040C1C4DCBE700FAD1D7 /* WSColoredDot.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA040B1C4DCBE700FAD1D7 /* WSColoredDot.swift */; };
 		E5F6F30A1C2B36930000A87E /* WSRestfulService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6F3091C2B36930000A87E /* WSRestfulService.swift */; };
@@ -139,6 +142,7 @@
 		E3FB3CCF89A82EEE1EDC2F21 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		E50FD8A11C053A42004D38A3 /* MapTileServerURLTemplate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapTileServerURLTemplate.swift; sourceTree = "<group>"; };
 		E51397661C06945E00FD8EC1 /* WSUserLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSUserLocation.swift; sourceTree = "<group>"; };
+		E52A07261C580B1C006F80A5 /* ComposeMessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeMessageViewController.swift; sourceTree = "<group>"; };
 		E52E8A991C071CE8000391AB /* kingpin-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "kingpin-Bridging-Header.h"; sourceTree = "<group>"; };
 		E52E8A9E1C0BD25A000391AB /* HostSearchViewController+MKMapViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HostSearchViewController+MKMapViewDelegate.swift"; sourceTree = "<group>"; };
 		E52E8AA01C0BD38D000391AB /* HostSearchViewController+UISearchControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HostSearchViewController+UISearchControllerDelegate.swift"; sourceTree = "<group>"; };
@@ -148,7 +152,6 @@
 		E52E8AAE1C0D056D000391AB /* MessageThreadsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageThreadsTableViewController.swift; sourceTree = "<group>"; };
 		E52E8AB01C0D0B1A000391AB /* MessageThreadsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageThreadsTableViewCell.swift; sourceTree = "<group>"; };
 		E52E8ABD1C0E463D000391AB /* Warmshowers.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Warmshowers.xcdatamodel; sourceTree = "<group>"; };
-		E54276701C3CA8E800047029 /* ComposeMessageTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeMessageTableViewController.swift; sourceTree = "<group>"; };
 		E54276721C3E0CC900047029 /* ComposeMessageDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeMessageDetailTableViewCell.swift; sourceTree = "<group>"; };
 		E54276741C3E0CE200047029 /* ComposeMessageBodyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeMessageBodyTableViewCell.swift; sourceTree = "<group>"; };
 		E54276771C3E374400047029 /* CreateFeedbackTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateFeedbackTableViewController.swift; sourceTree = "<group>"; };
@@ -175,8 +178,8 @@
 		E56CC08B1BFD2EC300AAF973 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		E56CC08F1BFD496400AAF973 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		E56CC0911BFD569500AAF973 /* SwitchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchTableViewCell.swift; sourceTree = "<group>"; };
-		E5700C511C44CB64008C8A87 /* ComposeMessageTableViewController+UITextViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ComposeMessageTableViewController+UITextViewDelegate.swift"; sourceTree = "<group>"; };
-		E5700C531C44EE51008C8A87 /* ComposeMessageTableViewController+UITextFieldDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ComposeMessageTableViewController+UITextFieldDelegate.swift"; sourceTree = "<group>"; };
+		E5700C511C44CB64008C8A87 /* ComposeMessageViewController+UITextViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ComposeMessageViewController+UITextViewDelegate.swift"; sourceTree = "<group>"; };
+		E5700C531C44EE51008C8A87 /* ComposeMessageViewController+UITextFieldDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ComposeMessageViewController+UITextFieldDelegate.swift"; sourceTree = "<group>"; };
 		E5700C551C44F083008C8A87 /* MBProgressHUD-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD-Bridging-Header.h"; sourceTree = "<group>"; };
 		E5700C571C45C057008C8A87 /* HostListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostListTableViewController.swift; sourceTree = "<group>"; };
 		E5700C591C45C961008C8A87 /* HostListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostListTableViewCell.swift; sourceTree = "<group>"; };
@@ -204,6 +207,9 @@
 		E5A9F1221C561971006D6499 /* WSHostsOnMapUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSHostsOnMapUpdater.swift; sourceTree = "<group>"; };
 		E5AF67051C56C24B00AC17A1 /* WSRequestDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSRequestDelegate.swift; sourceTree = "<group>"; };
 		E5AF67071C56DD7F00AC17A1 /* WSLoginManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSLoginManager.swift; sourceTree = "<group>"; };
+		E5AF67091C576C6300AC17A1 /* ComposeMessageViewController+UITableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ComposeMessageViewController+UITableViewDataSource.swift"; sourceTree = "<group>"; };
+		E5AF670B1C576CAE00AC17A1 /* ComposeMessageViewController+UITableViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ComposeMessageViewController+UITableViewDelegate.swift"; sourceTree = "<group>"; };
+		E5AF670D1C5775B100AC17A1 /* WSMessageSender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSMessageSender.swift; sourceTree = "<group>"; };
 		E5D96AF41BFB1CA700AFAFEE /* Warmshowers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Warmshowers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5D96AF71BFB1CA700AFAFEE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E5D96AFE1BFB1CA700AFAFEE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -240,7 +246,7 @@
 		E5DA03FC1C4C947100FAD1D7 /* WSSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSSettings.swift; sourceTree = "<group>"; };
 		E5DA03FE1C4CA9CF00FAD1D7 /* WSDistance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSDistance.swift; sourceTree = "<group>"; };
 		E5DA04001C4CDE6500FAD1D7 /* SpinnerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinnerTableViewCell.swift; sourceTree = "<group>"; };
-		E5DA04021C4CE6B500FAD1D7 /* NoHostsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoHostsTableViewCell.swift; sourceTree = "<group>"; };
+		E5DA04021C4CE6B500FAD1D7 /* PlaceholderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderTableViewCell.swift; sourceTree = "<group>"; };
 		E5DA04041C4DA8D000FAD1D7 /* WSMapSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSMapSource.swift; sourceTree = "<group>"; };
 		E5DA040B1C4DCBE700FAD1D7 /* WSColoredDot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSColoredDot.swift; sourceTree = "<group>"; };
 		E5F6F3091C2B36930000A87E /* WSRestfulService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSRestfulService.swift; sourceTree = "<group>"; };
@@ -306,16 +312,18 @@
 			name = Map;
 			sourceTree = "<group>";
 		};
-		E542766F1C3CA8B100047029 /* ComposeMessageTabelViewController */ = {
+		E542766F1C3CA8B100047029 /* ComposeMessageViewController */ = {
 			isa = PBXGroup;
 			children = (
-				E54276701C3CA8E800047029 /* ComposeMessageTableViewController.swift */,
-				E54276721C3E0CC900047029 /* ComposeMessageDetailTableViewCell.swift */,
 				E54276741C3E0CE200047029 /* ComposeMessageBodyTableViewCell.swift */,
-				E5700C511C44CB64008C8A87 /* ComposeMessageTableViewController+UITextViewDelegate.swift */,
-				E5700C531C44EE51008C8A87 /* ComposeMessageTableViewController+UITextFieldDelegate.swift */,
+				E54276721C3E0CC900047029 /* ComposeMessageDetailTableViewCell.swift */,
+				E52A07261C580B1C006F80A5 /* ComposeMessageViewController.swift */,
+				E5AF67091C576C6300AC17A1 /* ComposeMessageViewController+UITableViewDataSource.swift */,
+				E5AF670B1C576CAE00AC17A1 /* ComposeMessageViewController+UITableViewDelegate.swift */,
+				E5700C531C44EE51008C8A87 /* ComposeMessageViewController+UITextFieldDelegate.swift */,
+				E5700C511C44CB64008C8A87 /* ComposeMessageViewController+UITextViewDelegate.swift */,
 			);
-			name = ComposeMessageTabelViewController;
+			name = ComposeMessageViewController;
 			sourceTree = "<group>";
 		};
 		E54276761C3E371000047029 /* CreateFeedbackTableViewController */ = {
@@ -365,21 +373,22 @@
 		E54A57391C026D56000843A9 /* HTTP */ = {
 			isa = PBXGroup;
 			children = (
-				E54A57301BFE6FB2000843A9 /* WSURL.swift */,
-				E54A572E1BFDC446000843A9 /* WSRequests.swift */,
-				E5F6F3091C2B36930000A87E /* WSRestfulService.swift */,
-				E5DA03CA1C48534300FAD1D7 /* WSLazyImageDownloader.swift */,
-				E5DA03F31C4A412C00FAD1D7 /* WSRequester.swift */,
-				E5DA03F71C4A488E00FAD1D7 /* WSGetHostsOnMapOperation.swift */,
-				E5DA03F91C4A4FE100FAD1D7 /* WSGetHostsForKeywordOperation.swift */,
-				E557D8691C50421B00226E84 /* WSMessageThreadUpdater.swift */,
 				E557D86B1C50482200226E84 /* WSCSRFTokenGetter.swift */,
-				E557D86D1C504DCF00226E84 /* WSRequestWithCSRFToken.swift */,
-				E5A9F11B1C532BC5006D6499 /* WSMessageThreadsUpdater.swift */,
-				E5A9F11D1C55E536006D6499 /* WSSaveMessagesToStoreOperation.swift */,
+				E5DA03F91C4A4FE100FAD1D7 /* WSGetHostsForKeywordOperation.swift */,
+				E5DA03F71C4A488E00FAD1D7 /* WSGetHostsOnMapOperation.swift */,
 				E5A9F1221C561971006D6499 /* WSHostsOnMapUpdater.swift */,
-				E5AF67051C56C24B00AC17A1 /* WSRequestDelegate.swift */,
+				E5DA03CA1C48534300FAD1D7 /* WSLazyImageDownloader.swift */,
 				E5AF67071C56DD7F00AC17A1 /* WSLoginManager.swift */,
+				E5AF670D1C5775B100AC17A1 /* WSMessageSender.swift */,
+				E5A9F11B1C532BC5006D6499 /* WSMessageThreadsUpdater.swift */,
+				E557D8691C50421B00226E84 /* WSMessageThreadUpdater.swift */,
+				E5AF67051C56C24B00AC17A1 /* WSRequestDelegate.swift */,
+				E5DA03F31C4A412C00FAD1D7 /* WSRequester.swift */,
+				E54A572E1BFDC446000843A9 /* WSRequests.swift */,
+				E557D86D1C504DCF00226E84 /* WSRequestWithCSRFToken.swift */,
+				E5F6F3091C2B36930000A87E /* WSRestfulService.swift */,
+				E5A9F11D1C55E536006D6499 /* WSSaveMessagesToStoreOperation.swift */,
+				E54A57301BFE6FB2000843A9 /* WSURL.swift */,
 			);
 			name = HTTP;
 			sourceTree = "<group>";
@@ -389,7 +398,7 @@
 			children = (
 				E5A9F11F1C55F762006D6499 /* WSProgressHUD */,
 				E5F6F30B1C2FE2360000A87E /* AccountViewController */,
-				E542766F1C3CA8B100047029 /* ComposeMessageTabelViewController */,
+				E542766F1C3CA8B100047029 /* ComposeMessageViewController */,
 				E54276761C3E371000047029 /* CreateFeedbackTableViewController */,
 				E5967BAC1C38A0A30037F4B7 /* FeedbackTableViewController */,
 				E5700C561C45C02E008C8A87 /* HostListTableViewController */,
@@ -425,7 +434,7 @@
 				E52E8AA81C0BDB18000391AB /* HostSearchViewController+WSLazyImageTableViewDataSource.swift */,
 				E52E8AA41C0BD8BF000391AB /* HostSearchViewController+UISearchResultsUpdating.swift */,
 				E5DA04001C4CDE6500FAD1D7 /* SpinnerTableViewCell.swift */,
-				E5DA04021C4CE6B500FAD1D7 /* NoHostsTableViewCell.swift */,
+				E5DA04021C4CE6B500FAD1D7 /* PlaceholderTableViewCell.swift */,
 			);
 			name = HostSearchViewController;
 			sourceTree = "<group>";
@@ -826,7 +835,7 @@
 				E5700C5A1C45C961008C8A87 /* HostListTableViewCell.swift in Sources */,
 				E5DA03FF1C4CA9CF00FAD1D7 /* WSDistance.swift in Sources */,
 				E5DA03E01C490ECC00FAD1D7 /* HostListTableViewController+UITableViewDataSource.swift in Sources */,
-				E5DA04031C4CE6B500FAD1D7 /* NoHostsTableViewCell.swift in Sources */,
+				E5DA04031C4CE6B500FAD1D7 /* PlaceholderTableViewCell.swift in Sources */,
 				E52E8A9F1C0BD25A000391AB /* HostSearchViewController+MKMapViewDelegate.swift in Sources */,
 				E5967BBB1C3922170037F4B7 /* MessageThreadTableViewController.swift in Sources */,
 				E5967B9F1C3490740037F4B7 /* WSOffers.swift in Sources */,
@@ -849,6 +858,8 @@
 				E52E8AA91C0BDB18000391AB /* HostSearchViewController+WSLazyImageTableViewDataSource.swift in Sources */,
 				E5967BCF1C39DBC00037F4B7 /* CDWSUser.swift in Sources */,
 				E557D86A1C50421B00226E84 /* WSMessageThreadUpdater.swift in Sources */,
+				E5AF670E1C5775B100AC17A1 /* WSMessageSender.swift in Sources */,
+				E52A07271C580B1C006F80A5 /* ComposeMessageViewController.swift in Sources */,
 				E52E8AA31C0BD3F0000391AB /* HostSearchViewController+KPClusteringControllerDelegate.swift in Sources */,
 				E5F6F30D1C2FE2770000A87E /* AccountDetailTableViewCell.swift in Sources */,
 				E5DA03DA1C488CA000FAD1D7 /* WSLazyImage.swift in Sources */,
@@ -865,7 +876,7 @@
 				E5F6F30F1C2FE3360000A87E /* ProfileImageTableViewCell.swift in Sources */,
 				E5D96AF81BFB1CA700AFAFEE /* AppDelegate.swift in Sources */,
 				E5DA04011C4CDE6500FAD1D7 /* SpinnerTableViewCell.swift in Sources */,
-				E5700C521C44CB64008C8A87 /* ComposeMessageTableViewController+UITextViewDelegate.swift in Sources */,
+				E5700C521C44CB64008C8A87 /* ComposeMessageViewController+UITextViewDelegate.swift in Sources */,
 				E54276881C3E83E500047029 /* CreateFeedbackTableViewController+UIPickerViewDataSource.swift in Sources */,
 				E542767E1C3E544600047029 /* WSRecommendationRating.swift in Sources */,
 				E5967BB21C38A11E0037F4B7 /* FeedbackTableViewController.swift in Sources */,
@@ -874,13 +885,13 @@
 				E5967BB41C38A8ED0037F4B7 /* WSRecommendation.swift in Sources */,
 				E5F6F3111C3122740000A87E /* HostingInfoTableViewCell.swift in Sources */,
 				E5967BCE1C39DBC00037F4B7 /* CDWSUser+CoreDataProperties.swift in Sources */,
+				E5AF670C1C576CAE00AC17A1 /* ComposeMessageViewController+UITableViewDelegate.swift in Sources */,
 				E5AF67081C56DD7F00AC17A1 /* WSLoginManager.swift in Sources */,
 				E5F6F3191C3289060000A87E /* AccountTableViewController+SegmentTableViewCellActions.swift in Sources */,
 				E54276781C3E374400047029 /* CreateFeedbackTableViewController.swift in Sources */,
 				E5DA03F41C4A412C00FAD1D7 /* WSRequester.swift in Sources */,
 				E54276731C3E0CC900047029 /* ComposeMessageDetailTableViewCell.swift in Sources */,
 				E5967BCC1C39DBC00037F4B7 /* CDWSMessage+CoreDataProperties.swift in Sources */,
-				E54276711C3CA8E800047029 /* ComposeMessageTableViewController.swift in Sources */,
 				E542768E1C44947300047029 /* FeedbackBodyTableViewCell.swift in Sources */,
 				E5700C581C45C057008C8A87 /* HostListTableViewController.swift in Sources */,
 				E56CC0921BFD569500AAF973 /* SwitchTableViewCell.swift in Sources */,
@@ -889,6 +900,7 @@
 				E5967BA71C3620470037F4B7 /* WSPhoneNumber.swift in Sources */,
 				E542768C1C41B10300047029 /* FeedbackOptionTableViewCell.swift in Sources */,
 				E52E8AA51C0BD8BF000391AB /* HostSearchViewController+UISearchResultsUpdating.swift in Sources */,
+				E5AF670A1C576C6300AC17A1 /* ComposeMessageViewController+UITableViewDataSource.swift in Sources */,
 				E54A572F1BFDC446000843A9 /* WSRequests.swift in Sources */,
 				E5DA03E21C49185000FAD1D7 /* WSUserLocation+WSLazyImage.swift in Sources */,
 				E5F6F30A1C2B36930000A87E /* WSRestfulService.swift in Sources */,
@@ -898,7 +910,7 @@
 				E54276901C44956F00047029 /* CreateFeedbackTableViewController+UITextViewDelegate.swift in Sources */,
 				E54276861C3E78E000047029 /* CreateFeedbackTableViewController+UIPickerViewDelegate.swift in Sources */,
 				E5967BCD1C39DBC00037F4B7 /* CDWSMessage.swift in Sources */,
-				E5700C541C44EE51008C8A87 /* ComposeMessageTableViewController+UITextFieldDelegate.swift in Sources */,
+				E5700C541C44EE51008C8A87 /* ComposeMessageViewController+UITextFieldDelegate.swift in Sources */,
 				E5967BA91C36910C0037F4B7 /* AvailiblityTableViewCell.swift in Sources */,
 				E5A9F1231C561971006D6499 /* WSHostsOnMapUpdater.swift in Sources */,
 			);

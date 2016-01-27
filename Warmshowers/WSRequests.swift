@@ -74,7 +74,7 @@ struct WSRequest {
         
         // Add the session cookie to the header.
         if (service.type != .login && service.type != .token) {
-            if let sessionCookie = defaults.objectForKey(DEFAULTS_KEY_SESSION_COOKIE) as? String {
+            if let sessionCookie = defaults.objectForKey(defaults_key_session_cookie) as? String {
                 request.addValue(sessionCookie, forHTTPHeaderField: "Cookie")
             } else {
                 print("Failed to add session cookie to request header")
@@ -276,8 +276,8 @@ struct WSRequest {
     //
     static func autoLogin(doAfterLogin: () -> Void) {
         
-        let username = defaults.stringForKey(DEFAULTS_KEY_USERNAME)
-        let password = defaults.stringForKey(DEFAULTS_KEY_PASSWORD)
+        let username = defaults.stringForKey(defaults_key_username)
+        let password = defaults.stringForKey(defaults_key_password)
         
         if username != nil && password != nil {
             
@@ -688,13 +688,13 @@ struct WSRequest {
             let sessid = loginData!["sessid"] as? String
             if (sessionName != nil) && (sessid != nil) {
                 let sessionCookie = sessionName! + "=" + sessid!
-                defaults.setValue(sessionCookie, forKey: DEFAULTS_KEY_SESSION_COOKIE)
+                defaults.setValue(sessionCookie, forKey: defaults_key_session_cookie)
             }
             
             // Store the users uid
             if let user = loginData!["user"] {
                 if let uid = user["uid"] {
-                    defaults.setValue(uid, forKey: DEFAULTS_KEY_UID)
+                    defaults.setValue(uid, forKey: defaults_key_uid)
                 }
             }
             

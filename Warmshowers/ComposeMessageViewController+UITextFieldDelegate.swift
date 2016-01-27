@@ -1,5 +1,5 @@
 //
-//  ComposeMessageTableViewController+UITextFieldDelegate.swift
+//  ComposeMessageViewController+UITextFieldDelegate.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 12/01/16.
@@ -8,10 +8,10 @@
 
 import UIKit
 
-extension ComposeMessageTableViewController : UITextFieldDelegate {
+extension ComposeMessageViewController : UITextFieldDelegate {
     
     func textFieldDidEndEditing(textField: UITextField) {
-        message?.thread?.subject = textField.text
+        subject = textField.text
     }
     
 }
