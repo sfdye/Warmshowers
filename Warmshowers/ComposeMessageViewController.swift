@@ -170,7 +170,7 @@ class ComposeMessageViewController: UIViewController {
         if messageSender != nil {
 
             // Show the spinner
-            WSProgressHUD.show(self.view, label: "Sending message ...")
+            WSProgressHUD.show(navigationController!.view, label: "Sending message ...")
 
             // Start the message sender
             messageSender!.tokenGetter.start()
@@ -178,14 +178,14 @@ class ComposeMessageViewController: UIViewController {
     }
     
     func successfulSend() {
-        WSProgressHUD.hide(self.view)
+        WSProgressHUD.hide(navigationController!.view)
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
         })
     }
     
     func failedSend() {
-        WSProgressHUD.hide(self.view)
+        WSProgressHUD.hide(navigationController!.view)
         messageSender = nil
         let alert = UIAlertController(title: "Could not send message.", message: "Sorry, an error occured while sending you message. Please check you are connected to the internet and try again later.", preferredStyle: .Alert)
         let okAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)

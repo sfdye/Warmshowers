@@ -149,9 +149,7 @@ class WSRequester : NSObject {
     // Runs at the end of a request and calls eith success or failure callbacks
     //
     func end() {
-        print("ending")
         if shouldCallCompletionHandler() {
-            print("thou")
             if error != nil {
                 failure?()
             } else {
