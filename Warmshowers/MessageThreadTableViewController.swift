@@ -111,41 +111,47 @@ class MessageThreadTableViewController: UITableViewController {
     //
     func updateAuthorImages() {
         
-//        for author in authors {
-//            if author.image == nil {
-//
-//                let uid = author.uid!.integerValue
-//                
-//                WSRequest.getUserThumbnailImage(uid, doWithImage: { (image) -> Void in
-//                    if let image = image {
-//                        author.image = image
-//                        do {
-//                            try self.moc.save()
-//                            self.reloadMessagesWithAuthorUID(uid)
-//                        } catch {
-//                            print("Error saving user thumbnail to store.")
-//                        }
-//                    }
-//                })
-//            }
-//        }
+        let authors = messageThread?.participants?.allObjects as! [CDWSUser]
+        
+        for author in authors {
+            if author.image == nil {
+                
+                let uid = author.uid!.integerValue
+                
+                WSRequest.getUserThumbnailImage(uid, doWithImage: { (image) -> Void in
+                    if let image = image {
+                        author.image = image
+                        do {
+                            try self.moc.save()
+                            self.reloadMessagesWithAuthorUID(uid)
+                        } catch {
+                            print("Error saving user thumbnail to store.")
+                        }
+                    }
+                })
+            }
+        }
     }
     
     // Reloads rows in the table view by author uid
     //
     func reloadMessagesWithAuthorUID(uid: Int) {
         
-//        var indexPaths = [NSIndexPath]()
-//        
-//        for (index, message) in messages.enumerate() {
-//            if message.author!.uid!.integerValue == uid {
-//                indexPaths.append(NSIndexPath(forRow: index, inSection: 0))
-//            }
-//        }
-//        
-//        dispatch_async(dispatch_get_main_queue()) { () -> Void in
-//            self.tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
-//        }
+        guard messages.count > 0 else {
+            return
+        }
+        
+        var indexPaths = [NSIndexPath]()
+        
+        for (index, message) in messages.enumerate() {
+            if message.author!.uid!.integerValue == uid {
+                indexPaths.append(NSIndexPath(forRow: index, inSection: 0))
+            }
+        }
+        
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            self.tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+        }
     }
     
     // Mark message thread as read
@@ -173,6 +179,7 @@ class MessageThreadTableViewController: UITableViewController {
         messages = [CDWSMessage]()
         
         // Update the thread
+        updater.error = nil
         updater.tokenGetter.start()
     }
     
