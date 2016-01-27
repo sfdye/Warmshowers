@@ -44,6 +44,7 @@ class WSRequestWithCSRFToken : WSRequester {
     }
     
     override func retryReqeust() {
+        print("retrying")
         // Set up the login manager and try again
         loginManager.success = {
             self.tokenGetter.start()

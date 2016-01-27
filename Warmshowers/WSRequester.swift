@@ -142,13 +142,21 @@ class WSRequester : NSObject {
         error = NSError(domain: "WSRequesterDomain", code: 5, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("HTTP request recieved a successful response but with no data", comment: "")])
     }
     
+    // Decides whether the completion handlers should be called
+    //
     func shouldCallCompletionHandler() -> Bool {
         return true
+    }
+    
+    // Resets the upater variables
+    func reset() {
+        finalAttempt = false
     }
     
     // Runs at the end of a request and calls eith success or failure callbacks
     //
     func end() {
+        reset()
         if shouldCallCompletionHandler() {
             if error != nil {
                 failure?()
