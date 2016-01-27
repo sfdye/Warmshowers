@@ -11,12 +11,9 @@ import MapKit
 import CoreData
 
 // FIRST TODOs
-// fix message reply date bug
+// trigger a message view reloads after sending a reply message
 // fix map loading errors
-// tidy up mail checking methods, splitview for messages?
 // put user password in keychain
-// fix host list search table results sync issues
-// order host search by distance from user
 // fix views for ipad
 
 // LATER TODOs

@@ -35,8 +35,7 @@ class MessageThreadTableViewController: UITableViewController {
         
         // Set the view title
         navigationItem.title = messageThread?.subject
-        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: WSColor.DarkBlue,
-            NSFontAttributeName: WSFont.SueEllenFrancisco(18)]
+        navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: WSFont.SueEllenFrancisco(18)]
         
         // Force the back button to plain style
         // TODO
@@ -72,10 +71,6 @@ class MessageThreadTableViewController: UITableViewController {
         // Update the model
         updateAuthorImages()
         markAsRead()
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        // Update messages
     }
     
     func updateDataSource() {

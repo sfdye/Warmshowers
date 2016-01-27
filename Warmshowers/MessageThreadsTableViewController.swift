@@ -71,8 +71,7 @@ class MessageThreadsTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: WSColor.Green,
-            NSFontAttributeName: WSFont.SueEllenFrancisco(26)]
+        navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: WSFont.SueEllenFrancisco(26)]
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -275,115 +274,11 @@ class MessageThreadsTableViewController: UITableViewController {
             let cell = sender as! MessageThreadsTableViewCell
             let indexPath = tableView.indexPathForCell(cell)
             let messageThread = messageThreads[indexPath!.row] as CDWSMessageThread
-//            var messages = messageThread.messages?.allObjects as! [CDWSMessage]
-//            let authors = messageThread.participants?.allObjects as! [CDWSUser]
-            
-//            // Sort the messages by date
-//            messages.sortInPlace({
-//                return $0.timestamp!.laterDate($1.timestamp!).isEqualToDate($1.timestamp!)
-//            })
             
             // Assign the message thread data to the destination view controller
             let messageThreadVC = segue.destinationViewController as! MessageThreadTableViewController
             messageThreadVC.messageThread = messageThread
-//            messageThreadVC.messages = messages
-//            messageThreadVC.authors = authors
         }
     }
     
-    
-// ------------
-    
-//    func getMessageThread(threadID: Int16) -> MessageThread {
-//
-//        return mt
-//    }
-    
-//    // MARK: Segment control
-//
-//    @IBAction func segmentControlDidChange(sender: AnyObject) {
-//        
-//        let segment = sender as! UISegmentedControl
-//        
-//        switch segment.selectedSegmentIndex {
-//        case 0:
-//            print("inbox")
-//        case 1:
-//            print("sent")
-//        case 2:
-//            print("all")
-//        case 3:
-//            print("requests")
-//        default:
-//            return
-//        }
-//    
-//    }
-    
 }
-
-
-
-//            {
-//                count = 1;
-//                "has_tokens" = 0;
-//                "is_new" = 0;
-//                "last_updated" = 1452588123;
-//                participants =     (
-//                    {
-//                        fullname = "Rajan Fernandez";
-//                        name = RajanFernandez;
-//                        uid = 67118;
-//                    },
-//                    {
-//                        fullname = "Rajan Fernandez AppTest";
-//                        name = RajanFernandezAPPTEST;
-//                        uid = 105770;
-//                    }
-//                );
-//                subject = Test;
-//                "thread_id" = 1714292;
-//                "thread_started" = 1452588123;
-//        }
-
-//            {
-//                messages =     (
-//                    {
-//                        author = 67118;
-//                        body = Test;
-//                        "is_new" = 0;
-//                        mid = 1714292;
-//                        timestamp = 1452588123;
-//                    }
-//                );
-//                participants =     (
-//                    {
-//                        fullname = "Rajan Fernandez";
-//                        name = RajanFernandez;
-//                        uid = 67118;
-//                    },
-//                    {
-//                        fullname = "Rajan Fernandez AppTest";
-//                        name = RajanFernandezAPPTEST;
-//                        uid = 105770;
-//                    }
-//                );
-//                pmtid = 1714292;
-//                subject = Test;
-//        }
-
-//
-//        WSRequest.getMessageThread(1714292, withMessageThreadData: { (data) -> Void in
-//            print("IN CALLBACK")
-//            if let data = data {
-//                print("got data")
-//                if let json = WSRequest.jsonDataToJSONObject(data) {
-//                    print(json)
-//                    if let messagesJSON = json.valueForKey("messages") as? NSArray {
-//                        for messageJSON in messagesJSON {
-//
-//                        }
-//                    }
-//                }
-//            }
-//        })
