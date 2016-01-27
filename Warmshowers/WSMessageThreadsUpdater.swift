@@ -13,12 +13,11 @@ import CoreData
 //
 class WSMessageThreadsUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
     
-    var moc: NSManagedObjectContext!
+    let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     
-    init(moc: NSManagedObjectContext) {
+    override init() {
         super.init()
         requestDelegate = self
-        self.moc = moc
     }
     
     func requestForDownload() -> NSURLRequest? {

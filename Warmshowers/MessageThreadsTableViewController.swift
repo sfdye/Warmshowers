@@ -28,8 +28,7 @@ class MessageThreadsTableViewController: UITableViewController {
     var messageThreads = [CDWSMessageThread]()
     var messageThreadUpdater: WSMessageThreadsUpdater!
     var queue = NSOperationQueue()
-    
-    var refreshController = UIRefreshControl()
+
     var lastUpdated: NSDate?
     var updatesInProgress = [Int: WSMessageThreadUpdater]()
     var alert: UIAlertController?
@@ -43,14 +42,15 @@ class MessageThreadsTableViewController: UITableViewController {
         navigationItem.title = "Messages"
         
         // Set the refresh controller for the tableview
+        let refreshController = UIRefreshControl()
         refreshController.addTarget(self, action: Selector("startUpdates"), forControlEvents: UIControlEvents.ValueChanged)
-        self.refreshControl = self.refreshController
+        self.refreshControl = refreshController
         
         // Set up the message parsing queue
         queue.maxConcurrentOperationCount = 1
         
         // Set up the message thread updater
-        messageThreadUpdater = WSMessageThreadsUpdater(moc: moc)
+        messageThreadUpdater = WSMessageThreadsUpdater()
         messageThreadUpdater.success = {
             self.lastUpdated = NSDate()
             self.updateDataSource()
@@ -60,7 +60,7 @@ class MessageThreadsTableViewController: UITableViewController {
         }
         messageThreadUpdater.failure = {
             self.setFailedUpdateAlert(self.messageThreadUpdater.error)
-            self.refreshController.endRefreshing()
+            self.refreshControl!.endRefreshing()
             WSProgressHUD.hide()
             self.showAlert()
         }
@@ -138,10 +138,8 @@ class MessageThreadsTableViewController: UITableViewController {
     func updateMessages() {
         
         for thread in messageThreads {
-            if let messages = thread.messages, let count = thread.count?.integerValue {
-                if messages.count != count {
-                    setUpdaterForThread(thread)
-                }
+            if thread.needsUpdating() {
+                setUpdaterForThread(thread)
             }
         }
         startAllMessageUpdaters()
@@ -155,7 +153,7 @@ class MessageThreadsTableViewController: UITableViewController {
             return
         }
         
-        let messageUpdater = WSMessageThreadUpdater(messageThread: messageThread, inManagedObjectContext: moc, queue: queue)
+        let messageUpdater = WSMessageThreadUpdater(messageThread: messageThread, queue: queue)
         messageUpdater.success = {
             self.updateFinishedForThreadID(threadID)
         }
@@ -197,7 +195,7 @@ class MessageThreadsTableViewController: UITableViewController {
                 self.tableView.reloadData()
                 
                 // Hide refreshing indicators and show any error alerts that were set
-                self.refreshController.endRefreshing()
+                self.refreshControl!.endRefreshing()
                 WSProgressHUD.hide()
                 self.showAlert()
             })
@@ -277,19 +275,19 @@ class MessageThreadsTableViewController: UITableViewController {
             let cell = sender as! MessageThreadsTableViewCell
             let indexPath = tableView.indexPathForCell(cell)
             let messageThread = messageThreads[indexPath!.row] as CDWSMessageThread
-            var messages = messageThread.messages?.allObjects as! [CDWSMessage]
-            let authors = messageThread.participants?.allObjects as! [CDWSUser]
+//            var messages = messageThread.messages?.allObjects as! [CDWSMessage]
+//            let authors = messageThread.participants?.allObjects as! [CDWSUser]
             
-            // Sort the messages by date
-            messages.sortInPlace({
-                return $0.timestamp!.laterDate($1.timestamp!).isEqualToDate($1.timestamp!)
-            })
+//            // Sort the messages by date
+//            messages.sortInPlace({
+//                return $0.timestamp!.laterDate($1.timestamp!).isEqualToDate($1.timestamp!)
+//            })
             
             // Assign the message thread data to the destination view controller
             let messageThreadVC = segue.destinationViewController as! MessageThreadTableViewController
             messageThreadVC.messageThread = messageThread
-            messageThreadVC.messages = messages
-            messageThreadVC.authors = authors
+//            messageThreadVC.messages = messages
+//            messageThreadVC.authors = authors
         }
     }
     

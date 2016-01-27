@@ -13,7 +13,7 @@ class WSSaveMessagesToStoreOperation : NSOperation {
     
     var messagesJSON: NSArray!
     var messageThread: CDWSMessageThread
-    var moc: NSManagedObjectContext!
+    var moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     var updater: WSMessageThreadUpdater!
     var completion: () -> Void
     
@@ -22,7 +22,6 @@ class WSSaveMessagesToStoreOperation : NSOperation {
         self.updater = updater
         self.completion = completion
         self.messageThread = updater.messageThread
-        self.moc = updater.moc
         super.init()
     }
     

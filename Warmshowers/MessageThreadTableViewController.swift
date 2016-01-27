@@ -19,9 +19,11 @@ class MessageThreadTableViewController: UITableViewController {
     var threadID: Int? = nil
     var messageThread: CDWSMessageThread?
     var messages = [CDWSMessage]()
-    var authors = [CDWSUser]()
 
     let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+    var updater: WSMessageThreadUpdater!
+    var queue = NSOperationQueue()
+    var refreshController = UIRefreshControl()
     
     var currentUserUID: Int? {
         let defaults = NSUserDefaults.standardUserDefaults()
@@ -43,9 +45,45 @@ class MessageThreadTableViewController: UITableViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 104
         
+        // Update the table view data source
+        updateDataSource()
+        tableView.reloadData()
+        
+        // Configure the updater
+        updater = WSMessageThreadUpdater(messageThread: messageThread!, queue: queue)
+        updater.success = {
+            self.updateDataSource()
+            self.refreshControl!.endRefreshing()
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.tableView.reloadData()
+            })
+        }
+        updater.failure = {
+            self.refreshControl!.endRefreshing()
+            print(self.updater.error)
+        }
+        
+        // Configure the refresh controller
+        // Set the refresh controller for the tableview
+        let refreshController = UIRefreshControl()
+        refreshController.addTarget(self, action: Selector("updateMessages"), forControlEvents: UIControlEvents.ValueChanged)
+        self.refreshControl = refreshController
+        
         // Update the model
         updateAuthorImages()
         markAsRead()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        // Update messages
+    }
+    
+    func updateDataSource() {
+        // Get the messages and sort them by date
+        messages = messageThread?.messages?.allObjects as! [CDWSMessage]
+        messages.sortInPlace({
+            return $0.timestamp!.laterDate($1.timestamp!).isEqualToDate($1.timestamp!)
+        })
     }
 
     
@@ -73,41 +111,41 @@ class MessageThreadTableViewController: UITableViewController {
     //
     func updateAuthorImages() {
         
-        for author in authors {
-            if author.image == nil {
-
-                let uid = author.uid!.integerValue
-                
-                WSRequest.getUserThumbnailImage(uid, doWithImage: { (image) -> Void in
-                    if let image = image {
-                        author.image = image
-                        do {
-                            try self.moc.save()
-                            self.reloadMessagesWithAuthorUID(uid)
-                        } catch {
-                            print("Error saving user thumbnail to store.")
-                        }
-                    }
-                })
-            }
-        }
+//        for author in authors {
+//            if author.image == nil {
+//
+//                let uid = author.uid!.integerValue
+//                
+//                WSRequest.getUserThumbnailImage(uid, doWithImage: { (image) -> Void in
+//                    if let image = image {
+//                        author.image = image
+//                        do {
+//                            try self.moc.save()
+//                            self.reloadMessagesWithAuthorUID(uid)
+//                        } catch {
+//                            print("Error saving user thumbnail to store.")
+//                        }
+//                    }
+//                })
+//            }
+//        }
     }
     
     // Reloads rows in the table view by author uid
     //
     func reloadMessagesWithAuthorUID(uid: Int) {
         
-        var indexPaths = [NSIndexPath]()
-        
-        for (index, message) in messages.enumerate() {
-            if message.author!.uid!.integerValue == uid {
-                indexPaths.append(NSIndexPath(forRow: index, inSection: 0))
-            }
-        }
-        
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
-            self.tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
-        }
+//        var indexPaths = [NSIndexPath]()
+//        
+//        for (index, message) in messages.enumerate() {
+//            if message.author!.uid!.integerValue == uid {
+//                indexPaths.append(NSIndexPath(forRow: index, inSection: 0))
+//            }
+//        }
+//        
+//        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+//            self.tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+//        }
     }
     
     // Mark message thread as read
@@ -127,6 +165,15 @@ class MessageThreadTableViewController: UITableViewController {
                 print("failed")
             }
         }
+    }
+    
+    func updateMessages() {
+        
+        // Clear the messages from the context
+        messages = [CDWSMessage]()
+        
+        // Update the thread
+        updater.tokenGetter.start()
     }
     
 }

@@ -12,16 +12,14 @@ import CoreData
 class WSMessageThreadUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
     
     var messageThread: CDWSMessageThread!
-    var moc: NSManagedObjectContext!
     var queue: NSOperationQueue!
     var callCompletionHandler = true
     var saveOperation: WSSaveMessagesToStoreOperation?
     
-    init(messageThread: CDWSMessageThread, inManagedObjectContext moc: NSManagedObjectContext, queue: NSOperationQueue) {
+    init(messageThread: CDWSMessageThread, queue: NSOperationQueue) {
         super.init()
         requestDelegate = self
         self.messageThread = messageThread
-        self.moc = moc
         self.queue = queue
     }
     
@@ -31,9 +29,7 @@ class WSMessageThreadUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
         guard let _ = messageThread.thread_id?.integerValue, let _ = token else {
             return false
         }
-        
-        // Guard against unneccessarily updating
-        return messageThread.needsUpdating()
+        return true
     }
     
     func requestForDownload() -> NSURLRequest? {
