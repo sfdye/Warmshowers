@@ -49,8 +49,8 @@ class WSRequestWithCSRFToken : WSRequester {
         loginManager.success = {
             self.tokenGetter.start()
         }
-        loginManager.failure = {
-            self.error = self.loginManager.error
+        loginManager.failure = { (error) -> Void in
+            self.error = error
             self.end()
         }
         loginManager.start()

@@ -56,4 +56,14 @@ class CDWSMessage: NSManagedObject {
         self.timestamp = NSDate(timeIntervalSince1970: timestamp)
         self.is_new = is_new
     }
+    
+    static func allMessages() throws -> [CDWSMessage] {
+        let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        let request = NSFetchRequest(entityName: "Message")
+        do {
+            let threads = try moc.executeFetchRequest(request) as! [CDWSMessage]
+            return threads
+        }
+    }
+
 }

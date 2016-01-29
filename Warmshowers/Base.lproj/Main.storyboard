@@ -265,14 +265,14 @@ Second line</string>
                                     <segue destination="MJt-qp-NJY" kind="show" identifier="ToMessageThread" id="T4w-LT-wmd"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Placeholder" rowHeight="96" id="z75-t3-JMj" customClass="PlaceholderTableViewCell" customModule="Warmshowers" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Placeholder" rowHeight="96" id="z75-t3-JMj" customClass="PlaceholderTableViewCell" customModule="Warmshowers" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="188" width="600" height="96"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="z75-t3-JMj" id="YUh-8s-OGB">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="z75-t3-JMj" id="YUh-8s-OGB">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="95.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Messages" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K0A-85-qGg">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="No Messages" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K0A-85-qGg">
                                             <rect key="frame" x="248" y="28" width="104" height="20.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="40" id="EfJ-wd-KVY"/>

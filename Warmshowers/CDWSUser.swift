@@ -15,6 +15,10 @@ enum CDWSMessageParticipantError : ErrorType {
 
 class CDWSUser: NSManagedObject, WSLazyImage {
     
+    static let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+    
+    // MARK: WSLazyImage Protocol
+    
     var lazyImageURL: String? {
         get {
             return image_url
@@ -28,6 +32,8 @@ class CDWSUser: NSManagedObject, WSLazyImage {
             image = newImage
         }
     }
+    
+    // MARK: Instance methods
     
     func updateFromMessageParticipantJSON(json: AnyObject) throws {
         
@@ -56,4 +62,60 @@ class CDWSUser: NSManagedObject, WSLazyImage {
         self.image_url = json.valueForKey("profile_image_map_infoWindow") as? String
     }
     
+    // Checks if a user is already in the store by uid.
+    // Returns the existing user, or a new user inserted into the MOC.
+    //
+    static func userWithUID(uid: Int) -> CDWSUser? {
+        
+        let request = NSFetchRequest(entityName: "User")
+        request.predicate = NSPredicate(format: "uid == %i", uid)
+        
+        // Try to find the user in the store
+        do {
+            if let user = try moc.executeFetchRequest(request).first as? CDWSUser {
+                return user
+            } else {
+                return nil
+            }
+        } catch {
+            return nil
+        }
+    }
+    
+    static func newOrExistingUser(uid: Int) -> CDWSUser {
+        if let user = userWithUID(uid) {
+            return user
+        } else {
+            let user = NSEntityDescription.insertNewObjectForEntityForName("User", inManagedObjectContext: moc) as! CDWSUser
+            return user
+        }
+    }
+    
+    static func userSetFromJSON(json: AnyObject) throws -> NSSet {
+            
+        guard let users = json as? NSArray else {
+            throw DataError.FailedConversion
+        }
+        
+        var participants = [CDWSUser]()
+        for user in users {
+            
+            // Get the user uid of the message participant.
+            if let uid = user.valueForKey("uid")?.integerValue {
+                
+                // Check if the participant exists in the store.
+                let participant = newOrExistingUser(uid)
+                do {
+                    try participant.updateFromMessageParticipantJSON(user)
+                    participants.append(participant)
+                }
+                
+            } else {
+                throw DataError.InvalidInput
+            }
+        }
+        
+        return NSSet(array: participants)
+    }
+
 }

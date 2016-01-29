@@ -92,16 +92,17 @@ class ComposeMessageViewController: UIViewController {
     
     // Sets up the message as a reply on a given message thread
     //
-    func initialiseAsReplyOnMessageThread(messageThread: CDWSMessageThread) {
+    func initialiseAsReply(threadID: Int?) {
+        
+        guard let threadID = threadID else {
+            return
+        }
         
         // Set the navigation title
         navigationItem.title = "Reply"
         
         // Set up the reply
-        let participants = messageThread.participants?.allObjects as! [CDWSUser]
-        recipients = participants.filter( {$0.uid != currentUserUID} )
-        subject = messageThread.subject
-        threadID = messageThread.thread_id?.integerValue
+        self.threadID = threadID        
     }
     
     
@@ -184,7 +185,7 @@ class ComposeMessageViewController: UIViewController {
         })
     }
     
-    func failedSend() {
+    func failedSend(error: NSError) {
         WSProgressHUD.hide(navigationController!.view)
         messageSender = nil
         let alert = UIAlertController(title: "Could not send message.", message: "Sorry, an error occured while sending you message. Please check you are connected to the internet and try again later.", preferredStyle: .Alert)

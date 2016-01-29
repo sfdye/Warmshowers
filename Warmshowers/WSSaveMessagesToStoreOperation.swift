@@ -70,7 +70,7 @@ class WSSaveMessagesToStoreOperation : NSOperation {
     // Converts JSON data for a single message threads into a managed object
     //
     func messageWithJSON(json: AnyObject, forMessageThread messageThread: CDWSMessageThread) throws -> CDWSMessage {
-        
+
         // Abort if the message id can not be found.
         guard let message_id = json.valueForKey("mid")?.integerValue else {
             print("Recieved message with no ID")
@@ -87,7 +87,7 @@ class WSSaveMessagesToStoreOperation : NSOperation {
         do {
             author = try getUserWithUID(authorUID)
         }
-        
+
         // Create a new message object in the moc
         let message = NSEntityDescription.insertNewObjectForEntityForName("Message", inManagedObjectContext: moc) as! CDWSMessage
         message.author = author
@@ -98,7 +98,7 @@ class WSSaveMessagesToStoreOperation : NSOperation {
         } catch {
             print("Failed to update message thread with id \(message_id)")
         }
-        
+
         return message
     }
     

@@ -29,7 +29,7 @@ class WSRequester : NSObject {
     
     // Completion handlers
     var success: (() -> Void)?
-    var failure: (() -> Void)?
+    var failure: ((error: NSError) -> Void)?
     
     override init() {
         super.init()
@@ -151,20 +151,21 @@ class WSRequester : NSObject {
     // Resets the upater variables
     func reset() {
         finalAttempt = false
+        error = nil
     }
     
     // Runs at the end of a request and calls eith success or failure callbacks
     //
     func end() {
-        reset()
         if shouldCallCompletionHandler() {
             if error != nil {
-                failure?()
+                failure?(error: error!)
             } else {
                 success?()
             }
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         }
+        reset()
     }
     
     // Cancels the download task

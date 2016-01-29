@@ -100,8 +100,8 @@ class WSLazyImageTableViewController: UITableViewController {
                 // TODO: Sometimes the code breaks here with an unexpected nil
                 self.imageDownloadsInProgress.removeValueForKey(indexPath)
             }
-            imageDownloader.failure = {
-                print("Failed to get image.")
+            imageDownloader.failure = { (error) -> Void in
+                print("Failed to get image. \(error)")
                 self.imageDownloadsInProgress.removeValueForKey(indexPath)
             }
             

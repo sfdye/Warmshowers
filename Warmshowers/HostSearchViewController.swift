@@ -165,8 +165,8 @@ class HostSearchViewController: UIViewController {
                 })
                 self.mapUpdater = nil
             }
-            mapUpdater?.failure = {
-                print(self.mapUpdater!.error?.localizedDescription)
+            mapUpdater?.failure = { (error) -> Void in
+                print(error.localizedDescription)
             }
             mapUpdater?.tokenGetter.start()
         } else {
