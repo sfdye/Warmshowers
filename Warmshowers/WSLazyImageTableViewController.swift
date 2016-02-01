@@ -130,7 +130,7 @@ class WSLazyImageTableViewController: UITableViewController {
     // Terminates all image downloads
     func terminateAllDownloads() {
         for (_, download) in imageDownloadsInProgress {
-            download.cancelDownload()
+            download.cancel()
         }
         imageDownloadsInProgress.removeAll()
     }

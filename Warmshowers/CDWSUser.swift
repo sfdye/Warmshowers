@@ -82,6 +82,7 @@ class CDWSUser: NSManagedObject, WSLazyImage {
         }
     }
     
+    
     static func newOrExistingUser(uid: Int) -> CDWSUser {
         if let user = userWithUID(uid) {
             return user

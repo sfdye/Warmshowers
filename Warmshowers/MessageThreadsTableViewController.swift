@@ -23,14 +23,12 @@ class MessageThreadsTableViewController: UITableViewController {
     }
     var count: Int = 0
     
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-    
     var messageThreadUpdater: WSMessageThreadsUpdater!
-
     var lastUpdated: NSDate?
-    var updatesInProgress = [Int: WSMessageThreadUpdater]()
+//    var updatesQueue = NSOperationQueue()
+    var updatesInProgress = [Int: WSMessageUpdater]()
     var alert: UIAlertController?
+    var presentingAlert = false
     
     
     // MARK: View life cycle
@@ -43,27 +41,21 @@ class MessageThreadsTableViewController: UITableViewController {
         
         // Set the refresh controller for the tableview
         let refreshController = UIRefreshControl()
-        refreshController.addTarget(self, action: Selector("updateMessages"), forControlEvents: UIControlEvents.ValueChanged)
+        refreshController.addTarget(self, action: Selector("update"), forControlEvents: UIControlEvents.ValueChanged)
         self.refreshControl = refreshController
 
         // Set up the message thread updater
         messageThreadUpdater = WSMessageThreadsUpdater()
         messageThreadUpdater.success = {
-            self.refreshControl!.endRefreshing()
-            WSProgressHUD.hide()
             self.lastUpdated = NSDate()
-            self.reload()
-            print("Done.")
+            self.updateAllMessages()
         }
         messageThreadUpdater.failure = { (error) -> Void in
-            self.refreshControl!.endRefreshing()
-            WSProgressHUD.hide()
+            self.reload()
             self.setFailedUpdateAlert(error)
             self.showAlert()
-            print("fail")
         }
         WSProgressHUD.show("Updating messages ...")
-        messageThreadUpdater.update()
         
         // Table view autolayout options
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -76,137 +68,115 @@ class MessageThreadsTableViewController: UITableViewController {
     
     override func viewDidAppear(animated: Bool) {
         
-//        var needsUpdate = false
-//        
-//        // Update the message threads if more than 10 minutes has elapsed
-//        if lastUpdated == nil {
-//            needsUpdate = true
-//        } else if lastUpdated!.timeIntervalSinceNow > 600 {
-//            needsUpdate = true
-//        }
+        var needsUpdate = false
         
-        tableView.reloadData()
-        updateTabBarBadge()
-    }
-    
-    func updateMessages() {
-        messageThreadUpdater.update()
-    }
-    
-    func reload() {
-        count = CDWSMessageThread.numberOfMessageThreads()
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
-            print(self.count)
-            self.updateTabBarBadge()
-            self.tableView.reloadData()
+        // Update the message threads if more than 10 minutes has elapsed
+        if lastUpdated == nil {
+            needsUpdate = true
+        } else if lastUpdated!.timeIntervalSinceNow > 600 {
+            needsUpdate = true
+        }
+        
+        if needsUpdate {
+            update()
+        } else {
+            reload()
         }
     }
     
     
     // MARK: Utility methods
     
-//    // Starts updating message threads
-//    //
-//    func startUpdates() {
-//        messageThreadUpdater.tokenGetter.start()
-//    }
-//    
-//    // Fetches all messages from the store and updates the tableview data
-//    //
-//    func updateDataSource() {
-//        
-//        // Clear the context / table view data source
-//        messageThreads = [CDWSMessageThread]()
-//        
-//        // Get the currently saved message threads from the store
-//        let request = NSFetchRequest(entityName: "MessageThread")
-//        do {
-//            messageThreads = try moc.executeFetchRequest(request) as! [CDWSMessageThread]
-//        } catch {
-//            print("fetch fail.")
-//        }
-//        
-//        // Sort the message threads
-//        sortMessageThreads()
-//    }
-//    
-//    func sortMessageThreads() {
-//        
-//        // Sort the messages by date
-//        messageThreads.sortInPlace({
-//            return $0.last_updated!.laterDate($1.last_updated!).isEqualToDate($0.last_updated!)
-//        })
-//        
-//    }
-//    
-//    // Checks that messages in each thread are up-to-date an downloads required messages
-//    //
-//    func updateMessages() {
-//        
-//        for thread in messageThreads {
-//            if thread.needsUpdating() {
-//                setUpdaterForThread(thread)
-//            }
-//        }
-//        startAllMessageUpdaters()
-//    }
-//    
-//    // Sets an updater for a message thread, but does not start it
-//    //
-//    func setUpdaterForThread(messageThread: CDWSMessageThread) {
-//        
-//        guard let threadID = messageThread.thread_id?.integerValue else {
-//            return
-//        }
-//        
-//        let messageUpdater = WSMessageThreadUpdater(messageThread: messageThread, queue: queue)
-//        messageUpdater.success = {
-//            self.updateFinishedForThreadID(threadID)
-//        }
-//        messageUpdater.failure = {
-//            let messageUpdater = self.updatesInProgress[threadID]
-//            self.setFailedUpdateAlert(messageUpdater?.error)
-//            self.updateFinishedForThreadID(threadID)
-//        }
-//        updatesInProgress[threadID] = messageUpdater
-//    }
-//    
-//    // Starts all updaters in the updates in progress dictionary
-//    //
-//    func startAllMessageUpdaters() {
-//        
-//        guard updatesInProgress.count > 0 else {
-//            return
-//        }
-//        
-//        for (_, update) in updatesInProgress {
-//            update.tokenGetter.start()
-//        }
-//    }
-//    
-//    // Removes the message updater object assign to a given thread and reloads the table if all updates are done
-//    //
-//    func updateFinishedForThreadID(threadID: Int) {
-//        self.updatesInProgress.removeValueForKey(threadID)
-//        self.reloadIfUpdatesAreFinished()
-//    }
-//    
-//    // Reloads the table view if there are no message updaters left in updatesInProgress
-//    //
-//    func reloadIfUpdatesAreFinished() {
-//        if updatesInProgress.count == 0 {
-//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                
-//                // Reload the table view
-//                self.tableView.reloadData()
-//                
-//                // Hide refreshing indicators and show any error alerts that were set
-//                self.refreshControl!.endRefreshing()
-//                WSProgressHUD.hide()
-//                self.showAlert()
-//            })
-//        }
-//    }
+    func update() {
+        messageThreadUpdater.update()
+    }
+    
+    func reload() {
+        
+        // Hide any activity indicators
+        self.refreshControl!.endRefreshing()
+        WSProgressHUD.hide()
+        
+        // Update the view
+        do {
+            count = try CDWSMessageThread.numberOfMessageThreads()
+            dispatch_async(dispatch_get_main_queue()) { () -> Void in
+                self.tableView.reloadData()
+                self.updateTabBarBadge()
+            }
+        } catch let error {
+            let nserror = error as NSError
+            setFailedUpdateAlert(nserror)
+        }
+        
+        // Show any errors
+        showAlert()
+    }
+    
+    // Updates the messages on each thread if required
+    //
+    func updateAllMessages() {
+        
+        // Update the messages if necessary
+        do {
+            if let threadIDs = try CDWSMessageThread.messageThreadsThatNeedUpdating() {
+                for threadID in threadIDs {
+                    self.updateMessagesOnThread(threadID)
+                }
+            } else {
+                reload()
+            }
+        } catch let error  {
+            let nserror = error as NSError
+            setFailedUpdateAlert(nserror)
+            reload()
+        }
+    }
+    
+    // Cancels all message update requests
+    //
+    func cancelAllUpdates() {
+        for (_, update) in updatesInProgress {
+            update.cancel()
+        }
+    }
+    
+    // Sets an updater for a message thread, but does not start it
+    //
+    func updateMessagesOnThread(threadID: Int) {
+        
+        guard updatesInProgress[threadID] == nil else {
+            print("already updating thread")
+            return
+        }
+        
+        let messageUpdater = WSMessageUpdater(threadID: threadID)
+        messageUpdater.success = {
+            self.updateFinishedForThreadID(threadID)
+        }
+        messageUpdater.failure = { (error) -> Void in
+            self.cancelAllUpdates()
+            self.setFailedUpdateAlert(error)
+            self.updateFinishedForThreadID(threadID)
+        }
+        updatesInProgress[threadID] = messageUpdater
+        messageUpdater.update()
+    }
+
+    // Removes the message updater object assign to a given thread and reloads the table if all updates are done
+    //
+    func updateFinishedForThreadID(threadID: Int) {
+        
+        // Remove the updater
+        self.updatesInProgress.removeValueForKey(threadID)
+        
+        // Reload the table view if all the updates are finished
+        if updatesInProgress.count == 0 {
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.reload()
+            })
+        }
+    }
     
     // Update the tab bar badge with the number of unread threads
     //
@@ -224,30 +194,40 @@ class MessageThreadsTableViewController: UITableViewController {
     // Sets an failed update alert to be displayed at the end of the updates
     //
     func setFailedUpdateAlert(error: NSError? = nil) {
-        if alert == nil {
+        
+        guard alert == nil else {
+            return
+        }
+        
+        if !presentingAlert {
             var message: String = "Please check that you are connected to the internet and try again."
             if let error = error {
                 message = error.localizedDescription
             }
-            alert = UIAlertController(title: "Failed to update messages", message: message, preferredStyle: .Alert)
+            let alert = UIAlertController(title: "Failed to update messages", message: message, preferredStyle: .Alert)
             let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-            alert!.addAction(okAction)
+            alert.addAction(okAction)
+            self.alert = alert
         }
     }
     
     // Presents any alerts set during message updates
     //
     func showAlert() {
-        
+
         guard let alert = alert else {
             return
         }
         
-        dispatch_async(dispatch_get_main_queue(), {
-            self.presentViewController(alert, animated: true, completion: { () -> Void in
-                self.alert = nil
+        if !presentingAlert {
+            presentingAlert = true
+            dispatch_async(dispatch_get_main_queue(), {
+                self.presentViewController(alert, animated: true, completion: { () -> Void in
+                    self.alert = nil
+                    self.presentingAlert = false
+                })
             })
-        })
+        }
     }
     
     

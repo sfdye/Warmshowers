@@ -11,6 +11,7 @@ import CoreData
 
 enum CDWSMessageThreadError : ErrorType {
     case FailedValueForKey(key: String)
+    case ThreadWithIDNotFound(id: Int)
 }
 
 class CDWSMessageThread: NSManagedObject {
@@ -220,16 +221,14 @@ class CDWSMessageThread: NSManagedObject {
         }
     }
     
-    static func numberOfMessageThreads() -> Int {
+    static func numberOfMessageThreads() throws -> Int {
         do {
             let threads = try CDWSMessageThread.allMessageThreads()
             return threads.count
-        } catch let error {
-            return 0
         }
     }
     
-    static func numberOfMessagesOnThread(threadID: Int?) -> Int {
+    static func numberOfDownloadedMessagesOnThread(threadID: Int?) -> Int {
         if let messageThread = CDWSMessageThread.messageThreadWithID(threadID) {
             if let messages = messageThread.messages {
                 return messages.count
@@ -246,6 +245,34 @@ class CDWSMessageThread: NSManagedObject {
             return sum
         } catch {
             return 0
+        }
+    }
+    
+    static func messageThreadsThatNeedUpdating() throws -> [Int]? {
+        do {
+            var threadIDs = [Int]()
+            let threads = try CDWSMessageThread.allMessageThreads() 
+            for thread in threads {
+                if thread.needsUpdating() {
+                    if let threadID = thread.thread_id?.integerValue {
+                        threadIDs.append(threadID)
+                    }
+                }
+            }
+            if threadIDs.count > 0 {
+                return threadIDs
+            } else {
+                return nil
+            }
+        }
+    }
+    
+    static func allMessagesOnThread(threadID: Int) -> [CDWSMessage]? {
+        if let messageThread = CDWSMessageThread.messageThreadWithID(threadID) {
+            let messages = messageThread.messages?.allObjects as! [CDWSMessage]
+            return messages
+        } else {
+            return nil
         }
     }
 

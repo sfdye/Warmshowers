@@ -19,8 +19,7 @@ class MessageThreadTableViewController: UITableViewController {
     var threadID: Int? = nil
     var count: Int = 0
 
-    var updater: WSMessageThreadUpdater!
-    var queue = NSOperationQueue()
+    var updater: WSMessageUpdater!
     var refreshController = UIRefreshControl()
     
     var currentUserUID: Int? {
@@ -74,7 +73,7 @@ class MessageThreadTableViewController: UITableViewController {
     }
     
     func reload() {
-        count = CDWSMessageThread.numberOfMessagesOnThread(threadID)
+        count = CDWSMessageThread.numberOfDownloadedMessagesOnThread(threadID)
         tableView.reloadData()
     }
     

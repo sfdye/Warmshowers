@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15C50" minimumToolsVersion="Xcode 7.0">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15D21" minimumToolsVersion="Xcode 7.0">
     <entity name="Message" representedClassName=".CDWSMessage" syncable="YES">
         <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="is_new" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="message_id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="timestamp" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="author" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="sent_messages" inverseEntity="User" syncable="YES"/>
-        <relationship name="recipients" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="recieved_messages" inverseEntity="User" syncable="YES"/>
         <relationship name="thread" maxCount="1" deletionRule="Nullify" destinationEntity="MessageThread" inverseName="messages" inverseEntity="MessageThread" syncable="YES"/>
     </entity>
     <entity name="MessageThread" representedClassName=".CDWSMessageThread" syncable="YES">
@@ -26,13 +25,12 @@
         <attribute name="image_url" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="uid" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <relationship name="recieved_messages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" inverseName="recipients" inverseEntity="Message" syncable="YES"/>
         <relationship name="sent_messages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" inverseName="author" inverseEntity="Message" syncable="YES"/>
         <relationship name="threads" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MessageThread" inverseName="participants" inverseEntity="MessageThread" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Message" positionX="-162" positionY="-144" width="128" height="150"/>
+        <element name="Message" positionX="-162" positionY="-144" width="128" height="135"/>
         <element name="MessageThread" positionX="-342" positionY="-144" width="128" height="180"/>
-        <element name="User" positionX="-162" positionY="9" width="128" height="165"/>
+        <element name="User" positionX="-162" positionY="9" width="128" height="150"/>
     </elements>
 </model>

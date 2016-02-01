@@ -538,56 +538,56 @@ struct WSRequest {
         })
     }
     
-    // To send a new message
-    //
-    static func sendNewMessage(message: CDWSMessage, completion: (success: Bool) -> Void) {
-        
-        func makeRecipientString(message: CDWSMessage) -> String? {
-            
-            guard let recipients = message.recipients where recipients.count > 0 else {
-                return nil
-            }
-            
-            var recipientString = ""
-            for user in recipients {
-                if recipientString == "" {
-                    recipientString += user.name
-                } else {
-                    recipientString += "," + user.name
-                }
-            }
-            return recipientString
-        }
-        
-        guard let recipients = makeRecipientString(message),
-              let subject = message.thread?.subject,
-              let body = message.body
-            else {
-                return
-        }
-        
-        let service = WSRestfulService(type: .newMessage)!
-        
-        var params = [String: String]()
-        params["recipients"] = recipients
-        params["subject"] = subject
-        params["body"] = body
-        
-        requestWithCSRFToken(service, params: params, retry: true, doWithResponse: { (data, response, error) -> Void in
-            
-            guard let httpResponse = response as? NSHTTPURLResponse where data != nil && error == nil else {
-                completion(success: false)
-                return
-            }
-            
-            guard httpResponse.statusCode == 200 else {
-                completion(success: false)
-                return
-            }
-            
-            completion(success: true)
-        })
-    }
+//    // To send a new message
+//    //
+//    static func sendNewMessage(message: CDWSMessage, completion: (success: Bool) -> Void) {
+//        
+//        func makeRecipientString(message: CDWSMessage) -> String? {
+//            
+//            guard let recipients = message.recipients where recipients.count > 0 else {
+//                return nil
+//            }
+//            
+//            var recipientString = ""
+//            for user in recipients {
+//                if recipientString == "" {
+//                    recipientString += user.name
+//                } else {
+//                    recipientString += "," + user.name
+//                }
+//            }
+//            return recipientString
+//        }
+//        
+//        guard let recipients = makeRecipientString(message),
+//              let subject = message.thread?.subject,
+//              let body = message.body
+//            else {
+//                return
+//        }
+//        
+//        let service = WSRestfulService(type: .newMessage)!
+//        
+//        var params = [String: String]()
+//        params["recipients"] = recipients
+//        params["subject"] = subject
+//        params["body"] = body
+//        
+//        requestWithCSRFToken(service, params: params, retry: true, doWithResponse: { (data, response, error) -> Void in
+//            
+//            guard let httpResponse = response as? NSHTTPURLResponse where data != nil && error == nil else {
+//                completion(success: false)
+//                return
+//            }
+//            
+//            guard httpResponse.statusCode == 200 else {
+//                completion(success: false)
+//                return
+//            }
+//            
+//            completion(success: true)
+//        })
+//    }
 
     // To reply to a existing message
     //

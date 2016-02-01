@@ -15,6 +15,8 @@ enum CDWSMessageError : ErrorType {
 
 class CDWSMessage: NSManagedObject {
     
+    static let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+    
     var authorName: String? {
         if let author = self.author {
             return author.fullname
@@ -55,6 +57,19 @@ class CDWSMessage: NSManagedObject {
         self.message_id = message_id
         self.timestamp = NSDate(timeIntervalSince1970: timestamp)
         self.is_new = is_new
+        
+        // Don't need change the author if one already exist
+        guard author == nil else {
+            print("alreay got author")
+            return
+        }
+        
+        guard let author = json.valueForKey("author")?.integerValue else {
+            throw CDWSMessageThreadError.FailedValueForKey(key: "author")
+        }
+        
+        let user = CDWSUser.newOrExistingUser(author)
+        self.author = user
     }
     
     static func allMessages() throws -> [CDWSMessage] {
@@ -63,6 +78,31 @@ class CDWSMessage: NSManagedObject {
         do {
             let threads = try moc.executeFetchRequest(request) as! [CDWSMessage]
             return threads
+        }
+    }
+    
+    static func messageWithID(messageID: Int?) -> CDWSMessage? {
+        
+        guard let messageID = messageID else {
+            return nil
+        }
+        
+        let request = NSFetchRequest(entityName: "Message")
+        request.predicate = NSPredicate(format: "message_id==%i", messageID)
+        do {
+            let thread = try moc.executeFetchRequest(request).first as? CDWSMessage
+            return thread
+        } catch {
+            return nil
+        }
+    }
+    
+    static func newOrExistingMessage(messageID: Int) -> CDWSMessage {
+        if let message = messageWithID(messageID) {
+            return message
+        } else {
+            let message = NSEntityDescription.insertNewObjectForEntityForName("Message", inManagedObjectContext: moc) as! CDWSMessage
+            return message
         }
     }
 

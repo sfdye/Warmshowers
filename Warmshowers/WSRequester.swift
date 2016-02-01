@@ -168,14 +168,9 @@ class WSRequester : NSObject {
         reset()
     }
     
-    // Cancels the download task
-    //
-    func cancelDownload() {
-        task?.cancel()
-    }
-    
     // Cancels downloads and data parsing
+    //
     func cancel() {
-        self.cancelDownload()
+        task?.cancel()
     }
 }

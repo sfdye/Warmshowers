@@ -13,13 +13,9 @@ import CoreData
 //
 class WSMessageThreadsUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
     
-    let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-    var queue = NSOperationQueue()
-    
     override init() {
         super.init()
         requestDelegate = self
-        queue.maxConcurrentOperationCount = 1
     }
     
     func requestForDownload() -> NSURLRequest? {
@@ -33,62 +29,71 @@ class WSMessageThreadsUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
         guard let json = dataAsJSON() else {
             return
         }
-
-        do {
-            try saveMessageThreadsWithJSON(json)
-        } catch let error {
-            self.error = error as NSError
-        }
-    }
-    
-    // Parses JSON containing message threads
-    //
-    func saveMessageThreadsWithJSON(json: AnyObject) throws {
         
-        guard let json = json as? NSArray else {
-            throw DataError.InvalidInput
+        guard let threadsJSON = json as? NSArray else {
+            error = NSError(domain: "WSRequesterDomain", code: 40, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Failed to convert message thread JSON.", comment: "")])
+            return
         }
         
-        // Parse the json
-        var currentThreadIDs = [Int]()
-        for threadJSON in json {
+        let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        let privateMOC = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        privateMOC.parentContext = moc
+        
+        privateMOC.performBlock {
             
-            // Fail parsing if a message thread doesn't have an ID as it will cause problems later
-            guard let threadID = threadJSON.valueForKey("thread_id")?.integerValue else {
-                throw DataError.InvalidInput
-            }
-            
-            // Save the thread id
-            currentThreadIDs.append(threadID)
-            
-            // Retrive the thread from the store or save a new one
-            let messageThread = CDWSMessageThread.newOrExistingMessageThread(threadID)
-            do {
-                try messageThread.updateWithJSON(threadJSON)
-            }
-        }
-        
-        // Save the message threads to the store
-        do {
-            try moc.save()
-        }
-        
-        // Delete all threads that are not in the json
-        var allMessageThreads: [CDWSMessageThread]
-        do {
-            allMessageThreads = try CDWSMessageThread.allMessageThreads()
-            for messageThread in allMessageThreads {
-                if let threadID = messageThread.thread_id?.integerValue {
-                    if !(currentThreadIDs.contains(threadID)){
-                        moc.deleteObject(messageThread)
-                    }
+            // Parse the json
+            var currentThreadIDs = [Int]()
+            for threadJSON in threadsJSON {
+                
+                // Fail parsing if a message thread doesn't have an ID as it will cause problems later
+                guard let threadID = threadJSON.valueForKey("thread_id")?.integerValue else {
+                    self.error = NSError(domain: "WSRequesterDomain", code: 41, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Thread ID missing in message thread JSON.", comment: "")])
+                    return
+                }
+                
+                // Save the thread id
+                currentThreadIDs.append(threadID)
+                
+                // Retrive the thread from the store or save a new one
+                let messageThread = CDWSMessageThread.newOrExistingMessageThread(threadID)
+                do {
+                    try messageThread.updateWithJSON(threadJSON)
+                } catch let error as NSError {
+                    self.error = error
+                    return
                 }
             }
-        }
-        
-        // Save the deletions
-        do {
-            try moc.save()
+            
+            // Save the message threads to the store
+            do {
+                try privateMOC.save()
+            } catch let error as NSError {
+                self.error = error
+                return
+            }
+            
+            // Delete all threads that are not in the json
+            do {
+                let allMessageThreads = try CDWSMessageThread.allMessageThreads()
+                for messageThread in allMessageThreads {
+                    if let threadID = messageThread.thread_id?.integerValue {
+                        if !(currentThreadIDs.contains(threadID)){
+                            moc.deleteObject(messageThread)
+                        }
+                    }
+                }
+            } catch let error as NSError {
+                self.error = error
+                return
+            }
+            
+            // Save the deletions
+            do {
+                try privateMOC.save()
+            } catch let error as NSError {
+                self.error = error
+                return
+            }
         }
     }
     
@@ -100,5 +105,5 @@ class WSMessageThreadsUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
             self.tokenGetter.start()
         }
     }
-    
+
 }
