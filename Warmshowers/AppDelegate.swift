@@ -206,22 +206,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Deletes everything in the store
     func clearStore() throws {
         
-        // Roll back changes stored in the context
-        if managedObjectContext.hasChanges {
-            managedObjectContext.rollback()
-            
-        }
-        do {
-            try managedObjectContext.save()
-        }
-        
         let entities = managedObjectModel.entitiesByName.keys
         var request: NSFetchRequest
         
         // Cycle through entities and delete all entries
         for entity in entities {
             request = NSFetchRequest(entityName: entity)
-            print(entity)
             do {
                 let objects = try managedObjectContext.executeFetchRequest(request) as Array
                 for object in objects {
@@ -231,7 +221,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     try managedObjectContext.save()
                 }
             }
-            print("cleared")
         }
     }
     

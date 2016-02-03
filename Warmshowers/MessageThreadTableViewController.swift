@@ -17,7 +17,6 @@ let ReplyToMessageThreadSegueID = "ToReplyToMessage"
 class MessageThreadTableViewController: UITableViewController {
     
     var threadID: Int? = nil
-    var count: Int = 0
 
     var updater: WSMessageUpdater!
     var refreshController = UIRefreshControl()
@@ -31,7 +30,7 @@ class MessageThreadTableViewController: UITableViewController {
         super.viewDidLoad()
         
         // Set the view title
-        navigationItem.title = CDWSMessageThread.subjectForMessageThread(threadID)
+//        navigationItem.title = CDWSMessageThread.subjectForMessageThread(threadID)
         
         // Force the back button to plain style
         // TODO
@@ -73,7 +72,6 @@ class MessageThreadTableViewController: UITableViewController {
     }
     
     func reload() {
-        count = CDWSMessageThread.numberOfDownloadedMessagesOnThread(threadID)
         tableView.reloadData()
     }
     

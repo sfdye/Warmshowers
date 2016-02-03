@@ -522,7 +522,8 @@ class AccountTableViewController: UITableViewController {
             try recipient = getUserWithUID(uid)
         }
         
-        recipient?.updateFromJSON(info)
+        // TODO: Fix this to use message store manager
+//        recipient?.updateFromJSON(info)
 
         // save user to the store
         do {

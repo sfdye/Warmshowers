@@ -12,15 +12,15 @@ import CoreData
 class WSMessageUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
     
     var threadID: Int!
-    var callCompletionHandler = true
+    var store: WSMessageStore!
     
-    init(threadID: Int) {
+    init(threadID: Int, store: WSMessageStore) {
         super.init()
         requestDelegate = self
         self.threadID = threadID
-//        self.parsingQueue = parsingQueue
+        self.store = store
     }
-    
+ 
     func requestForDownload() -> NSURLRequest? {
         let service = WSRestfulService(type: .getMessageThread)!
         let params: [String: String] = ["thread_id": String(threadID)]
@@ -38,12 +38,8 @@ class WSMessageUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
             error = NSError(domain: "WSRequesterDomain", code: 30, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Messages JSON missing messages key", comment: "")])
             return
         }
-        
-        let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-        let privateMOC = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-        privateMOC.parentContext = moc
-        
-        privateMOC.performBlock {
+        print(store)
+        store.privateContext.performBlockAndWait {
             
             // Parse the json
             var currentMessageIDs = [Int]()
@@ -55,61 +51,35 @@ class WSMessageUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
                     return
                 }
                 
+                do {
+                    try self.store.addMessage(messageJSON, onThreadWithID: self.threadID)
+                } catch let nserror as NSError {
+                    self.error = nserror
+                    return
+                }
+                
                 // Save the thread id
                 currentMessageIDs.append(messageID)
                 
-                // Get the message thread from the store
-                if let thread = CDWSMessageThread.messageThreadWithID(self.threadID) {
-                    
-                    // Retrive the thread from the store or save a new one
-                    let message = CDWSMessage.newOrExistingMessage(messageID)
-                    if message.thread == nil {
-                        message.thread = thread
-                    }
-                    
-                    do {
-                        try message.updateWithJSON(messageJSON)
-                    } catch let error as NSError {
-                        privateMOC.deleteObject(message)
-                        self.error = error
-                        return
-                    }
-                    
-                } else {
-                    self.error = NSError(domain: "WSRequesterDomain", code: 33, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Failed to find message thread with id \(self.threadID) in the store", comment: "")])
-                    return
-                }
             }
             
-            // Save the message threads to the store
+            // Delete all messages that are not in the json
             do {
-                try privateMOC.save()
-            } catch let error as NSError {
-                privateMOC.rollback()
-                self.error = error
-                return
-            }
-            
-            // Delete all threads that are not in the json
-            if let allMessages = CDWSMessageThread.allMessagesOnThread(self.threadID) {
-                for message in allMessages {
-                    if let messageID = message.message_id?.integerValue {
-                        if !(currentMessageIDs.contains(messageID)){
-                            moc.deleteObject(message)
+                if let allMessages = try self.store.allMessagesOnThread(self.threadID) {
+                    for message in allMessages {
+                        if let messageID = message.message_id?.integerValue {
+                            if !(currentMessageIDs.contains(messageID)){
+                                self.store.privateContext.deleteObject(message)
+                            }
                         }
                     }
                 }
-            }
-            
-            // Save the deletions
-            do {
-                try privateMOC.save()
+                print("saving delete changes")
+                try self.store.savePrivateContext()
             } catch let error as NSError {
-                privateMOC.rollback()
                 self.error = error
                 return
             }
-            
         }
     }
     

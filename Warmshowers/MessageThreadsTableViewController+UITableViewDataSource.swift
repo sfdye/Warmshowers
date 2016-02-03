@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 
 extension MessageThreadsTableViewController {
     
@@ -15,28 +16,21 @@ extension MessageThreadsTableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if count == 0 {
-            return 1
-        } else {
-            return count
-        }
+        let sections = self.fetchedResultsController.sections!
+        let sectionInfo = sections[section]
+        print(sectionInfo.numberOfObjects)
+        return sectionInfo.numberOfObjects
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        if count == 0 {
-            
-            let cell = tableView.dequeueReusableCellWithIdentifier(PlaceholderCellID, forIndexPath: indexPath) as! PlaceholderTableViewCell
-            cell.placeholderLabel.text = "No Messages"
-            return cell
-            
-        } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier(MESSAGE_THREAD_CELL_ID, forIndexPath: indexPath) as! MessageThreadsTableViewCell
-            
-            let messageThread = CDWSMessageThread.messageThreadAtIndexPath(indexPath)
-            cell.configureWithMessageThread(messageThread)
-            return cell
-        }
+        let cell = tableView.dequeueReusableCellWithIdentifier(MessageThreadCellID, forIndexPath: indexPath) as! MessageThreadsTableViewCell
+        self.configureCell(cell, indexPath: indexPath)
+        return cell
     }
     
+    func configureCell(cell: UITableViewCell, indexPath: NSIndexPath) {
+        let messageThread = self.fetchedResultsController.objectAtIndexPath(indexPath) as! CDWSMessageThread
+        (cell as! MessageThreadsTableViewCell).configureWithMessageThread(messageThread)
+    }
+
 }

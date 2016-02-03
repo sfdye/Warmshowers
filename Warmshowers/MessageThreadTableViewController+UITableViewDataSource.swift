@@ -15,19 +15,20 @@ extension MessageThreadTableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return count
+        return 0
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if let message = CDWSMessageThread.messageAtIndexPath(indexPath, onMessageThreadWithID: threadID) {
-            let cellID = (message.author!.uid == currentUserUID) ? MessageFromSelfCellID : MessageFromUserCellID
+//        if let message = CDWSMessageThread.messageAtIndexPath(indexPath, onMessageThreadWithID: threadID) {
+//            let cellID = (message.author!.uid == currentUserUID) ? MessageFromSelfCellID : MessageFromUserCellID
+        let cellID = MessageFromSelfCellID
             let cell = tableView.dequeueReusableCellWithIdentifier(cellID, forIndexPath: indexPath) as! MessageTableViewCell
-            cell.configureWithMessage(message)
+//            cell.configureWithMessage(message)
             return cell
-        } else {
-            let cell = UITableViewCell()
-            return cell
-        }
+//        } else {
+//            let cell = UITableViewCell()
+//            return cell
+//        }
     }
     
 }

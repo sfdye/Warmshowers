@@ -8,6 +8,11 @@
 
 import Foundation
 
+enum WSRequesterState {
+    case Running
+    case Cancelled
+}
+
 class WSRequester : NSObject {
     
     // URL session
@@ -27,9 +32,11 @@ class WSRequester : NSObject {
     lazy var finalAttempt = false
     lazy var loginManager = WSLoginManager()
     
-    // Completion handlers
+    // Completion state / handlers
+    var state = WSRequesterState.Running
     var success: (() -> Void)?
     var failure: ((error: NSError) -> Void)?
+    var cancelled: (() -> Void)?
     
     override init() {
         super.init()
@@ -157,6 +164,12 @@ class WSRequester : NSObject {
     // Runs at the end of a request and calls eith success or failure callbacks
     //
     func end() {
+
+        if state == .Cancelled {
+            cancelled?()
+            print("WSRequester cancelling request")
+        }
+        
         if shouldCallCompletionHandler() {
             if error != nil {
                 failure?(error: error!)
@@ -165,12 +178,15 @@ class WSRequester : NSObject {
             }
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         }
+        
         reset()
     }
     
     // Cancels downloads and data parsing
     //
     func cancel() {
+        state = .Cancelled
         task?.cancel()
+        end()
     }
 }

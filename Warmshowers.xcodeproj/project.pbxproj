@@ -40,6 +40,7 @@
 		E557D86C1C50482200226E84 /* WSCSRFTokenGetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E557D86B1C50482200226E84 /* WSCSRFTokenGetter.swift */; };
 		E557D86E1C504DCF00226E84 /* WSRequestWithCSRFToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = E557D86D1C504DCF00226E84 /* WSRequestWithCSRFToken.swift */; };
 		E56B06291C5ED1D4006C7BF3 /* WSMessageUpdateOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56B06281C5ED1D4006C7BF3 /* WSMessageUpdateOperation.swift */; };
+		E56B062B1C5F0CAF006C7BF3 /* MessageThreadsTableViewController+NSFetchedResultsControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56B062A1C5F0CAF006C7BF3 /* MessageThreadsTableViewController+NSFetchedResultsControllerDelegate.swift */; };
 		E56CC0881BFD166200AAF973 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E56CC0871BFD166200AAF973 /* MapKit.framework */; };
 		E56CC08A1BFD22D800AAF973 /* HostSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56CC0891BFD22D800AAF973 /* HostSearchViewController.swift */; };
 		E56CC08C1BFD2EC300AAF973 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56CC08B1BFD2EC300AAF973 /* TabBarController.swift */; };
@@ -68,7 +69,6 @@
 		E5967BCE1C39DBC00037F4B7 /* CDWSUser+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967BC81C39DBC00037F4B7 /* CDWSUser+CoreDataProperties.swift */; };
 		E5967BCF1C39DBC00037F4B7 /* CDWSUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967BC91C39DBC00037F4B7 /* CDWSUser.swift */; };
 		E5A9F11C1C532BC5006D6499 /* WSMessageThreadsUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A9F11B1C532BC5006D6499 /* WSMessageThreadsUpdater.swift */; };
-		E5A9F11E1C55E536006D6499 /* WSSaveMessagesToStoreOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A9F11D1C55E536006D6499 /* WSSaveMessagesToStoreOperation.swift */; };
 		E5A9F1211C55F79A006D6499 /* WSProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A9F1201C55F79A006D6499 /* WSProgressHUD.swift */; };
 		E5A9F1231C561971006D6499 /* WSHostsOnMapUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A9F1221C561971006D6499 /* WSHostsOnMapUpdater.swift */; };
 		E5AF1A881C58A41A0004806A /* MessageThreadTableViewController+UITableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AF1A871C58A41A0004806A /* MessageThreadTableViewController+UITableViewDataSource.swift */; };
@@ -79,6 +79,8 @@
 		E5AF670A1C576C6300AC17A1 /* ComposeMessageViewController+UITableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AF67091C576C6300AC17A1 /* ComposeMessageViewController+UITableViewDataSource.swift */; };
 		E5AF670C1C576CAE00AC17A1 /* ComposeMessageViewController+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AF670B1C576CAE00AC17A1 /* ComposeMessageViewController+UITableViewDelegate.swift */; };
 		E5AF670E1C5775B100AC17A1 /* WSMessageSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AF670D1C5775B100AC17A1 /* WSMessageSender.swift */; };
+		E5D961501C6167EF004E1F31 /* WSPrivateContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D9614F1C6167EF004E1F31 /* WSPrivateContext.swift */; };
+		E5D961521C61FC75004E1F31 /* WSMessageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D961511C61FC75004E1F31 /* WSMessageStore.swift */; };
 		E5D96AF81BFB1CA700AFAFEE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D96AF71BFB1CA700AFAFEE /* AppDelegate.swift */; };
 		E5D96AFF1BFB1CA700AFAFEE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5D96AFD1BFB1CA700AFAFEE /* Main.storyboard */; };
 		E5D96B011BFB1CA700AFAFEE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5D96B001BFB1CA700AFAFEE /* Assets.xcassets */; };
@@ -178,6 +180,7 @@
 		E557D86B1C50482200226E84 /* WSCSRFTokenGetter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSCSRFTokenGetter.swift; sourceTree = "<group>"; };
 		E557D86D1C504DCF00226E84 /* WSRequestWithCSRFToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSRequestWithCSRFToken.swift; sourceTree = "<group>"; };
 		E56B06281C5ED1D4006C7BF3 /* WSMessageUpdateOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSMessageUpdateOperation.swift; sourceTree = "<group>"; };
+		E56B062A1C5F0CAF006C7BF3 /* MessageThreadsTableViewController+NSFetchedResultsControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadsTableViewController+NSFetchedResultsControllerDelegate.swift"; sourceTree = "<group>"; };
 		E56CC0871BFD166200AAF973 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		E56CC0891BFD22D800AAF973 /* HostSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostSearchViewController.swift; sourceTree = "<group>"; };
 		E56CC08B1BFD2EC300AAF973 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -207,7 +210,6 @@
 		E5967BC81C39DBC00037F4B7 /* CDWSUser+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDWSUser+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E5967BC91C39DBC00037F4B7 /* CDWSUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CDWSUser.swift; sourceTree = "<group>"; };
 		E5A9F11B1C532BC5006D6499 /* WSMessageThreadsUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSMessageThreadsUpdater.swift; sourceTree = "<group>"; };
-		E5A9F11D1C55E536006D6499 /* WSSaveMessagesToStoreOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSSaveMessagesToStoreOperation.swift; sourceTree = "<group>"; };
 		E5A9F1201C55F79A006D6499 /* WSProgressHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSProgressHUD.swift; sourceTree = "<group>"; };
 		E5A9F1221C561971006D6499 /* WSHostsOnMapUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSHostsOnMapUpdater.swift; sourceTree = "<group>"; };
 		E5AF1A871C58A41A0004806A /* MessageThreadTableViewController+UITableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadTableViewController+UITableViewDataSource.swift"; sourceTree = "<group>"; };
@@ -218,6 +220,8 @@
 		E5AF67091C576C6300AC17A1 /* ComposeMessageViewController+UITableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ComposeMessageViewController+UITableViewDataSource.swift"; sourceTree = "<group>"; };
 		E5AF670B1C576CAE00AC17A1 /* ComposeMessageViewController+UITableViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ComposeMessageViewController+UITableViewDelegate.swift"; sourceTree = "<group>"; };
 		E5AF670D1C5775B100AC17A1 /* WSMessageSender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSMessageSender.swift; sourceTree = "<group>"; };
+		E5D9614F1C6167EF004E1F31 /* WSPrivateContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSPrivateContext.swift; sourceTree = "<group>"; };
+		E5D961511C61FC75004E1F31 /* WSMessageStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSMessageStore.swift; sourceTree = "<group>"; };
 		E5D96AF41BFB1CA700AFAFEE /* Warmshowers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Warmshowers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5D96AF71BFB1CA700AFAFEE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E5D96AFE1BFB1CA700AFAFEE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -395,7 +399,6 @@
 				E54A572E1BFDC446000843A9 /* WSRequests.swift */,
 				E557D86D1C504DCF00226E84 /* WSRequestWithCSRFToken.swift */,
 				E5F6F3091C2B36930000A87E /* WSRestfulService.swift */,
-				E5A9F11D1C55E536006D6499 /* WSSaveMessagesToStoreOperation.swift */,
 				E54A57301BFE6FB2000843A9 /* WSURL.swift */,
 				E56B06281C5ED1D4006C7BF3 /* WSMessageUpdateOperation.swift */,
 			);
@@ -455,6 +458,7 @@
 				E52E8AB01C0D0B1A000391AB /* MessageThreadsTableViewCell.swift */,
 				E5AF1A891C58A44E0004806A /* MessageThreadsTableViewController+UITableViewDataSource.swift */,
 				E5AF1A8C1C58A49A0004806A /* MessageThreadsTableViewController+UITableViewDelegate.swift */,
+				E56B062A1C5F0CAF006C7BF3 /* MessageThreadsTableViewController+NSFetchedResultsControllerDelegate.swift */,
 			);
 			name = MessageThreadsTableView;
 			sourceTree = "<group>";
@@ -587,6 +591,8 @@
 			isa = PBXGroup;
 			children = (
 				E5DA03FC1C4C947100FAD1D7 /* WSSettings.swift */,
+				E5D9614F1C6167EF004E1F31 /* WSPrivateContext.swift */,
+				E5D961511C61FC75004E1F31 /* WSMessageStore.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -849,6 +855,7 @@
 				E5DA03E01C490ECC00FAD1D7 /* HostListTableViewController+UITableViewDataSource.swift in Sources */,
 				E5DA04031C4CE6B500FAD1D7 /* PlaceholderTableViewCell.swift in Sources */,
 				E52E8A9F1C0BD25A000391AB /* HostSearchViewController+MKMapViewDelegate.swift in Sources */,
+				E56B062B1C5F0CAF006C7BF3 /* MessageThreadsTableViewController+NSFetchedResultsControllerDelegate.swift in Sources */,
 				E5967BBB1C3922170037F4B7 /* MessageThreadTableViewController.swift in Sources */,
 				E5967B9F1C3490740037F4B7 /* WSOffers.swift in Sources */,
 				E54A57641C03E4A4000843A9 /* AccountTableViewController.swift in Sources */,
@@ -892,10 +899,10 @@
 				E5DA04011C4CDE6500FAD1D7 /* SpinnerTableViewCell.swift in Sources */,
 				E5700C521C44CB64008C8A87 /* ComposeMessageViewController+UITextViewDelegate.swift in Sources */,
 				E54276881C3E83E500047029 /* CreateFeedbackTableViewController+UIPickerViewDataSource.swift in Sources */,
+				E5D961521C61FC75004E1F31 /* WSMessageStore.swift in Sources */,
 				E542767E1C3E544600047029 /* WSRecommendationRating.swift in Sources */,
 				E5AF1A8D1C58A49A0004806A /* MessageThreadsTableViewController+UITableViewDelegate.swift in Sources */,
 				E5967BB21C38A11E0037F4B7 /* FeedbackTableViewController.swift in Sources */,
-				E5A9F11E1C55E536006D6499 /* WSSaveMessagesToStoreOperation.swift in Sources */,
 				E5967BA31C361A9F0037F4B7 /* PhoneTableViewCell.swift in Sources */,
 				E5967BB41C38A8ED0037F4B7 /* WSRecommendation.swift in Sources */,
 				E5F6F3111C3122740000A87E /* HostingInfoTableViewCell.swift in Sources */,
@@ -929,6 +936,7 @@
 				E5700C541C44EE51008C8A87 /* ComposeMessageViewController+UITextFieldDelegate.swift in Sources */,
 				E5967BA91C36910C0037F4B7 /* AvailiblityTableViewCell.swift in Sources */,
 				E5A9F1231C561971006D6499 /* WSHostsOnMapUpdater.swift in Sources */,
+				E5D961501C6167EF004E1F31 /* WSPrivateContext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

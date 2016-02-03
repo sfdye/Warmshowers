@@ -157,20 +157,28 @@ class HostSearchViewController: UIViewController {
     func updateHostsOnMap() {
         if mapUpdater == nil {
             mapUpdater = WSHostsOnMapUpdater(hostsOnMap: hostsOnMap, mapView: mapView)
-            mapUpdater?.success = {
+            mapUpdater!.success = {
                 // update the cluster controller on the main thread
-                self.hostsOnMap = self.mapUpdater!.hostsOnMap
+                print(self.mapUpdater)
+                if let updater = self.mapUpdater {
+                    self.hostsOnMap = updater.hostsOnMap
+                }
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.updateClusteringController()
                 })
                 self.mapUpdater = nil
             }
-            mapUpdater?.failure = { (error) -> Void in
+            mapUpdater!.failure = { (error) -> Void in
                 print(error.localizedDescription)
+                self.mapUpdater = nil
             }
+            mapUpdater!.cancelled = { () -> Void in
+                self.mapUpdater = nil
+            }
+            
             mapUpdater?.tokenGetter.start()
         } else {
-            mapUpdater?.cancel()
+            mapUpdater!.cancel()
         }
     }
     
