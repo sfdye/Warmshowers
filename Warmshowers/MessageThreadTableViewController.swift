@@ -169,9 +169,15 @@ class MessageThreadTableViewController: UITableViewController {
                     
                     WSRequest.getUserThumbnailImage(uid, doWithImage: { (image) -> Void in
                         
+                        guard let image = image else {
+                            return
+                        }
+                        
                         do {
-                            try self.store.updateUser(uid, withImage: image!)
-                            self.reloadMessagesWithAuthorUID(uid)
+                            try self.store.updateUser(uid, withImage: image)
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                self.reloadImage(image, forAuthor: uid)
+                            })
                         } catch {
                             // Not a big deal if the thumbnails don't load
                         }
@@ -183,26 +189,17 @@ class MessageThreadTableViewController: UITableViewController {
         }
     }
 
-    // Reloads rows in the table view by author uid
+    // Reloads thumbnails in the tableview for a given user
     //
-    func reloadMessagesWithAuthorUID(uid: Int) {
+    func reloadImage(image: UIImage, forAuthor uid: Int) {
         
         let numberOfRows = tableView.numberOfRowsInSection(0)
-        var indexPaths = [NSIndexPath]()
         for row in 0...numberOfRows - 1 {
             let indexPath = NSIndexPath(forRow: row, inSection: 0)
             let message = self.fetchedResultsController.objectAtIndexPath(indexPath) as! CDWSMessage
             if message.author!.uid == uid {
-                indexPaths.append(indexPath)
-            }
-        }
-
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
-            do {
-                try self.fetchedResultsController.performFetch()
-                self.tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
-            } catch {
-                // Not a big deal if the thumbnail doesn't load
+                let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! MessageTableViewCell
+                cell.authorImageView.image = image
             }
         }
     }
