@@ -16,18 +16,10 @@ class MessageTableViewCell: UITableViewCell {
     @IBOutlet var authorImageView: UIImageView!
     
     func configureWithMessage(message: CDWSMessage) {
-        setAuthor(message)
+        fromLabel.text = message.authorName ?? ""
         setDate(message.timestamp)
         bodyTextView.text = message.body
-        setAuthorImage(message.authorThumbnail)
-    }
-    
-    func setAuthor(message: CDWSMessage) {
-        if let name = message.authorName {
-            fromLabel.text = name
-        } else {
-            fromLabel.text = ""
-        }
+        authorImageView.image = message.authorThumbnail ?? UIImage(named: "ThumbnailPlaceholder")
     }
 
     func setDate(date: NSDate?) {
@@ -39,11 +31,5 @@ class MessageTableViewCell: UITableViewCell {
             dateLabel.text = formatter.stringFromDate(date!)
         }
     }
-    
-    func setAuthorImage(image: UIImage?) {
-        guard let image = image else {
-            return
-        }
-        authorImageView.image = image
-    }
+
 }

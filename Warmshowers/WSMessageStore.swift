@@ -13,6 +13,8 @@ enum WSMessageEntity : String {
     case Thread = "MessageThread"
     case Message = "Message"
     case User = "User"
+    
+    static let allValues = [Thread, Message, User]
 }
 
 class WSMessageStore {
@@ -74,6 +76,23 @@ class WSMessageStore {
         }
     }
     
+    // Deletes all objects from the store
+    //
+    func clearout() throws {
+    
+        // Cycle through entities and delete all entries
+        let entities = WSMessageEntity.allValues
+        do {
+            for entity in entities {
+                let objects = try getAllFromEntity(entity) as! [NSManagedObject]
+                for object in objects {
+                    privateContext.deleteObject(object)
+                    try savePrivateContext()
+                }
+            }
+        }
+    }
+    
     
     // MARK: Message thread handling methods
     
@@ -107,10 +126,8 @@ class WSMessageStore {
     func newOrExistingMessageThread(threadID: Int) throws -> CDWSMessageThread {
         do {
             if let thread = try messageThreadWithID(threadID) {
-                print("exisiting thread")
                 return thread
             } else {
-                print("new thread")
                 let thread = NSEntityDescription.insertNewObjectForEntityForName(WSMessageEntity.Thread.rawValue, inManagedObjectContext: privateContext) as! CDWSMessageThread
                 return thread
             }
@@ -218,6 +235,24 @@ class WSMessageStore {
                 messages = messageThread.messages?.allObjects as? [CDWSMessage]
             }
             return messages
+        }
+    }
+    
+    func subjectForMessageThreadWithID(threadID: Int) -> String? {
+        do {
+            let messageThread = try messageThreadWithID(threadID)
+            let subject = messageThread?.subject
+            return subject
+        } catch {
+            return nil
+        }
+    }
+    
+    func markMessageThreadAsRead(threadID: Int) throws {
+        do {
+            let messageThread = try messageThreadWithID(threadID)
+            messageThread?.is_new = false
+            try savePrivateContext()
         }
     }
     
@@ -399,7 +434,7 @@ class WSMessageStore {
     }
     
     // Updates a users profile thumbnail image url
-    func updateUserImageWithJSON(json: AnyObject) throws {
+    func updateUserImageURLWithJSON(json: AnyObject) throws {
         
         guard let uid = json.valueForKey("uid")?.integerValue else {
             throw DataError.InvalidInput
@@ -410,12 +445,24 @@ class WSMessageStore {
                 user.image_url = json.valueForKey("profile_image_map_infoWindow") as? String
                 try savePrivateContext()
             } else {
-                let error = NSError(domain: "WSMessageStore", code: 1, userInfo: [NSLocalizedDescriptionKey : "Can not update image for user. User is not in the store."])
+                let error = NSError(domain: "WSMessageStore", code: 1, userInfo: [NSLocalizedDescriptionKey : "Can not update image url for user. User is not in the store."])
                 throw error
             }
         }
     }
-
-
+    
+    // Update a user with a thumbnail image 
+    func updateUser(uid: Int, withImage image: UIImage) throws {
+        
+        do {
+            if let user = try userWithID(uid) {
+                user.image = image
+                try savePrivateContext()
+            } else {
+                let error = NSError(domain: "WSMessageStore", code: 2, userInfo: [NSLocalizedDescriptionKey : "Can not update image for user. User is not in the store."])
+                throw error
+            }
+        }
+    }
 }
 

@@ -18,7 +18,6 @@ extension MessageThreadsTableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let sections = self.fetchedResultsController.sections!
         let sectionInfo = sections[section]
-        print(sectionInfo.numberOfObjects)
         return sectionInfo.numberOfObjects
     }
     

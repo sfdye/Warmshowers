@@ -1,15 +1,15 @@
 //
-//  MessageThreadsTableViewController+UIFetchedResultsControllerDelegate.swift
+//  MessageThreadTableViewController+NSFetchedResultsControllerDelegate.swift
 //  Warmshowers
 //
-//  Created by Rajan Fernandez on 1/02/16.
+//  Created by Rajan Fernandez on 4/02/16.
 //  Copyright © 2016 Rajan Fernandez. All rights reserved.
 //
 
-import UIKit
+import Foundation
 import CoreData
 
-extension MessageThreadsTableViewController : NSFetchedResultsControllerDelegate {
+extension MessageThreadTableViewController : NSFetchedResultsControllerDelegate {
     
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
@@ -55,5 +55,4 @@ extension MessageThreadsTableViewController : NSFetchedResultsControllerDelegate
             self.tableView.endUpdates()
         }
     }
-    
 }

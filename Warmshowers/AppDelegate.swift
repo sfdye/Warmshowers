@@ -11,7 +11,6 @@ import MapKit
 import CoreData
 
 // FIRST TODOs
-// fix message deleting on logout
 // trigger a message view reloads after sending a reply message
 // fix map loading errors
 // put user password in keychain
@@ -187,40 +186,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return managedObjectContext
     }()
     
-    // MARK: - Core Data Saving support
+    // MARK: - Message saving support
     
-    func saveContext () {
-        if managedObjectContext.hasChanges {
-            do {
-                try managedObjectContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nserror = error as NSError
-                print("Core data save error: \(nserror.localizedDescription)")
-                print(nserror.userInfo)
-            }
-        }
-    }
+    // The message store
+    lazy var store = WSMessageStore()
     
     // Deletes everything in the store
     func clearStore() throws {
         
-        let entities = managedObjectModel.entitiesByName.keys
-        var request: NSFetchRequest
-        
-        // Cycle through entities and delete all entries
-        for entity in entities {
-            request = NSFetchRequest(entityName: entity)
-            do {
-                let objects = try managedObjectContext.executeFetchRequest(request) as Array
-                for object in objects {
-                    managedObjectContext.deleteObject(object as! NSManagedObject)
-                }
-                do {
-                    try managedObjectContext.save()
-                }
-            }
+        do {
+            try store.clearout()
         }
     }
     

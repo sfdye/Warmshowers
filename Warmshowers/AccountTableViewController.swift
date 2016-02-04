@@ -466,7 +466,6 @@ class AccountTableViewController: UITableViewController {
     }
     
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
-        print(identifier)
         switch identifier {
         case ToFeedbackSegueID:
             return feedback.count > 0
@@ -483,7 +482,7 @@ class AccountTableViewController: UITableViewController {
         if segue.identifier == ToFeedbackSegueID {
             let feedbackVC = segue.destinationViewController as! FeedbackTableViewController
             feedbackVC.lazyImageObjects = feedback
-            feedbackVC.placeHolderImageName = "ThumbnailPlaceholder"
+            feedbackVC.placeholderImageName = "ThumbnailPlaceholder"
         }
         if segue.identifier == ToSendNewMessageSegueID {
             let navVC = segue.destinationViewController as! UINavigationController

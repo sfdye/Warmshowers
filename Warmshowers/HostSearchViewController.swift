@@ -79,7 +79,7 @@ class HostSearchViewController: UIViewController {
         // Table view
         tableViewController.tableView = tableView
         tableViewController.dataSource = self
-        tableViewController.placeHolderImageName = "ThumbnailPlaceholder"
+        tableViewController.placeholderImageName = "ThumbnailPlaceholder"
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 74
         
@@ -159,7 +159,6 @@ class HostSearchViewController: UIViewController {
             mapUpdater = WSHostsOnMapUpdater(hostsOnMap: hostsOnMap, mapView: mapView)
             mapUpdater!.success = {
                 // update the cluster controller on the main thread
-                print(self.mapUpdater)
                 if let updater = self.mapUpdater {
                     self.hostsOnMap = updater.hostsOnMap
                 }
@@ -169,10 +168,6 @@ class HostSearchViewController: UIViewController {
                 self.mapUpdater = nil
             }
             mapUpdater!.failure = { (error) -> Void in
-                print(error.localizedDescription)
-                self.mapUpdater = nil
-            }
-            mapUpdater!.cancelled = { () -> Void in
                 self.mapUpdater = nil
             }
             
@@ -353,7 +348,7 @@ class HostSearchViewController: UIViewController {
             let navVC = segue.destinationViewController as! UINavigationController
             let hostListTVC = navVC.viewControllers.first as! HostListTableViewController
             hostListTVC.lazyImageObjects = users
-            hostListTVC.placeHolderImageName = "ThumbnailPlaceholder"
+            hostListTVC.placeholderImageName = "ThumbnailPlaceholder"
         default:
             return
         }

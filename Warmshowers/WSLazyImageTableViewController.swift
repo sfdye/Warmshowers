@@ -21,12 +21,12 @@ class WSLazyImageTableViewController: UITableViewController {
     
     var lazyImageObjects = [AnyObject]()
     var imageDownloadsInProgress = [NSIndexPath: WSLazyImageDownloader]()
-    var placeHolderImageName: String?
-    var placeHolderImage: UIImage? {
-        guard let placeHolderImageName = placeHolderImageName else {
+    var placeholderImageName: String?
+    var placeholderImage: UIImage? {
+        guard let placeholderImageName = placeholderImageName else {
             return nil
         }
-        return UIImage(named: placeHolderImageName)
+        return UIImage(named: placeholderImageName)
     }
     var dataSource: WSLazyImageTableViewDataSource!
         
@@ -68,7 +68,7 @@ class WSLazyImageTableViewController: UITableViewController {
             if tableView.dragging == false && tableView.decelerating == false {
                 startImageDownload(object, indexPath: indexPath)
             }
-            cell.lazyImage = placeHolderImage
+            cell.lazyImage = placeholderImage
         }
     }
     
@@ -83,9 +83,8 @@ class WSLazyImageTableViewController: UITableViewController {
         if imageDownloadsInProgress[indexPath] == nil {
             
             // Create and start a imageDownloader object
-            let imageDownloader = WSLazyImageDownloader()
-            imageDownloader.object = object
-            imageDownloader.placeHolderImage = placeHolderImage
+            let imageDownloader = WSLazyImageDownloader(lazyImageObject: object)
+            imageDownloader.placeholderImage = placeholderImage
             imageDownloader.success = {
                 
                 // Update the cell with the objects profile image

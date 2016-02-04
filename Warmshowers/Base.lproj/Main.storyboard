@@ -1658,8 +1658,8 @@ Second line</string>
         <image name="ThumbnailPlaceholder" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="Lua-AG-L6Z"/>
         <segue reference="chp-Mq-xSE"/>
         <segue reference="BZz-ra-FxF"/>
-        <segue reference="1RT-Kj-eKu"/>
     </inferredMetricsTieBreakers>
 </document>

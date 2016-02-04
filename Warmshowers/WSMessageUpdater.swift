@@ -38,7 +38,7 @@ class WSMessageUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
             error = NSError(domain: "WSRequesterDomain", code: 30, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Messages JSON missing messages key", comment: "")])
             return
         }
-        print(store)
+
         store.privateContext.performBlockAndWait {
             
             // Parse the json
@@ -74,7 +74,6 @@ class WSMessageUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
                         }
                     }
                 }
-                print("saving delete changes")
                 try self.store.savePrivateContext()
             } catch let error as NSError {
                 self.error = error

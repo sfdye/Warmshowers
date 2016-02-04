@@ -16,10 +16,25 @@ let ReplyToMessageThreadSegueID = "ToReplyToMessage"
 
 class MessageThreadTableViewController: UITableViewController {
     
-    var threadID: Int? = nil
+    var threadID: Int!
 
-    var updater: WSMessageUpdater!
+    lazy var messageUpdater: WSMessageUpdater = {
+        let messageUpdater = WSMessageUpdater(threadID: self.threadID, store: self.store)
+        messageUpdater.success = {
+            self.reload()
+        }
+        messageUpdater.failure = { (error) -> Void in
+            // Reload and show an error alert
+            self.setErrorAlert(error)
+            self.reload()
+        }
+        return messageUpdater
+    }()
+    let store = (UIApplication.sharedApplication().delegate as! AppDelegate).store
     var refreshController = UIRefreshControl()
+    var fetchedResultsController: NSFetchedResultsController!
+    var alert: UIAlertController?
+    var presentingAlert = false
     
     var currentUserUID: Int? {
         let defaults = NSUserDefaults.standardUserDefaults()
@@ -30,59 +45,84 @@ class MessageThreadTableViewController: UITableViewController {
         super.viewDidLoad()
         
         // Set the view title
-//        navigationItem.title = CDWSMessageThread.subjectForMessageThread(threadID)
-        
-        // Force the back button to plain style
-        // TODO
+        navigationItem.title = store.subjectForMessageThreadWithID(threadID)
         
         // Configure the table view
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 104
         
-        // Update the table view data source
-        tableView.reloadData()
+        // Set up the fetch results controller
+        initializeFetchedResultsController()
         
-//        // Configure the updater
-//        updater = WSMessageThreadUpdater(messageThread: messageThread!, queue: queue)
-//        updater.success = {
-//            self.updateDataSource()
-//            self.refreshControl!.endRefreshing()
-//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                self.tableView.reloadData()
-//            })
-//        }
-//        updater.failure = {
-//            self.refreshControl!.endRefreshing()
-//            print(self.updater.error)
-//        }
-        
-        // Configure the refresh controller
         // Set the refresh controller for the tableview
-        let refreshController = UIRefreshControl()
-        refreshController.addTarget(self, action: Selector("updateMessages"), forControlEvents: UIControlEvents.ValueChanged)
-        self.refreshControl = refreshController
-        
+        initializeRefreshController()
+
         // Update the model
-//        updateAuthorImages()
-//        markAsRead()
+        updateAuthorImages()
+        markAsRead()
+        
+        // Reload the table
+        self.reload()
     }
     
     override func viewWillAppear(animated: Bool) {
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: WSColor.Green, NSFontAttributeName: WSFont.SueEllenFrancisco(18)]
     }
     
-    func reload() {
-        tableView.reloadData()
+    func initializeFetchedResultsController() {
+        
+        guard let threadID = threadID else {
+            return
+        }
+        
+        let request = NSFetchRequest(entityName: "Message")
+        request.predicate = NSPredicate(format: "thread.thread_id==%i", threadID)
+        request.sortDescriptors = [NSSortDescriptor(key: "timestamp", ascending: false)]
+        
+        self.fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: store.privateContext, sectionNameKeyPath: nil, cacheName: nil)
+        fetchedResultsController.delegate = self
+        
+        do {
+            try self.fetchedResultsController.performFetch()
+        } catch {
+            fatalError("Failed to initialize FetchedResultsController: \(error)")
+        }
     }
     
-//    func updateDataSource() {
-//        // Get the messages and sort them by date
-//        messages = messageThread?.messages?.allObjects as! [CDWSMessage]
-//        messages.sortInPlace({
-//            return $0.timestamp!.laterDate($1.timestamp!).isEqualToDate($1.timestamp!)
-//        })
-//    }
-
+    func initializeRefreshController() {
+        let refreshController = UIRefreshControl()
+        refreshController.addTarget(self, action: Selector("update"), forControlEvents: UIControlEvents.ValueChanged)
+        self.refreshControl = refreshController
+    }
+    
+    // Updates the messages
+    //
+    func update() {
+        messageUpdater.update()
+    }
+    
+    // Reloads the tableview and hides any activity indicators
+    //
+    func reload() {
+        
+        // Hide any activity indicators and reload the tableview
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.refreshControl!.endRefreshing()
+            do {
+                try self.fetchedResultsController.performFetch()
+                self.tableView.reloadData()
+            } catch {
+                // If there is a problem fetching suggest that the user reinstall the app
+                self.alert = UIAlertController(title: "There was a problem loading your messages.", message: "Please try uninstalling and reinstalling the app and report this issue.", preferredStyle: .Alert)
+                let okAction = UIAlertAction(title: "Dismiss", style: .Default, handler: nil)
+                self.alert!.addAction(okAction)
+            }
+        })
+        
+        // Show errors
+        showAlert()
+    }
+    
     
     // MARK: Navigation
     
@@ -104,80 +144,109 @@ class MessageThreadTableViewController: UITableViewController {
     
     // MARK: Utility methods
     
-//    // Updates all the author thumbnails
-//    //
-//    func updateAuthorImages() {
-//        
-//        let authors = messageThread?.participants?.allObjects as! [CDWSUser]
-//        
-//        for author in authors {
-//            if author.image == nil {
-//                
-//                let uid = author.uid!.integerValue
-//                
-//                WSRequest.getUserThumbnailImage(uid, doWithImage: { (image) -> Void in
-//                    if let image = image {
-//                        author.image = image
-//                        do {
-//                            try self.moc.save()
-//                            self.reloadMessagesWithAuthorUID(uid)
-//                        } catch {
-//                            print("Error saving user thumbnail to store.")
-//                        }
-//                    }
-//                })
-//            }
-//        }
-//    }
-//    
-//    // Reloads rows in the table view by author uid
-//    //
-//    func reloadMessagesWithAuthorUID(uid: Int) {
-//        
-//        guard messages.count > 0 else {
-//            return
-//        }
-//        
-//        var indexPaths = [NSIndexPath]()
-//        
-//        for (index, message) in messages.enumerate() {
-//            if message.author!.uid!.integerValue == uid {
-//                indexPaths.append(NSIndexPath(forRow: index, inSection: 0))
-//            }
-//        }
-//        
-//        dispatch_async(dispatch_get_main_queue()) { () -> Void in
-//            self.tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
-//        }
-//    }
+    // Updates all the author thumbnails
+    //
+    func updateAuthorImages() {
+        
+        do {
+            let messageThread = try store.messageThreadWithID(threadID)
+            let authors = messageThread?.participants?.allObjects as! [CDWSUser]
+            for author in authors {
+                if author.image == nil {
+                    
+                    let uid = author.uid!.integerValue
+                    
+                    WSRequest.getUserThumbnailImage(uid, doWithImage: { (image) -> Void in
+                        
+                        do {
+                            try self.store.updateUser(uid, withImage: image!)
+                            self.reloadMessagesWithAuthorUID(uid)
+                        } catch {
+                            // Not a big deal if the thumbnails don't load
+                        }
+                    })
+                }
+            }
+        } catch {
+            // Not a big deal if the thumbnails don't load
+        }
+    }
+
+    // Reloads rows in the table view by author uid
+    //
+    func reloadMessagesWithAuthorUID(uid: Int) {
+        
+        let numberOfRows = tableView.numberOfRowsInSection(0)
+        var indexPaths = [NSIndexPath]()
+        for row in 0...numberOfRows - 1 {
+            let indexPath = NSIndexPath(forRow: row, inSection: 0)
+            let message = self.fetchedResultsController.objectAtIndexPath(indexPath) as! CDWSMessage
+            if message.author!.uid == uid {
+                indexPaths.append(indexPath)
+            }
+        }
+
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            do {
+                try self.fetchedResultsController.performFetch()
+                self.tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: .Automatic)
+            } catch {
+                // Not a big deal if the thumbnail doesn't load
+            }
+        }
+    }
     
-//    // Mark message thread as read
-//    func markAsRead() {
-//        
-//        guard let threadID = messageThread?.thread_id!.integerValue else {
-//            return
-//        }
-//        
-//        WSRequest.markMessageThread(threadID) { (data) -> Void in
-//            
-//            // On success update the local model
-//            self.messageThread?.is_new = false
-//            do {
-//                try self.moc.save()
-//            } catch {
-//                print("failed")
-//            }
-//        }
-//    }
+    // Sets an failed update alert to be displayed at the end of the updates
+    //
+    func setErrorAlert(error: NSError? = nil) {
+        
+        guard alert == nil else {
+            return
+        }
+        
+        if !presentingAlert {
+            var message: String = "Please check that you are connected to the internet and try again."
+            if let error = error {
+                message = error.localizedDescription
+            }
+            let alert = UIAlertController(title: "Failed to update messages", message: message, preferredStyle: .Alert)
+            let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            alert.addAction(okAction)
+            self.alert = alert
+        }
+    }
     
-//    func updateMessages() {
-//        
-//        // Clear the messages from the context
-//        messages = [CDWSMessage]()
-//        
-//        // Update the thread
-//        updater.error = nil
-//        updater.tokenGetter.start()
-//    }
+    // Presents any alerts set during message updates
+    //
+    func showAlert() {
+        
+        guard let alert = alert else {
+            return
+        }
+        
+        if !presentingAlert {
+            presentingAlert = true
+            dispatch_async(dispatch_get_main_queue(), {
+                self.presentViewController(alert, animated: true, completion: { () -> Void in
+                    self.alert = nil
+                    self.presentingAlert = false
+                })
+            })
+        }
+    }
+    
+    // Mark message thread as read
+    func markAsRead() {
+
+        WSRequest.markMessageThread(threadID) { (data) -> Void in
+            
+            // On success update the local model
+            do {
+                try self.store.markMessageThreadAsRead(self.threadID)
+            } catch {
+                // This is not an important error
+            }
+        }
+    }
     
 }

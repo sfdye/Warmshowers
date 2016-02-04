@@ -10,12 +10,13 @@ import Foundation
 
 class WSLazyImageDownloader : WSRequester, WSRequestDelegate {
     
-    var object: WSLazyImage?
-    var placeHolderImage: UIImage?
+    var object: WSLazyImage!
+    var placeholderImage: UIImage?
     
-    override init() {
+    init(lazyImageObject: WSLazyImage) {
         super.init()
         requestDelegate = self
+        self.object = lazyImageObject
     }
     
     func requestForDownload() -> NSURLRequest? {
@@ -37,12 +38,12 @@ class WSLazyImageDownloader : WSRequester, WSRequestDelegate {
         if let image = UIImage(data: data) {
             object?.lazyImage = image
         } else {
-            object?.lazyImage = self.placeHolderImage
+            object?.lazyImage = self.placeholderImage
         }
     }
     
     override func nilDataAction() {
-        object?.lazyImage = self.placeHolderImage
+        object?.lazyImage = self.placeholderImage
     }
     
 }

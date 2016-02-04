@@ -36,7 +36,6 @@ class WSRequester : NSObject {
     var state = WSRequesterState.Running
     var success: (() -> Void)?
     var failure: ((error: NSError) -> Void)?
-    var cancelled: (() -> Void)?
     
     override init() {
         super.init()
@@ -164,11 +163,6 @@ class WSRequester : NSObject {
     // Runs at the end of a request and calls eith success or failure callbacks
     //
     func end() {
-
-        if state == .Cancelled {
-            cancelled?()
-            print("WSRequester cancelling request")
-        }
         
         if shouldCallCompletionHandler() {
             if error != nil {

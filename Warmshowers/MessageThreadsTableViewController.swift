@@ -24,7 +24,7 @@ class MessageThreadsTableViewController: UITableViewController {
     var count: Int = 0
     
     var messageThreadUpdater: WSMessageThreadsUpdater!
-    let store = WSMessageStore()
+    let store = (UIApplication.sharedApplication().delegate as! AppDelegate).store
     var lastUpdated: NSDate?
     var updatesInProgress = [Int: WSMessageUpdater]()
     var alert: UIAlertController?
@@ -39,6 +39,7 @@ class MessageThreadsTableViewController: UITableViewController {
         
         navigationItem.title = "Messages"
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: WSColor.Green, NSFontAttributeName: WSFont.SueEllenFrancisco(26)]
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: self, action: Selector("update"))
         
         // Set up the fetch results controller
         initializeFetchedResultsController()
@@ -84,7 +85,7 @@ class MessageThreadsTableViewController: UITableViewController {
             self.updateAllMessages()
         }
         messageThreadUpdater.failure = { (error) -> Void in
-            self.setFailedUpdateAlert(error)
+            self.setErrorAlert(error)
             self.finishedUpdates()
         }
     }
@@ -94,8 +95,7 @@ class MessageThreadsTableViewController: UITableViewController {
         let timeSort = NSSortDescriptor(key: "last_updated", ascending: false)
         request.sortDescriptors = [timeSort]
         
-        let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-        self.fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: moc, sectionNameKeyPath: nil, cacheName: nil)
+        self.fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: store.privateContext, sectionNameKeyPath: nil, cacheName: nil)
         fetchedResultsController.delegate = self
         
         do {
@@ -118,21 +118,19 @@ class MessageThreadsTableViewController: UITableViewController {
         messageThreadUpdater.update()
     }
     
+    // Updates the table view and shows sny error alerts
+    //
     func finishedUpdates() {
         
-        // Hide any activity indicators
-        self.refreshControl!.endRefreshing()
-        WSProgressHUD.hide()
-        
-        // Update the tab bar badge
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
-            print("Reloading ...")
+            self.refreshControl!.endRefreshing()
+            WSProgressHUD.hide()
             do {
                 try self.fetchedResultsController.performFetch()
                 self.tableView.reloadData()
                 self.updateTabBarBadge()
             } catch let error as NSError {
-                self.setFailedUpdateAlert(error)
+                self.setErrorAlert(error)
                 self.showAlert()
             }
         }
@@ -148,7 +146,6 @@ class MessageThreadsTableViewController: UITableViewController {
         // Update the messages if necessary, or just reload if no updates are required
         do {
             let threadIDs = try store.messageThreadsThatNeedUpdating()
-            print("updating threads: \(threadIDs)")
             if threadIDs.count > 0 {
                 for threadID in threadIDs {
                     self.updateMessagesOnThread(threadID)
@@ -157,7 +154,7 @@ class MessageThreadsTableViewController: UITableViewController {
                 finishedUpdates()
             }
         } catch let error as NSError {
-            setFailedUpdateAlert(error)
+            setErrorAlert(error)
             finishedUpdates()
         }
     }
@@ -175,7 +172,6 @@ class MessageThreadsTableViewController: UITableViewController {
     func updateMessagesOnThread(threadID: Int) {
         
         guard updatesInProgress[threadID] == nil else {
-            print("already updating thread")
             return
         }
         
@@ -184,12 +180,10 @@ class MessageThreadsTableViewController: UITableViewController {
             self.updateFinishedForThreadID(threadID)
         }
         messageUpdater.failure = { (error) -> Void in
-//            self.cancelAllUpdates()
-            self.setFailedUpdateAlert(error)
+            self.setErrorAlert(error)
             self.updateFinishedForThreadID(threadID)
         }
         updatesInProgress[threadID] = messageUpdater
-        print("starting update for thread: \(threadID)")
         messageUpdater.update()
     }
 
@@ -199,13 +193,10 @@ class MessageThreadsTableViewController: UITableViewController {
         
         // Remove the updater
         self.updatesInProgress.removeValueForKey(threadID)
-        print("finished for \(threadID)")
         
         // Reload the table view if all the updates are finished
         if updatesInProgress.count == 0 {
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.finishedUpdates()
-            })
+            self.finishedUpdates()
         }
     }
     
@@ -228,7 +219,7 @@ class MessageThreadsTableViewController: UITableViewController {
     
     // Sets an failed update alert to be displayed at the end of the updates
     //
-    func setFailedUpdateAlert(error: NSError? = nil) {
+    func setErrorAlert(error: NSError? = nil) {
         
         guard alert == nil else {
             return
@@ -281,12 +272,9 @@ class MessageThreadsTableViewController: UITableViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == MessageSegueID {
-            
-            let cell = sender as? MessageThreadsTableViewCell
-            
             // Assign the message thread data to the destination view controller
             let messageThreadVC = segue.destinationViewController as! MessageThreadTableViewController
-            messageThreadVC.threadID = cell?.threadID
+            messageThreadVC.threadID = (sender as? MessageThreadsTableViewCell)?.threadID
         }
     }
     

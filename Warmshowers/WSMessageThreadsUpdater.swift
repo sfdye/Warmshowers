@@ -57,7 +57,6 @@ class WSMessageThreadsUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
                 }
                 
                 do {
-                    print("adding message thread")
                     try self.store.addMessageThread(threadJSON)
                 } catch let nserror as NSError {
                     self.error = nserror
@@ -74,12 +73,10 @@ class WSMessageThreadsUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
                 for messageThread in allMessageThreads {
                     if let threadID = messageThread.thread_id?.integerValue {
                         if !(currentThreadIDs.contains(threadID)){
-                            print("deleting thread")
                             self.store.privateContext.deleteObject(messageThread)
                         }
                     }
                 }
-                print("saving delete changes")
                 try self.store.savePrivateContext()
             } catch let error as NSError {
                 self.error = error
@@ -87,33 +84,6 @@ class WSMessageThreadsUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
             }
         }
     }
-    //                // Fail parsing if a message thread doesn't have an ID as it will cause problems later
-    //                guard let threadID = threadJSON.valueForKey("thread_id")?.integerValue else {
-    //                    self.error = NSError(domain: "WSRequesterDomain", code: 41, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Thread ID missing in message thread JSON.", comment: "")])
-    //                    return
-    //                }
-    //
-    //                // Retrive the thread from the store or save a new one
-    //                let messageThread = CDWSMessageThread.newOrExistingMessageThread(threadID, inContext: privateMOC)
-    //                do {
-    //                    try messageThread.updateWithJSON(threadJSON)
-    //                } catch let error as NSError {
-    //                    self.error = error
-    //                    return
-    //                }
-//}
-
-//            // Save the message threads to the store
-//            do {
-//                print("saving message threads")
-//                try privateMOC.save()
-//            } catch let error as NSError {
-//                self.error = error
-//                return
-//            }
-    
-    
-    
     
     // Starts the message thread updates
     //

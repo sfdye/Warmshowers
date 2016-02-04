@@ -81,6 +81,7 @@
 		E5AF670E1C5775B100AC17A1 /* WSMessageSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AF670D1C5775B100AC17A1 /* WSMessageSender.swift */; };
 		E5D961501C6167EF004E1F31 /* WSPrivateContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D9614F1C6167EF004E1F31 /* WSPrivateContext.swift */; };
 		E5D961521C61FC75004E1F31 /* WSMessageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D961511C61FC75004E1F31 /* WSMessageStore.swift */; };
+		E5D961541C62BFD4004E1F31 /* MessageThreadTableViewController+NSFetchedResultsControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D961531C62BFD4004E1F31 /* MessageThreadTableViewController+NSFetchedResultsControllerDelegate.swift */; };
 		E5D96AF81BFB1CA700AFAFEE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D96AF71BFB1CA700AFAFEE /* AppDelegate.swift */; };
 		E5D96AFF1BFB1CA700AFAFEE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5D96AFD1BFB1CA700AFAFEE /* Main.storyboard */; };
 		E5D96B011BFB1CA700AFAFEE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5D96B001BFB1CA700AFAFEE /* Assets.xcassets */; };
@@ -222,6 +223,7 @@
 		E5AF670D1C5775B100AC17A1 /* WSMessageSender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSMessageSender.swift; sourceTree = "<group>"; };
 		E5D9614F1C6167EF004E1F31 /* WSPrivateContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSPrivateContext.swift; sourceTree = "<group>"; };
 		E5D961511C61FC75004E1F31 /* WSMessageStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSMessageStore.swift; sourceTree = "<group>"; };
+		E5D961531C62BFD4004E1F31 /* MessageThreadTableViewController+NSFetchedResultsControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadTableViewController+NSFetchedResultsControllerDelegate.swift"; sourceTree = "<group>"; };
 		E5D96AF41BFB1CA700AFAFEE /* Warmshowers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Warmshowers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5D96AF71BFB1CA700AFAFEE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E5D96AFE1BFB1CA700AFAFEE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -505,6 +507,7 @@
 				E5967BBA1C3922170037F4B7 /* MessageThreadTableViewController.swift */,
 				E5AF1A871C58A41A0004806A /* MessageThreadTableViewController+UITableViewDataSource.swift */,
 				E5967BBC1C39BFF30037F4B7 /* MessageTableViewCell.swift */,
+				E5D961531C62BFD4004E1F31 /* MessageThreadTableViewController+NSFetchedResultsControllerDelegate.swift */,
 			);
 			name = MessageThreadTableViewController;
 			sourceTree = "<group>";
@@ -874,6 +877,7 @@
 				E557D86C1C50482200226E84 /* WSCSRFTokenGetter.swift in Sources */,
 				E5967BCA1C39DBC00037F4B7 /* CDWSMessageThread+CoreDataProperties.swift in Sources */,
 				E5DA03FA1C4A4FE100FAD1D7 /* WSGetHostsForKeywordOperation.swift in Sources */,
+				E5D961541C62BFD4004E1F31 /* MessageThreadTableViewController+NSFetchedResultsControllerDelegate.swift in Sources */,
 				E5DA03D41C48893400FAD1D7 /* WSLazyImageTableViewController+UIScrollViewDelegate.swift in Sources */,
 				E52E8AA91C0BDB18000391AB /* HostSearchViewController+WSLazyImageTableViewDataSource.swift in Sources */,
 				E5967BCF1C39DBC00037F4B7 /* CDWSUser.swift in Sources */,
