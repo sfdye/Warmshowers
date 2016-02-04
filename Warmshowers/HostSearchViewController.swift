@@ -64,6 +64,9 @@ class HostSearchViewController: UIViewController {
     var searchController: UISearchController!
     var searchBar: UISearchBar!
     
+    // Toolbar
+    @IBOutlet var toolbar: UIToolbar!
+    
     // MARK: View life cycle
     
     override func viewDidLoad() {
@@ -105,8 +108,14 @@ class HostSearchViewController: UIViewController {
             mapView.setRegion(region, animated: true)
             updateHostsOnMap()
         }
+        
+        // Configure the toolbar
+        toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .Any, barMetrics: .Default)
+        toolbar.setShadowImage(UIImage(), forToolbarPosition: .Any)
+        toolbar.tintColor = WSColor.Blue
     }
     
+        
     override func viewWillDisappear(animated: Bool) {
         queue.cancelAllOperations()
     }
@@ -182,6 +191,12 @@ class HostSearchViewController: UIViewController {
         if hostsOnMap.count != 0 {
             clusteringController.setAnnotations(hostsOnMap)
             clusteringController.refresh(true)
+        }
+    }
+    
+    @IBAction func centreOnLocation() {
+        if let coordinate = locationManager.location?.coordinate {
+            mapView.setCenterCoordinate(coordinate, animated: true)
         }
     }
 
