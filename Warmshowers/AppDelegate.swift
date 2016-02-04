@@ -14,7 +14,6 @@ import CoreData
 // fix map loading errors
 // put user password in keychain
 // fix views for ipad
-// add centre map on location button to map view
 
 // LATER TODOs
 // account view actions: add action to go to messages if there are messages from the user

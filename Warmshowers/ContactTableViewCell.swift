@@ -1,5 +1,5 @@
 //
-//  PhoneTableViewCell.swift
+//  ContactTableViewCell.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 1/01/16.
@@ -8,10 +8,10 @@
 
 import UIKit
 
-class PhoneTableViewCell: UITableViewCell {
+class ContactTableViewCell: UITableViewCell {
     
-    @IBOutlet var phoneNumberLabel: UILabel!
-    @IBOutlet var numberTypeLabel: UILabel!
+    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var detailLabel: UILabel!
     @IBOutlet var phoneIcon: UIImageView!
     @IBOutlet var messageIcon: UIImageView!
     
@@ -30,12 +30,12 @@ class PhoneTableViewCell: UITableViewCell {
         messageIcon.addGestureRecognizer(messageIconTap)
     }
     
-    // Configures the table view cell for a given phone number object
+    // Configures the table view cell for a phone number
+    //
     func setWithPhoneNumber(phoneNumber: WSPhoneNumber) {
-        phoneNumberLabel.text = phoneNumber.number
-        numberTypeLabel.text = phoneNumber.description
+        titleLabel.text = phoneNumber.description
+        detailLabel.text = phoneNumber.number
         
-        // TODO: link phone numbers to phone app and show icons below
         switch phoneNumber.type {
         case .Home, .Work:
             phoneIcon.hidden = false
@@ -46,18 +46,32 @@ class PhoneTableViewCell: UITableViewCell {
         }
     }
     
+    // Configures the table view cell for an address
+    //
+    func setWithAddress(address: String) {
+        titleLabel.text = "Address"
+        detailLabel.numberOfLines = 0
+        detailLabel.text = address
+        phoneIcon.hidden = true
+        messageIcon.hidden = true
+    }
+    
+    // Called when the user taps the phone icon
+    //
     func phoneIconTapped() {
         
-        guard let url = phoneNumberURL(phoneNumberLabel.text) else {
+        guard let url = phoneNumberURL(detailLabel.text) else {
             return
         }
         
         UIApplication.sharedApplication().openURL(url)
     }
     
+    // Called when the user taps the message bubble icon
+    //
     func messageIconTapped() {
         
-        guard let url = messageNumberURL(phoneNumberLabel.text) else {
+        guard let url = messageNumberURL(detailLabel.text) else {
             return
         }
         
@@ -68,7 +82,7 @@ class PhoneTableViewCell: UITableViewCell {
     //
     func phoneNumberURL(number: String?) -> NSURL? {
         
-        guard let number = phoneNumberLabel.text else {
+        guard let number = detailLabel.text else {
             return nil
         }
         
@@ -79,7 +93,7 @@ class PhoneTableViewCell: UITableViewCell {
     //
     func messageNumberURL(number: String?) -> NSURL? {
         
-        guard let number = phoneNumberLabel.text else {
+        guard let number = detailLabel.text else {
             return nil
         }
         

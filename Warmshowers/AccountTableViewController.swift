@@ -21,7 +21,7 @@ let AboutCellID = "About"
 let HostingInfoCellID = "HostingInfo"
 let OfferHeadingCellID = "OfferHeading"
 let OfferCellID = "Offer"
-let PhoneCellID = "Phone"
+let ContactCellID = "Contact"
 
 let ToFeedbackSegueID = "ToFeedback"
 let ToSendNewMessageSegueID = "ToSendNewMessage"
@@ -396,13 +396,13 @@ class AccountTableViewController: UITableViewController {
                 var phoneRow = row
                 if let user = user {
                     if row == 0 {
-                        let cell = tableView.dequeueReusableCellWithIdentifier(AboutCellID, forIndexPath: indexPath) as! AboutTableViewCell
-                        cell.aboutLabel.text =  user.address
+                        let cell = tableView.dequeueReusableCellWithIdentifier(ContactCellID, forIndexPath: indexPath) as! ContactTableViewCell
+                        cell.setWithAddress(user.address)
                         return cell
                     }
                     phoneRow--
                 }
-                let cell = tableView.dequeueReusableCellWithIdentifier(PhoneCellID, forIndexPath: indexPath) as! PhoneTableViewCell
+                let cell = tableView.dequeueReusableCellWithIdentifier(ContactCellID, forIndexPath: indexPath) as! ContactTableViewCell
                 cell.setWithPhoneNumber(phoneNumbers.numbers[phoneRow])
                 return cell
             }
@@ -448,8 +448,6 @@ class AccountTableViewController: UITableViewController {
         switch indexPath.section {
         case 0:
             return 400
-        case 1:
-            return 44
         default:
             return 44
         }
