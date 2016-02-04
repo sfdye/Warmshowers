@@ -184,11 +184,13 @@ class ComposeMessageViewController: UIViewController {
             WSProgressHUD.show(navigationController!.view, label: "Sending message ...")
 
             // Start the message sender
-            messageSender!.tokenGetter.start()
+            messageSender!.send()
         }
     }
     
     func successfulSend() {
+        let notificationCentre = NSNotificationCenter.defaultCenter()
+        notificationCentre.postNotification(NSNotification(name: MessagesViewNeedsUpdateNotificationName, object: nil))
         WSProgressHUD.hide(navigationController!.view)
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.navigationController?.dismissViewControllerAnimated(true, completion: nil)

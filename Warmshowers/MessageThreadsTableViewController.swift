@@ -13,6 +13,9 @@ import MBProgressHUD
 let MessageThreadCellID = "MessageThreadCell"
 let MessageSegueID = "ToMessageThread"
 
+let MessageUpdateNotificationName = "ws_update_messages"
+let MessagesWereUpdatedNotificationName = "ws_messages_were_updated"
+
 class MessageThreadsTableViewController: UITableViewController {
     
     // MARK: Properties
@@ -30,7 +33,6 @@ class MessageThreadsTableViewController: UITableViewController {
     var alert: UIAlertController?
     var presentingAlert = false
     var fetchedResultsController: NSFetchedResultsController!
-    
     
     // MARK: View life cycle
     

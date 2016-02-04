@@ -78,4 +78,10 @@ class WSMessageSender : WSRequestWithCSRFToken, WSRequestDelegate {
         return recipientString
     }
     
+    // Starts the message sending process
+    //
+    func send() {
+        tokenGetter.start()
+    }
+    
 }

@@ -14,6 +14,8 @@ let MessageFromSelfCellID = "MessageFromSelf"
 
 let ReplyToMessageThreadSegueID = "ToReplyToMessage"
 
+let MessagesViewNeedsUpdateNotificationName = "ws_message_view_needs_update"
+
 class MessageThreadTableViewController: UITableViewController {
     
     var threadID: Int!
@@ -63,6 +65,9 @@ class MessageThreadTableViewController: UITableViewController {
         
         // Reload the table
         self.reload(true)
+        
+        let notificationCentre = NSNotificationCenter.defaultCenter()
+        notificationCentre.addObserver(self, selector: Selector("update"), name: MessagesViewNeedsUpdateNotificationName, object: nil)
     }
     
     override func viewWillAppear(animated: Bool) {

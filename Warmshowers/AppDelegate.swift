@@ -11,12 +11,14 @@ import MapKit
 import CoreData
 
 // FIRST TODOs
-// trigger a message view reloads after sending a reply message
 // fix map loading errors
 // put user password in keychain
 // fix views for ipad
+// add centre map on location button to map view
 
 // LATER TODOs
+// account view actions: add action to go to messages if there are messages from the user
+// show account view modally when a author name is tapped in the message view
 // map search debouncing
 // background message check and app icon bagde/ notifications
 // add message sorter
