@@ -62,7 +62,7 @@ class MessageThreadTableViewController: UITableViewController {
         markAsRead()
         
         // Reload the table
-        self.reload()
+        self.reload(true)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -77,7 +77,7 @@ class MessageThreadTableViewController: UITableViewController {
         
         let request = NSFetchRequest(entityName: "Message")
         request.predicate = NSPredicate(format: "thread.thread_id==%i", threadID)
-        request.sortDescriptors = [NSSortDescriptor(key: "timestamp", ascending: false)]
+        request.sortDescriptors = [NSSortDescriptor(key: "timestamp", ascending: true)]
         
         self.fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: store.privateContext, sectionNameKeyPath: nil, cacheName: nil)
         fetchedResultsController.delegate = self
@@ -103,7 +103,7 @@ class MessageThreadTableViewController: UITableViewController {
     
     // Reloads the tableview and hides any activity indicators
     //
-    func reload() {
+    func reload(scroll: Bool = false) {
         
         // Hide any activity indicators and reload the tableview
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -111,6 +111,11 @@ class MessageThreadTableViewController: UITableViewController {
             do {
                 try self.fetchedResultsController.performFetch()
                 self.tableView.reloadData()
+                if scroll {
+                    let row = self.tableView.numberOfRowsInSection(0) - 1
+                    let indexPath = NSIndexPath(forRow: row, inSection: 0)
+                    self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Bottom, animated: false)
+                }
             } catch {
                 // If there is a problem fetching suggest that the user reinstall the app
                 self.alert = UIAlertController(title: "There was a problem loading your messages.", message: "Please try uninstalling and reinstalling the app and report this issue.", preferredStyle: .Alert)
@@ -128,7 +133,13 @@ class MessageThreadTableViewController: UITableViewController {
     
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         if identifier == ReplyToMessageThreadSegueID {
-            return threadID != nil
+            do {
+                if let _ = try store.messageThreadWithID(threadID) {
+                    return true
+                }
+            } catch {
+                // Do not segue
+            }
         }
         return false
     }

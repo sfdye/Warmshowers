@@ -45,6 +45,26 @@ class CDWSMessageThread: NSManagedObject {
         return pString
     }
     
+    // Returns the message thread participants with the currently logged-in user removed
+    func otherParticipants(currentUserUID: Int) -> [CDWSUser] {
+        
+        guard var users = participants?.allObjects as? [CDWSUser] else {
+            return [CDWSUser]()
+        }
+        
+        var index: Int?
+        for (i, user) in users.enumerate() {
+            if user.uid == currentUserUID {
+                index = i
+            }
+        }
+        if let index = index {
+            users.removeAtIndex(index)
+        }
+        
+        return users
+    }
+    
     // Returns true if the message count doesn't match the number of messages relationships
     //
     func needsUpdating() -> Bool {

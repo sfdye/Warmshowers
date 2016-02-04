@@ -100,7 +100,6 @@ class WSLazyImageTableViewController: UITableViewController {
                 self.imageDownloadsInProgress.removeValueForKey(indexPath)
             }
             imageDownloader.failure = { (error) -> Void in
-                print("Failed to get image. \(error)")
                 self.imageDownloadsInProgress.removeValueForKey(indexPath)
             }
             

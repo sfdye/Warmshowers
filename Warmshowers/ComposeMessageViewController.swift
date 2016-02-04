@@ -29,6 +29,7 @@ class ComposeMessageViewController: UIViewController {
     var threadID: Int?
     var replyOnMessageThread: CDWSMessageThread?
     
+    let store = (UIApplication.sharedApplication().delegate as! AppDelegate).store
     var messageSender: WSMessageSender?
     
     override func viewDidLoad() {
@@ -102,7 +103,16 @@ class ComposeMessageViewController: UIViewController {
         navigationItem.title = "Reply"
         
         // Set up the reply
-        self.threadID = threadID        
+        self.threadID = threadID
+        do {
+            let thread = try store.messageThreadWithID(threadID)
+            let recipients = thread?.otherParticipants(currentUserUID)
+            self.threadID = threadID
+            self.subject = thread?.subject
+            self.recipients = recipients
+        } catch {
+            // Segue to reply should fail before this
+        }
     }
     
     
