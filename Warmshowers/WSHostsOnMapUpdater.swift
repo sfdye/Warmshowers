@@ -23,12 +23,14 @@ class WSHostsOnMapUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
         self.mapView = mapView
     }
     
-    func requestForDownload() -> NSURLRequest? {
-        let service = WSRestfulService(type: .searchByLocation)!
-        var params = mapView.getWSMapRegion()
-        params["limit"] = String(MapSearchLimit)
-        let request = WSRequest.requestWithService(service, params: params, token: token)
-        return request
+    func requestForDownload() throws -> NSURLRequest {
+        do {
+            let service = WSRestfulService(type: .searchByLocation)!
+            var params = mapView.getWSMapRegion()
+            params["limit"] = String(MapSearchLimit)
+            let request = try WSRequest.requestWithService(service, params: params, token: token)
+            return request
+        }
     }
     
     func doWithData(data: NSData) {

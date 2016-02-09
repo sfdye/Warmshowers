@@ -342,9 +342,7 @@ class HostSearchViewController: UIViewController {
                 let userLocation = kpAnnotation.annotations.first as? WSUserLocation
                 accountTVC.uid = userLocation?.uid
             } else {
-                let defaults = (UIApplication.sharedApplication().delegate as! AppDelegate).defaults
-                let uid = defaults.integerForKey(defaults_key_uid)
-                accountTVC.uid = uid
+                accountTVC.uid = WSLoginData.uid
             }
             
         case ResultsToUserAccountSegueID:

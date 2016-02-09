@@ -8,6 +8,10 @@
 
 import Foundation
 
+enum WSMessageSenderError : ErrorType {
+    case C
+}
+
 class WSMessageSender : WSRequestWithCSRFToken, WSRequestDelegate {
     
     var threadID: Int?
@@ -32,31 +36,36 @@ class WSMessageSender : WSRequestWithCSRFToken, WSRequestDelegate {
         self.body = body
     }
     
-    func requestForDownload() -> NSURLRequest? {
+    func requestForDownload() throws -> NSURLRequest {
+        
+        var service: WSRestfulService?
+        var params = [String: String]()
+        
         // New message request
         if let threadID = threadID, let body = body {
-            let service = WSRestfulService(type: .newMessage)!
-            var params = [String: String]()
+            service = WSRestfulService(type: .newMessage)!
             params["thread_id"] = String(threadID)
             params["body"] = body
-            let request = WSRequest.requestWithService(service, params: params, token: token)
-            return request
         }
         
         // Reply request
         if let recipients = recipients, let subject = subject, let body = body {
             if let recipientsString = makeRecipientString(recipients) {
-                let service = WSRestfulService(type: .replyToMessage)!
-                var params = [String: String]()
+                service = WSRestfulService(type: .replyToMessage)!
                 params["recipients"] = recipientsString
                 params["subject"] = subject
                 params["body"] = body
-                let request = WSRequest.requestWithService(service, params: params, token: token)
-                return request
             }
         }
-
-        return nil
+        
+        if let service = service {
+            do {
+                let request = try WSRequest.requestWithService(service, params: params, token: token)
+                return request
+            }
+        } else {
+            throw WSRequesterError.CouldNotCreateRequest
+        }
     }
     
     func doWithData(data: NSData) {

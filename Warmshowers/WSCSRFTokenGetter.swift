@@ -17,10 +17,12 @@ class WSCSRFTokenGetter : WSRequester, WSRequestDelegate {
         requestDelegate = self
     }
     
-    func requestForDownload() -> NSURLRequest? {
-        let service = WSRestfulService.init(type: .token)!
-        let request = WSRequest.requestWithService(service)
-        return request
+    func requestForDownload() throws -> NSURLRequest {
+        do {
+            let service = WSRestfulService.init(type: .token)!
+            let request = try WSRequest.requestWithService(service)
+            return request
+        }
     }
     
     func doWithData(data: NSData) {

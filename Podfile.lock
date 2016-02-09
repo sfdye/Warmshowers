@@ -1,8 +1,10 @@
 PODS:
+  - KeychainAccess (2.3.3)
   - kingpin (0.3.1)
   - MBProgressHUD (0.9.1)
 
 DEPENDENCIES:
+  - KeychainAccess
   - kingpin (from `https://github.com/itsbonczek/kingpin`)
   - MBProgressHUD (from `https://github.com/jdg/MBProgressHUD.git`)
 
@@ -21,6 +23,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/jdg/MBProgressHUD.git
 
 SPEC CHECKSUMS:
+  KeychainAccess: 9b7e49e48277e329b1b3195e54697ed313d30acf
   kingpin: 52bb578006bdeb881db225e6ff1a4228375cbfbf
   MBProgressHUD: c34da5f231d7c38b8bc9d2cb08f81509d0bea7b0
 

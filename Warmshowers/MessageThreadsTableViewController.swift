@@ -19,12 +19,6 @@ let MessagesWereUpdatedNotificationName = "ws_messages_were_updated"
 class MessageThreadsTableViewController: UITableViewController {
     
     // MARK: Properties
-
-    var currentUserUID: Int {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        return defaults.integerForKey(defaults_key_uid)
-    }
-    var count: Int = 0
     
     var messageThreadUpdater: WSMessageThreadsUpdater!
     let store = (UIApplication.sharedApplication().delegate as! AppDelegate).store

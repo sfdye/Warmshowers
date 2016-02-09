@@ -170,18 +170,11 @@ class AccountTableViewController: UITableViewController {
     
     func userIsLoggedIn() -> Bool {
         
-        guard let uid = uid,
-            let defaults = self.appDelegate?.defaults
-        else {
+        guard let uid = uid else {
             return false
         }
         
-        let currentUserUID = defaults.valueForKey(defaults_key_uid)?.integerValue
-        if uid == currentUserUID {
-            return true
-        } else {
-            return false
-        }
+        return uid == WSLoginData.uid
     }
     
     // Sets up a done button if one is needed

@@ -10,33 +10,27 @@ import Foundation
 
 class WSLoginManager : WSRequester, WSRequestDelegate {
     
-    var username: String
-    var password: String
-    
-    init(username: String, password: String) {
-        self.username = username
-        self.password = password
+    override init() {
         super.init()
         requestDelegate = self
     }
     
-    convenience override init() {
-        let defaults = (UIApplication.sharedApplication().delegate as! AppDelegate).defaults
-        let username = defaults.stringForKey(defaults_key_username)!
-        let password = defaults.stringForKey(defaults_key_password)!
-        self.init(username: username, password: password)
-    }
-    
-    func requestForDownload() -> NSURLRequest? {
-        let service = WSRestfulService(type: .login)!
-        let params = ["username" : username, "password" : password]
-        let request = WSRequest.requestWithService(service, params: params, token: nil)
-        return request
+    // Note that reqeusts are built with the username and password saved to the NSUserdefaults and keychain with WSLoginData. Hence these varialble must be saved first before a valid request can be made.
+    //
+    func requestForDownload() throws -> NSURLRequest {
+        do {
+            let (username, password) = try WSLoginData.getCredentials()
+            let service = WSRestfulService(type: .login)!
+            let params = ["username" : username, "password" : password]
+            let request = try WSRequest.requestWithService(service, params: params, token: nil)
+            return request
+        }
     }
     
     func doWithData(data: NSData) {
         
         guard let json = dataAsJSON() else {
+            setDataError()
             return
         }
         
@@ -44,23 +38,28 @@ class WSLoginManager : WSRequester, WSRequestDelegate {
             let sessid = json.valueForKey("sessid") as? String,
             let user = json.valueForKey("user")
         else {
-            error = NSError(domain: "WSRequesterDomain", code: 20, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Failed to parse login data", comment: "")])
+            setDataError()
             return
         }
         
-        let defaults = (UIApplication.sharedApplication().delegate as! AppDelegate).defaults
+        guard let uid = user.valueForKey("uid")?.integerValue else {
+            setDataError()
+            return
+        }
         
         // Store the session data
         let sessionCookie = sessionName + "=" + sessid
-        defaults.setValue(sessionCookie, forKey: defaults_key_session_cookie)
-        
-        // Store the users uid
-        if let uid = user["uid"] {
-            defaults.setValue(uid, forKey: defaults_key_uid)
-        }
-        
-        // Save the session data
-        defaults.synchronize()
+        WSLoginData.saveSessionData(sessionCookie, uid: uid)
+    }
+    
+    func setDataError() {
+        error = NSError(domain: "WSRequesterDomain", code: 20, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Failed to parse login data", comment: "")])
+    }
+    
+    // Convinience method to start the login process
+    //
+    func login() {
+        start()
     }
 
 }

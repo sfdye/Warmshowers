@@ -21,10 +21,12 @@ class WSMessageThreadsUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
         self.store = store
     }
     
-    func requestForDownload() -> NSURLRequest? {
-        let service = WSRestfulService(type: .getAllMessageThreads)!
-        let request = WSRequest.requestWithService(service, token: token)
-        return request
+    func requestForDownload() throws -> NSURLRequest {
+        do {
+            let service = WSRestfulService(type: .getAllMessageThreads)!
+            let request = try WSRequest.requestWithService(service, token: token)
+            return request
+        }
     }
     
     func doWithData(data: NSData) {

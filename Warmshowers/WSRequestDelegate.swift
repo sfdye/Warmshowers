@@ -9,6 +9,6 @@
 import Foundation
 
 protocol WSRequestDelegate {
-    func requestForDownload() -> NSURLRequest?
+    func requestForDownload() throws -> NSURLRequest
     func doWithData(data: NSData)
 }

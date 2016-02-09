@@ -12,7 +12,7 @@ import CoreData
 
 // FIRST TODOs
 // fix map loading errors
-// put user password in keychain
+// fix message thread table view loading error
 // fix views for ipad
 
 // LATER TODOs
@@ -23,26 +23,13 @@ import CoreData
 // add message sorter
 // add google translate feature to account view, translate from 'detect language' to system language
 // search filters, i.e. by country
-
-// IDEAS
 // - load gps files on map - start with american adventure routes on WS
 // - facebook integration for finding friends on map
 // - add offline country option: downloads users in one country for offline use for a few days.
+// link address in account view to open in maps/google maps options
 
 // View controller identifiers
-let LOGIN_VC_ID = "Login"
-let TABBAR_VC_ID = "TabBar"
-
-// Defaults keys
-let defaults_key_username = "ws_username"
-let defaults_key_password = "ws_password"
-let defaults_key_session_cookie = "ws_session_cookie"
-let defaults_key_uid = "ws_uid"
-
-// Core data entity names
-let MessageThreadsEntityName = "MessageThread"
-let MessagesEntityName = "Message"
-let UsersEntityName = "User"
+let LoginViewControllerID = "Login"
 
 // Error types
 enum DataError : ErrorType {
@@ -50,10 +37,8 @@ enum DataError : ErrorType {
     case FailedConversion
 }
 
-enum CoreDataError : ErrorType {
-    case FailedFetchReqeust
-    case NotInStore
-}
+// Error domain
+let WSErrorDomain = "com.rajanfernandez.Warmshowers.ErrorDomain"
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -112,15 +97,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Checks if the user is logged in
     func isLoggedin() -> Bool {
-        if defaults.objectForKey(defaults_key_session_cookie) != nil {
+        do {
+            let _ = try WSLoginData.getSessionCookie()
             return true
+        } catch {
+            return false
         }
-        return false
     }
     
     // Shows the login page instead of the main app
     func showLoginScreen() {
-        let loginViewController = storyboard.instantiateViewControllerWithIdentifier(LOGIN_VC_ID)
+        let loginViewController = storyboard.instantiateViewControllerWithIdentifier(LoginViewControllerID)
         self.window?.rootViewController = loginViewController
     }
     
@@ -132,9 +119,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func logout() {
         
         // Clear the appropriate defaults
-        defaults.setObject(nil, forKey: defaults_key_password)
-        defaults.setObject(nil, forKey: defaults_key_uid)
-        defaults.setObject(nil, forKey: defaults_key_session_cookie)
+        do {
+            try WSLoginData.removeDataForLogout()
+        } catch {
+            // Data will be overwritten on next login
+        }
         
         // Go to the login screen
         showLoginScreen()

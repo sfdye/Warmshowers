@@ -18,11 +18,6 @@ class ComposeMessageViewController: UIViewController {
     
     let detailCellHeight: CGFloat = 40.0
     
-    var currentUserUID: Int {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        return defaults.integerForKey(defaults_key_uid)
-    }
-    
     var recipients: [CDWSUser]?
     var subject: String?
     var body: String?
@@ -106,7 +101,7 @@ class ComposeMessageViewController: UIViewController {
         self.threadID = threadID
         do {
             let thread = try store.messageThreadWithID(threadID)
-            let recipients = thread?.otherParticipants(currentUserUID)
+            let recipients = thread?.otherParticipants(WSLoginData.uid)
             self.threadID = threadID
             self.subject = thread?.subject
             self.recipients = recipients

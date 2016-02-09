@@ -13,7 +13,7 @@ import MapKit
 //    func requestAlert(title: String, message: String)
 //}
 
-enum HttpRequestError : ErrorType {
+enum WSRequestError : ErrorType {
     case NoSessionCookie
     case NoCSRFToken
     case JSONSerialisationFailure
@@ -68,17 +68,17 @@ struct WSRequest {
     
     // Creates a request for a warmshowers restful service
     //
-    static func requestWithService(service: WSRestfulService, params: [String: String]? = nil, token: String? = nil) -> NSMutableURLRequest? {
+    static func requestWithService(service: WSRestfulService, params: [String: String]? = nil, token: String? = nil) throws -> NSMutableURLRequest {
         
         let request = NSMutableURLRequest.withWSRestfulService(service)
         
         // Add the session cookie to the header.
         if (service.type != .login && service.type != .token) {
-            if let sessionCookie = defaults.objectForKey(defaults_key_session_cookie) as? String {
+            do {
+                let sessionCookie = try WSLoginData.getSessionCookie()
                 request.addValue(sessionCookie, forHTTPHeaderField: "Cookie")
-            } else {
-                print("Failed to add session cookie to request header")
-                return nil
+            } catch {
+                throw WSRequestError.NoSessionCookie
             }
         }
         
@@ -87,8 +87,7 @@ struct WSRequest {
             if token != nil {
                 request.addValue(token!, forHTTPHeaderField: "X-CSRF-Token")
             } else {
-                print("Failed to add X-CSRF token to request header")
-                return nil
+                throw WSRequestError.NoCSRFToken
             }
         }
 
@@ -160,9 +159,10 @@ struct WSRequest {
     //
     static func request(service: WSRestfulService, params: [String: String]? = nil, doWithResponse: (NSData?, NSURLResponse?, NSError?) -> Void) {
         
-        if let request = requestWithService(service) {
+        do {
+            let request = try requestWithService(service)
             dataRequest(request, doWithResponse: doWithResponse)
-        } else {
+        } catch {
             print("Failed to build http request")
         }
         
@@ -179,14 +179,15 @@ struct WSRequest {
                 doWithResponse(nil, response, error)
                 return
             }
-
-            if let request = self.requestWithService(service, params: params, token: token) {
-
+            
+            do {
+                let request = try self.requestWithService(service, params: params, token: token)
+                
                 self.dataRequest(request, doWithResponse: { (data, response, error) -> Void in
                     
                     // Retry the request if neccessary
                     if self.shouldRetryRequest(data, response: response, error: error) && (request.URL != WSURL.LOGOUT()) && retry {
-
+                        
                         // Login again to get a new session cookie
                         self.autoLogin({ () -> Void in
                             
@@ -201,6 +202,8 @@ struct WSRequest {
                     }
                     
                 })
+            } catch {
+                print("failed request")
             }
         }
     }
@@ -276,19 +279,15 @@ struct WSRequest {
     //
     static func autoLogin(doAfterLogin: () -> Void) {
         
-        let username = defaults.stringForKey(defaults_key_username)
-        let password = defaults.stringForKey(defaults_key_password)
-        
-        if username != nil && password != nil {
-            
-            self.login(username!, password: password!) { (success, response, error) -> Void in
+        do {
+            let (username, password) = try WSLoginData.getCredentials()
+            self.login(username, password: password) { (success, response, error) -> Void in
                 if success {
                     print("Autologin succeeded")
                     doAfterLogin()
                 }
             }
-            
-        } else {
+        } catch {
             print("Autologin failed. Username or password not stored yet.")
         }
     }
@@ -643,18 +642,18 @@ struct WSRequest {
         })
     }
     
-    // To get a single message thread
-    //
-    static func getMessageThread(threadID: Int, withMessageThreadData: (data: NSData?) -> Void) {
-        
-        let service = WSRestfulService(type: .getMessageThread)!
-        var params = [String: String]()
-        params["thread_id"] = String(threadID)
-        
-        requestWithCSRFToken(service, params: params, retry: true, doWithResponse: { (data, response, error) -> Void in
-            withMessageThreadData(data: data)
-        })
-    }
+//    // To get a single message thread
+//    //
+//    static func getMessageThread(threadID: Int, withMessageThreadData: (data: NSData?) -> Void) {
+//        
+//        let service = WSRestfulService(type: .getMessageThread)!
+//        var params = [String: String]()
+//        params["thread_id"] = String(threadID)
+//        
+//        requestWithCSRFToken(service, params: params, retry: true, doWithResponse: { (data, response, error) -> Void in
+//            withMessageThreadData(data: data)
+//        })
+//    }
     
     // To mark a message thread as read or unread
     //
@@ -686,20 +685,14 @@ struct WSRequest {
             // Store the session cookie
             let sessionName = loginData!["session_name"] as? String
             let sessid = loginData!["sessid"] as? String
-            if (sessionName != nil) && (sessid != nil) {
-                let sessionCookie = sessionName! + "=" + sessid!
-                defaults.setValue(sessionCookie, forKey: defaults_key_session_cookie)
-            }
+            let sessionCookie = sessionName! + "=" + sessid!
             
             // Store the users uid
             if let user = loginData!["user"] {
-                if let uid = user["uid"] {
-                    defaults.setValue(uid, forKey: defaults_key_uid)
+                if let uid = user.valueForKey("uid")?.integerValue {
+                    WSLoginData.saveSessionData(sessionCookie, uid: uid)
                 }
             }
-            
-            // Save the session data
-            defaults.synchronize()
         }
     }
     

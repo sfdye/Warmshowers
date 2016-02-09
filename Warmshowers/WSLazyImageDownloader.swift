@@ -19,14 +19,14 @@ class WSLazyImageDownloader : WSRequester, WSRequestDelegate {
         self.object = lazyImageObject
     }
     
-    func requestForDownload() -> NSURLRequest? {
+    func requestForDownload() throws -> NSURLRequest {
         
         guard let object = object where object.lazyImageURL != nil else {
-            return nil
+            throw WSLazyImageError.NoImageURL
         }
         
         guard let url = NSURL(string: object.lazyImageURL!) else {
-            return nil
+            throw WSLazyImageError.CouldNotFormURL
         }
         
         let request = NSURLRequest(URL: url)

@@ -12,3 +12,8 @@ protocol WSLazyImage {
     var lazyImageURL: String? { get }
     var lazyImage: UIImage? { get set }
 }
+
+enum WSLazyImageError : ErrorType {
+    case NoImageURL
+    case CouldNotFormURL
+}

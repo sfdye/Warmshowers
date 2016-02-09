@@ -38,11 +38,6 @@ class MessageThreadTableViewController: UITableViewController {
     var alert: UIAlertController?
     var presentingAlert = false
     
-    var currentUserUID: Int? {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        return defaults.integerForKey(defaults_key_uid)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         

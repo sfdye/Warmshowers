@@ -19,10 +19,7 @@ class MessageThreadsTableViewCell: UITableViewCell {
     @IBOutlet weak var newDot: WSColoredDot!
     var threadID: Int?
     
-    var currentUserUID: Int {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        return defaults.integerForKey(defaults_key_uid)
-    }
+    var currentUserUID: Int? { return WSLoginData.uid }
         
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -34,6 +31,7 @@ class MessageThreadsTableViewCell: UITableViewCell {
     // If the input is nil the cell labels are cleared
     //
     func configureWithMessageThread(messageThread: CDWSMessageThread?) {
+        
         guard let messageThread = messageThread else {
             participantsLabel.text = nil
             dateLabel.text = nil

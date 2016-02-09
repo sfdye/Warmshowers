@@ -8,9 +8,17 @@
 
 import Foundation
 
-enum WSRequesterState {
-    case Running
-    case Cancelled
+/*
+Requester error codes:
+100 - Request aborted
+101 - NSURLRequest could not be created
+102 - No HTTP response
+103 - HTTP bad response
+104 - No data recieved
+ */
+
+enum WSRequesterError : ErrorType {
+    case CouldNotCreateRequest
 }
 
 class WSRequester : NSObject {
@@ -32,8 +40,7 @@ class WSRequester : NSObject {
     lazy var finalAttempt = false
     lazy var loginManager = WSLoginManager()
     
-    // Completion state / handlers
-    var state = WSRequesterState.Running
+    // Completion handlers
     var success: (() -> Void)?
     var failure: ((error: NSError) -> Void)?
     
@@ -50,22 +57,26 @@ class WSRequester : NSObject {
     // Starts the download and parsing process
     //
     func start() {
-
-        guard shouldStart() == true else {
-            if error == nil {
-                error = NSError(domain: "WSRequesterDomain", code: 0, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Request aborted", comment: "")])
-            }
-            end()
-            return
-        }
-
-        guard let request = requestDelegate.requestForDownload() else {
-            error = NSError(domain: "WSRequesterDomain", code: 1, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Nil Request", comment: "")])
-            end()
-            return
-        }
-        print(request)
+        
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
+        guard shouldStart() == true else {
+            setError(100, description: "Request aborted")
+            end()
+            return
+        }
+        
+        var request: NSURLRequest
+        do {
+            request = try requestDelegate.requestForDownload()
+        } catch let error as NSError {
+            self.error = error
+            end()
+            return
+        }
+        
+        print(request)
+        
         task = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
             self.data = data
             self.response = response
@@ -85,7 +96,7 @@ class WSRequester : NSObject {
         }
         
         guard let httpResponse = httpResponse else {
-            error = NSError(domain: "WSRequesterDomain", code: 2, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Unauthorised", comment: "")])
+            setError(102, description: "Unauthorised")
             end()
             return
         }
@@ -105,11 +116,10 @@ class WSRequester : NSObject {
             if shouldRetryRequest() {
                 retryReqeust()
             } else {
-                error = NSError(domain: "WSRequesterDomain", code: 3, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("HTTP request failed with status code \(httpResponse.statusCode)", comment: "")])
+                setError(103, description: "HTTP request failed with status code \(httpResponse.statusCode)")
                 end()
             }
         }
-        
     }
     
     // Converts data to json as AnyObject
@@ -145,13 +155,19 @@ class WSRequester : NSObject {
     // Runs when a request recieved a valid response but with nil data
     //
     func nilDataAction() {
-        error = NSError(domain: "WSRequesterDomain", code: 5, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("HTTP request recieved a successful response but with no data", comment: "")])
+        setError(104, description: "HTTP request recieved a successful response but with no data")
     }
     
     // Decides whether the completion handlers should be called
     //
     func shouldCallCompletionHandler() -> Bool {
         return true
+    }
+    
+    func setError(code: Int, description: String) {
+        if error == nil {
+            error = NSError(domain: WSErrorDomain, code: code, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString(description, comment: "")])
+        }
     }
     
     // Resets the upater variables
@@ -179,7 +195,6 @@ class WSRequester : NSObject {
     // Cancels downloads and data parsing
     //
     func cancel() {
-        state = .Cancelled
         task?.cancel()
         end()
     }
