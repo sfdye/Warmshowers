@@ -245,15 +245,25 @@ class MessageThreadTableViewController: UITableViewController {
     
     // Mark message thread as read
     func markAsRead() {
-
-        WSRequest.markMessageThread(threadID) { (data) -> Void in
-            
-            // On success update the local model
-            do {
-                try self.store.markMessageThreadAsRead(self.threadID)
-            } catch {
-                // This is not an important error
+        
+        do {
+            guard let thread = try store.messageThreadWithID(threadID) where thread.is_new != nil else {
+                return
             }
+            
+            if thread.is_new!.boolValue {
+                WSRequest.markMessageThread(threadID) { (data) -> Void in
+                    
+                    // On success update the local model
+                    do {
+                        try self.store.markMessageThreadAsRead(self.threadID)
+                    } catch {
+                        // This is not an important error
+                    }
+                }
+            }
+        } catch {
+            
         }
     }
     

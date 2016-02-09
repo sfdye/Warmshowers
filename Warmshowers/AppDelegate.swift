@@ -11,7 +11,6 @@ import MapKit
 import CoreData
 
 // FIRST TODOs
-// change icon
 // fix login 401 error
 // fix map loading errors
 // add reachability checks
