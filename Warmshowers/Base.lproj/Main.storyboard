@@ -1514,7 +1514,7 @@ Second line</string>
         <scene sceneID="6eX-Nx-4IN">
             <objects>
                 <tableViewController id="MJt-qp-NJY" customClass="MessageThreadTableViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="N7f-I9-Tkm">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="N7f-I9-Tkm">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1523,7 +1523,7 @@ Second line</string>
                                 <rect key="frame" x="0.0" y="92" width="600" height="188"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wL2-3k-YOQ" id="v4n-wk-DsP">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="187.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="188"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="ThumbnailPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="Bp1-9S-ZqY">
@@ -1586,7 +1586,7 @@ Second line</string>
                                 <rect key="frame" x="0.0" y="280" width="600" height="188"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Rhz-mZ-RVE" id="vp4-Sm-UgD">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="187.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="188"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ThumbnailPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="T6Z-8b-apK">
@@ -1698,6 +1698,6 @@ Second line</string>
     <inferredMetricsTieBreakers>
         <segue reference="chp-Mq-xSE"/>
         <segue reference="BZz-ra-FxF"/>
-        <segue reference="1RT-Kj-eKu"/>
+        <segue reference="Lua-AG-L6Z"/>
     </inferredMetricsTieBreakers>
 </document>
