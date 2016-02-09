@@ -89,16 +89,16 @@ class CDWSMessageThread: NSManagedObject {
     
     // Returns a string of the lastest message body
     //
-    func lastestMessagePreview() -> String {
+    func lastestMessagePreview() -> String? {
         
-        if let latest =  self.lastestMessage() {
-            if var preview = latest.body {
+        if let latestMessage =  self.lastestMessage() {
+            if var preview = latestMessage.body {
                 preview += "\n"
                 // TODO remove blank lines from the message body so the preview doens't display blanks
                 return preview
             }
         }
-        return ""
+        return nil
     }
 
 }

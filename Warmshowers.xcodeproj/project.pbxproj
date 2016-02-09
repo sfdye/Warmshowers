@@ -359,6 +359,10 @@
 		E54A57321BFE82F9000843A9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E5DA03FC1C4C947100FAD1D7 /* WSSettings.swift */,
+				E53548EB1C69AA8E00E22C3D /* WSUserDefaultsKeys.swift */,
+				E53548E91C69713900E22C3D /* WSLoginData.swift */,
+				E5D961511C61FC75004E1F31 /* WSMessageStore.swift */,
 				E5967BC71C39DBC00037F4B7 /* CDWSMessage.swift */,
 				E5967BC61C39DBC00037F4B7 /* CDWSMessage+CoreDataProperties.swift */,
 				E5967BC51C39DBC00037F4B7 /* CDWSMessageThread.swift */,
@@ -549,7 +553,6 @@
 		E5D96AF61BFB1CA700AFAFEE /* Warmshowers */ = {
 			isa = PBXGroup;
 			children = (
-				E5DA03FB1C4C945100FAD1D7 /* Utilities */,
 				E5D96AF71BFB1CA700AFAFEE /* AppDelegate.swift */,
 				E54A573A1C026D96000843A9 /* Controllers */,
 				E54A57391C026D56000843A9 /* HTTP */,
@@ -590,17 +593,6 @@
 				E5DA03F11C49FA6500FAD1D7 /* WSLazyImageTableViewDataSource.swift */,
 			);
 			name = WSLazyImageTableVIewController;
-			sourceTree = "<group>";
-		};
-		E5DA03FB1C4C945100FAD1D7 /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				E5DA03FC1C4C947100FAD1D7 /* WSSettings.swift */,
-				E5D961511C61FC75004E1F31 /* WSMessageStore.swift */,
-				E53548E91C69713900E22C3D /* WSLoginData.swift */,
-				E53548EB1C69AA8E00E22C3D /* WSUserDefaultsKeys.swift */,
-			);
-			name = Utilities;
 			sourceTree = "<group>";
 		};
 		E5F6F3031C28EC550000A87E /* Views */ = {

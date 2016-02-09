@@ -11,11 +11,13 @@ import MapKit
 import CoreData
 
 // FIRST TODOs
+// change icon
 // fix map loading errors
-// fix message thread table view loading error
+// add reachability checks
 // fix views for ipad
 
 // LATER TODOs
+// add distance from loaction to account view
 // account view actions: add action to go to messages if there are messages from the user
 // show account view modally when a author name is tapped in the message view
 // map search debouncing

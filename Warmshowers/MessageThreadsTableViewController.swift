@@ -91,7 +91,7 @@ class MessageThreadsTableViewController: UITableViewController {
         let timeSort = NSSortDescriptor(key: "last_updated", ascending: false)
         request.sortDescriptors = [timeSort]
         
-        self.fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: store.privateContext, sectionNameKeyPath: nil, cacheName: nil)
+        self.fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: store.moc, sectionNameKeyPath: nil, cacheName: nil)
         fetchedResultsController.delegate = self
         
         do {

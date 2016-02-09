@@ -46,7 +46,7 @@ class MessageThreadsTableViewCell: UITableViewCell {
         setDate(messageThread.last_updated)
         subjectLabel.text = messageThread.subject ?? ""
         newDot.hidden = (messageThread.is_new == 0)
-        bodyPreviewLabel.text = messageThread.lastestMessagePreview()
+        bodyPreviewLabel.text = messageThread.lastestMessagePreview() ?? "\n"
         threadID = messageThread.thread_id?.integerValue
     }
     

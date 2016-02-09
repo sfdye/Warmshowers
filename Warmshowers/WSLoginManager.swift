@@ -20,6 +20,7 @@ class WSLoginManager : WSRequester, WSRequestDelegate {
     func requestForDownload() throws -> NSURLRequest {
         do {
             let (username, password) = try WSLoginData.getCredentials()
+            print("Loggin in with u: \(username) and p: \(password)")
             let service = WSRestfulService(type: .login)!
             let params = ["username" : username, "password" : password]
             let request = try WSRequest.requestWithService(service, params: params, token: nil)

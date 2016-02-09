@@ -17,14 +17,19 @@ enum WSMessageEntity : String {
     static let allValues = [Thread, Message, User]
 }
 
-class WSMessageStore {
+class WSMessageStore : NSObject {
     
     let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     let privateContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
         
-    init() {
+    override init() {
+        super.init()
         privateContext.persistentStoreCoordinator = moc.persistentStoreCoordinator
+        
+        // Set up an observer to merge changes in the private context to the main context when it is saved
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("privateContextDidSave:"), name: NSManagedObjectContextDidSaveNotification, object: self.privateContext)
     }
+    
     
     // MARK: Generic methods
     
@@ -35,6 +40,12 @@ class WSMessageStore {
                 try privateContext.save()
             }
         }
+    }
+    
+    // Merges the private context with the main context on notification
+    func privateContextDidSave(notification:NSNotification)
+    {
+        moc.performSelectorOnMainThread(Selector("mergeChangesFromContextDidSaveNotification:"), withObject: notification, waitUntilDone: false)
     }
     
     // Initialise a NSFetchRequest for a given entity
