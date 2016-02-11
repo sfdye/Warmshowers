@@ -259,10 +259,10 @@ class WSMessageStore : NSObject {
         }
     }
     
-    func markMessageThreadAsRead(threadID: Int) throws {
+    func markMessageThread(threadID: Int, unread: Bool) throws {
         do {
             let messageThread = try messageThreadWithID(threadID)
-            messageThread?.is_new = false
+            messageThread?.is_new = unread
             try savePrivateContext()
         }
     }

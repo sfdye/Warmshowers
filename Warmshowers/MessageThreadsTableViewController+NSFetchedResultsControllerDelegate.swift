@@ -12,7 +12,8 @@ import CoreData
 extension MessageThreadsTableViewController : NSFetchedResultsControllerDelegate {
     
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
-            self.tableView.beginUpdates()
+        self.tableView.beginUpdates()
+        self.updateTabBarBadge()
     }
     
 //    func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {

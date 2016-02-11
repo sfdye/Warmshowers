@@ -21,36 +21,36 @@ class WSGetHostsOnMapOperation : NSOperation {
     
     override func main() {
         
-        WSRequest.getHostDataForMapView(mapView) { (data) -> Void in
-            
-            // About if the operation was cancelled
-            guard self.cancelled == false else {
-                return
-            }
-            
-            // Update the mapView data source
-            if let data = data {
-                
-                var hosts = [WSUserLocation]()
-                
-                // parse the json
-                if let json = WSRequest.jsonDataToDictionary(data) {
-                    if let accounts = json["accounts"] as? NSArray {
-                        for account in accounts {
-                            if let user = WSUserLocation(json: account) {
-                                hosts.append(user)
-                            }
-                        }
-                    }
-                }
-                
-                
-                if hosts.count > 0 && self.cancelled == false {
-                    self.success?(hosts: hosts)
-                }
-            }
-            self.failure?()
-        }
+//        WSRequest.getHostDataForMapView(mapView) { (data) -> Void in
+//            
+//            // About if the operation was cancelled
+//            guard self.cancelled == false else {
+//                return
+//            }
+//            
+//            // Update the mapView data source
+//            if let data = data {
+//                
+//                var hosts = [WSUserLocation]()
+//                
+//                // parse the json
+//                if let json = WSRequest.jsonDataToDictionary(data) {
+//                    if let accounts = json["accounts"] as? NSArray {
+//                        for account in accounts {
+//                            if let user = WSUserLocation(json: account) {
+//                                hosts.append(user)
+//                            }
+//                        }
+//                    }
+//                }
+//                
+//                
+//                if hosts.count > 0 && self.cancelled == false {
+//                    self.success?(hosts: hosts)
+//                }
+//            }
+//            self.failure?()
+//        }
     }
     
 }

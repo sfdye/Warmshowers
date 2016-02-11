@@ -23,7 +23,7 @@ class WSMessageUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
  
     func requestForDownload() throws -> NSURLRequest {
         do {
-        let service = WSRestfulService(type: .getMessageThread)!
+        let service = WSRestfulService(type: .GetMessageThread)!
         let params: [String: String] = ["thread_id": String(threadID)]
         let request = try WSRequest.requestWithService(service, params: params, token: token)
         return request
@@ -37,7 +37,7 @@ class WSMessageUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
         }
         
         guard let messagesJSON = json.valueForKey("messages") as? NSArray else {
-            error = NSError(domain: "WSRequesterDomain", code: 30, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Messages JSON missing messages key", comment: "")])
+            setError(301, description: "Messages JSON missing messages key")
             return
         }
 
@@ -49,7 +49,7 @@ class WSMessageUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
                 
                 // Fail parsing if a message thread doesn't have an ID as it will cause problems later
                 guard let messageID = messageJSON.valueForKey("mid")?.integerValue else {
-                    self.error = NSError(domain: "WSRequesterDomain", code: 31, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Messages JSON missing message id key", comment: "")])
+                    self.setError(302, description: "Messages JSON missing message id key")
                     return
                 }
                 

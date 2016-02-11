@@ -9,25 +9,25 @@
 import Foundation
 
 enum WSRestfulServiceType {
-    case token
-    case login
-    case logout
-    case searchByLocation
-    case searchByKeyword
-    case userInfo
-    case userFeedback
-    case createFeedback
-    case newMessage
-    case replyToMessage
-    case unreadMessageCount
-    case getAllMessageThreads
-    case getMessageThread
-    case markMessage
+    case Token
+    case Login
+    case Logout
+    case SearchByLocation
+    case SearchByKeyword
+    case UserInfo
+    case UserFeedback
+    case CreateFeedback
+    case NewMessage
+    case ReplyToMessage
+    case UnreadMessageCount
+    case GetAllMessageThreads
+    case GetMessageThread
+    case MarkMessage
 }
 
 enum HttpMethod {
-    case get
-    case post
+    case Get
+    case Post
 }
 
 struct WSRestfulService {
@@ -40,18 +40,18 @@ struct WSRestfulService {
     
     var method: HttpMethod {
         switch type {
-        case .token, .userInfo, .userFeedback:
-            return HttpMethod.get
+        case .Token, .UserInfo, .UserFeedback:
+            return HttpMethod.Get
         default:
-            return HttpMethod.post
+            return HttpMethod.Post
         }
     }
     
     var methodAsString: String {
         switch method {
-        case .get:
+        case .Get:
             return "GET"
-        case .post:
+        case .Post:
             return "POST"
         }
     }

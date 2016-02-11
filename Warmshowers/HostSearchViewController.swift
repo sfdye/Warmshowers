@@ -383,14 +383,17 @@ class HostSearchViewController: UIViewController {
         return false
     }
     
-    // Changes between the mapView and tableView
+    // Hides the search by keyword table view    
     //
     func showMapView() {
         UIView.transitionWithView(tableView, duration: 0.1, options: .TransitionCrossDissolve, animations: { () -> Void in
             self.tableView.hidden = true
+            self.hostsInTable = [WSUserLocation]()
             }, completion: nil)
     }
     
+    // Shows the search by keyword table view
+    //
     func showTableView() {
         UIView.transitionWithView(tableView, duration: 0.1, options: .TransitionCrossDissolve, animations: { () -> Void in
             self.tableView.hidden = false

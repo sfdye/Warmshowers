@@ -86,8 +86,12 @@ class MessageThreadsTableViewController: UITableViewController {
         let request = NSFetchRequest(entityName: "MessageThread")
         let timeSort = NSSortDescriptor(key: "last_updated", ascending: false)
         request.sortDescriptors = [timeSort]
-        
-        self.fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: store.moc, sectionNameKeyPath: nil, cacheName: nil)
+        let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        self.fetchedResultsController = NSFetchedResultsController(
+            fetchRequest: request,
+            managedObjectContext: moc,
+            sectionNameKeyPath: nil,
+            cacheName: nil)
         fetchedResultsController.delegate = self
         
         do {
@@ -117,17 +121,10 @@ class MessageThreadsTableViewController: UITableViewController {
     //
     func finishedUpdates() {
         
+        // Hide any activity indecators
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
             self.refreshControl!.endRefreshing()
             WSProgressHUD.hide()
-            do {
-                try self.fetchedResultsController.performFetch()
-                self.tableView.reloadData()
-                self.updateTabBarBadge()
-            } catch let error as NSError {
-                self.setErrorAlert(error)
-                self.showAlert()
-            }
         }
         
         // Show any errors

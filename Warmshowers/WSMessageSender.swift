@@ -8,10 +8,6 @@
 
 import Foundation
 
-enum WSMessageSenderError : ErrorType {
-    case C
-}
-
 class WSMessageSender : WSRequestWithCSRFToken, WSRequestDelegate {
     
     var threadID: Int?
@@ -43,7 +39,7 @@ class WSMessageSender : WSRequestWithCSRFToken, WSRequestDelegate {
         
         // New message request
         if let threadID = threadID, let body = body {
-            service = WSRestfulService(type: .newMessage)!
+            service = WSRestfulService(type: .NewMessage)!
             params["thread_id"] = String(threadID)
             params["body"] = body
         }
@@ -51,7 +47,7 @@ class WSMessageSender : WSRequestWithCSRFToken, WSRequestDelegate {
         // Reply request
         if let recipients = recipients, let subject = subject, let body = body {
             if let recipientsString = makeRecipientString(recipients) {
-                service = WSRestfulService(type: .replyToMessage)!
+                service = WSRestfulService(type: .ReplyToMessage)!
                 params["recipients"] = recipientsString
                 params["subject"] = subject
                 params["body"] = body
@@ -69,6 +65,8 @@ class WSMessageSender : WSRequestWithCSRFToken, WSRequestDelegate {
     }
     
     func doWithData(data: NSData) {
+        
+        // Check for success in response
         
     }
     

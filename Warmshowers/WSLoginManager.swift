@@ -8,7 +8,7 @@
 
 import Foundation
 
-class WSLoginManager : WSRequester, WSRequestDelegate {
+class WSLoginManager : WSRequestWithCSRFToken, WSRequestDelegate {
     
     override init(success: (() -> Void)?, failure: ((error: NSError) -> Void)?) {
         super.init(success: success, failure: failure)
@@ -20,9 +20,9 @@ class WSLoginManager : WSRequester, WSRequestDelegate {
     func requestForDownload() throws -> NSURLRequest {
         do {
             let (username, password) = try WSLoginData.getCredentials()
-            let service = WSRestfulService(type: .login)!
+            let service = WSRestfulService(type: .Login)!
             let params = ["username" : username, "password" : password]
-            let request = try WSRequest.requestWithService(service, params: params, token: nil)
+            let request = try WSRequest.requestWithService(service, params: params, token: token)
             return request
         }
     }
@@ -34,12 +34,16 @@ class WSLoginManager : WSRequester, WSRequestDelegate {
             return
         }
         
+        // DEBUG
+        print(json)
+        // DEBUG
+            
         guard let sessionName = json.valueForKey("session_name") as? String,
             let sessid = json.valueForKey("sessid") as? String,
             let user = json.valueForKey("user")
-        else {
-            setDataError()
-            return
+            else {
+                setDataError()
+                return
         }
         
         guard let uid = user.valueForKey("uid")?.integerValue else {
@@ -53,13 +57,13 @@ class WSLoginManager : WSRequester, WSRequestDelegate {
     }
     
     func setDataError() {
-        error = NSError(domain: "WSRequesterDomain", code: 20, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Failed to parse login data", comment: "")])
+        setError(401, description: "Failed to parse login data")
     }
     
     // Convinience method to start the login process
     //
     func login() {
-        start()
+        tokenGetter.start()
     }
 
 }

@@ -271,20 +271,24 @@ class CreateFeedbackTableViewController: UITableViewController {
         showHUD()
         
         // Submit the feedback
-        WSRequest.createUserFeedback(feedback, userName: userName) { (success) -> Void in
-            
-            // Remove the spinner
-            self.hideHUD()
-            
-            if success {
+        let feedbackSender = WSFeedbackSender(
+            feedback: feedback,
+            userName: userName,
+            success: { () -> Void in
+                // Dismiss the view on successful feedback submission
+                self.hideHUD()
                 self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
-            } else {
+            },
+            failure: {(error) -> Void in
+                // Show an error
+                self.hideHUD()
                 let alert = UIAlertController(title: "Could not submit feedback", message: "Sorry, an error occured while submitted your feedback. Please check you are connected to the internet and try again later.", preferredStyle: .Alert)
                 let okAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
                 alert.addAction(okAction)
                 self.presentViewController(alert, animated: true, completion: nil)
             }
-        }
+        )
+        feedbackSender.send()
     }
     
     func showHUD() {

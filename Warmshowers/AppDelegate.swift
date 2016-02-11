@@ -112,17 +112,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     // Shows the main app with the tab bar
+    //
     func showMainApp() {
         self.window?.rootViewController = storyboard.instantiateInitialViewController()
     }
     
+    // Tasks to do when loggin out the user
+    //
     func logout() {
         
-        // Clear the appropriate defaults
+        // Clear out the users messages
+        do {
+            try store.clearout()
+        } catch {
+            // Suggest that the user delete the app for privacy
+            let alert = UIAlertController(title: "Data Error", message: "Sorry, an error occured while removing your messages from this iPhone during the logout process. If you would like to remove your Warmshowers messages from this iPhone please try deleting the Warmshowers app.", preferredStyle: .Alert)
+            let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            alert.addAction(okAction)
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.window?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
+            })
+        }
+        
+        // Clear the appropriate defaults.
         do {
             try WSLoginData.removeDataForLogout()
         } catch {
-            // Data will be overwritten on next login
+            // Login data will be overwritten on next login.
         }
         
         // Go to the login screen
@@ -180,14 +196,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // The message store
     lazy var store = WSMessageStore()
-    
-    // Deletes everything in the store
-    func clearStore() throws {
-        
-        do {
-            try store.clearout()
-        }
-    }
     
 }
 

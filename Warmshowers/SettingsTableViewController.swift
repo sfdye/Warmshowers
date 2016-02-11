@@ -126,29 +126,23 @@ class SettingsTableViewController: UITableViewController {
                 UIApplication.sharedApplication().openURL(NSURL(string: "mailto:rajan.fernandez@hotmail.com?subject=Warmshowers%20app")!)
             case 30:
                 // Logout and return the login screeen
-                let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
-                
-                // Logout and return the login screeen
-                WSRequest.logout({ (success) -> Void in
-                    
-                    // Delete the users messages from the store
-                    do {
-                        try appDelegate?.clearStore()
-                    } catch {
-                        // Suggest that the user delete the app for privacy
-                        let alert = UIAlertController(title: "Data Error", message: "Sorry, an error occured while removing your messages from this iPhone during the logout process. If you would like to remove your Warmshowers messages from this iPhone please try deleting the Warmshowers app.", preferredStyle: .Alert)
-                        let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-                        alert.addAction(okAction)
+                let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                let logoutManager = WSLogoutManager(
+                    success: {
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            self.presentViewController(alert, animated: true, completion: nil)
+                            WSProgressHUD.hide()
+                            appDelegate.logout()
+                        })
+                    },
+                    failure: { (error) -> Void in
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            WSProgressHUD.hide()
+                            appDelegate.logout()
                         })
                     }
-                    
-                    // Delete defaults and return to the login screen
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        appDelegate?.logout()
-                    })
-                })
+                )
+                WSProgressHUD.show("Logging out ...")
+                logoutManager.logout()
                 
             default:
                 return

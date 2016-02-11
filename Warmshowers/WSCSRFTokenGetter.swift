@@ -19,7 +19,7 @@ class WSCSRFTokenGetter : WSRequester, WSRequestDelegate {
     
     func requestForDownload() throws -> NSURLRequest {
         do {
-            let service = WSRestfulService.init(type: .token)!
+            let service = WSRestfulService.init(type: .Token)!
             let request = try WSRequest.requestWithService(service)
             return request
         }

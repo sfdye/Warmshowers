@@ -23,7 +23,7 @@ class WSMessageThreadsUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
     
     func requestForDownload() throws -> NSURLRequest {
         do {
-            let service = WSRestfulService(type: .getAllMessageThreads)!
+            let service = WSRestfulService(type: .GetAllMessageThreads)!
             let request = try WSRequest.requestWithService(service, token: token)
             return request
         }
@@ -36,7 +36,7 @@ class WSMessageThreadsUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
         }
         
         guard let threadsJSON = json as? NSArray else {
-            error = NSError(domain: "WSRequesterDomain", code: 40, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Failed to convert message thread JSON.", comment: "")])
+            setError(201, description: "Failed to convert message thread JSON.")
             return
         }
         
@@ -48,7 +48,7 @@ class WSMessageThreadsUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
                 
                 // Fail parsing if a message thread doesn't have an ID as it will cause problems later
                 guard let threadID = threadJSON.valueForKey("thread_id")?.integerValue else {
-                    self.error = NSError(domain: "WSRequesterDomain", code: 41, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Thread ID missing in message thread JSON.", comment: "")])
+                    self.setError(202, description: "Thread ID missing in message thread JSON.")
                     return
                 }
                 
