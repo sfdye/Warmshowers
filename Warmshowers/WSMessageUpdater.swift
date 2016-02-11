@@ -14,8 +14,8 @@ class WSMessageUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
     var threadID: Int!
     var store: WSMessageStore!
     
-    init(threadID: Int, store: WSMessageStore) {
-        super.init()
+    init(threadID: Int, store: WSMessageStore, success: (() -> Void)?, failure: ((error: NSError) -> Void)?) {
+        super.init(success: success, failure: failure)
         requestDelegate = self
         self.threadID = threadID
         self.store = store

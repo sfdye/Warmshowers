@@ -16,8 +16,8 @@ class WSHostsOnMapUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
     var mapView: MKMapView!
     let MapSearchLimit: Int = 800
     
-    init(hostsOnMap: [WSUserLocation], mapView: MKMapView) {
-        super.init()
+    init(hostsOnMap: [WSUserLocation], mapView: MKMapView, success: (() -> Void)?, failure: ((error: NSError) -> Void)?) {
+        super.init(success: success, failure: failure)
         requestDelegate = self
         self.hostsOnMap = hostsOnMap
         self.mapView = mapView
@@ -48,6 +48,12 @@ class WSHostsOnMapUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
                 }
             }
         }
+    }
+    
+    // Convinience method to start the updates
+    //
+    func update() {
+        tokenGetter.start()
     }
 
 }

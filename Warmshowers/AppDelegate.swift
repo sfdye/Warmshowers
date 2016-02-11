@@ -11,9 +11,7 @@ import MapKit
 import CoreData
 
 // FIRST TODOs
-// fix login 401 error
 // fix map loading errors
-// add reachability checks
 // fix views for ipad
 
 // LATER TODOs

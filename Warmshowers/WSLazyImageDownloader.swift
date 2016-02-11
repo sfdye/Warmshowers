@@ -13,8 +13,8 @@ class WSLazyImageDownloader : WSRequester, WSRequestDelegate {
     var object: WSLazyImage!
     var placeholderImage: UIImage?
     
-    init(lazyImageObject: WSLazyImage) {
-        super.init()
+    init(lazyImageObject: WSLazyImage, success: (() -> Void)?, failure: ((error: NSError) -> Void)?) {
+        super.init(success: success, failure: failure)
         requestDelegate = self
         self.object = lazyImageObject
     }

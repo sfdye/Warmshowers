@@ -83,26 +83,26 @@ class WSLazyImageTableViewController: UITableViewController {
         if imageDownloadsInProgress[indexPath] == nil {
             
             // Create and start a imageDownloader object
-            let imageDownloader = WSLazyImageDownloader(lazyImageObject: object)
+            let imageDownloader = WSLazyImageDownloader(
+                lazyImageObject: object,
+                success: {
+                    // Update the cell with the objects profile image
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        // Sometimes this cast failes for the first screen of the tableview, but i don't know why.
+                        if var cell = self.tableView.cellForRowAtIndexPath(indexPath) as? WSLazyImageTableViewCell {
+                            cell.lazyImage = object.lazyImage
+                        }
+                    })
+                    
+                    // Remove the downloader object from the downloads
+                    // TODO: Sometimes the code breaks here with an unexpected nil
+                    self.imageDownloadsInProgress.removeValueForKey(indexPath)
+                },
+                failure: { (error) -> Void in
+                    self.imageDownloadsInProgress.removeValueForKey(indexPath)
+                }
+            )
             imageDownloader.placeholderImage = placeholderImage
-            imageDownloader.success = {
-                
-                // Update the cell with the objects profile image
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    // Sometimes this cast failes for the first screen of the tableview, but i don't know why.
-                    if var cell = self.tableView.cellForRowAtIndexPath(indexPath) as? WSLazyImageTableViewCell {
-                        cell.lazyImage = object.lazyImage
-                    }
-                })
-
-                // Remove the downloader object from the downloads
-                // TODO: Sometimes the code breaks here with an unexpected nil
-                self.imageDownloadsInProgress.removeValueForKey(indexPath)
-            }
-            imageDownloader.failure = { (error) -> Void in
-                self.imageDownloadsInProgress.removeValueForKey(indexPath)
-            }
-            
             imageDownloadsInProgress[indexPath] = imageDownloader
             imageDownloader.start()
         }

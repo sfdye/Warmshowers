@@ -20,16 +20,16 @@ class WSMessageSender : WSRequestWithCSRFToken, WSRequestDelegate {
     var body: String?
     
     // Initialiser for replies
-    init(threadID: Int, body: String) {
-        super.init()
+    init(threadID: Int, body: String, success: (() -> Void)?, failure: ((error: NSError) -> Void)?) {
+        super.init(success: success, failure: failure)
         requestDelegate = self
         self.threadID = threadID
         self.body = body
     }
     
     // Initialiser for new messages
-    init(recipients: [CDWSUser], subject: String, body: String) {
-        super.init()
+    init(recipients: [CDWSUser], subject: String, body: String, success: (() -> Void)?, failure: ((error: NSError) -> Void)?) {
+        super.init(success: success, failure: failure)
         requestDelegate = self
         self.recipients = recipients
         self.subject = subject

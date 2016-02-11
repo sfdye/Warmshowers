@@ -12,25 +12,38 @@ import Foundation
 //
 class WSRequestWithCSRFToken : WSRequester {
     
-    var tokenGetter = WSCSRFTokenGetter()
+    var tokenGetter: WSCSRFTokenGetter!
+    lazy var loginManager: WSLoginManager = {
+        let loginManager = WSLoginManager(
+            success: { () -> Void in
+                self.tokenGetter.start()
+            },
+            failure: { (error) -> Void in
+                self.error = error
+                self.end()
+            }
+        )
+        return loginManager
+    }()
     var token: String? { return tokenGetter.token }
     
-    override init() {
-        super.init()
-        
+    // Login manager for getting a new session cookie if required
+    lazy var finalAttempt = false
+    
+    override init(success: (() -> Void)?, failure: ((error: NSError) -> Void)?) {
+        super.init(success: success, failure: failure)
         // Set the token getter to execute the request if a token was recieved
-        tokenGetter.success = { self.start() }
-        tokenGetter.failure = self.failure
+        tokenGetter = WSCSRFTokenGetter(success: self.start, failure: failure)
     }
     
     // Prevents the request starting without a CSRF token
     //
     override func shouldStart() -> Bool {
         if token == nil {
-            error = NSError(domain: "WSRequesterDomain", code: 9, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Request aborted with no CSRF token", comment: "")])
+            setError(102, description: "Request aborted with no CSRF token.")
             return false
         } else {
-            return true
+            return isReachable()
         }
     }
     
@@ -44,16 +57,14 @@ class WSRequestWithCSRFToken : WSRequester {
     }
     
     override func retryReqeust() {
-        print("retrying")
         // Set up the login manager and try again
-        loginManager.success = {
-            self.tokenGetter.start()
-        }
-        loginManager.failure = { (error) -> Void in
-            self.error = error
-            self.end()
-        }
         loginManager.start()
+    }
+    
+    // Resets the upater variables
+    override func reset() {
+        finalAttempt = false
+        error = nil
     }
 
 }

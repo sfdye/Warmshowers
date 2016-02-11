@@ -161,14 +161,22 @@ class ComposeMessageViewController: UIViewController {
         
         if let threadID = threadID {
             // Send message as a reply on an existing thread
-            messageSender = WSMessageSender(threadID: threadID, body: body)
+            messageSender = WSMessageSender(
+                threadID: threadID,
+                body: body,
+                success: self.successfulSend,
+                failure: self.failedSend
+            )
         } else {
             // Send as a new message
-            messageSender = WSMessageSender(recipients: recipients, subject: subject, body: body)
+            messageSender = WSMessageSender(
+                recipients: recipients,
+                subject: subject,
+                body: body,
+                success: self.successfulSend,
+                failure: self.failedSend
+            )
         }
-        
-        messageSender?.success = self.successfulSend
-        messageSender?.failure = self.failedSend
         sendMessage()
     }
     

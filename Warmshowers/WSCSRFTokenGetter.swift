@@ -12,8 +12,8 @@ class WSCSRFTokenGetter : WSRequester, WSRequestDelegate {
     
     var token: String?
     
-    override init() {
-        super.init()
+    override init(success: (() -> Void)?, failure: ((error: NSError) -> Void)?) {
+        super.init(success: success, failure: failure)
         requestDelegate = self
     }
     

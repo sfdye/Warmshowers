@@ -21,15 +21,17 @@ class MessageThreadTableViewController: UITableViewController {
     var threadID: Int!
 
     lazy var messageUpdater: WSMessageUpdater = {
-        let messageUpdater = WSMessageUpdater(threadID: self.threadID, store: self.store)
-        messageUpdater.success = {
-            self.reload()
-        }
-        messageUpdater.failure = { (error) -> Void in
-            // Reload and show an error alert
-            self.setErrorAlert(error)
-            self.reload()
-        }
+        let messageUpdater = WSMessageUpdater(
+            threadID: self.threadID,
+            store: self.store,
+            success: {
+                self.reload()
+            },
+            failure: { (error) -> Void in
+                // Reload and show an error alert
+                self.setErrorAlert(error)
+                self.reload()
+        })
         return messageUpdater
     }()
     let store = (UIApplication.sharedApplication().delegate as! AppDelegate).store

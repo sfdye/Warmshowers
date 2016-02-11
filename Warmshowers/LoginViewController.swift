@@ -25,8 +25,8 @@ class LoginViewController: UIViewController {
     var alertController: UIAlertController?
     
     // Login manager
-    var loginManager = WSLoginManager()
-    
+    var loginManager: WSLoginManager!
+
 
     // MARK: View life cycle
     
@@ -37,16 +37,20 @@ class LoginViewController: UIViewController {
         usernameTextField.text = WSLoginData.username
         
         // Set up the login manager
-        loginManager.success = {
-            WSProgressHUD.hide()
-            dispatch_async(dispatch_get_main_queue(), {
-                self.appDelegate?.showMainApp()
-            })
-        }
-        loginManager.failure = { (error) -> Void in
-            WSProgressHUD.hide()
-            self.alert("Login failed", message: error.localizedDescription)
-        }
+        loginManager = WSLoginManager(
+            success: {
+                dispatch_async(dispatch_get_main_queue(), {
+                    WSProgressHUD.hide()
+                    (UIApplication.sharedApplication().delegate as! AppDelegate).showMainApp()
+                })
+            },
+            failure: { (error) -> Void in
+                dispatch_async(dispatch_get_main_queue(), {
+                    WSProgressHUD.hide()
+                    self.alert("Login failed", message: error.localizedDescription)
+                })
+            }
+        )
     }
     
     override func didReceiveMemoryWarning() {

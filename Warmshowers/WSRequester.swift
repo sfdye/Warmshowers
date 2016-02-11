@@ -7,14 +7,16 @@
 //
 
 import Foundation
+import ReachabilitySwift
 
 /*
 Requester error codes:
-100 - Request aborted
-101 - NSURLRequest could not be created
-102 - No HTTP response
-103 - HTTP bad response
-104 - No data recieved
+100 - No internet
+101 - Request aborted
+102 - NSURLRequest could not be created
+103 - No HTTP response
+104 - HTTP bad response
+105 - No data recieved
  */
 
 enum WSRequesterError : ErrorType {
@@ -26,6 +28,9 @@ class WSRequester : NSObject {
     // URL session
     let session = NSURLSession.init(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
     
+    // Reachability
+    var reachability: Reachability?
+    
     // Delegate
     var requestDelegate: WSRequestDelegate!
     
@@ -36,22 +41,39 @@ class WSRequester : NSObject {
     var httpResponse: NSHTTPURLResponse? { return response as? NSHTTPURLResponse }
     var error: NSError?
     
-    // Login manager for getting a new session cookie if required
-    lazy var finalAttempt = false
-    lazy var loginManager = WSLoginManager()
-    
     // Completion handlers
     var success: (() -> Void)?
     var failure: ((error: NSError) -> Void)?
     
-    override init() {
+    init(success: (() -> Void)?, failure: ((error: NSError) -> Void)?) {
         super.init()
+        self.success = success
+        self.failure = failure
+        do {
+            reachability = try Reachability.reachabilityForInternetConnection()
+        } catch  {
+            // Requester can still run without this
+        }
     }
     
-    // Override this function to perform checks before starting update operations
+    // Checks for an internet connection
+    //
+    func isReachable() -> Bool {
+        
+        if let reachability = reachability {
+            if !reachability.isReachable() {
+                setError(100, description: "No internet connection.")
+                return false
+            }
+        }
+        
+        return true
+    }
+    
+    // Override this function to perform other checks before starting update operations
     //
     func shouldStart() -> Bool {
-        return true
+        return isReachable()
     }
     
     // Starts the download and parsing process
@@ -61,7 +83,7 @@ class WSRequester : NSObject {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
         guard shouldStart() == true else {
-            setError(100, description: "Request aborted")
+            setError(101, description: "Request aborted.")
             end()
             return
         }
@@ -96,7 +118,7 @@ class WSRequester : NSObject {
         }
         
         guard let httpResponse = httpResponse else {
-            setError(102, description: "Unauthorised")
+            setError(103, description: "No Response.")
             end()
             return
         }
@@ -116,7 +138,7 @@ class WSRequester : NSObject {
             if shouldRetryRequest() {
                 retryReqeust()
             } else {
-                setError(103, description: "HTTP request failed with status code \(httpResponse.statusCode)")
+                setError(104, description: "HTTP request failed with status code \(httpResponse.statusCode).")
                 end()
             }
         }
@@ -155,7 +177,7 @@ class WSRequester : NSObject {
     // Runs when a request recieved a valid response but with nil data
     //
     func nilDataAction() {
-        setError(104, description: "HTTP request recieved a successful response but with no data")
+        setError(105, description: "HTTP request recieved a successful response but with no data.")
     }
     
     // Decides whether the completion handlers should be called
@@ -164,6 +186,8 @@ class WSRequester : NSObject {
         return true
     }
     
+    // Sets an error if one doesn't already exist
+    //
     func setError(code: Int, description: String) {
         if error == nil {
             error = NSError(domain: WSErrorDomain, code: code, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString(description, comment: "")])
@@ -172,14 +196,13 @@ class WSRequester : NSObject {
     
     // Resets the upater variables
     func reset() {
-        finalAttempt = false
         error = nil
     }
     
     // Runs at the end of a request and calls eith success or failure callbacks
     //
     func end() {
-        
+
         if shouldCallCompletionHandler() {
             if error != nil {
                 failure?(error: error!)

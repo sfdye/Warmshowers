@@ -2,17 +2,21 @@ PODS:
   - KeychainAccess (2.3.3)
   - kingpin (0.3.1)
   - MBProgressHUD (0.9.1)
+  - ReachabilitySwift (2.3.3)
 
 DEPENDENCIES:
   - KeychainAccess
   - kingpin (from `https://github.com/itsbonczek/kingpin`)
   - MBProgressHUD (from `https://github.com/jdg/MBProgressHUD.git`)
+  - ReachabilitySwift (from `https://github.com/ashleymills/Reachability.swift`)
 
 EXTERNAL SOURCES:
   kingpin:
     :git: https://github.com/itsbonczek/kingpin
   MBProgressHUD:
     :git: https://github.com/jdg/MBProgressHUD.git
+  ReachabilitySwift:
+    :git: https://github.com/ashleymills/Reachability.swift
 
 CHECKOUT OPTIONS:
   kingpin:
@@ -21,10 +25,14 @@ CHECKOUT OPTIONS:
   MBProgressHUD:
     :commit: 2fbcbae6a28b770a572b8bd08d93f8db23e786a6
     :git: https://github.com/jdg/MBProgressHUD.git
+  ReachabilitySwift:
+    :commit: ec4b33a7e439e5b203b0cae0f71383ca803ad031
+    :git: https://github.com/ashleymills/Reachability.swift
 
 SPEC CHECKSUMS:
   KeychainAccess: 9b7e49e48277e329b1b3195e54697ed313d30acf
   kingpin: 52bb578006bdeb881db225e6ff1a4228375cbfbf
   MBProgressHUD: c34da5f231d7c38b8bc9d2cb08f81509d0bea7b0
+  ReachabilitySwift: e0f6b6f280effb47731acfaaa2d5ffe223703793
 
 COCOAPODS: 0.39.0

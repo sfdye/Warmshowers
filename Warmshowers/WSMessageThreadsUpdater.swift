@@ -15,8 +15,8 @@ class WSMessageThreadsUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
     
     var store: WSMessageStore!
     
-    init(store: WSMessageStore) {
-        super.init()
+    init(store: WSMessageStore, success: (() -> Void)?, failure: ((error: NSError) -> Void)?) {
+        super.init(success: success, failure: failure)
         requestDelegate = self
         self.store = store
     }
@@ -39,12 +39,6 @@ class WSMessageThreadsUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
             error = NSError(domain: "WSRequesterDomain", code: 40, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Failed to convert message thread JSON.", comment: "")])
             return
         }
-        
-        //        let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-        //        let privateMOC = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-//        privateMOC.parentContext = moc
-        
-        // Don't call completion handlers until the block has finished
         
         store.privateContext.performBlockAndWait { () -> Void in
             

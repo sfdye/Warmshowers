@@ -279,33 +279,6 @@ Second line</string>
                                     <segue destination="MJt-qp-NJY" kind="show" identifier="ToMessageThread" id="T4w-LT-wmd"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Placeholder" rowHeight="96" id="z75-t3-JMj" customClass="PlaceholderTableViewCell" customModule="Warmshowers" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="188" width="600" height="96"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="z75-t3-JMj" id="YUh-8s-OGB">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="95.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="No Messages" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K0A-85-qGg">
-                                            <rect key="frame" x="248" y="28" width="104" height="20.5"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="40" id="EfJ-wd-KVY"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="K0A-85-qGg" secondAttribute="bottom" constant="28" id="1eV-F0-xtJ"/>
-                                        <constraint firstItem="K0A-85-qGg" firstAttribute="top" secondItem="YUh-8s-OGB" secondAttribute="top" constant="28" id="Kwx-Pm-I8s"/>
-                                        <constraint firstItem="K0A-85-qGg" firstAttribute="centerX" secondItem="YUh-8s-OGB" secondAttribute="centerX" id="svt-Rw-5q3"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="placeholderLabel" destination="K0A-85-qGg" id="kSc-gk-QqO"/>
-                                </connections>
-                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="2Pf-bx-IOP" id="DRi-3M-dzm"/>
@@ -1016,7 +989,7 @@ Second line</string>
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="lIQ-HM-o8N">
-                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="Lgf-SQ-Wv3">
+                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="Lgf-SQ-Wv3">
                             <connections>
                                 <action selector="actionButtonPressed:" destination="Hb8-qn-N7z" id="5DC-Ds-Eu3"/>
                             </connections>
@@ -1696,8 +1669,8 @@ Second line</string>
         <image name="ThumbnailPlaceholder" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="chp-Mq-xSE"/>
         <segue reference="BZz-ra-FxF"/>
-        <segue reference="Lua-AG-L6Z"/>
+        <segue reference="chp-Mq-xSE"/>
+        <segue reference="1RT-Kj-eKu"/>
     </inferredMetricsTieBreakers>
 </document>

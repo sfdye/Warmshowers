@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import MBProgressHUD
+import ReachabilitySwift
 
 let MessageThreadCellID = "MessageThreadCell"
 let MessageSegueID = "ToMessageThread"
@@ -45,7 +46,6 @@ class MessageThreadsTableViewController: UITableViewController {
         
         // Set up the message thread updater
         configureMessageThreadsUpdater()
-        WSProgressHUD.show("Updating messages ...")
         
         // Table view autolayout options
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -53,37 +53,33 @@ class MessageThreadsTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
+        
+        // Reset the navigation bar text properties
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: WSColor.Green, NSFontAttributeName: WSFont.SueEllenFrancisco(26)]
     }
     
     override func viewDidAppear(animated: Bool) {
         
-        var needsUpdate = false
-        
-        // Update the message threads if more than 10 minutes has elapsed
-        if lastUpdated == nil {
-            needsUpdate = true
-        } else if lastUpdated!.timeIntervalSinceNow > 600 {
-            needsUpdate = true
-        }
-        
-        if needsUpdate {
-            update()
-        } else {
+        // Update the message threads on loading the view or if more than 10 minutes has elapsed
+        if let lastUpdated = lastUpdated where lastUpdated.timeIntervalSinceNow < 600 {
             finishedUpdates()
+        } else {
+            update()
         }
     }
     
     func configureMessageThreadsUpdater() {
-        messageThreadUpdater = WSMessageThreadsUpdater(store: store)
-        messageThreadUpdater.success = {
-            self.lastUpdated = NSDate()
-            self.updateAllMessages()
-        }
-        messageThreadUpdater.failure = { (error) -> Void in
-            self.setErrorAlert(error)
-            self.finishedUpdates()
-        }
+        messageThreadUpdater = WSMessageThreadsUpdater(
+            store: store,
+            success: {
+                self.lastUpdated = NSDate()
+                self.updateAllMessages()
+            },
+            failure: { (error) -> Void in
+                self.setErrorAlert(error)
+                self.finishedUpdates()
+            }
+        )
     }
     
     func initializeFetchedResultsController() {
@@ -111,6 +107,9 @@ class MessageThreadsTableViewController: UITableViewController {
     // MARK: Utility methods
     
     func update() {
+        if lastUpdated == nil {
+            WSProgressHUD.show("Updating messages ...")
+        }
         messageThreadUpdater.update()
     }
     
@@ -171,14 +170,17 @@ class MessageThreadsTableViewController: UITableViewController {
             return
         }
         
-        let messageUpdater = WSMessageUpdater(threadID: threadID, store: store)
-        messageUpdater.success = {
-            self.updateFinishedForThreadID(threadID)
-        }
-        messageUpdater.failure = { (error) -> Void in
-            self.setErrorAlert(error)
-            self.updateFinishedForThreadID(threadID)
-        }
+        let messageUpdater = WSMessageUpdater(
+            threadID: threadID,
+            store: store,
+            success: {
+                self.updateFinishedForThreadID(threadID)
+            },
+            failure: { (error) -> Void in
+                self.setErrorAlert(error)
+                self.updateFinishedForThreadID(threadID)
+            }
+        )
         updatesInProgress[threadID] = messageUpdater
         messageUpdater.update()
     }
