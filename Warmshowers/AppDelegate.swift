@@ -11,7 +11,7 @@ import MapKit
 import CoreData
 
 // FIRST TODOs
-// fix map loading errors
+// fix map loading errors: manage map pins with core data to avoid memory warnings.
 // fix views for ipad
 
 // LATER TODOs

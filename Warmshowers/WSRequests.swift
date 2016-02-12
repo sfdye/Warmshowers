@@ -159,35 +159,6 @@ struct WSRequest {
             }
         }
     }
-    
-//    // Logout of warmshowers
-//    //
-//    static func logout(doWithLogoutResponse: (success: Bool) -> Void) {
-//        
-//        let service = WSRestfulService(type: .Logout)!
-//
-//        requestWithCSRFToken(service, doWithResponse : { (data, response, error) -> Void in
-//            
-//            guard let data = data, let httpResponse = response as? NSHTTPURLResponse where error == nil else {
-//                doWithLogoutResponse(success: false)
-//                return
-//            }
-//            
-//            if let _ = self.jsonDataToJSONObject(data) {
-//                doWithLogoutResponse(success: true)
-//                return
-//            } else {
-//                print("Logout request responded with: \(httpResponse)")
-//                if httpResponse.statusCode == 406 {
-//                    // http 406: unauthorized. The user was already logged out
-//                    doWithLogoutResponse(success: true)
-//                    return
-//                }
-//            }
-//            
-//            doWithLogoutResponse(success: false)
-//        })
-//    }
 
     
     // MARK: - Utilities
@@ -205,19 +176,6 @@ struct WSRequest {
             return json
         } catch {
             print("Failed converting JSON data.")
-        }
-        return nil
-    }
-    
-    // Checks if JSON data contains just an integer and returns it (or nil)
-    //
-    static func intFromJSONData(data: NSData?) -> Int? {
-        
-        if let json = jsonDataToJSONObject(data) {
-            if json.count == 1 {
-                let count: Int? = json.objectAtIndex(0).integerValue
-                return count
-            }
         }
         return nil
     }

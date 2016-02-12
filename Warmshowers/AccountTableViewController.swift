@@ -37,7 +37,7 @@ class AccountTableViewController: UITableViewController {
     
     let PHOTO_KEY = "profile_image_mobile_profile_photo_std"
     
-    var uid: Int?
+    var uid: Int!
     var info: AnyObject?
     var user: WSUserLocation?
     var feedback = [WSRecommendation]()
@@ -456,7 +456,7 @@ class AccountTableViewController: UITableViewController {
         case ToFeedbackSegueID:
             return feedback.count > 0
         case ToSendNewMessageSegueID:
-            return recipient != nil
+            return (info != nil && uid != nil && recipient != nil)
         case ToProvideFeeedbackSegueID:
             return info?.valueForKey("name") as? String != nil ? true : false
         default:
@@ -473,12 +473,13 @@ class AccountTableViewController: UITableViewController {
         if segue.identifier == ToSendNewMessageSegueID {
             let navVC = segue.destinationViewController as! UINavigationController
             let composeMessageVC = navVC.viewControllers.first as! ComposeMessageViewController
-            if info != nil {
+            if let info = info, let uid = uid {
+                // Save the user to the store and pass the user object to the compose message view controller
+                let store = (UIApplication.sharedApplication().delegate as! AppDelegate).store
                 do {
-                    try saveUserInfo(info!)
-                    if let recipient = recipient {
-                        composeMessageVC.initialiseAsNewMessageToUser([recipient])
-                    }
+                    try store.addUserWithParticipantJSON(info)
+                    recipient = try store.userWithID(uid)
+                    composeMessageVC.initialiseAsNewMessageToUser([recipient!])
                 } catch {
                     print("Failed to get user for compose message view")
                 }
@@ -494,48 +495,6 @@ class AccountTableViewController: UITableViewController {
 
     
     // MARK: Utilities
-    
-    // Saves user profile data to the store and reloads the view
-    func saveUserInfo(info: AnyObject) throws {
-        
-        guard let uid = uid else {
-            throw DataError.InvalidInput
-        }
-
-        // Get user from the
-        do {
-            try recipient = getUserWithUID(uid)
-        }
-        
-        // TODO: Fix this to use message store manager
-//        recipient?.updateFromJSON(info)
-
-        // save user to the store
-        do {
-            try moc.save()
-        }
-    }
-    
-    // Checks if a user is already in the store by uid.
-    // Returns the existing user, or a new user inserted into the MOC.
-    //
-    func getUserWithUID(uid: Int) throws -> CDWSUser {
-        
-        let request = NSFetchRequest(entityName: "User")
-        request.predicate = NSPredicate(format: "uid == %i", uid)
-        
-        // Try to find the user in the store
-        do {
-            if let user = try moc.executeFetchRequest(request).first as? CDWSUser {
-                return user
-            }
-        }
-        
-        // User wasn't in the store, so create a new managed object
-        let user = NSEntityDescription.insertNewObjectForEntityForName("User", inManagedObjectContext: moc) as! CDWSUser
-        
-        return user
-    }
     
     // Reloads the view
     func reload() {
