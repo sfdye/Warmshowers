@@ -138,12 +138,6 @@ class WSRequester : NSObject {
             if shouldRetryRequest() {
                 retryReqeust()
             } else {
-                
-                // DEBUG
-                requestDelegate.doWithData(self.data!)
-                // DEBUG
-                
-                
                 setError(104, description: "HTTP request failed with status code \(httpResponse.statusCode).")
                 end()
             }

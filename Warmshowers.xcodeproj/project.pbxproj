@@ -20,6 +20,7 @@
 		E52E8ABE1C0E463D000391AB /* Warmshowers.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E52E8ABC1C0E463D000391AB /* Warmshowers.xcdatamodeld */; };
 		E53548EA1C69713900E22C3D /* WSLoginData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53548E91C69713900E22C3D /* WSLoginData.swift */; };
 		E53548EC1C69AA8E00E22C3D /* WSUserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53548EB1C69AA8E00E22C3D /* WSUserDefaultsKeys.swift */; };
+		E536BFC61C7304980017E7B8 /* WSHostsByKeywordSearchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E536BFC51C7304980017E7B8 /* WSHostsByKeywordSearchManager.swift */; };
 		E54276731C3E0CC900047029 /* ComposeMessageDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54276721C3E0CC900047029 /* ComposeMessageDetailTableViewCell.swift */; };
 		E54276751C3E0CE200047029 /* ComposeMessageBodyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54276741C3E0CE200047029 /* ComposeMessageBodyTableViewCell.swift */; };
 		E54276781C3E374400047029 /* CreateFeedbackTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54276771C3E374400047029 /* CreateFeedbackTableViewController.swift */; };
@@ -165,6 +166,7 @@
 		E52E8ABD1C0E463D000391AB /* Warmshowers.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Warmshowers.xcdatamodel; sourceTree = "<group>"; };
 		E53548E91C69713900E22C3D /* WSLoginData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSLoginData.swift; sourceTree = "<group>"; };
 		E53548EB1C69AA8E00E22C3D /* WSUserDefaultsKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSUserDefaultsKeys.swift; sourceTree = "<group>"; };
+		E536BFC51C7304980017E7B8 /* WSHostsByKeywordSearchManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSHostsByKeywordSearchManager.swift; sourceTree = "<group>"; };
 		E54276721C3E0CC900047029 /* ComposeMessageDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeMessageDetailTableViewCell.swift; sourceTree = "<group>"; };
 		E54276741C3E0CE200047029 /* ComposeMessageBodyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeMessageBodyTableViewCell.swift; sourceTree = "<group>"; };
 		E54276771C3E374400047029 /* CreateFeedbackTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateFeedbackTableViewController.swift; sourceTree = "<group>"; };
@@ -413,6 +415,7 @@
 				E5DF37C11C6C1E6C00D5F509 /* WSMessageThreadMarker.swift */,
 				E5DF37C31C6C315700D5F509 /* WSFeedbackSender.swift */,
 				E569DC481C6C5E4300286055 /* WSLogoutManager.swift */,
+				E536BFC51C7304980017E7B8 /* WSHostsByKeywordSearchManager.swift */,
 			);
 			name = HTTP;
 			sourceTree = "<group>";
@@ -954,6 +957,7 @@
 				E53548EA1C69713900E22C3D /* WSLoginData.swift in Sources */,
 				E54276861C3E78E000047029 /* CreateFeedbackTableViewController+UIPickerViewDelegate.swift in Sources */,
 				E5967BCD1C39DBC00037F4B7 /* CDWSMessage.swift in Sources */,
+				E536BFC61C7304980017E7B8 /* WSHostsByKeywordSearchManager.swift in Sources */,
 				E5700C541C44EE51008C8A87 /* ComposeMessageViewController+UITextFieldDelegate.swift in Sources */,
 				E5967BA91C36910C0037F4B7 /* AvailiblityTableViewCell.swift in Sources */,
 				E5A9F1231C561971006D6499 /* WSHostsOnMapUpdater.swift in Sources */,
@@ -1103,11 +1107,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Warmshowers/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.Warmshowers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Warmshowers/kingpin-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1117,11 +1122,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Warmshowers/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.Warmshowers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Warmshowers/kingpin-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

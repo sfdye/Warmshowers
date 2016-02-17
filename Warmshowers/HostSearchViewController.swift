@@ -52,6 +52,7 @@ class HostSearchViewController: UIViewController {
             tableViewController.lazyImageObjects = newValue
         }
     }
+    var hostsByKeywordSearcher: WSHostsByKeywordSearchManager!
     
     // Navigation bar items
     var searchButton: UIBarButtonItem!
@@ -78,6 +79,19 @@ class HostSearchViewController: UIViewController {
         // Mapview
         mapView.delegate = self
         showMapView()
+        
+        // Host by keyword search manager
+        hostsByKeywordSearcher = WSHostsByKeywordSearchManager(
+            hostList: hostsInTable,
+            success: {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.tableView.reloadData()
+                })
+            },
+            failure: { (error) -> Void in
+                print("fail")
+            }
+        )
         
         // Table view
         tableViewController.tableView = tableView
@@ -183,9 +197,11 @@ class HostSearchViewController: UIViewController {
                 }
             )
             mapUpdater!.update()
-        } else {
-            mapUpdater!.cancel()
         }
+        
+//        else {
+//            mapUpdater!.cancel()
+//        }
     }
     
     // Updates the pin clustering controller
@@ -214,27 +230,30 @@ class HostSearchViewController: UIViewController {
         }
 
         // Clear the operation queue
-        queue.cancelAllOperations()
+//        queue.cancelAllOperations()
         
         // Clear the debounce timer
         debounceTimer = nil
         
-        // Update the map annotation data source
-        let operation = WSGetHostsForKeywordOperation(keyword: keyword)
-        operation.success = { (hosts) -> Void in
-            
-            self.hostsInTable = hosts
-
-            // update the results table on the main thread
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.tableView.reloadData()
-            })
-        }
-        operation.failure = {
-            // TODO failure action here
-        }
+        hostsByKeywordSearcher.update(keyword)
         
-        queue.addOperation(operation)
+//        // Update the map annotation data source
+//        let operation = WSGetHostsForKeywordOperation(keyword: keyword)
+//        operation.success = { (hosts) -> Void in
+//            
+//            self.hostsInTable = hosts
+//
+//            // update the results table on the main thread
+//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                self.tableView.reloadData()
+//            })
+//        }
+//        operation.failure = {
+//            // TODO failure action here
+//        }
+//        
+//        queue.addOperation(operation)
+        
     }
     
     

@@ -58,7 +58,7 @@ class WSRequestWithCSRFToken : WSRequester {
     
     override func retryReqeust() {
         // Set up the login manager and try again
-        loginManager.start()
+        loginManager.login()
     }
     
     // Resets the upater variables

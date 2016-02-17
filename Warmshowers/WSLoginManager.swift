@@ -33,10 +33,6 @@ class WSLoginManager : WSRequestWithCSRFToken, WSRequestDelegate {
             setDataError()
             return
         }
-        
-        // DEBUG
-        print(json)
-        // DEBUG
             
         guard let sessionName = json.valueForKey("session_name") as? String,
             let sessid = json.valueForKey("sessid") as? String,

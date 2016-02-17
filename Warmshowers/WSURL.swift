@@ -96,39 +96,39 @@ class WSURL {
     class func forServiceType(service: WSRestfulServiceType, uid: Int? = nil) throws -> NSURL {
         
         switch service {
-        case .token:
+        case .Token:
             return WSURL.TOKEN()
-        case .login:
+        case .Login:
             return WSURL.LOGIN()
-        case .logout:
+        case .Logout:
             return WSURL.LOGOUT()
-        case .searchByLocation:
+        case .SearchByLocation:
             return WSURL.LOCATION_SEARCH()
-        case .searchByKeyword:
+        case .SearchByKeyword:
             return WSURL.KEYWORD_SEARCH()
-        case .userInfo:
+        case .UserInfo:
             guard let uid = uid else {
                 throw WSURLError.InvalidInput
             }
             return WSURL.USER_INFO(uid)
-        case .userFeedback:
+        case .UserFeedback:
             guard let uid = uid else {
                 throw WSURLError.InvalidInput
             }
             return WSURL.USER_FEEDBACK(uid)
-        case .createFeedback:
+        case .CreateFeedback:
             return WSURL.CREATE_FEEDBACK()
-        case .newMessage:
+        case .NewMessage:
             return WSURL.NEW_MESSAGE()
-        case .replyToMessage:
+        case .ReplyToMessage:
             return WSURL.REPLY_MESSAGE()
-        case .unreadMessageCount:
+        case .UnreadMessageCount:
             return WSURL.UNREAD_MESSAGE_COUNT()
-        case .getAllMessageThreads:
+        case .GetAllMessageThreads:
             return WSURL.GET_ALL_MESSAGE_THREADS()
-        case .getMessageThread:
+        case .GetMessageThread:
             return WSURL.GET_MESSAGE_THREAD()
-        case .markMessage:
+        case .MarkMessage:
             return WSURL.MARK_REPLY_AS_READ()
         }
     }

@@ -15,6 +15,7 @@ import CoreData
 // fix views for ipad
 
 // LATER TODOs
+// convert user info request to subclass of wsrequestwithcsrftoken
 // add distance from loaction to account view
 // account view actions: add action to go to messages if there are messages from the user
 // show account view modally when a author name is tapped in the message view
@@ -69,6 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: WSColor.Green,
             NSFontAttributeName: WSFont.SueEllenFrancisco(26)]
         UINavigationBar.appearance().setTitleVerticalPositionAdjustment(6, forBarMetrics: .Default)
+        UINavigationBar.appearance().translucent = false
     }
 
     func applicationWillResignActive(application: UIApplication) {
