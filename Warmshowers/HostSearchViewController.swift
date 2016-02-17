@@ -82,14 +82,14 @@ class HostSearchViewController: UIViewController {
         
         // Host by keyword search manager
         hostsByKeywordSearcher = WSHostsByKeywordSearchManager(
-            hostList: hostsInTable,
             success: {
+                self.hostsInTable = self.hostsByKeywordSearcher.hostList
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.tableView.reloadData()
                 })
             },
             failure: { (error) -> Void in
-                print("fail")
+                print("failed to get hosts by keyword")
             }
         )
         
@@ -236,24 +236,6 @@ class HostSearchViewController: UIViewController {
         debounceTimer = nil
         
         hostsByKeywordSearcher.update(keyword)
-        
-//        // Update the map annotation data source
-//        let operation = WSGetHostsForKeywordOperation(keyword: keyword)
-//        operation.success = { (hosts) -> Void in
-//            
-//            self.hostsInTable = hosts
-//
-//            // update the results table on the main thread
-//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                self.tableView.reloadData()
-//            })
-//        }
-//        operation.failure = {
-//            // TODO failure action here
-//        }
-//        
-//        queue.addOperation(operation)
-        
     }
     
     
@@ -275,8 +257,7 @@ class HostSearchViewController: UIViewController {
             return MKTileOverlay.init(URLTemplate: MapTileServerURLTemplate.OpenStreetMaps())
         default:
             return nil
-        }
-        
+        }   
     }
     
     // Sets the overlay variable to the current map source and update the mapView overlays
@@ -299,7 +280,6 @@ class HostSearchViewController: UIViewController {
         if mapOverlay != nil {
             mapView.addOverlay(mapOverlay!, level: MKOverlayLevel.AboveLabels)
         }
-        
     }
     
     // MARK: Navigation methods

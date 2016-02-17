@@ -100,6 +100,7 @@ class WSRequester : NSObject {
         print(request)
         
         task = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
+            print("GOT RESPONSE")
             self.data = data
             self.response = response
             self.error = error
@@ -128,11 +129,10 @@ class WSRequester : NSObject {
             // Response is ok, proceed to parse the data if there is any
             if data != nil {
                 requestDelegate.doWithData(self.data!)
-                end()
             } else {
                 nilDataAction()
-                end()
             }
+            end()
         default:
             // HTTP bad reesponse
             if shouldRetryRequest() {

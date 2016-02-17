@@ -48,6 +48,9 @@ class WSRequestWithCSRFToken : WSRequester {
     }
     
     override func shouldRetryRequest() -> Bool {
+        print("final attempt: \(finalAttempt)")
+        print(httpResponse?.statusCode)
+        
         if !finalAttempt {
             finalAttempt = true
             return true
