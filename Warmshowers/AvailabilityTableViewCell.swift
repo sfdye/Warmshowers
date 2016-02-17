@@ -8,9 +8,9 @@
 
 import UIKit
 
-class AvailiblityTableViewCell: UITableViewCell {
+class AvailabilityTableViewCell: UITableViewCell {
 
-    func configureAsCurrentlyAvailible(userInfo: AnyObject?) {
+    func configureAsCurrentlyAvailable(userInfo: AnyObject?) {
         
         textLabel?.text = ""
         
@@ -24,11 +24,11 @@ class AvailiblityTableViewCell: UITableViewCell {
         
         
         if notavailible {
-            textLabel?.text = "Unavailible"
-            self.backgroundColor = WSColor.NotAvailible
+            textLabel?.text = "Unavailable"
+            self.backgroundColor = WSColor.NotAvailable
         } else {
-            textLabel?.text = "Currently Availible"
-            self.backgroundColor = WSColor.Availible
+            textLabel?.text = "Currently Available"
+            self.backgroundColor = WSColor.Available
         }
     }
     

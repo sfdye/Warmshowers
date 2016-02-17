@@ -59,7 +59,7 @@
 		E5967BA31C361A9F0037F4B7 /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967BA21C361A9F0037F4B7 /* ContactTableViewCell.swift */; };
 		E5967BA51C361D2B0037F4B7 /* WSPhoneContacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967BA41C361D2B0037F4B7 /* WSPhoneContacts.swift */; };
 		E5967BA71C3620470037F4B7 /* WSPhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967BA61C3620470037F4B7 /* WSPhoneNumber.swift */; };
-		E5967BA91C36910C0037F4B7 /* AvailiblityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967BA81C36910C0037F4B7 /* AvailiblityTableViewCell.swift */; };
+		E5967BA91C36910C0037F4B7 /* AvailabilityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967BA81C36910C0037F4B7 /* AvailabilityTableViewCell.swift */; };
 		E5967BAB1C38814F0037F4B7 /* WSTimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967BAA1C38814F0037F4B7 /* WSTimeInterval.swift */; };
 		E5967BB21C38A11E0037F4B7 /* FeedbackTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967BB11C38A11E0037F4B7 /* FeedbackTableViewController.swift */; };
 		E5967BB41C38A8ED0037F4B7 /* WSRecommendation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967BB31C38A8ED0037F4B7 /* WSRecommendation.swift */; };
@@ -206,7 +206,7 @@
 		E5967BA21C361A9F0037F4B7 /* ContactTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactTableViewCell.swift; sourceTree = "<group>"; };
 		E5967BA41C361D2B0037F4B7 /* WSPhoneContacts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSPhoneContacts.swift; sourceTree = "<group>"; };
 		E5967BA61C3620470037F4B7 /* WSPhoneNumber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSPhoneNumber.swift; sourceTree = "<group>"; };
-		E5967BA81C36910C0037F4B7 /* AvailiblityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvailiblityTableViewCell.swift; sourceTree = "<group>"; };
+		E5967BA81C36910C0037F4B7 /* AvailabilityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvailabilityTableViewCell.swift; sourceTree = "<group>"; };
 		E5967BAA1C38814F0037F4B7 /* WSTimeInterval.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSTimeInterval.swift; sourceTree = "<group>"; };
 		E5967BB11C38A11E0037F4B7 /* FeedbackTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackTableViewController.swift; sourceTree = "<group>"; };
 		E5967BB31C38A8ED0037F4B7 /* WSRecommendation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSRecommendation.swift; sourceTree = "<group>"; };
@@ -611,7 +611,7 @@
 				E54276741C3E0CE200047029 /* ComposeMessageBodyTableViewCell.swift */,
 				E54276721C3E0CC900047029 /* ComposeMessageDetailTableViewCell.swift */,
 				E5967BA21C361A9F0037F4B7 /* ContactTableViewCell.swift */,
-				E5967BA81C36910C0037F4B7 /* AvailiblityTableViewCell.swift */,
+				E5967BA81C36910C0037F4B7 /* AvailabilityTableViewCell.swift */,
 				E5F6F30C1C2FE2770000A87E /* AccountDetailTableViewCell.swift */,
 				E5F6F30E1C2FE3360000A87E /* ProfileImageTableViewCell.swift */,
 				E5F6F3101C3122740000A87E /* HostingInfoTableViewCell.swift */,
@@ -959,7 +959,7 @@
 				E5967BCD1C39DBC00037F4B7 /* CDWSMessage.swift in Sources */,
 				E536BFC61C7304980017E7B8 /* WSHostsByKeywordSearchManager.swift in Sources */,
 				E5700C541C44EE51008C8A87 /* ComposeMessageViewController+UITextFieldDelegate.swift in Sources */,
-				E5967BA91C36910C0037F4B7 /* AvailiblityTableViewCell.swift in Sources */,
+				E5967BA91C36910C0037F4B7 /* AvailabilityTableViewCell.swift in Sources */,
 				E5A9F1231C561971006D6499 /* WSHostsOnMapUpdater.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -23,9 +23,9 @@ class HostListTableViewCell: UITableViewCell {
         }
         
         if notAvailible {
-            availibleDot?.color = WSColor.NotAvailible
+            availibleDot?.color = WSColor.NotAvailable
         } else {
-            availibleDot?.color = WSColor.Availible
+            availibleDot?.color = WSColor.Available
         }
     }
     

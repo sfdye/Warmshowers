@@ -24,8 +24,8 @@ struct WSColor {
     static var Negative = UIColor.redColor()
     
     // Availiblity colors
-    static var Availible = WSColor.colorFromHexString("019E3C")
-    static var NotAvailible = UIColor.redColor()
+    static var Available = WSColor.colorFromHexString("019E3C")
+    static var NotAvailable = UIColor.redColor()
     
     // OS colours
     static var NavbarGrey = UIColor(red: 247.0/255.0, green: 247.0/255.0, blue: 247.0/255.0, alpha: 1)

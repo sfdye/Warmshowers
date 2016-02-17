@@ -13,7 +13,7 @@ import CoreData
 // #304767
 
 let ImageCellID = "Photo"
-let AvailibilityCellID = "Availible"
+let AvailabilityCellID = "Available"
 let AccountDetailCellID = "AccountDetail"
 let FeedbackCountCellID = "FeedbackCount"
 let SegmentCellID = "Segment"
@@ -297,8 +297,8 @@ class AccountTableViewController: UITableViewController {
                 return cell
             case 1:
                 // Availiblity
-                let cell = tableView.dequeueReusableCellWithIdentifier(AvailibilityCellID, forIndexPath: indexPath) as! AvailiblityTableViewCell
-                cell.configureAsCurrentlyAvailible(info)
+                let cell = tableView.dequeueReusableCellWithIdentifier(AvailabilityCellID, forIndexPath: indexPath) as! AvailabilityTableViewCell
+                cell.configureAsCurrentlyAvailable(info)
                 return cell
             default:
                 let cell = UITableViewCell(style: .Default, reuseIdentifier: nil)
