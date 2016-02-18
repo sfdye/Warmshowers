@@ -10,16 +10,15 @@ import Foundation
 
 // This class is for downloading hosts from warmshowers for a give map region
 //
-class WSHostsOnMapUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
+class WSHostsOnMapSearchManager : WSRequestWithCSRFToken, WSRequestDelegate {
     
-    var hostsOnMap: [WSUserLocation]!
+    var hostsOnMap = [WSUserLocation]()
     var mapView: MKMapView!
     let MapSearchLimit: Int = 800
     
-    init(hostsOnMap: [WSUserLocation], mapView: MKMapView, success: (() -> Void)?, failure: ((error: NSError) -> Void)?) {
+    init(mapView: MKMapView, success: (() -> Void)?, failure: ((error: NSError) -> Void)?) {
         super.init(success: success, failure: failure)
         requestDelegate = self
-        self.hostsOnMap = hostsOnMap
         self.mapView = mapView
     }
     
@@ -40,7 +39,7 @@ class WSHostsOnMapUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
         }
         
         // Parse the json
-        self.hostsOnMap = [WSUserLocation]()
+        hostsOnMap = [WSUserLocation]()
         if let accounts = json["accounts"] as? NSArray {
             for account in accounts {
                 if let user = WSUserLocation(json: account) {

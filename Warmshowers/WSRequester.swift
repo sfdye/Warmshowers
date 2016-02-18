@@ -225,6 +225,7 @@ class WSRequester : NSObject {
     //
     func cancel() {
         task?.cancel()
+        task = nil
         end()
     }
 }

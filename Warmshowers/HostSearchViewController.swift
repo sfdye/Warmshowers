@@ -25,26 +25,32 @@ let PlaceholderCellID = "Placeholder"
 
 class HostSearchViewController: UIViewController {
     
+    // MARK: Constants
+    
+    let kDefaultRegionLatitudeDelta: CLLocationDegrees = 1
+    let kDefaultRegionLongitudeDelta: CLLocationDegrees = 1
+    
+    
     // MARK: Properties
     
     let locationManager = CLLocationManager()
-//    let queue = NSOperationQueue()
     var debounceTimer: NSTimer?
     
-    // Main view components / controllers
-    @IBOutlet var mapView: MKMapView!
-    @IBOutlet var tableView: UITableView!
-    @IBOutlet var centreOnLocationButton: UIImage!
-    var tableViewController = WSLazyImageTableViewController()
-
     // Map source variables
     var mapSource = WSMapSource.AppleMaps
     var mapOverlay: MKTileOverlay? = nil
     var overlay: MKTileOverlay? = nil
     
+    // Main view components / controllers
+    @IBOutlet var mapView: MKMapView!
+    @IBOutlet var tableView: UITableView!
+    @IBOutlet var toolbar: UIToolbar!
+    var tableViewController = WSLazyImageTableViewController()
+    private var clusteringController : KPClusteringController!
+
     // Host data variables
     var hostsOnMap = [WSUserLocation]()
-    var mapUpdater: WSHostsOnMapUpdater?
+    var hostsOnMapSearcher: WSHostsOnMapSearchManager!
     var hostsInTable: [WSUserLocation] {
         get {
             return tableViewController.lazyImageObjects as! [WSUserLocation]
@@ -59,15 +65,10 @@ class HostSearchViewController: UIViewController {
     var searchButton: UIBarButtonItem!
     var accountButton: UIBarButtonItem!
     
-    // Pin clustering controller
-    private var clusteringController : KPClusteringController!
-    
     // Search controller
     var searchController: UISearchController!
     var searchBar: UISearchBar!
-    
-    // Toolbar
-    @IBOutlet var toolbar: UIToolbar!
+
     
     // MARK: View life cycle
     
@@ -81,6 +82,61 @@ class HostSearchViewController: UIViewController {
         mapView.delegate = self
         showMapView()
         
+        // Table view
+        tableViewController.tableView = tableView
+        tableViewController.dataSource = self
+        tableViewController.placeholderImageName = "ThumbnailPlaceholder"
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 74
+        
+        // Search controller and bar
+        searchController = UISearchController(searchResultsController: nil)
+        searchBar = searchController.searchBar
+        
+        // Configure components
+        configureHostUpdaters()
+        configureNavigationItem()
+        configureSearchController()
+        configureToolbar()
+        configureClusteringController()
+        
+        // Ask the users permission to use location services
+        if CLLocationManager.authorizationStatus() == .NotDetermined {
+            locationManager.requestWhenInUseAuthorization()
+        }
+        mapView.showsUserLocation = true
+        
+        // Centre the map on the user's location
+        centreOnRegion()
+    }
+    
+    // When the view disappears all requests are cancelled
+    
+    override func viewWillDisappear(animated: Bool) {
+        WSURLSession.cancelAllDataTasksWithCompletionHandler()
+    }
+    
+    func configureHostUpdaters() {
+        
+        // Hosts on map search manager
+        hostsOnMapSearcher = WSHostsOnMapSearchManager(
+            mapView: self.mapView,
+            success: { () -> Void in
+                print("completion state: \(self.hostsOnMapSearcher.task?.state.rawValue)")
+                if self.hostsOnMapSearcher.task?.state == .Completed {
+                    print("updating map")
+                    self.hostsOnMap = self.hostsOnMapSearcher.hostsOnMap
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.updateClusteringController()
+                    })
+                }
+            },
+            failure: { (error) -> Void in
+                // update error here
+                print("Failed to update the map.")
+            }
+        )
+        
         // Host by keyword search manager
         hostsByKeywordSearcher = WSHostsByKeywordSearchManager(
             success: {
@@ -93,46 +149,6 @@ class HostSearchViewController: UIViewController {
                 print("failed to get hosts by keyword")
             }
         )
-        
-        // Table view
-        tableViewController.tableView = tableView
-        tableViewController.dataSource = self
-        tableViewController.placeholderImageName = "ThumbnailPlaceholder"
-        tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 74
-        
-        // Search controller and bar
-        searchController = UISearchController(searchResultsController: nil)
-        searchBar = searchController.searchBar
-        
-        // Ask the users permission to use location services
-        if CLLocationManager.authorizationStatus() == .NotDetermined {
-            locationManager.requestWhenInUseAuthorization()
-        }
-        mapView.showsUserLocation = true
-        
-        // Configure components
-        configureNavigationItem()
-        configureClusteringController()
-        configureSearchController()
-        
-        // Centre the map on the user's location
-        if let userLocation = locationManager.location?.coordinate {
-            let region = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1))
-            mapView.setRegion(region, animated: true)
-            updateHostsOnMap()
-        }
-        
-        // Configure the toolbar
-        toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .Any, barMetrics: .Default)
-        toolbar.setShadowImage(UIImage(), forToolbarPosition: .Any)
-        toolbar.tintColor = WSColor.Blue
-    }
-    
-    // When the view disappears all requests are cancelled
-    /
-    override func viewWillDisappear(animated: Bool) {
-        WSURLSession.cancelAllDataTasksWithCompletionHandler()
     }
     
     func configureNavigationItem() {
@@ -160,77 +176,18 @@ class HostSearchViewController: UIViewController {
         searchBar.placeholder = "Search by name, email or town"
     }
     
+    func configureToolbar() {
+        toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .Any, barMetrics: .Default)
+        toolbar.setShadowImage(UIImage(), forToolbarPosition: .Any)
+        toolbar.tintColor = WSColor.Blue
+    }
+    
     func configureClusteringController() {
         let algorithm : KPGridClusteringAlgorithm = KPGridClusteringAlgorithm()
         algorithm.annotationSize = CGSizeMake(25, 50)
         algorithm.clusteringStrategy = KPGridClusteringAlgorithmStrategy.TwoPhase;
         clusteringController = KPClusteringController(mapView: self.mapView, clusteringAlgorithm: algorithm)
         clusteringController.delegate = self
-    }
-
-    
-    // MARK: Map update methods
-    
-    // Updates the hosts shown on the map
-    //
-    func updateHostsOnMap() {
-        if mapUpdater == nil {
-            mapUpdater = WSHostsOnMapUpdater(
-                hostsOnMap: hostsOnMap,
-                mapView: mapView,
-                success: {
-                    // update the cluster controller on the main thread
-                    if let updater = self.mapUpdater {
-                        self.hostsOnMap = updater.hostsOnMap
-                    }
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        self.updateClusteringController()
-                    })
-                    self.mapUpdater = nil
-                },
-                failure: { (error) -> Void in
-                    self.mapUpdater = nil
-                }
-            )
-            mapUpdater!.update()
-        } else {
-            WSURLSession.cancelAllDataTasksWithCompletionHandler({ () -> Void in
-                self.updateHostsOnMap()
-            })
-        }
-    }
-    
-    // Updates the pin clustering controller
-    func updateClusteringController() {
-        if hostsOnMap.count != 0 {
-            clusteringController.setAnnotations(hostsOnMap)
-            clusteringController.refresh(true)
-        }
-    }
-    
-    @IBAction func centreOnLocation() {
-        if let coordinate = locationManager.location?.coordinate {
-            mapView.setCenterCoordinate(coordinate, animated: true)
-        }
-    }
-
-    
-    // MARK: Search by keyword methods
-    
-    // Updates the hosts to be shown in the table view
-    //
-    func updateSearchResultsWithKeyword() {
-        
-        guard let keyword = searchController.searchBar.text else {
-            return
-        }
-        
-        // Clear the debounce timer
-        debounceTimer = nil
-        
-        WSURLSession.cancelAllDataTasksWithCompletionHandler { () -> Void in
-            self.hostsByKeywordSearcher.update(keyword)
-        }
     }
     
     
@@ -252,7 +209,7 @@ class HostSearchViewController: UIViewController {
             return MKTileOverlay.init(URLTemplate: MapTileServerURLTemplate.OpenStreetMaps())
         default:
             return nil
-        }   
+        }
     }
     
     // Sets the overlay variable to the current map source and update the mapView overlays
@@ -276,6 +233,61 @@ class HostSearchViewController: UIViewController {
             mapView.addOverlay(mapOverlay!, level: MKOverlayLevel.AboveLabels)
         }
     }
+    
+    
+    // MARK: Map centring
+    
+    @IBAction func centreOnLocation() {
+        if let coordinate = locationManager.location?.coordinate {
+            mapView.setCenterCoordinate(coordinate, animated: true)
+        }
+    }
+    
+    func centreOnRegion() {
+        if let userLocation = locationManager.location?.coordinate {
+            let region = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: kDefaultRegionLatitudeDelta, longitudeDelta: kDefaultRegionLongitudeDelta))
+            mapView.setRegion(region, animated: true)
+        }
+    }
+
+    
+    // MARK: Pin clusting
+    
+    // Updates the pin clustering controller
+    func updateClusteringController() {
+        if hostsOnMap.count != 0 {
+            clusteringController.setAnnotations(hostsOnMap)
+            clusteringController.refresh(true)
+        }
+    }
+    
+    
+    // MARK: Updating hosts
+    
+    
+    // Updates the hosts shown on the map
+    //
+    func updateHostsOnMap() {
+        hostsOnMapSearcher.cancel()
+        hostsOnMapSearcher.update()
+    }
+    
+    // Updates the hosts to be shown in the table view
+    //
+    func updateSearchResultsWithKeyword() {
+        
+        guard let keyword = searchController.searchBar.text else {
+            return
+        }
+        
+        // Clear the debounce timer
+        debounceTimer = nil
+        
+        WSURLSession.cancelAllDataTasksWithCompletionHandler { () -> Void in
+            self.hostsByKeywordSearcher.update(keyword)
+        }
+    }
+    
     
     // MARK: Navigation methods
     
@@ -362,22 +374,8 @@ class HostSearchViewController: UIViewController {
             return
         }
     }
-
     
-    // MARK: Utilities
-
-    // Checks if a user is already in the map data source
-    func userOnMap(uid: Int) -> Bool {
-        
-        for host in hostsOnMap {
-            if host.uid == uid {
-                return true
-            }
-        }
-        return false
-    }
-    
-    // Hides the search by keyword table view    
+    // Hides the search by keyword table view
     //
     func showMapView() {
         UIView.transitionWithView(tableView, duration: 0.1, options: .TransitionCrossDissolve, animations: { () -> Void in
@@ -396,4 +394,17 @@ class HostSearchViewController: UIViewController {
             }, completion: nil)
     }
 
+    
+    // MARK: Utilities
+
+//    // Checks if a user is already in the map data source
+//    func userOnMap(uid: Int) -> Bool {
+//        
+//        for host in hostsOnMap {
+//            if host.uid == uid {
+//                return true
+//            }
+//        }
+//        return false
+//    }
 }

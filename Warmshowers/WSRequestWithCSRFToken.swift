@@ -25,7 +25,14 @@ class WSRequestWithCSRFToken : WSRequester {
         )
         return loginManager
     }()
-    var token: String? { return tokenGetter.token }
+    var token: String? {
+        get {
+            return tokenGetter.token
+        }
+        set(newToken) {
+            tokenGetter.token = newToken
+        }
+    }
     
     // Login manager for getting a new session cookie if required
     lazy var finalAttempt = false
@@ -48,10 +55,14 @@ class WSRequestWithCSRFToken : WSRequester {
     }
     
     override func shouldRetryRequest() -> Bool {
-        print("final attempt: \(finalAttempt)")
-        print(httpResponse?.statusCode)
-        
-        if !finalAttempt {
+        // Abort if:
+        //  1. The task has already been tried once
+        //  2. The task has been cancelled
+        //  3. The server returned a bad response, that is not a 401 (unauthorized)
+        if !finalAttempt
+            && task?.state != .Canceling
+            && httpResponse?.statusCode == 401
+        {
             finalAttempt = true
             return true
         } else {
@@ -67,7 +78,17 @@ class WSRequestWithCSRFToken : WSRequester {
     // Resets the upater variables
     override func reset() {
         finalAttempt = false
+        token = nil
         error = nil
+    }
+    
+    // Cancels downloads and data parsing
+    //
+    override func cancel() {
+        task?.cancel()
+        task = nil
+        token = nil
+        end()
     }
 
 }

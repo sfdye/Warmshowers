@@ -9,7 +9,7 @@
 import Foundation
 import kingpin
 
-extension HostSearchViewController: MKMapViewDelegate {
+extension HostSearchViewController : MKMapViewDelegate {
     
     // Used to display tiles for maps other than Apple Maps
     func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
@@ -92,7 +92,6 @@ extension HostSearchViewController: MKMapViewDelegate {
     //
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView,
         calloutAccessoryControlTapped control: UIControl) {
-            
             if let kpAnnotation = view.annotation as? KPAnnotation {
                 if view.reuseIdentifier == "cluster" {
                     // Show a list of the clustered hosts
@@ -108,6 +107,5 @@ extension HostSearchViewController: MKMapViewDelegate {
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         updateHostsOnMap()
     }
-
         
 }
