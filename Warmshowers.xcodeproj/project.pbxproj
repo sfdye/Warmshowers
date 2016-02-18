@@ -22,6 +22,8 @@
 		E53548EC1C69AA8E00E22C3D /* WSUserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53548EB1C69AA8E00E22C3D /* WSUserDefaultsKeys.swift */; };
 		E536BFC61C7304980017E7B8 /* WSHostsByKeywordSearchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E536BFC51C7304980017E7B8 /* WSHostsByKeywordSearchManager.swift */; };
 		E53BA73C1C7554880076E825 /* WSURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53BA73B1C7554880076E825 /* WSURLSession.swift */; };
+		E53BA7421C766B490076E825 /* WSInfoBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53BA7411C766B490076E825 /* WSInfoBanner.swift */; };
+		E53BA7451C766F850076E825 /* WSReachabilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53BA7441C766F850076E825 /* WSReachabilityManager.swift */; };
 		E54276731C3E0CC900047029 /* ComposeMessageDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54276721C3E0CC900047029 /* ComposeMessageDetailTableViewCell.swift */; };
 		E54276751C3E0CE200047029 /* ComposeMessageBodyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54276741C3E0CE200047029 /* ComposeMessageBodyTableViewCell.swift */; };
 		E54276781C3E374400047029 /* CreateFeedbackTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54276771C3E374400047029 /* CreateFeedbackTableViewController.swift */; };
@@ -169,6 +171,8 @@
 		E53548EB1C69AA8E00E22C3D /* WSUserDefaultsKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSUserDefaultsKeys.swift; sourceTree = "<group>"; };
 		E536BFC51C7304980017E7B8 /* WSHostsByKeywordSearchManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSHostsByKeywordSearchManager.swift; sourceTree = "<group>"; };
 		E53BA73B1C7554880076E825 /* WSURLSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSURLSession.swift; sourceTree = "<group>"; };
+		E53BA7411C766B490076E825 /* WSInfoBanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSInfoBanner.swift; sourceTree = "<group>"; };
+		E53BA7441C766F850076E825 /* WSReachabilityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSReachabilityManager.swift; sourceTree = "<group>"; };
 		E54276721C3E0CC900047029 /* ComposeMessageDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeMessageDetailTableViewCell.swift; sourceTree = "<group>"; };
 		E54276741C3E0CE200047029 /* ComposeMessageBodyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeMessageBodyTableViewCell.swift; sourceTree = "<group>"; };
 		E54276771C3E374400047029 /* CreateFeedbackTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateFeedbackTableViewController.swift; sourceTree = "<group>"; };
@@ -338,6 +342,22 @@
 			name = Map;
 			sourceTree = "<group>";
 		};
+		E53BA7401C766B390076E825 /* WSInfoBanner */ = {
+			isa = PBXGroup;
+			children = (
+				E53BA7411C766B490076E825 /* WSInfoBanner.swift */,
+			);
+			name = WSInfoBanner;
+			sourceTree = "<group>";
+		};
+		E53BA7431C766F700076E825 /* WSReachabilityManager */ = {
+			isa = PBXGroup;
+			children = (
+				E53BA7441C766F850076E825 /* WSReachabilityManager.swift */,
+			);
+			name = WSReachabilityManager;
+			sourceTree = "<group>";
+		};
 		E542766F1C3CA8B100047029 /* ComposeMessageViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -426,6 +446,8 @@
 		E54A573A1C026D96000843A9 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				E53BA7431C766F700076E825 /* WSReachabilityManager */,
+				E53BA7401C766B390076E825 /* WSInfoBanner */,
 				E5A9F11F1C55F762006D6499 /* WSProgressHUD */,
 				E5F6F30B1C2FE2360000A87E /* AccountViewController */,
 				E542766F1C3CA8B100047029 /* ComposeMessageViewController */,
@@ -730,7 +752,7 @@
 				TargetAttributes = {
 					E5D96AF31BFB1CA700AFAFEE = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = RZGK26E8DQ;
+						DevelopmentTeam = 9N22DQCP66;
 						SystemCapabilities = {
 							com.apple.Maps.iOS = {
 								enabled = 1;
@@ -875,6 +897,7 @@
 				E5DA03E61C49A5CA00FAD1D7 /* WSRecommendation+WSLazyImage.swift in Sources */,
 				E5700C5A1C45C961008C8A87 /* HostListTableViewCell.swift in Sources */,
 				E5DA03FF1C4CA9CF00FAD1D7 /* WSDistance.swift in Sources */,
+				E53BA7451C766F850076E825 /* WSReachabilityManager.swift in Sources */,
 				E5DA03E01C490ECC00FAD1D7 /* HostListTableViewController+UITableViewDataSource.swift in Sources */,
 				E5DA04031C4CE6B500FAD1D7 /* PlaceholderTableViewCell.swift in Sources */,
 				E52E8A9F1C0BD25A000391AB /* HostSearchViewController+MKMapViewDelegate.swift in Sources */,
@@ -965,6 +988,7 @@
 				E5700C541C44EE51008C8A87 /* ComposeMessageViewController+UITextFieldDelegate.swift in Sources */,
 				E5967BA91C36910C0037F4B7 /* AvailabilityTableViewCell.swift in Sources */,
 				E5A9F1231C561971006D6499 /* WSHostsOnMapUpdater.swift in Sources */,
+				E53BA7421C766B490076E825 /* WSInfoBanner.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1110,11 +1134,14 @@
 			baseConfigurationReference = E3FB3CCF89A82EEE1EDC2F21 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Warmshowers/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.Warmshowers;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rajanfernandez.Warmshowers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Warmshowers/kingpin-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1125,11 +1152,14 @@
 			baseConfigurationReference = 67B2E52709A5EFB71A7262A4 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Warmshowers/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.Warmshowers;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rajanfernandez.Warmshowers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Warmshowers/kingpin-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};

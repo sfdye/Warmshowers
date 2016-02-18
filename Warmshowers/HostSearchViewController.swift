@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 import MapKit
 import kingpin
+import ReachabilitySwift
 
 // TODOs
 // address this issue (add gps routes to the map)
@@ -28,12 +29,12 @@ class HostSearchViewController: UIViewController {
     // MARK: Properties
     
     let locationManager = CLLocationManager()
-//    let queue = NSOperationQueue()
     var debounceTimer: NSTimer?
     
     // Main view components / controllers
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var toolbar: UIToolbar!
     @IBOutlet var centreOnLocationButton: UIImage!
     var tableViewController = WSLazyImageTableViewController()
 
@@ -66,10 +67,12 @@ class HostSearchViewController: UIViewController {
     var searchController: UISearchController!
     var searchBar: UISearchBar!
     
-    // Toolbar
-    @IBOutlet var toolbar: UIToolbar!
     
     // MARK: View life cycle
+    
+    deinit {
+        WSReachabilityManager.deregisterFromNotifications(self)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -127,10 +130,15 @@ class HostSearchViewController: UIViewController {
         toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .Any, barMetrics: .Default)
         toolbar.setShadowImage(UIImage(), forToolbarPosition: .Any)
         toolbar.tintColor = WSColor.Blue
+        
+        // Reachability notifications
+        WSReachabilityManager.registerForAndStartNotifications(self, selector: Selector("reachabilityChanged:"))
     }
     
-    // When the view disappears all requests are cancelled
-    /
+    override func viewWillAppear(animated: Bool) {
+        showReachabilityBannerIfNeeded()
+    }
+    
     override func viewWillDisappear(animated: Bool) {
         WSURLSession.cancelAllDataTasksWithCompletionHandler()
     }
@@ -166,6 +174,22 @@ class HostSearchViewController: UIViewController {
         algorithm.clusteringStrategy = KPGridClusteringAlgorithmStrategy.TwoPhase;
         clusteringController = KPClusteringController(mapView: self.mapView, clusteringAlgorithm: algorithm)
         clusteringController.delegate = self
+    }
+    
+    
+    // MARK: Reachability
+    
+    func reachabilityChanged(note: NSNotification) {
+        print("called")
+        showReachabilityBannerIfNeeded()
+    }
+    
+    func showReachabilityBannerIfNeeded() {
+        if WSReachabilityManager.sharedInstance?.isReachable() == false {
+            WSInfoBanner.showNoInternetBanner()
+        } else {
+            WSInfoBanner.hideAll()
+        }
     }
 
     

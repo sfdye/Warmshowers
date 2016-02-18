@@ -31,6 +31,10 @@ class MessageThreadsTableViewController: UITableViewController {
     
     // MARK: View life cycle
     
+    deinit {
+        WSReachabilityManager.deregisterFromNotifications(self)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -50,12 +54,17 @@ class MessageThreadsTableViewController: UITableViewController {
         // Table view autolayout options
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 96
+        
+        // Reachability notifications
+        WSReachabilityManager.registerForAndStartNotifications(self, selector: Selector("reachabilityChanged:"))
     }
     
     override func viewWillAppear(animated: Bool) {
         
         // Reset the navigation bar text properties
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: WSColor.Green, NSFontAttributeName: WSFont.SueEllenFrancisco(26)]
+        
+        showReachabilityBannerIfNeeded()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -108,9 +117,30 @@ class MessageThreadsTableViewController: UITableViewController {
     }
     
     
+    // MARK: Reachability
+    
+    func reachabilityChanged(note: NSNotification) {
+        showReachabilityBannerIfNeeded()
+    }
+    
+    func showReachabilityBannerIfNeeded() {
+        if WSReachabilityManager.sharedInstance?.isReachable() == false {
+            WSInfoBanner.showNoInternetBanner()
+        } else {
+            WSInfoBanner.hideAll()
+        }
+    }
+    
+    
     // MARK: Utility methods
     
     func update() {
+        
+        guard WSReachabilityManager.sharedInstance?.isReachable() == true else {
+            refreshControl?.endRefreshing()
+            return
+        }
+        
         if lastUpdated == nil {
             WSProgressHUD.show("Updating messages ...")
         }
@@ -162,6 +192,11 @@ class MessageThreadsTableViewController: UITableViewController {
     // Sets an updater for a message thread, but does not start it
     //
     func updateMessagesOnThread(threadID: Int) {
+        
+        guard WSReachabilityManager.sharedInstance?.isReachable() == true else {
+            self.updateFinishedForThreadID(threadID)
+            return
+        }
         
         guard updatesInProgress[threadID] == nil else {
             return

@@ -74,6 +74,10 @@ class SettingsTableViewController: UITableViewController {
         super.viewDidLoad()
         navigationItem.title = "Settings"
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        WSInfoBanner.hideAll()
+    }
 
     // MARK: - Table view data source
 
