@@ -28,7 +28,6 @@ class WSCSRFTokenGetter : WSRequester, WSRequestDelegate {
     func doWithData(data: NSData) {
         if let token = String.init(data: data, encoding: NSUTF8StringEncoding) {
             self.token = token
-            print("TOKEN SET")
         } else {
             error = NSError(domain: "WSRequesterDomain", code: 10, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Failed to decode token data.", comment: "")])
         }

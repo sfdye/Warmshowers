@@ -28,12 +28,13 @@ class HostSearchViewController: UIViewController {
     // MARK: Properties
     
     let locationManager = CLLocationManager()
-    let queue = NSOperationQueue()
+//    let queue = NSOperationQueue()
     var debounceTimer: NSTimer?
     
     // Main view components / controllers
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var centreOnLocationButton: UIImage!
     var tableViewController = WSLazyImageTableViewController()
 
     // Map source variables
@@ -114,7 +115,6 @@ class HostSearchViewController: UIViewController {
         configureNavigationItem()
         configureClusteringController()
         configureSearchController()
-        configureQueue()
         
         // Centre the map on the user's location
         if let userLocation = locationManager.location?.coordinate {
@@ -129,9 +129,10 @@ class HostSearchViewController: UIViewController {
         toolbar.tintColor = WSColor.Blue
     }
     
-        
+    // When the view disappears all requests are cancelled
+    /
     override func viewWillDisappear(animated: Bool) {
-        queue.cancelAllOperations()
+        WSURLSession.cancelAllDataTasksWithCompletionHandler()
     }
     
     func configureNavigationItem() {
@@ -165,11 +166,6 @@ class HostSearchViewController: UIViewController {
         algorithm.clusteringStrategy = KPGridClusteringAlgorithmStrategy.TwoPhase;
         clusteringController = KPClusteringController(mapView: self.mapView, clusteringAlgorithm: algorithm)
         clusteringController.delegate = self
-//        clusteringController.setAnnotations(hostsOnMap)
-    }
-    
-    func configureQueue() {
-        queue.maxConcurrentOperationCount = 1
     }
 
     
@@ -197,11 +193,11 @@ class HostSearchViewController: UIViewController {
                 }
             )
             mapUpdater!.update()
+        } else {
+            WSURLSession.cancelAllDataTasksWithCompletionHandler({ () -> Void in
+                self.updateHostsOnMap()
+            })
         }
-        
-//        else {
-//            mapUpdater!.cancel()
-//        }
     }
     
     // Updates the pin clustering controller
@@ -228,14 +224,13 @@ class HostSearchViewController: UIViewController {
         guard let keyword = searchController.searchBar.text else {
             return
         }
-
-        // Clear the operation queue
-//        queue.cancelAllOperations()
         
         // Clear the debounce timer
         debounceTimer = nil
         
-        hostsByKeywordSearcher.update(keyword)
+        WSURLSession.cancelAllDataTasksWithCompletionHandler { () -> Void in
+            self.hostsByKeywordSearcher.update(keyword)
+        }
     }
     
     
@@ -387,6 +382,7 @@ class HostSearchViewController: UIViewController {
     func showMapView() {
         UIView.transitionWithView(tableView, duration: 0.1, options: .TransitionCrossDissolve, animations: { () -> Void in
             self.tableView.hidden = true
+            self.toolbar.hidden = false
             self.hostsInTable = [WSUserLocation]()
             }, completion: nil)
     }
@@ -396,6 +392,7 @@ class HostSearchViewController: UIViewController {
     func showTableView() {
         UIView.transitionWithView(tableView, duration: 0.1, options: .TransitionCrossDissolve, animations: { () -> Void in
             self.tableView.hidden = false
+            self.toolbar.hidden = true
             }, completion: nil)
     }
 

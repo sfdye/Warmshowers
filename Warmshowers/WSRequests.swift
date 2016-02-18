@@ -23,11 +23,6 @@ struct WSRequest {
     
     static let MapSearchLimit: Int = 1000
     
-    static let session = NSURLSession.init(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
-    
-    static let defaults = (UIApplication.sharedApplication().delegate as! AppDelegate).defaults
-    
-    
     // MARK: - HTTP Request utilities
     
     // Creates a request for a warmshowers restful service
@@ -73,7 +68,7 @@ struct WSRequest {
         
         do {
             let request = try requestWithService(service)
-            let task = self.session.dataTaskWithRequest(request, completionHandler: doWithResponse)
+            let task = WSURLSession.sharedSession.dataTaskWithRequest(request, completionHandler: doWithResponse)
             task.resume()
         } catch {
             print("Failed to build http request")
@@ -90,7 +85,7 @@ struct WSRequest {
             request.URL = url
             request.HTTPMethod = "GET"
             
-            let task = self.session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
+            let task = WSURLSession.sharedSession.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
                 
                 if data != nil {
                     let image = UIImage(data: data!)

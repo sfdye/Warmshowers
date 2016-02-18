@@ -25,8 +25,10 @@ enum WSRequesterError : ErrorType {
 
 class WSRequester : NSObject {
     
+    // MARK - Properties
+    
     // URL session
-    let session = NSURLSession.init(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
+    let session = WSURLSession.sharedSession
     
     // Reachability
     var reachability: Reachability?
@@ -45,6 +47,9 @@ class WSRequester : NSObject {
     var success: (() -> Void)?
     var failure: ((error: NSError) -> Void)?
     
+    
+    // MARK - Initialisation
+    
     init(success: (() -> Void)?, failure: ((error: NSError) -> Void)?) {
         super.init()
         self.success = success
@@ -55,6 +60,8 @@ class WSRequester : NSObject {
             // Requester can still run without this
         }
     }
+    
+    // MARK - Instance methods
     
     // Checks for an internet connection
     //
@@ -100,7 +107,6 @@ class WSRequester : NSObject {
         print(request)
         
         task = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
-            print("GOT RESPONSE")
             self.data = data
             self.response = response
             self.error = error
@@ -113,7 +119,7 @@ class WSRequester : NSObject {
     //
     func processResponse() {
 
-        guard error == nil else {
+        guard error == nil && task?.state != .Canceling else {
             end()
             return
         }
