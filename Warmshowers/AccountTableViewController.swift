@@ -213,7 +213,7 @@ class AccountTableViewController: UITableViewController {
                         })
                     }
                 )
-                WSProgressHUD.show("Logging out ...")
+                WSProgressHUD.show(self.navigationController!.view, label: "Logging out ...")
                 logoutManager.logout()
             }
             actionAlert.addAction(logoutAction)

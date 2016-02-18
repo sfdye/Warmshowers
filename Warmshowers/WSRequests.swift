@@ -64,7 +64,7 @@ struct WSRequest {
     
     // Makes a normal get request
     //
-    static func makeRequestWithService(service: WSRestfulService, params: [String: String]? = nil, doWithResponse: (NSData?, NSURLResponse?, NSError?) -> Void) {
+    static func makeRequestWithService(service: WSRestfulService, doWithResponse: (NSData?, NSURLResponse?, NSError?) -> Void) {
         
         do {
             let request = try requestWithService(service)
@@ -108,6 +108,7 @@ struct WSRequest {
             
             if error != nil {
                 print("Error getting user info")
+                print("\(error?.localizedDescription)")
                 return
             }
             
@@ -144,6 +145,7 @@ struct WSRequest {
         makeRequestWithService(service) { (data, response, error) -> Void in
             if error != nil {
                 print("Error getting user feedback")
+                print("\(error?.localizedDescription)")
                 return
             }
             

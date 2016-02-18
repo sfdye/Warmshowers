@@ -730,7 +730,7 @@
 				TargetAttributes = {
 					E5D96AF31BFB1CA700AFAFEE = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = RZGK26E8DQ;
+						DevelopmentTeam = 9N22DQCP66;
 						SystemCapabilities = {
 							com.apple.Maps.iOS = {
 								enabled = 1;
@@ -1110,11 +1110,14 @@
 			baseConfigurationReference = E3FB3CCF89A82EEE1EDC2F21 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Warmshowers/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.Warmshowers;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rajanfernandez.Warmshowers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Warmshowers/kingpin-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1125,11 +1128,14 @@
 			baseConfigurationReference = 67B2E52709A5EFB71A7262A4 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Warmshowers/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.Warmshowers;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rajanfernandez.Warmshowers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Warmshowers/kingpin-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};

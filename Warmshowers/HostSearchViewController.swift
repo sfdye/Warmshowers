@@ -110,12 +110,6 @@ class HostSearchViewController: UIViewController {
         centreOnRegion()
     }
     
-    // When the view disappears all requests are cancelled
-    
-    override func viewWillDisappear(animated: Bool) {
-        WSURLSession.cancelAllDataTasksWithCompletionHandler()
-    }
-    
     func configureHostUpdaters() {
         
         // Hosts on map search manager
