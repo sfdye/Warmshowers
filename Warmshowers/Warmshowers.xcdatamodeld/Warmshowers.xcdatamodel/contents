@@ -20,10 +20,20 @@
         <relationship name="participants" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="threads" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="User" representedClassName=".CDWSUser" syncable="YES">
+        <attribute name="additional" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="distance" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="fullname" attributeType="String" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="image_url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="notcurrentlyavailable" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="post_code" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="province" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="street" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="uid" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <relationship name="sent_messages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" inverseName="author" inverseEntity="Message" syncable="YES"/>
         <relationship name="threads" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MessageThread" inverseName="participants" inverseEntity="MessageThread" syncable="YES"/>
@@ -31,6 +41,6 @@
     <elements>
         <element name="Message" positionX="-162" positionY="-144" width="128" height="135"/>
         <element name="MessageThread" positionX="-342" positionY="-144" width="128" height="180"/>
-        <element name="User" positionX="-162" positionY="9" width="128" height="150"/>
+        <element name="User" positionX="-162" positionY="9" width="128" height="300"/>
     </elements>
 </model>

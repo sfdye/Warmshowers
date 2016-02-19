@@ -12,17 +12,23 @@ import Foundation
 //
 class WSHostsOnMapSearchManager : WSRequestWithCSRFToken, WSRequestDelegate {
     
-    var hostsOnMap = [WSUserLocation]()
+    var store: WSStore!
     var mapView: MKMapView!
     let MapSearchLimit: Int = 800
     
-    init(mapView: MKMapView, success: (() -> Void)?, failure: ((error: NSError) -> Void)?) {
+    init(store: WSStore, mapView: MKMapView, success: (() -> Void)?, failure: ((error: NSError) -> Void)?) {
         super.init(success: success, failure: failure)
         requestDelegate = self
+        self.store = store
         self.mapView = mapView
     }
     
     func requestForDownload() throws -> NSURLRequest {
+        
+        // DECIDE WHAT AREAS TO REQUEST HERE
+        // ACCESS THE STORE AND CHECK WHICH AREAS NEED UPDATEING
+        
+        
         do {
             let service = WSRestfulService(type: .SearchByLocation)!
             var params = mapView.getWSMapRegion()
@@ -38,13 +44,19 @@ class WSHostsOnMapSearchManager : WSRequestWithCSRFToken, WSRequestDelegate {
             return
         }
         
+        guard let accounts = json["accounts"] as? NSArray else {
+            setError(501, description: "Failed find accounts in host location JSON.")
+            return
+        }
+        
         // Parse the json
-        hostsOnMap = [WSUserLocation]()
-        if let accounts = json["accounts"] as? NSArray {
-            for account in accounts {
-                if let user = WSUserLocation(json: account) {
-                    self.hostsOnMap.append(user)
-                }
+        for userLocationJSON in accounts {
+            do {
+                try self.store.addUserWithLocationJSON(userLocationJSON)
+                print("user saved to store")
+            } catch let nserror as NSError {
+                self.error = nserror
+                return
             }
         }
     }

@@ -20,6 +20,19 @@ class WSUserLocation : WSUser {
     var city: String?
     var country: String?
     var distance: Double?
+    //
+    var coordinate: CLLocationCoordinate2D
+    
+    var notcurrentlyavailable: Bool?
+    var postCode: String?
+    var province: String?
+    var thumbnailImageURL: String?
+    var street: String? = nil
+    var thumbnailImage: UIImage?
+    
+    
+    var location: CLLocation { return CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude) }
+    
     var distanceToUser: CLLocationDistance? {
         get {
             let lm = CLLocationManager()
@@ -29,14 +42,7 @@ class WSUserLocation : WSUser {
             return nil
         }
     }
-    var coordinate: CLLocationCoordinate2D
-    var location: CLLocation { return CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude) }
-    var notcurrentlyavailable: Bool?
-    var postCode: String?
-    var province: String?
-    var thumbnailImageURL: String?
-    var street: String? = nil
-    var thumbnailImage: UIImage?
+    
     var shortAddress: String {
         var address: String = ""
         address.appendWithComma(city)
@@ -45,6 +51,7 @@ class WSUserLocation : WSUser {
         }
         return address
     }
+    
     var address: String {
         var address: String = ""
         address.appendWithNewLine(street)
@@ -99,39 +106,6 @@ class WSUserLocation : WSUser {
             thumbnailImageURL = json.valueForKey("profile_image_map_infoWindow") as? String
             street = json.valueForKey("street") as? String
         }
-    }
-    
-}
-
-extension String {
-    
-    mutating func appendWithCharacter(character: Character, other: String?) {
-        
-        guard let other = other else {
-            return
-        }
-        
-        if self == "" {
-            self += other
-        } else {
-            self += String(character)
-            if character != "\n" {
-                self += " "
-            }
-            self += other
-        }
-    }
-    
-    mutating func appendWithComma(other: String?) {
-        appendWithCharacter(",", other: other)
-    }
-    
-    mutating func appendWithNewLine(other: String?) {
-        appendWithCharacter("\n", other: other)
-    }
-    
-    mutating func appendWithSpace(other: String?) {
-        appendWithCharacter(" ", other: other)
     }
     
 }

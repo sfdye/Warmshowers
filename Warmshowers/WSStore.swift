@@ -1,5 +1,5 @@
 //
-//  WSMessageStore.swift
+//  WSStore.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 3/02/16.
@@ -9,15 +9,7 @@
 import Foundation
 import CoreData
 
-enum WSMessageEntity : String {
-    case Thread = "MessageThread"
-    case Message = "Message"
-    case User = "User"
-    
-    static let allValues = [Thread, Message, User]
-}
-
-class WSMessageStore : NSObject {
+class WSStore : NSObject {
     
     let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
     let privateContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
@@ -30,6 +22,9 @@ class WSMessageStore : NSObject {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("privateContextDidSave:"), name: NSManagedObjectContextDidSaveNotification, object: self.privateContext)
     }
     
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
     
     // MARK: Generic methods
     
@@ -49,7 +44,7 @@ class WSMessageStore : NSObject {
     }
     
     // Initialise a NSFetchRequest for a given entity
-    func requestForEntity(entity: WSMessageEntity) -> NSFetchRequest {
+    func requestForEntity(entity: WSEntity) -> NSFetchRequest {
         let request = NSFetchRequest(entityName: entity.rawValue)
         return request
     }
@@ -77,7 +72,7 @@ class WSMessageStore : NSObject {
     
     // Syncronous fetch of all entries in an entity
     //
-    func getAllFromEntity(entity: WSMessageEntity) throws -> [AnyObject] {
+    func getAllFromEntity(entity: WSEntity) throws -> [AnyObject] {
         
         let request = requestForEntity(entity)
         
@@ -92,7 +87,7 @@ class WSMessageStore : NSObject {
     func clearout() throws {
     
         // Cycle through entities and delete all entries
-        let entities = WSMessageEntity.allValues
+        let entities = WSEntity.allValues
         do {
             for entity in entities {
                 let objects = try getAllFromEntity(entity) as! [NSManagedObject]
@@ -139,7 +134,7 @@ class WSMessageStore : NSObject {
             if let thread = try messageThreadWithID(threadID) {
                 return thread
             } else {
-                let thread = NSEntityDescription.insertNewObjectForEntityForName(WSMessageEntity.Thread.rawValue, inManagedObjectContext: privateContext) as! CDWSMessageThread
+                let thread = NSEntityDescription.insertNewObjectForEntityForName(WSEntity.Thread.rawValue, inManagedObjectContext: privateContext) as! CDWSMessageThread
                 return thread
             }
         }
@@ -302,7 +297,7 @@ class WSMessageStore : NSObject {
             if let message = try messageWithID(messageID) {
                 return message
             } else {
-                let message = NSEntityDescription.insertNewObjectForEntityForName(WSMessageEntity.Message.rawValue, inManagedObjectContext: privateContext) as! CDWSMessage
+                let message = NSEntityDescription.insertNewObjectForEntityForName(WSEntity.Message.rawValue, inManagedObjectContext: privateContext) as! CDWSMessage
                 return message
             }
         }
@@ -381,7 +376,7 @@ class WSMessageStore : NSObject {
             if let user = try userWithID(uid) {
                 return user
             } else {
-                let user = NSEntityDescription.insertNewObjectForEntityForName(WSMessageEntity.User.rawValue, inManagedObjectContext: privateContext) as! CDWSUser
+                let user = NSEntityDescription.insertNewObjectForEntityForName(WSEntity.User.rawValue, inManagedObjectContext: privateContext) as! CDWSUser
                 return user
             }
         }
@@ -424,15 +419,15 @@ class WSMessageStore : NSObject {
     func addUserWithParticipantJSON(json: AnyObject) throws {
     
         guard let fullname = json.valueForKey("fullname") as? String else {
-            throw CDWSMessageParticipantError.FailedValueForKey(key: "fullname")
+            throw CDWSUserError.FailedValueForKey(key: "fullname")
         }
         
         guard let name = json.valueForKey("name") as? String else {
-            throw CDWSMessageParticipantError.FailedValueForKey(key: "name")
+            throw CDWSUserError.FailedValueForKey(key: "name")
         }
         
         guard let uid = json.valueForKey("uid")?.integerValue else {
-            throw CDWSMessageParticipantError.FailedValueForKey(key: "uid")
+            throw CDWSUserError.FailedValueForKey(key: "uid")
         }
         
         do {
@@ -440,6 +435,52 @@ class WSMessageStore : NSObject {
             user.fullname = fullname
             user.name = name
             user.uid = uid
+            try savePrivateContext()
+        }
+    }
+    
+    // Adds a user to the store with json describing a host location
+    //
+    func addUserWithLocationJSON(json: AnyObject) throws {
+        
+        guard let fullname = json.valueForKey("fullname") as? String else {
+            throw CDWSUserError.FailedValueForKey(key: "fullname")
+        }
+        
+        guard let name = json.valueForKey("name") as? String else {
+            throw CDWSUserError.FailedValueForKey(key: "name")
+        }
+        
+        guard let uid = json.valueForKey("uid")?.integerValue else {
+            throw CDWSUserError.FailedValueForKey(key: "uid")
+        }
+        
+        guard let latitude = json.valueForKey("latitude")?.integerValue else {
+            throw CDWSUserError.FailedValueForKey(key: "latitude")
+        }
+        
+        guard let longitude = json.valueForKey("longitude")?.integerValue else {
+            throw CDWSUserError.FailedValueForKey(key: "longitude")
+        }
+        
+        do {
+            let user = try newOrExistingUser(uid)
+            // Critical properties
+            user.fullname = fullname
+            user.name = name
+            user.uid = uid
+            user.latitude = latitude
+            user.longitude = longitude
+            // Other Properties
+            user.additional = json.valueForKey("additional") as? String
+            user.city = json.valueForKey("city") as? String
+            user.country = json.valueForKey("country") as? String
+            user.distance = json.valueForKey("distance")?.doubleValue
+            user.notcurrentlyavailable = json.valueForKey("notcurrentlyavailable")?.boolValue
+            user.post_code = json.valueForKey("postal_code") as? String
+            user.province = json.valueForKey("province") as? String
+            user.image_url = json.valueForKey("profile_image_map_infoWindow") as? String
+            user.street = json.valueForKey("street") as? String
             try savePrivateContext()
         }
     }
@@ -456,7 +497,7 @@ class WSMessageStore : NSObject {
                 user.image_url = json.valueForKey("profile_image_map_infoWindow") as? String
                 try savePrivateContext()
             } else {
-                let error = NSError(domain: "WSMessageStore", code: 1, userInfo: [NSLocalizedDescriptionKey : "Can not update image url for user. User is not in the store."])
+                let error = NSError(domain: "WSStore", code: 1, userInfo: [NSLocalizedDescriptionKey : "Can not update image url for user. User is not in the store."])
                 throw error
             }
         }
@@ -470,7 +511,7 @@ class WSMessageStore : NSObject {
                 user.image = image
                 try savePrivateContext()
             } else {
-                let error = NSError(domain: "WSMessageStore", code: 2, userInfo: [NSLocalizedDescriptionKey : "Can not update image for user. User is not in the store."])
+                let error = NSError(domain: "WSStore", code: 2, userInfo: [NSLocalizedDescriptionKey : "Can not update image for user. User is not in the store."])
                 throw error
             }
         }

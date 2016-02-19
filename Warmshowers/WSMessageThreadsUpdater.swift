@@ -13,9 +13,9 @@ import CoreData
 //
 class WSMessageThreadsUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
     
-    var store: WSMessageStore!
+    var store: WSStore!
     
-    init(store: WSMessageStore, success: (() -> Void)?, failure: ((error: NSError) -> Void)?) {
+    init(store: WSStore, success: (() -> Void)?, failure: ((error: NSError) -> Void)?) {
         super.init(success: success, failure: failure)
         requestDelegate = self
         self.store = store

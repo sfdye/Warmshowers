@@ -197,7 +197,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Message saving support
     
     // The message store
-    lazy var store = WSMessageStore()
+    lazy var store = WSStore()
     
 }
 

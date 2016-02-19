@@ -13,9 +13,9 @@ class WSMessageThreadMarker : WSRequestWithCSRFToken, WSRequestDelegate {
     
     var threadID: Int!
     var unread = false
-    var store: WSMessageStore!
+    var store: WSStore!
     
-    init(threadID: Int, store: WSMessageStore, success: (() -> Void)?, failure: ((error: NSError) -> Void)?) {
+    init(threadID: Int, store: WSStore, success: (() -> Void)?, failure: ((error: NSError) -> Void)?) {
         super.init(success: success, failure: failure)
         requestDelegate = self
         self.threadID = threadID

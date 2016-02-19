@@ -106,6 +106,28 @@ extension HostSearchViewController : MKMapViewDelegate {
     // Called when the map view changes
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         updateHostsOnMap()
-    }
         
+        // test code
+        let zoomLevel = mapView.zoomLevel()
+        print("zoom level: \(zoomLevel)")
+        
+        
+    }
+    
+    
+    // TEST HOST MANAGER METHODS
+        
+}
+
+extension MKMapView {
+    
+    // Returns the current zoom level of the map
+    // Zoom levels are as per google maps. 0 = the whole world, 1 = a quadrant of the whole world, ...
+    func zoomLevel() -> UInt {
+
+        let latitudeZoomLevel = UInt(log2(180.0 / self.region.span.latitudeDelta))
+        let longitudeZoomLevel = UInt(log2(360.0 / self.region.span.longitudeDelta))
+        return latitudeZoomLevel < longitudeZoomLevel ? latitudeZoomLevel : longitudeZoomLevel
+    }
+    
 }

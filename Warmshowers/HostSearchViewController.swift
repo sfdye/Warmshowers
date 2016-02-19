@@ -39,17 +39,18 @@ class HostSearchViewController: UIViewController {
     // Map source variables
     var mapSource = WSMapSource.AppleMaps
     var mapOverlay: MKTileOverlay? = nil
-    var overlay: MKTileOverlay? = nil
     
     // Main view components / controllers
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var tableView: UITableView!
     @IBOutlet var toolbar: UIToolbar!
     var tableViewController = WSLazyImageTableViewController()
+    let store = (UIApplication.sharedApplication().delegate as! AppDelegate).store
+    var fetchedResultsController: NSFetchedResultsController!
     private var clusteringController : KPClusteringController!
 
-    // Host data variables
-    var hostsOnMap = [WSUserLocation]()
+    // Host data variablesstore
+    var hostsOnMap = [CDWSUser]()
     var hostsOnMapSearcher: WSHostsOnMapSearchManager!
     var hostsInTable: [WSUserLocation] {
         get {
@@ -98,6 +99,7 @@ class HostSearchViewController: UIViewController {
         configureNavigationItem()
         configureSearchController()
         configureToolbar()
+        initializeFetchedResultsController()
         configureClusteringController()
         
         // Ask the users permission to use location services
@@ -108,21 +110,24 @@ class HostSearchViewController: UIViewController {
         
         // Centre the map on the user's location
         centreOnRegion()
+        
+        // DEBUG
+        setMapOverlay()
     }
     
     func configureHostUpdaters() {
         
         // Hosts on map search manager
         hostsOnMapSearcher = WSHostsOnMapSearchManager(
+            store: self.store,
             mapView: self.mapView,
             success: { () -> Void in
-                print("completion state: \(self.hostsOnMapSearcher.task?.state.rawValue)")
                 if self.hostsOnMapSearcher.task?.state == .Completed {
-                    print("updating map")
-                    self.hostsOnMap = self.hostsOnMapSearcher.hostsOnMap
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        self.updateClusteringController()
-                    })
+                    print("updated map")
+//                    self.hostsOnMap = self.hostsOnMapSearcher.hostsOnMap
+//                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                        self.updateClusteringController()
+//                    })
                 }
             },
             failure: { (error) -> Void in
@@ -174,6 +179,25 @@ class HostSearchViewController: UIViewController {
         toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .Any, barMetrics: .Default)
         toolbar.setShadowImage(UIImage(), forToolbarPosition: .Any)
         toolbar.tintColor = WSColor.Blue
+    }
+    
+    func initializeFetchedResultsController() {
+        let request = NSFetchRequest(entityName: WSEntity.User.rawValue)
+        request.sortDescriptors = [NSSortDescriptor(key: "latitude", ascending: false)]
+        let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        self.fetchedResultsController = NSFetchedResultsController(
+            fetchRequest: request,
+            managedObjectContext: moc,
+            sectionNameKeyPath: nil,
+            cacheName: nil)
+        fetchedResultsController.delegate = self
+        
+        updateAnnotations()
+//        do {
+//            try self.fetchedResultsController.performFetch()
+//        } catch {
+//            fatalError("Failed to initialize FetchedResultsController: \(error)")
+//        }
     }
     
     func configureClusteringController() {
@@ -243,21 +267,43 @@ class HostSearchViewController: UIViewController {
             mapView.setRegion(region, animated: true)
         }
     }
+    
+    
+    // MARK: Map Annotations
+    
+    func updateAnnotations() {
+//        do {
+//            try fetchedResultsController.performFetch()
+//            mapView.removeAnnotations(mapView.annotations)
+//            if let annotations = fetchedResultsController.fetchedObjects as? [CDWSUser] {
+//                mapView
+//                
+//                hostsOnMap = annotations
+//                if hostsOnMap.count != 0 {
+//                    clusteringController.setAnnotations(hostsOnMap)
+//                    clusteringController.refresh(true)
+//                }
+////                clusteringController.setAnnotations(mapView.annotations)
+////                clusteringController.refresh(true)
+//            }
+//        } catch {
+//            print("fetch failed")
+//        }
+    }
 
     
     // MARK: Pin clusting
     
-    // Updates the pin clustering controller
-    func updateClusteringController() {
-        if hostsOnMap.count != 0 {
-            clusteringController.setAnnotations(hostsOnMap)
-            clusteringController.refresh(true)
-        }
-    }
+//    // Updates the pin clustering controller
+//    func updateClusteringController() {
+//        if hostsOnMap.count != 0 {
+//            clusteringController.setAnnotations(hostsOnMap)
+//            clusteringController.refresh(true)
+//        }
+//    }
     
     
     // MARK: Updating hosts
-    
     
     // Updates the hosts shown on the map
     //
@@ -388,17 +434,4 @@ class HostSearchViewController: UIViewController {
             }, completion: nil)
     }
 
-    
-    // MARK: Utilities
-
-//    // Checks if a user is already in the map data source
-//    func userOnMap(uid: Int) -> Bool {
-//        
-//        for host in hostsOnMap {
-//            if host.uid == uid {
-//                return true
-//            }
-//        }
-//        return false
-//    }
 }
