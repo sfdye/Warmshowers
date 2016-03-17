@@ -24,7 +24,6 @@ class ComposeMessageViewController: UIViewController {
     var threadID: Int?
     var replyOnMessageThread: CDWSMessageThread?
     
-    let store = (UIApplication.sharedApplication().delegate as! AppDelegate).store
     var messageSender: WSMessageSender?
     
     override func viewDidLoad() {
@@ -100,7 +99,7 @@ class ComposeMessageViewController: UIViewController {
         // Set up the reply
         self.threadID = threadID
         do {
-            let thread = try store.messageThreadWithID(threadID)
+            let thread = try WSStore.messageThreadWithID(threadID)
             let recipients = thread?.otherParticipants(WSLoginData.uid)
             self.threadID = threadID
             self.subject = thread?.subject

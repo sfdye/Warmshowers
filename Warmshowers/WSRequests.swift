@@ -64,7 +64,7 @@ struct WSRequest {
     
     // Makes a normal get request
     //
-    static func makeRequestWithService(service: WSRestfulService, params: [String: String]? = nil, doWithResponse: (NSData?, NSURLResponse?, NSError?) -> Void) {
+    static func makeRequestWithService(service: WSRestfulService, doWithResponse: (NSData?, NSURLResponse?, NSError?) -> Void) {
         
         do {
             let request = try requestWithService(service)
@@ -108,6 +108,7 @@ struct WSRequest {
             
             if error != nil {
                 print("Error getting user info")
+                print("\(error?.localizedDescription)")
                 return
             }
             
@@ -144,6 +145,7 @@ struct WSRequest {
         makeRequestWithService(service) { (data, response, error) -> Void in
             if error != nil {
                 print("Error getting user feedback")
+                print("\(error?.localizedDescription)")
                 return
             }
             
@@ -216,32 +218,6 @@ extension NSMutableURLRequest {
         }
         
         return request
-    }
-    
-}
-
-
-// To get the map bounds when searching for hosts
-//
-extension MKMapView {
-    
-    // Returns the current coordinate limits of a mapview
-    // Used for getting hosts in the current displayed region in getHostDataForMapView
-    //
-    func getWSMapRegion(limit: Int = 100) -> [String: String] {
-        
-        let region = self.region
-        
-        let regionLimits: [String: String] = [
-            "minlat": String(region.center.latitude - region.span.latitudeDelta / Double(2)),
-            "maxlat": String(region.center.latitude + region.span.latitudeDelta / Double(2)),
-            "minlon": String(region.center.longitude - region.span.longitudeDelta / Double(2)),
-            "maxlon": String(region.center.longitude + region.span.longitudeDelta / Double(2)),
-            "centerlat": String(region.center.latitude),
-            "centerlon": String(region.center.longitude)
-        ]
-        
-        return regionLimits
     }
     
 }

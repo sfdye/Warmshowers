@@ -1,5 +1,5 @@
 //
-//  WSMessageStore.swift
+//  WSStore.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 3/02/16.
@@ -9,35 +9,36 @@
 import Foundation
 import CoreData
 
-enum WSMessageEntity : String {
-    case Thread = "MessageThread"
-    case Message = "Message"
-    case User = "User"
+class WSStore : NSObject {
     
-    static let allValues = [Thread, Message, User]
-}
-
-class WSMessageStore : NSObject {
+    static let sharedStore = WSStore()
+    
+    // Set the map tiel expiry time to 24 hr
+    static let MapTileExpiryTime: NSTimeInterval = 60.0 * 60.0 * 24.0
     
     let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+    
     let privateContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
         
-    override init() {
+    private override init() {
         super.init()
         privateContext.persistentStoreCoordinator = moc.persistentStoreCoordinator
         
         // Set up an observer to merge changes in the private context to the main context when it is saved
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("privateContextDidSave:"), name: NSManagedObjectContextDidSaveNotification, object: self.privateContext)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("privateContextDidSave:"), name: NSManagedObjectContextDidSaveNotification, object: privateContext)
     }
     
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
     
     // MARK: Generic methods
     
     // Saves the private content
-    func savePrivateContext() throws {
-        if privateContext.hasChanges {
+    class func savePrivateContext() throws {
+        if sharedStore.privateContext.hasChanges {
             do {
-                try privateContext.save()
+                try sharedStore.privateContext.save()
             }
         }
     }
@@ -45,24 +46,24 @@ class WSMessageStore : NSObject {
     // Merges the private context with the main context on notification
     func privateContextDidSave(notification:NSNotification)
     {
-        moc.performSelectorOnMainThread(Selector("mergeChangesFromContextDidSaveNotification:"), withObject: notification, waitUntilDone: false)
+        WSStore.sharedStore.moc.performSelectorOnMainThread(Selector("mergeChangesFromContextDidSaveNotification:"), withObject: notification, waitUntilDone: false)
     }
     
     // Initialise a NSFetchRequest for a given entity
-    func requestForEntity(entity: WSMessageEntity) -> NSFetchRequest {
+    class func requestForEntity(entity: WSEntity) -> NSFetchRequest {
         let request = NSFetchRequest(entityName: entity.rawValue)
         return request
     }
     
     // Excecutes a syncronous fetch request with the private context
     //
-    func executeFetchRequest(request: NSFetchRequest) throws -> [AnyObject] {
+    class func executeFetchRequest(request: NSFetchRequest) throws -> [AnyObject] {
         
         var objects = [AnyObject]()
         var error: NSError?
-        privateContext.performBlockAndWait { () -> Void in
+        sharedStore.privateContext.performBlockAndWait { () -> Void in
             do {
-                objects = try self.privateContext.executeFetchRequest(request)
+                objects = try sharedStore.privateContext.executeFetchRequest(request)
             } catch let nserror as NSError {
                 error = nserror
             }
@@ -77,7 +78,7 @@ class WSMessageStore : NSObject {
     
     // Syncronous fetch of all entries in an entity
     //
-    func getAllFromEntity(entity: WSMessageEntity) throws -> [AnyObject] {
+    class func getAllFromEntity(entity: WSEntity) throws -> [AnyObject] {
         
         let request = requestForEntity(entity)
         
@@ -89,15 +90,15 @@ class WSMessageStore : NSObject {
     
     // Deletes all objects from the store
     //
-    func clearout() throws {
+    class func clearout() throws {
     
         // Cycle through entities and delete all entries
-        let entities = WSMessageEntity.allValues
+        let entities = WSEntity.allValues
         do {
             for entity in entities {
-                let objects = try getAllFromEntity(entity) as! [NSManagedObject]
+                let objects = try WSStore.getAllFromEntity(entity) as! [NSManagedObject]
                 for object in objects {
-                    privateContext.deleteObject(object)
+                    sharedStore.privateContext.deleteObject(object)
                     try savePrivateContext()
                 }
             }
@@ -109,7 +110,7 @@ class WSMessageStore : NSObject {
     
     // Returns all the message threads in the store
     //
-    func allMessageThreads() throws -> [CDWSMessageThread] {
+    class func allMessageThreads() throws -> [CDWSMessageThread] {
         
         do {
             let threads = try getAllFromEntity(.Thread) as! [CDWSMessageThread]
@@ -120,26 +121,25 @@ class WSMessageStore : NSObject {
     // Checks if a message thread is already in the store by thread id.
     // Returns the existing message thread, or a new message thread inserted into the private context.
     //
-    func messageThreadWithID(threadID: Int) throws -> CDWSMessageThread? {
+    class func messageThreadWithID(threadID: Int) throws -> CDWSMessageThread? {
         
         let request = requestForEntity(.Thread)
         request.predicate = NSPredicate(format: "thread_id==%i", threadID)
         
-        var thread: CDWSMessageThread?
         do {
-            thread = try executeFetchRequest(request).first as? CDWSMessageThread
+            let thread = try executeFetchRequest(request).first as? CDWSMessageThread
+            return thread
         }
-        return thread
     }
     
     // Checks if a message exists and returns it or a new one if it doesn't exist
     //
-    func newOrExistingMessageThread(threadID: Int) throws -> CDWSMessageThread {
+    class func newOrExistingMessageThread(threadID: Int) throws -> CDWSMessageThread {
         do {
             if let thread = try messageThreadWithID(threadID) {
                 return thread
             } else {
-                let thread = NSEntityDescription.insertNewObjectForEntityForName(WSMessageEntity.Thread.rawValue, inManagedObjectContext: privateContext) as! CDWSMessageThread
+                let thread = NSEntityDescription.insertNewObjectForEntityForName(WSEntity.Thread.rawValue, inManagedObjectContext: sharedStore.privateContext) as! CDWSMessageThread
                 return thread
             }
         }
@@ -147,7 +147,7 @@ class WSMessageStore : NSObject {
     
     // Adds a message thread to the store with json
     //
-    func addMessageThread(json: AnyObject) throws {
+    class func addMessageThread(json: AnyObject) throws {
         
         guard let count = json.valueForKey("count")?.integerValue else {
             throw CDWSMessageThreadError.FailedValueForKey(key: "count")
@@ -204,7 +204,7 @@ class WSMessageStore : NSObject {
     }
     
     // Returns the number of messages that have been saved to the store for a given thread
-    func numberOfDownloadedMessagesOnThread(threadID: Int) throws -> Int {
+    class func numberOfDownloadedMessagesOnThread(threadID: Int) throws -> Int {
         do {
             if let messageThread = try messageThreadWithID(threadID) {
                 if let messages = messageThread.messages {
@@ -215,7 +215,7 @@ class WSMessageStore : NSObject {
         }
     }
     
-    func numberOfUnreadMessageThreads() throws -> Int {
+    class func numberOfUnreadMessageThreads() throws -> Int {
         do {
             let threads = try allMessageThreads() as NSArray
             let isNew = threads.valueForKey("is_new") as! [Int]
@@ -224,7 +224,7 @@ class WSMessageStore : NSObject {
         }
     }
     
-    func messageThreadsThatNeedUpdating() throws -> [Int] {
+    class func messageThreadsThatNeedUpdating() throws -> [Int] {
         do {
             var threadIDs = [Int]()
             let threads = try allMessageThreads()
@@ -239,7 +239,7 @@ class WSMessageStore : NSObject {
         }
     }
     
-    func allMessagesOnThread(threadID: Int) throws -> [CDWSMessage]? {
+    class func allMessagesOnThread(threadID: Int) throws -> [CDWSMessage]? {
         do {
             var messages: [CDWSMessage]?
             if let messageThread = try messageThreadWithID(threadID) {
@@ -249,7 +249,7 @@ class WSMessageStore : NSObject {
         }
     }
     
-    func subjectForMessageThreadWithID(threadID: Int) -> String? {
+    class func subjectForMessageThreadWithID(threadID: Int) -> String? {
         do {
             let messageThread = try messageThreadWithID(threadID)
             let subject = messageThread?.subject
@@ -259,7 +259,7 @@ class WSMessageStore : NSObject {
         }
     }
     
-    func markMessageThread(threadID: Int, unread: Bool) throws {
+    class func markMessageThread(threadID: Int, unread: Bool) throws {
         do {
             let messageThread = try messageThreadWithID(threadID)
             messageThread?.is_new = unread
@@ -272,7 +272,7 @@ class WSMessageStore : NSObject {
     
     // Returns all the messages in the store
     //
-    func allMessages() throws -> [CDWSMessage] {
+    class func allMessages() throws -> [CDWSMessage] {
         
         do {
             let messages = try getAllFromEntity(.Message) as! [CDWSMessage]
@@ -283,26 +283,25 @@ class WSMessageStore : NSObject {
     // Checks if a message is already in the store by message id.
     // Returns the existing message, or a new message inserted into the private context.
     //
-    func messageWithID(messageID: Int) throws -> CDWSMessage? {
+    class func messageWithID(messageID: Int) throws -> CDWSMessage? {
         
         let request = requestForEntity(.Message)
         request.predicate = NSPredicate(format: "message_id==%i", messageID)
         
-        var message: CDWSMessage?
         do {
-            message = try executeFetchRequest(request).first as? CDWSMessage
+            let message = try executeFetchRequest(request).first as? CDWSMessage
+            return message
         }
-        return message
     }
     
     // Checks if a message exists and returns it or a new one if it doesn't exist
     //
-    func newOrExistingMessage(messageID: Int) throws -> CDWSMessage {
+    class func newOrExistingMessage(messageID: Int) throws -> CDWSMessage {
         do {
             if let message = try messageWithID(messageID) {
                 return message
             } else {
-                let message = NSEntityDescription.insertNewObjectForEntityForName(WSMessageEntity.Message.rawValue, inManagedObjectContext: privateContext) as! CDWSMessage
+                let message = NSEntityDescription.insertNewObjectForEntityForName(WSEntity.Message.rawValue, inManagedObjectContext: sharedStore.privateContext) as! CDWSMessage
                 return message
             }
         }
@@ -310,7 +309,7 @@ class WSMessageStore : NSObject {
     
     // Adds a message to the store with json
     //
-    func addMessage(json: AnyObject, onThreadWithID threadID: Int) throws {
+    class func addMessage(json: AnyObject, onThreadWithID threadID: Int) throws {
         
         // JSON input checks
         guard let body = json.valueForKey("body") as? String else {
@@ -353,7 +352,7 @@ class WSMessageStore : NSObject {
     
     // Returns all the users in the store
     //
-    func allUsers() throws -> [CDWSUser] {
+    class func allUsers() throws -> [CDWSUser] {
         
         do {
             let users = try getAllFromEntity(.User) as! [CDWSUser]
@@ -362,26 +361,26 @@ class WSMessageStore : NSObject {
     }
     
     // Checks if a user is already in the store by uid.
-    // Returns the existing user, or a new user inserted into the private context.
     //
-    func userWithID(uid: Int) throws -> CDWSUser? {
+    class func userWithID(uid: Int) throws -> CDWSUser? {
         
         let request = requestForEntity(.User)
         request.predicate = NSPredicate(format: "uid == %i", uid)
         
-        var user: CDWSUser?
         do {
-            user = try executeFetchRequest(request).first as? CDWSUser
+            let user = try executeFetchRequest(request).first as? CDWSUser
+            return user
         }
-        return user
     }
     
-    func newOrExistingUser(uid: Int) throws -> CDWSUser {
+    // Returns an existing user, or a new user inserted into the private context.
+    //
+    class func newOrExistingUser(uid: Int) throws -> CDWSUser {
         do {
             if let user = try userWithID(uid) {
                 return user
             } else {
-                let user = NSEntityDescription.insertNewObjectForEntityForName(WSMessageEntity.User.rawValue, inManagedObjectContext: privateContext) as! CDWSUser
+                let user = NSEntityDescription.insertNewObjectForEntityForName(WSEntity.User.rawValue, inManagedObjectContext: sharedStore.privateContext) as! CDWSUser
                 return user
             }
         }
@@ -389,7 +388,7 @@ class WSMessageStore : NSObject {
     
     // Create a user set from json containing message thread participants
     //
-    func userSetFromJSON(json: AnyObject) throws -> NSSet {
+    class func userSetFromJSON(json: AnyObject) throws -> NSSet {
         
         guard let users = json as? NSArray else {
             throw DataError.InvalidInput
@@ -421,18 +420,18 @@ class WSMessageStore : NSObject {
     
     // Adds a user to the store with json describing a message participant
     //
-    func addUserWithParticipantJSON(json: AnyObject) throws {
+    class func addUserWithParticipantJSON(json: AnyObject) throws {
     
         guard let fullname = json.valueForKey("fullname") as? String else {
-            throw CDWSMessageParticipantError.FailedValueForKey(key: "fullname")
+            throw CDWSUserError.FailedValueForKey(key: "fullname")
         }
         
         guard let name = json.valueForKey("name") as? String else {
-            throw CDWSMessageParticipantError.FailedValueForKey(key: "name")
+            throw CDWSUserError.FailedValueForKey(key: "name")
         }
         
         guard let uid = json.valueForKey("uid")?.integerValue else {
-            throw CDWSMessageParticipantError.FailedValueForKey(key: "uid")
+            throw CDWSUserError.FailedValueForKey(key: "uid")
         }
         
         do {
@@ -444,8 +443,54 @@ class WSMessageStore : NSObject {
         }
     }
     
+    // Adds a user to the store with json describing a host location
+    //
+    class func addUserToMapTile(mapTile: CDWSMapTile, withLocationJSON json: AnyObject) throws {
+        
+        guard let fullname = json.valueForKey("fullname") as? String else {
+            throw CDWSUserError.FailedValueForKey(key: "fullname")
+        }
+        
+        guard let name = json.valueForKey("name") as? String else {
+            throw CDWSUserError.FailedValueForKey(key: "name")
+        }
+        
+        guard let uid = json.valueForKey("uid")?.integerValue else {
+            throw CDWSUserError.FailedValueForKey(key: "uid")
+        }
+        
+        guard let latitude = json.valueForKey("latitude")?.doubleValue else {
+            throw CDWSUserError.FailedValueForKey(key: "latitude")
+        }
+        
+        guard let longitude = json.valueForKey("longitude")?.doubleValue else {
+            throw CDWSUserError.FailedValueForKey(key: "longitude")
+        }
+        
+        do {
+            let user = try newOrExistingUser(uid)
+            // Critical properties
+            user.fullname = fullname
+            user.name = name
+            user.uid = uid
+            user.latitude = latitude
+            user.longitude = longitude
+            // Other Properties
+            user.additional = json.valueForKey("additional") as? String
+            user.city = json.valueForKey("city") as? String
+            user.country = json.valueForKey("country") as? String
+            user.distance = json.valueForKey("distance")?.doubleValue
+            user.notcurrentlyavailable = json.valueForKey("notcurrentlyavailable")?.boolValue
+            user.post_code = json.valueForKey("postal_code") as? String
+            user.province = json.valueForKey("province") as? String
+            user.image_url = json.valueForKey("profile_image_map_infoWindow") as? String
+            user.street = json.valueForKey("street") as? String
+            user.map_tile = mapTile
+        }
+    }
+    
     // Updates a users profile thumbnail image url
-    func updateUserImageURLWithJSON(json: AnyObject) throws {
+    class func updateUserImageURLWithJSON(json: AnyObject) throws {
         
         guard let uid = json.valueForKey("uid")?.integerValue else {
             throw DataError.InvalidInput
@@ -456,24 +501,100 @@ class WSMessageStore : NSObject {
                 user.image_url = json.valueForKey("profile_image_map_infoWindow") as? String
                 try savePrivateContext()
             } else {
-                let error = NSError(domain: "WSMessageStore", code: 1, userInfo: [NSLocalizedDescriptionKey : "Can not update image url for user. User is not in the store."])
+                let error = NSError(domain: "WSStore", code: 1, userInfo: [NSLocalizedDescriptionKey : "Can not update image url for user. User is not in the store."])
                 throw error
             }
         }
     }
     
     // Update a user with a thumbnail image 
-    func updateUser(uid: Int, withImage image: UIImage) throws {
+    class func updateUser(uid: Int, withImage image: UIImage) throws {
         
         do {
             if let user = try userWithID(uid) {
                 user.image = image
                 try savePrivateContext()
             } else {
-                let error = NSError(domain: "WSMessageStore", code: 2, userInfo: [NSLocalizedDescriptionKey : "Can not update image for user. User is not in the store."])
+                let error = NSError(domain: "WSStore", code: 2, userInfo: [NSLocalizedDescriptionKey : "Can not update image for user. User is not in the store."])
                 throw error
             }
         }
     }
+    
+    // MARK: Map Tile handling methods
+    
+    // Returns all the map tiles in the store
+    //
+    class func allMapTiles() throws -> [CDWSMapTile] {
+        
+        do {
+            let tiles = try getAllFromEntity(.MapTile) as! [CDWSMapTile]
+            return tiles
+        }
+    }
+    
+    // Checks if a map tile is already in the store.
+    //
+    class func mapTileAtPosition(x: UInt, y: UInt, z: UInt) throws -> CDWSMapTile? {
+        
+        let request = requestForEntity(.MapTile)
+        var predicates = [NSPredicate]()
+        predicates.append(NSPredicate(format: "x == %i", x))
+        predicates.append(NSPredicate(format: "y == %i", y))
+        predicates.append(NSPredicate(format: "z == %i", z))
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+        
+        do {
+            let tile = try executeFetchRequest(request).first as? CDWSMapTile
+            return tile
+        }
+    }
+    
+    // Returns a map tile by its identifer
+    class func mapTileWithID(id: String) throws -> CDWSMapTile? {
+        
+        let request = requestForEntity(.MapTile)
+        request.predicate = NSPredicate(format: "%K == %@", "identifier", id)
+        
+        do {
+            let tile = try executeFetchRequest(request).first as? CDWSMapTile
+            return tile
+        }
+    }
+    
+    // Returns an existing map tile, or a new map tile into the private context.
+    //
+    class func newOrExistingMapTileAtPosition(x: UInt, y: UInt, z: UInt) throws -> CDWSMapTile {
+        do {
+            if let tile = try mapTileAtPosition(x, y: y, z: z) {
+                return tile
+            } else {
+                let tile = NSEntityDescription.insertNewObjectForEntityForName(WSEntity.MapTile.rawValue, inManagedObjectContext: sharedStore.privateContext) as! CDWSMapTile
+                tile.x = x
+                tile.y = y
+                tile.z = z
+                tile.identifier = tile.identifierFromXYZ
+                return tile
+            }
+        }
+    }
+    
+    // Removes tiles from the data base that haven't been loaded in a while
+    class func clearoutOldTiles() {
+        do {
+            let tiles = try allMapTiles()
+            for tile in tiles {
+                if let last_updated = tile.last_updated {
+                    if abs(last_updated.timeIntervalSinceNow) > MapTileExpiryTime {
+                        print("deleting tile")
+                        sharedStore.privateContext.deleteObject(tile)
+                    }
+                }
+            }
+        } catch {
+            print("Error clearing out old tiles")
+        }
+    }
+    
 }
 

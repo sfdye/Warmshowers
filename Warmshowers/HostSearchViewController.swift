@@ -26,10 +26,20 @@ let PlaceholderCellID = "Placeholder"
 
 class HostSearchViewController: UIViewController {
     
+    // MARK: Constants
+    
+    let kDefaultRegionLatitudeDelta: CLLocationDegrees = 1
+    let kDefaultRegionLongitudeDelta: CLLocationDegrees = 1
+    
+    
     // MARK: Properties
     
     let locationManager = CLLocationManager()
     var debounceTimer: NSTimer?
+    
+    // Map source variables
+    var mapSource = WSMapSource.AppleMaps
+    var mapOverlay: MKTileOverlay? = nil
     
     // Main view components / controllers
     @IBOutlet var mapView: MKMapView!
@@ -37,15 +47,13 @@ class HostSearchViewController: UIViewController {
     @IBOutlet var toolbar: UIToolbar!
     @IBOutlet var centreOnLocationButton: UIImage!
     var tableViewController = WSLazyImageTableViewController()
+    var fetchedResultsController: NSFetchedResultsController!
+//    private var clusteringController : KPClusteringController!
 
-    // Map source variables
-    var mapSource = WSMapSource.AppleMaps
-    var mapOverlay: MKTileOverlay? = nil
-    var overlay: MKTileOverlay? = nil
-    
-    // Host data variables
-    var hostsOnMap = [WSUserLocation]()
-    var mapUpdater: WSHostsOnMapUpdater?
+    // Host data variablesstore
+    var mapManager: WSMapManager!
+//    var hostsOnMap = [WSUserLocation]()
+    var hostsOnMapSearcher: WSHostsOnMapSearchManager!
     var hostsInTable: [WSUserLocation] {
         get {
             return tableViewController.lazyImageObjects as! [WSUserLocation]
@@ -59,9 +67,6 @@ class HostSearchViewController: UIViewController {
     // Navigation bar items
     var searchButton: UIBarButtonItem!
     var accountButton: UIBarButtonItem!
-    
-    // Pin clustering controller
-    private var clusteringController : KPClusteringController!
     
     // Search controller
     var searchController: UISearchController!
@@ -84,19 +89,6 @@ class HostSearchViewController: UIViewController {
         mapView.delegate = self
         showMapView()
         
-        // Host by keyword search manager
-        hostsByKeywordSearcher = WSHostsByKeywordSearchManager(
-            success: {
-                self.hostsInTable = self.hostsByKeywordSearcher.hostList
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.tableView.reloadData()
-                })
-            },
-            failure: { (error) -> Void in
-                print("failed to get hosts by keyword")
-            }
-        )
-        
         // Table view
         tableViewController.tableView = tableView
         tableViewController.dataSource = self
@@ -108,23 +100,25 @@ class HostSearchViewController: UIViewController {
         searchController = UISearchController(searchResultsController: nil)
         searchBar = searchController.searchBar
         
+        // Clear out old location data
+        WSStore.clearoutOldTiles()
+        
+        // Configure components
+        configureHostUpdaters()
+        configureNavigationItem()
+        configureSearchController()
+        configureToolbar()
+//        initializeFetchedResultsController()
+//        configureClusteringController()
+        
         // Ask the users permission to use location services
         if CLLocationManager.authorizationStatus() == .NotDetermined {
             locationManager.requestWhenInUseAuthorization()
         }
         mapView.showsUserLocation = true
         
-        // Configure components
-        configureNavigationItem()
-        configureClusteringController()
-        configureSearchController()
-        
         // Centre the map on the user's location
-        if let userLocation = locationManager.location?.coordinate {
-            let region = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1))
-            mapView.setRegion(region, animated: true)
-            updateHostsOnMap()
-        }
+        centreOnRegion()
         
         // Configure the toolbar
         toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .Any, barMetrics: .Default)
@@ -237,25 +231,50 @@ class HostSearchViewController: UIViewController {
             mapView.setCenterCoordinate(coordinate, animated: true)
         }
     }
-
     
-    // MARK: Search by keyword methods
+//    func initializeFetchedResultsController() {
+//        let request = NSFetchRequest(entityName: WSEntity.MapTile.rawValue)
+////        request.predicate = NSPredicate(format: "latitude != nil")
+//        request.sortDescriptors = [NSSortDescriptor(key: "last_updated", ascending: false)]
+//        let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+//        self.fetchedResultsController = NSFetchedResultsController(
+//            fetchRequest: request,
+//            managedObjectContext: moc,
+//            sectionNameKeyPath: nil,
+//            cacheName: nil)
+//        fetchedResultsController.delegate = self
+//        
+//        do {
+//            try fetchedResultsController.performFetch()
+//            mapView.removeAnnotations(mapView.annotations)
+//            
+//            if let tiles = fetchedResultsController.fetchedObjects as? [CDWSMapTile] {
+//                print(tiles)
+//                for tile in tiles {
+//                    addUsersToMapWithMapTile(tile)
+//                }
+////                mapView.addAnnotations(annotations)
+////                print("\(mapView.annotations.count) locations initially on map")
+//                //                hostsOnMap = annotations
+//                //                if hostsOnMap.count != 0 {
+//                //                    clusteringController.setAnnotations(hostsOnMap)
+//                //                    clusteringController.refresh(true)
+//                //                }
+////                clusteringController.setAnnotations(<#T##annoations: [AnyObject]!##[AnyObject]!#>)
+////                clusteringController.refresh(true)
+//            }
+//        } catch {
+//            fatalError("Failed to initialize FetchedResultsController: \(error)")
+//        }
+//    }
     
-    // Updates the hosts to be shown in the table view
-    //
-    func updateSearchResultsWithKeyword() {
-        
-        guard let keyword = searchController.searchBar.text else {
-            return
-        }
-        
-        // Clear the debounce timer
-        debounceTimer = nil
-        
-        WSURLSession.cancelAllDataTasksWithCompletionHandler { () -> Void in
-            self.hostsByKeywordSearcher.update(keyword)
-        }
-    }
+//    func configureClusteringController() {
+//        let algorithm : KPGridClusteringAlgorithm = KPGridClusteringAlgorithm()
+//        algorithm.annotationSize = CGSizeMake(25, 50)
+//        algorithm.clusteringStrategy = KPGridClusteringAlgorithmStrategy.TwoPhase;
+//        clusteringController = KPClusteringController(mapView: mapView, clusteringAlgorithm: algorithm)
+//        clusteringController.delegate = self
+//    }
     
     
     // MARK: - Map source methods
@@ -276,7 +295,7 @@ class HostSearchViewController: UIViewController {
             return MKTileOverlay.init(URLTemplate: MapTileServerURLTemplate.OpenStreetMaps())
         default:
             return nil
-        }   
+        }
     }
     
     // Sets the overlay variable to the current map source and update the mapView overlays
@@ -300,6 +319,60 @@ class HostSearchViewController: UIViewController {
             mapView.addOverlay(mapOverlay!, level: MKOverlayLevel.AboveLabels)
         }
     }
+    
+    
+    // MARK: Map centring
+    
+    @IBAction func centreOnLocation() {
+        if let coordinate = locationManager.location?.coordinate {
+            mapView.setCenterCoordinate(coordinate, animated: true)
+        }
+    }
+    
+    func centreOnRegion() {
+        if let userLocation = locationManager.location?.coordinate {
+            let region = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: kDefaultRegionLatitudeDelta, longitudeDelta: kDefaultRegionLongitudeDelta))
+            mapView.setRegion(region, animated: true)
+        }
+    }
+
+    
+    // MARK: Pin clusting
+    
+//    // Updates the pin clustering controller
+//    func updateClusteringController() {
+//        if hostsOnMap.count != 0 {
+//            clusteringController.setAnnotations(hostsOnMap)
+//            clusteringController.refresh(true)
+//        }
+//    }
+    
+    
+    // MARK: Updating hosts
+    
+//    // Updates the hosts shown on the map
+//    //
+//    func updateHostsOnMap() {
+//        hostsOnMapSearcher.cancel()
+//        hostsOnMapSearcher.update()
+//    }
+    
+    // Updates the hosts to be shown in the table view
+    //
+    func updateSearchResultsWithKeyword() {
+        
+        guard let keyword = searchController.searchBar.text else {
+            return
+        }
+        
+        // Clear the debounce timer
+        debounceTimer = nil
+        
+        WSURLSession.cancelAllDataTasksWithCompletionHandler { () -> Void in
+            self.hostsByKeywordSearcher.update(keyword)
+        }
+    }
+    
     
     // MARK: Navigation methods
     
@@ -386,22 +459,8 @@ class HostSearchViewController: UIViewController {
             return
         }
     }
-
     
-    // MARK: Utilities
-
-    // Checks if a user is already in the map data source
-    func userOnMap(uid: Int) -> Bool {
-        
-        for host in hostsOnMap {
-            if host.uid == uid {
-                return true
-            }
-        }
-        return false
-    }
-    
-    // Hides the search by keyword table view    
+    // Hides the search by keyword table view
     //
     func showMapView() {
         UIView.transitionWithView(tableView, duration: 0.1, options: .TransitionCrossDissolve, animations: { () -> Void in

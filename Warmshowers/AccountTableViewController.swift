@@ -213,7 +213,7 @@ class AccountTableViewController: UITableViewController {
                         })
                     }
                 )
-                WSProgressHUD.show("Logging out ...")
+                WSProgressHUD.show(self.navigationController!.view, label: "Logging out ...")
                 logoutManager.logout()
             }
             actionAlert.addAction(logoutAction)
@@ -475,10 +475,9 @@ class AccountTableViewController: UITableViewController {
             let composeMessageVC = navVC.viewControllers.first as! ComposeMessageViewController
             if let info = info, let uid = uid {
                 // Save the user to the store and pass the user object to the compose message view controller
-                let store = (UIApplication.sharedApplication().delegate as! AppDelegate).store
                 do {
-                    try store.addUserWithParticipantJSON(info)
-                    recipient = try store.userWithID(uid)
+                    try WSStore.addUserWithParticipantJSON(info)
+                    recipient = try WSStore.userWithID(uid)
                     composeMessageVC.initialiseAsNewMessageToUser([recipient!])
                 } catch {
                     print("Failed to get user for compose message view")

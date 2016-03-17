@@ -88,7 +88,6 @@ class WSRequester : NSObject {
     func start() {
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        
         guard shouldStart() == true else {
             setError(101, description: "Request aborted.")
             end()
@@ -225,6 +224,7 @@ class WSRequester : NSObject {
     //
     func cancel() {
         task?.cancel()
+        task = nil
         end()
     }
 }

@@ -32,10 +32,13 @@ extension MessageThreadsTableViewController : NSFetchedResultsControllerDelegate
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
             switch type {
             case .Insert:
+                print("insert")
                 self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
             case .Delete:
+                print("delete")
                 self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
             case .Update:
+                print("update")
                 if let cell = self.tableView.cellForRowAtIndexPath(indexPath!) {
                     self.configureCell(cell, indexPath: indexPath!)
                 }
