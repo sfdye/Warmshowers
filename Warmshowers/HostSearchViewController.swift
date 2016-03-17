@@ -48,11 +48,9 @@ class HostSearchViewController: UIViewController {
     @IBOutlet var centreOnLocationButton: UIImage!
     var tableViewController = WSLazyImageTableViewController()
     var fetchedResultsController: NSFetchedResultsController!
-//    private var clusteringController : KPClusteringController!
 
     // Host data variablesstore
     var mapManager: WSMapManager!
-//    var hostsOnMap = [WSUserLocation]()
     var hostsOnMapSearcher: WSHostsOnMapSearchManager!
     var hostsInTable: [WSUserLocation] {
         get {
@@ -71,6 +69,7 @@ class HostSearchViewController: UIViewController {
     // Search controller
     var searchController: UISearchController!
     var searchBar: UISearchBar!
+
     
     
     // MARK: View life cycle
@@ -120,10 +119,8 @@ class HostSearchViewController: UIViewController {
         // Centre the map on the user's location
         centreOnRegion()
         
-        // Configure the toolbar
-        toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .Any, barMetrics: .Default)
-        toolbar.setShadowImage(UIImage(), forToolbarPosition: .Any)
-        toolbar.tintColor = WSColor.Blue
+        // DEBUG
+        setMapOverlay()
         
         // Reachability notifications
         WSReachabilityManager.registerForAndStartNotifications(self, selector: Selector("reachabilityChanged:"))
@@ -135,6 +132,42 @@ class HostSearchViewController: UIViewController {
     
     override func viewWillDisappear(animated: Bool) {
         WSURLSession.cancelAllDataTasksWithCompletionHandler()
+    }
+        
+    func configureHostUpdaters() {
+        
+        // Hosts on map search manager
+//        hostsOnMapSearcher = WSHostsOnMapSearchManager(
+//            store: self.store,
+//            success: { () -> Void in
+//                if self.hostsOnMapSearcher.task?.state == .Completed {
+//                    print("finished request")
+////                    self.hostsOnMap = self.hostsOnMapSearcher.hostsOnMap
+////                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+////                        self.updateClusteringController()
+////                    })
+//                }
+//            },
+//            failure: { (error) -> Void in
+//                // update error here
+//                print("Failed to update the store.")
+//            }
+//        )
+        mapManager = WSMapManager(withMapView: mapView)
+        mapManager.updateAnnotationsInView()
+        
+        // Host by keyword search manager
+        hostsByKeywordSearcher = WSHostsByKeywordSearchManager(
+            success: {
+                self.hostsInTable = self.hostsByKeywordSearcher.hostList
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.tableView.reloadData()
+                })
+            },
+            failure: { (error) -> Void in
+                print("failed to get hosts by keyword")
+            }
+        )
     }
     
     func configureNavigationItem() {
@@ -162,12 +195,10 @@ class HostSearchViewController: UIViewController {
         searchBar.placeholder = "Search by name, email or town"
     }
     
-    func configureClusteringController() {
-        let algorithm : KPGridClusteringAlgorithm = KPGridClusteringAlgorithm()
-        algorithm.annotationSize = CGSizeMake(25, 50)
-        algorithm.clusteringStrategy = KPGridClusteringAlgorithmStrategy.TwoPhase;
-        clusteringController = KPClusteringController(mapView: self.mapView, clusteringAlgorithm: algorithm)
-        clusteringController.delegate = self
+    func configureToolbar() {
+        toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .Any, barMetrics: .Default)
+        toolbar.setShadowImage(UIImage(), forToolbarPosition: .Any)
+        toolbar.tintColor = WSColor.Blue
     }
     
     
@@ -186,51 +217,6 @@ class HostSearchViewController: UIViewController {
         }
     }
 
-    
-    // MARK: Map update methods
-    
-    // Updates the hosts shown on the map
-    //
-    func updateHostsOnMap() {
-        if mapUpdater == nil {
-            mapUpdater = WSHostsOnMapUpdater(
-                hostsOnMap: hostsOnMap,
-                mapView: mapView,
-                success: {
-                    // update the cluster controller on the main thread
-                    if let updater = self.mapUpdater {
-                        self.hostsOnMap = updater.hostsOnMap
-                    }
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        self.updateClusteringController()
-                    })
-                    self.mapUpdater = nil
-                },
-                failure: { (error) -> Void in
-                    self.mapUpdater = nil
-                }
-            )
-            mapUpdater!.update()
-        } else {
-            WSURLSession.cancelAllDataTasksWithCompletionHandler({ () -> Void in
-                self.updateHostsOnMap()
-            })
-        }
-    }
-    
-    // Updates the pin clustering controller
-    func updateClusteringController() {
-        if hostsOnMap.count != 0 {
-            clusteringController.setAnnotations(hostsOnMap)
-            clusteringController.refresh(true)
-        }
-    }
-    
-    @IBAction func centreOnLocation() {
-        if let coordinate = locationManager.location?.coordinate {
-            mapView.setCenterCoordinate(coordinate, animated: true)
-        }
-    }
     
 //    func initializeFetchedResultsController() {
 //        let request = NSFetchRequest(entityName: WSEntity.MapTile.rawValue)
