@@ -23,18 +23,16 @@ class MessageThreadTableViewController: UITableViewController {
     lazy var messageUpdater: WSMessageUpdater = {
         let messageUpdater = WSMessageUpdater(
             threadID: self.threadID,
-            store: self.store,
             success: {
-                self.reload()
+                self.reload(true)
             },
             failure: { (error) -> Void in
                 // Reload and show an error alert
                 self.setErrorAlert(error)
-                self.reload()
+                self.reload(true)
         })
         return messageUpdater
     }()
-    let store = (UIApplication.sharedApplication().delegate as! AppDelegate).store
     var refreshController = UIRefreshControl()
     var fetchedResultsController: NSFetchedResultsController!
     var alert: UIAlertController?
@@ -44,7 +42,7 @@ class MessageThreadTableViewController: UITableViewController {
         super.viewDidLoad()
         
         // Set the view title
-        navigationItem.title = store.subjectForMessageThreadWithID(threadID)
+        navigationItem.title = WSStore.subjectForMessageThreadWithID(threadID)
         
         // Configure the table view
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -81,7 +79,7 @@ class MessageThreadTableViewController: UITableViewController {
         request.predicate = NSPredicate(format: "thread.thread_id==%i", threadID)
         request.sortDescriptors = [NSSortDescriptor(key: "timestamp", ascending: true)]
         
-        self.fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: store.privateContext, sectionNameKeyPath: nil, cacheName: nil)
+        self.fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: WSStore.sharedStore.privateContext, sectionNameKeyPath: nil, cacheName: nil)
         fetchedResultsController.delegate = self
         
         do {
@@ -116,7 +114,7 @@ class MessageThreadTableViewController: UITableViewController {
                 if scroll {
                     let row = self.tableView.numberOfRowsInSection(0) - 1
                     let indexPath = NSIndexPath(forRow: row, inSection: 0)
-                    self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Bottom, animated: false)
+                    self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Bottom, animated: true)
                 }
             } catch {
                 // If there is a problem fetching suggest that the user reinstall the app
@@ -136,7 +134,7 @@ class MessageThreadTableViewController: UITableViewController {
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         if identifier == ReplyToMessageThreadSegueID {
             do {
-                if let _ = try store.messageThreadWithID(threadID) {
+                if let _ = try WSStore.messageThreadWithID(threadID) {
                     return true
                 }
             } catch {
@@ -162,7 +160,7 @@ class MessageThreadTableViewController: UITableViewController {
     func updateAuthorImages() {
         
         do {
-            let messageThread = try store.messageThreadWithID(threadID)
+            let messageThread = try WSStore.messageThreadWithID(threadID)
             let authors = messageThread?.participants?.allObjects as! [CDWSUser]
             for author in authors {
                 if author.image == nil {
@@ -176,7 +174,7 @@ class MessageThreadTableViewController: UITableViewController {
                         }
                         
                         do {
-                            try self.store.updateUser(uid, withImage: image)
+                            try WSStore.updateUser(uid, withImage: image)
                             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                                 self.reloadImage(image, forAuthor: uid)
                             })
@@ -199,9 +197,10 @@ class MessageThreadTableViewController: UITableViewController {
         for row in 0...numberOfRows - 1 {
             let indexPath = NSIndexPath(forRow: row, inSection: 0)
             let message = self.fetchedResultsController.objectAtIndexPath(indexPath) as! CDWSMessage
-            if message.author!.uid == uid {
-                let cell = self.tableView.cellForRowAtIndexPath(indexPath) as! MessageTableViewCell
-                cell.authorImageView.image = image
+            if message.author?.uid == uid {
+                if let cell = self.tableView.cellForRowAtIndexPath(indexPath) as? MessageTableViewCell {
+                    cell.authorImageView.image = image
+                }
             }
         }
     }
@@ -249,14 +248,13 @@ class MessageThreadTableViewController: UITableViewController {
     func markAsRead() {
         
         do {
-            guard let thread = try store.messageThreadWithID(threadID) where thread.is_new != nil else {
+            guard let thread = try WSStore.messageThreadWithID(threadID) where thread.is_new != nil else {
                 return
             }
             
             if thread.is_new!.boolValue {
                 let marker = WSMessageThreadMarker(
                     threadID: threadID,
-                    store: store,
                     success: nil,
                     failure: nil
                 )

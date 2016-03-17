@@ -13,13 +13,11 @@ class WSMessageThreadMarker : WSRequestWithCSRFToken, WSRequestDelegate {
     
     var threadID: Int!
     var unread = false
-    var store: WSStore!
     
-    init(threadID: Int, store: WSStore, success: (() -> Void)?, failure: ((error: NSError) -> Void)?) {
+    init(threadID: Int, success: (() -> Void)?, failure: ((error: NSError) -> Void)?) {
         super.init(success: success, failure: failure)
         requestDelegate = self
         self.threadID = threadID
-        self.store = store
     }
     
     func requestForDownload() throws -> NSURLRequest {
@@ -43,7 +41,7 @@ class WSMessageThreadMarker : WSRequestWithCSRFToken, WSRequestDelegate {
                 if success {
                     // On success update the local model
                     do {
-                        try self.store.markMessageThread(self.threadID, unread: self.unread)
+                        try WSStore.markMessageThread(self.threadID, unread: self.unread)
                     } catch {
                         // This is not an important error
                     }

@@ -12,5 +12,6 @@ enum WSEntity : String {
     case Thread = "MessageThread"
     case Message = "Message"
     case User = "User"
-    static let allValues = [Thread, Message, User]
+    case MapTile = "MapTile"
+    static let allValues = [Thread, Message, User, MapTile]
 }

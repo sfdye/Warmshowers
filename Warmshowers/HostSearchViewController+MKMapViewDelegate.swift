@@ -16,7 +16,14 @@ extension HostSearchViewController : MKMapViewDelegate {
         if mapOverlay != nil {
             return MKTileOverlayRenderer.init(overlay: overlay)
         } else {
-            return MKTileOverlayRenderer.init();
+            // tile colouring overlay
+            if overlay.isKindOfClass(MKPolygon) {
+                let renderer = MKPolygonRenderer(polygon: overlay as! MKPolygon)
+                renderer.fillColor = UIColor.redColor().colorWithAlphaComponent(0.25)
+                return renderer
+            } else {
+                return MKTileOverlayRenderer.init();
+            }
         }
     }
     
@@ -63,6 +70,23 @@ extension HostSearchViewController : MKMapViewDelegate {
             annotationView!.canShowCallout = true;
         }
         
+        
+        // ****************************************
+        // no cluster controller test
+        // Single host map pins
+        if let dequeuedView = mapView.dequeueReusableAnnotationViewWithIdentifier("pin") as? MKPinAnnotationView {
+            annotationView = dequeuedView
+        } else {
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "pin")
+        }
+        // Red pins for single hosts
+        annotationView!.pinTintColor = UIColor.redColor()
+        // Add an accessory button to the annotation
+        let button = UIButton(type: UIButtonType.DetailDisclosure)
+        annotationView?.rightCalloutAccessoryView = button
+        annotationView!.canShowCallout = true;
+        // ****************************************
+        
         return annotationView;
     }
     
@@ -92,6 +116,9 @@ extension HostSearchViewController : MKMapViewDelegate {
     //
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView,
         calloutAccessoryControlTapped control: UIControl) {
+            
+            print("Coordinates: \(view.annotation?.coordinate)")
+            
             if let kpAnnotation = view.annotation as? KPAnnotation {
                 if view.reuseIdentifier == "cluster" {
                     // Show a list of the clustered hosts
@@ -105,29 +132,9 @@ extension HostSearchViewController : MKMapViewDelegate {
     
     // Called when the map view changes
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        updateHostsOnMap()
         
-        // test code
-        let zoomLevel = mapView.zoomLevel()
-        print("zoom level: \(zoomLevel)")
-        
-        
+        // Update the annotation on the map
+        mapManager.updateAnnotationsInView()
     }
-    
-    
-    // TEST HOST MANAGER METHODS
         
-}
-
-extension MKMapView {
-    
-    // Returns the current zoom level of the map
-    // Zoom levels are as per google maps. 0 = the whole world, 1 = a quadrant of the whole world, ...
-    func zoomLevel() -> UInt {
-
-        let latitudeZoomLevel = UInt(log2(180.0 / self.region.span.latitudeDelta))
-        let longitudeZoomLevel = UInt(log2(360.0 / self.region.span.longitudeDelta))
-        return latitudeZoomLevel < longitudeZoomLevel ? latitudeZoomLevel : longitudeZoomLevel
-    }
-    
 }

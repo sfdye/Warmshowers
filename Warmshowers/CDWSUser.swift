@@ -13,7 +13,7 @@ enum CDWSUserError : ErrorType {
     case FailedValueForKey(key: String)
 }
 
-class CDWSUser: NSManagedObject, WSLazyImage, MKAnnotation {
+class CDWSUser: NSManagedObject, WSLazyImage {
     
     // MARK: WSLazyImage Protocol
     

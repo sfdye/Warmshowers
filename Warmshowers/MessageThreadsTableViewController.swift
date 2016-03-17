@@ -22,7 +22,6 @@ class MessageThreadsTableViewController: UITableViewController {
     // MARK: Properties
     
     var messageThreadUpdater: WSMessageThreadsUpdater!
-    let store = (UIApplication.sharedApplication().delegate as! AppDelegate).store
     var lastUpdated: NSDate?
     var updatesInProgress = [Int: WSMessageUpdater]()
     var alert: UIAlertController?
@@ -70,7 +69,6 @@ class MessageThreadsTableViewController: UITableViewController {
     
     func configureMessageThreadsUpdater() {
         messageThreadUpdater = WSMessageThreadsUpdater(
-            store: store,
             success: {
                 self.lastUpdated = NSDate()
                 self.updateAllMessages()
@@ -78,8 +76,7 @@ class MessageThreadsTableViewController: UITableViewController {
             failure: { (error) -> Void in
                 self.setErrorAlert(error)
                 self.finishedUpdates()
-            }
-        )
+        })
     }
     
     func initializeFetchedResultsController() {
@@ -136,7 +133,7 @@ class MessageThreadsTableViewController: UITableViewController {
         
         // Update the messages if necessary, or just reload if no updates are required
         do {
-            let threadIDs = try store.messageThreadsThatNeedUpdating()
+            let threadIDs = try WSStore.messageThreadsThatNeedUpdating()
             if threadIDs.count > 0 {
                 for threadID in threadIDs {
                     self.updateMessagesOnThread(threadID)
@@ -168,7 +165,6 @@ class MessageThreadsTableViewController: UITableViewController {
         
         let messageUpdater = WSMessageUpdater(
             threadID: threadID,
-            store: store,
             success: {
                 self.updateFinishedForThreadID(threadID)
             },
@@ -198,7 +194,7 @@ class MessageThreadsTableViewController: UITableViewController {
     //
     func updateTabBarBadge() {
         do {
-            let unread = try store.numberOfUnreadMessageThreads()
+            let unread = try WSStore.numberOfUnreadMessageThreads()
             dispatch_async(dispatch_get_main_queue()) { () -> Void in
                 if unread > 0 {
                     self.navigationController?.tabBarItem.badgeValue = String(unread)

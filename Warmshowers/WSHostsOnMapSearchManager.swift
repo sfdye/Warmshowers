@@ -12,26 +12,37 @@ import Foundation
 //
 class WSHostsOnMapSearchManager : WSRequestWithCSRFToken, WSRequestDelegate {
     
-    var store: WSStore!
-    var mapView: MKMapView!
-    let MapSearchLimit: Int = 800
+    var x: UInt?
+    var y: UInt?
+    var z: UInt?
+    let MapSearchLimit: Int = 500
     
-    init(store: WSStore, mapView: MKMapView, success: (() -> Void)?, failure: ((error: NSError) -> Void)?) {
+    override init(success: (() -> Void)?, failure: ((error: NSError) -> Void)?) {
         super.init(success: success, failure: failure)
         requestDelegate = self
-        self.store = store
-        self.mapView = mapView
+    }
+    
+    // Prevents the request starting without a CSRF token
+    //
+    override func shouldStart() -> Bool {
+        
+        guard token != nil else {
+            setError(102, description: "Request aborted with no CSRF token.")
+            return false
+        }
+        
+        guard let _ = tileForUpdate() else {
+            setError(502, description: "No map tile for request.")
+            return false
+        }
+        
+        return isReachable()
     }
     
     func requestForDownload() throws -> NSURLRequest {
-        
-        // DECIDE WHAT AREAS TO REQUEST HERE
-        // ACCESS THE STORE AND CHECK WHICH AREAS NEED UPDATEING
-        
-        
         do {
             let service = WSRestfulService(type: .SearchByLocation)!
-            var params = mapView.getWSMapRegion()
+            var params = tileForUpdate()!.getWSMapRegionLimits()
             params["limit"] = String(MapSearchLimit)
             let request = try WSRequest.requestWithService(service, params: params, token: token)
             return request
@@ -49,11 +60,34 @@ class WSHostsOnMapSearchManager : WSRequestWithCSRFToken, WSRequestDelegate {
             return
         }
         
-        // Parse the json
-        for userLocationJSON in accounts {
+        WSStore.sharedStore.privateContext.performBlockAndWait {
+            
+            var tile: CDWSMapTile!
             do {
-                try self.store.addUserWithLocationJSON(userLocationJSON)
-                print("user saved to store")
+                tile = try WSStore.newOrExistingMapTileAtPosition(self.x!, y: self.y!, z: self.z!)
+            } catch let nserror as NSError {
+                self.error = nserror
+                return
+            }
+            
+            print("got \(accounts.count) accounts")
+            
+            // Parse the json and add the users to the map tile
+            for userLocationJSON in accounts {
+                do {
+                    try WSStore.addUserToMapTile(tile, withLocationJSON:userLocationJSON)
+                } catch let nserror as NSError {
+                    self.error = nserror
+                    return
+                }
+            }
+            
+            // Mark the tile as updated
+            tile.setValue(NSDate(timeIntervalSinceNow: 0), forKey: "last_updated")
+            print(tile.last_updated)
+            do {
+                try WSStore.savePrivateContext()
+                print("Successfully updated tile data")
             } catch let nserror as NSError {
                 self.error = nserror
                 return
@@ -63,8 +97,28 @@ class WSHostsOnMapSearchManager : WSRequestWithCSRFToken, WSRequestDelegate {
     
     // Convinience method to start the updates
     //
-    func update() {
+    func updateHostsForTileAtPosition(x: UInt, y: UInt, z: UInt) {
+        self.x = x
+        self.y = y
+        self.z = z
         tokenGetter.start()
+    }
+    
+    // Method to retrieve the updating tile from the store
+    //
+    func tileForUpdate() -> CDWSMapTile? {
+        
+        guard let x = x, y = y, z = z else {
+            return nil
+        }
+        
+        do {
+            let tile = try WSStore.mapTileAtPosition(x, y: y, z: z)
+            return tile
+        } catch {
+            print("Failed to retrieve tile from the store")
+            return nil
+        }
     }
 
 }

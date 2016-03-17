@@ -1,6 +1,7 @@
 PODS:
   - AFMInfoBanner (1.2.1):
     - CVKHierarchySearcher (~> 0.2)
+  - CCHMapClusterController (1.7.0)
   - CVKHierarchySearcher (0.2.0)
   - KeychainAccess (2.3.3)
   - kingpin (0.3.1)
@@ -9,6 +10,7 @@ PODS:
 
 DEPENDENCIES:
   - AFMInfoBanner
+  - CCHMapClusterController
   - KeychainAccess
   - kingpin (from `https://github.com/itsbonczek/kingpin`)
   - MBProgressHUD (from `https://github.com/jdg/MBProgressHUD.git`)
@@ -35,6 +37,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   AFMInfoBanner: a7bcfd409faa624f043e604ae4fb789c84b22815
+  CCHMapClusterController: d8cd12cd5682ec6cd76d911ac7198f981b6cc1b8
   CVKHierarchySearcher: 7be8d3bcbcc6f86ff07f785e6c632b5e40da2553
   KeychainAccess: 9b7e49e48277e329b1b3195e54697ed313d30acf
   kingpin: 52bb578006bdeb881db225e6ff1a4228375cbfbf

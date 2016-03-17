@@ -58,10 +58,10 @@ class WSRequestWithCSRFToken : WSRequester {
         // Abort if:
         //  1. The task has already been tried once
         //  2. The task has been cancelled
-        //  3. The server returned a bad response, that is not a 401 (unauthorized)
+        //  3. The server returned a 401 or 403.
         if !finalAttempt
             && task?.state != .Canceling
-            && httpResponse?.statusCode == 401
+            && (httpResponse?.statusCode == 401 || httpResponse?.statusCode == 403 || httpResponse?.statusCode == 406)
         {
             finalAttempt = true
             return true

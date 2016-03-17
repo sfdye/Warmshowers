@@ -45,12 +45,12 @@ class HostSearchViewController: UIViewController {
     @IBOutlet var tableView: UITableView!
     @IBOutlet var toolbar: UIToolbar!
     var tableViewController = WSLazyImageTableViewController()
-    let store = (UIApplication.sharedApplication().delegate as! AppDelegate).store
     var fetchedResultsController: NSFetchedResultsController!
-    private var clusteringController : KPClusteringController!
+//    private var clusteringController : KPClusteringController!
 
     // Host data variablesstore
-    var hostsOnMap = [CDWSUser]()
+    var mapManager: WSMapManager!
+//    var hostsOnMap = [WSUserLocation]()
     var hostsOnMapSearcher: WSHostsOnMapSearchManager!
     var hostsInTable: [WSUserLocation] {
         get {
@@ -94,13 +94,16 @@ class HostSearchViewController: UIViewController {
         searchController = UISearchController(searchResultsController: nil)
         searchBar = searchController.searchBar
         
+        // Clear out old location data
+        WSStore.clearoutOldTiles()
+        
         // Configure components
         configureHostUpdaters()
         configureNavigationItem()
         configureSearchController()
         configureToolbar()
-        initializeFetchedResultsController()
-        configureClusteringController()
+//        initializeFetchedResultsController()
+//        configureClusteringController()
         
         // Ask the users permission to use location services
         if CLLocationManager.authorizationStatus() == .NotDetermined {
@@ -118,23 +121,24 @@ class HostSearchViewController: UIViewController {
     func configureHostUpdaters() {
         
         // Hosts on map search manager
-        hostsOnMapSearcher = WSHostsOnMapSearchManager(
-            store: self.store,
-            mapView: self.mapView,
-            success: { () -> Void in
-                if self.hostsOnMapSearcher.task?.state == .Completed {
-                    print("updated map")
-//                    self.hostsOnMap = self.hostsOnMapSearcher.hostsOnMap
-//                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                        self.updateClusteringController()
-//                    })
-                }
-            },
-            failure: { (error) -> Void in
-                // update error here
-                print("Failed to update the map.")
-            }
-        )
+//        hostsOnMapSearcher = WSHostsOnMapSearchManager(
+//            store: self.store,
+//            success: { () -> Void in
+//                if self.hostsOnMapSearcher.task?.state == .Completed {
+//                    print("finished request")
+////                    self.hostsOnMap = self.hostsOnMapSearcher.hostsOnMap
+////                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+////                        self.updateClusteringController()
+////                    })
+//                }
+//            },
+//            failure: { (error) -> Void in
+//                // update error here
+//                print("Failed to update the store.")
+//            }
+//        )
+        mapManager = WSMapManager(withMapView: mapView)
+        mapManager.updateAnnotationsInView()
         
         // Host by keyword search manager
         hostsByKeywordSearcher = WSHostsByKeywordSearchManager(
@@ -181,32 +185,49 @@ class HostSearchViewController: UIViewController {
         toolbar.tintColor = WSColor.Blue
     }
     
-    func initializeFetchedResultsController() {
-        let request = NSFetchRequest(entityName: WSEntity.User.rawValue)
-        request.sortDescriptors = [NSSortDescriptor(key: "latitude", ascending: false)]
-        let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-        self.fetchedResultsController = NSFetchedResultsController(
-            fetchRequest: request,
-            managedObjectContext: moc,
-            sectionNameKeyPath: nil,
-            cacheName: nil)
-        fetchedResultsController.delegate = self
-        
-        updateAnnotations()
+//    func initializeFetchedResultsController() {
+//        let request = NSFetchRequest(entityName: WSEntity.MapTile.rawValue)
+////        request.predicate = NSPredicate(format: "latitude != nil")
+//        request.sortDescriptors = [NSSortDescriptor(key: "last_updated", ascending: false)]
+//        let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+//        self.fetchedResultsController = NSFetchedResultsController(
+//            fetchRequest: request,
+//            managedObjectContext: moc,
+//            sectionNameKeyPath: nil,
+//            cacheName: nil)
+//        fetchedResultsController.delegate = self
+//        
 //        do {
-//            try self.fetchedResultsController.performFetch()
+//            try fetchedResultsController.performFetch()
+//            mapView.removeAnnotations(mapView.annotations)
+//            
+//            if let tiles = fetchedResultsController.fetchedObjects as? [CDWSMapTile] {
+//                print(tiles)
+//                for tile in tiles {
+//                    addUsersToMapWithMapTile(tile)
+//                }
+////                mapView.addAnnotations(annotations)
+////                print("\(mapView.annotations.count) locations initially on map")
+//                //                hostsOnMap = annotations
+//                //                if hostsOnMap.count != 0 {
+//                //                    clusteringController.setAnnotations(hostsOnMap)
+//                //                    clusteringController.refresh(true)
+//                //                }
+////                clusteringController.setAnnotations(<#T##annoations: [AnyObject]!##[AnyObject]!#>)
+////                clusteringController.refresh(true)
+//            }
 //        } catch {
 //            fatalError("Failed to initialize FetchedResultsController: \(error)")
 //        }
-    }
+//    }
     
-    func configureClusteringController() {
-        let algorithm : KPGridClusteringAlgorithm = KPGridClusteringAlgorithm()
-        algorithm.annotationSize = CGSizeMake(25, 50)
-        algorithm.clusteringStrategy = KPGridClusteringAlgorithmStrategy.TwoPhase;
-        clusteringController = KPClusteringController(mapView: self.mapView, clusteringAlgorithm: algorithm)
-        clusteringController.delegate = self
-    }
+//    func configureClusteringController() {
+//        let algorithm : KPGridClusteringAlgorithm = KPGridClusteringAlgorithm()
+//        algorithm.annotationSize = CGSizeMake(25, 50)
+//        algorithm.clusteringStrategy = KPGridClusteringAlgorithmStrategy.TwoPhase;
+//        clusteringController = KPClusteringController(mapView: mapView, clusteringAlgorithm: algorithm)
+//        clusteringController.delegate = self
+//    }
     
     
     // MARK: - Map source methods
@@ -267,29 +288,6 @@ class HostSearchViewController: UIViewController {
             mapView.setRegion(region, animated: true)
         }
     }
-    
-    
-    // MARK: Map Annotations
-    
-    func updateAnnotations() {
-//        do {
-//            try fetchedResultsController.performFetch()
-//            mapView.removeAnnotations(mapView.annotations)
-//            if let annotations = fetchedResultsController.fetchedObjects as? [CDWSUser] {
-//                mapView
-//                
-//                hostsOnMap = annotations
-//                if hostsOnMap.count != 0 {
-//                    clusteringController.setAnnotations(hostsOnMap)
-//                    clusteringController.refresh(true)
-//                }
-////                clusteringController.setAnnotations(mapView.annotations)
-////                clusteringController.refresh(true)
-//            }
-//        } catch {
-//            print("fetch failed")
-//        }
-    }
 
     
     // MARK: Pin clusting
@@ -305,12 +303,12 @@ class HostSearchViewController: UIViewController {
     
     // MARK: Updating hosts
     
-    // Updates the hosts shown on the map
-    //
-    func updateHostsOnMap() {
-        hostsOnMapSearcher.cancel()
-        hostsOnMapSearcher.update()
-    }
+//    // Updates the hosts shown on the map
+//    //
+//    func updateHostsOnMap() {
+//        hostsOnMapSearcher.cancel()
+//        hostsOnMapSearcher.update()
+//    }
     
     // Updates the hosts to be shown in the table view
     //

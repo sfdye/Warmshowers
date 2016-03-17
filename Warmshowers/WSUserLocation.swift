@@ -16,20 +16,24 @@ enum WSUserLocationError: ErrorType {
 
 class WSUserLocation : WSUser {
     
+    // MARK - Properties
+    
     var additional: String?
     var city: String?
     var country: String?
     var distance: Double?
-    //
+//    var latitude: Double?
+//    var longitude: Double?
     var coordinate: CLLocationCoordinate2D
-    
     var notcurrentlyavailable: Bool?
     var postCode: String?
     var province: String?
     var thumbnailImageURL: String?
     var street: String? = nil
     var thumbnailImage: UIImage?
+    var tileID: String?
     
+    // MARK - Calculated Properties
     
     var location: CLLocation { return CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude) }
     
@@ -64,21 +68,17 @@ class WSUserLocation : WSUser {
         return address
     }
     
+    // MARK - Initializers
+    
     init(fullname: String, name: String, uid: Int, lat: Double, lon: Double) {
         self.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
         super.init(fullname: fullname, name: name, uid: uid)
     }
     
-    init(user: WSUser, location: CLLocationCoordinate2D) {
-        self.coordinate = location
-        super.init(fullname: user.fullname, name: user.name, uid: user.uid)
-    }
-    
     // initialises a WSUserLocation instance with json data
-    init?(json: AnyObject) {
+    convenience init?(json: AnyObject) {
         
-        self.coordinate = CLLocationCoordinate2D()
-        super.init(fullname: "", name: "", uid: 0)
+        self.init(fullname: "", name: "", uid: 0, lat: 0.0, lon: 0.0)
         
         // At a minimum, the object must have a uid, latitude and longitude
         guard let fullname = json.valueForKey("fullname") as? String,
@@ -106,6 +106,26 @@ class WSUserLocation : WSUser {
             thumbnailImageURL = json.valueForKey("profile_image_map_infoWindow") as? String
             street = json.valueForKey("street") as? String
         }
+    }
+    
+    convenience init?(user: CDWSUser, tileID: String) {
+        
+        self.init(fullname: "", name: "", uid: 0, lat: 0.0, lon: 0.0)
+        
+        // At a minimum, the object must have a uid, latitude and longitude
+        guard let fullname = user.fullname,
+            let name = user.name,
+            let uid = user.uid?.integerValue,
+            let lat = user.latitude?.doubleValue,
+            let lon = user.longitude?.doubleValue
+            else {
+                return nil
+        }
+        
+        self.fullname = fullname
+        self.name = name
+        self.uid = uid
+        self.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
     }
     
 }

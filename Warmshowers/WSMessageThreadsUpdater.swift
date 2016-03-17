@@ -13,12 +13,9 @@ import CoreData
 //
 class WSMessageThreadsUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
     
-    var store: WSStore!
-    
-    init(store: WSStore, success: (() -> Void)?, failure: ((error: NSError) -> Void)?) {
+    override init(success: (() -> Void)?, failure: ((error: NSError) -> Void)?) {
         super.init(success: success, failure: failure)
         requestDelegate = self
-        self.store = store
     }
     
     func requestForDownload() throws -> NSURLRequest {
@@ -40,8 +37,8 @@ class WSMessageThreadsUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
             return
         }
         
-        store.privateContext.performBlockAndWait { () -> Void in
-            
+        WSStore.sharedStore.privateContext.performBlockAndWait { () -> Void in
+
             // Parse the json
             var currentThreadIDs = [Int]()
             for threadJSON in threadsJSON {
@@ -53,7 +50,7 @@ class WSMessageThreadsUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
                 }
                 
                 do {
-                    try self.store.addMessageThread(threadJSON)
+                    try WSStore.addMessageThread(threadJSON)
                 } catch let nserror as NSError {
                     self.error = nserror
                     return
@@ -65,15 +62,15 @@ class WSMessageThreadsUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
             
             // Delete all threads that are not in the json
             do {
-                let allMessageThreads = try self.store.allMessageThreads()
+                let allMessageThreads = try WSStore.allMessageThreads()
                 for messageThread in allMessageThreads {
                     if let threadID = messageThread.thread_id?.integerValue {
                         if !(currentThreadIDs.contains(threadID)){
-                            self.store.privateContext.deleteObject(messageThread)
+                            WSStore.sharedStore.privateContext.deleteObject(messageThread)
                         }
                     }
                 }
-                try self.store.savePrivateContext()
+                try WSStore.savePrivateContext()
             } catch let error as NSError {
                 self.error = error
                 return

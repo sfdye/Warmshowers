@@ -221,29 +221,3 @@ extension NSMutableURLRequest {
     }
     
 }
-
-
-// To get the map bounds when searching for hosts
-//
-extension MKMapView {
-    
-    // Returns the current coordinate limits of a mapview
-    // Used for getting hosts in the current displayed region in getHostDataForMapView
-    //
-    func getWSMapRegion(limit: Int = 100) -> [String: String] {
-        
-        let region = self.region
-        
-        let regionLimits: [String: String] = [
-            "minlat": String(region.center.latitude - region.span.latitudeDelta / Double(2)),
-            "maxlat": String(region.center.latitude + region.span.latitudeDelta / Double(2)),
-            "minlon": String(region.center.longitude - region.span.longitudeDelta / Double(2)),
-            "maxlon": String(region.center.longitude + region.span.longitudeDelta / Double(2)),
-            "centerlat": String(region.center.latitude),
-            "centerlon": String(region.center.longitude)
-        ]
-        
-        return regionLimits
-    }
-    
-}

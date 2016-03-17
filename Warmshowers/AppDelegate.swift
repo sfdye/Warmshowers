@@ -125,7 +125,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Clear out the users messages
         do {
-            try store.clearout()
+            try WSStore.clearout()
         } catch {
             // Suggest that the user delete the app for privacy
             let alert = UIAlertController(title: "Data Error", message: "Sorry, an error occured while removing your messages from this iPhone during the logout process. If you would like to remove your Warmshowers messages from this iPhone please try deleting the Warmshowers app.", preferredStyle: .Alert)
@@ -193,11 +193,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         managedObjectContext.persistentStoreCoordinator = coordinator
         return managedObjectContext
     }()
-    
-    // MARK: - Message saving support
-    
-    // The message store
-    lazy var store = WSStore()
     
 }
 

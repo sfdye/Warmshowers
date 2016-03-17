@@ -27,6 +27,11 @@ class WSLoginManager : WSRequestWithCSRFToken, WSRequestDelegate {
         }
     }
     
+    // Never retry logins
+    override func shouldRetryRequest() -> Bool {
+        return false
+    }
+    
     func doWithData(data: NSData) {
         
         guard let json = dataAsJSON() else {
