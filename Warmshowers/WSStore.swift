@@ -596,5 +596,18 @@ class WSStore : NSObject {
         }
     }
     
+    class func clearoutAllTiles() {
+        do {
+            let tiles = try WSStore.allMapTiles()
+            for tile in tiles {
+                print("deleting tile with id \(tile.identifier)")
+                sharedStore.privateContext.deleteObject(tile)
+                try savePrivateContext()
+            }
+        } catch {
+            print("Error clearing out map tiles")
+        }
+    }
+    
 }
 

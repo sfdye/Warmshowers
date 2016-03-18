@@ -3,45 +3,37 @@ PODS:
     - CVKHierarchySearcher (~> 0.2)
   - CCHMapClusterController (1.7.0)
   - CVKHierarchySearcher (0.2.0)
-  - KeychainAccess (2.3.3)
-  - kingpin (0.3.1)
-  - MBProgressHUD (0.9.1)
+  - KeychainAccess (2.3.4)
+  - MBProgressHUD (0.9.2)
   - ReachabilitySwift (2.3.3)
 
 DEPENDENCIES:
   - AFMInfoBanner
   - CCHMapClusterController
   - KeychainAccess
-  - kingpin (from `https://github.com/itsbonczek/kingpin`)
   - MBProgressHUD (from `https://github.com/jdg/MBProgressHUD.git`)
   - ReachabilitySwift (from `https://github.com/ashleymills/Reachability.swift`)
 
 EXTERNAL SOURCES:
-  kingpin:
-    :git: https://github.com/itsbonczek/kingpin
   MBProgressHUD:
     :git: https://github.com/jdg/MBProgressHUD.git
   ReachabilitySwift:
     :git: https://github.com/ashleymills/Reachability.swift
 
 CHECKOUT OPTIONS:
-  kingpin:
-    :commit: 047b764c03bb32f2b379e74730238fe152f5a28c
-    :git: https://github.com/itsbonczek/kingpin
   MBProgressHUD:
-    :commit: 2fbcbae6a28b770a572b8bd08d93f8db23e786a6
+    :commit: 80fc1445c023b5bf1216220d92af54cbd738612f
     :git: https://github.com/jdg/MBProgressHUD.git
   ReachabilitySwift:
-    :commit: ec4b33a7e439e5b203b0cae0f71383ca803ad031
+    :commit: cf126c0584a209143c75bf1d0f23fd904891e26e
     :git: https://github.com/ashleymills/Reachability.swift
 
 SPEC CHECKSUMS:
   AFMInfoBanner: a7bcfd409faa624f043e604ae4fb789c84b22815
   CCHMapClusterController: d8cd12cd5682ec6cd76d911ac7198f981b6cc1b8
   CVKHierarchySearcher: 7be8d3bcbcc6f86ff07f785e6c632b5e40da2553
-  KeychainAccess: 9b7e49e48277e329b1b3195e54697ed313d30acf
-  kingpin: 52bb578006bdeb881db225e6ff1a4228375cbfbf
-  MBProgressHUD: c34da5f231d7c38b8bc9d2cb08f81509d0bea7b0
+  KeychainAccess: 3a21b6944b4f2a22653f091d770cf10374961a94
+  MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   ReachabilitySwift: e0f6b6f280effb47731acfaaa2d5ffe223703793
 
 COCOAPODS: 0.39.0

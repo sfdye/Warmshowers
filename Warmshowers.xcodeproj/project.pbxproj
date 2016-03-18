@@ -12,7 +12,6 @@
 		E52A07271C580B1C006F80A5 /* ComposeMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A07261C580B1C006F80A5 /* ComposeMessageViewController.swift */; };
 		E52E8A9F1C0BD25A000391AB /* HostSearchViewController+MKMapViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8A9E1C0BD25A000391AB /* HostSearchViewController+MKMapViewDelegate.swift */; };
 		E52E8AA11C0BD38D000391AB /* HostSearchViewController+UISearchControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8AA01C0BD38D000391AB /* HostSearchViewController+UISearchControllerDelegate.swift */; };
-		E52E8AA31C0BD3F0000391AB /* HostSearchViewController+KPClusteringControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8AA21C0BD3F0000391AB /* HostSearchViewController+KPClusteringControllerDelegate.swift */; };
 		E52E8AA51C0BD8BF000391AB /* HostSearchViewController+UISearchResultsUpdating.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8AA41C0BD8BF000391AB /* HostSearchViewController+UISearchResultsUpdating.swift */; };
 		E52E8AA91C0BDB18000391AB /* HostSearchViewController+WSLazyImageTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8AA81C0BDB18000391AB /* HostSearchViewController+WSLazyImageTableViewDataSource.swift */; };
 		E52E8AAF1C0D056D000391AB /* MessageThreadsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8AAE1C0D056D000391AB /* MessageThreadsTableViewController.swift */; };
@@ -24,7 +23,7 @@
 		E53BA73C1C7554880076E825 /* WSURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53BA73B1C7554880076E825 /* WSURLSession.swift */; };
 		E53BA7421C766B490076E825 /* WSInfoBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53BA7411C766B490076E825 /* WSInfoBanner.swift */; };
 		E53BA7451C766F850076E825 /* WSReachabilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53BA7441C766F850076E825 /* WSReachabilityManager.swift */; };
-		E53BA7491C769E770076E825 /* WSMapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53BA7481C769E770076E825 /* WSMapManager.swift */; };
+		E53BA7491C769E770076E825 /* WSMapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53BA7481C769E770076E825 /* WSMapController.swift */; };
 		E53BA74B1C76AE8C0076E825 /* WSEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53BA74A1C76AE8C0076E825 /* WSEntity.swift */; };
 		E54276731C3E0CC900047029 /* ComposeMessageDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54276721C3E0CC900047029 /* ComposeMessageDetailTableViewCell.swift */; };
 		E54276751C3E0CE200047029 /* ComposeMessageBodyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54276741C3E0CE200047029 /* ComposeMessageBodyTableViewCell.swift */; };
@@ -58,6 +57,9 @@
 		E5700C541C44EE51008C8A87 /* ComposeMessageViewController+UITextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5700C531C44EE51008C8A87 /* ComposeMessageViewController+UITextFieldDelegate.swift */; };
 		E5700C581C45C057008C8A87 /* HostListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5700C571C45C057008C8A87 /* HostListTableViewController.swift */; };
 		E5700C5A1C45C961008C8A87 /* HostListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5700C591C45C961008C8A87 /* HostListTableViewCell.swift */; };
+		E571D4681C9B74A300790C88 /* CCHMapClusterController+Warmshowers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E571D4671C9B74A300790C88 /* CCHMapClusterController+Warmshowers.swift */; };
+		E571D46B1C9BA5C400790C88 /* WSMapControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E571D46A1C9BA5C400790C88 /* WSMapControllerDelegate.swift */; };
+		E571D46D1C9BA6E700790C88 /* HostSearchViewController+WSMapControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E571D46C1C9BA6E700790C88 /* HostSearchViewController+WSMapControllerDelegate.swift */; };
 		E5967B9F1C3490740037F4B7 /* WSOffers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967B9E1C3490740037F4B7 /* WSOffers.swift */; };
 		E5967BA11C35D59C0037F4B7 /* WSHostingInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967BA01C35D59C0037F4B7 /* WSHostingInfo.swift */; };
 		E5967BA31C361A9F0037F4B7 /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967BA21C361A9F0037F4B7 /* ContactTableViewCell.swift */; };
@@ -78,7 +80,7 @@
 		E5967BCF1C39DBC00037F4B7 /* CDWSUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967BC91C39DBC00037F4B7 /* CDWSUser.swift */; };
 		E598987B1C97EDC200AFB089 /* CDWSMapTile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59898791C97EDC200AFB089 /* CDWSMapTile+CoreDataProperties.swift */; };
 		E598987C1C97EDC200AFB089 /* CDWSMapTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E598987A1C97EDC200AFB089 /* CDWSMapTile.swift */; };
-		E59898811C9A9BFA00AFB089 /* WSMapManager+CCHMapClusterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59898801C9A9BFA00AFB089 /* WSMapManager+CCHMapClusterController.swift */; };
+		E59898811C9A9BFA00AFB089 /* WSMapController+CCHMapClusterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59898801C9A9BFA00AFB089 /* WSMapController+CCHMapClusterController.swift */; };
 		E59898851C9B405500AFB089 /* WSHostsOnMapSearchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59898841C9B405500AFB089 /* WSHostsOnMapSearchManager.swift */; };
 		E5A84A671C8E0A1D007609A9 /* WSMapTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A84A661C8E0A1D007609A9 /* WSMapTile.swift */; };
 		E5A84A691C8E0AE9007609A9 /* MKMapView+Warmshowers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5A84A681C8E0AE9007609A9 /* MKMapView+Warmshowers.swift */; };
@@ -166,7 +168,6 @@
 		E52E8A991C071CE8000391AB /* kingpin-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "kingpin-Bridging-Header.h"; sourceTree = "<group>"; };
 		E52E8A9E1C0BD25A000391AB /* HostSearchViewController+MKMapViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HostSearchViewController+MKMapViewDelegate.swift"; sourceTree = "<group>"; };
 		E52E8AA01C0BD38D000391AB /* HostSearchViewController+UISearchControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HostSearchViewController+UISearchControllerDelegate.swift"; sourceTree = "<group>"; };
-		E52E8AA21C0BD3F0000391AB /* HostSearchViewController+KPClusteringControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HostSearchViewController+KPClusteringControllerDelegate.swift"; sourceTree = "<group>"; };
 		E52E8AA41C0BD8BF000391AB /* HostSearchViewController+UISearchResultsUpdating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HostSearchViewController+UISearchResultsUpdating.swift"; sourceTree = "<group>"; };
 		E52E8AA81C0BDB18000391AB /* HostSearchViewController+WSLazyImageTableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HostSearchViewController+WSLazyImageTableViewDataSource.swift"; sourceTree = "<group>"; };
 		E52E8AAE1C0D056D000391AB /* MessageThreadsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageThreadsTableViewController.swift; sourceTree = "<group>"; };
@@ -178,7 +179,7 @@
 		E53BA73B1C7554880076E825 /* WSURLSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSURLSession.swift; sourceTree = "<group>"; };
 		E53BA7411C766B490076E825 /* WSInfoBanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSInfoBanner.swift; sourceTree = "<group>"; };
 		E53BA7441C766F850076E825 /* WSReachabilityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSReachabilityManager.swift; sourceTree = "<group>"; };
-		E53BA7481C769E770076E825 /* WSMapManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSMapManager.swift; sourceTree = "<group>"; };
+		E53BA7481C769E770076E825 /* WSMapController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSMapController.swift; sourceTree = "<group>"; };
 		E53BA74A1C76AE8C0076E825 /* WSEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSEntity.swift; sourceTree = "<group>"; };
 		E54276721C3E0CC900047029 /* ComposeMessageDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeMessageDetailTableViewCell.swift; sourceTree = "<group>"; };
 		E54276741C3E0CE200047029 /* ComposeMessageBodyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeMessageBodyTableViewCell.swift; sourceTree = "<group>"; };
@@ -213,6 +214,9 @@
 		E5700C551C44F083008C8A87 /* MBProgressHUD-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD-Bridging-Header.h"; sourceTree = "<group>"; };
 		E5700C571C45C057008C8A87 /* HostListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostListTableViewController.swift; sourceTree = "<group>"; };
 		E5700C591C45C961008C8A87 /* HostListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostListTableViewCell.swift; sourceTree = "<group>"; };
+		E571D4671C9B74A300790C88 /* CCHMapClusterController+Warmshowers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CCHMapClusterController+Warmshowers.swift"; sourceTree = "<group>"; };
+		E571D46A1C9BA5C400790C88 /* WSMapControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSMapControllerDelegate.swift; sourceTree = "<group>"; };
+		E571D46C1C9BA6E700790C88 /* HostSearchViewController+WSMapControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HostSearchViewController+WSMapControllerDelegate.swift"; sourceTree = "<group>"; };
 		E5967B9E1C3490740037F4B7 /* WSOffers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSOffers.swift; sourceTree = "<group>"; };
 		E5967BA01C35D59C0037F4B7 /* WSHostingInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSHostingInfo.swift; sourceTree = "<group>"; };
 		E5967BA21C361A9F0037F4B7 /* ContactTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactTableViewCell.swift; sourceTree = "<group>"; };
@@ -234,7 +238,7 @@
 		E59898791C97EDC200AFB089 /* CDWSMapTile+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDWSMapTile+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E598987A1C97EDC200AFB089 /* CDWSMapTile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CDWSMapTile.swift; sourceTree = "<group>"; };
 		E598987F1C9A9B4500AFB089 /* CCHMapClusterController-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCHMapClusterController-Bridging-Header.h"; sourceTree = "<group>"; };
-		E59898801C9A9BFA00AFB089 /* WSMapManager+CCHMapClusterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSMapManager+CCHMapClusterController.swift"; sourceTree = "<group>"; };
+		E59898801C9A9BFA00AFB089 /* WSMapController+CCHMapClusterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSMapController+CCHMapClusterController.swift"; sourceTree = "<group>"; };
 		E59898841C9B405500AFB089 /* WSHostsOnMapSearchManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSHostsOnMapSearchManager.swift; sourceTree = "<group>"; };
 		E5A84A661C8E0A1D007609A9 /* WSMapTile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSMapTile.swift; sourceTree = "<group>"; };
 		E5A84A681C8E0AE9007609A9 /* MKMapView+Warmshowers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MKMapView+Warmshowers.swift"; sourceTree = "<group>"; };
@@ -422,12 +426,10 @@
 				E51397661C06945E00FD8EC1 /* WSUserLocation.swift */,
 				E5DA03E31C49187600FAD1D7 /* WSUserLocation+MKAnnotation.swift */,
 				E5DA03E11C49185000FAD1D7 /* WSUserLocation+WSLazyImage.swift */,
-				E53BA7481C769E770076E825 /* WSMapManager.swift */,
 				E53BA74A1C76AE8C0076E825 /* WSEntity.swift */,
 				E5A84A661C8E0A1D007609A9 /* WSMapTile.swift */,
 				E59898791C97EDC200AFB089 /* CDWSMapTile+CoreDataProperties.swift */,
 				E598987A1C97EDC200AFB089 /* CDWSMapTile.swift */,
-				E59898801C9A9BFA00AFB089 /* WSMapManager+CCHMapClusterController.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -461,6 +463,8 @@
 		E54A573A1C026D96000843A9 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				E571D4691C9B771800790C88 /* WSMapController */,
+				E571D4661C9B748300790C88 /* CCHMapClusterController */,
 				E53BA7431C766F700076E825 /* WSReachabilityManager */,
 				E53BA7401C766B390076E825 /* WSInfoBanner */,
 				E5A9F11F1C55F762006D6499 /* WSProgressHUD */,
@@ -489,15 +493,33 @@
 			name = HostListTableViewController;
 			sourceTree = "<group>";
 		};
+		E571D4661C9B748300790C88 /* CCHMapClusterController */ = {
+			isa = PBXGroup;
+			children = (
+				E571D4671C9B74A300790C88 /* CCHMapClusterController+Warmshowers.swift */,
+			);
+			name = CCHMapClusterController;
+			sourceTree = "<group>";
+		};
+		E571D4691C9B771800790C88 /* WSMapController */ = {
+			isa = PBXGroup;
+			children = (
+				E53BA7481C769E770076E825 /* WSMapController.swift */,
+				E59898801C9A9BFA00AFB089 /* WSMapController+CCHMapClusterController.swift */,
+				E571D46A1C9BA5C400790C88 /* WSMapControllerDelegate.swift */,
+			);
+			name = WSMapController;
+			sourceTree = "<group>";
+		};
 		E573D1751C0E5FC8004C3BFC /* HostSearchViewController */ = {
 			isa = PBXGroup;
 			children = (
 				E56CC0891BFD22D800AAF973 /* HostSearchViewController.swift */,
 				E52E8AA01C0BD38D000391AB /* HostSearchViewController+UISearchControllerDelegate.swift */,
 				E52E8AA81C0BDB18000391AB /* HostSearchViewController+WSLazyImageTableViewDataSource.swift */,
-				E52E8AA21C0BD3F0000391AB /* HostSearchViewController+KPClusteringControllerDelegate.swift */,
 				E52E8A9E1C0BD25A000391AB /* HostSearchViewController+MKMapViewDelegate.swift */,
 				E52E8AA41C0BD8BF000391AB /* HostSearchViewController+UISearchResultsUpdating.swift */,
+				E571D46C1C9BA6E700790C88 /* HostSearchViewController+WSMapControllerDelegate.swift */,
 			);
 			name = HostSearchViewController;
 			sourceTree = "<group>";
@@ -769,7 +791,7 @@
 				TargetAttributes = {
 					E5D96AF31BFB1CA700AFAFEE = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = 9N22DQCP66;
+						DevelopmentTeam = RZGK26E8DQ;
 						SystemCapabilities = {
 							com.apple.Maps.iOS = {
 								enabled = 1;
@@ -899,6 +921,7 @@
 				E5DA03EA1C49AF1000FAD1D7 /* FeedbackTableViewCell+WSLazyImageTableViewCell.swift in Sources */,
 				E5F6F3131C3124230000A87E /* HostOfferTableViewCell.swift in Sources */,
 				E5DF37C41C6C315700D5F509 /* WSFeedbackSender.swift in Sources */,
+				E571D46B1C9BA5C400790C88 /* WSMapControllerDelegate.swift in Sources */,
 				E5DA03FD1C4C947100FAD1D7 /* WSSettings.swift in Sources */,
 				E56CC08C1BFD2EC300AAF973 /* TabBarController.swift in Sources */,
 				E598987B1C97EDC200AFB089 /* CDWSMapTile+CoreDataProperties.swift in Sources */,
@@ -911,6 +934,7 @@
 				E5DA04051C4DA8D000FAD1D7 /* WSMapSource.swift in Sources */,
 				E5DF37C21C6C1E6C00D5F509 /* WSMessageThreadMarker.swift in Sources */,
 				E52E8AB11C0D0B1A000391AB /* MessageThreadsTableViewCell.swift in Sources */,
+				E571D46D1C9BA6E700790C88 /* HostSearchViewController+WSMapControllerDelegate.swift in Sources */,
 				E5967BB81C38C0FA0037F4B7 /* FeedbackTableViewCell.swift in Sources */,
 				E5DA03E61C49A5CA00FAD1D7 /* WSRecommendation+WSLazyImage.swift in Sources */,
 				E5700C5A1C45C961008C8A87 /* HostListTableViewCell.swift in Sources */,
@@ -925,7 +949,7 @@
 				E5967B9F1C3490740037F4B7 /* WSOffers.swift in Sources */,
 				E54A57641C03E4A4000843A9 /* AccountTableViewController.swift in Sources */,
 				E569DC491C6C5E4300286055 /* WSLogoutManager.swift in Sources */,
-				E59898811C9A9BFA00AFB089 /* WSMapManager+CCHMapClusterController.swift in Sources */,
+				E59898811C9A9BFA00AFB089 /* WSMapController+CCHMapClusterController.swift in Sources */,
 				E54A57311BFE6FB2000843A9 /* WSURL.swift in Sources */,
 				E5DA03F01C49C7A200FAD1D7 /* WSFont.swift in Sources */,
 				E52E8ABE1C0E463D000391AB /* Warmshowers.xcdatamodeld in Sources */,
@@ -937,7 +961,7 @@
 				E557D86E1C504DCF00226E84 /* WSRequestWithCSRFToken.swift in Sources */,
 				E56B06291C5ED1D4006C7BF3 /* WSMessageUpdateOperation.swift in Sources */,
 				E5A84A691C8E0AE9007609A9 /* MKMapView+Warmshowers.swift in Sources */,
-				E53BA7491C769E770076E825 /* WSMapManager.swift in Sources */,
+				E53BA7491C769E770076E825 /* WSMapController.swift in Sources */,
 				E5967BA11C35D59C0037F4B7 /* WSHostingInfo.swift in Sources */,
 				E557D86C1C50482200226E84 /* WSCSRFTokenGetter.swift in Sources */,
 				E5967BCA1C39DBC00037F4B7 /* CDWSMessageThread+CoreDataProperties.swift in Sources */,
@@ -950,11 +974,11 @@
 				E5AF670E1C5775B100AC17A1 /* WSMessageSender.swift in Sources */,
 				E598987C1C97EDC200AFB089 /* CDWSMapTile.swift in Sources */,
 				E52A07271C580B1C006F80A5 /* ComposeMessageViewController.swift in Sources */,
-				E52E8AA31C0BD3F0000391AB /* HostSearchViewController+KPClusteringControllerDelegate.swift in Sources */,
 				E5F6F30D1C2FE2770000A87E /* AccountDetailTableViewCell.swift in Sources */,
 				E5DA03DA1C488CA000FAD1D7 /* WSLazyImage.swift in Sources */,
 				E56CC08A1BFD22D800AAF973 /* HostSearchViewController.swift in Sources */,
 				E53548EC1C69AA8E00E22C3D /* WSUserDefaultsKeys.swift in Sources */,
+				E571D4681C9B74A300790C88 /* CCHMapClusterController+Warmshowers.swift in Sources */,
 				E50FD8A21C053A42004D38A3 /* MapTileServerURLTemplate.swift in Sources */,
 				E5A9F11C1C532BC5006D6499 /* WSMessageThreadsUpdater.swift in Sources */,
 				E54276821C3E54BA00047029 /* WSPhoneNumberType.swift in Sources */,
@@ -1161,7 +1185,7 @@
 				INFOPLIST_FILE = Warmshowers/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.rajanfernandez.Warmshowers;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rajanfernandez.Warmshowers.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Warmshowers/kingpin-Bridging-Header.h";
@@ -1179,7 +1203,7 @@
 				INFOPLIST_FILE = Warmshowers/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.rajanfernandez.Warmshowers;
+				PRODUCT_BUNDLE_IDENTIFIER = com.rajanfernandez.Warmshowers.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Warmshowers/kingpin-Bridging-Header.h";

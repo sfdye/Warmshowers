@@ -9,8 +9,8 @@
 import UIKit
 import CoreData
 import MapKit
-import kingpin
 import ReachabilitySwift
+import CCHMapClusterController
 
 // TODOs
 // address this issue (add gps routes to the map)
@@ -45,12 +45,12 @@ class HostSearchViewController: UIViewController {
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var tableView: UITableView!
     @IBOutlet var toolbar: UIToolbar!
-    @IBOutlet var centreOnLocationButton: UIImage!
+    @IBOutlet var infoLabel: UILabel!
     var tableViewController = WSLazyImageTableViewController()
     var fetchedResultsController: NSFetchedResultsController!
 
     // Host data variablesstore
-    var mapManager: WSMapManager!
+    var mapManager: WSMapController!
     var hostsOnMapSearcher: WSHostsOnMapSearchManager!
     var hostsInTable: [WSUserLocation] {
         get {
@@ -84,9 +84,13 @@ class HostSearchViewController: UIViewController {
         // View title
         navigationItem.title = "Host Search"
         
+        // Clear the store on loading so fresh data is fetched
+        WSStore.clearoutAllTiles()
+        
         // Mapview
         mapView.delegate = self
         showMapView()
+        infoLabel.text = nil
         
         // Table view
         tableViewController.tableView = tableView
@@ -107,8 +111,6 @@ class HostSearchViewController: UIViewController {
         configureNavigationItem()
         configureSearchController()
         configureToolbar()
-//        initializeFetchedResultsController()
-//        configureClusteringController()
         
         // Ask the users permission to use location services
         if CLLocationManager.authorizationStatus() == .NotDetermined {
@@ -153,7 +155,8 @@ class HostSearchViewController: UIViewController {
 //                print("Failed to update the store.")
 //            }
 //        )
-        mapManager = WSMapManager(withMapView: mapView)
+        mapManager = WSMapController(withMapView: mapView)
+        mapManager.delegate = self
         mapManager.updateAnnotationsInView()
         
         // Host by keyword search manager
@@ -375,31 +378,24 @@ class HostSearchViewController: UIViewController {
     }
     
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+        
         switch identifier {
+            
         case MapToUserAccountSegueID:
             
-            if let kpAnnotation = sender as? KPAnnotation {
-                if let _ = kpAnnotation.annotations.first as? WSUserLocation {
-                    return true
-                }
-            }
-            return false
+            return sender as? WSUserLocation != nil
             
         case ResultsToUserAccountSegueID:
             
             if let cell = sender as? HostListTableViewCell {
-                if let _ = cell.uid {
-                    return true
-                }
+                return cell.uid != nil
             }
             return false
             
         case ToHostListSegueID:
             
-            if let kpAnnotation = sender as? KPAnnotation {
-                if let _ = Array(kpAnnotation.annotations) as? [WSUserLocation] {
-                    return true
-                }
+            if let clusterAnnotation = sender as? CCHMapClusterAnnotation {
+                return Array(clusterAnnotation.annotations) as? [WSUserLocation] != nil
             }
             return false
             
@@ -417,9 +413,8 @@ class HostSearchViewController: UIViewController {
             let navVC = segue.destinationViewController as! UINavigationController
             let accountTVC = navVC.viewControllers.first as! AccountTableViewController
             
-            if let kpAnnotation = sender as? KPAnnotation {
-                let userLocation = kpAnnotation.annotations.first as? WSUserLocation
-                accountTVC.uid = userLocation?.uid
+            if let user = sender as? WSUserLocation {
+                accountTVC.uid = user.uid
             } else {
                 accountTVC.uid = WSLoginData.uid
             }
@@ -435,12 +430,17 @@ class HostSearchViewController: UIViewController {
             
         case ToHostListSegueID:
             
-            let kpAnnotation = sender as! KPAnnotation
-            let users = Array(kpAnnotation.annotations) as! [WSUserLocation]
             let navVC = segue.destinationViewController as! UINavigationController
             let hostListTVC = navVC.viewControllers.first as! HostListTableViewController
-            hostListTVC.lazyImageObjects = users
-            hostListTVC.placeholderImageName = "ThumbnailPlaceholder"
+            
+            if let clusterAnnotation = sender as? CCHMapClusterAnnotation {
+                if let users = Array(clusterAnnotation.annotations) as? [WSUserLocation] {
+                    print(users)
+                    hostListTVC.lazyImageObjects = users
+                    hostListTVC.placeholderImageName = "ThumbnailPlaceholder"
+                }
+            }
+        
         default:
             return
         }

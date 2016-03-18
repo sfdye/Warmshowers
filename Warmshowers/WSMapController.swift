@@ -1,5 +1,5 @@
 //
-//  WSMapManager.swift
+//  WSMapController.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 19/02/16.
@@ -9,12 +9,12 @@
 import Foundation
 import CCHMapClusterController
 
-class WSMapManager : NSObject {
+class WSMapController : NSObject {
     
     // This is the zoom level at which api request will be made
     let TileUpdateZoomLevel: UInt = 5
     
-    // This is the minimum zoom level at which tiles should be updated. 
+    // This is the minimum zoom level at which tiles should be updated.
     // If the map is zoom out to less than this zoom level updateTilesInView() will do nothing
     let MinimumZoomLevelForTileUpdates: UInt = 5
     
@@ -25,7 +25,7 @@ class WSMapManager : NSObject {
     var mapView: MKMapView!
     var clusteringController: CCHMapClusterController!
     var updatesInProgress = [String: WSHostsOnMapSearchManager]()
-//    var delegate: WSMapManagerDelegate?
+    var delegate: WSMapControllerDelegate?
     
     // MARK: Initialiser
     
@@ -36,9 +36,9 @@ class WSMapManager : NSObject {
         self.clusteringController.delegate = self
     }
     
-    // MARK: Tile checking and updating utilities
+    // MARK: Tile updating methods
     
-    // Returns the tiles at the update zoom level currently in the view
+    /// Returns the tiles at the update zoom level currently in the view
     func tilesInViewForUpdateZoomLevel() -> [CDWSMapTile] {
         
         // Convert a longitude to a x value. x = 0 @ Lon = -180, y = 360 @ Lon = 180
@@ -80,11 +80,13 @@ class WSMapManager : NSObject {
         let deltaX = 360.0 / pow(2.0, Double(TileUpdateZoomLevel))
         let deltaY = 180.0 / pow(2.0, Double(TileUpdateZoomLevel))
         
-        // View limits in the (x,y) system
-        let minX = longitudeToX(mapView.minimumLongitude)
-        let maxX = longitudeToX(mapView.maximumLongitude)
-        let minY = latitudeToY(mapView.maximumLatitude)
-        let maxY = latitudeToY(mapView.minimumLatitude)
+        // View limits in the (x,y) system 
+        // Half the view area is added as a buffer region
+        let mapRegionBufferFactor = 1.2
+        let minX = longitudeToX(mapView.minimumLongitude - deltaX * mapRegionBufferFactor)
+        let maxX = longitudeToX(mapView.maximumLongitude + deltaX * mapRegionBufferFactor)
+        let minY = latitudeToY(mapView.maximumLatitude + deltaY * mapRegionBufferFactor)
+        let maxY = latitudeToY(mapView.minimumLatitude - deltaY * mapRegionBufferFactor)
         
         // Generate arrays of the tile indexes in the view
         var xTileIndexes: [UInt]
@@ -107,6 +109,8 @@ class WSMapManager : NSObject {
             yTileIndexes = Array(first.union(last))
         }
         
+        print("Tiles in view: x: [\(xTileIndexes)], y: [\(yTileIndexes)]")
+        
         // Return all the tiles in the view
         var tiles = [CDWSMapTile]()
         for y in yTileIndexes {
@@ -122,24 +126,17 @@ class WSMapManager : NSObject {
         
         return tiles
     }
-    
-    // Updates an array of map tiles
-    //
-    func updateMapTiles(tiles: [CDWSMapTile]) {
-        
-        for tile in tiles {
-//            mapView.addOverlay(tile.polygon())
-            updateMapTile(tile)
-        }
-    }
 
-    //  Starts an update request for a map tile
-    //
+    ///  Starts an update request for a map tile
     func updateMapTile(tile: CDWSMapTile) {
         
         let tileID = tile.identifierFromXYZ
         
         if shouldUpdateMapTile(tile) {
+            
+            if updatesInProgress.count == 0 {
+                self.delegate?.willBeginUpdates()
+            }
             
             print("updating tile")
             let updater = WSHostsOnMapSearchManager(
@@ -170,19 +167,15 @@ class WSMapManager : NSObject {
         return tile.needsUpdating() && updatesInProgress[tile.identifierFromXYZ] == nil
     }
     
-    // Removes the message updater object assign to a given thread and reloads the table if all updates are done
-    //
+    /// Removes the message updater object assign to a given thread and reloads the table if all updates are done
     func updateFinishedMapTileID(tileID: String) {
         
         // Remove the updater
         self.updatesInProgress.removeValueForKey(tileID)
         
         // Update the annotations
-        
         do {
-            print("fetching host data for tileID: \(tileID)")
             if let tile = try WSStore.mapTileWithID(tileID) {
-                print(tile)
                 addAnnotationsFromMapTile(tile)
             } else {
                 print("Couldn't find tile in the store")
@@ -191,10 +184,10 @@ class WSMapManager : NSObject {
             print("An error occured fetching a tile by id from the store.")
         }
         
-        // Reload the table view if all the updates are finished
-//        if updatesInProgress.count == 0 {
-//            self.finishedUpdates()
-//        }
+        // Signal finshing updates
+        if updatesInProgress.count == 0 {
+            self.delegate?.didFinishUpdates()
+        }
     }
     
     // Cancels all message update requests
@@ -205,20 +198,35 @@ class WSMapManager : NSObject {
         }
     }
     
-    // Removes all pins from the map
-    //
+    // MARK: Adding and removing annotations
+    
+    /// Removes all pins from the map
     func removeAllAnnotations() {
         clusteringController.removeAnnotations(Array(clusteringController.annotations), withCompletionHandler: nil)
     }
     
-    // Adds host location annotations to the map
-    //
+    func removeAnnotationsWithTileID(tileID: String) {
+        
+        let hostsOnTile = clusteringController.annotations.filter { (user) -> Bool in
+            if let userTileID = user.valueForKey("tileID") {
+                return userTileID.isEqualToString(tileID)
+            } else {
+                return false
+            }
+        }
+        
+        print("removing \(hostsOnTile.count) annotations")
+        clusteringController.removeAnnotations(hostsOnTile, withCompletionHandler: nil)
+    }
+    
+    /// Adds host location annotations to the map for an array of tiles
     func addAnnotationsFromMapTiles(tiles: [CDWSMapTile]) {
         for tile in tiles {
             addAnnotationsFromMapTile(tile)
         }
     }
 
+    /// Adds host location annotations to the map for a single map tile
     func addAnnotationsFromMapTile(tile: CDWSMapTile) {
         if let users = tile.users where users.count > 0 {
             print("adding \(users.count) users to the map")
@@ -230,12 +238,34 @@ class WSMapManager : NSObject {
                 }
             }
             clusteringController.addAnnotations(locations, withCompletionHandler: nil)
-            print("added \(users.count) locations to cc")
+        } else {
+            print("Zero users on tile with id: \(tile.identifier)")
         }
     }
     
-    // Loads host location annotations for the current view
-    //
+    /// Updates the annotation on the map with those from an array of tiles
+    func updateAnnotationsWithMapTiles(tiles: [CDWSMapTile]) {
+        
+        // Remove all annotations that belong to other tiles
+        removeAllAnnotations()
+        
+        // Update the annotations shown for each tile
+        print("Adding annotation for \(tiles.count) to the map.")
+        for tile in tiles {
+            updateAnnotationsForMapTile(tile)
+        }
+    }
+    
+    func updateAnnotationsForMapTile(tile: CDWSMapTile) {
+        
+        // Remove all current annotations
+        removeAnnotationsWithTileID(tile.identifier!)
+        
+        // Add the up-to-date ones
+        addAnnotationsFromMapTile(tile)
+    }
+    
+    /// Loads host location annotations for the current view
     func updateAnnotationsInView() {
         
         // Remove annotation if the user zooms out too far
@@ -244,9 +274,18 @@ class WSMapManager : NSObject {
             return
         }
         
-        // Load the current data and update the data if needed
+        // Load the tiles in the view
         let tiles = tilesInViewForUpdateZoomLevel()
+        
+        highlightTiles(tiles)
+        
+        print("Removing annotations")
+        removeAllAnnotations()
+        
+        print("Adding annotations")
         addAnnotationsFromMapTiles(tiles)
+        
+        // --- Updates ---
         
         // Do nothing when the user is zoomed out too far
         guard mapView.zoomLevel() >= MinimumZoomLevelForTileUpdates else {
@@ -254,10 +293,22 @@ class WSMapManager : NSObject {
             return
         }
         
-        // Cancel any out-of-view updates
-        // TODO
-        
-        // Update host location data on the visible tiles
-        updateMapTiles(tiles)
+        print("Updating tiles")
+        for tile in tiles {
+            updateMapTile(tile)
+        }
     }
+    
+    // MARK: Utilities
+    
+    func highlightTiles(tiles: [CDWSMapTile]) {
+        // Add overlay for debug
+        mapView.removeOverlays(mapView.overlays)
+        for tile in tiles {
+            mapView.addOverlay(tile.polygon())
+        }
+    }
+    
+    
+    
 }

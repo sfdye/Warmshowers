@@ -48,9 +48,9 @@
         <relationship name="threads" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MessageThread" inverseName="participants" inverseEntity="MessageThread" syncable="YES"/>
     </entity>
     <elements>
+        <element name="MapTile" positionX="-378" positionY="194" width="128" height="133"/>
         <element name="Message" positionX="-162" positionY="-144" width="128" height="135"/>
         <element name="MessageThread" positionX="-342" positionY="-144" width="128" height="180"/>
         <element name="User" positionX="-162" positionY="9" width="128" height="313"/>
-        <element name="MapTile" positionX="-369" positionY="218" width="128" height="58"/>
     </elements>
 </model>

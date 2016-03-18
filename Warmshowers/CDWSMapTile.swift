@@ -16,7 +16,7 @@ class CDWSMapTile: NSManagedObject {
      * The time at which user location data is deemed to old and should be updated (in seconds)
      * Set to 10 minutes
      */
-    let UpdateThresholdTime: Double = 5.0 //60.0 * 10.0
+    let UpdateThresholdTime: Double = 60.0 * 10.0
     
     // MARK: Identifier property
     

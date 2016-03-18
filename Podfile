@@ -3,7 +3,6 @@
 # Uncomment this line if you're using Swift
 use_frameworks!
 
-pod 'kingpin', :git => 'https://github.com/itsbonczek/kingpin'
 pod 'MBProgressHUD', :git => 'https://github.com/jdg/MBProgressHUD.git'
 pod 'KeychainAccess'
 pod 'ReachabilitySwift', :git => 'https://github.com/ashleymills/Reachability.swift'
