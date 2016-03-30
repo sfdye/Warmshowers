@@ -6,7 +6,7 @@
 //  Copyright © 2016 Rajan Fernandez. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import CoreData
 
 // This class is for downloading message thread data from warmshowers and updating the persistant store

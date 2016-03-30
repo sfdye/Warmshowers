@@ -6,7 +6,7 @@
 //  Copyright © 2015 Rajan Fernandez. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 // Class to provie template URLs for different map tile servers
 class MapTileServerURLTemplate {

@@ -6,7 +6,8 @@
 //  Copyright © 2016 Rajan Fernandez. All rights reserved.
 //
 
-import Foundation
+import UIKit
+import MapKit
 
 class WSMapTile {
     

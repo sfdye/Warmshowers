@@ -6,49 +6,35 @@
 //  Copyright © 2016 Rajan Fernandez. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import CoreData
+import MapKit
 
 enum CDWSUserError : ErrorType {
     case FailedValueForKey(key: String)
 }
 
-class CDWSUser: NSManagedObject, WSLazyImage {
+class CDWSUser: NSManagedObject {
     
-    // MARK: WSLazyImage Protocol
-    
-    var lazyImageURL: String? {
-        get {
-            return image_url
-        }
-    }
-    
-    var lazyImage: UIImage? {
-        get {
-            return image as? UIImage
-        }
-        set(newImage) {
-            image = newImage
-        }
-    }
+//    , WSLazyImage
+//    // MARK: WSLazyImage Protocol
+//    
+//    var lazyImageURL: String? {
+//        get {
+//            return image_url
+//        }
+//    }
+//    
+//    var lazyImage: UIImage? {
+//        get {
+//            return image as? UIImage
+//        }
+//        set(newImage) {
+//            image = newImage
+//        }
+//    }
     
     // Calculated properties
-    
-    var coordinate: CLLocationCoordinate2D {
-        return CLLocationCoordinate2D(latitude: latitude?.doubleValue ?? 0.0, longitude: longitude?.doubleValue ?? 0.0)
-    }
-
-    var location: CLLocation { return CLLocation(latitude: latitude?.doubleValue ?? 0.0, longitude: longitude?.doubleValue ?? 0.0) }
-    
-    var distanceToUser: CLLocationDistance? {
-        get {
-            let lm = CLLocationManager()
-            if let location = lm.location {
-                return location.distanceFromLocation(self.location)
-            }
-            return nil
-        }
-    }
     
     var shortAddress: String {
         var address: String = ""

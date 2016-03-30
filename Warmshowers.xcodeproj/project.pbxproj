@@ -60,6 +60,13 @@
 		E571D4681C9B74A300790C88 /* CCHMapClusterController+Warmshowers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E571D4671C9B74A300790C88 /* CCHMapClusterController+Warmshowers.swift */; };
 		E571D46B1C9BA5C400790C88 /* WSMapControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E571D46A1C9BA5C400790C88 /* WSMapControllerDelegate.swift */; };
 		E571D46D1C9BA6E700790C88 /* HostSearchViewController+WSMapControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E571D46C1C9BA6E700790C88 /* HostSearchViewController+WSMapControllerDelegate.swift */; };
+		E57AF72B1CAA4D60002785D1 /* WSStore+MessageThread.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57AF72A1CAA4D60002785D1 /* WSStore+MessageThread.swift */; };
+		E57AF72D1CAA4DCA002785D1 /* WSStore+Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57AF72C1CAA4DCA002785D1 /* WSStore+Message.swift */; };
+		E57AF72F1CAA4E40002785D1 /* WSStore+Participant.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57AF72E1CAA4E40002785D1 /* WSStore+Participant.swift */; };
+		E57AF7311CAA4E58002785D1 /* WSStore+UserLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57AF7301CAA4E58002785D1 /* WSStore+UserLocation.swift */; };
+		E57AF7331CAA4EA4002785D1 /* WSStore+MapTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57AF7321CAA4EA4002785D1 /* WSStore+MapTile.swift */; };
+		E57AF74A1CAA6A0A002785D1 /* CDWSUserLocation+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57AF7481CAA6A0A002785D1 /* CDWSUserLocation+CoreDataProperties.swift */; };
+		E57AF74B1CAA6A0A002785D1 /* CDWSUserLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57AF7491CAA6A0A002785D1 /* CDWSUserLocation.swift */; };
 		E5967B9F1C3490740037F4B7 /* WSOffers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967B9E1C3490740037F4B7 /* WSOffers.swift */; };
 		E5967BA11C35D59C0037F4B7 /* WSHostingInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967BA01C35D59C0037F4B7 /* WSHostingInfo.swift */; };
 		E5967BA31C361A9F0037F4B7 /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967BA21C361A9F0037F4B7 /* ContactTableViewCell.swift */; };
@@ -165,7 +172,6 @@
 		E50FD8A11C053A42004D38A3 /* MapTileServerURLTemplate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapTileServerURLTemplate.swift; sourceTree = "<group>"; };
 		E51397661C06945E00FD8EC1 /* WSUserLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSUserLocation.swift; sourceTree = "<group>"; };
 		E52A07261C580B1C006F80A5 /* ComposeMessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeMessageViewController.swift; sourceTree = "<group>"; };
-		E52E8A991C071CE8000391AB /* kingpin-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "kingpin-Bridging-Header.h"; sourceTree = "<group>"; };
 		E52E8A9E1C0BD25A000391AB /* HostSearchViewController+MKMapViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HostSearchViewController+MKMapViewDelegate.swift"; sourceTree = "<group>"; };
 		E52E8AA01C0BD38D000391AB /* HostSearchViewController+UISearchControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HostSearchViewController+UISearchControllerDelegate.swift"; sourceTree = "<group>"; };
 		E52E8AA41C0BD8BF000391AB /* HostSearchViewController+UISearchResultsUpdating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HostSearchViewController+UISearchResultsUpdating.swift"; sourceTree = "<group>"; };
@@ -217,6 +223,13 @@
 		E571D4671C9B74A300790C88 /* CCHMapClusterController+Warmshowers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CCHMapClusterController+Warmshowers.swift"; sourceTree = "<group>"; };
 		E571D46A1C9BA5C400790C88 /* WSMapControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSMapControllerDelegate.swift; sourceTree = "<group>"; };
 		E571D46C1C9BA6E700790C88 /* HostSearchViewController+WSMapControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HostSearchViewController+WSMapControllerDelegate.swift"; sourceTree = "<group>"; };
+		E57AF72A1CAA4D60002785D1 /* WSStore+MessageThread.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSStore+MessageThread.swift"; sourceTree = "<group>"; };
+		E57AF72C1CAA4DCA002785D1 /* WSStore+Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSStore+Message.swift"; sourceTree = "<group>"; };
+		E57AF72E1CAA4E40002785D1 /* WSStore+Participant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSStore+Participant.swift"; sourceTree = "<group>"; };
+		E57AF7301CAA4E58002785D1 /* WSStore+UserLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSStore+UserLocation.swift"; sourceTree = "<group>"; };
+		E57AF7321CAA4EA4002785D1 /* WSStore+MapTile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSStore+MapTile.swift"; sourceTree = "<group>"; };
+		E57AF7481CAA6A0A002785D1 /* CDWSUserLocation+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CDWSUserLocation+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E57AF7491CAA6A0A002785D1 /* CDWSUserLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CDWSUserLocation.swift; sourceTree = "<group>"; };
 		E5967B9E1C3490740037F4B7 /* WSOffers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSOffers.swift; sourceTree = "<group>"; };
 		E5967BA01C35D59C0037F4B7 /* WSHostingInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSHostingInfo.swift; sourceTree = "<group>"; };
 		E5967BA21C361A9F0037F4B7 /* ContactTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactTableViewCell.swift; sourceTree = "<group>"; };
@@ -430,6 +443,13 @@
 				E5A84A661C8E0A1D007609A9 /* WSMapTile.swift */,
 				E59898791C97EDC200AFB089 /* CDWSMapTile+CoreDataProperties.swift */,
 				E598987A1C97EDC200AFB089 /* CDWSMapTile.swift */,
+				E57AF72A1CAA4D60002785D1 /* WSStore+MessageThread.swift */,
+				E57AF72C1CAA4DCA002785D1 /* WSStore+Message.swift */,
+				E57AF72E1CAA4E40002785D1 /* WSStore+Participant.swift */,
+				E57AF7301CAA4E58002785D1 /* WSStore+UserLocation.swift */,
+				E57AF7321CAA4EA4002785D1 /* WSStore+MapTile.swift */,
+				E57AF7481CAA6A0A002785D1 /* CDWSUserLocation+CoreDataProperties.swift */,
+				E57AF7491CAA6A0A002785D1 /* CDWSUserLocation.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -703,7 +723,6 @@
 			children = (
 				E5D96B001BFB1CA700AFAFEE /* Assets.xcassets */,
 				E5D96B051BFB1CA700AFAFEE /* Info.plist */,
-				E52E8A991C071CE8000391AB /* kingpin-Bridging-Header.h */,
 				E5700C551C44F083008C8A87 /* MBProgressHUD-Bridging-Header.h */,
 				E5DA03ED1C49C59500FAD1D7 /* Sue Ellen Francisco.ttf */,
 				E598987F1C9A9B4500AFB089 /* CCHMapClusterController-Bridging-Header.h */,
@@ -917,6 +936,7 @@
 				E51397671C06945E00FD8EC1 /* WSUserLocation.swift in Sources */,
 				E5F6F3171C3140BD0000A87E /* AboutTableViewCell.swift in Sources */,
 				E5967BA51C361D2B0037F4B7 /* WSPhoneContacts.swift in Sources */,
+				E57AF72F1CAA4E40002785D1 /* WSStore+Participant.swift in Sources */,
 				E5D96B281BFC493B00AFAFEE /* LoginViewController.swift in Sources */,
 				E5DA03EA1C49AF1000FAD1D7 /* FeedbackTableViewCell+WSLazyImageTableViewCell.swift in Sources */,
 				E5F6F3131C3124230000A87E /* HostOfferTableViewCell.swift in Sources */,
@@ -929,10 +949,12 @@
 				E5DA03F21C49FA6500FAD1D7 /* WSLazyImageTableViewDataSource.swift in Sources */,
 				E52E8AA11C0BD38D000391AB /* HostSearchViewController+UISearchControllerDelegate.swift in Sources */,
 				E56CC0901BFD496400AAF973 /* SettingsTableViewController.swift in Sources */,
+				E57AF74B1CAA6A0A002785D1 /* CDWSUserLocation.swift in Sources */,
 				E52E8AAF1C0D056D000391AB /* MessageThreadsTableViewController.swift in Sources */,
 				E5DA03EC1C49BA3000FAD1D7 /* FeedbackTableViewController+UITableViewCellDataSource.swift in Sources */,
 				E5DA04051C4DA8D000FAD1D7 /* WSMapSource.swift in Sources */,
 				E5DF37C21C6C1E6C00D5F509 /* WSMessageThreadMarker.swift in Sources */,
+				E57AF72B1CAA4D60002785D1 /* WSStore+MessageThread.swift in Sources */,
 				E52E8AB11C0D0B1A000391AB /* MessageThreadsTableViewCell.swift in Sources */,
 				E571D46D1C9BA6E700790C88 /* HostSearchViewController+WSMapControllerDelegate.swift in Sources */,
 				E5967BB81C38C0FA0037F4B7 /* FeedbackTableViewCell.swift in Sources */,
@@ -944,6 +966,7 @@
 				E5DA03E01C490ECC00FAD1D7 /* HostListTableViewController+UITableViewDataSource.swift in Sources */,
 				E5DA04031C4CE6B500FAD1D7 /* PlaceholderTableViewCell.swift in Sources */,
 				E52E8A9F1C0BD25A000391AB /* HostSearchViewController+MKMapViewDelegate.swift in Sources */,
+				E57AF72D1CAA4DCA002785D1 /* WSStore+Message.swift in Sources */,
 				E56B062B1C5F0CAF006C7BF3 /* MessageThreadsTableViewController+NSFetchedResultsControllerDelegate.swift in Sources */,
 				E5967BBB1C3922170037F4B7 /* MessageThreadTableViewController.swift in Sources */,
 				E5967B9F1C3490740037F4B7 /* WSOffers.swift in Sources */,
@@ -965,6 +988,7 @@
 				E5967BA11C35D59C0037F4B7 /* WSHostingInfo.swift in Sources */,
 				E557D86C1C50482200226E84 /* WSCSRFTokenGetter.swift in Sources */,
 				E5967BCA1C39DBC00037F4B7 /* CDWSMessageThread+CoreDataProperties.swift in Sources */,
+				E57AF7311CAA4E58002785D1 /* WSStore+UserLocation.swift in Sources */,
 				E5D961541C62BFD4004E1F31 /* MessageThreadTableViewController+NSFetchedResultsControllerDelegate.swift in Sources */,
 				E5DA03D41C48893400FAD1D7 /* WSLazyImageTableViewController+UIScrollViewDelegate.swift in Sources */,
 				E52E8AA91C0BDB18000391AB /* HostSearchViewController+WSLazyImageTableViewDataSource.swift in Sources */,
@@ -1012,6 +1036,7 @@
 				E54276731C3E0CC900047029 /* ComposeMessageDetailTableViewCell.swift in Sources */,
 				E5967BCC1C39DBC00037F4B7 /* CDWSMessage+CoreDataProperties.swift in Sources */,
 				E542768E1C44947300047029 /* FeedbackBodyTableViewCell.swift in Sources */,
+				E57AF74A1CAA6A0A002785D1 /* CDWSUserLocation+CoreDataProperties.swift in Sources */,
 				E5700C581C45C057008C8A87 /* HostListTableViewController.swift in Sources */,
 				E56CC0921BFD569500AAF973 /* SwitchTableViewCell.swift in Sources */,
 				E5F6F3151C313F340000A87E /* SegmentTableViewCell.swift in Sources */,
@@ -1034,6 +1059,7 @@
 				E5700C541C44EE51008C8A87 /* ComposeMessageViewController+UITextFieldDelegate.swift in Sources */,
 				E5967BA91C36910C0037F4B7 /* AvailabilityTableViewCell.swift in Sources */,
 				E53BA7421C766B490076E825 /* WSInfoBanner.swift in Sources */,
+				E57AF7331CAA4EA4002785D1 /* WSStore+MapTile.swift in Sources */,
 				E5A84A6B1C8FBCE1007609A9 /* WSUser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1129,7 +1155,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
-				SWIFT_OBJC_BRIDGING_HEADER = "Warmshowers/kingpin-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1169,7 +1195,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OBJC_BRIDGING_HEADER = "Warmshowers/kingpin-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1188,7 +1214,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.rajanfernandez.Warmshowers.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Warmshowers/kingpin-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1206,7 +1232,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.rajanfernandez.Warmshowers.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Warmshowers/kingpin-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

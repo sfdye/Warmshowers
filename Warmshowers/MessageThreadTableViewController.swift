@@ -174,7 +174,7 @@ class MessageThreadTableViewController: UITableViewController {
                         }
                         
                         do {
-                            try WSStore.updateUser(uid, withImage: image)
+                            try WSStore.updateParticipant(uid, withImage: image)
                             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                                 self.reloadImage(image, forAuthor: uid)
                             })

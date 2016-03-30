@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15D21" minimumToolsVersion="Xcode 7.0">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10171" systemVersion="15E65" minimumToolsVersion="Xcode 7.0">
     <entity name="MapTile" representedClassName="CDWSMapTile" syncable="YES">
         <attribute name="identifier" attributeType="String" syncable="YES"/>
         <attribute name="last_updated" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="x" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="y" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="z" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <relationship name="users" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="map_tile" inverseEntity="User" syncable="YES"/>
+        <relationship name="users" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="UserLocation" inverseName="map_tile" inverseEntity="UserLocation" syncable="YES"/>
     </entity>
     <entity name="Message" representedClassName=".CDWSMessage" syncable="YES">
         <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="is_new" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="message_id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="timestamp" optional="YES" attributeType="Date" syncable="YES"/>
-        <relationship name="author" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="sent_messages" inverseEntity="User" syncable="YES"/>
+        <relationship name="author" maxCount="1" deletionRule="Nullify" destinationEntity="Participant" inverseName="sent_messages" inverseEntity="Participant" syncable="YES"/>
         <relationship name="thread" maxCount="1" deletionRule="Nullify" destinationEntity="MessageThread" inverseName="messages" inverseEntity="MessageThread" syncable="YES"/>
     </entity>
     <entity name="MessageThread" representedClassName=".CDWSMessageThread" syncable="YES">
@@ -25,9 +25,28 @@
         <attribute name="thread_id" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="thread_started" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Message" inverseName="thread" inverseEntity="Message" syncable="YES"/>
-        <relationship name="participants" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="threads" inverseEntity="User" syncable="YES"/>
+        <relationship name="participants" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Participant" inverseName="threads" inverseEntity="Participant" syncable="YES"/>
     </entity>
-    <entity name="User" representedClassName=".CDWSUser" syncable="YES">
+    <entity name="Participant" representedClassName=".CDWSUser" syncable="YES">
+        <attribute name="additional" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="distance" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="fullname" attributeType="String" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="image_url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="notcurrentlyavailable" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="post_code" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="province" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="street" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uid" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="sent_messages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" inverseName="author" inverseEntity="Message" syncable="YES"/>
+        <relationship name="threads" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MessageThread" inverseName="participants" inverseEntity="MessageThread" syncable="YES"/>
+    </entity>
+    <entity name="UserLocation" representedClassName=".CDWSUserLocation" syncable="YES">
         <attribute name="additional" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
@@ -44,13 +63,12 @@
         <attribute name="street" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="uid" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <relationship name="map_tile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MapTile" inverseName="users" inverseEntity="MapTile" syncable="YES"/>
-        <relationship name="sent_messages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" inverseName="author" inverseEntity="Message" syncable="YES"/>
-        <relationship name="threads" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MessageThread" inverseName="participants" inverseEntity="MessageThread" syncable="YES"/>
     </entity>
     <elements>
-        <element name="MapTile" positionX="-378" positionY="194" width="128" height="133"/>
+        <element name="MapTile" positionX="-342" positionY="189" width="128" height="133"/>
         <element name="Message" positionX="-162" positionY="-144" width="128" height="135"/>
         <element name="MessageThread" positionX="-342" positionY="-144" width="128" height="180"/>
-        <element name="User" positionX="-162" positionY="9" width="128" height="313"/>
+        <element name="Participant" positionX="18" positionY="-144" width="128" height="298"/>
+        <element name="UserLocation" positionX="-162" positionY="194" width="128" height="283"/>
     </elements>
 </model>

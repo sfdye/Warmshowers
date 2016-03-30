@@ -6,7 +6,7 @@
 //  Copyright © 2016 Rajan Fernandez. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import CCHMapClusterController
 
 class WSMapController : NSObject {
@@ -233,7 +233,7 @@ class WSMapController : NSObject {
             var locations = [WSUserLocation]()
             let tileID = tile.identifier!
             for user in users {
-                if let location = WSUserLocation(user: user as! CDWSUser, tileID: tileID) {
+                if let location = WSUserLocation(user: user as! CDWSUserLocation, tileID: tileID) {
                     locations.append(location)
                 }
             }

@@ -6,12 +6,13 @@
 //  Copyright © 2016 Rajan Fernandez. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 enum WSEntity : String {
     case Thread = "MessageThread"
     case Message = "Message"
-    case User = "User"
+    case Participant = "Participant"
     case MapTile = "MapTile"
-    static let allValues = [Thread, Message, User, MapTile]
+    case UserLocation = "UserLocation"
+    static let allValues = [Thread, Message, Participant, MapTile, UserLocation]
 }

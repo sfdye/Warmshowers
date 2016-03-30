@@ -6,7 +6,7 @@
 //  Copyright © 2015 Rajan Fernandez. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import MapKit
 import Contacts
 
@@ -108,7 +108,7 @@ class WSUserLocation : WSUser {
         }
     }
     
-    convenience init?(user: CDWSUser, tileID: String) {
+    convenience init?(user: CDWSUserLocation, tileID: String) {
         
         self.init(fullname: "", name: "", uid: 0, lat: 0.0, lon: 0.0)
         
@@ -126,6 +126,8 @@ class WSUserLocation : WSUser {
         self.name = name
         self.uid = uid
         self.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+        self.thumbnailImage = user.image as? UIImage
+        self.thumbnailImageURL = user.image_url
     }
     
 }

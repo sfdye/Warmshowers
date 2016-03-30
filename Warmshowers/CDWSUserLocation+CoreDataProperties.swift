@@ -1,5 +1,5 @@
 //
-//  CDWSUser+CoreDataProperties.swift
+//  CDWSUserLocation+CoreDataProperties.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 29/03/16.
@@ -12,7 +12,7 @@
 import Foundation
 import CoreData
 
-extension CDWSUser {
+extension CDWSUserLocation {
 
     @NSManaged var additional: String?
     @NSManaged var city: String?
@@ -29,7 +29,6 @@ extension CDWSUser {
     @NSManaged var province: String?
     @NSManaged var street: String?
     @NSManaged var uid: NSNumber?
-    @NSManaged var sent_messages: NSSet?
-    @NSManaged var threads: NSSet?
+    @NSManaged var map_tile: CDWSMapTile?
 
 }

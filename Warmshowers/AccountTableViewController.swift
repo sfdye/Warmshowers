@@ -62,8 +62,13 @@ class AccountTableViewController: UITableViewController {
         configureDoneButton()
         configureActions()
         
+        // configure the tableview
+        tableView.rowHeight = UITableViewAutomaticDimension
+    }
+    
+    override func viewWillAppear(animated: Bool) {
         if uid != nil {
-
+            
             // Get the users profile
             WSRequest.getUserInfo(uid!, doWithUserInfo: { (info) -> Void in
                 self.updateWithUserInfo(info)
@@ -77,10 +82,6 @@ class AccountTableViewController: UITableViewController {
         } else {
             print("No uid")
         }
-        
-        // configure the tableview
-        tableView.rowHeight = UITableViewAutomaticDimension
-
     }
     
     func updateWithUserInfo(info: AnyObject?) {
@@ -179,7 +180,7 @@ class AccountTableViewController: UITableViewController {
     //
     func configureDoneButton() {
         if navigationController?.viewControllers.count < 2 {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: Selector("doneButtonPressed"))
+            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(AccountTableViewController.doneButtonPressed))
         }
     }
     
@@ -263,7 +264,7 @@ class AccountTableViewController: UITableViewController {
             case .Contact:
                 var cells = phoneNumbers.count
                 if user != nil {
-                    cells++
+                    cells += 1
                 }
                 return cells
             }
@@ -388,7 +389,7 @@ class AccountTableViewController: UITableViewController {
                         cell.setWithAddress(user.address)
                         return cell
                     }
-                    phoneRow--
+                    phoneRow -= 1
                 }
                 let cell = tableView.dequeueReusableCellWithIdentifier(ContactCellID, forIndexPath: indexPath) as! ContactTableViewCell
                 cell.setWithPhoneNumber(phoneNumbers.numbers[phoneRow])
@@ -476,8 +477,8 @@ class AccountTableViewController: UITableViewController {
             if let info = info, let uid = uid {
                 // Save the user to the store and pass the user object to the compose message view controller
                 do {
-                    try WSStore.addUserWithParticipantJSON(info)
-                    recipient = try WSStore.userWithID(uid)
+                    try WSStore.addParticipantWithJSON(info)
+                    recipient = try WSStore.participantWithID(uid)
                     composeMessageVC.initialiseAsNewMessageToUser([recipient!])
                 } catch {
                     print("Failed to get user for compose message view")

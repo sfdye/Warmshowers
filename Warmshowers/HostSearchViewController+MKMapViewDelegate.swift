@@ -6,7 +6,7 @@
 //  Copyright © 2015 Rajan Fernandez. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import CCHMapClusterController
 
 extension HostSearchViewController : MKMapViewDelegate {

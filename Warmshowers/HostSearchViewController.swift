@@ -435,7 +435,6 @@ class HostSearchViewController: UIViewController {
             
             if let clusterAnnotation = sender as? CCHMapClusterAnnotation {
                 if let users = Array(clusterAnnotation.annotations) as? [WSUserLocation] {
-                    print(users)
                     hostListTVC.lazyImageObjects = users
                     hostListTVC.placeholderImageName = "ThumbnailPlaceholder"
                 }

@@ -13,7 +13,7 @@ let HostListCellID = "HostList"
 class HostListTableViewController: WSLazyImageTableViewController {
     
     var users: [AnyObject] { return lazyImageObjects }
-    
+        
     // MARK: View life cycle
     
     override func viewDidLoad() {
@@ -55,7 +55,7 @@ class HostListTableViewController: WSLazyImageTableViewController {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let cell = sender as? HostListTableViewCell
-        let accountVC = segue.destinationViewController as! AccountTableViewController
-        accountVC.uid = cell?.uid
+        let accountTVC = segue.destinationViewController as! AccountTableViewController
+        accountTVC.uid = cell?.uid
     }
 }

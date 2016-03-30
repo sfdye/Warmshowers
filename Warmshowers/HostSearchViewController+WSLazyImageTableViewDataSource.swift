@@ -6,7 +6,7 @@
 //  Copyright © 2015 Rajan Fernandez. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 extension HostSearchViewController : WSLazyImageTableViewDataSource {
     
@@ -28,8 +28,8 @@ extension HostSearchViewController : WSLazyImageTableViewDataSource {
             cell.placeholderLabel.text = "No Hosts"
             return cell
         } else {
+            let cell = tableView.dequeueReusableCellWithIdentifier(HostListCellID, forIndexPath: indexPath) as! HostListTableViewCell
             if hostsInTable.count > 0 && hostsInTable.count > indexPath.row {
-                let cell = tableView.dequeueReusableCellWithIdentifier(HostListCellID, forIndexPath: indexPath) as! HostListTableViewCell
                 let user = hostsInTable[indexPath.row]
                 cell.nameLabel.text = user.fullname
                 cell.locationLabel.text = user.shortAddress
@@ -37,7 +37,6 @@ extension HostSearchViewController : WSLazyImageTableViewDataSource {
                 cell.uid = user.uid
                 return cell
             } else {
-                let cell = tableView.dequeueReusableCellWithIdentifier(HostListCellID, forIndexPath: indexPath) as! HostListTableViewCell
                 cell.nameLabel.text = nil
                 cell.locationLabel.text = nil
                 cell.imageView!.image = nil

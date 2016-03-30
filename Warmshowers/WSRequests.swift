@@ -106,6 +106,9 @@ struct WSRequest {
         
         makeRequestWithService(service) { (data, response, error) -> Void in
             
+            print(error)
+            print(data)
+            
             if error != nil {
                 print("Error getting user info")
                 print("\(error?.localizedDescription)")

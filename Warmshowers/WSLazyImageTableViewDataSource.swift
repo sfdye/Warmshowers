@@ -6,7 +6,7 @@
 //  Copyright © 2016 Rajan Fernandez. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 @objc protocol WSLazyImageTableViewDataSource {
     optional func numberOfRowsInSection(section: Int) -> Int

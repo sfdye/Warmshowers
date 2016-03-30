@@ -6,7 +6,7 @@
 //  Copyright © 2016 Rajan Fernandez. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import KeychainAccess
 
 // WSLoginData is a wrapper for saving and retrieving the users credentials
