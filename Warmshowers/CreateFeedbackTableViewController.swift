@@ -75,7 +75,7 @@ class CreateFeedbackTableViewController: UITableViewController {
             // then we have one more cell than the model allows, so decrement the modelRow index
             var modelRow = indexPath.row
             if let pickerIndexPath = pickerIndexPath where pickerIndexPath.row <= indexPath.row {
-                modelRow--
+                modelRow -= 1
             }
             
             // configure a picker cell

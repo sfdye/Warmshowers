@@ -39,7 +39,7 @@ class MessageThreadsTableViewController: UITableViewController {
         
         navigationItem.title = "Messages"
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: WSColor.Green, NSFontAttributeName: WSFont.SueEllenFrancisco(26)]
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: self, action: Selector("update"))
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: self, action: #selector(MessageThreadsTableViewController.update))
         
         // Set up the fetch results controller
         initializeFetchedResultsController()
@@ -55,7 +55,7 @@ class MessageThreadsTableViewController: UITableViewController {
         tableView.estimatedRowHeight = 96
         
         // Reachability notifications
-        WSReachabilityManager.registerForAndStartNotifications(self, selector: Selector("reachabilityChanged:"))
+        WSReachabilityManager.registerForAndStartNotifications(self, selector: #selector(MessageThreadsTableViewController.reachabilityChanged(_:)))
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -108,7 +108,7 @@ class MessageThreadsTableViewController: UITableViewController {
     
     func initializeRefreshController() {
         let refreshController = UIRefreshControl()
-        refreshController.addTarget(self, action: Selector("update"), forControlEvents: UIControlEvents.ValueChanged)
+        refreshController.addTarget(self, action: #selector(MessageThreadsTableViewController.update), forControlEvents: UIControlEvents.ValueChanged)
         self.refreshControl = refreshController
     }
     

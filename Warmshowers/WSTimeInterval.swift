@@ -95,7 +95,7 @@ struct WSTimeInterval {
                     string += " "
                 }
                 string += String(format: "%i %@", arguments: [value, unit.stringValue(plural)])
-                count++
+                count += 1
                 return
             } else {
                 return

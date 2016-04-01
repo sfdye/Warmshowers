@@ -125,7 +125,7 @@ class HostSearchViewController: UIViewController {
         setMapOverlay()
         
         // Reachability notifications
-        WSReachabilityManager.registerForAndStartNotifications(self, selector: Selector("reachabilityChanged:"))
+        WSReachabilityManager.registerForAndStartNotifications(self, selector: #selector(HostSearchViewController.reachabilityChanged(_:)))
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -176,11 +176,11 @@ class HostSearchViewController: UIViewController {
     func configureNavigationItem() {
         
         // Left button
-        accountButton = UIBarButtonItem(image: UIImage.init(named: "UserIcon"), style: .Plain, target: self, action: Selector("accountButtonPressed"))
+        accountButton = UIBarButtonItem(image: UIImage.init(named: "UserIcon"), style: .Plain, target: self, action: #selector(HostSearchViewController.accountButtonPressed))
         navigationItem.setLeftBarButtonItem(accountButton, animated: false)
         
         // Right button
-        searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: Selector("searchButtonPressed"))
+        searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: #selector(HostSearchViewController.searchButtonPressed))
         navigationItem.setRightBarButtonItem(searchButton, animated: false)
     }
     

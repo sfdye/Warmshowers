@@ -57,14 +57,14 @@ struct WSOffers {
         
         var count = 0
         
-        if bed { count++ }
-        if food { count++ }
-        if laundry { count++ }
-        if lawnspace { count++ }
-        if sag { count++ }
-        if shower { count++ }
-        if storage { count++ }
-        if kitchenuse { count++ }
+        if bed { count += 1 }
+        if food { count += 1 }
+        if laundry { count += 1 }
+        if lawnspace { count += 1 }
+        if sag { count += 1 }
+        if shower { count += 1 }
+        if storage { count += 1 }
+        if kitchenuse { count += 1 }
         
         return count
     }

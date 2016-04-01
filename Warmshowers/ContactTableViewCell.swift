@@ -18,13 +18,13 @@ class ContactTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         
         // Phone icon tap gesture
-        let phoneIconTap = UITapGestureRecognizer(target: self, action: Selector("phoneIconTapped"))
+        let phoneIconTap = UITapGestureRecognizer(target: self, action: #selector(ContactTableViewCell.phoneIconTapped))
         phoneIconTap.numberOfTapsRequired = 1
         phoneIcon.userInteractionEnabled = true
         phoneIcon.addGestureRecognizer(phoneIconTap)
         
         // Message icon tap gesture
-        let messageIconTap = UITapGestureRecognizer(target: self, action: Selector("messageIconTapped"))
+        let messageIconTap = UITapGestureRecognizer(target: self, action: #selector(ContactTableViewCell.messageIconTapped))
         messageIconTap.numberOfTapsRequired = 1
         messageIcon.userInteractionEnabled = true
         messageIcon.addGestureRecognizer(messageIconTap)

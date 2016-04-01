@@ -62,7 +62,7 @@ class MessageThreadTableViewController: UITableViewController {
         self.reload(true)
         
         let notificationCentre = NSNotificationCenter.defaultCenter()
-        notificationCentre.addObserver(self, selector: Selector("update"), name: MessagesViewNeedsUpdateNotificationName, object: nil)
+        notificationCentre.addObserver(self, selector: #selector(MessageThreadTableViewController.update), name: MessagesViewNeedsUpdateNotificationName, object: nil)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -91,7 +91,7 @@ class MessageThreadTableViewController: UITableViewController {
     
     func initializeRefreshController() {
         let refreshController = UIRefreshControl()
-        refreshController.addTarget(self, action: Selector("update"), forControlEvents: UIControlEvents.ValueChanged)
+        refreshController.addTarget(self, action: #selector(MessageThreadTableViewController.update), forControlEvents: UIControlEvents.ValueChanged)
         self.refreshControl = refreshController
     }
     
