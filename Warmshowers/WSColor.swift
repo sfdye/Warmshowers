@@ -37,9 +37,9 @@ struct WSColor {
             return CGFloat(strtoul(hex, nil, 16))
         }
         
-        let redRange = Range<String.Index>(start:hex.startIndex.advancedBy(0), end: hex.startIndex.advancedBy(2))
-        let greenRange = Range<String.Index>(start:hex.startIndex.advancedBy(2), end: hex.startIndex.advancedBy(4))
-        let blueRange = Range<String.Index>(start:hex.startIndex.advancedBy(4), end: hex.startIndex.advancedBy(6))
+        let redRange = hex.startIndex.advancedBy(0) ..< hex.startIndex.advancedBy(2)
+        let greenRange = hex.startIndex.advancedBy(2) ..< hex.startIndex.advancedBy(4)
+        let blueRange = hex.startIndex.advancedBy(4) ..< hex.startIndex.advancedBy(6)
         
         let red = hexToDecimal(hex.substringWithRange(redRange))/255
         let green = hexToDecimal(hex.substringWithRange(greenRange))/255

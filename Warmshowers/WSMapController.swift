@@ -42,38 +42,38 @@ class WSMapController : NSObject {
     func tilesInViewForUpdateZoomLevel() -> [CDWSMapTile] {
         
         // Convert a longitude to a x value. x = 0 @ Lon = -180, y = 360 @ Lon = 180
-        func longitudeToX(var longitude: Double) -> Double {
+        func longitudeToX(longitude: Double) -> Double {
             
             // Offset so that x is in the range of 0-360
-            longitude += 180
+            var lon = longitude + 180
             
             // Ensure the longitude is in the range of 0-360
-            while longitude < 0 {
-                longitude += 360
+            while lon < 0 {
+                lon += 360
             }
-            while longitude > 360 {
-                longitude -= 360
+            while lon > 360 {
+                lon -= 360
             }
             
-            return longitude
+            return lon
         }
         
         // Convert a latitude to a y value. y = 0 @ Lat = 90, y = 180 @ Lat = -90
-        func latitudeToY(var latitude: Double) -> Double {
+        func latitudeToY(latitude: Double) -> Double {
             
             // Offset so that y is in the range of -180-0
-            latitude -= 90
+            var lat = latitude - 90
             
             // Ensure the latitude is in the range of -180-0
-            while latitude < -180 {
-                latitude += 180
+            while lat < -180 {
+                lat += 180
             }
-            while latitude > 0 {
-                latitude -= 180
+            while lat > 0 {
+                lat -= 180
             }
             
             // Return the negated scale
-            return -latitude
+            return -lat
         }
         
         // Tile size

@@ -25,7 +25,7 @@ extension HostSearchViewController : UISearchResultsUpdating {
         }
         
         // Search after 0.5 seconds to debounce input
-        debounceTimer = NSTimer(timeInterval: 0.5, target: self, selector: Selector("updateSearchResultsWithKeyword"), userInfo: nil, repeats: false)
+        debounceTimer = NSTimer(timeInterval: 0.5, target: self, selector: #selector(HostSearchViewController.updateSearchResultsWithKeyword), userInfo: nil, repeats: false)
         NSRunLoop.currentRunLoop().addTimer(debounceTimer!, forMode: "NSDefaultRunLoopMode")
         
         // Clear out old search results
