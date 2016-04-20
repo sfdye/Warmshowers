@@ -39,7 +39,7 @@ class CDWSMapTile: NSManagedObject {
         return (-y!.doubleValue * latitudeDelta) + 90
     }
     
-    var maximumLatitude: CLLocationDegrees {
+    var maximumLatitude: CLLocationDegrees { 
         return (-(y!.doubleValue + 1) * latitudeDelta) + 90
     }
     

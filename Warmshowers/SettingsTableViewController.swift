@@ -90,7 +90,8 @@ class SettingsTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let contents = settings[indexPath.section]["cells"]?[indexPath.row]
+        let cells = settings[indexPath.section]["cells"] as? [AnyObject]
+        let contents = cells?[indexPath.row]
         let cellID = contents?["cell_id"] as! String
         switch cellID  {
         case SwitchCellID:

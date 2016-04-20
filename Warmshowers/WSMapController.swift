@@ -82,7 +82,7 @@ class WSMapController : NSObject {
         
         // View limits in the (x,y) system 
         // Half the view area is added as a buffer region
-        let mapRegionBufferFactor = 1.2
+        let mapRegionBufferFactor = 1.0
         let minX = longitudeToX(mapView.minimumLongitude - deltaX * mapRegionBufferFactor)
         let maxX = longitudeToX(mapView.maximumLongitude + deltaX * mapRegionBufferFactor)
         let minY = latitudeToY(mapView.maximumLatitude + deltaY * mapRegionBufferFactor)
