@@ -57,6 +57,10 @@
 		E5700C541C44EE51008C8A87 /* ComposeMessageViewController+UITextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5700C531C44EE51008C8A87 /* ComposeMessageViewController+UITextFieldDelegate.swift */; };
 		E5700C581C45C057008C8A87 /* HostListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5700C571C45C057008C8A87 /* HostListTableViewController.swift */; };
 		E5700C5A1C45C961008C8A87 /* HostListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5700C591C45C961008C8A87 /* HostListTableViewCell.swift */; };
+		E57057D31CC8557B00FA5D9F /* ComposeMessage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E57057D11CC8557B00FA5D9F /* ComposeMessage.storyboard */; };
+		E57057D51CC855BE00FA5D9F /* Messages.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E57057D41CC855BE00FA5D9F /* Messages.storyboard */; };
+		E57057D81CC855EB00FA5D9F /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E57057D61CC855EB00FA5D9F /* Settings.storyboard */; };
+		E57057DA1CC8567800FA5D9F /* HostSearch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E57057D91CC8567800FA5D9F /* HostSearch.storyboard */; };
 		E571D4681C9B74A300790C88 /* CCHMapClusterController+Warmshowers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E571D4671C9B74A300790C88 /* CCHMapClusterController+Warmshowers.swift */; };
 		E571D46B1C9BA5C400790C88 /* WSMapControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E571D46A1C9BA5C400790C88 /* WSMapControllerDelegate.swift */; };
 		E571D46D1C9BA6E700790C88 /* HostSearchViewController+WSMapControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E571D46C1C9BA6E700790C88 /* HostSearchViewController+WSMapControllerDelegate.swift */; };
@@ -220,6 +224,10 @@
 		E5700C551C44F083008C8A87 /* MBProgressHUD-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD-Bridging-Header.h"; sourceTree = "<group>"; };
 		E5700C571C45C057008C8A87 /* HostListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostListTableViewController.swift; sourceTree = "<group>"; };
 		E5700C591C45C961008C8A87 /* HostListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostListTableViewCell.swift; sourceTree = "<group>"; };
+		E57057D21CC8557B00FA5D9F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/ComposeMessage.storyboard; sourceTree = "<group>"; };
+		E57057D41CC855BE00FA5D9F /* Messages.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Messages.storyboard; sourceTree = "<group>"; };
+		E57057D71CC855EB00FA5D9F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
+		E57057D91CC8567800FA5D9F /* HostSearch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HostSearch.storyboard; sourceTree = "<group>"; };
 		E571D4671C9B74A300790C88 /* CCHMapClusterController+Warmshowers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CCHMapClusterController+Warmshowers.swift"; sourceTree = "<group>"; };
 		E571D46A1C9BA5C400790C88 /* WSMapControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSMapControllerDelegate.swift; sourceTree = "<group>"; };
 		E571D46C1C9BA6E700790C88 /* HostSearchViewController+WSMapControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HostSearchViewController+WSMapControllerDelegate.swift"; sourceTree = "<group>"; };
@@ -709,6 +717,10 @@
 			children = (
 				E5DF37C01C6C194100D5F509 /* TableViewCells */,
 				E5D96AFD1BFB1CA700AFAFEE /* Main.storyboard */,
+				E57057D91CC8567800FA5D9F /* HostSearch.storyboard */,
+				E57057D61CC855EB00FA5D9F /* Settings.storyboard */,
+				E57057D41CC855BE00FA5D9F /* Messages.storyboard */,
+				E57057D11CC8557B00FA5D9F /* ComposeMessage.storyboard */,
 				E5D96B021BFB1CA700AFAFEE /* LaunchScreen.storyboard */,
 				E5DA03A61C46FCBB00FAD1D7 /* WSColor.swift */,
 				E5DA03EF1C49C7A200FAD1D7 /* WSFont.swift */,
@@ -857,6 +869,10 @@
 				E54A572B1BFD664A000843A9 /* Settings.bundle in Resources */,
 				E5D96B041BFB1CA700AFAFEE /* LaunchScreen.storyboard in Resources */,
 				E5D96B011BFB1CA700AFAFEE /* Assets.xcassets in Resources */,
+				E57057D81CC855EB00FA5D9F /* Settings.storyboard in Resources */,
+				E57057DA1CC8567800FA5D9F /* HostSearch.storyboard in Resources */,
+				E57057D31CC8557B00FA5D9F /* ComposeMessage.storyboard in Resources */,
+				E57057D51CC855BE00FA5D9F /* Messages.storyboard in Resources */,
 				E5DA03EE1C49C66A00FAD1D7 /* Sue Ellen Francisco.ttf in Resources */,
 				E5D96AFF1BFB1CA700AFAFEE /* Main.storyboard in Resources */,
 			);
@@ -1096,6 +1112,22 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		E57057D11CC8557B00FA5D9F /* ComposeMessage.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E57057D21CC8557B00FA5D9F /* Base */,
+			);
+			name = ComposeMessage.storyboard;
+			sourceTree = "<group>";
+		};
+		E57057D61CC855EB00FA5D9F /* Settings.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E57057D71CC855EB00FA5D9F /* Base */,
+			);
+			name = Settings.storyboard;
+			sourceTree = "<group>";
+		};
 		E5D96AFD1BFB1CA700AFAFEE /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
