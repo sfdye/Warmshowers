@@ -7,7 +7,7 @@
         <!--Login View Controller-->
         <scene sceneID="QFQ-Jf-mNM">
             <objects>
-                <viewController storyboardIdentifier="Login" id="u1K-i7-mGS" customClass="LoginViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Login" id="u1K-i7-mGS" customClass="WSLoginViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3JT-d1-oiz"/>
                         <viewControllerLayoutGuide type="bottom" id="pud-cq-cJ0"/>
@@ -136,7 +136,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
             <objects>
-                <tabBarController storyboardIdentifier="TabBar" id="49e-Tb-3d3" customClass="TabBarController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBar" id="49e-Tb-3d3" customClass="WSTabBarController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>

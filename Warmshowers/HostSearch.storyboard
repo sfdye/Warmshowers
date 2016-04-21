@@ -8,7 +8,7 @@
         <!--Host Search-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
-                <viewController id="9pv-A4-QxB" customClass="HostSearchViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="9pv-A4-QxB" customClass="WSHostSearchViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="mPF-T7-aao"/>
                         <viewControllerLayoutGuide type="bottom" id="RfY-cJ-dh8"/>
@@ -224,7 +224,7 @@
         <!--Account Table View Controller-->
         <scene sceneID="yHk-3J-1rW">
             <objects>
-                <tableViewController id="Hb8-qn-N7z" customClass="AccountTableViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="Hb8-qn-N7z" customClass="WSAccountTableViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="i5W-FB-YBy">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -632,7 +632,7 @@
         <!--Create Feedback-->
         <scene sceneID="zGa-sl-WSc">
             <objects>
-                <tableViewController id="Zua-CD-4dt" customClass="CreateFeedbackTableViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="Zua-CD-4dt" customClass="WSCreateWSFeedbackTableViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="1NB-62-ukS">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -785,7 +785,7 @@
         <!--Feedback Table View Controller-->
         <scene sceneID="mk8-Fx-u2B">
             <objects>
-                <tableViewController id="rgL-BL-hqm" customClass="FeedbackTableViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="rgL-BL-hqm" customClass="WSFeedbackTableViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="132" sectionHeaderHeight="28" sectionFooterHeight="28" id="Ito-dU-DVC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -896,7 +896,7 @@
         <!--Root View Controller-->
         <scene sceneID="Uao-jn-H3o">
             <objects>
-                <tableViewController id="3O8-H1-wvc" customClass="HostListTableViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="3O8-H1-wvc" customClass="WSHostListTableViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="74" sectionHeaderHeight="28" sectionFooterHeight="28" id="3f4-vC-WWE">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

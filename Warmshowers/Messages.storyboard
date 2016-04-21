@@ -7,7 +7,7 @@
         <!--Messages-->
         <scene sceneID="WJK-eV-Y75">
             <objects>
-                <tableViewController id="2Pf-bx-IOP" customClass="MessageThreadsTableViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="2Pf-bx-IOP" customClass="WSMessageThreadsTableViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="1" sectionHeaderHeight="28" sectionFooterHeight="28" id="njU-RN-S71">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -125,7 +125,7 @@ Second line</string>
         <!--Title-->
         <scene sceneID="6eX-Nx-4IN">
             <objects>
-                <tableViewController id="MJt-qp-NJY" customClass="MessageThreadTableViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="MJt-qp-NJY" customClass="WSMessageThreadTableViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="N7f-I9-Tkm">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

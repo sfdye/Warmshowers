@@ -7,7 +7,7 @@
         <!--Compose Message View Controller-->
         <scene sceneID="u7Z-3f-x0D">
             <objects>
-                <viewController id="Flg-vX-hH9" customClass="ComposeMessageViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Flg-vX-hH9" customClass="WSComposeMessageViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Cii-dS-4cw">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

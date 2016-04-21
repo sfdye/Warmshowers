@@ -30,7 +30,7 @@ import CoreData
 // link address in account view to open in maps/google maps options
 
 // View controller identifiers
-let LoginViewControllerID = "Login"
+let WSLoginViewControllerID = "Login"
 
 // Error types
 enum DataError : ErrorType {
@@ -112,7 +112,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Shows the login page instead of the main app
     func showLoginScreen() {
-        let loginViewController = storyboard.instantiateViewControllerWithIdentifier(LoginViewControllerID)
+        let loginViewController = storyboard.instantiateViewControllerWithIdentifier(WSLoginViewControllerID)
         self.window?.rootViewController = loginViewController
     }
     
