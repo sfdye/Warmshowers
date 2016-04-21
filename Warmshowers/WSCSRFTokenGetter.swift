@@ -32,5 +32,4 @@ class WSCSRFTokenGetter : WSRequester, WSRequestDelegate {
             error = NSError(domain: "WSRequesterDomain", code: 10, userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Failed to decode token data.", comment: "")])
         }
     }
-    
 }

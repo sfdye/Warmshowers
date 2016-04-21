@@ -34,7 +34,7 @@ extension CreateFeedbackTableViewController : UIPickerViewDataSource {
         
         switch pickerRow - 1 {
         case 0:
-            return WSRecommendationFor.allValues.count
+            return WSRecommendationType.allValues.count
         case 1:
             return WSRecommendationRating.allValues.count
         case 2:

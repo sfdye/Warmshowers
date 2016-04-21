@@ -468,8 +468,9 @@ class AccountTableViewController: UITableViewController {
         if segue.identifier == ToProvideFeeedbackSegueID {
             let navVC = segue.destinationViewController as! UINavigationController
             let createFeedbackVC = navVC.viewControllers.first as! CreateFeedbackTableViewController
-            createFeedbackVC.userName = info?.valueForKey("name") as? String
-            createFeedbackVC.feedback.recommendedUserUID = uid!
+            createFeedbackVC.configureForSendingFeedbackForUserWithUserName(info?.valueForKey("name") as? String)
+//            createFeedbackVC.feedback.recommendedUserName = info?.valueForKey("name") as? String
+//            createFeedbackVC.feedback.recommendedUserUID = uid!
         }
     }
 

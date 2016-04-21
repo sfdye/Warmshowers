@@ -23,7 +23,7 @@ class FeedbackTableViewCell: UITableViewCell {
         authorNameLabel.text = feedback.author?.fullname
         setDate(feedback.date)
         setRating(feedback.rating)
-        setAuthorType(feedback.recommendationFor)
+        setType(feedback.type)
         bodyLabel.text = feedback.body
     }
     
@@ -56,14 +56,14 @@ class FeedbackTableViewCell: UITableViewCell {
         }
     }
     
-    func setAuthorType(recommendationFor: WSRecommendationFor) {
-        switch recommendationFor {
-        case .Guest:
+    func setType(type: WSRecommendationType) {
+        switch type {
+        case .ForGuest:
             forLabel.text = "Host, "
-        case .Host:
+        case .ForHost:
             forLabel.text = "Guest, "
         default:
-            forLabel.text = recommendationFor.rawValue + ", "
+            forLabel.text = type.rawValue + ", "
         }
     }
 }

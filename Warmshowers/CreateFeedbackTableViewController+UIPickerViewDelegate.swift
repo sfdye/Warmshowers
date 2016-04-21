@@ -26,7 +26,7 @@ extension CreateFeedbackTableViewController : UIPickerViewDelegate {
         switch optionCellRow {
         case 0:
             // Feedback guest or host picker
-            feedback.recommendationFor.setFromRawValue(selectedValue)
+            feedback.type.setFromRawValue(selectedValue)
         case 1:
             // Feedback rating picker
             feedback.rating.setFromRawValue(selectedValue)
@@ -62,7 +62,7 @@ extension CreateFeedbackTableViewController : UIPickerViewDelegate {
         switch modelRow - 1 {
         case 0:
             // Feedback guest or host picker
-            return WSRecommendationFor.allValues[row].rawValue
+            return WSRecommendationType.allValues[row].rawValue
         case 1:
             // Feedback rating picker
             return WSRecommendationRating.allValues[row].rawValue

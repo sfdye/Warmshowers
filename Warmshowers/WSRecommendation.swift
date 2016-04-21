@@ -12,10 +12,11 @@ class WSRecommendation {
     
     var body: String = ""
     var date: NSDate = NSDate()
-    var recommendationFor: WSRecommendationFor = .Host
+    var type: WSRecommendationType = .ForHost
     var rating: WSRecommendationRating = .Positive
     var author: WSUser?
     var recommendedUserUID: Int?
+    var recommendedUserName: String?
     var authorImageURL: String?
     var authorImage: UIImage?
     var month: Int {
@@ -33,7 +34,7 @@ class WSRecommendation {
         
         guard let body = json.valueForKey("body") as? String,
               let date = json.valueForKey("field_hosting_date")?.integerValue,
-              let recommendationFor = json.valueForKey("field_guest_or_host") as? String,
+              let type = json.valueForKey("field_guest_or_host") as? String,
               let rating = json.valueForKey("field_rating") as? String,
               let fullname = json.valueForKey("fullname") as? String,
               let name = json.valueForKey("name") as? String,
@@ -46,15 +47,15 @@ class WSRecommendation {
         
         self.body = body
         self.date = NSDate(timeIntervalSince1970: Double(date))
-        switch recommendationFor {
+        switch type {
         case "Guest":
-            self.recommendationFor = .Guest
+            self.type = .ForGuest
         case "Host":
-            self.recommendationFor = .Host
+            self.type = .ForHost
         case "Met Traveling":
-            self.recommendationFor = .MetTraveling
+            self.type = .MetTraveling
         case "Other":
-            self.recommendationFor = .Other
+            self.type = .Other
         default:
             print("Failed to initialise WSRecommendation due to an unrecognised guest_or_host value")
             return nil

@@ -14,7 +14,7 @@ class FeedbackOptionTableViewCell: UITableViewCell {
     //
     func configureForTypeWithFeedback(feedback: WSRecommendation) {
         textLabel?.text = "Feedback for"
-        detailTextLabel?.text = feedback.recommendationFor.rawValue
+        detailTextLabel?.text = feedback.type.rawValue
     }
     
     // Configures the picker for feedback ratings

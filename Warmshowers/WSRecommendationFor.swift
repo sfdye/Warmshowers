@@ -8,16 +8,16 @@
 
 import UIKit
 
-enum WSRecommendationFor : String {
-    case Guest = "Guest"
-    case Host = "Host"
+enum WSRecommendationType : String {
+    case ForGuest = "Guest"
+    case ForHost = "Host"
     case MetTraveling = "Met Traveling"
     case Other = "Other"
     
-    static let allValues = [Guest, Host, MetTraveling, Other]
+    static let allValues = [ForGuest, ForHost, MetTraveling, Other]
     
     mutating func setFromRawValue(rawValue: String) {
-        let allValues = WSRecommendationFor.allValues
+        let allValues = WSRecommendationType.allValues
         for value in allValues {
             if value.rawValue == rawValue {
                 self = value

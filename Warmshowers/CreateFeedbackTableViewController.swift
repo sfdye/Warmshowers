@@ -25,130 +25,36 @@ class CreateFeedbackTableViewController: UITableViewController {
     var feedback = WSRecommendation()
     var userName: String?
     
-    // View variables
+    // View state variables
     var pickerIndexPath: NSIndexPath? = nil
     let PlaceholderFeedback = "Type your feedback here."
     
-    // HTTP Request client
+    // HTTP client
+    var apiCommunicator: WSAPICommunicatorProtocol?
     
-
     
     // MARK: View life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        apiCommunicator = WSAPICommunicator.sharedAPICommunicator
+        assert(apiCommunicator != nil, "CreateFeedbackTableViewController failed to set an API Communicator.")
         
-        // get the current year
+        // Get the current year
         thisYear = calendar?.components([.Year], fromDate: NSDate()).year
         
         // Configure the table view
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 44
     }
-
-    // MARK: - Table view data source
-
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
-    }
-
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return pickerIndexPath == nil ? 3 : 4
-        default:
-            return 1
-        }
-    }
-
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        // Feedback options section
-        if indexPath.section == 0 {
-            
-            // if we have a date picker open whose cell is above the cell we want to update,
-            // then we have one more cell than the model allows, so decrement the modelRow index
-            var modelRow = indexPath.row
-            if let pickerIndexPath = pickerIndexPath where pickerIndexPath.row <= indexPath.row {
-                modelRow -= 1
-            }
-            
-            // configure a picker cell
-            if let pickerIndexPath = pickerIndexPath where pickerIndexPath.row == indexPath.row {
-                let cell = tableView.dequeueReusableCellWithIdentifier(FeedbackOptionPickerCellID, forIndexPath: indexPath) as! FeedbackOptionPickerTableViewCell
-                cell.picker.delegate = self
-                cell.picker.dataSource = self
-                switch modelRow {
-                case 0:
-                    // Feedback guest or host picker
-                    cell.configureForTypeWithFeedback(feedback)
-                case 1:
-                    // Feedback rating picker
-                    cell.configureForRatingWithFeedback(feedback)
-                default:
-                    // Feedback date picker
-                    cell.configureForDateWithFeedback(feedback)
-                }
-                return cell
-            }
-
-            // configure a option cell
-            let cell = tableView.dequeueReusableCellWithIdentifier(FeedbackOptionCellID, forIndexPath: indexPath) as! FeedbackOptionTableViewCell
-            switch modelRow {
-            case 0:
-                // Feedback guest or host picker
-                cell.configureForTypeWithFeedback(feedback)
-            case 1:
-                // Feedback rating picker
-                cell.configureForRatingWithFeedback(feedback)
-            default:
-                // Feedback date picker
-                cell.configureForDateWithFeedback(feedback)
-            }
-            return cell
-            
-        } else {
-            
-            // Written feedback section
-            let cell = tableView.dequeueReusableCellWithIdentifier(FeedbackBodyCellID, forIndexPath: indexPath) as! FeedbackBodyTableViewCell
-            cell.textView.delegate = self
-            return cell
-        }
-    }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        if indexPath.section == 0 {
-            
-            hideKeyboard()
-            
-            // show a picker
-            let cell = tableView.cellForRowAtIndexPath(indexPath)
-            if cell?.reuseIdentifier == FeedbackOptionCellID {
-                displayInlinePickerForRowAtIndexPath(indexPath)
-            } else {
-                tableView.deselectRowAtIndexPath(indexPath, animated: true)
-            }
-        } else {
-            
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
-            removeAllPickerCells()
-        }
-    }
-    
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case 0:
-            return "Options"
-        case 1:
-            return "Feedback"
-        default:
-            return ""
-        }
-    }
-
    
     // MARK: Utility methods
+    
+    // Configures the view controller
+    func configureForSendingFeedbackForUserWithUserName(userName: String?) {
+        feedback.recommendedUserName = userName
+    }
     
     // Checks if a picker is at the given index path
     //
@@ -250,7 +156,11 @@ class CreateFeedbackTableViewController: UITableViewController {
         
         self.view.endEditing(true)
         
-        guard let userName = userName else {
+        guard let _ = feedback.recommendedUserName else {
+            let alert = UIAlertController(title: "An error occured", message: "Recommended user not set. Please report this as a bug, sorry for the inconvenience.", preferredStyle: .Alert)
+            let okAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
+            alert.addAction(okAction)
+            self.presentViewController(alert, animated: true, completion: nil)
             return
         }
         
@@ -263,25 +173,8 @@ class CreateFeedbackTableViewController: UITableViewController {
         }
         
         // Submit the feedback
-        let feedbackSender = WSFeedbackSender(
-            feedback: feedback,
-            userName: userName,
-            success: { () -> Void in
-                // Dismiss the view on successful feedback submission
-                WSProgressHUD.hide()
-                self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
-            },
-            failure: {(error) -> Void in
-                // Show an error
-                WSProgressHUD.hide()
-                let alert = UIAlertController(title: "Could not submit feedback", message: "Sorry, an error occured while submitted your feedback. Please check you are connected to the internet and try again later.", preferredStyle: .Alert)
-                let okAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
-                alert.addAction(okAction)
-                self.presentViewController(alert, animated: true, completion: nil)
-            }
-        )
+        apiCommunicator?.sendFeedback(feedback, andNotify: self)
         WSProgressHUD.show("Submitting feedback ...")
-        feedbackSender.send()
     }
 
 }

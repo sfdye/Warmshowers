@@ -62,6 +62,12 @@
 		E57057D81CC855EB00FA5D9F /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E57057D61CC855EB00FA5D9F /* Settings.storyboard */; };
 		E57057DA1CC8567800FA5D9F /* HostSearch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E57057D91CC8567800FA5D9F /* HostSearch.storyboard */; };
 		E57057DC1CC85CE100FA5D9F /* WSConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57057DB1CC85CE100FA5D9F /* WSConstants.swift */; };
+		E57057DE1CC867EE00FA5D9F /* CreateFeedbackTableViewController+UITableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57057DD1CC867EE00FA5D9F /* CreateFeedbackTableViewController+UITableViewDataSource.swift */; };
+		E57057E01CC8688400FA5D9F /* CreateFeedbackTableViewController+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57057DF1CC8688400FA5D9F /* CreateFeedbackTableViewController+UITableViewDelegate.swift */; };
+		E57057E21CC86C6600FA5D9F /* WSAPICommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57057E11CC86C6600FA5D9F /* WSAPICommunicator.swift */; };
+		E57057E41CC86D8900FA5D9F /* WSAPICommunicatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57057E31CC86D8900FA5D9F /* WSAPICommunicatorProtocol.swift */; };
+		E57057E61CC8719800FA5D9F /* WSAPIResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57057E51CC8719800FA5D9F /* WSAPIResponseHandler.swift */; };
+		E57057E81CC879E300FA5D9F /* CreateFeedbackTableViewController+WSAPIResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57057E71CC879E300FA5D9F /* CreateFeedbackTableViewController+WSAPIResponseHandler.swift */; };
 		E571D4681C9B74A300790C88 /* CCHMapClusterController+Warmshowers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E571D4671C9B74A300790C88 /* CCHMapClusterController+Warmshowers.swift */; };
 		E571D46B1C9BA5C400790C88 /* WSMapControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E571D46A1C9BA5C400790C88 /* WSMapControllerDelegate.swift */; };
 		E571D46D1C9BA6E700790C88 /* HostSearchViewController+WSMapControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E571D46C1C9BA6E700790C88 /* HostSearchViewController+WSMapControllerDelegate.swift */; };
@@ -230,6 +236,12 @@
 		E57057D71CC855EB00FA5D9F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
 		E57057D91CC8567800FA5D9F /* HostSearch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HostSearch.storyboard; sourceTree = "<group>"; };
 		E57057DB1CC85CE100FA5D9F /* WSConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSConstants.swift; sourceTree = "<group>"; };
+		E57057DD1CC867EE00FA5D9F /* CreateFeedbackTableViewController+UITableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CreateFeedbackTableViewController+UITableViewDataSource.swift"; sourceTree = "<group>"; };
+		E57057DF1CC8688400FA5D9F /* CreateFeedbackTableViewController+UITableViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CreateFeedbackTableViewController+UITableViewDelegate.swift"; sourceTree = "<group>"; };
+		E57057E11CC86C6600FA5D9F /* WSAPICommunicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSAPICommunicator.swift; sourceTree = "<group>"; };
+		E57057E31CC86D8900FA5D9F /* WSAPICommunicatorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSAPICommunicatorProtocol.swift; sourceTree = "<group>"; };
+		E57057E51CC8719800FA5D9F /* WSAPIResponseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSAPIResponseHandler.swift; sourceTree = "<group>"; };
+		E57057E71CC879E300FA5D9F /* CreateFeedbackTableViewController+WSAPIResponseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CreateFeedbackTableViewController+WSAPIResponseHandler.swift"; sourceTree = "<group>"; };
 		E571D4671C9B74A300790C88 /* CCHMapClusterController+Warmshowers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CCHMapClusterController+Warmshowers.swift"; sourceTree = "<group>"; };
 		E571D46A1C9BA5C400790C88 /* WSMapControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSMapControllerDelegate.swift; sourceTree = "<group>"; };
 		E571D46C1C9BA6E700790C88 /* HostSearchViewController+WSMapControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HostSearchViewController+WSMapControllerDelegate.swift"; sourceTree = "<group>"; };
@@ -415,6 +427,9 @@
 				E54276851C3E78E000047029 /* CreateFeedbackTableViewController+UIPickerViewDelegate.swift */,
 				E54276871C3E83E500047029 /* CreateFeedbackTableViewController+UIPickerViewDataSource.swift */,
 				E542768F1C44956F00047029 /* CreateFeedbackTableViewController+UITextViewDelegate.swift */,
+				E57057DD1CC867EE00FA5D9F /* CreateFeedbackTableViewController+UITableViewDataSource.swift */,
+				E57057DF1CC8688400FA5D9F /* CreateFeedbackTableViewController+UITableViewDelegate.swift */,
+				E57057E71CC879E300FA5D9F /* CreateFeedbackTableViewController+WSAPIResponseHandler.swift */,
 			);
 			name = CreateFeedbackTableViewController;
 			sourceTree = "<group>";
@@ -486,6 +501,9 @@
 				E5F6F3091C2B36930000A87E /* WSRestfulService.swift */,
 				E54A57301BFE6FB2000843A9 /* WSURL.swift */,
 				E53BA73B1C7554880076E825 /* WSURLSession.swift */,
+				E57057E11CC86C6600FA5D9F /* WSAPICommunicator.swift */,
+				E57057E31CC86D8900FA5D9F /* WSAPICommunicatorProtocol.swift */,
+				E57057E51CC8719800FA5D9F /* WSAPIResponseHandler.swift */,
 			);
 			name = HTTP;
 			sourceTree = "<group>";
@@ -973,6 +991,7 @@
 				E5DA03EC1C49BA3000FAD1D7 /* FeedbackTableViewController+UITableViewCellDataSource.swift in Sources */,
 				E5DA04051C4DA8D000FAD1D7 /* WSMapSource.swift in Sources */,
 				E5DF37C21C6C1E6C00D5F509 /* WSMessageThreadMarker.swift in Sources */,
+				E57057DE1CC867EE00FA5D9F /* CreateFeedbackTableViewController+UITableViewDataSource.swift in Sources */,
 				E57AF72B1CAA4D60002785D1 /* WSStore+MessageThread.swift in Sources */,
 				E52E8AB11C0D0B1A000391AB /* MessageThreadsTableViewCell.swift in Sources */,
 				E571D46D1C9BA6E700790C88 /* HostSearchViewController+WSMapControllerDelegate.swift in Sources */,
@@ -1012,6 +1031,7 @@
 				E5DA03D41C48893400FAD1D7 /* WSLazyImageTableViewController+UIScrollViewDelegate.swift in Sources */,
 				E52E8AA91C0BDB18000391AB /* HostSearchViewController+WSLazyImageTableViewDataSource.swift in Sources */,
 				E53BA73C1C7554880076E825 /* WSURLSession.swift in Sources */,
+				E57057E41CC86D8900FA5D9F /* WSAPICommunicatorProtocol.swift in Sources */,
 				E5967BCF1C39DBC00037F4B7 /* CDWSUser.swift in Sources */,
 				E557D86A1C50421B00226E84 /* WSMessageUpdater.swift in Sources */,
 				E5AF670E1C5775B100AC17A1 /* WSMessageSender.swift in Sources */,
@@ -1035,6 +1055,7 @@
 				E5F6F30F1C2FE3360000A87E /* ProfileImageTableViewCell.swift in Sources */,
 				E5D96AF81BFB1CA700AFAFEE /* AppDelegate.swift in Sources */,
 				E5DA04011C4CDE6500FAD1D7 /* SpinnerTableViewCell.swift in Sources */,
+				E57057E01CC8688400FA5D9F /* CreateFeedbackTableViewController+UITableViewDelegate.swift in Sources */,
 				E5700C521C44CB64008C8A87 /* ComposeMessageViewController+UITextViewDelegate.swift in Sources */,
 				E54276881C3E83E500047029 /* CreateFeedbackTableViewController+UIPickerViewDataSource.swift in Sources */,
 				E5D961521C61FC75004E1F31 /* WSStore.swift in Sources */,
@@ -1058,6 +1079,7 @@
 				E57AF74A1CAA6A0A002785D1 /* CDWSUserLocation+CoreDataProperties.swift in Sources */,
 				E5700C581C45C057008C8A87 /* HostListTableViewController.swift in Sources */,
 				E56CC0921BFD569500AAF973 /* SwitchTableViewCell.swift in Sources */,
+				E57057E81CC879E300FA5D9F /* CreateFeedbackTableViewController+WSAPIResponseHandler.swift in Sources */,
 				E5F6F3151C313F340000A87E /* SegmentTableViewCell.swift in Sources */,
 				E5AF1A881C58A41A0004806A /* MessageThreadTableViewController+UITableViewDataSource.swift in Sources */,
 				E5967BA71C3620470037F4B7 /* WSPhoneNumber.swift in Sources */,
@@ -1069,6 +1091,7 @@
 				E5F6F30A1C2B36930000A87E /* WSRestfulService.swift in Sources */,
 				E5DA03A71C46FCBB00FAD1D7 /* WSColor.swift in Sources */,
 				E5967BCB1C39DBC00037F4B7 /* CDWSMessageThread.swift in Sources */,
+				E57057E21CC86C6600FA5D9F /* WSAPICommunicator.swift in Sources */,
 				E5AF67061C56C24B00AC17A1 /* WSRequestDelegate.swift in Sources */,
 				E54276901C44956F00047029 /* CreateFeedbackTableViewController+UITextViewDelegate.swift in Sources */,
 				E53548EA1C69713900E22C3D /* WSLoginData.swift in Sources */,
@@ -1080,6 +1103,7 @@
 				E53BA7421C766B490076E825 /* WSInfoBanner.swift in Sources */,
 				E57057DC1CC85CE100FA5D9F /* WSConstants.swift in Sources */,
 				E57AF7331CAA4EA4002785D1 /* WSStore+MapTile.swift in Sources */,
+				E57057E61CC8719800FA5D9F /* WSAPIResponseHandler.swift in Sources */,
 				E5A84A6B1C8FBCE1007609A9 /* WSUser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

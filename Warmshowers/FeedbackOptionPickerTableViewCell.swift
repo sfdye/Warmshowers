@@ -15,7 +15,7 @@ class FeedbackOptionPickerTableViewCell: UITableViewCell {
     // Configures the picker for feedback type
     //
     func configureForTypeWithFeedback(feedback: WSRecommendation) {
-        let row = feedback.recommendationFor.hashValue
+        let row = feedback.type.hashValue
         picker.selectRow(row, inComponent: 0, animated: false)
     }
     

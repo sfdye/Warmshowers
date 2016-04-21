@@ -27,7 +27,6 @@ extension CreateFeedbackTableViewController : UITextViewDelegate {
         
         // Update the model
         feedback.body = textView.text
-        
     }
     
     func textViewDidEndEditing(textView: UITextView) {
