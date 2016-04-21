@@ -611,7 +611,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FFU-pi-jI9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4904" y="-1706"/>
+            <point key="canvasLocation" x="4424" y="-1306"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="MmP-gO-NGe">
@@ -627,7 +627,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T2W-Yz-oSW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5634" y="-1711"/>
+            <point key="canvasLocation" x="5154" y="-1311"/>
         </scene>
         <!--Create Feedback-->
         <scene sceneID="zGa-sl-WSc">
@@ -736,7 +736,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Rl-ng-Tvb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6356" y="-2460"/>
+            <point key="canvasLocation" x="5876" y="-2060"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="oow-cd-HOT">
@@ -752,7 +752,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Vc-bd-0DM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5629" y="-2460"/>
+            <point key="canvasLocation" x="5149" y="-2060"/>
         </scene>
         <!--Table View Controller-->
         <scene sceneID="NNy-ib-OvI">
@@ -780,7 +780,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B6L-IR-NZ4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6356" y="-1711"/>
+            <point key="canvasLocation" x="5876" y="-1311"/>
         </scene>
         <!--Feedback Table View Controller-->
         <scene sceneID="mk8-Fx-u2B">
@@ -875,7 +875,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G2d-Vh-EWw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5634" y="-933"/>
+            <point key="canvasLocation" x="5154" y="-533"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="8HQ-Hy-fwQ">
@@ -965,7 +965,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Oar-Jo-ppe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4102" y="-948"/>
+            <point key="canvasLocation" x="3486" y="-1004"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="0rI-Xt-thn">
@@ -981,7 +981,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zd8-0V-NEp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3352" y="-948"/>
+            <point key="canvasLocation" x="2736" y="-1004"/>
         </scene>
         <!--ComposeMessage-->
         <scene sceneID="CKz-ho-KNc">
@@ -989,7 +989,7 @@
                 <viewControllerPlaceholder storyboardName="ComposeMessage" id="zYL-Ie-UK7" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zjx-0r-oSD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4879.5" y="-1138"/>
+            <point key="canvasLocation" x="4399.5" y="-738"/>
         </scene>
     </scenes>
     <resources>
@@ -1001,7 +1001,7 @@
         <image name="ThumbnailPlaceholder" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="BZz-ra-FxF"/>
+        <segue reference="yRc-eW-HTh"/>
         <segue reference="chp-Mq-xSE"/>
     </inferredMetricsTieBreakers>
 </document>

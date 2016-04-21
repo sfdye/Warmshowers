@@ -9,11 +9,6 @@
 import UIKit
 import MBProgressHUD
 
-let FEEDBACK_OPTION_CELL_ID = "FeedbackOption"
-let FEEDBACK_OPTION_PICKER_CELL_ID = "FeedbackOptionPicker"
-let FEEDBACK_DATE_PICKER_CELL_ID = "FeedbackDatePicker"
-let FEEDBACK_BODY_CELL_ID = "FeedbackBody"
-
 class CreateFeedbackTableViewController: UITableViewController {
     
     // MARK: Properties
@@ -80,7 +75,7 @@ class CreateFeedbackTableViewController: UITableViewController {
             
             // configure a picker cell
             if let pickerIndexPath = pickerIndexPath where pickerIndexPath.row == indexPath.row {
-                let cell = tableView.dequeueReusableCellWithIdentifier(FEEDBACK_OPTION_PICKER_CELL_ID, forIndexPath: indexPath) as! FeedbackOptionPickerTableViewCell
+                let cell = tableView.dequeueReusableCellWithIdentifier(FeedbackOptionPickerCellID, forIndexPath: indexPath) as! FeedbackOptionPickerTableViewCell
                 cell.picker.delegate = self
                 cell.picker.dataSource = self
                 switch modelRow {
@@ -98,7 +93,7 @@ class CreateFeedbackTableViewController: UITableViewController {
             }
 
             // configure a option cell
-            let cell = tableView.dequeueReusableCellWithIdentifier(FEEDBACK_OPTION_CELL_ID, forIndexPath: indexPath) as! FeedbackOptionTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(FeedbackOptionCellID, forIndexPath: indexPath) as! FeedbackOptionTableViewCell
             switch modelRow {
             case 0:
                 // Feedback guest or host picker
@@ -115,7 +110,7 @@ class CreateFeedbackTableViewController: UITableViewController {
         } else {
             
             // Written feedback section
-            let cell = tableView.dequeueReusableCellWithIdentifier(FEEDBACK_BODY_CELL_ID, forIndexPath: indexPath) as! FeedbackBodyTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(FeedbackBodyCellID, forIndexPath: indexPath) as! FeedbackBodyTableViewCell
             cell.textView.delegate = self
             return cell
         }
@@ -129,7 +124,7 @@ class CreateFeedbackTableViewController: UITableViewController {
             
             // show a picker
             let cell = tableView.cellForRowAtIndexPath(indexPath)
-            if cell?.reuseIdentifier == FEEDBACK_OPTION_CELL_ID {
+            if cell?.reuseIdentifier == FeedbackOptionCellID {
                 displayInlinePickerForRowAtIndexPath(indexPath)
             } else {
                 tableView.deselectRowAtIndexPath(indexPath, animated: true)

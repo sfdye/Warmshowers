@@ -9,9 +9,6 @@
 import UIKit
 import CoreData
 
-let ComposeMessageDetailCellID = "ComposeMessageDetail"
-let ComposeMessageBodyCellID = "ComposeMessageBody"
-
 class ComposeMessageViewController: UIViewController {
     
     @IBOutlet var tableView: UITableView!

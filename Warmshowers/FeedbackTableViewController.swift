@@ -8,8 +8,6 @@
 
 import UIKit
 
-let FeedbackCellID = "Feedback"
-
 class FeedbackTableViewController: WSLazyImageTableViewController {
 
     var feedback: [AnyObject] { return lazyImageObjects }

@@ -18,12 +18,6 @@ import CCHMapClusterController
 // - make the pin clustering like the website and android app
 // add loading indicator to map view
 
-let MapToUserAccountSegueID = "MapToUserAccount"
-let ResultsToUserAccountSegueID = "SearchResultsToUserAccount"
-let ToHostListSegueID = "ToHostList"
-let SpinnerCellID = "Spinner"
-let PlaceholderCellID = "Placeholder"
-
 class HostSearchViewController: UIViewController {
     
     // MARK: Constants

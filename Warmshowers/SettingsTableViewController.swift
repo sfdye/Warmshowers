@@ -8,17 +8,6 @@
 
 import UIKit
 
-/*
-
-About
-Help
-
- */
-
-let LogoutCellID = "Logout"
-let SwitchCellID = "Switch"
-let DisclosureCellID = "Disclosure"
-
 class SettingsTableViewController: UITableViewController {
     
     var wifiOnly = true

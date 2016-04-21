@@ -9,13 +9,6 @@
 import UIKit
 import CoreData
 
-let MessageFromUserCellID = "MessageFromUser"
-let MessageFromSelfCellID = "MessageFromSelf"
-
-let ReplyToMessageThreadSegueID = "ToReplyToMessage"
-
-let MessagesViewNeedsUpdateNotificationName = "ws_message_view_needs_update"
-
 class MessageThreadTableViewController: UITableViewController {
     
     var threadID: Int!

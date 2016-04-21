@@ -8,8 +8,6 @@
 
 import UIKit
 
-let HostListCellID = "HostList"
-
 class HostListTableViewController: WSLazyImageTableViewController {
     
     var users: [AnyObject] { return lazyImageObjects }

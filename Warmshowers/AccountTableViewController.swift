@@ -9,24 +9,6 @@
 import UIKit
 import CoreData
 
-// #759DEB - background blue
-// #304767
-
-let ImageCellID = "Photo"
-let AvailabilityCellID = "Available"
-let AccountDetailCellID = "AccountDetail"
-let FeedbackCountCellID = "FeedbackCount"
-let SegmentCellID = "Segment"
-let AboutCellID = "About"
-let HostingInfoCellID = "HostingInfo"
-let OfferHeadingCellID = "OfferHeading"
-let OfferCellID = "Offer"
-let ContactCellID = "Contact"
-
-let ToFeedbackSegueID = "ToFeedback"
-let ToSendNewMessageSegueID = "ToSendNewMessage"
-let ToProvideFeeedbackSegueID = "ToProvideFeedback"
-
 enum HostProfileTab {
     case About
     case Hosting
