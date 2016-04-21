@@ -33,8 +33,6 @@ class AccountTableViewController: UITableViewController {
     
     var actionAlert = UIAlertController()
     
-    let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         

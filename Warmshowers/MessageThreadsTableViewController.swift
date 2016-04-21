@@ -85,7 +85,7 @@ class MessageThreadsTableViewController: UITableViewController {
     func initializeFetchedResultsController() {
         let request = NSFetchRequest(entityName: WSEntity.Thread.rawValue)
         request.sortDescriptors = [NSSortDescriptor(key: "last_updated", ascending: false)]
-        let moc = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
+        let moc = WSStore.sharedStore.managedObjectContext
         self.fetchedResultsController = NSFetchedResultsController(
             fetchRequest: request,
             managedObjectContext: moc,

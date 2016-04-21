@@ -10,19 +10,7 @@ import UIKit
 
 class SettingsTableViewController: UITableViewController {
     
-    var wifiOnly = true
-    
     var settings = [
-//        [
-//            "section_title" : "Map",
-//            "cells" : [
-//                [
-//                    "title" : "Source",
-//                    "cell_id": DisclosureCellID,
-//                    "tag" : 00
-//                ]
-//            ]
-//        ],
         [
             "section_title" : "Warmshowers.org",
             "cells" : Array([
