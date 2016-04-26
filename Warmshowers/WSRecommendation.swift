@@ -10,7 +10,9 @@ import UIKit
 
 class WSRecommendation {
     
-    var body: String = ""
+    // MARK: Properties
+    
+    var body: String?
     var date: NSDate = NSDate()
     var type: WSRecommendationType = .ForHost
     var rating: WSRecommendationRating = .Positive
@@ -19,14 +21,23 @@ class WSRecommendation {
     var recommendedUserName: String?
     var authorImageURL: String?
     var authorImage: UIImage?
+    
     var month: Int {
         let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
         return calendar.components([.Month], fromDate: date).month
     }
+    
     var year: Int {
         let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
         return calendar.components([.Year], fromDate: date).year
     }
+    
+    var hasBody: Bool {
+        return body != nil && body != ""
+    }
+    
+    
+    // MARK: Initialisers
     
     init() {}
     

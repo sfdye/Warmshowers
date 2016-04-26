@@ -34,7 +34,7 @@ class WSLoginViewController: UIViewController {
         super.viewDidLoad()
         
         // Load the default username
-        usernameTextField.text = WSLoginData.username
+        usernameTextField.text = WSSessionData.username
         
         // Set up the login manager
         loginManager = WSLoginManager(
@@ -80,7 +80,7 @@ class WSLoginViewController: UIViewController {
         // Show the spinner
         WSProgressHUD.show("Logging in ...")
         do {
-            try WSLoginData.saveCredentials(password, forUsername: username)
+            try WSSessionData.saveCredentials(password, forUsername: username)
             loginManager.login()
         } catch {
             // Serious error. Autologin will not be possible later.

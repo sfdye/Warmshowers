@@ -88,5 +88,4 @@ extension WSCreateWSFeedbackTableViewController {
             return ""
         }
     }
-
 }

@@ -45,8 +45,14 @@ let ResultsToUserAccountSegueID = "SearchResultsToUserAccount"
 let MessageSegueID = "ToMessageThread"
 let ReplyToMessageThreadSegueID = "ToReplyToMessage"
 
+// Storyboard IDs
+let CreateFeedbackSBID = "CreateFeedback"
+
 // Notification identifiers
 let MessageUpdateNotificationName = "ws_update_messages"
 let MessagesWereUpdatedNotificationName = "ws_messages_were_updated"
 let MessagesViewNeedsUpdateNotificationName = "ws_message_view_needs_update"
+
+// URLs
+//let WSBaseUrl = 
 

@@ -25,7 +25,7 @@ class WSFeedbackSender : WSRequestWithCSRFToken, WSRequestDelegate {
         var params = [String: String]()
         params["node[type]"] = "trust_referral"
         params["node[field_member_i_trust][0][uid][uid]"] = feedback.recommendedUserName
-        params["node[field_rating][value]"] = feedback.rating.rawValue
+        params["node[field_rating][value]"] = nil //feedback.rating.rawValue
         params["node[body]"] = feedback.body
         params["node[field_guest_or_host][value]"] = feedback.type.rawValue
         params["node[field_hosting_date][0][value][year]"] = String(feedback.year)

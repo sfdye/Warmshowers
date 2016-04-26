@@ -41,5 +41,4 @@ extension WSCreateWSFeedbackTableViewController : UITextViewDelegate {
         removeAllPickerCells()
         return true
     }
-    
 }

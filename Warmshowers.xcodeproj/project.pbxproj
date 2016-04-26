@@ -66,8 +66,20 @@
 		E57057E01CC8688400FA5D9F /* WSCreateFeedbackTableViewController+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57057DF1CC8688400FA5D9F /* WSCreateFeedbackTableViewController+UITableViewDelegate.swift */; };
 		E57057E21CC86C6600FA5D9F /* WSAPICommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57057E11CC86C6600FA5D9F /* WSAPICommunicator.swift */; };
 		E57057E41CC86D8900FA5D9F /* WSAPICommunicatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57057E31CC86D8900FA5D9F /* WSAPICommunicatorProtocol.swift */; };
-		E57057E61CC8719800FA5D9F /* WSAPIResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57057E51CC8719800FA5D9F /* WSAPIResponseHandler.swift */; };
-		E57057E81CC879E300FA5D9F /* WSCreateFeedbackTableViewController+WSAPIResponseHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57057E71CC879E300FA5D9F /* WSCreateFeedbackTableViewController+WSAPIResponseHandler.swift */; };
+		E57057E81CC879E300FA5D9F /* WSCreateFeedbackTableViewController+WSAPIResponseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57057E71CC879E300FA5D9F /* WSCreateFeedbackTableViewController+WSAPIResponseDelegate.swift */; };
+		E57057EA1CC8845300FA5D9F /* WSCreateFeedbackTableViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57057E91CC8845300FA5D9F /* WSCreateFeedbackTableViewControllerTests.swift */; };
+		E57057ED1CC88D7000FA5D9F /* WSMOCKAPICommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57057EC1CC88D7000FA5D9F /* WSMOCKAPICommunicator.swift */; };
+		E57057F31CC9895300FA5D9F /* WSAPIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57057F21CC9895300FA5D9F /* WSAPIRequest.swift */; };
+		E57058071CC9B9F600FA5D9F /* WSAPICommunicator+WSAPIRequestDelgate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57058061CC9B9F600FA5D9F /* WSAPICommunicator+WSAPIRequestDelgate.swift */; };
+		E57058091CC9C2C100FA5D9F /* WSAPIRequestDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57058081CC9C2C100FA5D9F /* WSAPIRequestDelegate.swift */; };
+		E570580B1CC9C30200FA5D9F /* WSAPIResponseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E570580A1CC9C30200FA5D9F /* WSAPIResponseDelegate.swift */; };
+		E570580D1CC9CFDA00FA5D9F /* HttpMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = E570580C1CC9CFDA00FA5D9F /* HttpMethod.swift */; };
+		E57058121CCA312200FA5D9F /* WSAPIEndPointProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57058111CCA312200FA5D9F /* WSAPIEndPointProtocol.swift */; };
+		E57058141CCA367100FA5D9F /* NSMutableURLRequest+Warmshowers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57058131CCA367100FA5D9F /* NSMutableURLRequest+Warmshowers.swift */; };
+		E57058181CCA377A00FA5D9F /* WSAPIEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57058171CCA377A00FA5D9F /* WSAPIEndPoint.swift */; };
+		E570581A1CCA38C000FA5D9F /* WSEndPointFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57058191CCA38C000FA5D9F /* WSEndPointFactory.swift */; };
+		E570581C1CCA391100FA5D9F /* WSCreateFeedbackEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E570581B1CCA391100FA5D9F /* WSCreateFeedbackEndPoint.swift */; };
+		E57058201CCAD75700FA5D9F /* WSCreateFeedbackEndPoint+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E570581F1CCAD75700FA5D9F /* WSCreateFeedbackEndPoint+Mock.swift */; };
 		E571D4681C9B74A300790C88 /* CCHMapClusterController+Warmshowers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E571D4671C9B74A300790C88 /* CCHMapClusterController+Warmshowers.swift */; };
 		E571D46B1C9BA5C400790C88 /* WSMapControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E571D46A1C9BA5C400790C88 /* WSMapControllerDelegate.swift */; };
 		E571D46D1C9BA6E700790C88 /* WSHostSearchViewController+WSMapControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E571D46C1C9BA6E700790C88 /* WSHostSearchViewController+WSMapControllerDelegate.swift */; };
@@ -119,7 +131,6 @@
 		E5D96AFF1BFB1CA700AFAFEE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5D96AFD1BFB1CA700AFAFEE /* Main.storyboard */; };
 		E5D96B011BFB1CA700AFAFEE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5D96B001BFB1CA700AFAFEE /* Assets.xcassets */; };
 		E5D96B041BFB1CA700AFAFEE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5D96B021BFB1CA700AFAFEE /* LaunchScreen.storyboard */; };
-		E5D96B0F1BFB1CA700AFAFEE /* WarmshowersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D96B0E1BFB1CA700AFAFEE /* WarmshowersTests.swift */; };
 		E5D96B1A1BFB1CA700AFAFEE /* WarmshowersUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D96B191BFB1CA700AFAFEE /* WarmshowersUITests.swift */; };
 		E5D96B281BFC493B00AFAFEE /* WSLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D96B271BFC493B00AFAFEE /* WSLoginViewController.swift */; };
 		E5DA03A71C46FCBB00FAD1D7 /* WSColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA03A61C46FCBB00FAD1D7 /* WSColor.swift */; };
@@ -240,8 +251,20 @@
 		E57057DF1CC8688400FA5D9F /* WSCreateFeedbackTableViewController+UITableViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSCreateFeedbackTableViewController+UITableViewDelegate.swift"; sourceTree = "<group>"; };
 		E57057E11CC86C6600FA5D9F /* WSAPICommunicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSAPICommunicator.swift; sourceTree = "<group>"; };
 		E57057E31CC86D8900FA5D9F /* WSAPICommunicatorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSAPICommunicatorProtocol.swift; sourceTree = "<group>"; };
-		E57057E51CC8719800FA5D9F /* WSAPIResponseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSAPIResponseHandler.swift; sourceTree = "<group>"; };
-		E57057E71CC879E300FA5D9F /* WSCreateFeedbackTableViewController+WSAPIResponseHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSCreateFeedbackTableViewController+WSAPIResponseHandler.swift"; sourceTree = "<group>"; };
+		E57057E71CC879E300FA5D9F /* WSCreateFeedbackTableViewController+WSAPIResponseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSCreateFeedbackTableViewController+WSAPIResponseDelegate.swift"; sourceTree = "<group>"; };
+		E57057E91CC8845300FA5D9F /* WSCreateFeedbackTableViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSCreateFeedbackTableViewControllerTests.swift; sourceTree = "<group>"; };
+		E57057EC1CC88D7000FA5D9F /* WSMOCKAPICommunicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSMOCKAPICommunicator.swift; sourceTree = "<group>"; };
+		E57057F21CC9895300FA5D9F /* WSAPIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSAPIRequest.swift; sourceTree = "<group>"; };
+		E57058061CC9B9F600FA5D9F /* WSAPICommunicator+WSAPIRequestDelgate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSAPICommunicator+WSAPIRequestDelgate.swift"; sourceTree = "<group>"; };
+		E57058081CC9C2C100FA5D9F /* WSAPIRequestDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSAPIRequestDelegate.swift; sourceTree = "<group>"; };
+		E570580A1CC9C30200FA5D9F /* WSAPIResponseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSAPIResponseDelegate.swift; sourceTree = "<group>"; };
+		E570580C1CC9CFDA00FA5D9F /* HttpMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpMethod.swift; sourceTree = "<group>"; };
+		E57058111CCA312200FA5D9F /* WSAPIEndPointProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSAPIEndPointProtocol.swift; sourceTree = "<group>"; };
+		E57058131CCA367100FA5D9F /* NSMutableURLRequest+Warmshowers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSMutableURLRequest+Warmshowers.swift"; sourceTree = "<group>"; };
+		E57058171CCA377A00FA5D9F /* WSAPIEndPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSAPIEndPoint.swift; sourceTree = "<group>"; };
+		E57058191CCA38C000FA5D9F /* WSEndPointFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSEndPointFactory.swift; sourceTree = "<group>"; };
+		E570581B1CCA391100FA5D9F /* WSCreateFeedbackEndPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSCreateFeedbackEndPoint.swift; sourceTree = "<group>"; };
+		E570581F1CCAD75700FA5D9F /* WSCreateFeedbackEndPoint+Mock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSCreateFeedbackEndPoint+Mock.swift"; sourceTree = "<group>"; };
 		E571D4671C9B74A300790C88 /* CCHMapClusterController+Warmshowers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CCHMapClusterController+Warmshowers.swift"; sourceTree = "<group>"; };
 		E571D46A1C9BA5C400790C88 /* WSMapControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSMapControllerDelegate.swift; sourceTree = "<group>"; };
 		E571D46C1C9BA6E700790C88 /* WSHostSearchViewController+WSMapControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSHostSearchViewController+WSMapControllerDelegate.swift"; sourceTree = "<group>"; };
@@ -297,7 +320,6 @@
 		E5D96B031BFB1CA700AFAFEE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E5D96B051BFB1CA700AFAFEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5D96B0A1BFB1CA700AFAFEE /* WarmshowersTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WarmshowersTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E5D96B0E1BFB1CA700AFAFEE /* WarmshowersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmshowersTests.swift; sourceTree = "<group>"; };
 		E5D96B101BFB1CA700AFAFEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5D96B151BFB1CA700AFAFEE /* WarmshowersUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WarmshowersUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5D96B191BFB1CA700AFAFEE /* WarmshowersUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmshowersUITests.swift; sourceTree = "<group>"; };
@@ -429,7 +451,7 @@
 				E542768F1C44956F00047029 /* WSCreateFeedbackTableViewController+UITextViewDelegate.swift */,
 				E57057DD1CC867EE00FA5D9F /* WSCreateFeedbackTableViewController+UITableViewDataSource.swift */,
 				E57057DF1CC8688400FA5D9F /* WSCreateFeedbackTableViewController+UITableViewDelegate.swift */,
-				E57057E71CC879E300FA5D9F /* WSCreateFeedbackTableViewController+WSAPIResponseHandler.swift */,
+				E57057E71CC879E300FA5D9F /* WSCreateFeedbackTableViewController+WSAPIResponseDelegate.swift */,
 			);
 			name = WSCreateFeedbackTableViewController;
 			sourceTree = "<group>";
@@ -479,33 +501,17 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
-		E54A57391C026D56000843A9 /* HTTP */ = {
+		E54A57391C026D56000843A9 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				E557D86B1C50482200226E84 /* WSCSRFTokenGetter.swift */,
-				E5DF37C31C6C315700D5F509 /* WSFeedbackSender.swift */,
-				E536BFC51C7304980017E7B8 /* WSHostsByKeywordSearchManager.swift */,
-				E59898841C9B405500AFB089 /* WSHostsOnMapSearchManager.swift */,
-				E5DA03CA1C48534300FAD1D7 /* WSLazyImageDownloader.swift */,
-				E5AF67071C56DD7F00AC17A1 /* WSLoginManager.swift */,
-				E569DC481C6C5E4300286055 /* WSLogoutManager.swift */,
-				E5AF670D1C5775B100AC17A1 /* WSMessageSender.swift */,
-				E5DF37C11C6C1E6C00D5F509 /* WSMessageThreadMarker.swift */,
-				E5A9F11B1C532BC5006D6499 /* WSMessageThreadsUpdater.swift */,
-				E56B06281C5ED1D4006C7BF3 /* WSMessageUpdateOperation.swift */,
-				E557D8691C50421B00226E84 /* WSMessageUpdater.swift */,
-				E5AF67051C56C24B00AC17A1 /* WSRequestDelegate.swift */,
-				E5DA03F31C4A412C00FAD1D7 /* WSRequester.swift */,
-				E54A572E1BFDC446000843A9 /* WSRequests.swift */,
-				E557D86D1C504DCF00226E84 /* WSRequestWithCSRFToken.swift */,
-				E5F6F3091C2B36930000A87E /* WSRestfulService.swift */,
-				E54A57301BFE6FB2000843A9 /* WSURL.swift */,
-				E53BA73B1C7554880076E825 /* WSURLSession.swift */,
-				E57057E11CC86C6600FA5D9F /* WSAPICommunicator.swift */,
-				E57057E31CC86D8900FA5D9F /* WSAPICommunicatorProtocol.swift */,
-				E57057E51CC8719800FA5D9F /* WSAPIResponseHandler.swift */,
+				E57058211CCB37C000FA5D9F /* OLD */,
+				E570581E1CCAD31F00FA5D9F /* Client */,
+				E57058101CCA304F00FA5D9F /* EndPoints */,
+				E57057F21CC9895300FA5D9F /* WSAPIRequest.swift */,
+				E57058081CC9C2C100FA5D9F /* WSAPIRequestDelegate.swift */,
+				E570580A1CC9C30200FA5D9F /* WSAPIResponseDelegate.swift */,
 			);
-			name = HTTP;
+			name = API;
 			sourceTree = "<group>";
 		};
 		E54A573A1C026D96000843A9 /* Controllers */ = {
@@ -539,6 +545,72 @@
 				E5DA03DF1C490ECC00FAD1D7 /* WSHostListTableViewController+UITableViewDataSource.swift */,
 			);
 			name = WSHostListTableViewController;
+			sourceTree = "<group>";
+		};
+		E57057EB1CC88D5F00FA5D9F /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				E57057EC1CC88D7000FA5D9F /* WSMOCKAPICommunicator.swift */,
+			);
+			name = Mocks;
+			sourceTree = "<group>";
+		};
+		E57058101CCA304F00FA5D9F /* EndPoints */ = {
+			isa = PBXGroup;
+			children = (
+				E570581D1CCAD21D00FA5D9F /* CreateFeedback */,
+				E57058111CCA312200FA5D9F /* WSAPIEndPointProtocol.swift */,
+				E57058171CCA377A00FA5D9F /* WSAPIEndPoint.swift */,
+				E57058191CCA38C000FA5D9F /* WSEndPointFactory.swift */,
+			);
+			name = EndPoints;
+			sourceTree = "<group>";
+		};
+		E570581D1CCAD21D00FA5D9F /* CreateFeedback */ = {
+			isa = PBXGroup;
+			children = (
+				E570581B1CCA391100FA5D9F /* WSCreateFeedbackEndPoint.swift */,
+				E570581F1CCAD75700FA5D9F /* WSCreateFeedbackEndPoint+Mock.swift */,
+			);
+			name = CreateFeedback;
+			sourceTree = "<group>";
+		};
+		E570581E1CCAD31F00FA5D9F /* Client */ = {
+			isa = PBXGroup;
+			children = (
+				E54A57301BFE6FB2000843A9 /* WSURL.swift */,
+				E570580C1CC9CFDA00FA5D9F /* HttpMethod.swift */,
+				E53BA73B1C7554880076E825 /* WSURLSession.swift */,
+				E57057E11CC86C6600FA5D9F /* WSAPICommunicator.swift */,
+				E57057E31CC86D8900FA5D9F /* WSAPICommunicatorProtocol.swift */,
+				E57058061CC9B9F600FA5D9F /* WSAPICommunicator+WSAPIRequestDelgate.swift */,
+				E57058131CCA367100FA5D9F /* NSMutableURLRequest+Warmshowers.swift */,
+			);
+			name = Client;
+			sourceTree = "<group>";
+		};
+		E57058211CCB37C000FA5D9F /* OLD */ = {
+			isa = PBXGroup;
+			children = (
+				E5F6F3091C2B36930000A87E /* WSRestfulService.swift */,
+				E557D86B1C50482200226E84 /* WSCSRFTokenGetter.swift */,
+				E5DF37C31C6C315700D5F509 /* WSFeedbackSender.swift */,
+				E536BFC51C7304980017E7B8 /* WSHostsByKeywordSearchManager.swift */,
+				E59898841C9B405500AFB089 /* WSHostsOnMapSearchManager.swift */,
+				E5DA03CA1C48534300FAD1D7 /* WSLazyImageDownloader.swift */,
+				E5AF67071C56DD7F00AC17A1 /* WSLoginManager.swift */,
+				E569DC481C6C5E4300286055 /* WSLogoutManager.swift */,
+				E5AF670D1C5775B100AC17A1 /* WSMessageSender.swift */,
+				E5DF37C11C6C1E6C00D5F509 /* WSMessageThreadMarker.swift */,
+				E5A9F11B1C532BC5006D6499 /* WSMessageThreadsUpdater.swift */,
+				E56B06281C5ED1D4006C7BF3 /* WSMessageUpdateOperation.swift */,
+				E557D8691C50421B00226E84 /* WSMessageUpdater.swift */,
+				E5AF67051C56C24B00AC17A1 /* WSRequestDelegate.swift */,
+				E5DA03F31C4A412C00FAD1D7 /* WSRequester.swift */,
+				E54A572E1BFDC446000843A9 /* WSRequests.swift */,
+				E557D86D1C504DCF00226E84 /* WSRequestWithCSRFToken.swift */,
+			);
+			name = OLD;
 			sourceTree = "<group>";
 		};
 		E571D4661C9B748300790C88 /* CCHMapClusterController */ = {
@@ -663,7 +735,7 @@
 			children = (
 				E5D96AF71BFB1CA700AFAFEE /* AppDelegate.swift */,
 				E54A573A1C026D96000843A9 /* Controllers */,
-				E54A57391C026D56000843A9 /* HTTP */,
+				E54A57391C026D56000843A9 /* API */,
 				E50FD8A01C053A24004D38A3 /* Map */,
 				E54A57321BFE82F9000843A9 /* Model */,
 				E5F6F3041C28EC780000A87E /* Supporting Files */,
@@ -676,7 +748,8 @@
 		E5D96B0D1BFB1CA700AFAFEE /* WarmshowersTests */ = {
 			isa = PBXGroup;
 			children = (
-				E5D96B0E1BFB1CA700AFAFEE /* WarmshowersTests.swift */,
+				E57057EB1CC88D5F00FA5D9F /* Mocks */,
+				E57057E91CC8845300FA5D9F /* WSCreateFeedbackTableViewControllerTests.swift */,
 				E5D96B101BFB1CA700AFAFEE /* Info.plist */,
 			);
 			path = WarmshowersTests;
@@ -996,6 +1069,7 @@
 				E52E8AB11C0D0B1A000391AB /* MessageThreadsTableViewCell.swift in Sources */,
 				E571D46D1C9BA6E700790C88 /* WSHostSearchViewController+WSMapControllerDelegate.swift in Sources */,
 				E5967BB81C38C0FA0037F4B7 /* FeedbackTableViewCell.swift in Sources */,
+				E570581A1CCA38C000FA5D9F /* WSEndPointFactory.swift in Sources */,
 				E5DA03E61C49A5CA00FAD1D7 /* WSRecommendation+WSLazyImage.swift in Sources */,
 				E5700C5A1C45C961008C8A87 /* HostListTableViewCell.swift in Sources */,
 				E5DA03FF1C4CA9CF00FAD1D7 /* WSDistance.swift in Sources */,
@@ -1007,14 +1081,17 @@
 				E57AF72D1CAA4DCA002785D1 /* WSStore+Message.swift in Sources */,
 				E56B062B1C5F0CAF006C7BF3 /* WSMessageThreadsTableViewController+NSFetchedResultsControllerDelegate.swift in Sources */,
 				E5967BBB1C3922170037F4B7 /* WSMessageThreadTableViewController.swift in Sources */,
+				E570580B1CC9C30200FA5D9F /* WSAPIResponseDelegate.swift in Sources */,
 				E5967B9F1C3490740037F4B7 /* WSOffers.swift in Sources */,
 				E54A57641C03E4A4000843A9 /* WSAccountTableViewController.swift in Sources */,
 				E569DC491C6C5E4300286055 /* WSLogoutManager.swift in Sources */,
 				E59898811C9A9BFA00AFB089 /* WSMapController+CCHMapClusterController.swift in Sources */,
+				E57058201CCAD75700FA5D9F /* WSCreateFeedbackEndPoint+Mock.swift in Sources */,
 				E54A57311BFE6FB2000843A9 /* WSURL.swift in Sources */,
 				E5DA03F01C49C7A200FAD1D7 /* WSFont.swift in Sources */,
 				E52E8ABE1C0E463D000391AB /* Warmshowers.xcdatamodeld in Sources */,
 				E5DA03CB1C48534300FAD1D7 /* WSLazyImageDownloader.swift in Sources */,
+				E57058071CC9B9F600FA5D9F /* WSAPICommunicator+WSAPIRequestDelgate.swift in Sources */,
 				E54276801C3E546E00047029 /* WSRecommendationFor.swift in Sources */,
 				E5967BBD1C39BFF30037F4B7 /* MessageTableViewCell.swift in Sources */,
 				E5DA03E41C49187600FAD1D7 /* WSUserLocation+MKAnnotation.swift in Sources */,
@@ -1032,14 +1109,18 @@
 				E52E8AA91C0BDB18000391AB /* WSHostSearchViewController+WSLazyImageTableViewDataSource.swift in Sources */,
 				E53BA73C1C7554880076E825 /* WSURLSession.swift in Sources */,
 				E57057E41CC86D8900FA5D9F /* WSAPICommunicatorProtocol.swift in Sources */,
+				E57058141CCA367100FA5D9F /* NSMutableURLRequest+Warmshowers.swift in Sources */,
 				E5967BCF1C39DBC00037F4B7 /* CDWSUser.swift in Sources */,
 				E557D86A1C50421B00226E84 /* WSMessageUpdater.swift in Sources */,
 				E5AF670E1C5775B100AC17A1 /* WSMessageSender.swift in Sources */,
 				E598987C1C97EDC200AFB089 /* CDWSMapTile.swift in Sources */,
+				E570580D1CC9CFDA00FA5D9F /* HttpMethod.swift in Sources */,
 				E52A07271C580B1C006F80A5 /* WSComposeMessageViewController.swift in Sources */,
 				E5F6F30D1C2FE2770000A87E /* AccountDetailTableViewCell.swift in Sources */,
 				E5DA03DA1C488CA000FAD1D7 /* WSLazyImage.swift in Sources */,
 				E56CC08A1BFD22D800AAF973 /* WSHostSearchViewController.swift in Sources */,
+				E570581C1CCA391100FA5D9F /* WSCreateFeedbackEndPoint.swift in Sources */,
+				E57058121CCA312200FA5D9F /* WSAPIEndPointProtocol.swift in Sources */,
 				E53548EC1C69AA8E00E22C3D /* WSUserDefaultsKeys.swift in Sources */,
 				E571D4681C9B74A300790C88 /* CCHMapClusterController+Warmshowers.swift in Sources */,
 				E50FD8A21C053A42004D38A3 /* MapTileServerURLTemplate.swift in Sources */,
@@ -1055,12 +1136,14 @@
 				E5F6F30F1C2FE3360000A87E /* ProfileImageTableViewCell.swift in Sources */,
 				E5D96AF81BFB1CA700AFAFEE /* AppDelegate.swift in Sources */,
 				E5DA04011C4CDE6500FAD1D7 /* SpinnerTableViewCell.swift in Sources */,
+				E57058091CC9C2C100FA5D9F /* WSAPIRequestDelegate.swift in Sources */,
 				E57057E01CC8688400FA5D9F /* WSCreateFeedbackTableViewController+UITableViewDelegate.swift in Sources */,
 				E5700C521C44CB64008C8A87 /* WSComposeMessageViewController+UITextViewDelegate.swift in Sources */,
 				E54276881C3E83E500047029 /* WSCreateFeedbackTableViewController+UIPickerViewDataSource.swift in Sources */,
 				E5D961521C61FC75004E1F31 /* WSStore.swift in Sources */,
 				E59898851C9B405500AFB089 /* WSHostsOnMapSearchManager.swift in Sources */,
 				E542767E1C3E544600047029 /* WSRecommendationRating.swift in Sources */,
+				E57058181CCA377A00FA5D9F /* WSAPIEndPoint.swift in Sources */,
 				E5AF1A8D1C58A49A0004806A /* WSMessageThreadsTableViewController+UITableViewDelegate.swift in Sources */,
 				E5967BB21C38A11E0037F4B7 /* WSFeedbackTableViewController.swift in Sources */,
 				E53BA74B1C76AE8C0076E825 /* WSEntity.swift in Sources */,
@@ -1079,7 +1162,7 @@
 				E57AF74A1CAA6A0A002785D1 /* CDWSUserLocation+CoreDataProperties.swift in Sources */,
 				E5700C581C45C057008C8A87 /* WSHostListTableViewController.swift in Sources */,
 				E56CC0921BFD569500AAF973 /* SwitchTableViewCell.swift in Sources */,
-				E57057E81CC879E300FA5D9F /* WSCreateFeedbackTableViewController+WSAPIResponseHandler.swift in Sources */,
+				E57057E81CC879E300FA5D9F /* WSCreateFeedbackTableViewController+WSAPIResponseDelegate.swift in Sources */,
 				E5F6F3151C313F340000A87E /* SegmentTableViewCell.swift in Sources */,
 				E5AF1A881C58A41A0004806A /* WSMessageThreadTableViewController+UITableViewDataSource.swift in Sources */,
 				E5967BA71C3620470037F4B7 /* WSPhoneNumber.swift in Sources */,
@@ -1102,8 +1185,8 @@
 				E5967BA91C36910C0037F4B7 /* AvailabilityTableViewCell.swift in Sources */,
 				E53BA7421C766B490076E825 /* WSInfoBanner.swift in Sources */,
 				E57057DC1CC85CE100FA5D9F /* WSConstants.swift in Sources */,
+				E57057F31CC9895300FA5D9F /* WSAPIRequest.swift in Sources */,
 				E57AF7331CAA4EA4002785D1 /* WSStore+MapTile.swift in Sources */,
-				E57057E61CC8719800FA5D9F /* WSAPIResponseHandler.swift in Sources */,
 				E5A84A6B1C8FBCE1007609A9 /* WSUser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1112,7 +1195,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E5D96B0F1BFB1CA700AFAFEE /* WarmshowersTests.swift in Sources */,
+				E57057EA1CC8845300FA5D9F /* WSCreateFeedbackTableViewControllerTests.swift in Sources */,
+				E57057ED1CC88D7000FA5D9F /* WSMOCKAPICommunicator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1175,6 +1259,95 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		E57057EE1CC9803A00FA5D9F /* Test */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_SWIFT_FLAGS = "-DTEST";
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Test;
+		};
+		E57057EF1CC9803A00FA5D9F /* Test */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E3FB3CCF89A82EEE1EDC2F21 /* Pods.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = Warmshowers/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.rajanfernandez.Warmshowers;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Test;
+		};
+		E57057F01CC9803A00FA5D9F /* Test */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = WarmshowersTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.WarmshowersTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Warmshowers.app/Warmshowers";
+			};
+			name = Test;
+		};
+		E57057F11CC9803A00FA5D9F /* Test */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = WarmshowersUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.WarmshowersUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = Warmshowers;
+				USES_XCTRUNNER = YES;
+			};
+			name = Test;
+		};
 		E5D96B1C1BFB1CA700AFAFEE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1211,9 +1384,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_SWIFT_FLAGS = "-DDEBUG";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1251,9 +1425,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_SWIFT_FLAGS = "-DRELEASE";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1352,6 +1527,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E5D96B1C1BFB1CA700AFAFEE /* Debug */,
+				E57057EE1CC9803A00FA5D9F /* Test */,
 				E5D96B1D1BFB1CA700AFAFEE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -1361,6 +1537,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E5D96B1F1BFB1CA700AFAFEE /* Debug */,
+				E57057EF1CC9803A00FA5D9F /* Test */,
 				E5D96B201BFB1CA700AFAFEE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -1370,6 +1547,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E5D96B221BFB1CA700AFAFEE /* Debug */,
+				E57057F01CC9803A00FA5D9F /* Test */,
 				E5D96B231BFB1CA700AFAFEE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -1379,6 +1557,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E5D96B251BFB1CA700AFAFEE /* Debug */,
+				E57057F11CC9803A00FA5D9F /* Test */,
 				E5D96B261BFB1CA700AFAFEE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;

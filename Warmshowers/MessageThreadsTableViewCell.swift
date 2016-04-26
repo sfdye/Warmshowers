@@ -19,7 +19,7 @@ class MessageThreadsTableViewCell: UITableViewCell {
     @IBOutlet weak var newDot: WSColoredDot!
     var threadID: Int?
     
-    var currentUserUID: Int? { return WSLoginData.uid }
+    var currentUserUID: Int? { return WSSessionData.uid }
         
     override func awakeFromNib() {
         super.awakeFromNib()

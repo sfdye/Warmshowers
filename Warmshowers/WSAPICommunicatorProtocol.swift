@@ -9,5 +9,5 @@
 import Foundation
 
 protocol WSAPICommunicatorProtocol {
-    func sendFeedback(feedback: WSRecommendation, andNotify: WSAPIResponseHandler?)
+    func createFeedback(feedback: WSRecommendation, andNotify: WSAPIResponseDelegate)
 }

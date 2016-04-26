@@ -153,7 +153,7 @@ class WSAccountTableViewController: UITableViewController {
             return false
         }
         
-        return uid == WSLoginData.uid
+        return uid == WSSessionData.uid
     }
     
     // Sets up a done button if one is needed

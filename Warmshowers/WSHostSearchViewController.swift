@@ -410,7 +410,7 @@ class WSHostSearchViewController: UIViewController {
             if let user = sender as? WSUserLocation {
                 accountTVC.uid = user.uid
             } else {
-                accountTVC.uid = WSLoginData.uid
+                accountTVC.uid = WSSessionData.uid
             }
             
         case ResultsToUserAccountSegueID:

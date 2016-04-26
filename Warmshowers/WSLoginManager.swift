@@ -15,11 +15,11 @@ class WSLoginManager : WSRequestWithCSRFToken, WSRequestDelegate {
         requestDelegate = self
     }
     
-    // Note that reqeusts are built with the username and password saved to the NSUserdefaults and keychain with WSLoginData. Hence these varialble must be saved first before a valid request can be made.
+    // Note that reqeusts are built with the username and password saved to the NSUserdefaults and keychain with WSSessionData. Hence these varialble must be saved first before a valid request can be made.
     //
     func requestForDownload() throws -> NSURLRequest {
         do {
-            let (username, password) = try WSLoginData.getCredentials()
+            let (username, password) = try WSSessionData.getCredentials()
             let service = WSRestfulService(type: .Login)!
             let params = ["username" : username, "password" : password]
             let request = try WSRequest.requestWithService(service, params: params, token: token)
@@ -41,6 +41,7 @@ class WSLoginManager : WSRequestWithCSRFToken, WSRequestDelegate {
             
         guard let sessionName = json.valueForKey("session_name") as? String,
             let sessid = json.valueForKey("sessid") as? String,
+            let token = json.valueForKey("token") as? String,
             let user = json.valueForKey("user")
             else {
                 setDataError()
@@ -54,7 +55,7 @@ class WSLoginManager : WSRequestWithCSRFToken, WSRequestDelegate {
         
         // Store the session data
         let sessionCookie = sessionName + "=" + sessid
-        WSLoginData.saveSessionData(sessionCookie, uid: uid)
+        WSSessionData.saveSessionData(sessionCookie, token: token, uid: uid)
     }
     
     func setDataError() {

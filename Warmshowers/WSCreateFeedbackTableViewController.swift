@@ -48,13 +48,16 @@ class WSCreateWSFeedbackTableViewController: UITableViewController {
         tableView.estimatedRowHeight = 44
     }
     
-   
-    // MARK: Utility methods
+    
+    // MARK: Configuration
     
     // Configures the view controller
     func configureForSendingFeedbackForUserWithUserName(userName: String?) {
         feedback.recommendedUserName = userName
     }
+    
+   
+    // MARK: Utility methods
     
     // Checks if a picker is at the given index path
     //
@@ -107,16 +110,15 @@ class WSCreateWSFeedbackTableViewController: UITableViewController {
     // Inserts a picker cell under the cell at the given index path
     //
     func showPickerForIndexPath(indexPath: NSIndexPath) {
-        
         tableView.beginUpdates()
-        tableView.insertRowsAtIndexPaths([NSIndexPath(forRow: indexPath.row + 1, inSection: indexPath.section)], withRowAnimation: UITableViewRowAnimation.Automatic)
+        let pickerIndexPath = NSIndexPath(forRow: indexPath.row + 1, inSection: indexPath.section)
+        tableView.insertRowsAtIndexPaths([pickerIndexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
         tableView.endUpdates()
     }
     
     // Removes all picker cell from the table view
     //
     func removeAllPickerCells() {
-        
         if let pickerIndexPath = pickerIndexPath {
             tableView.beginUpdates()
             tableView.deleteRowsAtIndexPaths([pickerIndexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
@@ -138,7 +140,7 @@ class WSCreateWSFeedbackTableViewController: UITableViewController {
         
         self.view.endEditing(true)
         
-        if feedback.body != "" {
+        if feedback.hasBody {
             let alert = UIAlertController(title: nil, message: "Are you sure you want to discard the current feedback?", preferredStyle: .Alert)
             let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
             alert.addAction(cancelAction)
@@ -164,7 +166,7 @@ class WSCreateWSFeedbackTableViewController: UITableViewController {
             return
         }
         
-        guard feedback.body != "" else {
+        guard feedback.hasBody else {
             let alert = UIAlertController(title: "No feedback to submit", message: "Please enter some feedback before submitting.", preferredStyle: .Alert)
             let okAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
             alert.addAction(okAction)
@@ -173,8 +175,13 @@ class WSCreateWSFeedbackTableViewController: UITableViewController {
         }
         
         // Submit the feedback
-        apiCommunicator?.sendFeedback(feedback, andNotify: self)
         WSProgressHUD.show("Submitting feedback ...")
+        apiCommunicator?.createFeedback(feedback, andNotify: self)
+//        // TODO sort out this weak referencing
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), { [weak self] () -> Void in
+//            self?.apiCommunicator?.createFeedback(self!.feedback, andNotify: self!)
+//        })
+        
     }
 
 }

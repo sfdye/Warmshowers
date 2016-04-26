@@ -51,5 +51,4 @@ extension WSCreateWSFeedbackTableViewController : UIPickerViewDataSource {
             return 0
         }
     }
-    
 }

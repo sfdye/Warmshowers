@@ -25,10 +25,10 @@ enum WSRestfulServiceType {
     case MarkMessage
 }
 
-enum HttpMethod {
-    case Get
-    case Post
-}
+//enum HttpMethod {
+//    case Get
+//    case Post
+//}
 
 struct WSRestfulService {
     

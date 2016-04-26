@@ -34,7 +34,7 @@ struct WSRequest {
         // Add the session cookie to the header.
         if (service.type != .Login && service.type != .Token) {
             do {
-                let sessionCookie = try WSLoginData.getSessionCookie()
+                let sessionCookie = try WSSessionData.getSessionCookie()
                 request.addValue(sessionCookie, forHTTPHeaderField: "Cookie")
             } catch {
                 throw WSRequestError.NoSessionCookie
@@ -181,46 +181,4 @@ struct WSRequest {
     
 }
     
-// To create NSMutableRequests with a dictionary of post parameters
-//
-extension NSMutableURLRequest {
-    
-    // To convert a dictionary of post parameters into a parameter string and sets the string as the http body
-    //
-    func setBodyContent(params: [String: String]) {
-        
-        var requestBodyAsString = ""
-        var firstOneAdded = false
-        let paramKeys:Array<String> = Array(params.keys)
-        
-        for paramKey in paramKeys {
-            if(!firstOneAdded) {
-                requestBodyAsString += paramKey + "=" + params[paramKey]!
-                firstOneAdded = true
-            }
-            else {
-                requestBodyAsString += "&" + paramKey + "=" + params[paramKey]!
-            }
-        }
-        
-        self.HTTPBody = requestBodyAsString.dataUsingEncoding(NSUTF8StringEncoding)
-    }
-    
-    // Initialises a NSMutableURLRequest for a particular Warmshowers Restful service
-    //
-    class func withWSRestfulService(service: WSRestfulService) -> NSMutableURLRequest {
-        
-        let request = NSMutableURLRequest.init()
-        request.URL = service.url
-        request.HTTPMethod = service.methodAsString
-        
-        if service.type == .Token {
-            request.addValue("text/plain", forHTTPHeaderField: "Accept")
-        } else {
-            request.addValue("application/json", forHTTPHeaderField: "Accept")
-        }
-        
-        return request
-    }
-    
-}
+

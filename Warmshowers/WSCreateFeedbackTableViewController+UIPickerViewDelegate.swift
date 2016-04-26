@@ -84,5 +84,4 @@ extension WSCreateWSFeedbackTableViewController : UIPickerViewDelegate {
             return nil
         }
     }
-    
 }

@@ -107,7 +107,9 @@ class WSRequester : NSObject {
         
         task = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
             self.data = data
+            print(self.dataAsJSON())
             self.response = response
+            print(response)
             self.error = error
             self.processResponse()
         })

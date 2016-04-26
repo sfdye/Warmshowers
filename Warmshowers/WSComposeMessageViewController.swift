@@ -97,7 +97,7 @@ class WSComposeMessageViewController: UIViewController {
         self.threadID = threadID
         do {
             let thread = try WSStore.messageThreadWithID(threadID)
-            let recipients = thread?.otherParticipants(WSLoginData.uid)
+            let recipients = thread?.otherParticipants(WSSessionData.uid)
             self.threadID = threadID
             self.subject = thread?.subject
             self.recipients = recipients

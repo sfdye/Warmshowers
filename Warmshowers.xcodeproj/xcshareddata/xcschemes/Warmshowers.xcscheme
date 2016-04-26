@@ -23,7 +23,7 @@
       </BuildActionEntries>
    </BuildAction>
    <TestAction
-      buildConfiguration = "Debug"
+      buildConfiguration = "Test"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
@@ -35,16 +35,6 @@
                BlueprintIdentifier = "E5D96B091BFB1CA700AFAFEE"
                BuildableName = "WarmshowersTests.xctest"
                BlueprintName = "WarmshowersTests"
-               ReferencedContainer = "container:Warmshowers.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E5D96B141BFB1CA700AFAFEE"
-               BuildableName = "WarmshowersUITests.xctest"
-               BlueprintName = "WarmshowersUITests"
                ReferencedContainer = "container:Warmshowers.xcodeproj">
             </BuildableReference>
          </TestableReference>

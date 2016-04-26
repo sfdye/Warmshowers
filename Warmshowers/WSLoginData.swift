@@ -1,5 +1,5 @@
 //
-//  WSLoginData.swift
+//  WSSessionData.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 9/02/16.
@@ -9,18 +9,19 @@
 import UIKit
 import KeychainAccess
 
-// WSLoginData is a wrapper for saving and retrieving the users credentials
+// WSSessionData is a wrapper for saving and retrieving the users credentials
 // - The user's username, uid and session cookie are stored in NSUserDefaults
 // - The user's password is stored securely in the keychain
 
-enum WSLoginDataError : ErrorType {
+enum WSSessionDataError : ErrorType {
     case UsernameNotSet
     case PasswordNotSet
     case SessionCookieNotSet
+    case TokenNotSet
     case UserUIDNotSet
 }
 
-class WSLoginData {
+class WSSessionData {
     
     static let defaults = (UIApplication.sharedApplication().delegate as! AppDelegate).defaults
     static let keychain = Keychain(server: WSURL.BASE, protocolType: .HTTPS)
@@ -53,7 +54,7 @@ class WSLoginData {
         if let username = defaults.stringForKey(WSUserDefaultsKeys.UsernameKey) {
             return username
         } else {
-            throw WSLoginDataError.UsernameNotSet
+            throw WSSessionDataError.UsernameNotSet
         }
     }
     
@@ -68,7 +69,7 @@ class WSLoginData {
             if let password = try keychain.get(username) {
                 return password;
             } else {
-                throw WSLoginDataError.PasswordNotSet
+                throw WSSessionDataError.PasswordNotSet
             }
         }
     }
@@ -107,8 +108,9 @@ class WSLoginData {
     
     // Saves a session cookie and the current users uid to NSUserDefaults
     //
-    static func saveSessionData(sessionCookie: String, uid: Int) {
+    static func saveSessionData(sessionCookie: String, token: String, uid: Int) {
         defaults.setValue(sessionCookie, forKey: WSUserDefaultsKeys.SessionCookieKey)
+        defaults.setValue(token, forKey: WSUserDefaultsKeys.TokenKey)
         defaults.setValue(uid, forKey: WSUserDefaultsKeys.UserUIDKey)
         defaults.synchronize()
     }
@@ -119,12 +121,25 @@ class WSLoginData {
         if let sessionCookie = defaults.stringForKey(WSUserDefaultsKeys.SessionCookieKey) {
             return sessionCookie
         } else {
-            throw WSLoginDataError.SessionCookieNotSet
+            throw WSSessionDataError.SessionCookieNotSet
         }
     }
     
     static func deleteSessionCookie() {
         defaults.removeObjectForKey(WSUserDefaultsKeys.SessionCookieKey)
+    }
+    
+    // Returns the session CSRF token
+    static func getToken() throws -> String {
+        if let token = defaults.stringForKey(WSUserDefaultsKeys.TokenKey) {
+            return token
+        } else {
+            throw WSSessionDataError.TokenNotSet
+        }
+    }
+    
+    static func deleteToken() {
+        defaults.removeObjectForKey(WSUserDefaultsKeys.TokenKey)
     }
     
     // Returns the current users uid

@@ -103,7 +103,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Checks if the user is logged in
     func isLoggedin() -> Bool {
         do {
-            let _ = try WSLoginData.getSessionCookie()
+            let _ = try WSSessionData.getSessionCookie()
             return true
         } catch {
             return false
@@ -141,7 +141,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Clear the appropriate defaults.
         do {
-            try WSLoginData.removeDataForLogout()
+            try WSSessionData.removeDataForLogout()
         } catch {
             // Login data will be overwritten on next login.
         }
