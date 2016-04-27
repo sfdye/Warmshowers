@@ -14,14 +14,6 @@ enum WSAPICommunicatorMode {
     case Mocking
 }
 
-enum WSAPICommunicatorError : ErrorType {
-    case Offline
-    case NoSessionCookie
-    case NoToken
-    case ServerError(statusCode: Int)
-    case NoData
-}
-
 /**
  A central point of control for all api requests.
  */
@@ -71,7 +63,7 @@ class WSAPICommunicator : WSAPICommunicatorProtocol {
         }
     
         // Else add a request to the queue
-        let request = WSAPIRequest(endPoint: .CreateFeedback, withDelegate: self, andRequester:requester)
+        let request = WSAPIRequest(endPoint: endPoint, withDelegate: self, andRequester:requester)
         addRequestToQueue(request)
         
         do {
@@ -103,6 +95,12 @@ class WSAPICommunicator : WSAPICommunicatorProtocol {
     // MARK: Network activity indicator control
     // TODO
 
+    func login(username: String, password: String, andNotify requester: WSAPIResponseDelegate) {
+        
+        let params = ["username" : username, "password" : password]
+        
+        contactEndPoint(.Login, withParameters: params, thenNotify: requester)
+    }
     
     func createFeedback(feedback: WSRecommendation, andNotify requester: WSAPIResponseDelegate) {
         

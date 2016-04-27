@@ -1,5 +1,5 @@
 //
-//  WSCreateWSFeedbackTableViewController+UITextViewDelegate.swift
+//  WSCreateFeedbackTableViewController+UITextViewDelegate.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 12/01/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension WSCreateWSFeedbackTableViewController : UITextViewDelegate {
+extension WSCreateFeedbackTableViewController : UITextViewDelegate {
     
     func textViewDidChange(textView: UITextView) {
         

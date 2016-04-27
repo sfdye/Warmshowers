@@ -467,7 +467,7 @@ class WSAccountTableViewController: UITableViewController {
         }
         if segue.identifier == ToProvideFeeedbackSegueID {
             let navVC = segue.destinationViewController as! UINavigationController
-            let createFeedbackVC = navVC.viewControllers.first as! WSCreateWSFeedbackTableViewController
+            let createFeedbackVC = navVC.viewControllers.first as! WSCreateFeedbackTableViewController
             createFeedbackVC.configureForSendingFeedbackForUserWithUserName(info?.valueForKey("name") as? String)
         }
     }

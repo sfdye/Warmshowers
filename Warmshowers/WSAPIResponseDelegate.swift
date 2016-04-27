@@ -10,5 +10,5 @@ import Foundation
 
 protocol WSAPIResponseDelegate {
     func didRecieveAPISuccessResponse(data: AnyObject?)
-    func didRecieveAPIFailureResponse(error: ErrorType?)
+    func didRecieveAPIFailureResponse(error: ErrorType)
 }

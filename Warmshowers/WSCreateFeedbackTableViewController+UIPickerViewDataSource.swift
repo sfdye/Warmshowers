@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension WSCreateWSFeedbackTableViewController : UIPickerViewDataSource {
+extension WSCreateFeedbackTableViewController : UIPickerViewDataSource {
     
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
         

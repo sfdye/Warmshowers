@@ -33,8 +33,15 @@ extension WSAPICommunicator : WSAPIRequestDelegate {
         }
         
         do {
-            let json = try NSJSONSerialization.JSONObjectWithData(data, options: [])
-            try request.endPoint.request(request, needsToParseJSON: json)
+            switch request.endPoint.accept {
+            case .PlainText:
+                if let text = String.init(data: data, encoding: NSUTF8StringEncoding) {
+                    try request.endPoint.request(request, didRecievedResponseWithText: text)
+                }
+            case .JSON:
+                let json = try NSJSONSerialization.JSONObjectWithData(data, options: [])
+                try request.endPoint.request(request, didRecievedResponseWithJSON: json)
+            }
             request.delegate.request(request, didSucceedWithData: nil)
         } catch let error {
             request.delegate.request(request, didFailWithError: error)

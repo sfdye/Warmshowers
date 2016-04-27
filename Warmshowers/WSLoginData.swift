@@ -129,6 +129,11 @@ class WSSessionData {
         defaults.removeObjectForKey(WSUserDefaultsKeys.SessionCookieKey)
     }
     
+    static func setToken(token: String) {
+        defaults.setValue(token, forKey: WSUserDefaultsKeys.TokenKey)
+        defaults.synchronize()
+    }
+    
     // Returns the session CSRF token
     static func getToken() throws -> String {
         if let token = defaults.stringForKey(WSUserDefaultsKeys.TokenKey) {

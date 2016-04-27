@@ -19,17 +19,21 @@ protocol WSAPIEndPointProtocol {
     /** Specifies the http method that the service accepts */
     var method: HttpMethod { get }
     
+    /** Specifies the acceptable response data format */
+    var accept: AcceptType { get }
+    
     /** Provides a set of status codes that represent successful responses */
     var successCodes: Set<Int> { get }
     
     /** Defines if responses from the end point are expected to include data */
     func doesExpectDataWithResponse() -> Bool
     
+    /** Describes how plain text recieved from this endpoint should be parsed */
+    func request(request: WSAPIRequest, didRecievedResponseWithText text: String) throws
+    
     /** Describes how json recieved from this endpoint should be parsed */
-    func request(request: WSAPIRequest, needsToParseJSON json: AnyObject) throws
+    func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws
     
-    // MARK: Mocking
-    
+    /** Provides mock end point responses for testing */
     func generateMockResponseForURLRequest(urlRequest: NSMutableURLRequest) -> (NSData?, NSURLResponse?, NSError?)
-    
 }

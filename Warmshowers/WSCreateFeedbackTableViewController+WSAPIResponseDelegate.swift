@@ -1,5 +1,5 @@
 //
-//  WSCreateWSFeedbackTableViewController+WSAPIResponseDelegate.swift
+//  WSCreateFeedbackTableViewController+WSAPIResponseDelegate.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 21/04/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension WSCreateWSFeedbackTableViewController : WSAPIResponseDelegate {
+extension WSCreateFeedbackTableViewController : WSAPIResponseDelegate {
     
     func didRecieveAPISuccessResponse(data: AnyObject?) {
         print("In API success")
@@ -18,7 +18,7 @@ extension WSCreateWSFeedbackTableViewController : WSAPIResponseDelegate {
         })
     }
     
-    func didRecieveAPIFailureResponse(error: ErrorType?) {
+    func didRecieveAPIFailureResponse(error: ErrorType) {
         print("In API fail")
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             WSProgressHUD.hide()

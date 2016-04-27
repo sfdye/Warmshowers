@@ -19,5 +19,4 @@ class MapTileServerURLTemplate {
     class func OpenCycleMaps() -> String {
         return "http://tile.opencyclemap.org/cycle/{z}/{x}/{y}.png"
     }
-    
 }

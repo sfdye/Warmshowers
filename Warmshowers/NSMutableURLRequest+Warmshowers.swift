@@ -40,13 +40,8 @@ extension NSMutableURLRequest {
         let request = NSMutableURLRequest.init()
         request.URL = WSURL.BASE.URLByAppendingPathComponent(endPoint.path)
         request.HTTPMethod = endPoint.method.rawValue
-        
-        if endPoint.type == .Token {
-            request.addValue("text/plain", forHTTPHeaderField: "Accept")
-        } else {
-            request.addValue("application/json", forHTTPHeaderField: "Accept")
-        }
-        
+        request.addValue(endPoint.accept.rawValue, forHTTPHeaderField: "Accept")
+        print(endPoint.type)
         if (endPoint.type != .Login && endPoint.type != .Token) {
             // Add the session cookie to the header.
             do {

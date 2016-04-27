@@ -1,5 +1,5 @@
 //
-//  WSCreateWSFeedbackTableViewController.swift
+//  WSCreateFeedbackTableViewController.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 7/01/16.
@@ -9,7 +9,7 @@
 import UIKit
 import MBProgressHUD
 
-class WSCreateWSFeedbackTableViewController: UITableViewController {
+class WSCreateFeedbackTableViewController: UITableViewController {
     
     // MARK: Properties
     
@@ -29,16 +29,16 @@ class WSCreateWSFeedbackTableViewController: UITableViewController {
     var pickerIndexPath: NSIndexPath? = nil
     let PlaceholderFeedback = "Type your feedback here."
     
-    // HTTP client
-    var apiCommunicator: WSAPICommunicatorProtocol?
+    // API communicator
+    var apiCommunicator: WSAPICommunicatorProtocol? = WSAPICommunicator.sharedAPICommunicator
     
     
     // MARK: View life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        apiCommunicator = WSAPICommunicator.sharedAPICommunicator
-        assert(apiCommunicator != nil, "WSCreateWSFeedbackTableViewController failed to set an API Communicator.")
+//        apiCommunicator = WSAPICommunicator.sharedAPICommunicator
+        assert(apiCommunicator != nil, "WSCreateFeedbackTableViewController failed to set an API Communicator.")
         
         // Get the current year
         thisYear = calendar?.components([.Year], fromDate: NSDate()).year
@@ -131,57 +131,6 @@ class WSCreateWSFeedbackTableViewController: UITableViewController {
     //
     func hideKeyboard() {
         self.view.endEditing(true)
-    }
-
-    
-    // MARK: Actions
-
-    @IBAction func cancelButtonPressed(sender: AnyObject?) {
-        
-        self.view.endEditing(true)
-        
-        if feedback.hasBody {
-            let alert = UIAlertController(title: nil, message: "Are you sure you want to discard the current feedback?", preferredStyle: .Alert)
-            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
-            alert.addAction(cancelAction)
-            let continueAction = UIAlertAction(title: "Continue", style: .Default) { (continueAction) -> Void in
-                self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
-            }
-            alert.addAction(continueAction)
-            self.presentViewController(alert, animated: true, completion: nil)
-        } else {
-            self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
-        }
-    }
-    
-    @IBAction func sumbitButtonPressed(sender: AnyObject?) {
-        
-        self.view.endEditing(true)
-        
-        guard let _ = feedback.recommendedUserName else {
-            let alert = UIAlertController(title: "An error occured", message: "Recommended user not set. Please report this as a bug, sorry for the inconvenience.", preferredStyle: .Alert)
-            let okAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
-            alert.addAction(okAction)
-            self.presentViewController(alert, animated: true, completion: nil)
-            return
-        }
-        
-        guard feedback.hasBody else {
-            let alert = UIAlertController(title: "No feedback to submit", message: "Please enter some feedback before submitting.", preferredStyle: .Alert)
-            let okAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
-            alert.addAction(okAction)
-            self.presentViewController(alert, animated: true, completion: nil)
-            return
-        }
-        
-        // Submit the feedback
-        WSProgressHUD.show("Submitting feedback ...")
-        apiCommunicator?.createFeedback(feedback, andNotify: self)
-//        // TODO sort out this weak referencing
-//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), { [weak self] () -> Void in
-//            self?.apiCommunicator?.createFeedback(self!.feedback, andNotify: self!)
-//        })
-        
     }
 
 }

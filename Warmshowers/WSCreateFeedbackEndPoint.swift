@@ -16,21 +16,10 @@ class WSCreateFeedbackEndPoint : WSAPIEndPointProtocol {
     
     var path: String { return "/services/rest/node" }
     
-    var method: HttpMethod { return HttpMethod.Post }
+    var method: HttpMethod { return .Post }
     
-    var successCodes: Set<Int> { return [200] }
-    
-    func request(request: WSAPIRequest, shouldParseDataWithResponse response: NSURLResponse?) -> Bool {
-        print("Got response with code: \((response as! NSHTTPURLResponse).statusCode)")
-        return (response as! NSHTTPURLResponse).statusCode == 200
-    }
-    
-    func doesExpectDataWithResponse() -> Bool {
-        return true
-    }
-    
-    func request(request: WSAPIRequest, needsToParseJSON json: AnyObject) throws {
-        // No need to parse response.
+    func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws {
+        // No need for response data.
     }
     
     func generateMockResponseForURLRequest(urlRequest: NSMutableURLRequest) -> (NSData?, NSURLResponse?, NSError?) {
@@ -38,5 +27,4 @@ class WSCreateFeedbackEndPoint : WSAPIEndPointProtocol {
         let response = NSURLResponse()
         return (data, response, nil)
     }
-    
 }

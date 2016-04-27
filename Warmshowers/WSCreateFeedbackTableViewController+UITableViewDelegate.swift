@@ -1,5 +1,5 @@
 //
-//  WSCreateWSFeedbackTableViewController+UITableViewDelegate.swift
+//  WSCreateFeedbackTableViewController+UITableViewDelegate.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 21/04/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension WSCreateWSFeedbackTableViewController {
+extension WSCreateFeedbackTableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         

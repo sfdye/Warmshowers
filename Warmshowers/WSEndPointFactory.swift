@@ -14,12 +14,34 @@ import Foundation
 class WSAPIEndPointFactory {
     static func endPointWithEndPoint(endPoint: WSAPIEndPoint, andUID uid: Int? = nil) -> WSAPIEndPointProtocol {
         switch endPoint {
+        case .Token:
+            return WSTokenEndPoint.sharedEndPoint
+        case .Login:
+            return WSLoginEndPoint.sharedEndPoint
+        case .Logout:
+            return WSCreateFeedbackEndPoint.sharedEndPoint // NEEDS CHANGE
+        case .SearchByLocation:
+            return WSCreateFeedbackEndPoint.sharedEndPoint // NEEDS CHANGE
+        case .SearchByKeyword:
+            return WSCreateFeedbackEndPoint.sharedEndPoint // NEEDS CHANGE
+        case .UserInfo:
+            return WSCreateFeedbackEndPoint.sharedEndPoint // NEEDS CHANGE
+        case .UserFeedback:
+            return WSCreateFeedbackEndPoint.sharedEndPoint // NEEDS CHANGE
         case .CreateFeedback:
             return WSCreateFeedbackEndPoint.sharedEndPoint
-            
-        // CHANGE THIS DEFAULT LATER
-        default:
-            return WSCreateFeedbackEndPoint.sharedEndPoint
+        case .NewMessage:
+            return WSCreateFeedbackEndPoint.sharedEndPoint // NEEDS CHANGE
+        case .ReplyToMessage:
+            return WSCreateFeedbackEndPoint.sharedEndPoint // NEEDS CHANGE
+        case .UnreadMessageCount:
+            return WSCreateFeedbackEndPoint.sharedEndPoint // NEEDS CHANGE
+        case .GetAllMessageThreads:
+            return WSCreateFeedbackEndPoint.sharedEndPoint // NEEDS CHANGE
+        case .GetMessageThread:
+            return WSCreateFeedbackEndPoint.sharedEndPoint // NEEDS CHANGE
+        case .MarkMessage:
+            return WSCreateFeedbackEndPoint.sharedEndPoint // NEEDS CHANGE
         }
     }
 }

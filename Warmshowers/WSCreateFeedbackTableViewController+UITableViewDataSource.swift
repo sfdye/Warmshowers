@@ -1,5 +1,5 @@
 //
-//  WSCreateWSFeedbackTableViewController+UITableViewDataSource.swift
+//  WSCreateFeedbackTableViewController+UITableViewDataSource.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 21/04/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension WSCreateWSFeedbackTableViewController {
+extension WSCreateFeedbackTableViewController {
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 2

@@ -1,5 +1,5 @@
 //
-//  WSCreateWSFeedbackTableViewController+PickerViewDelegate.swift
+//  WSCreateFeedbackTableViewController+PickerViewDelegate.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 7/01/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension WSCreateWSFeedbackTableViewController : UIPickerViewDelegate {
+extension WSCreateFeedbackTableViewController : UIPickerViewDelegate {
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
