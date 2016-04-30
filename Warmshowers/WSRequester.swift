@@ -19,6 +19,9 @@ Requester error codes:
 105 - No data recieved
  */
 
+// Error domain
+let WSErrorDomain = "com.rajanfernandez.Warmshowers.ErrorDomain"
+
 enum WSRequesterError : ErrorType {
     case CouldNotCreateRequest
 }

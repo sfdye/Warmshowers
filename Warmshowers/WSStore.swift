@@ -9,6 +9,12 @@
 import UIKit
 import CoreData
 
+// Error types
+enum DataError : ErrorType {
+    case InvalidInput
+    case FailedConversion
+}
+
 class WSStore : NSObject {
     
     static let sharedStore = WSStore()

@@ -824,10 +824,8 @@
 		E5D96AF61BFB1CA700AFAFEE /* Warmshowers */ = {
 			isa = PBXGroup;
 			children = (
-				E5ED1E981CD468910017D12F /* SessionState */,
-				E5ED1E8C1CD4169C0017D12F /* NavigationDelegate */,
-				E59FE1DA1CD3590C0024F354 /* AlertDelegate */,
 				E5D96AF71BFB1CA700AFAFEE /* AppDelegate.swift */,
+				E5ED1E9F1CD475CE0017D12F /* Delegates */,
 				E54A573A1C026D96000843A9 /* Controllers */,
 				E54A57391C026D56000843A9 /* API */,
 				E50FD8A01C053A24004D38A3 /* Map */,
@@ -927,6 +925,16 @@
 				E53548E91C69713900E22C3D /* WSLoginData.swift */,
 			);
 			name = SessionState;
+			sourceTree = "<group>";
+		};
+		E5ED1E9F1CD475CE0017D12F /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				E5ED1E981CD468910017D12F /* SessionState */,
+				E5ED1E8C1CD4169C0017D12F /* NavigationDelegate */,
+				E59FE1DA1CD3590C0024F354 /* AlertDelegate */,
+			);
+			name = Delegates;
 			sourceTree = "<group>";
 		};
 		E5F6F3031C28EC550000A87E /* Views */ = {

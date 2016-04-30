@@ -46,4 +46,8 @@ class WSSessionState : WSSessionStateProtocol {
         defaults.removeObjectForKey(WSUserDefaultsKeys.UserUIDKey)
         defaults.synchronize()
     }
+
+    var isLoggedIn: Bool {
+        return defaults.objectForKey(WSUserDefaultsKeys.SessionCookieKey) != nil
+    }
 }

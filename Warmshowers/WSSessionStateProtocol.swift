@@ -24,4 +24,7 @@ protocol WSSessionStateProtocol {
     
     /** Deletes the session cookie, token and current user uid from NSUserDefaults */
     func deleteSessionData(sessionCookie: String, token: String, uid: Int)
+    
+    /** Returns true is a user is logged in */
+    var isLoggedIn: Bool { get }
 }

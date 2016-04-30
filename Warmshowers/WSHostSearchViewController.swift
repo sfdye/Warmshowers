@@ -16,7 +16,6 @@ import CCHMapClusterController
 // address this issue (add gps routes to the map)
 // https://ro.warmshowers.org/node/112508
 // - make the pin clustering like the website and android app
-// add loading indicator to map view
 
 class WSHostSearchViewController: UIViewController {
     
