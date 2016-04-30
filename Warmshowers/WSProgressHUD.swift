@@ -31,14 +31,14 @@ class WSProgressHUD {
     //
     static func hide() {
         if let view = (UIApplication.sharedApplication().delegate as! AppDelegate).window?.rootViewController?.view {
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), { [unowned view] in
                 MBProgressHUD.hideHUDForView(view, animated: true)
             })
         }
     }
     
     static func hide(view: UIView) {
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+        dispatch_async(dispatch_get_main_queue(), { [unowned view] in
             MBProgressHUD.hideHUDForView(view, animated: true)
         })
     }

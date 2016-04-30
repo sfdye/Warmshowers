@@ -184,13 +184,13 @@ class WSAccountTableViewController: UITableViewController {
                     success: {
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
                             WSProgressHUD.hide()
-                            appDelegate.logout()
+//                            appDelegate.logout() // DISABLED FOR NOW WHILE UPGRADING TO PROTOCOL ORIENTATED DESIGN
                         })
                     },
                     failure: { (error) -> Void in
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
                             WSProgressHUD.hide()
-                            appDelegate.logout()
+//                            appDelegate.logout() // DISABLED FOR NOW WHILE UPGRADING TO PROTOCOL ORIENTATED DESIGN
                         })
                     }
                 )

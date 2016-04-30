@@ -9,5 +9,5 @@
 import Foundation
 
 enum WSAPIEndPointError : ErrorType {
-    case ParsingError(endPoint: String, key: String)
+    case ParsingError(endPoint: String, key: String?)
 }

@@ -11,16 +11,19 @@ import Foundation
 
 class WSMOCKAPICommunicator : WSAPICommunicatorProtocol {
     
-    static let sharedAPICommunicator = WSMOCKAPICommunicator()
+    var loginCalled = false
+    var logoutCalled = false
+    var createFeedbackCalled = false
     
-    var sendFeedbackCalled = false
-    
-    func sendFeedback(feedback: WSRecommendation, andNotify sender: WSAPIResponseDelegate) {
-        print("IN MOCK")
-        sendFeedbackCalled = true
+    func login(username: String, password: String, andNotify: WSAPIResponseDelegate) {
+        loginCalled = true
     }
     
-    func reset() {
-        sendFeedbackCalled = false
+    func logoutAndNotify(requester: WSAPIResponseDelegate) {
+        logoutCalled = true
+    }
+    
+    func createFeedback(feedback: WSRecommendation, andNotify: WSAPIResponseDelegate) {
+        createFeedbackCalled = true
     }
 }

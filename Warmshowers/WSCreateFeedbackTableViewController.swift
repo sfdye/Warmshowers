@@ -31,14 +31,13 @@ class WSCreateFeedbackTableViewController: UITableViewController {
     
     // API communicator
     var apiCommunicator: WSAPICommunicatorProtocol? = WSAPICommunicator.sharedAPICommunicator
+    var alertDelegate: WSAlertProtocol? = WSAlertDelegate.sharedAlertDelegate
     
     
     // MARK: View life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        apiCommunicator = WSAPICommunicator.sharedAPICommunicator
-        assert(apiCommunicator != nil, "WSCreateFeedbackTableViewController failed to set an API Communicator.")
         
         // Get the current year
         thisYear = calendar?.components([.Year], fromDate: NSDate()).year

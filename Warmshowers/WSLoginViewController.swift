@@ -16,29 +16,18 @@ class WSLoginViewController: UIViewController {
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
 
-    // API communicator
+    // Delegates
+    var sessionState: WSSessionStateProtocol? = WSSessionState.sharedSessionState
+    var navigationDelegate: WSNavigationProtocol? = WSNavigationDelegate.sharedNavigationDelegate
     var apiCommunicator: WSAPICommunicatorProtocol? = WSAPICommunicator.sharedAPICommunicator
-
+    var alertDelegate: WSAlertProtocol? = WSAlertDelegate.sharedAlertDelegate
+    
 
     // MARK: View life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Load the default username
-        usernameTextField.text = WSSessionData.username
-    }
-    
-    
-    // MARK: Utility functions
-    
-    /**
-     Shows an alert with a 'Dismiss' button.
-     */
-    func alert(title: String, message: String, handler: ((UIAlertAction) -> Void)? = nil) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        let action = UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil)
-        alertController.addAction(action)
-        self.presentViewController(alertController, animated: true, completion: nil)
+        usernameTextField.text = sessionState?.username
     }
 }

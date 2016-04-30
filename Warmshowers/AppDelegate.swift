@@ -29,9 +29,6 @@ import CoreData
 // - add offline country option: downloads users in one country for offline use for a few days.
 // link address in account view to open in maps/google maps options
 
-// View controller identifiers
-let WSLoginViewControllerID = "Login"
-
 // Error types
 enum DataError : ErrorType {
     case InvalidInput
@@ -46,18 +43,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    // app variables
-    let storyboard:UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-    let defaults = NSUserDefaults.standardUserDefaults()
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         configureGlobalViewSettings()
 
         if !isLoggedin() {
-            showLoginScreen()
+            WSNavigationDelegate.sharedNavigationDelegate.showLoginScreen()
         } else {
-            showMainApp()
+            WSNavigationDelegate.sharedNavigationDelegate.showMainApp()
         }
         
         return true
@@ -109,46 +102,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return false
         }
     }
-    
-    // Shows the login page instead of the main app
-    func showLoginScreen() {
-        let loginViewController = storyboard.instantiateViewControllerWithIdentifier(WSLoginViewControllerID)
-        self.window?.rootViewController = loginViewController
-    }
-    
-    // Shows the main app with the tab bar
-    //
-    func showMainApp() {
-        self.window?.rootViewController = storyboard.instantiateInitialViewController()
-    }
-    
-    // Tasks to do when loggin out the user
-    //
-    func logout() {
-        
-        // Clear out the users messages
-        do {
-            try WSStore.clearout()
-        } catch {
-            // Suggest that the user delete the app for privacy
-            let alert = UIAlertController(title: "Data Error", message: "Sorry, an error occured while removing your messages from this iPhone during the logout process. If you would like to remove your Warmshowers messages from this iPhone please try deleting the Warmshowers app.", preferredStyle: .Alert)
-            let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-            alert.addAction(okAction)
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.window?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
-            })
-        }
-        
-        // Clear the appropriate defaults.
-        do {
-            try WSSessionData.removeDataForLogout()
-        } catch {
-            // Login data will be overwritten on next login.
-        }
-        
-        // Go to the login screen
-        showLoginScreen()
-    }
-    
 }
 

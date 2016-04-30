@@ -42,12 +42,6 @@ class WSLoginEndPoint : WSAPIEndPointProtocol {
         
         // Store the session data
         let sessionCookie = sessionName + "=" + sessid
-        WSSessionData.saveSessionData(sessionCookie, token: token, uid: uid)
-    }
-    
-    func generateMockResponseForURLRequest(urlRequest: NSMutableURLRequest) -> (NSData?, NSURLResponse?, NSError?) {
-        let data = NSData()
-        let response = NSURLResponse()
-        return (data, response, nil)
+        WSSessionState.sharedSessionState.saveSessionData(sessionCookie, token: token, uid: uid)
     }
 }

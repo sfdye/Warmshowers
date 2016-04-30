@@ -25,6 +25,7 @@ class WSTokenEndPoint : WSAPIEndPointProtocol {
     }
     
     func generateMockResponseForURLRequest(urlRequest: NSMutableURLRequest) -> (NSData?, NSURLResponse?, NSError?) {
+        assertionFailure("No testing data added")
         let data = NSData()
         let response = NSURLResponse()
         return (data, response, nil)

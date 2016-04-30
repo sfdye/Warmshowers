@@ -15,44 +15,66 @@ class WSCreateFeedbackTableViewControllerTests: XCTestCase {
     let storyboardID = CreateFeedbackSBID
     
     // Test objects
-//    var mockAPICommunicator = WSMOCKAPICommunicator.sharedAPICommunicator
-    var createFeedbackViewController: WSCreateWSFeedbackTableViewController?
+    var createFeedbackViewController: WSCreateFeedbackTableViewController?
+    var mockAPICommunicator: WSMOCKAPICommunicator?
+    var mockAlertDelegate: WSMOCKAlertDelegate?
     
     override func setUp() {
         super.setUp()
-        
-        // Test the view can be loaded from the storyboard.
-        createFeedbackViewController = storyboard.instantiateViewControllerWithIdentifier(storyboardID) as? WSCreateWSFeedbackTableViewController
+        // Load the view controller
+        createFeedbackViewController = storyboard.instantiateViewControllerWithIdentifier(storyboardID) as? WSCreateFeedbackTableViewController
         XCTAssertNotNil(createFeedbackViewController, "Failed to instantiate with storyboard ID: \(storyboardID).")
         
-//        // Attach the mock api communicator.
-//        mockAPICommunicator = WSMOCKAPICommunicator.sharedAPICommunicator
-//        createFeedbackViewController?.apiCommunicator = mockAPICommunicator
-//        print(createFeedbackViewController?.apiCommunicator)
+        // Initialise mocks
+        mockAPICommunicator = WSMOCKAPICommunicator()
+        mockAlertDelegate = WSMOCKAlertDelegate()
+        
+        // Set the mocks that don't require the view
+        createFeedbackViewController?.apiCommunicator = mockAPICommunicator
+        createFeedbackViewController?.alertDelegate = mockAlertDelegate
     }
     
     override func tearDown() {
         createFeedbackViewController = nil
-//        mockAPICommunicator.reset()
+        mockAPICommunicator = nil
+        mockAlertDelegate = nil
         super.tearDown()
     }
     
-    func testSubmitFeedbackAction() {
-        
-        createFeedbackViewController?.feedback.recommendedUserName = "bob"
+    func testRecommendedUserNameGuard() {
+        // given
+        createFeedbackViewController?.feedback.recommendedUserName = nil
         createFeedbackViewController?.feedback.body = "test"
         
+        // when - feedback is submitted with no recommended user name
         createFeedbackViewController?.sumbitButtonPressed(nil)
         
+        // then
+        XCTAssertTrue(mockAlertDelegate!.presentAlertCalled, "User not alerted when no recommended user is set while creating feedback.")
+    }
+    
+    func testFeedbackBodyGuard() {
+        // given
+        createFeedbackViewController?.feedback.recommendedUserName = "bob"
+        createFeedbackViewController?.feedback.body = nil
         
+        // when - feedback is submitted with no recommended user name
+        createFeedbackViewController?.sumbitButtonPressed(nil)
         
-//        print(mockAPICommunicator.sendFeedbackCalled)
+        // then
+        XCTAssertTrue(mockAlertDelegate!.presentAlertCalled, "User not alerted when attempting to submit feedback with no body.")
+    }
+    
+    func testSubmitFeedback() {
+        // given
+        createFeedbackViewController?.feedback.recommendedUserName = "bob"
+        createFeedbackViewController?.feedback.body = "feedback"
         
-//        XCTAssertFalse(mockAPICommunicator.sendFeedbackCalled, "Feedback should not be submitted without a username.")
+        // when - feedback is submitted with no recommended user name
+        createFeedbackViewController?.sumbitButtonPressed(nil)
         
-        
-//        XCTAssertFalse(mockAPICommunicator.sendFeedbackCalled, "Feedback should not be submitted without a recomendation body.")
-        
+        // then
+        XCTAssertTrue(mockAPICommunicator!.createFeedbackCalled, "API not contacted when the create feedback button was pressed.")
     }
 
 }

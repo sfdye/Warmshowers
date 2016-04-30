@@ -23,31 +23,31 @@ enum WSSessionDataError : ErrorType {
 
 class WSSessionData {
     
-    static let defaults = (UIApplication.sharedApplication().delegate as! AppDelegate).defaults
+    static let defaults = NSUserDefaults.standardUserDefaults()
     static let keychain = Keychain(server: WSURL.BASE, protocolType: .HTTPS)
     
     // Mark: Convenience properties
     
-    static var username: String? {
-        do {
-            let username = try getUserName()
-            return username
-        } catch {
-            return nil
-        }
-    }
+//    static var username: String? {
+//        do {
+//            let username = try getUserName()
+//            return username
+//        } catch {
+//            return nil
+//        }
+//    }
     
     static var uid: Int { return getCurrentUserUID() }
     
     
     // MARK: Username
     
-    // Save a username to NSUserDefaults
-    static func saveUsername(username: String) {
-        defaults.setValue(username, forKey: WSUserDefaultsKeys.UsernameKey)
-        defaults.synchronize()
-    }
-    
+//    // Save a username to NSUserDefaults
+//    static func saveUsername(username: String) {
+//        defaults.setValue(username, forKey: WSUserDefaultsKeys.UsernameKey)
+//        defaults.synchronize()
+//    }
+//    
     // Returns latest users username or nil
     //
     static func getUserName() throws -> String {
@@ -73,28 +73,28 @@ class WSSessionData {
             }
         }
     }
-    
-    // Removes the users password from the keychain
-    //
-    static func deletePassword() throws {
-        do {
-            let username = try getUserName()
-            try keychain.remove(username)
-        }
-    }
+//
+//    // Removes the users password from the keychain
+//    //
+//    static func deletePassword() throws {
+//        do {
+//            let username = try getUserName()
+//            try keychain.remove(username)
+//        }
+//    }
     
     
     // MARK: Full Credentials
     
-    // Saves the users password to the keychain
-    //
-    static func saveCredentials(password: String, forUsername username: String) throws {
-        do {
-            try keychain.set(password, key: username)
-            saveUsername(username)
-        }
-    }
-    
+//    // Saves the users password to the keychain
+//    //
+//    static func saveCredentials(password: String, forUsername username: String) throws {
+//        do {
+//            try keychain.set(password, key: username)
+//            saveUsername(username)
+//        }
+//    }
+//    
     static func getCredentials() throws -> (username: String, password: String) {
         do {
             let password = try getPassword()
@@ -166,7 +166,8 @@ class WSSessionData {
         do {
             deleteCurrentUserUID()
             deleteSessionCookie()
-            try deletePassword()
+            deleteToken()
+//            try deletePassword()
         }
     }
 }

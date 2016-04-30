@@ -46,7 +46,9 @@ let MessageSegueID = "ToMessageThread"
 let ReplyToMessageThreadSegueID = "ToReplyToMessage"
 
 // Storyboard IDs
+let LoginSBID = "Login"
 let CreateFeedbackSBID = "CreateFeedback"
+let SettingsSBID = "Settings"
 
 // Notification identifiers
 let MessageUpdateNotificationName = "ws_update_messages"

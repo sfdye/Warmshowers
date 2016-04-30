@@ -1,14 +1,14 @@
 //
-//  WarmshowersUITests.swift
-//  WarmshowersUITests
+//  LoginUITests.swift
+//  Warmshowers
 //
-//  Created by Rajan Fernandez on 17/11/15.
-//  Copyright © 2015 Rajan Fernandez. All rights reserved.
+//  Created by Rajan Fernandez on 28/04/16.
+//  Copyright © 2016 Rajan Fernandez. All rights reserved.
 //
 
 import XCTest
 
-class WarmshowersUITests: XCTestCase {
+class LoginUITests: XCTestCase {
         
     override func setUp() {
         super.setUp()
@@ -28,9 +28,24 @@ class WarmshowersUITests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testLoginActions() {
+        
+        let app = XCUIApplication()
+        
+        let userNameField = app.textFields["Username or Email"]
+        XCTAssertNotNil(userNameField, "Username field not found on login screen.")
+        userNameField.tap()
+        
+        let passwordSecureTextField = app.secureTextFields["Password"]
+        XCTAssertNotNil(passwordSecureTextField, "Password field not found on login screen.")
+        passwordSecureTextField.tap()
+        
+        app.buttons["Login"].tap()
+        
+        let dismissButton = app.alerts["Login error"].collectionViews.buttons["Dismiss"]
+        dismissButton.tap()
+        
+        app.buttons["Create an account"].tap()
     }
     
 }

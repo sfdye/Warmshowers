@@ -102,6 +102,10 @@ class WSAPICommunicator : WSAPICommunicatorProtocol {
         contactEndPoint(.Login, withParameters: params, thenNotify: requester)
     }
     
+    func logoutAndNotify(requester: WSAPIResponseDelegate) {
+        contactEndPoint(.Logout, thenNotify: requester)
+    }
+    
     func createFeedback(feedback: WSRecommendation, andNotify requester: WSAPIResponseDelegate) {
         
         var params = [String: String]()

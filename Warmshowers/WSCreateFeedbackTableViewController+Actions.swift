@@ -15,6 +15,7 @@ extension WSCreateFeedbackTableViewController {
         self.view.endEditing(true)
         
         if feedback.hasBody {
+            // TODO: Delegate this to the alertDelgate
             let alert = UIAlertController(title: nil, message: "Are you sure you want to discard the current feedback?", preferredStyle: .Alert)
             let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
             alert.addAction(cancelAction)
@@ -33,18 +34,12 @@ extension WSCreateFeedbackTableViewController {
         self.view.endEditing(true)
         
         guard let _ = feedback.recommendedUserName else {
-            let alert = UIAlertController(title: "An error occured", message: "Recommended user not set. Please report this as a bug, sorry for the inconvenience.", preferredStyle: .Alert)
-            let okAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
-            alert.addAction(okAction)
-            self.presentViewController(alert, animated: true, completion: nil)
+            alertDelegate?.presentAlertFor(self, withTitle: "An error occured", button: "OK", message: "Recommended user not set. Please report this as a bug, sorry for the inconvenience.")
             return
         }
         
         guard feedback.hasBody else {
-            let alert = UIAlertController(title: "No feedback to submit", message: "Please enter some feedback before submitting.", preferredStyle: .Alert)
-            let okAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
-            alert.addAction(okAction)
-            self.presentViewController(alert, animated: true, completion: nil)
+            alertDelegate?.presentAlertFor(self, withTitle: "No feedback to submit", button: "OK", message: "Please enter some feedback before submitting.")
             return
         }
         
