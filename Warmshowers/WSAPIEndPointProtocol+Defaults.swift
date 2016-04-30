@@ -17,9 +17,9 @@ extension WSAPIEndPointProtocol {
     
     func doesExpectDataWithResponse() -> Bool { return true }
     
-    func request(request: WSAPIRequest, didRecievedResponseWithText text: String) throws { }
+    func request(request: WSAPIRequest, didRecievedResponseWithText text: String) throws -> AnyObject? { return nil }
     
-    func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws { }
+    func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? { return nil }
     
     func generateMockResponseForURLRequest(urlRequest: NSMutableURLRequest) -> (NSData?, NSURLResponse?, NSError?) {
         return (nil, nil, nil)

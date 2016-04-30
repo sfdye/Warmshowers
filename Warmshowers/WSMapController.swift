@@ -28,7 +28,7 @@ class WSMapController : NSObject {
     var mapView: MKMapView!
     var clusteringController: CCHMapClusterController
     var updatesInProgress = [String: WSHostsOnMapSearchManager]()
-    var delegate: WSMapControllerDelegate
+    var delegate: WSMapControllerDelegate?
     
     // MARK: Initialiser
     
@@ -138,7 +138,7 @@ class WSMapController : NSObject {
         if shouldUpdateMapTile(tile) {
             
             if updatesInProgress.count == 0 {
-                self.delegate.willBeginUpdates()
+                self.delegate!.willBeginUpdates()
             }
             
             print("updating tile")
@@ -189,7 +189,7 @@ class WSMapController : NSObject {
         
         // Signal finshing updates
         if updatesInProgress.count == 0 {
-            self.delegate.didFinishUpdates()
+            self.delegate!.didFinishUpdates()
         }
     }
     

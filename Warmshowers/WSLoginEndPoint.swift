@@ -18,7 +18,7 @@ class WSLoginEndPoint : WSAPIEndPointProtocol {
     
     var method: HttpMethod { return .Post }
     
-    func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws {
+    func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
         
         guard let sessionName = json.valueForKey("session_name") as? String else {
             throw WSAPIEndPointError.ParsingError(endPoint: path, key: "session_name")
@@ -43,5 +43,7 @@ class WSLoginEndPoint : WSAPIEndPointProtocol {
         // Store the session data
         let sessionCookie = sessionName + "=" + sessid
         WSSessionState.sharedSessionState.saveSessionData(sessionCookie, token: token, uid: uid)
+        
+        return nil
     }
 }

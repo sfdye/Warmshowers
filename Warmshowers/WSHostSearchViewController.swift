@@ -24,11 +24,6 @@ class WSHostSearchViewController: UIViewController {
     @IBOutlet var toolbar: UIToolbar!
     @IBOutlet var infoLabel: UILabel!
     
-    var mapController: WSMapController!
-    var tableViewController = WSLazyImageTableViewController()
-    var searchController: UISearchController!
-    var searchBar: UISearchBar!
-    
     // MARK: Constants
     
     let kDefaultRegionLatitudeDelta: CLLocationDegrees = 1
@@ -36,8 +31,21 @@ class WSHostSearchViewController: UIViewController {
     
     // MARK: Properties
     
+    var mapController: WSMapController!
+    var tableViewController = WSLazyImageTableViewController()
+    var searchController: UISearchController!
+    var searchBar: UISearchBar!
+    
     let locationManager = CLLocationManager()
     var debounceTimer: NSTimer?
+    
+    var mapOverlay: MKTileOverlay?
+    var mapSource: WSMapSource = WSMapSource.AppleMaps
+    
+    // Delegates
+    
+    var apiCommunicator: WSAPICommunicator? = WSAPICommunicator.sharedAPICommunicator
+    var alertDelegate: WSAlertDelegate? = WSAlertDelegate.sharedAlertDelegate
     
     
     // MARK: View life cycle
@@ -55,7 +63,7 @@ class WSHostSearchViewController: UIViewController {
             locationManager.requestWhenInUseAuthorization()
         }
         mapView.showsUserLocation = true
-        mapView.delegate = mapController
+        mapView.delegate = self
         centreOnRegion()
         
         infoLabel.text = nil
@@ -117,7 +125,6 @@ class WSHostSearchViewController: UIViewController {
     // MARK: Reachability
     
     func reachabilityChanged(note: NSNotification) {
-        print("called")
         showReachabilityBannerIfNeeded()
     }
     
@@ -144,18 +151,20 @@ class WSHostSearchViewController: UIViewController {
     
     /** Shows the host map and hides the search by keyword table view */
     func showMapView() {
-        UIView.transitionWithView(tableView, duration: 0.1, options: .TransitionCrossDissolve, animations: { () -> Void in
-            self.tableView.hidden = true
-            self.toolbar.hidden = false
-            self.tableViewController.lazyImageObjects = [WSUserLocation]()
+        UIView.transitionWithView(tableView, duration: 0.1, options: .TransitionCrossDissolve, animations: { [weak self] () -> Void in
+            self?.tableView.hidden = true
+            self?.toolbar.hidden = false
+            self?.infoLabel.hidden = false
+            self?.tableViewController.lazyImageObjects = [WSUserLocation]()
             }, completion: nil)
     }
     
     /** Shows the search by keyword table view and hides the host map */
     func showTableView() {
-        UIView.transitionWithView(tableView, duration: 0.1, options: .TransitionCrossDissolve, animations: { () -> Void in
-            self.tableView.hidden = false
-            self.toolbar.hidden = true
+        UIView.transitionWithView(tableView, duration: 0.1, options: .TransitionCrossDissolve, animations: { [weak self] () -> Void in
+            self?.tableView.hidden = false
+            self?.toolbar.hidden = true
+            self?.infoLabel.hidden = true
             }, completion: nil)
     }
     
@@ -236,15 +245,21 @@ class WSHostSearchViewController: UIViewController {
     //
     func updateSearchResultsWithKeyword() {
         
-        //        guard let keyword = searchController.searchBar.text else {
-        //            return
-        //        }
-        //
-        //        // Clear the debounce timer
-        //        debounceTimer = nil
+        guard let keyword = searchController.searchBar.text else {
+            return
+        }
         
-        //        WSURLSession.cancelAllDataTasksWithCompletionHandler { () -> Void in
-        //            self.hostsByKeywordSearcher.update(keyword)
-        //        }
+        // Clear the debounce timer
+        debounceTimer?.invalidate()
+        debounceTimer = nil
+        
+        apiCommunicator?.searchByKeyword(keyword, offset: 0, andNotify: self)
+    }
+    
+    func reloadTableWithHosts(hosts: [WSUserLocation]) {
+        tableViewController.lazyImageObjects = hosts
+        dispatch_async(dispatch_get_main_queue(), { [weak self] in
+            self?.tableView.reloadData()
+            })
     }
 }

@@ -20,7 +20,7 @@ class WSLogoutEndPoint : WSAPIEndPointProtocol {
     
     var accept: AcceptType { return .PlainText }
     
-    func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws {
+    func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
         
         // Successful requests get a array response with:
         //      - 0 : Not logged in
@@ -31,6 +31,8 @@ class WSLogoutEndPoint : WSAPIEndPointProtocol {
         
         // Update the session state.
 //        WSSessionState.
+        
+        return nil
     }
     
     func generateMockResponseForURLRequest(urlRequest: NSMutableURLRequest) -> (NSData?, NSURLResponse?, NSError?) {

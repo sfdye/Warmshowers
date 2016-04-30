@@ -18,8 +18,9 @@ class WSCreateFeedbackEndPoint : WSAPIEndPointProtocol {
     
     var method: HttpMethod { return .Post }
     
-    func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws {
+    func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
         // No need for response data.
+        return nil
     }
     
     func generateMockResponseForURLRequest(urlRequest: NSMutableURLRequest) -> (NSData?, NSURLResponse?, NSError?) {

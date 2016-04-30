@@ -24,8 +24,7 @@ class WSAPIEndPointFactory {
             assertionFailure("End point not added to factory")
             return WSCreateFeedbackEndPoint.sharedEndPoint // NEEDS CHANGE
         case .SearchByKeyword:
-            assertionFailure("End point not added to factory")
-            return WSCreateFeedbackEndPoint.sharedEndPoint // NEEDS CHANGE
+            return WSSearchByKeywordEndPoint.sharedEndPoint
         case .UserInfo:
             assertionFailure("End point not added to factory")
             return WSCreateFeedbackEndPoint.sharedEndPoint // NEEDS CHANGE

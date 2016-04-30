@@ -1,5 +1,5 @@
 //
-//  WSMapController+MKMapViewDelegate.swift
+//  WSHostSearchViewController+MKMapViewDelegate.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 30/04/16.
@@ -9,7 +9,7 @@
 import UIKit
 import CCHMapClusterController
 
-extension WSMapController : MKMapViewDelegate {
+extension WSHostSearchViewController : MKMapViewDelegate {
     
     // Used to display tiles for maps other than Apple Maps
     func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
@@ -125,6 +125,6 @@ extension WSMapController : MKMapViewDelegate {
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         
         // Update the annotation on the map
-        mapController.updateAnnotationsInView()
+//        mapController.updateAnnotationsInView()
     }
 }

@@ -20,8 +20,9 @@ class WSTokenEndPoint : WSAPIEndPointProtocol {
     
     var accept: AcceptType { return .PlainText }
     
-    func request(request: WSAPIRequest, didRecievedResponseWithText text: String) throws {
+    func request(request: WSAPIRequest, didRecievedResponseWithText text: String) throws -> AnyObject? {
         WSSessionData.setToken(text)
+        return nil
     }
     
     func generateMockResponseForURLRequest(urlRequest: NSMutableURLRequest) -> (NSData?, NSURLResponse?, NSError?) {

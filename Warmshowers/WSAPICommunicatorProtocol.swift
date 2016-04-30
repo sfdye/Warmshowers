@@ -12,4 +12,6 @@ protocol WSAPICommunicatorProtocol {
     func login(username: String, password: String, andNotify requester: WSAPIResponseDelegate)
     func logoutAndNotify(requester: WSAPIResponseDelegate)
     func createFeedback(feedback: WSRecommendation, andNotify requester: WSAPIResponseDelegate)
+    func searchByLocation(regionLimits: [String: String], andNotify requester: WSAPIResponseDelegate)
+    func searchByKeyword(keyword: String, offset: Int, andNotify requester: WSAPIResponseDelegate)
 }

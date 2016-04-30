@@ -23,6 +23,9 @@ class WSAPICommunicator : WSAPICommunicatorProtocol {
     
     static let sharedAPICommunicator = WSAPICommunicator()
     
+    let MapSearchLimit: Int = 500
+    let KeywordSearchLimit: Int = 50
+    
     let session = WSURLSession.sharedSession
     
     var mode: WSAPICommunicatorMode
@@ -104,6 +107,24 @@ class WSAPICommunicator : WSAPICommunicatorProtocol {
     
     func logoutAndNotify(requester: WSAPIResponseDelegate) {
         contactEndPoint(.Logout, thenNotify: requester)
+    }
+    
+    func searchByLocation(regionLimits: [String: String], andNotify requester: WSAPIResponseDelegate) {
+        
+        var params = regionLimits
+        params["limit"] = String(MapSearchLimit)
+        
+        contactEndPoint(.SearchByLocation, withParameters: params, thenNotify: requester)
+    }
+    
+    func searchByKeyword(keyword: String, offset: Int, andNotify requester: WSAPIResponseDelegate) {
+        
+        var params = [String: String]()
+        params["keyword"] = keyword ?? " "
+        params["offset"] = String(offset)
+        params["limit"] = String(KeywordSearchLimit)
+        
+        contactEndPoint(.SearchByKeyword, withParameters: params, thenNotify: requester)
     }
     
     func createFeedback(feedback: WSRecommendation, andNotify requester: WSAPIResponseDelegate) {
