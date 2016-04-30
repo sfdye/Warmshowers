@@ -8,7 +8,7 @@
         <!--Host Search-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
-                <viewController id="9pv-A4-QxB" customClass="WSHostSearchViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Host Search" id="9pv-A4-QxB" customClass="WSHostSearchViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="mPF-T7-aao"/>
                         <viewControllerLayoutGuide type="bottom" id="RfY-cJ-dh8"/>
@@ -148,7 +148,6 @@
                             </tableView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="72C-Vn-U1r">
                                 <rect key="frame" x="0.0" y="512" width="600" height="44"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="PrD-GV-L6p"/>
                                     <barButtonItem image="Location" id="Wb1-PZ-8Ey">
@@ -186,7 +185,18 @@
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Host Search" id="cHc-7U-xFe"/>
+                    <navigationItem key="navigationItem" title="Host Search" id="cHc-7U-xFe">
+                        <barButtonItem key="leftBarButtonItem" image="UserIcon" id="jw6-Nh-xli">
+                            <connections>
+                                <action selector="accountButtonPressed:" destination="9pv-A4-QxB" id="nLb-XA-hbB"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="PFi-9C-QCk">
+                            <connections>
+                                <action selector="searchButtonPressed:" destination="9pv-A4-QxB" id="xn8-hw-ulT"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="infoLabel" destination="UNj-rN-h0W" id="xmg-cj-Tpc"/>
@@ -999,9 +1009,10 @@
         <image name="MessageIcon" width="22" height="22"/>
         <image name="PhoneIcon" width="22" height="22"/>
         <image name="ThumbnailPlaceholder" width="25" height="25"/>
+        <image name="UserIcon" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="yRc-eW-HTh"/>
-        <segue reference="chp-Mq-xSE"/>
+        <segue reference="hkh-3S-gg7"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -55,6 +55,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NSFontAttributeName: WSFont.SueEllenFrancisco(26)]
         UINavigationBar.appearance().setTitleVerticalPositionAdjustment(6, forBarMetrics: .Default)
         UINavigationBar.appearance().translucent = false
+        
+        // Toolbars
+        UIToolbar.appearance().tintColor = WSColor.Blue
+        
+        // Search bars
+        UISearchBar.appearance().tintColor = WSColor.Blue
     }
 
     func applicationWillResignActive(application: UIApplication) {

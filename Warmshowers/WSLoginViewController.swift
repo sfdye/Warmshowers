@@ -11,8 +11,6 @@ import MBProgressHUD
 
 class WSLoginViewController: UIViewController {
     
-    // MARK: Properties
-    
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
 

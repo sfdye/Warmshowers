@@ -1,15 +1,15 @@
 //
-//  WSHostSearchViewController+CLLocationManagerDelegate.swift
+//  WSMapController+MKMapViewDelegate.swift
 //  Warmshowers
 //
-//  Created by Rajan Fernandez on 30/11/15.
-//  Copyright © 2015 Rajan Fernandez. All rights reserved.
+//  Created by Rajan Fernandez on 30/04/16.
+//  Copyright © 2016 Rajan Fernandez. All rights reserved.
 //
 
 import UIKit
 import CCHMapClusterController
 
-extension WSHostSearchViewController : MKMapViewDelegate {
+extension WSMapController : MKMapViewDelegate {
     
     // Used to display tiles for maps other than Apple Maps
     func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
@@ -42,7 +42,7 @@ extension WSHostSearchViewController : MKMapViewDelegate {
         if let clusterAnnotation = annotation as? CCHMapClusterAnnotation {
             
             if clusterAnnotation.isCluster() {
-    
+                
                 // Clustered host map pins
                 let reuseidentifier = "cluster"
                 if let dequeueView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseidentifier) as? MKPinAnnotationView {
@@ -78,30 +78,30 @@ extension WSHostSearchViewController : MKMapViewDelegate {
         return annotationView;
     }
     
-//    // Moves the map to users location
-//    func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
-//        let userLocation = (locationManager.location?.coordinate)!
-//        mapView.setCenterCoordinate(userLocation , animated: true)
-//    }
+    //    // Moves the map to users location
+    //    func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
+    //        let userLocation = (locationManager.location?.coordinate)!
+    //        mapView.setCenterCoordinate(userLocation , animated: true)
+    //    }
     
     // Called when a pin is selected
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
         print("tapped")
-//        if let clusterAnnotation = view.annotation as? CCHMapClusterAnnotation {
-//            print("cluster tapped")
-////            let cluster = view.annotation as! KPAnnotation
-////            
-////             zooms to location
-////            if cluster.annotations.count > 1 {
-////                let region = MKCoordinateRegionMakeWithDistance(cluster.coordinate,
-////                    cluster.radius * 2.5,
-////                    cluster.radius * 2.5)
-////                
-////                mapView.setRegion(region, animated: true)
-////            }
-//        } else {
-//            print("single tapped")
-//        }
+        //        if let clusterAnnotation = view.annotation as? CCHMapClusterAnnotation {
+        //            print("cluster tapped")
+        ////            let cluster = view.annotation as! KPAnnotation
+        ////
+        ////             zooms to location
+        ////            if cluster.annotations.count > 1 {
+        ////                let region = MKCoordinateRegionMakeWithDistance(cluster.coordinate,
+        ////                    cluster.radius * 2.5,
+        ////                    cluster.radius * 2.5)
+        ////
+        ////                mapView.setRegion(region, animated: true)
+        ////            }
+        //        } else {
+        //            print("single tapped")
+        //        }
     }
     
     // Called when the details button on an annotation is pressed
@@ -125,7 +125,6 @@ extension WSHostSearchViewController : MKMapViewDelegate {
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         
         // Update the annotation on the map
-        mapManager.updateAnnotationsInView()
+        mapController.updateAnnotationsInView()
     }
-        
 }

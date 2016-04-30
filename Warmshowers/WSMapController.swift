@@ -22,10 +22,13 @@ class WSMapController : NSObject {
     // When the user is zoomed out too far it doesn't make sense to try and show map pins
     let MinimumZoomLevelToShowAnnotations: UInt = 2
     
+    var mapOverlay: MKTileOverlay?
+    var mapSource: WSMapSource = WSMapSource.AppleMaps
+    
     var mapView: MKMapView!
-    var clusteringController: CCHMapClusterController!
+    var clusteringController: CCHMapClusterController
     var updatesInProgress = [String: WSHostsOnMapSearchManager]()
-    var delegate: WSMapControllerDelegate?
+    var delegate: WSMapControllerDelegate
     
     // MARK: Initialiser
     
@@ -135,7 +138,7 @@ class WSMapController : NSObject {
         if shouldUpdateMapTile(tile) {
             
             if updatesInProgress.count == 0 {
-                self.delegate?.willBeginUpdates()
+                self.delegate.willBeginUpdates()
             }
             
             print("updating tile")
@@ -186,7 +189,7 @@ class WSMapController : NSObject {
         
         // Signal finshing updates
         if updatesInProgress.count == 0 {
-            self.delegate?.didFinishUpdates()
+            self.delegate.didFinishUpdates()
         }
     }
     
@@ -299,6 +302,48 @@ class WSMapController : NSObject {
         }
     }
     
+    // MARK: - Map source methods
+    
+    /** Changes the map source. */
+    func switchToMapSource(source: WSMapSource) {
+        self.mapSource = source
+        setMapOverlay()
+    }
+    
+    /** Returns an overlay for the current map source. */
+    func selectMapOverlay() -> MKTileOverlay? {
+        switch mapSource {
+        case .OpenCycleMaps:
+            return MKTileOverlay.init(URLTemplate: MapTileServerURLTemplate.OpenCycleMaps())
+        case .OpenStreetMaps:
+            return MKTileOverlay.init(URLTemplate: MapTileServerURLTemplate.OpenStreetMaps())
+        default:
+            return nil
+        }
+    }
+    
+    /** Sets the overlay variable to the current map source and update the mapView overlays */
+    func setMapOverlay() {
+        
+        // remove the existing overlay object from the mapView
+        if mapOverlay != nil {
+            mapView.removeOverlay(mapOverlay!)
+        }
+        
+        // set a new map overlay
+        if let overlay = selectMapOverlay() {
+            overlay.canReplaceMapContent = true;
+            mapOverlay = overlay
+        } else {
+            mapOverlay = nil
+        }
+        
+        // add the new map
+        if mapOverlay != nil {
+            mapView.addOverlay(mapOverlay!, level: MKOverlayLevel.AboveLabels)
+        }
+    }
+    
     // MARK: Utilities
     
     func highlightTiles(tiles: [CDWSMapTile]) {
@@ -308,7 +353,4 @@ class WSMapController : NSObject {
             mapView.addOverlay(tile.polygon())
         }
     }
-    
-    
-    
 }
