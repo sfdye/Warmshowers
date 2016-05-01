@@ -1,15 +1,15 @@
 //
-//  WSHostSearchViewController+MKMapViewDelegate.swift
+//  WSLocationSearchViewController+MKMapViewDelegate.swift
 //  Warmshowers
 //
-//  Created by Rajan Fernandez on 30/04/16.
+//  Created by Rajan Fernandez on 1/05/16.
 //  Copyright © 2016 Rajan Fernandez. All rights reserved.
 //
 
 import UIKit
 import CCHMapClusterController
 
-extension WSHostSearchViewController : MKMapViewDelegate {
+extension WSLocationSearchViewController : MKMapViewDelegate {
     
     // Used to display tiles for maps other than Apple Maps
     func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
@@ -110,11 +110,11 @@ extension WSHostSearchViewController : MKMapViewDelegate {
         if let clusterAnnotation = view.annotation as? CCHMapClusterAnnotation {
             if clusterAnnotation.isCluster() {
                 print(clusterAnnotation.annotations)
-                performSegueWithIdentifier(ToHostListSegueID, sender: clusterAnnotation)
+//                performSegueWithIdentifier(ToHostListSegueID, sender: clusterAnnotation)
             } else {
                 if let user = clusterAnnotation.annotations.first as? WSUserLocation {
                     print(user)
-                    performSegueWithIdentifier(MapToUserAccountSegueID, sender: user)
+//                    performSegueWithIdentifier(MapToUserAccountSegueID, sender: user)
                 }
             }
         }
@@ -125,6 +125,6 @@ extension WSHostSearchViewController : MKMapViewDelegate {
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         
         // Update the annotation on the map
-//        mapController.updateAnnotationsInView()
+        //        mapController.updateAnnotationsInView()
     }
 }

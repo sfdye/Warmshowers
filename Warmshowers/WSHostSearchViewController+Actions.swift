@@ -11,8 +11,6 @@ import UIKit
 extension WSHostSearchViewController {
     
     @IBAction func searchButtonPressed(sender: UIBarButtonItem) {
-        tableViewController.lazyImageObjects = [WSUserLocation]()
-        tableView.reloadData()
         presentViewController(searchController, animated: true, completion: nil)
         searchController.active = true
         didPresentSearchController(searchController)

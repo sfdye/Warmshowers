@@ -24,6 +24,9 @@ class WSHostSearchViewController: UIViewController {
     @IBOutlet var toolbar: UIToolbar!
     @IBOutlet var infoLabel: UILabel!
     
+    var searchController: UISearchController!
+    var searchBar: UISearchBar!
+    
     // MARK: Constants
     
     let kDefaultRegionLatitudeDelta: CLLocationDegrees = 1
@@ -31,21 +34,12 @@ class WSHostSearchViewController: UIViewController {
     
     // MARK: Properties
     
-    var mapController: WSMapController!
-    var tableViewController = WSLazyImageTableViewController()
-    var searchController: UISearchController!
-    var searchBar: UISearchBar!
-    
     let locationManager = CLLocationManager()
-    var debounceTimer: NSTimer?
-    
-    var mapOverlay: MKTileOverlay?
-    var mapSource: WSMapSource = WSMapSource.AppleMaps
     
     // Delegates
-    
-    var apiCommunicator: WSAPICommunicator? = WSAPICommunicator.sharedAPICommunicator
     var alertDelegate: WSAlertDelegate? = WSAlertDelegate.sharedAlertDelegate
+    var locationSearchController: WSLocationSearchViewControllerProtocol? = WSLocationSearchViewController()
+    var keywordSearchController: WSKeywordSearchTableViewControllerProtocol? = WSKeywordSearchTableViewController()
     
     
     // MARK: View life cycle
@@ -63,14 +57,15 @@ class WSHostSearchViewController: UIViewController {
             locationManager.requestWhenInUseAuthorization()
         }
         mapView.showsUserLocation = true
-        mapView.delegate = self
         centreOnRegion()
         
         infoLabel.text = nil
-        
+        locationSearchController?.mapView = mapView
+        locationSearchController?.delegate = self
+        keywordSearchController?.tableView = tableView
+        keywordSearchController?.delegate = self
+
         // Configure components
-        configureMapController()
-        configureTableViewController()
         configureSearchController()
         configureToolbar()
         
@@ -85,20 +80,6 @@ class WSHostSearchViewController: UIViewController {
 //    override func viewWillDisappear(animated: Bool) {
 //        WSURLSession.cancelAllDataTasksWithCompletionHandler()
 //    }
-    
-    func configureMapController() {
-        mapController = WSMapController(withMapView: mapView)
-        mapController.delegate = self
-        mapController.updateAnnotationsInView()
-    }
-    
-    func configureTableViewController() {
-        tableViewController.tableView = tableView
-        tableViewController.dataSource = self
-        tableViewController.placeholderImageName = "ThumbnailPlaceholder"
-        tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 74
-    }
     
     func configureSearchController() {
         searchController = UISearchController(searchResultsController: nil)
@@ -155,7 +136,6 @@ class WSHostSearchViewController: UIViewController {
             self?.tableView.hidden = true
             self?.toolbar.hidden = false
             self?.infoLabel.hidden = false
-            self?.tableViewController.lazyImageObjects = [WSUserLocation]()
             }, completion: nil)
     }
     
@@ -168,98 +148,4 @@ class WSHostSearchViewController: UIViewController {
             }, completion: nil)
     }
     
-    
-    // MARK: Navigation methods
-    
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
-        
-        switch identifier {
-            
-        case MapToUserAccountSegueID:
-            
-            return sender as? WSUserLocation != nil
-            
-        case ResultsToUserAccountSegueID:
-            
-            if let cell = sender as? HostListTableViewCell {
-                return cell.uid != nil
-            }
-            return false
-            
-        case ToHostListSegueID:
-            
-            if let clusterAnnotation = sender as? CCHMapClusterAnnotation {
-                return Array(clusterAnnotation.annotations) as? [WSUserLocation] != nil
-            }
-            return false
-            
-        default:
-            return true
-        }
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        
-        switch segue.identifier! {
-            
-        case MapToUserAccountSegueID:
-            
-            let navVC = segue.destinationViewController as! UINavigationController
-            let accountTVC = navVC.viewControllers.first as! WSAccountTableViewController
-            
-            if let user = sender as? WSUserLocation {
-                accountTVC.uid = user.uid
-            } else {
-                accountTVC.uid = WSSessionData.uid
-            }
-            
-        case ResultsToUserAccountSegueID:
-            
-            let navVC = segue.destinationViewController as! UINavigationController
-            let accountTVC = navVC.viewControllers.first as! WSAccountTableViewController
-            
-            if let cell = sender as? HostListTableViewCell {
-                accountTVC.uid = cell.uid
-            }
-            
-        case ToHostListSegueID:
-            
-            let navVC = segue.destinationViewController as! UINavigationController
-            let hostListTVC = navVC.viewControllers.first as! WSHostListTableViewController
-            
-            if let clusterAnnotation = sender as? CCHMapClusterAnnotation {
-                if let users = Array(clusterAnnotation.annotations) as? [WSUserLocation] {
-                    hostListTVC.lazyImageObjects = users
-                    hostListTVC.placeholderImageName = "ThumbnailPlaceholder"
-                }
-            }
-            
-        default:
-            return
-        }
-    }
-    
-    // MARK: Updating hosts
-    
-    // Updates the hosts to be shown in the table view
-    //
-    func updateSearchResultsWithKeyword() {
-        
-        guard let keyword = searchController.searchBar.text else {
-            return
-        }
-        
-        // Clear the debounce timer
-        debounceTimer?.invalidate()
-        debounceTimer = nil
-        
-        apiCommunicator?.searchByKeyword(keyword, offset: 0, andNotify: self)
-    }
-    
-    func reloadTableWithHosts(hosts: [WSUserLocation]) {
-        tableViewController.lazyImageObjects = hosts
-        dispatch_async(dispatch_get_main_queue(), { [weak self] in
-            self?.tableView.reloadData()
-            })
-    }
 }

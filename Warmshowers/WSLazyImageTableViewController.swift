@@ -112,7 +112,7 @@ class WSLazyImageTableViewController: UITableViewController {
     //
     func loadImagesForObjectsOnScreen() {
         
-        guard let visiblePaths = tableView.indexPathsForVisibleRows else {
+        guard let visiblePaths = tableView.indexPathsForVisibleRows where lazyImageObjects.count > 0 else {
             return
         }
         

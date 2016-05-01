@@ -1,14 +1,14 @@
 //
-//  WSHostSearchViewController+WSAPIResponseDelegate.swift
+//  WSKeywordSearchTableViewController+WSAPIResponseDelegate.swift
 //  Warmshowers
 //
-//  Created by Rajan Fernandez on 30/04/16.
+//  Created by Rajan Fernandez on 1/05/16.
 //  Copyright © 2016 Rajan Fernandez. All rights reserved.
 //
 
 import Foundation
 
-extension WSHostSearchViewController : WSAPIResponseDelegate {
+extension WSKeywordSearchTableViewController : WSAPIResponseDelegate {
     
     func didRecieveAPISuccessResponse(data: AnyObject?) {
         if data is [WSUserLocation] {
@@ -17,6 +17,6 @@ extension WSHostSearchViewController : WSAPIResponseDelegate {
     }
     
     func didRecieveAPIFailureResponse(error: ErrorType) {
-        alertDelegate?.presentAlertFor(self, withTitle: "Error", button: "Dismiss", message: nil)
+        delegate?.alertDelegate?.presentAlertFor(self, withTitle: "Error", button: "Dismiss", message: nil)
     }
 }
