@@ -9,6 +9,7 @@
 import Foundation
 
 protocol WSAPICommunicatorProtocol {
+    func getTokenAndNotify(requester: WSAPIResponseDelegate)
     func login(username: String, password: String, andNotify requester: WSAPIResponseDelegate)
     func logoutAndNotify(requester: WSAPIResponseDelegate)
     func createFeedback(feedback: WSRecommendation, andNotify requester: WSAPIResponseDelegate)

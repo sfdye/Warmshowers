@@ -97,6 +97,10 @@ class WSAPICommunicator : WSAPICommunicatorProtocol {
     
     // MARK: Network activity indicator control
     // TODO
+    
+    func getTokenAndNotify(requester: WSAPIResponseDelegate) {
+        contactEndPoint(.Token, thenNotify: requester)
+    }
 
     func login(username: String, password: String, andNotify requester: WSAPIResponseDelegate) {
         

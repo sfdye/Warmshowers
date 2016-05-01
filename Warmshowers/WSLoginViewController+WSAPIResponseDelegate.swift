@@ -11,14 +11,20 @@ import UIKit
 extension WSLoginViewController : WSAPIResponseDelegate {
     
     func didRecieveAPISuccessResponse(data: AnyObject?) {
-        WSProgressHUD.hide()
-        let username = usernameTextField.text, password = passwordTextField.text
-        do {
-            try sessionState?.savePassword(password!, forUsername: username!)
-            navigationDelegate?.showMainApp()
-        } catch {
-            // This case is very unlikely.
-            alertDelegate?.presentAlertFor(self, withTitle: "App error", button: "Sorry, an error occured while saving your username. Please report this as a bug, sorry for the inconvenience.")
+        if data is String {
+            // Recieved the access token: proceed to the main app
+            WSProgressHUD.hide()
+            let username = usernameTextField.text, password = passwordTextField.text
+            do {
+                try sessionState?.savePassword(password!, forUsername: username!)
+                navigationDelegate?.showMainApp()
+            } catch {
+                // This case is very unlikely.
+                alertDelegate?.presentAlertFor(self, withTitle: "App error", button: "Sorry, an error occured while saving your username. Please report this as a bug, sorry for the inconvenience.")
+            }
+        } else {
+            // Recieved login response: request a token
+            apiCommunicator?.getTokenAndNotify(self)
         }
     }
     
