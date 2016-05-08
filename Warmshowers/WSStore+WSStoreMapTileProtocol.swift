@@ -9,23 +9,19 @@
 import Foundation
 import CoreData
 
-extension WSStore {
+extension WSStore : WSStoreMapTileProtocol {
     
-    // MARK: Map Tile handling methods
+    var MapTileExpiryTime: NSTimeInterval { return 60.0 * 60.0 * 24.0 }
     
-    // Returns all the map tiles in the store
-    //
-    class func allMapTiles() throws -> [CDWSMapTile] {
+    func allMapTiles() throws -> [CDWSMapTile] {
         
         do {
-            let tiles = try getAllFromEntity(.MapTile) as! [CDWSMapTile]
+            let tiles = try getAllEntriesFromEntity(.MapTile) as! [CDWSMapTile]
             return tiles
         }
     }
     
-    // Checks if a map tile is already in the store.
-    //
-    class func mapTileAtPosition(x: UInt, y: UInt, z: UInt) throws -> CDWSMapTile? {
+    func mapTileAtPosition(x: UInt, y: UInt, z: UInt) throws -> CDWSMapTile? {
         
         let request = requestForEntity(.MapTile)
         var predicates = [NSPredicate]()
@@ -40,8 +36,7 @@ extension WSStore {
         }
     }
     
-    // Returns a map tile by its identifer.
-    class func mapTileWithID(id: String) throws -> CDWSMapTile? {
+    func mapTileWithID(id: String) throws -> CDWSMapTile? {
         
         let request = requestForEntity(.MapTile)
         request.predicate = NSPredicate(format: "%K == %@", "identifier", id)
@@ -52,14 +47,12 @@ extension WSStore {
         }
     }
     
-    // Returns an existing map tile, or a new map tile into the private context.
-    //
-    class func newOrExistingMapTileAtPosition(x: UInt, y: UInt, z: UInt) throws -> CDWSMapTile {
+    func newOrExistingMapTileAtPosition(x: UInt, y: UInt, z: UInt) throws -> CDWSMapTile {
         do {
             if let tile = try mapTileAtPosition(x, y: y, z: z) {
                 return tile
             } else {
-                let tile = NSEntityDescription.insertNewObjectForEntityForName(WSEntity.MapTile.rawValue, inManagedObjectContext: sharedStore.privateContext) as! CDWSMapTile
+                let tile = NSEntityDescription.insertNewObjectForEntityForName(WSEntity.MapTile.rawValue, inManagedObjectContext: privateContext) as! CDWSMapTile
                 tile.x = x
                 tile.y = y
                 tile.z = z
@@ -69,15 +62,14 @@ extension WSStore {
         }
     }
     
-    // Removes tiles from the data base that haven't been loaded in a while.
-    class func clearoutOldTiles() {
+    func clearoutOldTiles() {
         do {
             let tiles = try allMapTiles()
             for tile in tiles {
                 if let last_updated = tile.last_updated {
                     if abs(last_updated.timeIntervalSinceNow) > MapTileExpiryTime {
                         print("deleting tile")
-                        sharedStore.privateContext.deleteObject(tile)
+                        privateContext.deleteObject(tile)
                     }
                 }
             }
@@ -86,13 +78,12 @@ extension WSStore {
         }
     }
     
-    // Removes all tiles from the store.
-    class func clearoutAllTiles() {
+    func clearoutAllTiles() {
         do {
-            let tiles = try WSStore.allMapTiles()
+            let tiles = try allMapTiles()
             for tile in tiles {
                 print("deleting tile with id \(tile.identifier)")
-                sharedStore.privateContext.deleteObject(tile)
+                privateContext.deleteObject(tile)
                 try savePrivateContext()
             }
         } catch {

@@ -19,7 +19,8 @@ class MessageThreadsTableViewCell: UITableViewCell {
     @IBOutlet weak var newDot: WSColoredDot!
     var threadID: Int?
     
-    var currentUserUID: Int? { return WSSessionData.uid }
+    // TODO: This logic should not be in the view. Move it to the controller.
+    var currentUserUID: Int? { return WSSessionState.sharedSessionState.uid }
         
     override func awakeFromNib() {
         super.awakeFromNib()

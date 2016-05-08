@@ -50,7 +50,7 @@ class WSMessageThreadsUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
                 }
                 
                 do {
-                    try WSStore.addMessageThread(threadJSON)
+//                    try WSStore.addMessageThread(threadJSON)
                 } catch let nserror as NSError {
                     self.error = nserror
                     return
@@ -62,15 +62,15 @@ class WSMessageThreadsUpdater : WSRequestWithCSRFToken, WSRequestDelegate {
             
             // Delete all threads that are not in the json
             do {
-                let allMessageThreads = try WSStore.allMessageThreads()
-                for messageThread in allMessageThreads {
-                    if let threadID = messageThread.thread_id?.integerValue {
-                        if !(currentThreadIDs.contains(threadID)){
-                            WSStore.sharedStore.privateContext.deleteObject(messageThread)
-                        }
-                    }
-                }
-                try WSStore.savePrivateContext()
+//                let allMessageThreads = try WSStore.allMessageThreads()
+//                for messageThread in allMessageThreads {
+//                    if let threadID = messageThread.thread_id?.integerValue {
+//                        if !(currentThreadIDs.contains(threadID)){
+//                            WSStore.sharedStore.privateContext.deleteObject(messageThread)
+//                        }
+//                    }
+//                }
+//                try WSStore.savePrivateContext()
             } catch let error as NSError {
                 self.error = error
                 return

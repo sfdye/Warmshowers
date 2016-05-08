@@ -9,24 +9,16 @@
 import UIKit
 import CoreData
 
-extension WSStore {
+extension WSStore : WSStoreMessageProtocol {
     
-    // MARK: Message handling methods
-    
-    // Returns all the messages in the store
-    //
-    class func allMessages() throws -> [CDWSMessage] {
-        
+    func allMessages() throws -> [CDWSMessage] {
         do {
-            let messages = try getAllFromEntity(.Message) as! [CDWSMessage]
+            let messages = try getAllEntriesFromEntity(.Message) as! [CDWSMessage]
             return messages
         }
     }
     
-    // Checks if a message is already in the store by message id.
-    // Returns the existing message, or a new message inserted into the private context.
-    //
-    class func messageWithID(messageID: Int) throws -> CDWSMessage? {
+    func messageWithID(messageID: Int) throws -> CDWSMessage? {
         
         let request = requestForEntity(.Message)
         request.predicate = NSPredicate(format: "message_id==%i", messageID)
@@ -37,22 +29,18 @@ extension WSStore {
         }
     }
     
-    // Checks if a message exists and returns it or a new one if it doesn't exist
-    //
-    class func newOrExistingMessage(messageID: Int) throws -> CDWSMessage {
+    func newOrExistingMessage(messageID: Int) throws -> CDWSMessage {
         do {
             if let message = try messageWithID(messageID) {
                 return message
             } else {
-                let message = NSEntityDescription.insertNewObjectForEntityForName(WSEntity.Message.rawValue, inManagedObjectContext: sharedStore.privateContext) as! CDWSMessage
+                let message = NSEntityDescription.insertNewObjectForEntityForName(WSEntity.Message.rawValue, inManagedObjectContext: privateContext) as! CDWSMessage
                 return message
             }
         }
     }
     
-    // Adds a message to the store with json
-    //
-    class func addMessage(json: AnyObject, onThreadWithID threadID: Int) throws {
+    func addMessage(json: AnyObject, onThreadWithID threadID: Int) throws {
         
         // JSON input checks
         guard let body = json.valueForKey("body") as? String else {

@@ -10,8 +10,17 @@ import Foundation
 
 extension WSAPICommunicator : WSAPIRequestDelegate {
     
-    /** Describes how API responses should be handled for each request */
+    func requestShouldBeQueuedWhileOffline(request: WSAPIRequest) -> Bool {
+        switch request.endPoint.type {
+        case .CreateFeedback:
+            return true
+        default:
+            return false
+        }
+    }
+    
     func request(request: WSAPIRequest, didRecieveHTTPResponse data: NSData?, response: NSURLResponse?, andError error: NSError?) {
+        request.status = .RecievedResponse
         
         guard error == nil else {
             request.delegate.request(request, didFailWithError: error!)
@@ -32,6 +41,8 @@ extension WSAPICommunicator : WSAPIRequestDelegate {
             return
         }
         
+        request.status = .Parsing
+        
         do {
             var parsedData: AnyObject? = nil
             switch request.endPoint.accept {
@@ -49,7 +60,6 @@ extension WSAPICommunicator : WSAPIRequestDelegate {
         }
     }
     
-    /** Called when a request finishes with no errors */
     func request(request: WSAPIRequest, didSucceedWithData data: AnyObject?) {
         
         // notify the requester
@@ -59,7 +69,6 @@ extension WSAPICommunicator : WSAPIRequestDelegate {
         removeRequestFromQueue(request)
     }
     
-    /** Called when a request fails with an error */
     func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
         
         // notify the requester

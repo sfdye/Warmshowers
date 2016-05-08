@@ -13,25 +13,26 @@ import Foundation
  */
 class WSAPIRequest : Hashable {
     
-    var madeAt: NSDate
-    var delegate: WSAPIRequestDelegate
     var endPoint: WSAPIEndPointProtocol
-    
-    var data: AnyObject?
-    var token: String?
+    var delegate: WSAPIRequestDelegate
     var requester: WSAPIResponseDelegate?
-
-    init(endPoint: WSAPIEndPoint, withDelegate delegate: WSAPIRequestDelegate, andRequester requester: WSAPIResponseDelegate?) {
-        self.madeAt = NSDate()
-        self.requester = requester
-        self.delegate = delegate
-        self.endPoint = WSAPIEndPointFactory.endPointWithEndPoint(endPoint)
-    }
+    var params: [String: String]?
+    var status: WSAPIRequestStatus = .Created
     
     // MARK: Hashable
     
+    var madeAt: NSDate
     var hashValue: Int { return Int(self.madeAt.timeIntervalSince1970 * 1000) }
     
+    
+    // MARK: Initialiser
+    
+    init(endPoint: WSAPIEndPoint, withDelegate delegate: WSAPIRequestDelegate, andRequester requester: WSAPIResponseDelegate?, andParameters params: [String : String]? = nil) {
+        self.madeAt = NSDate()
+        self.requester = requester
+        self.delegate = delegate
+        self.endPoint = endPoint.sharedEndPoint
+    }
 }
 
 // MARK: Equatable

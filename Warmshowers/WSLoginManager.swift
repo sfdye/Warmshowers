@@ -19,9 +19,9 @@ class WSLoginManager : WSRequestWithCSRFToken, WSRequestDelegate {
     //
     func requestForDownload() throws -> NSURLRequest {
         do {
-            let (username, password) = try WSSessionData.getCredentials()
+//            let (username, password) = try WSSessionData.getCredentials()
             let service = WSRestfulService(type: .Login)!
-            let params = ["username" : username, "password" : password]
+            let params: [String: String]? = nil //["username" : username, "password" : password]
             let request = try WSRequest.requestWithService(service, params: params, token: token)
             return request
         }
@@ -55,7 +55,7 @@ class WSLoginManager : WSRequestWithCSRFToken, WSRequestDelegate {
         
         // Store the session data
         let sessionCookie = sessionName + "=" + sessid
-        WSSessionData.saveSessionData(sessionCookie, token: token, uid: uid)
+//        WSSessionData.saveSessionData(sessionCookie, token: token, uid: uid)
     }
     
     func setDataError() {

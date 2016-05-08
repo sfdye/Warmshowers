@@ -27,14 +27,10 @@ class WSAPICommunicator : WSAPICommunicatorProtocol {
     let KeywordSearchLimit: Int = 50
     
     let session = WSURLSession.sharedSession
-    
-    var mode: WSAPICommunicatorMode
+    var connection: WSReachabilityProtocol = WSReachabilityManager.sharedReachabilityManager
     
     var requests = Set<WSAPIRequest>()
-    var queue = NSOperationQueue()
-    
-    var reachability: Reachability
-    var offline: Bool { return !reachability.isReachable() }
+    var mode: WSAPICommunicatorMode
     
     
     // MARK: Initialisers
@@ -47,30 +43,34 @@ class WSAPICommunicator : WSAPICommunicatorProtocol {
             mode = .Online
             print("Initialising as ONLINE")
         #endif
-        
-        do {
-            reachability = try Reachability.reachabilityForInternetConnection()
-        } catch  {
-            preconditionFailure("Reachability failed to initialise")
-        }
+    }
+    
+    deinit {
+        connection.deregisterFromNotifications(self)
     }
     
     // MARK: Utilities
     
     func contactEndPoint(endPoint: WSAPIEndPoint, withParameters params: [String: String]? = nil, thenNotify requester: WSAPIResponseDelegate) {
+        let request = WSAPIRequest(endPoint: endPoint, withDelegate: self, andRequester:requester, andParameters: params)
+        addRequestToQueue(request)
+        executeRequest(request)
+    }
+    
+    func executeRequest(request: WSAPIRequest) {
         
-        // If offline notify the requester
-        guard !offline  else {
-            requester.didRecieveAPIFailureResponse(WSAPICommunicatorError.Offline)
+        guard connection.isOnline else {
+            // Only keep requests to be processed online later when explicitly specified
+            if !requestShouldBeQueuedWhileOffline(request) {
+                removeRequestFromQueue(request)
+            }
+            connection.registerForAndStartNotifications(self, selector: #selector(reachabilityDidChange))
+            request.requester?.didRecieveAPIFailureResponse(WSAPICommunicatorError.Offline)
             return
         }
     
-        // Else add a request to the queue
-        let request = WSAPIRequest(endPoint: endPoint, withDelegate: self, andRequester:requester)
-        addRequestToQueue(request)
-        
         do {
-            let urlRequest = try NSMutableURLRequest.mutableURLRequestForEndpoint(request.endPoint, withPostParameters: params)
+            let urlRequest = try NSMutableURLRequest.mutableURLRequestForEndpoint(request.endPoint, withPostParameters: request.params)
             #if TEST
                 print("MOCKING REQUEST")
                 let (data, response, error) = request.endPoint.generateMockResponseForURLRequest(urlRequest)
@@ -82,17 +82,33 @@ class WSAPICommunicator : WSAPICommunicatorProtocol {
                 }
                 task.resume()
             #endif
+            request.status = .Sent
         } catch let error {
             request.delegate.request(request, didFailWithError: error)
         }
     }
     
+    @objc func reachabilityDidChange() {
+        if connection.isOnline {
+            flushQueue()
+        }
+    }
+    
     func addRequestToQueue(request: WSAPIRequest) {
+        request.status = .Queued
         requests.insert(request)
     }
     
     func removeRequestFromQueue(request: WSAPIRequest) {
         requests.remove(request)
+    }
+    
+    func flushQueue() {
+        for request in requests {
+            if request.status == .Queued {
+                executeRequest(request)
+            }
+        }
     }
     
     // MARK: Network activity indicator control

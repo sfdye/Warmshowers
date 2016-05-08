@@ -119,8 +119,8 @@ class WSMapController : NSObject {
         for y in yTileIndexes {
             for x in xTileIndexes {
                 do {
-                    let tile = try WSStore.newOrExistingMapTileAtPosition(x, y: y, z: TileUpdateZoomLevel)
-                    tiles.append(tile)
+//                    let tile = try WSStore.newOrExistingMapTileAtPosition(x, y: y, z: TileUpdateZoomLevel)
+//                    tiles.append(tile)
                 } catch {
                     print("Failed to get tiles from the store.")
                 }
@@ -177,15 +177,15 @@ class WSMapController : NSObject {
         self.updatesInProgress.removeValueForKey(tileID)
         
         // Update the annotations
-        do {
-            if let tile = try WSStore.mapTileWithID(tileID) {
-                addAnnotationsFromMapTile(tile)
-            } else {
-                print("Couldn't find tile in the store")
-            }
-        } catch {
-            print("An error occured fetching a tile by id from the store.")
-        }
+//        do {
+//            if let tile = try WSStore.mapTileWithID(tileID) {
+//                addAnnotationsFromMapTile(tile)
+//            } else {
+//                print("Couldn't find tile in the store")
+//            }
+//        } catch {
+//            print("An error occured fetching a tile by id from the store.")
+//        }
         
         // Signal finshing updates
         if updatesInProgress.count == 0 {

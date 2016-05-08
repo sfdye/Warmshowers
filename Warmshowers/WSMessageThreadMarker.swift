@@ -41,7 +41,7 @@ class WSMessageThreadMarker : WSRequestWithCSRFToken, WSRequestDelegate {
                 if success {
                     // On success update the local model
                     do {
-                        try WSStore.markMessageThread(self.threadID, unread: self.unread)
+//                        try WSStore.markMessageThread(self.threadID, unread: self.unread)
                     } catch {
                         // This is not an important error
                     }

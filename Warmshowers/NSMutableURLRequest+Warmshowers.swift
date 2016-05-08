@@ -43,21 +43,22 @@ extension NSMutableURLRequest {
         request.addValue(endPoint.accept.rawValue, forHTTPHeaderField: "Accept")
         print(endPoint.type)
         if (endPoint.type != .Login && endPoint.type != .Token) {
-            // Add the session cookie to the header.
-            do {
-                let sessionCookie = try WSSessionData.getSessionCookie()
-                request.addValue(sessionCookie, forHTTPHeaderField: "Cookie")
-            } catch {
+            
+            let (sessionCookie, token, _) = WSSessionState.sharedSessionState.getSessionData()
+            
+            guard sessionCookie != nil else {
                 throw WSAPICommunicatorError.NoSessionCookie
             }
-            // Add the CSRF token to the header.
-            // Note: Your not meant to need a CSRF token for login, but if you dont get one sometimes login authentication fails ...
-            do {
-                let token = try WSSessionData.getToken()
-                request.addValue(token, forHTTPHeaderField: "X-CSRF-Token")
-            } catch {
+            
+            guard token != nil else {
                 throw WSAPICommunicatorError.NoToken
             }
+            
+            // Add the session cookie to the header.
+            request.addValue(sessionCookie!, forHTTPHeaderField: "Cookie")
+
+            // Add the CSRF token to the header.
+            request.addValue(token!, forHTTPHeaderField: "X-CSRF-Token")
         }
 
         if let params = params where endPoint.method == .Post {

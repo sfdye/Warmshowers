@@ -64,7 +64,7 @@ class WSHostsOnMapSearchManager : WSRequestWithCSRFToken, WSRequestDelegate {
             
             var tile: CDWSMapTile!
             do {
-                tile = try WSStore.newOrExistingMapTileAtPosition(self.x!, y: self.y!, z: self.z!)
+//                tile = try WSStore.newOrExistingMapTileAtPosition(self.x!, y: self.y!, z: self.z!)
             } catch let nserror as NSError {
                 self.error = nserror
                 return
@@ -75,7 +75,7 @@ class WSHostsOnMapSearchManager : WSRequestWithCSRFToken, WSRequestDelegate {
             // Parse the json and add the users to the map tile
             for userLocationJSON in accounts {
                 do {
-                    try WSStore.addUserToMapTile(tile, withLocationJSON:userLocationJSON)
+//                    try WSStore.addUserToMapTile(tile, withLocationJSON:userLocationJSON)
                 } catch let nserror as NSError {
                     self.error = nserror
                     return
@@ -86,8 +86,8 @@ class WSHostsOnMapSearchManager : WSRequestWithCSRFToken, WSRequestDelegate {
             tile.setValue(NSDate(timeIntervalSinceNow: 0), forKey: "last_updated")
             print(tile.last_updated)
             do {
-                try WSStore.savePrivateContext()
-                print("Successfully updated tile data")
+//                try store.savePrivateContext()
+//                print("Successfully updated tile data")
             } catch let nserror as NSError {
                 self.error = nserror
                 return
@@ -108,17 +108,18 @@ class WSHostsOnMapSearchManager : WSRequestWithCSRFToken, WSRequestDelegate {
     //
     func tileForUpdate() -> CDWSMapTile? {
         
-        guard let x = x, y = y, z = z else {
-            return nil
-        }
-        
-        do {
-            let tile = try WSStore.mapTileAtPosition(x, y: y, z: z)
-            return tile
-        } catch {
-            print("Failed to retrieve tile from the store")
-            return nil
-        }
+//        guard let x = x, y = y, z = z else {
+//            return nil
+//        }
+//        
+//        do {
+////            let tile = try store.mapTileAtPosition(x, y: y, z: z)
+////            return tile
+//        } catch {
+//            print("Failed to retrieve tile from the store")
+//            return nil
+//        }
+        return nil
     }
 
 }

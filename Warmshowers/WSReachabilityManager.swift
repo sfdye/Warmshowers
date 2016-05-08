@@ -9,57 +9,57 @@
 import UIKit
 import ReachabilitySwift
 
-class WSReachabilityManager {
+class WSReachabilityManager : WSReachabilityProtocol {
     
-    private static let reachability: Reachability? = {
-        let reachability: Reachability?
+    static let sharedReachabilityManager = WSReachabilityManager()
+    
+    var reachability: Reachability
+    var isOnline: Bool { return reachability.isReachable() }
+    
+    init() {
         do {
             reachability = try Reachability.reachabilityForInternetConnection()
-            return reachability
         } catch {
-            print("Unable to create Reachability")
-            return nil
+            abort()
         }
-    }()
+    }
     
-    static var sharedInstance: Reachability? = WSReachabilityManager.reachability
-    
-    static func startNotifications() {
+    func startReachabilityNotifications() {
         do {
-            try WSReachabilityManager.sharedInstance?.startNotifier()
+            try reachability.startNotifier()
         } catch {
             print("Failed to start reachability notifications")
         }
     }
     
-    static func stopNotifications() {
-        WSReachabilityManager.sharedInstance?.stopNotifier()
+    func stopReachabilityNotifications() {
+        reachability.stopNotifier()
     }
     
-    static func registerForNotifications(observer: AnyObject, selector aSelector: Selector) {
+    func registerForNotifications(observer: AnyObject, selector aSelector: Selector) {
         NSNotificationCenter.defaultCenter().addObserver(observer,
             selector: aSelector,
             name: ReachabilityChangedNotification,
-            object: WSReachabilityManager.sharedInstance)
+            object: reachability)
     }
     
-    static func deregisterFromNotifications(observer: AnyObject) {
+    func deregisterFromNotifications(observer: AnyObject) {
         NSNotificationCenter.defaultCenter().removeObserver(observer,
             name: ReachabilityChangedNotification,
-            object: WSReachabilityManager.sharedInstance)
+            object: reachability)
     }
     
     
     // MARK: Convenience notification methods
     
-    static func registerForAndStartNotifications(observer: AnyObject, selector aSelector: Selector) {
-        WSReachabilityManager.registerForNotifications(observer, selector: aSelector)
-        WSReachabilityManager.startNotifications()
+    func registerForAndStartNotifications(observer: AnyObject, selector aSelector: Selector) {
+        registerForNotifications(observer, selector: aSelector)
+        startReachabilityNotifications()
     }
     
-    static func deregisterAndStopNotifications(observer: AnyObject) {
-        WSReachabilityManager.stopNotifications()
-        WSReachabilityManager.deregisterFromNotifications(observer)
+    func deregisterAndStopNotifications(observer: AnyObject) {
+        stopReachabilityNotifications()
+        deregisterFromNotifications(observer)
     }
     
 }

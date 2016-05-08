@@ -14,8 +14,8 @@ extension WSSettingsTableViewController : WSAPIResponseDelegate {
         
         // Clear out the users messages
         do {
-            try WSStore.clearout()
-            try WSSessionData.removeDataForLogout()
+            try store?.clearout()
+            try session?.deleteSessionData()
             navigationDelegate?.showLoginScreen()
         } catch {
             // Suggest that the user delete the app for privacy

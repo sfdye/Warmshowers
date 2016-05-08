@@ -13,12 +13,14 @@ class WSSettingsTableViewController: UITableViewController {
     // Delegates
     var navigationDelegate: WSNavigationProtocol? = WSNavigationDelegate.sharedNavigationDelegate
     var apiCommunicator: WSAPICommunicatorProtocol? = WSAPICommunicator.sharedAPICommunicator
+    var session: WSSessionStateProtocol? = WSSessionState.sharedSessionState
+    var store: WSStoreProtocol? = WSStore.sharedStore
     var alertDelegate: WSAlertProtocol? = WSAlertDelegate.sharedAlertDelegate
     
     let settings = [
         [
             "section_title" : "Warmshowers.org",
-            "cells" : Array([
+            "cells" : [
                 [
                     "title" : "Visit the website",
                     "cell_id": DisclosureCellID,
@@ -29,7 +31,7 @@ class WSSettingsTableViewController: UITableViewController {
                     "cell_id": DisclosureCellID,
                     "tag" : 11
                 ]
-            ])
+            ]
         ],
         [
             "section_title" : "Help",

@@ -10,6 +10,9 @@ import Foundation
 
 protocol WSAPIRequestDelegate {
     
+    /** Specifies if the http client should queue a request while offline for processing later once online again */
+    func requestShouldBeQueuedWhileOffline(request: WSAPIRequest) -> Bool
+    
     /** Defines how responses from the API should be handled */
     func request(request: WSAPIRequest, didRecieveHTTPResponse data: NSData?, response: NSURLResponse?, andError error: NSError?)
     

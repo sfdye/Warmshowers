@@ -119,6 +119,12 @@ class WSLoginViewControllerTests: XCTestCase {
         loginViewController?.didRecieveAPISuccessResponse(nil)
         
         // then
+        XCTAssertTrue(mockAPICommunicator!.getTokenCalled, "API not contacted with a token request after a successful login.")
+        
+        // when
+        loginViewController?.didRecieveAPISuccessResponse("mock token string")
+        
+        // then
         XCTAssertTrue(mockSessionState!.savePasswordForUsernameCalled, "Username and password not updated on a successful login.")
         XCTAssertTrue(mockNavigationDelegate!.showMainAppCalled, "Navigation delegate not notified to display main app after successful login.")
     }

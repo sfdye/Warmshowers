@@ -18,11 +18,8 @@ enum DataError : ErrorType {
 class WSStore : NSObject {
     
     static let sharedStore = WSStore()
+    
     let privateContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-    
-    // Set the map tiel expiry time to 24 hr
-    static let MapTileExpiryTime: NSTimeInterval = 60.0 * 60.0 * 24.0
-    
     
     // MARK: Core Data stack
     
@@ -53,7 +50,7 @@ class WSStore : NSObject {
             dict[NSLocalizedFailureReasonErrorKey] = failureReason
             
             dict[NSUnderlyingErrorKey] = error as NSError
-            let wrappedError = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
+            let wrappedError = NSError(domain: "com.rajanfernandez.Warmshowers.ErrorDomain", code: 9999, userInfo: dict)
             // Replace this with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog("Unresolved error \(wrappedError), \(wrappedError.userInfo)")
@@ -79,23 +76,11 @@ class WSStore : NSObject {
         privateContext.persistentStoreCoordinator = managedObjectContext.persistentStoreCoordinator
         
         // Set up an observer to merge changes in the private context to the main context when it is saved
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WSStore.privateContextDidSave(_:)), name: NSManagedObjectContextDidSaveNotification, object: privateContext)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(privateContextDidSave(_:)), name: NSManagedObjectContextDidSaveNotification, object: privateContext)
     }
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
-    }
-    
-
-    // MARK: Generic methods
-    
-    // Saves the private content
-    class func savePrivateContext() throws {
-        if sharedStore.privateContext.hasChanges {
-            do {
-                try sharedStore.privateContext.save()
-            }
-        }
     }
     
     // Merges the private context with the main context on notification
@@ -104,21 +89,33 @@ class WSStore : NSObject {
         managedObjectContext.performSelectorOnMainThread(#selector(NSManagedObjectContext.mergeChangesFromContextDidSaveNotification(_:)), withObject: notification, waitUntilDone: false)
     }
     
-    // Initialise a NSFetchRequest for a given entity
-    class func requestForEntity(entity: WSEntity) -> NSFetchRequest {
+
+    // MARK: Generic methods
+    
+    /** Saves the private content. */
+    func savePrivateContext() throws {
+        if privateContext.hasChanges {
+            do {
+                try privateContext.save()
+            }
+        }
+    }
+    
+    /** Initialises a NSFetchRequest for a given entity. */
+    func requestForEntity(entity: WSEntity) -> NSFetchRequest {
         let request = NSFetchRequest(entityName: entity.rawValue)
         return request
     }
     
     // Excecutes a syncronous fetch request with the private context
     //
-    class func executeFetchRequest(request: NSFetchRequest) throws -> [AnyObject] {
+    func executeFetchRequest(request: NSFetchRequest) throws -> [AnyObject] {
         
         var objects = [AnyObject]()
         var error: NSError?
-        sharedStore.privateContext.performBlockAndWait { () -> Void in
+        privateContext.performBlockAndWait { () -> Void in
             do {
-                objects = try sharedStore.privateContext.executeFetchRequest(request)
+                objects = try self.privateContext.executeFetchRequest(request)
             } catch let nserror as NSError {
                 error = nserror
             }
@@ -131,9 +128,8 @@ class WSStore : NSObject {
         return objects
     }
     
-    // Syncronous fetch of all entries in an entity
-    //
-    class func getAllFromEntity(entity: WSEntity) throws -> [AnyObject] {
+    /** Syncronous fetch of all entries in an entity. */
+    func getAllEntriesFromEntity(entity: WSEntity) throws -> [AnyObject] {
         
         let request = requestForEntity(entity)
         
@@ -142,23 +138,5 @@ class WSStore : NSObject {
             return objects
         }
     }
-    
-    // Deletes all objects from the store
-    //
-    class func clearout() throws {
-    
-        // Cycle through entities and delete all entries
-        let entities = WSEntity.allValues
-        do {
-            for entity in entities {
-                let objects = try WSStore.getAllFromEntity(entity) as! [NSManagedObject]
-                for object in objects {
-                    sharedStore.privateContext.deleteObject(object)
-                    try savePrivateContext()
-                }
-            }
-        }
-    }
-    
 }
 

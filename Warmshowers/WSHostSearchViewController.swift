@@ -38,6 +38,8 @@ class WSHostSearchViewController: UIViewController {
     
     // Delegates
     var alertDelegate: WSAlertDelegate? = WSAlertDelegate.sharedAlertDelegate
+    var connection: WSReachabilityProtocol = WSReachabilityManager.sharedReachabilityManager
+    var session: WSSessionStateProtocol = WSSessionState.sharedSessionState
     var locationSearchController: WSLocationSearchViewControllerProtocol? = WSLocationSearchViewController()
     var keywordSearchController: WSKeywordSearchTableViewControllerProtocol? = WSKeywordSearchTableViewController()
     
@@ -45,7 +47,7 @@ class WSHostSearchViewController: UIViewController {
     // MARK: View life cycle
     
     deinit {
-        WSReachabilityManager.deregisterFromNotifications(self)
+        connection.deregisterFromNotifications(self)
     }
     
     override func viewDidLoad() {
@@ -70,7 +72,7 @@ class WSHostSearchViewController: UIViewController {
         configureToolbar()
         
         // Reachability notifications
-        WSReachabilityManager.registerForAndStartNotifications(self, selector: #selector(WSHostSearchViewController.reachabilityChanged(_:)))
+        connection.registerForAndStartNotifications(self, selector: #selector(WSHostSearchViewController.reachabilityChanged(_:)))
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -110,7 +112,7 @@ class WSHostSearchViewController: UIViewController {
     }
     
     func showReachabilityBannerIfNeeded() {
-        if WSReachabilityManager.sharedInstance?.isReachable() == false {
+        if !connection.isOnline {
             WSInfoBanner.showNoInternetBanner()
         } else {
             WSInfoBanner.hideAll()

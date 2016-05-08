@@ -9,23 +9,16 @@
 import UIKit
 import CoreData
 
-extension WSStore {
+extension WSStore : WSStoreParticipantProtocol {
     
-    // MARK: User handling methods
-    
-    // Returns all the users in the store
-    //
-    class func allMessageParticipants() throws -> [CDWSUser] {
-        
+    func allMessageParticipants() throws -> [CDWSUser] {
         do {
-            let users = try getAllFromEntity(.Participant) as! [CDWSUser]
+            let users = try getAllEntriesFromEntity(.Participant) as! [CDWSUser]
             return users
         }
     }
     
-    // Checks if a user is already in the store by uid.
-    //
-    class func participantWithID(uid: Int) throws -> CDWSUser? {
+    func participantWithID(uid: Int) throws -> CDWSUser? {
         
         let request = requestForEntity(.Participant)
         request.predicate = NSPredicate(format: "uid == %i", uid)
@@ -36,22 +29,18 @@ extension WSStore {
         }
     }
     
-    // Returns an existing user, or a new user inserted into the private context.
-    //
-    class func newOrExistingParticipant(uid: Int) throws -> CDWSUser {
+    func newOrExistingParticipant(uid: Int) throws -> CDWSUser {
         do {
             if let user = try participantWithID(uid) {
                 return user
             } else {
-                let user = NSEntityDescription.insertNewObjectForEntityForName(WSEntity.Participant.rawValue, inManagedObjectContext: sharedStore.privateContext) as! CDWSUser
+                let user = NSEntityDescription.insertNewObjectForEntityForName(WSEntity.Participant.rawValue, inManagedObjectContext: privateContext) as! CDWSUser
                 return user
             }
         }
     }
     
-    // Create a user set from json containing message thread participants
-    //
-    class func participantSetFromJSON(json: AnyObject) throws -> NSSet {
+    func participantSetFromJSON(json: AnyObject) throws -> NSSet {
         
         guard let users = json as? NSArray else {
             throw DataError.InvalidInput
@@ -81,9 +70,7 @@ extension WSStore {
         return NSSet(array: participants)
     }
     
-    // Adds a user to the store with json describing a message participant
-    //
-    class func addParticipantWithJSON(json: AnyObject) throws {
+    func addParticipantWithJSON(json: AnyObject) throws {
         
         guard let fullname = json.valueForKey("fullname") as? String else {
             throw CDWSUserError.FailedValueForKey(key: "fullname")
@@ -106,8 +93,7 @@ extension WSStore {
         }
     }
     
-    // Updates a users profile thumbnail image url
-    class func updateParticipantImageURLWithJSON(json: AnyObject) throws {
+    func updateParticipantImageURLWithJSON(json: AnyObject) throws {
         
         guard let uid = json.valueForKey("uid")?.integerValue else {
             throw DataError.InvalidInput
@@ -124,9 +110,7 @@ extension WSStore {
         }
     }
     
-    // Update a user with a thumbnail image
-    class func updateParticipant(uid: Int, withImage image: UIImage) throws {
-        
+    func updateParticipant(uid: Int, withImage image: UIImage) throws {
         do {
             if let user = try participantWithID(uid) {
                 user.image = image
@@ -137,5 +121,4 @@ extension WSStore {
             }
         }
     }
-    
 }

@@ -9,25 +9,16 @@
 import UIKit
 import CoreData
 
-extension WSStore {
+extension WSStore : WSStoreMessageThreadProtocol {
     
-    // MARK: Message thread handling methods
-    
-    // Returns all the message threads in the store
-    //
-    class func allMessageThreads() throws -> [CDWSMessageThread] {
-        
+    func allMessageThreads() throws -> [CDWSMessageThread] {
         do {
-            let threads = try getAllFromEntity(.Thread) as! [CDWSMessageThread]
+            let threads = try getAllEntriesFromEntity(.Thread) as! [CDWSMessageThread]
             return threads
         }
     }
     
-    // Checks if a message thread is already in the store by thread id.
-    // Returns the existing message thread, or a new message thread inserted into the private context.
-    //
-    class func messageThreadWithID(threadID: Int) throws -> CDWSMessageThread? {
-        
+    func messageThreadWithID(threadID: Int) throws -> CDWSMessageThread? {
         let request = requestForEntity(.Thread)
         request.predicate = NSPredicate(format: "thread_id==%i", threadID)
         
@@ -37,22 +28,18 @@ extension WSStore {
         }
     }
     
-    // Checks if a message exists and returns it or a new one if it doesn't exist
-    //
-    class func newOrExistingMessageThread(threadID: Int) throws -> CDWSMessageThread {
+    func newOrExistingMessageThread(threadID: Int) throws -> CDWSMessageThread {
         do {
             if let thread = try messageThreadWithID(threadID) {
                 return thread
             } else {
-                let thread = NSEntityDescription.insertNewObjectForEntityForName(WSEntity.Thread.rawValue, inManagedObjectContext: sharedStore.privateContext) as! CDWSMessageThread
+                let thread = NSEntityDescription.insertNewObjectForEntityForName(WSEntity.Thread.rawValue, inManagedObjectContext: privateContext) as! CDWSMessageThread
                 return thread
             }
         }
     }
     
-    // Adds a message thread to the store with json
-    //
-    class func addMessageThread(json: AnyObject) throws {
+    func addMessageThread(json: AnyObject) throws {
         
         guard let count = json.valueForKey("count")?.integerValue else {
             throw CDWSMessageThreadError.FailedValueForKey(key: "count")
@@ -108,8 +95,7 @@ extension WSStore {
         }
     }
     
-    // Returns the number of messages that have been saved to the store for a given thread
-    class func numberOfDownloadedMessagesOnThread(threadID: Int) throws -> Int {
+    func numberOfDownloadedMessagesOnThread(threadID: Int) throws -> Int {
         do {
             if let messageThread = try messageThreadWithID(threadID) {
                 if let messages = messageThread.messages {
@@ -120,7 +106,7 @@ extension WSStore {
         }
     }
     
-    class func numberOfUnreadMessageThreads() throws -> Int {
+    func numberOfUnreadMessageThreads() throws -> Int {
         do {
             let threads = try allMessageThreads() as NSArray
             let isNew = threads.valueForKey("is_new") as! [Int]
@@ -129,7 +115,7 @@ extension WSStore {
         }
     }
     
-    class func messageThreadsThatNeedUpdating() throws -> [Int] {
+    func messageThreadsThatNeedUpdating() throws -> [Int] {
         do {
             var threadIDs = [Int]()
             let threads = try allMessageThreads()
@@ -144,7 +130,7 @@ extension WSStore {
         }
     }
     
-    class func allMessagesOnThread(threadID: Int) throws -> [CDWSMessage]? {
+    func allMessagesOnThread(threadID: Int) throws -> [CDWSMessage]? {
         do {
             var messages: [CDWSMessage]?
             if let messageThread = try messageThreadWithID(threadID) {
@@ -154,7 +140,7 @@ extension WSStore {
         }
     }
     
-    class func subjectForMessageThreadWithID(threadID: Int) -> String? {
+    func subjectForMessageThreadWithID(threadID: Int) -> String? {
         do {
             let messageThread = try messageThreadWithID(threadID)
             let subject = messageThread?.subject
@@ -164,12 +150,11 @@ extension WSStore {
         }
     }
     
-    class func markMessageThread(threadID: Int, unread: Bool) throws {
+    func markMessageThread(threadID: Int, unread: Bool) throws {
         do {
             let messageThread = try messageThreadWithID(threadID)
             messageThread?.is_new = unread
             try savePrivateContext()
         }
     }
-    
 }

@@ -9,11 +9,9 @@
 import UIKit
 import CoreData
 
-extension WSStore {
+extension WSStore : WSStoreUserLocationProtocol {
     
-    // Checks if a user is already in the store by uid.
-    //
-    class func userLocationWithID(uid: Int) throws -> CDWSUserLocation? {
+    func userLocationWithID(uid: Int) throws -> CDWSUserLocation? {
         
         let request = requestForEntity(.UserLocation)
         request.predicate = NSPredicate(format: "uid == %i", uid)
@@ -24,22 +22,18 @@ extension WSStore {
         }
     }
     
-    // Returns an existing user, or a new user inserted into the private context.
-    //
-    class func newOrExistingUserLocation(uid: Int) throws -> CDWSUserLocation {
+    func newOrExistingUserLocation(uid: Int) throws -> CDWSUserLocation {
         do {
             if let user = try userLocationWithID(uid) {
                 return user
             } else {
-                let user = NSEntityDescription.insertNewObjectForEntityForName(WSEntity.UserLocation.rawValue, inManagedObjectContext: sharedStore.privateContext) as! CDWSUserLocation
+                let user = NSEntityDescription.insertNewObjectForEntityForName(WSEntity.UserLocation.rawValue, inManagedObjectContext: privateContext) as! CDWSUserLocation
                 return user
             }
         }
     }
     
-    // Adds a user to the store with json describing a host location
-    //
-    class func addUserToMapTile(mapTile: CDWSMapTile, withLocationJSON json: AnyObject) throws {
+    func addUserToMapTile(mapTile: CDWSMapTile, withLocationJSON json: AnyObject) throws {
         
         guard let fullname = json.valueForKey("fullname") as? String else {
             throw CDWSUserLocationError.FailedValueForKey(key: "fullname")

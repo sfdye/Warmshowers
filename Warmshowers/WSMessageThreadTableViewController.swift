@@ -31,11 +31,18 @@ class WSMessageThreadTableViewController: UITableViewController {
     var alert: UIAlertController?
     var presentingAlert = false
     
+    // Delegates
+    let store: WSStoreMessageThreadProtocol = WSStore.sharedStore
+    let session: WSSessionStateProtocol = WSSessionState.sharedSessionState
+    
+    
+    // MARK: View life cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Set the view title
-        navigationItem.title = WSStore.subjectForMessageThreadWithID(threadID)
+        navigationItem.title = store.subjectForMessageThreadWithID(threadID)
         
         // Configure the table view
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -127,7 +134,7 @@ class WSMessageThreadTableViewController: UITableViewController {
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         if identifier == ReplyToMessageThreadSegueID {
             do {
-                if let _ = try WSStore.messageThreadWithID(threadID) {
+                if let _ = try store.messageThreadWithID(threadID) {
                     return true
                 }
             } catch {
@@ -153,7 +160,7 @@ class WSMessageThreadTableViewController: UITableViewController {
     func updateAuthorImages() {
         
         do {
-            let messageThread = try WSStore.messageThreadWithID(threadID)
+            let messageThread = try store.messageThreadWithID(threadID)
             let authors = messageThread?.participants?.allObjects as! [CDWSUser]
             for author in authors {
                 if author.image == nil {
@@ -167,7 +174,8 @@ class WSMessageThreadTableViewController: UITableViewController {
                         }
                         
                         do {
-                            try WSStore.updateParticipant(uid, withImage: image)
+                            // TODO: This should be refactored so that the store remains as a delegate variable
+                            try WSStore.sharedStore.updateParticipant(uid, withImage: image)
                             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                                 self.reloadImage(image, forAuthor: uid)
                             })
@@ -241,7 +249,7 @@ class WSMessageThreadTableViewController: UITableViewController {
     func markAsRead() {
         
         do {
-            guard let thread = try WSStore.messageThreadWithID(threadID) where thread.is_new != nil else {
+            guard let thread = try store.messageThreadWithID(threadID) where thread.is_new != nil else {
                 return
             }
             

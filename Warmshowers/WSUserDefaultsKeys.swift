@@ -12,5 +12,5 @@ struct WSUserDefaultsKeys {
     static let UsernameKey = "ws-current-user-username"
     static let SessionCookieKey = "ws-session-cookie"
     static let TokenKey = "ws-token"
-    static let UserUIDKey = "ws-current-user-uid"
+    static let UIDKey = "ws-current-user-uid"
 }

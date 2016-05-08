@@ -22,7 +22,7 @@ extension WSMessageThreadTableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let message = self.fetchedResultsController.objectAtIndexPath(indexPath) as! CDWSMessage
-        let cellID = (message.author!.uid == WSSessionData.uid) ? MessageFromSelfCellID : MessageFromUserCellID
+        let cellID = (message.author!.uid == session.uid) ? MessageFromSelfCellID : MessageFromUserCellID
         let cell = tableView.dequeueReusableCellWithIdentifier(cellID, forIndexPath: indexPath) as! MessageTableViewCell
         self.configureCell(cell, indexPath: indexPath)
         return cell

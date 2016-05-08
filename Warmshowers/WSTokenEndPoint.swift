@@ -21,7 +21,7 @@ class WSTokenEndPoint : WSAPIEndPointProtocol {
     var accept: AcceptType { return .PlainText }
     
     func request(request: WSAPIRequest, didRecievedResponseWithText text: String) throws -> AnyObject? {
-        WSSessionData.setToken(text)
+        WSSessionState.sharedSessionState.setToken(text)
         return text
     }
     

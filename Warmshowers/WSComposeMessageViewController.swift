@@ -23,6 +23,10 @@ class WSComposeMessageViewController: UIViewController {
     
     var messageSender: WSMessageSender?
     
+    // Delegates
+    let store: WSStoreMessageThreadProtocol = WSStore.sharedStore
+    let session: WSSessionStateProtocol = WSSessionState.sharedSessionState
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -96,8 +100,13 @@ class WSComposeMessageViewController: UIViewController {
         // Set up the reply
         self.threadID = threadID
         do {
-            let thread = try WSStore.messageThreadWithID(threadID)
-            let recipients = thread?.otherParticipants(WSSessionData.uid)
+            let thread = try store.messageThreadWithID(threadID)
+            
+            guard let uid = session.uid else {
+                return
+            }
+            
+            let recipients = thread?.otherParticipants(uid)
             self.threadID = threadID
             self.subject = thread?.subject
             self.recipients = recipients

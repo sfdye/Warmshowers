@@ -33,12 +33,12 @@ struct WSRequest {
         
         // Add the session cookie to the header.
         if (service.type != .Login && service.type != .Token) {
-            do {
-                let sessionCookie = try WSSessionData.getSessionCookie()
-                request.addValue(sessionCookie, forHTTPHeaderField: "Cookie")
-            } catch {
-                throw WSRequestError.NoSessionCookie
-            }
+//            do {
+//                let sessionCookie = try WSSessionData.getSessionCookie()
+//                request.addValue(sessionCookie, forHTTPHeaderField: "Cookie")
+//            } catch {
+//                throw WSRequestError.NoSessionCookie
+//            }
         }
         
         // Add the CSRF token to the header.

@@ -33,6 +33,11 @@ class WSAccountTableViewController: UITableViewController {
     
     var actionAlert = UIAlertController()
     
+    // Delegates
+    let store: WSStoreParticipantProtocol = WSStore.sharedStore
+    let session: WSSessionStateProtocol = WSSessionState.sharedSessionState
+    var connection: WSReachabilityProtocol = WSReachabilityManager.sharedReachabilityManager
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -153,7 +158,7 @@ class WSAccountTableViewController: UITableViewController {
             return false
         }
         
-        return uid == WSSessionData.uid
+        return uid == session.uid
     }
     
     // Sets up a done button if one is needed
@@ -457,8 +462,8 @@ class WSAccountTableViewController: UITableViewController {
             if let info = info, let uid = uid {
                 // Save the user to the store and pass the user object to the compose message view controller
                 do {
-                    try WSStore.addParticipantWithJSON(info)
-                    recipient = try WSStore.participantWithID(uid)
+                    try store.addParticipantWithJSON(info)
+                    recipient = try store.participantWithID(uid)
                     composeMessageVC.initialiseAsNewMessageToUser([recipient!])
                 } catch {
                     print("Failed to get user for compose message view")

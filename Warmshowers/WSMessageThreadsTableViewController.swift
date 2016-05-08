@@ -22,10 +22,14 @@ class WSMessageThreadsTableViewController: UITableViewController {
     var presentingAlert = false
     var fetchedResultsController: NSFetchedResultsController!
     
+    // Delegates
+    let store: WSStoreMessageThreadProtocol = WSStore.sharedStore
+    var connection: WSReachabilityProtocol = WSReachabilityManager.sharedReachabilityManager
+    
     // MARK: View life cycle
     
     deinit {
-        WSReachabilityManager.deregisterFromNotifications(self)
+        connection.deregisterFromNotifications(self)
     }
     
     override func viewDidLoad() {
@@ -49,7 +53,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
         tableView.estimatedRowHeight = 96
         
         // Reachability notifications
-        WSReachabilityManager.registerForAndStartNotifications(self, selector: #selector(WSMessageThreadsTableViewController.reachabilityChanged(_:)))
+        connection.registerForAndStartNotifications(self, selector: #selector(WSMessageThreadsTableViewController.reachabilityChanged(_:)))
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -114,7 +118,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
     }
     
     func showReachabilityBannerIfNeeded() {
-        if WSReachabilityManager.sharedInstance?.isReachable() == false {
+        if !connection.isOnline {
             WSInfoBanner.showNoInternetBanner()
         } else {
             WSInfoBanner.hideAll()
@@ -126,7 +130,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
     
     func update() {
         
-        guard WSReachabilityManager.sharedInstance?.isReachable() == true else {
+        guard connection.isOnline else {
             refreshControl?.endRefreshing()
             return
         }
@@ -157,7 +161,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
         
         // Update the messages if necessary, or just reload if no updates are required
         do {
-            let threadIDs = try WSStore.messageThreadsThatNeedUpdating()
+            let threadIDs = try store.messageThreadsThatNeedUpdating()
             if threadIDs.count > 0 {
                 for threadID in threadIDs {
                     self.updateMessagesOnThread(threadID)
@@ -183,7 +187,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
     //
     func updateMessagesOnThread(threadID: Int) {
         
-        guard WSReachabilityManager.sharedInstance?.isReachable() == true else {
+        guard connection.isOnline else {
             self.updateFinishedForThreadID(threadID)
             return
         }
@@ -223,7 +227,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
     //
     func updateTabBarBadge() {
         do {
-            let unread = try WSStore.numberOfUnreadMessageThreads()
+            let unread = try store.numberOfUnreadMessageThreads()
             dispatch_async(dispatch_get_main_queue()) { () -> Void in
                 if unread > 0 {
                     self.navigationController?.tabBarItem.badgeValue = String(unread)

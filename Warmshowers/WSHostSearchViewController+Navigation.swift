@@ -50,7 +50,7 @@ extension WSHostSearchViewController {
             if let user = sender as? WSUserLocation {
                 accountTVC.uid = user.uid
             } else {
-                accountTVC.uid = WSSessionData.uid
+                accountTVC.uid = session.uid
             }
             
         case ResultsToUserAccountSegueID:

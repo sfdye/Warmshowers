@@ -11,11 +11,21 @@ import Foundation
 
 class WSMOCKSessionState : WSSessionStateProtocol {
     
+    var uidReturned = false
     var usernameReturned = false
     var setUsernameCalled = false
     var savePasswordForUsernameCalled = false
     var saveSessionDataCalled = false
     var deleteSessionDataCalled = false
+    var setTokenCalled = false
+    var isLoggedInReturned = false
+    
+    var uid: Int? {
+        get {
+            uidReturned = true
+            return 0
+        }
+    }
     
     var username: String? {
         get {
@@ -23,24 +33,32 @@ class WSMOCKSessionState : WSSessionStateProtocol {
             return "username"
         }
     }
-    
-    /** Saves the users username to the standard defaults */
+
     func setUsername(username: String) {
         setUsernameCalled = true
     }
     
-    /** Saves a users username and password. */
     func savePassword(password: String, forUsername username: String) throws {
         savePasswordForUsernameCalled = true
     }
     
-    /** Saves a session cookie, token and current user uid to NSUserDefaults */
     func saveSessionData(sessionCookie: String, token: String, uid: Int) {
         saveSessionDataCalled = true
     }
     
-    /** Deletes the session cookie, token and current user uid from NSUserDefaults */
-    func deleteSessionData(sessionCookie: String, token: String, uid: Int) {
+    func deleteSessionData() {
         deleteSessionDataCalled = true
     }
+    
+    func setToken(token: String) {
+        setTokenCalled = true
+    }
+    
+    var isLoggedIn: Bool {
+        get {
+            isLoggedInReturned = true
+            return true
+        }
+    }
+
 }
