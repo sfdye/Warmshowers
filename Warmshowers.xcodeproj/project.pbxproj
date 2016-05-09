@@ -193,6 +193,16 @@
 		E5ED1E9C1CD468C70017D12F /* WSSessionStateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5ED1E9B1CD468C70017D12F /* WSSessionStateProtocol.swift */; };
 		E5ED1E9E1CD471E00017D12F /* WSMOCKSessionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5ED1E9D1CD471E00017D12F /* WSMOCKSessionState.swift */; };
 		E5ED1EA11CD47CA00017D12F /* WSHostSearchViewController+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5ED1EA01CD47CA00017D12F /* WSHostSearchViewController+Actions.swift */; };
+		E5F4A7901CE086150010BEC7 /* WSAPICommunicator+WSAPICommunicatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F4A78F1CE086150010BEC7 /* WSAPICommunicator+WSAPICommunicatorProtocol.swift */; };
+		E5F4A7921CE086EA0010BEC7 /* WSMarkMessageEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F4A7911CE086EA0010BEC7 /* WSMarkMessageEndPoint.swift */; };
+		E5F4A7941CE08B9B0010BEC7 /* WSSearchByLocationEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F4A7931CE08B9B0010BEC7 /* WSSearchByLocationEndPoint.swift */; };
+		E5F4A7961CE092A10010BEC7 /* WSGetMessageThreadEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F4A7951CE092A10010BEC7 /* WSGetMessageThreadEndPoint.swift */; };
+		E5F4A7981CE092C40010BEC7 /* WSGetAllMessageThreadsEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F4A7971CE092C40010BEC7 /* WSGetAllMessageThreadsEndPoint.swift */; };
+		E5F4A79A1CE092DA0010BEC7 /* WSUnreadMessageCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F4A7991CE092DA0010BEC7 /* WSUnreadMessageCount.swift */; };
+		E5F4A79C1CE092F30010BEC7 /* WSReplyToMessageEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F4A79B1CE092F30010BEC7 /* WSReplyToMessageEndPoint.swift */; };
+		E5F4A79E1CE092FF0010BEC7 /* WSNewMessageEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F4A79D1CE092FF0010BEC7 /* WSNewMessageEndPoint.swift */; };
+		E5F4A7A01CE093110010BEC7 /* WSUserFeedbackEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F4A79F1CE093110010BEC7 /* WSUserFeedbackEndPoint.swift */; };
+		E5F4A7A21CE0931F0010BEC7 /* WSUserInfoEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F4A7A11CE0931F0010BEC7 /* WSUserInfoEndPoint.swift */; };
 		E5F6F30A1C2B36930000A87E /* WSRestfulService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6F3091C2B36930000A87E /* WSRestfulService.swift */; };
 		E5F6F30D1C2FE2770000A87E /* AccountDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6F30C1C2FE2770000A87E /* AccountDetailTableViewCell.swift */; };
 		E5F6F30F1C2FE3360000A87E /* ProfileImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6F30E1C2FE3360000A87E /* ProfileImageTableViewCell.swift */; };
@@ -428,6 +438,16 @@
 		E5ED1E9B1CD468C70017D12F /* WSSessionStateProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSSessionStateProtocol.swift; sourceTree = "<group>"; };
 		E5ED1E9D1CD471E00017D12F /* WSMOCKSessionState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSMOCKSessionState.swift; sourceTree = "<group>"; };
 		E5ED1EA01CD47CA00017D12F /* WSHostSearchViewController+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSHostSearchViewController+Actions.swift"; sourceTree = "<group>"; };
+		E5F4A78F1CE086150010BEC7 /* WSAPICommunicator+WSAPICommunicatorProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSAPICommunicator+WSAPICommunicatorProtocol.swift"; sourceTree = "<group>"; };
+		E5F4A7911CE086EA0010BEC7 /* WSMarkMessageEndPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSMarkMessageEndPoint.swift; sourceTree = "<group>"; };
+		E5F4A7931CE08B9B0010BEC7 /* WSSearchByLocationEndPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSSearchByLocationEndPoint.swift; sourceTree = "<group>"; };
+		E5F4A7951CE092A10010BEC7 /* WSGetMessageThreadEndPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSGetMessageThreadEndPoint.swift; sourceTree = "<group>"; };
+		E5F4A7971CE092C40010BEC7 /* WSGetAllMessageThreadsEndPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSGetAllMessageThreadsEndPoint.swift; sourceTree = "<group>"; };
+		E5F4A7991CE092DA0010BEC7 /* WSUnreadMessageCount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSUnreadMessageCount.swift; sourceTree = "<group>"; };
+		E5F4A79B1CE092F30010BEC7 /* WSReplyToMessageEndPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSReplyToMessageEndPoint.swift; sourceTree = "<group>"; };
+		E5F4A79D1CE092FF0010BEC7 /* WSNewMessageEndPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSNewMessageEndPoint.swift; sourceTree = "<group>"; };
+		E5F4A79F1CE093110010BEC7 /* WSUserFeedbackEndPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSUserFeedbackEndPoint.swift; sourceTree = "<group>"; };
+		E5F4A7A11CE0931F0010BEC7 /* WSUserInfoEndPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSUserInfoEndPoint.swift; sourceTree = "<group>"; };
 		E5F6F3091C2B36930000A87E /* WSRestfulService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSRestfulService.swift; sourceTree = "<group>"; };
 		E5F6F30C1C2FE2770000A87E /* AccountDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountDetailTableViewCell.swift; sourceTree = "<group>"; };
 		E5F6F30E1C2FE3360000A87E /* ProfileImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageTableViewCell.swift; sourceTree = "<group>"; };
@@ -627,6 +647,7 @@
 		E564903C1CD4AF4C00645331 /* SearchByLocation */ = {
 			isa = PBXGroup;
 			children = (
+				E5F4A7931CE08B9B0010BEC7 /* WSSearchByLocationEndPoint.swift */,
 			);
 			name = SearchByLocation;
 			sourceTree = "<group>";
@@ -715,6 +736,7 @@
 				E570580C1CC9CFDA00FA5D9F /* HttpMethod.swift */,
 				E53BA73B1C7554880076E825 /* WSURLSession.swift */,
 				E57057E11CC86C6600FA5D9F /* WSAPICommunicator.swift */,
+				E5F4A78F1CE086150010BEC7 /* WSAPICommunicator+WSAPICommunicatorProtocol.swift */,
 				E57057E31CC86D8900FA5D9F /* WSAPICommunicatorProtocol.swift */,
 				E57058061CC9B9F600FA5D9F /* WSAPICommunicator+WSAPIRequestDelgate.swift */,
 				E57058131CCA367100FA5D9F /* NSMutableURLRequest+Warmshowers.swift */,
@@ -1078,6 +1100,7 @@
 		E5F9BC941CDE8FD8006494FE /* UserInfo */ = {
 			isa = PBXGroup;
 			children = (
+				E5F4A7A11CE0931F0010BEC7 /* WSUserInfoEndPoint.swift */,
 			);
 			name = UserInfo;
 			sourceTree = "<group>";
@@ -1085,6 +1108,7 @@
 		E5F9BC951CDE8FEA006494FE /* UserFeedback */ = {
 			isa = PBXGroup;
 			children = (
+				E5F4A79F1CE093110010BEC7 /* WSUserFeedbackEndPoint.swift */,
 			);
 			name = UserFeedback;
 			sourceTree = "<group>";
@@ -1092,6 +1116,7 @@
 		E5F9BC961CDE8FF4006494FE /* NewMessage */ = {
 			isa = PBXGroup;
 			children = (
+				E5F4A79D1CE092FF0010BEC7 /* WSNewMessageEndPoint.swift */,
 			);
 			name = NewMessage;
 			sourceTree = "<group>";
@@ -1099,6 +1124,7 @@
 		E5F9BC971CDE8FFB006494FE /* ReplyToMessage */ = {
 			isa = PBXGroup;
 			children = (
+				E5F4A79B1CE092F30010BEC7 /* WSReplyToMessageEndPoint.swift */,
 			);
 			name = ReplyToMessage;
 			sourceTree = "<group>";
@@ -1106,6 +1132,7 @@
 		E5F9BC981CDE9006006494FE /* UnreadMessageCount */ = {
 			isa = PBXGroup;
 			children = (
+				E5F4A7991CE092DA0010BEC7 /* WSUnreadMessageCount.swift */,
 			);
 			name = UnreadMessageCount;
 			sourceTree = "<group>";
@@ -1113,6 +1140,7 @@
 		E5F9BC991CDE9016006494FE /* GetAllMessageThreads */ = {
 			isa = PBXGroup;
 			children = (
+				E5F4A7971CE092C40010BEC7 /* WSGetAllMessageThreadsEndPoint.swift */,
 			);
 			name = GetAllMessageThreads;
 			sourceTree = "<group>";
@@ -1120,6 +1148,7 @@
 		E5F9BC9A1CDE901C006494FE /* GetMessageThread */ = {
 			isa = PBXGroup;
 			children = (
+				E5F4A7951CE092A10010BEC7 /* WSGetMessageThreadEndPoint.swift */,
 			);
 			name = GetMessageThread;
 			sourceTree = "<group>";
@@ -1127,6 +1156,7 @@
 		E5F9BC9B1CDE9025006494FE /* MarkMessage */ = {
 			isa = PBXGroup;
 			children = (
+				E5F4A7911CE086EA0010BEC7 /* WSMarkMessageEndPoint.swift */,
 			);
 			name = MarkMessage;
 			sourceTree = "<group>";
@@ -1361,6 +1391,7 @@
 				E56CC0901BFD496400AAF973 /* WSSettingsTableViewController.swift in Sources */,
 				E564904A1CD5578100645331 /* WSKeywordSearchTableViewController+WSAPIResponseDelegate.swift in Sources */,
 				E57AF74B1CAA6A0A002785D1 /* CDWSUserLocation.swift in Sources */,
+				E5F4A7941CE08B9B0010BEC7 /* WSSearchByLocationEndPoint.swift in Sources */,
 				E52E8AAF1C0D056D000391AB /* WSMessageThreadsTableViewController.swift in Sources */,
 				E5DA03EC1C49BA3000FAD1D7 /* WSFeedbackTableViewController+UITableViewCellDataSource.swift in Sources */,
 				E5DA04051C4DA8D000FAD1D7 /* WSMapSource.swift in Sources */,
@@ -1385,6 +1416,7 @@
 				E5967BBB1C3922170037F4B7 /* WSMessageThreadTableViewController.swift in Sources */,
 				E570580B1CC9C30200FA5D9F /* WSAPIResponseDelegate.swift in Sources */,
 				E5967B9F1C3490740037F4B7 /* WSOffers.swift in Sources */,
+				E5F4A79A1CE092DA0010BEC7 /* WSUnreadMessageCount.swift in Sources */,
 				E56490461CD555A800645331 /* WSKeywordSearchTableViewController.swift in Sources */,
 				E564904E1CD55B7300645331 /* WSKeywordSearchTableViewController+WSKeywordSearchTableViewControllerProtocol.swift in Sources */,
 				E54A57641C03E4A4000843A9 /* WSAccountTableViewController.swift in Sources */,
@@ -1404,6 +1436,7 @@
 				E5DA040C1C4DCBE700FAD1D7 /* WSColoredDot.swift in Sources */,
 				E557D86E1C504DCF00226E84 /* WSRequestWithCSRFToken.swift in Sources */,
 				E56B06291C5ED1D4006C7BF3 /* WSMessageUpdateOperation.swift in Sources */,
+				E5F4A7901CE086150010BEC7 /* WSAPICommunicator+WSAPICommunicatorProtocol.swift in Sources */,
 				E5A84A691C8E0AE9007609A9 /* MKMapView+Warmshowers.swift in Sources */,
 				E5F9BC9E1CDE93A8006494FE /* WSAPIRequestStatus.swift in Sources */,
 				E53BA7491C769E770076E825 /* WSMapController.swift in Sources */,
@@ -1412,9 +1445,12 @@
 				E5967BCA1C39DBC00037F4B7 /* CDWSMessageThread+CoreDataProperties.swift in Sources */,
 				E57AF7311CAA4E58002785D1 /* WSStore+WSStoreUserLocationProtocol.swift in Sources */,
 				E5D961541C62BFD4004E1F31 /* WSMessageThreadTableViewController+NSFetchedResultsControllerDelegate.swift in Sources */,
+				E5F4A79C1CE092F30010BEC7 /* WSReplyToMessageEndPoint.swift in Sources */,
 				E5DA03D41C48893400FAD1D7 /* WSLazyImageTableViewController+UIScrollViewDelegate.swift in Sources */,
+				E5F4A7A01CE093110010BEC7 /* WSUserFeedbackEndPoint.swift in Sources */,
 				E564905E1CD5F57600645331 /* WSLocationSearchViewController+MKMapViewDelegate.swift in Sources */,
 				E53BA73C1C7554880076E825 /* WSURLSession.swift in Sources */,
+				E5F4A7981CE092C40010BEC7 /* WSGetAllMessageThreadsEndPoint.swift in Sources */,
 				E57057E41CC86D8900FA5D9F /* WSAPICommunicatorProtocol.swift in Sources */,
 				E57058141CCA367100FA5D9F /* NSMutableURLRequest+Warmshowers.swift in Sources */,
 				E5967BCF1C39DBC00037F4B7 /* CDWSUser.swift in Sources */,
@@ -1444,7 +1480,9 @@
 				E5DA03D11C4887E700FAD1D7 /* WSLazyImageTableViewController.swift in Sources */,
 				E5F9BCA21CDF25FA006494FE /* WSStoreMapTileProtocol.swift in Sources */,
 				E5AF1A8A1C58A44E0004806A /* WSMessageThreadsTableViewController+UITableViewDataSource.swift in Sources */,
+				E5F4A7921CE086EA0010BEC7 /* WSMarkMessageEndPoint.swift in Sources */,
 				E564905C1CD5F49100645331 /* WSHostSearchViewController+WSHostSearchControllerDelegate.swift in Sources */,
+				E5F4A7961CE092A10010BEC7 /* WSGetMessageThreadEndPoint.swift in Sources */,
 				E54276751C3E0CE200047029 /* ComposeMessageBodyTableViewCell.swift in Sources */,
 				E542768A1C41AAAF00047029 /* WSRecommendationMonths.swift in Sources */,
 				E5DA03E81C49AE5300FAD1D7 /* HostListTableViewCell+WSLazyImageTableViewCell.swift in Sources */,
@@ -1477,6 +1515,7 @@
 				E5AF670C1C576CAE00AC17A1 /* WSComposeMessageViewController+UITableViewDelegate.swift in Sources */,
 				E5AF67081C56DD7F00AC17A1 /* WSLoginManager.swift in Sources */,
 				E5F6F3191C3289060000A87E /* WSAccountTableViewController+SegmentTableViewCellActions.swift in Sources */,
+				E5F4A7A21CE0931F0010BEC7 /* WSUserInfoEndPoint.swift in Sources */,
 				E54276781C3E374400047029 /* WSCreateFeedbackTableViewController.swift in Sources */,
 				E56490401CD4B9B200645331 /* WSSearchByKeywordEndPoint.swift in Sources */,
 				E564905A1CD5ED2E00645331 /* WSHostSearchControllerDelegate.swift in Sources */,
@@ -1506,6 +1545,7 @@
 				E5F6F30A1C2B36930000A87E /* WSRestfulService.swift in Sources */,
 				E5DA03A71C46FCBB00FAD1D7 /* WSColor.swift in Sources */,
 				E56490421CD5517200645331 /* WSHostSearchViewController+Navigation.swift in Sources */,
+				E5F4A79E1CE092FF0010BEC7 /* WSNewMessageEndPoint.swift in Sources */,
 				E5967BCB1C39DBC00037F4B7 /* CDWSMessageThread.swift in Sources */,
 				E57057E21CC86C6600FA5D9F /* WSAPICommunicator.swift in Sources */,
 				E5AF67061C56C24B00AC17A1 /* WSRequestDelegate.swift in Sources */,

@@ -34,36 +34,27 @@ enum WSAPIEndPoint {
         case .Logout:
             return WSLogoutEndPoint.sharedEndPoint
         case .SearchByLocation:
-            assertionFailure("End point not added to factory")
-            return WSCreateFeedbackEndPoint.sharedEndPoint // NEEDS CHANGE
+            return WSSearchByLocationEndPoint.sharedEndPoint
         case .SearchByKeyword:
             return WSSearchByKeywordEndPoint.sharedEndPoint
         case .UserInfo:
-            assertionFailure("End point not added to factory")
-            return WSCreateFeedbackEndPoint.sharedEndPoint // NEEDS CHANGE
+            return WSUserInfoEndPoint.sharedEndPoint
         case .UserFeedback:
-            assertionFailure("End point not added to factory")
-            return WSCreateFeedbackEndPoint.sharedEndPoint // NEEDS CHANGE
+            return WSUserFeedbackEndPoint.sharedEndPoint
         case .CreateFeedback:
             return WSCreateFeedbackEndPoint.sharedEndPoint
         case .NewMessage:
-            assertionFailure("End point not added to factory")
-            return WSCreateFeedbackEndPoint.sharedEndPoint // NEEDS CHANGE
+            return WSNewMessageEndPoint.sharedEndPoint
         case .ReplyToMessage:
-            assertionFailure("End point not added to factory")
-            return WSCreateFeedbackEndPoint.sharedEndPoint // NEEDS CHANGE
+            return WSReplyToMessageEndPoint.sharedEndPoint
         case .UnreadMessageCount:
-            assertionFailure("End point not added to factory")
-            return WSCreateFeedbackEndPoint.sharedEndPoint // NEEDS CHANGE
+            return WSUnreadMessageCountEndPoint.sharedEndPoint
         case .GetAllMessageThreads:
-            assertionFailure("End point not added to factory")
-            return WSCreateFeedbackEndPoint.sharedEndPoint // NEEDS CHANGE
+            return WSGetAllMessageThreadsEndPoint.sharedEndPoint
         case .GetMessageThread:
-            assertionFailure("End point not added to factory")
-            return WSCreateFeedbackEndPoint.sharedEndPoint // NEEDS CHANGE
+            return WSGetMessageThreadEndPoint.sharedEndPoint
         case .MarkMessage:
-            assertionFailure("End point not added to factory")
-            return WSCreateFeedbackEndPoint.sharedEndPoint // NEEDS CHANGE
+            return WSMarkMessageEndPoint.sharedEndPoint
         }
     }
 }
