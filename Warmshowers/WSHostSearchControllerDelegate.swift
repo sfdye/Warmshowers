@@ -8,15 +8,10 @@
 
 import UIKit
 
-protocol WSHostSearchControllerDelegate {
+@objc protocol WSHostSearchControllerDelegate {
     
-    var alertDelegate: WSAlertDelegate? { get }
-    
-    /** Called when the location search controller will begin updating hosts on the map */
-    func locationSearchWillBeginUpdates()
-    
-    /** Called when the location search controller did finish updating hosts on the map */
-    func locationSearchDidFinishUpdates()
+    /** Presents a simple OK alert */
+    func showAlertWithTitle(title: String, andMessage: String?)
     
     /** Initiates a segue to show the account/profile screen for a given user */
     func showProfileForUserAtLocation(location: WSUserLocation)

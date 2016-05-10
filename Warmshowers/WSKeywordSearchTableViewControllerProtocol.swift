@@ -10,9 +10,6 @@ import UIKit
 
 protocol WSKeywordSearchTableViewControllerProtocol {
     
-    var tableView: UITableView! { get set }
-    var delegate: WSHostSearchControllerDelegate? { get set }
-    
     /** Initiates a search for hosts by keyword and updated the table view with the results */
     func updateSearchResultsForKeyword(keyword: String?)
 }

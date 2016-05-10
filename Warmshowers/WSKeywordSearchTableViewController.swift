@@ -11,20 +11,16 @@ import UIKit
 class WSKeywordSearchTableViewController : WSLazyImageTableViewController {
     
     var debounceTimer: NSTimer?
-    override var tableView: UITableView! {
-        didSet {
-            dataSource = self
-            tableView.delegate = self
-            tableView.estimatedRowHeight = 74
-            tableView.rowHeight = UITableViewAutomaticDimension
-            placeholderImageName = "ThumbnailPlaceholder"
-        }
-    }
     
     // Delegates
-    var delegate: WSHostSearchControllerDelegate?
+    var alertDelegate: WSAlertDelegate = WSAlertDelegate.sharedAlertDelegate
     var apiCommunicator: WSAPICommunicator? = WSAPICommunicator.sharedAPICommunicator
     
+    override func viewDidLoad() {
+        dataSource = self
+        tableView.estimatedRowHeight = 44
+        tableView.rowHeight = UITableViewAutomaticDimension
+    }
     
     // MARK: Utility methods
     

@@ -11,6 +11,6 @@ import UIKit
 extension WSHostSearchViewController : UISearchResultsUpdating {
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-        keywordSearchController?.updateSearchResultsForKeyword(searchController.searchBar.text)
+        (self.childViewControllers.last as? WSKeywordSearchTableViewControllerProtocol)?.updateSearchResultsForKeyword(searchController.searchBar.text)
     }
 }

@@ -11,6 +11,7 @@ import UIKit
 extension WSHostSearchViewController {
     
     @IBAction func searchButtonPressed(sender: UIBarButtonItem) {
+        showTableView()
         presentViewController(searchController, animated: true, completion: nil)
         searchController.active = true
         didPresentSearchController(searchController)
@@ -18,11 +19,5 @@ extension WSHostSearchViewController {
     
     @IBAction func accountButtonPressed(sender: UIBarButtonItem) {
         performSegueWithIdentifier(MapToUserAccountSegueID, sender: nil)
-    }
-    
-    @IBAction func centreOnLocation() {
-        if let coordinate = locationManager.location?.coordinate {
-            mapView.setCenterCoordinate(coordinate, animated: true)
-        }
     }
 }

@@ -10,16 +10,8 @@ import Foundation
 
 extension WSHostSearchViewController : WSHostSearchControllerDelegate {
     
-    func locationSearchWillBeginUpdates() {
-        dispatch_async(dispatch_get_main_queue()) { [weak self] () -> Void in
-            self?.infoLabel.text = "Updating ..."
-        }
-    }
-    
-    func locationSearchDidFinishUpdates() {
-        dispatch_async(dispatch_get_main_queue()) { [weak self] () -> Void in
-            self?.infoLabel.text = nil
-        }
+    func showAlertWithTitle(title: String, andMessage message: String?) {
+        alertDelegate.presentAlertFor(self, withTitle: title, button: "OK", message: message)
     }
     
     func showProfileForUserAtLocation(location: WSUserLocation) {

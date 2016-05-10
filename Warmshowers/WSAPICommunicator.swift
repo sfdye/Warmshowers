@@ -78,6 +78,7 @@ class WSAPICommunicator {
             #else
                 print("MAKING REQUEST ONLINE")
                 let task = session.dataTaskWithRequest(urlRequest) { (data, response, error) in
+                    print("GOT RESPONSE")
                     request.delegate.request(request, didRecieveHTTPResponse: data, response: response, andError: error)
                 }
                 task.resume()
