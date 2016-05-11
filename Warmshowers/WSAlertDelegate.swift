@@ -28,4 +28,20 @@ class WSAlertDelegate : WSAlertProtocol {
             delegator?.presentViewController(alertController, animated: true, completion: nil)
         }
     }
+    
+    func presentAPIError(error: ErrorType, forDelegator delegator: UIViewController) {
+        var title: String = "Error"
+        var message: String? = "An unknown error ocurred."
+        switch error {
+        case is WSAPIEndPointError:
+            title = "Data Parsing Error"
+            message = "An error occured while parsing data from the Warmshowers API. Please report this as a bug."
+        case is WSAPICommunicatorError:
+            title = "API Error"
+            message = "An error occured while contacting the Warmshowers API. Please report this as a bug."
+        default:
+            break
+        }
+        presentAlertFor(delegator, withTitle: title, button: "OK", message: message)
+    }
 }

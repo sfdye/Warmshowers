@@ -25,7 +25,7 @@ class WSLocationSearchViewController : UIViewController {
     let kDefaultRegionLongitudeDelta: CLLocationDegrees = 1
     
     // Delegates
-    var alertDelegate: WSHostSearchControllerDelegate?
+    var alertDelegate: WSAlertDelegate = WSAlertDelegate.sharedAlertDelegate
     var apiCommunicator: WSAPICommunicator? = WSAPICommunicator.sharedAPICommunicator
     
     override func viewDidLoad() {

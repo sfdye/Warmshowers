@@ -18,5 +18,6 @@ extension WSKeywordSearchTableViewController : WSAPIResponseDelegate {
     
     func didRecieveAPIFailureResponse(error: ErrorType) {
         reloadTableWithHosts([WSUserLocation]())
+        alertDelegate.presentAPIError(error, forDelegator: self)
     }
 }
