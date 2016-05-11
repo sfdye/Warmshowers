@@ -16,6 +16,7 @@ class WSMOCKAlertDelegate : WSAlertProtocol {
     var message: String?
     var button: String?
     var handler: ((UIAlertAction) -> Void)?
+    var error: ErrorType?
     
     func presentAlertFor(delegator: UIViewController, withTitle title: String?, button: String?) {
         presentAlertFor(delegator, withTitle: title, button: button, message: nil, andHandler: nil)
@@ -30,6 +31,11 @@ class WSMOCKAlertDelegate : WSAlertProtocol {
         self.message = message
         self.button = button
         self.handler = handler
+        presentAlertCalled = true
+    }
+    
+    func presentAPIError(error: ErrorType, forDelegator delegator: UIViewController) {
+        self.error = error
         presentAlertCalled = true
     }
 }
