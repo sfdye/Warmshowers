@@ -337,7 +337,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <activityIndicatorView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="tJ7-mc-Rii">
-                                            <rect key="frame" x="133" y="27" width="20" height="37"/>
+                                            <rect key="frame" x="279" y="25" width="20" height="37"/>
                                             <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                                 <rect key="frame" x="133" y="27" width="20" height="19.5"/>
                                             </variation>
@@ -360,11 +360,8 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="73.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="No Hosts" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Ux-ii-EKB">
-                                            <rect key="frame" x="75" y="25" width="136" height="24"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="24" id="UHF-Ge-hf3"/>
-                                            </constraints>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Hosts" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Ux-ii-EKB">
+                                            <rect key="frame" x="8" y="25" width="584" height="24"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -372,8 +369,9 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="7Ux-ii-EKB" firstAttribute="top" secondItem="03Y-BE-8x7" secondAttribute="top" constant="25" id="8Ey-Qx-ME0"/>
-                                        <constraint firstItem="7Ux-ii-EKB" firstAttribute="centerX" secondItem="03Y-BE-8x7" secondAttribute="centerX" id="tRh-q7-tpg"/>
-                                        <constraint firstAttribute="bottom" secondItem="7Ux-ii-EKB" secondAttribute="bottom" constant="25" id="xjB-R8-ECc"/>
+                                        <constraint firstItem="7Ux-ii-EKB" firstAttribute="trailing" secondItem="03Y-BE-8x7" secondAttribute="trailingMargin" id="ZDm-jR-tpW"/>
+                                        <constraint firstAttribute="bottom" secondItem="7Ux-ii-EKB" secondAttribute="bottom" constant="25" id="a6H-aK-gp6"/>
+                                        <constraint firstItem="7Ux-ii-EKB" firstAttribute="leading" secondItem="03Y-BE-8x7" secondAttribute="leadingMargin" id="yYf-gs-DGG"/>
                                     </constraints>
                                     <variation key="heightClass=regular-widthClass=compact" ambiguous="YES">
                                         <rect key="frame" x="0.0" y="0.0" width="400" height="73.5"/>

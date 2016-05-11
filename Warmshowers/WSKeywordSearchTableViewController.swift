@@ -18,6 +18,7 @@ class WSKeywordSearchTableViewController : WSLazyImageTableViewController {
     
     override func viewDidLoad() {
         dataSource = self
+        placeholderImageName = "ThumbnailPlaceholder"
         tableView.estimatedRowHeight = 44
         tableView.rowHeight = UITableViewAutomaticDimension
     }
@@ -25,17 +26,20 @@ class WSKeywordSearchTableViewController : WSLazyImageTableViewController {
     // MARK: Utility methods
     
     func searchWithKeywordOnTimer(timer: NSTimer) {
+        
         guard let keyword = timer.userInfo as? String else {
             return
         }
-        apiCommunicator?.searchByKeyword(keyword, offset: 0, andNotify: self)
+        
         debounceTimer = nil
+        apiCommunicator?.searchByKeyword(keyword, offset: 0, andNotify: self)
     }
     
     /** Reloads the table view with an array of results */
     func reloadTableWithHosts(hosts: [WSUserLocation]) {
         self.lazyImageObjects = hosts
         dispatch_async(dispatch_get_main_queue(), { [weak self] in
+            print(self?.debounceTimer)
             self?.tableView.reloadData()
             })
     }

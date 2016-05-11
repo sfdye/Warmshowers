@@ -45,17 +45,6 @@ class WSHostSearchViewController: UIViewController {
         
         // Reachability notifications
         connection.registerForAndStartNotifications(self, selector: #selector(WSHostSearchViewController.reachabilityChanged(_:)))
-        
-//        for controller in childViewControllers {
-//            switch controller {
-//            case is WSKeywordSearchTableViewController:
-//                (controller as! WSKeywordSearchTableViewController).alertDelegate = self
-//            case is WSLocationSearchViewController:
-//                (controller as! WSLocationSearchViewController).alertDelegate = self
-//            default:
-//                break
-//            }
-//        }
     }
 
     override func viewWillAppear(animated: Bool) {

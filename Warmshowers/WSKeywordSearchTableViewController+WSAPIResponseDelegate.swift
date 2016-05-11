@@ -6,7 +6,7 @@
 //  Copyright © 2016 Rajan Fernandez. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 extension WSKeywordSearchTableViewController : WSAPIResponseDelegate {
     
@@ -18,6 +18,5 @@ extension WSKeywordSearchTableViewController : WSAPIResponseDelegate {
     
     func didRecieveAPIFailureResponse(error: ErrorType) {
         reloadTableWithHosts([WSUserLocation]())
-        alertDelegate.presentAPIError(error, forDelegator: self)
     }
 }
