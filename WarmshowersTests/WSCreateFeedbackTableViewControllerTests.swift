@@ -11,7 +11,7 @@ import XCTest
 
 class WSCreateFeedbackTableViewControllerTests: XCTestCase {
     
-    let storyboard = UIStoryboard.init(name: "HostSearch", bundle: nil)
+    let storyboard = UIStoryboard.init(name: "UserProfile", bundle: nil)
     let storyboardID = CreateFeedbackSBID
     
     // Test objects

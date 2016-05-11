@@ -32,6 +32,7 @@ class WSAPIRequest : Hashable {
         self.requester = requester
         self.delegate = delegate
         self.endPoint = endPoint.sharedEndPoint
+        self.params = params
     }
 }
 

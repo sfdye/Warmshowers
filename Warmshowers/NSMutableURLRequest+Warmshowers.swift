@@ -41,7 +41,7 @@ extension NSMutableURLRequest {
         request.URL = WSURL.BASE.URLByAppendingPathComponent(endPoint.path)
         request.HTTPMethod = endPoint.method.rawValue
         request.addValue(endPoint.accept.rawValue, forHTTPHeaderField: "Accept")
-        print(endPoint.type)
+        
         if (endPoint.type != .Login && endPoint.type != .Token) {
             
             let (sessionCookie, token, _) = WSSessionState.sharedSessionState.getSessionData()
@@ -60,7 +60,7 @@ extension NSMutableURLRequest {
             // Add the CSRF token to the header.
             request.addValue(token!, forHTTPHeaderField: "X-CSRF-Token")
         }
-
+        
         if let params = params where endPoint.method == .Post {
             request.setBodyContent(params)
         }

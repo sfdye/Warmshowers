@@ -31,14 +31,32 @@ class WSAlertDelegate : WSAlertProtocol {
     
     func presentAPIError(error: ErrorType, forDelegator delegator: UIViewController) {
         var title: String = "Error"
-        var message: String? = "An unknown error ocurred."
+        var message: String = "An unknown error ocurred."
         switch error {
         case is WSAPIEndPointError:
-            title = "Data Parsing Error"
-            message = "An error occured while parsing data from the Warmshowers API. Please report this as a bug."
+            switch (error as! WSAPIEndPointError) {
+            case .ParsingError(let endPoint, let key):
+                title = "Data Parsing Error"
+                message = "An error occured while parsing data from the Warmshowers API end point \(endPoint). "
+                if key != nil {
+                    message += "The error occured while parsing key: '\(key)'. "
+                }
+                message += "Please report this as a bug."
+            }
         case is WSAPICommunicatorError:
-            title = "API Error"
-            message = "An error occured while contacting the Warmshowers API. Please report this as a bug."
+            switch (error as! WSAPICommunicatorError) {
+            case .NoSessionCookie, .NoToken:
+                return
+            case .Offline:
+                // Case is handled by the reachability banner.
+                return
+            case .ServerError(let statusCode):
+                title = "Server Error"
+                message = "The server responded with \(statusCode)."
+            default:
+                title = "API Error"
+                message = "An error occured while contacting the Warmshowers API. Please report this as a bug."
+            }
         default:
             break
         }

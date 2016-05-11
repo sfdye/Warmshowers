@@ -30,7 +30,20 @@ extension WSAPICommunicator : WSAPIRequestDelegate {
         let statusCode = (response as! NSHTTPURLResponse).statusCode
         
         guard request.endPoint.successCodes.contains(statusCode) else {
-            let error = WSAPICommunicatorError.ServerError(statusCode: statusCode)
+            
+            var body: String?
+            if let data = data {
+                do {
+                    let json = try NSJSONSerialization.JSONObjectWithData(data, options: [])
+                    if json.count > 0 {
+                        body = json.objectAtIndex(0) as? String
+                    }
+                } catch {
+                    // Leave body as nil
+                }
+            }
+
+            let error = WSAPICommunicatorError.ServerError(statusCode: statusCode, body: body)
             request.delegate.request(request, didFailWithError: error)
             return
         }

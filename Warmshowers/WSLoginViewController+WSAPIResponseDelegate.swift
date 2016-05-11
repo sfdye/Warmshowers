@@ -35,7 +35,7 @@ extension WSLoginViewController : WSAPIResponseDelegate {
         var message: String?
         
         switch error {
-        case WSAPICommunicatorError.ServerError(let statusCode):
+        case WSAPICommunicatorError.ServerError(let statusCode, _):
             if statusCode == 401 {
                 title = "Login error"
                 message = "Incorrect username or password."

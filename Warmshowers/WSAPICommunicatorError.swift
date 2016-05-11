@@ -12,6 +12,6 @@ enum WSAPICommunicatorError : ErrorType {
     case Offline
     case NoSessionCookie
     case NoToken
-    case ServerError(statusCode: Int)
+    case ServerError(statusCode: Int, body: String?)
     case NoData
 }
