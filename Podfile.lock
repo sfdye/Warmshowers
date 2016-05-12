@@ -3,6 +3,9 @@ PODS:
     - CVKHierarchySearcher (~> 0.2)
   - CCHMapClusterController (1.7.0)
   - CVKHierarchySearcher (0.2.0)
+  - HockeySDK (4.0.1):
+    - HockeySDK/AllFeaturesLib (= 4.0.1)
+  - HockeySDK/AllFeaturesLib (4.0.1)
   - KeychainAccess (2.3.5)
   - MBProgressHUD (0.9.2)
   - ReachabilitySwift (2.3.3)
@@ -10,6 +13,7 @@ PODS:
 DEPENDENCIES:
   - AFMInfoBanner
   - CCHMapClusterController
+  - HockeySDK
   - KeychainAccess
   - MBProgressHUD (from `https://github.com/jdg/MBProgressHUD.git`)
   - ReachabilitySwift (from `https://github.com/ashleymills/Reachability.swift`)
@@ -32,6 +36,7 @@ SPEC CHECKSUMS:
   AFMInfoBanner: a7bcfd409faa624f043e604ae4fb789c84b22815
   CCHMapClusterController: d8cd12cd5682ec6cd76d911ac7198f981b6cc1b8
   CVKHierarchySearcher: 7be8d3bcbcc6f86ff07f785e6c632b5e40da2553
+  HockeySDK: 1b69a82782f6a3d4a1c0b1f04dca4bca83fc8c82
   KeychainAccess: e283c1981a6c5655e1984cd411c6faf16fa165ae
   MBProgressHUD: c10206b47acf9e1659bd80a366cc935e35745b9b
   ReachabilitySwift: e0f6b6f280effb47731acfaaa2d5ffe223703793

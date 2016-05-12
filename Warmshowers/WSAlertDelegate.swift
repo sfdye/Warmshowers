@@ -12,15 +12,15 @@ class WSAlertDelegate : WSAlertProtocol {
     
     static let sharedAlertDelegate = WSAlertDelegate()
     
-    func presentAlertFor(delegator: UIViewController, withTitle title: String?, button: String?) {
+    func presentAlertFor(delegator: UIViewController?, withTitle title: String?, button: String?) {
         presentAlertFor(delegator, withTitle: title, button: button, message: nil, andHandler: nil)
     }
     
-    func presentAlertFor(delegator: UIViewController, withTitle title: String?, button: String?, message: String?) {
+    func presentAlertFor(delegator: UIViewController?, withTitle title: String?, button: String?, message: String?) {
         presentAlertFor(delegator, withTitle: title, button: button, message: message, andHandler: nil)
     }
     
-    func presentAlertFor(delegator: UIViewController, withTitle title: String?, button: String?, message: String?, andHandler handler: ((UIAlertAction) -> Void)?) {
+    func presentAlertFor(delegator: UIViewController?, withTitle title: String?, button: String?, message: String?, andHandler handler: ((UIAlertAction) -> Void)?) {
         dispatch_async(dispatch_get_main_queue()) { [weak delegator] in
             let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
             let action = UIAlertAction(title: button, style: UIAlertActionStyle.Default, handler: handler)
@@ -29,7 +29,7 @@ class WSAlertDelegate : WSAlertProtocol {
         }
     }
     
-    func presentAPIError(error: ErrorType, forDelegator delegator: UIViewController) {
+    func presentAPIError(error: ErrorType, forDelegator delegator: UIViewController?) {
         var title: String = "Error"
         var message: String = "An unknown error ocurred."
         switch error {

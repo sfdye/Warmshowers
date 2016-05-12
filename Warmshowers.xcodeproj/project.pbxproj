@@ -929,7 +929,6 @@
 				E5D96AF71BFB1CA700AFAFEE /* AppDelegate.swift */,
 				E5ED1E9F1CD475CE0017D12F /* Delegates */,
 				E54A573A1C026D96000843A9 /* Controllers */,
-				E54A57391C026D56000843A9 /* API */,
 				E50FD8A01C053A24004D38A3 /* Map */,
 				E54A57321BFE82F9000843A9 /* Model */,
 				E5F6F3041C28EC780000A87E /* Supporting Files */,
@@ -1036,6 +1035,7 @@
 				E5ED1E981CD468910017D12F /* SessionState */,
 				E5ED1E8C1CD4169C0017D12F /* NavigationDelegate */,
 				E59FE1DA1CD3590C0024F354 /* AlertDelegate */,
+				E54A57391C026D56000843A9 /* API */,
 			);
 			name = Delegates;
 			sourceTree = "<group>";
