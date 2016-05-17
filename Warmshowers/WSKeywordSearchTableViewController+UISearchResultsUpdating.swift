@@ -29,7 +29,7 @@ extension WSKeywordSearchTableViewController : UISearchResultsUpdating {
         debounceTimer = NSTimer(timeInterval: 0.7, target: self, selector: #selector(WSKeywordSearchTableViewController.searchWithKeywordOnTimer(_:)), userInfo: keyword, repeats: false)
         NSRunLoop.currentRunLoop().addTimer(debounceTimer!, forMode: "NSDefaultRunLoopMode")
         
-        // Clear out old search results
-        clearTable()
+        // Show the spinner
+        showSpinner()
     }
 }

@@ -52,7 +52,7 @@ class WSHostSearchViewController: UIViewController {
         connection.registerForAndStartNotifications(self, selector: #selector(WSHostSearchViewController.reachabilityChanged(_:)))
         
         // Search controller
-        searchController = UISearchController(searchResultsController: nil)
+        searchController = UISearchController(searchResultsController:nil)
         searchController.delegate = self
         searchController.searchResultsUpdater = keywordSearchTableViewController!
         searchController.hidesNavigationBarDuringPresentation = false

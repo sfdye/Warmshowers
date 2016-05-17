@@ -63,7 +63,7 @@ class WSKeywordSearchTableViewController : UITableViewController {
     }
     
     /** Reloads the table view with an array of results. */
-    func reloadTableWithHosts(hosts: [WSUserLocation]) {
+    func reloadTableWithHosts(hosts: [WSUserLocation]?) {
         self.hosts = hosts
         dispatch_async(dispatch_get_main_queue(), { [weak self] in
             self?.tableView.reloadData()
@@ -73,5 +73,10 @@ class WSKeywordSearchTableViewController : UITableViewController {
     /** Clears the table view. */
     func clearTable() {
         reloadTableWithHosts([WSUserLocation]())
+    }
+    
+    /** Clears the table view and shows the spinner/loading table view cell */
+    func showSpinner() {
+        reloadTableWithHosts(nil)
     }
 }

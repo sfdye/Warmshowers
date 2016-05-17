@@ -20,7 +20,6 @@ extension WSKeywordSearchTableViewController : WSAPIResponseDelegate {
             for (index, host) in hosts.enumerate() {
                 if host.thumbnailImageURL == request.endPoint.path {
                     host.thumbnailImage = image ?? placeholderImage
-                    print(host.thumbnailImage)
                     dispatch_async(dispatch_get_main_queue(), { [weak self] () -> Void in
                         self?.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .None)
                     })
