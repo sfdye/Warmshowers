@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AFMInfoBanner
 
 class WSAlertDelegate : WSAlertProtocol {
     
@@ -46,6 +47,7 @@ class WSAlertDelegate : WSAlertProtocol {
         case is WSAPICommunicatorError:
             switch (error as! WSAPICommunicatorError) {
             case .NoSessionCookie, .NoToken:
+                // Do not show errors for these. Auto login is handled by WSAPICommunicator.
                 return
             case .Offline:
                 // Case is handled by the reachability banner.
@@ -61,5 +63,20 @@ class WSAlertDelegate : WSAlertProtocol {
             break
         }
         presentAlertFor(delegator, withTitle: title, button: "OK", message: message)
+    }
+    
+    func showNoInternetBanner() {
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            let banner = AFMInfoBanner()
+            banner.text = "No Internet Connection"
+            banner.style = .Error
+            banner.show(true)
+        }
+    }
+    
+    func hideAllBanners() {
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            AFMInfoBanner.hideAll()
+        }
     }
 }

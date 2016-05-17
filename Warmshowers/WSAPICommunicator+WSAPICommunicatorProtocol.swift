@@ -88,4 +88,8 @@ extension WSAPICommunicator : WSAPICommunicatorProtocol {
     func markMessage(threadID: Int, andNotify requester: WSAPIResponseDelegate) {
         
     }
+    
+    func getImageAtURL(imageURL: String, andNotify requester: WSAPIResponseDelegate) {
+        downloadImageAtURL(imageURL, thenNotify: requester)
+    }
 }

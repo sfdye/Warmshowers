@@ -24,6 +24,9 @@ class WSHostSearchViewController: UIViewController {
     
     var searchController: UISearchController!
     var searchBar: UISearchBar!
+    
+    // var locationSearchViewController: WSLocationSearchViewController?
+    var keywordSearchTableViewController: UISearchResultsUpdating?
 
     // Delegates
     var alertDelegate: WSAlertDelegate = WSAlertDelegate.sharedAlertDelegate
@@ -38,34 +41,31 @@ class WSHostSearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Set references to child views
+        keywordSearchTableViewController = self.childViewControllers.last as? UISearchResultsUpdating
+        assert(keywordSearchTableViewController != nil, "Keyword Search Table View Controller not set while loading the Host Search View Controller. Check that WSKeywordSearchTableViewCOntroller conforms to UISearchResultsUpdating.")
+        
         showMapView()
-
-        // Configure components
-        configureSearchController()
         
         // Reachability notifications
         connection.registerForAndStartNotifications(self, selector: #selector(WSHostSearchViewController.reachabilityChanged(_:)))
+        
+        // Search controller
+        searchController = UISearchController(searchResultsController: nil)
+        searchController.delegate = self
+        searchController.searchResultsUpdater = keywordSearchTableViewController!
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.dimsBackgroundDuringPresentation = false
+        
+        // Search bar
+        searchBar = searchController.searchBar
+        searchBar.placeholder = "Search by name, email or town"
     }
 
     override func viewWillAppear(animated: Bool) {
         showReachabilityBannerIfNeeded()
     }
-    
-    func configureSearchController() {
-        searchController = UISearchController(searchResultsController: nil)
-        searchBar = searchController.searchBar
-        
-        // Search controller
-        searchController.delegate = self
-        searchController.searchResultsUpdater = self
-        searchController.hidesNavigationBarDuringPresentation = false
-        searchController.dimsBackgroundDuringPresentation = false
-        
-        // Search bar
-        searchBar.barTintColor = WSColor.NavbarGrey
-        searchBar.placeholder = "Search by name, email or town"
-    }
-
 
     // MARK: Reachability
     
@@ -75,9 +75,9 @@ class WSHostSearchViewController: UIViewController {
     
     func showReachabilityBannerIfNeeded() {
         if !connection.isOnline {
-            WSInfoBanner.showNoInternetBanner()
+            alertDelegate.showNoInternetBanner()
         } else {
-            WSInfoBanner.hideAll()
+            alertDelegate.hideAllBanners()
         }
     }
     

@@ -13,20 +13,22 @@ class HostListTableViewCell: UITableViewCell {
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var locationLabel: UILabel!
     @IBOutlet var profileImage: UIImageView!
-    @IBOutlet var availibleDot: WSColoredDot?
+    @IBOutlet var availibleDot: WSColoredDot!
+    
     var uid: Int?
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        nameLabel.text = nil
+        locationLabel.text = nil
+        profileImage.image = nil
+    }
+    
     func setNotAvailible(notAvailible: Bool?) {
-        
-        guard let notAvailible = notAvailible else {
-            return
-        }
-        
-        if notAvailible {
+        if notAvailible ?? false {
             availibleDot?.color = WSColor.NotAvailable
         } else {
             availibleDot?.color = WSColor.Available
         }
     }
-    
 }

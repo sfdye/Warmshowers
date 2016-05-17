@@ -10,11 +10,11 @@ import Foundation
 
 extension WSLocationSearchViewController : WSAPIResponseDelegate {
     
-    func didRecieveAPISuccessResponse(data: AnyObject?) {
+    func request(request: WSAPIRequest, didSuceedWithData data: AnyObject?) {
         print("recieved host locations")
     }
     
-    func didRecieveAPIFailureResponse(error: ErrorType) {
+    func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
         alertDelegate.presentAPIError(error, forDelegator: self)
     }
 }

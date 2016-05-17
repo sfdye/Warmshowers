@@ -23,6 +23,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
     var fetchedResultsController: NSFetchedResultsController!
     
     // Delegates
+    var alertDelegate: WSAlertProtocol = WSAlertDelegate.sharedAlertDelegate
     let store: WSStoreMessageThreadProtocol = WSStore.sharedStore
     var connection: WSReachabilityProtocol = WSReachabilityManager.sharedReachabilityManager
     
@@ -119,9 +120,9 @@ class WSMessageThreadsTableViewController: UITableViewController {
     
     func showReachabilityBannerIfNeeded() {
         if !connection.isOnline {
-            WSInfoBanner.showNoInternetBanner()
+            alertDelegate.showNoInternetBanner()
         } else {
-            WSInfoBanner.hideAll()
+            alertDelegate.hideAllBanners()
         }
     }
     

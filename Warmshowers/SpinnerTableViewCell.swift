@@ -13,6 +13,7 @@ class SpinnerTableViewCell: UITableViewCell {
     @IBOutlet var spinner: UIActivityIndicatorView!
     
     override func awakeFromNib() {
+        super.awakeFromNib()
         spinner.hidesWhenStopped = true
         spinner.startAnimating()
     }

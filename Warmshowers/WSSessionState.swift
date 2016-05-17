@@ -57,6 +57,7 @@ class WSSessionState : WSSessionStateProtocol {
     
     func setToken(token: String) {
         defaults.setValue(token, forKey: WSUserDefaultsKeys.TokenKey)
+        defaults.synchronize()
     }
     
     var isLoggedIn: Bool {

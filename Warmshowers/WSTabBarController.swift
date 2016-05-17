@@ -10,16 +10,4 @@ import UIKit
 
 class WSTabBarController: UITabBarController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        tabBar.tintColor = WSColor.Blue
-        
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
 }

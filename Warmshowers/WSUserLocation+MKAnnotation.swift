@@ -11,13 +11,12 @@ import MapKit
 
 extension WSUserLocation : MKAnnotation {
     
-    var title: String? {
+    @objc var title: String? {
         return fullname
     }
     
-    var subtitle: String? {
+    @objc var subtitle: String? {
         return shortAddress
     }
-
 }
 

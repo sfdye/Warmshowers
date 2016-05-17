@@ -49,6 +49,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func configureGlobalViewSettings() {
         
+        // Tabbar
+        UITabBar.appearance().tintColor = WSColor.Blue
+        
         // Navigation bars
         UINavigationBar.appearance().tintColor = WSColor.Blue
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: WSColor.Green,
@@ -61,6 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Search bars
         UISearchBar.appearance().tintColor = WSColor.Blue
+        UISearchBar.appearance().barTintColor = WSColor.NavbarGrey
     }
 
     func applicationWillResignActive(application: UIApplication) {

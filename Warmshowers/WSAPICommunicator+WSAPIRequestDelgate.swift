@@ -6,7 +6,7 @@
 //  Copyright © 2016 Rajan Fernandez. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 extension WSAPICommunicator : WSAPIRequestDelegate {
     
@@ -56,38 +56,49 @@ extension WSAPICommunicator : WSAPIRequestDelegate {
         
         request.status = .Parsing
         
-        do {
-            var parsedData: AnyObject? = nil
-            switch request.endPoint.accept {
-            case .PlainText:
-                if let text = String.init(data: data, encoding: NSUTF8StringEncoding) {
-                    parsedData = try request.endPoint.request(request, didRecievedResponseWithText: text)
-                }
-            case .JSON:
-                let json = try NSJSONSerialization.JSONObjectWithData(data, options: [])
-                parsedData = try request.endPoint.request(request, didRecievedResponseWithJSON: json)
+        switch request.endPoint.type {
+        case .ImageResource:
+            // Image resouces
+            if let image = UIImage(data: data) {
+                request.delegate.request(request, didSucceedWithData: image)
+            } else {
+                request.delegate.request(request, didFailWithError: WSAPIEndPointError.ParsingError(endPoint: request.endPoint.path, key: nil))
             }
-            request.delegate.request(request, didSucceedWithData: parsedData)
-        } catch let error {
-            request.delegate.request(request, didFailWithError: error)
+        default:
+            // Text resources
+            do {
+                var parsedData: AnyObject? = nil
+                switch request.endPoint.accept {
+                case .PlainText:
+                    if let text = String.init(data: data, encoding: NSUTF8StringEncoding) {
+                        parsedData = try request.endPoint.request(request, didRecievedResponseWithText: text)
+                    }
+                case .JSON:
+                    let json = try NSJSONSerialization.JSONObjectWithData(data, options: [])
+                    parsedData = try request.endPoint.request(request, didRecievedResponseWithJSON: json)
+                }
+                request.delegate.request(request, didSucceedWithData: parsedData)
+            } catch let error {
+                request.delegate.request(request, didFailWithError: error)
+            }
         }
     }
     
     func request(request: WSAPIRequest, didSucceedWithData data: AnyObject?) {
         
         // notify the requester
-        request.requester?.didRecieveAPISuccessResponse(data)
+        request.requester?.request(request, didSuceedWithData: data)
         
-        // remove request from queu
+        // remove request from queue
         removeRequestFromQueue(request)
     }
     
     func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
         
         // notify the requester
-        request.requester?.didRecieveAPIFailureResponse(error)
+        request.requester?.request(request, didFailWithError: error)
         
-        // remove request from queu
+        // remove request from queue
         removeRequestFromQueue(request)
     }
 }

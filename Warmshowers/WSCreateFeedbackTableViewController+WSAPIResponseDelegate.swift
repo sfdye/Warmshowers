@@ -10,7 +10,7 @@ import UIKit
 
 extension WSCreateFeedbackTableViewController : WSAPIResponseDelegate {
     
-    func didRecieveAPISuccessResponse(data: AnyObject?) {
+    func request(request: WSAPIRequest, didSuceedWithData data: AnyObject?) {
         print("In API success")
         dispatch_async(dispatch_get_main_queue(), { [weak self] in
             WSProgressHUD.hide()
@@ -18,7 +18,7 @@ extension WSCreateFeedbackTableViewController : WSAPIResponseDelegate {
         })
     }
     
-    func didRecieveAPIFailureResponse(error: ErrorType) {
+    func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
         print("In API fail")
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             WSProgressHUD.hide()

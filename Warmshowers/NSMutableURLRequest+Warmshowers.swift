@@ -37,6 +37,14 @@ extension NSMutableURLRequest {
     //
     class func mutableURLRequestForEndpoint(endPoint: WSAPIEndPointProtocol, withPostParameters params: [String: String]? = nil) throws -> NSMutableURLRequest {
         
+        if endPoint.type == .ImageResource {
+            if let url = NSURL(string: endPoint.path) {
+                return NSMutableURLRequest(URL: url)
+            } else {
+                throw WSAPICommunicatorError.InvalidImageResourceURL
+            }
+        }
+        
         let request = NSMutableURLRequest.init()
         request.URL = WSURL.BASE.URLByAppendingPathComponent(endPoint.path)
         request.HTTPMethod = endPoint.method.rawValue
@@ -56,7 +64,7 @@ extension NSMutableURLRequest {
             
             // Add the session cookie to the header.
             request.addValue(sessionCookie!, forHTTPHeaderField: "Cookie")
-
+            
             // Add the CSRF token to the header.
             request.addValue(token!, forHTTPHeaderField: "X-CSRF-Token")
         }
@@ -67,7 +75,6 @@ extension NSMutableURLRequest {
         
         return request
     }
-    
     
     // KEEP FOR LEGACY UNTIL HTTP CLIENT TRANSER IS COMPLETE
     class func withWSRestfulService(service: WSRestfulService) -> NSMutableURLRequest {

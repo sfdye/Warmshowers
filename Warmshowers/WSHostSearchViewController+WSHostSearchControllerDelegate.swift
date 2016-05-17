@@ -6,19 +6,25 @@
 //  Copyright © 2016 Rajan Fernandez. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 extension WSHostSearchViewController : WSHostSearchControllerDelegate {
     
-    func showAlertWithTitle(title: String, andMessage message: String?) {
-        alertDelegate.presentAlertFor(self, withTitle: title, button: "OK", message: message)
+    func presentErrorAlertWithError(error: ErrorType) {
+        let delegator: UIViewController = searchController.active ? searchController : self
+        print(delegator)
+        alertDelegate.presentAPIError(error, forDelegator: delegator)
     }
     
-    func showProfileForUserAtLocation(location: WSUserLocation) {
-        
-    }
-    
-    func showHostListWithUsers(users: [WSUserLocation]) {
-        
-    }
+//    func showAlertWithTitle(title: String, andMessage message: String?) {
+//        alertDelegate.presentAlertFor(self, withTitle: title, button: "OK", message: message)
+//    }
+//    
+//    func showProfileForUserAtLocation(location: WSUserLocation) {
+//        
+//    }
+//    
+//    func showHostListWithUsers(users: [WSUserLocation]) {
+//        
+//    }
 }

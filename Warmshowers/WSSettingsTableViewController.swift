@@ -55,6 +55,6 @@ class WSSettingsTableViewController: UITableViewController {
     ]
     
     override func viewWillAppear(animated: Bool) {
-        WSInfoBanner.hideAll()
+        alertDelegate?.hideAllBanners()
     }
 }

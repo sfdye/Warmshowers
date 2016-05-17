@@ -57,6 +57,12 @@ class WSAPICommunicator {
         executeRequest(request)
     }
     
+    func downloadImageAtURL(imageURL: String, thenNotify requester: WSAPIResponseDelegate) {
+        let request = WSAPIRequest(imageURL: imageURL, withDelegate: self, andRequester:requester)
+        addRequestToQueue(request)
+        executeRequest(request)
+    }
+    
     func executeRequest(request: WSAPIRequest) {
         
         guard connection.isOnline else {
@@ -65,7 +71,7 @@ class WSAPICommunicator {
                 removeRequestFromQueue(request)
             }
             connection.registerForAndStartNotifications(self, selector: #selector(reachabilityDidChange))
-            request.requester?.didRecieveAPIFailureResponse(WSAPICommunicatorError.Offline)
+            request.requester?.request(request, didFailWithError: WSAPICommunicatorError.Offline)
             return
         }
     

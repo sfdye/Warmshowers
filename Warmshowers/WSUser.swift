@@ -8,11 +8,17 @@
 
 import UIKit
 
-class WSUser : NSObject {
+class WSUser: NSObject {
     
     var fullname: String
     var name: String
     var uid: Int
+    
+    // MARK: Hashable
+    
+    override var hashValue: Int { return uid }
+    
+    // MARK: Initialisers
     
     init(fullname: String, name: String, uid: Int) {
         self.fullname = fullname
@@ -20,8 +26,6 @@ class WSUser : NSObject {
         self.uid = uid
     }
     
-    // Method to initialise from a JSON object
-    //
     convenience init?(json: AnyObject) {
         
         guard let fullname = json.valueForKey("fullname") as? String,
@@ -33,5 +37,10 @@ class WSUser : NSObject {
         
         self.init(fullname: fullname, name: name, uid: uid)
     }
-
 }
+
+func ==(lhs: WSUser, rhs: WSUser) -> Bool {
+    return lhs.hashValue == rhs.hashValue
+}
+
+

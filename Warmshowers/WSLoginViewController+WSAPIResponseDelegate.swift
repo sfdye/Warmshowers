@@ -10,7 +10,7 @@ import UIKit
 
 extension WSLoginViewController : WSAPIResponseDelegate {
     
-    func didRecieveAPISuccessResponse(data: AnyObject?) {
+    func request(request: WSAPIRequest, didSuceedWithData data: AnyObject?) {
         if data is String {
             // Recieved the access token: proceed to the main app
             WSProgressHUD.hide()
@@ -24,11 +24,12 @@ extension WSLoginViewController : WSAPIResponseDelegate {
             }
         } else {
             // Recieved login response: request a token
+            print("back in login controller: getting toke.")
             apiCommunicator?.getTokenAndNotify(self)
         }
     }
     
-    func didRecieveAPIFailureResponse(error: ErrorType) {
+    func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
         WSProgressHUD.hide()
         
         var title: String?

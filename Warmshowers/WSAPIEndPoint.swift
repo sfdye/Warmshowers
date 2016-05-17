@@ -23,6 +23,7 @@ enum WSAPIEndPoint {
     case GetAllMessageThreads
     case GetMessageThread
     case MarkMessage
+    case ImageResource
     
     /** Returns the shared instance of the end point */
     var sharedEndPoint: WSAPIEndPointProtocol {
@@ -55,6 +56,9 @@ enum WSAPIEndPoint {
             return WSGetMessageThreadEndPoint.sharedEndPoint
         case .MarkMessage:
             return WSMarkMessageEndPoint.sharedEndPoint
+        case .ImageResource:
+            assertionFailure("Resources can not be requested from a shared end point object. Create an instance of WSResourceURL instead.")
+            return WSImageResourceURL(url: "")
         }
     }
 }

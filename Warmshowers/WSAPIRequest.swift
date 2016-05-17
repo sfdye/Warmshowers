@@ -19,6 +19,7 @@ class WSAPIRequest : Hashable {
     var params: [String: String]?
     var status: WSAPIRequestStatus = .Created
     
+        
     // MARK: Hashable
     
     var madeAt: NSDate
@@ -33,6 +34,13 @@ class WSAPIRequest : Hashable {
         self.delegate = delegate
         self.endPoint = endPoint.sharedEndPoint
         self.params = params
+    }
+    
+    init(imageURL: String, withDelegate delegate: WSAPIRequestDelegate, andRequester requester: WSAPIResponseDelegate) {
+        self.madeAt = NSDate()
+        self.requester = requester
+        self.delegate = delegate
+        self.endPoint = WSImageResourceURL(url: imageURL)
     }
 }
 

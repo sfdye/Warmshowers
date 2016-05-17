@@ -8,19 +8,20 @@
 
 import UIKit
 
-class WSKeywordSearchTableViewController : WSLazyImageTableViewController {
+class WSKeywordSearchTableViewController : UITableViewController {
     
     var debounceTimer: NSTimer?
+    var placeholderImage: UIImage? = UIImage(named: "ThumbnailPlaceholder")
+    var hosts: [WSUserLocation]?
+    var numberOfHosts: Int { return hosts?.count ?? 0 }
     
     // Delegates
     var alertDelegate: WSAlertDelegate = WSAlertDelegate.sharedAlertDelegate
     var apiCommunicator: WSAPICommunicator? = WSAPICommunicator.sharedAPICommunicator
     
     override func viewDidLoad() {
-        dataSource = self
-        placeholderImageName = "ThumbnailPlaceholder"
-        tableView.estimatedRowHeight = 44
-        tableView.rowHeight = UITableViewAutomaticDimension
+        super.viewDidLoad()
+        assert(placeholderImage != nil, "Placeholder image not found while loading WSKeywordSearchTableViewController.")
     }
     
     // MARK: Utility methods
@@ -35,12 +36,42 @@ class WSKeywordSearchTableViewController : WSLazyImageTableViewController {
         apiCommunicator?.searchByKeyword(keyword, offset: 0, andNotify: self)
     }
     
-    /** Reloads the table view with an array of results */
+    func startImageDownloadForIndexPath(indexPath: NSIndexPath) {
+        
+        guard let hosts = hosts where indexPath.row < numberOfHosts else {
+            return
+        }
+        
+        let user = hosts[indexPath.row]
+        if let url = user.thumbnailImageURL where user.thumbnailImage == nil {
+            apiCommunicator?.getImageAtURL(url, andNotify: self)
+        }
+    }
+    
+    func loadImagesForObjectsOnScreen() {
+        
+        guard
+            let visiblePaths = tableView.indexPathsForVisibleRows
+            where hosts != nil && numberOfHosts > 0
+            else {
+                return
+        }
+        
+        for indexPath in visiblePaths {
+            startImageDownloadForIndexPath(indexPath)
+        }
+    }
+    
+    /** Reloads the table view with an array of results. */
     func reloadTableWithHosts(hosts: [WSUserLocation]) {
-        self.lazyImageObjects = hosts
+        self.hosts = hosts
         dispatch_async(dispatch_get_main_queue(), { [weak self] in
-            print(self?.debounceTimer)
             self?.tableView.reloadData()
             })
+    }
+    
+    /** Clears the table view. */
+    func clearTable() {
+        reloadTableWithHosts([WSUserLocation]())
     }
 }

@@ -17,4 +17,8 @@ protocol WSAlertProtocol {
     
     /** Attempts to present an api error alert on the given view controller */
     func presentAPIError(error: ErrorType, forDelegator delegator: UIViewController?)
+    
+    /** Shows a 'No Internet Connection' info banner under the nav bar*/
+    func showNoInternetBanner()
+    func hideAllBanners()
 }

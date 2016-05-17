@@ -23,4 +23,5 @@ protocol WSAPICommunicatorProtocol {
     func getAllMessageThreadsAndNotify(requester: WSAPIResponseDelegate)
     func getMessagesOnThread(threadID: Int, andNotify requester: WSAPIResponseDelegate)
     func markMessage(threadID: Int, andNotify requester: WSAPIResponseDelegate)
+    func getImageAtURL(imageURL: String, andNotify requester: WSAPIResponseDelegate)
 }

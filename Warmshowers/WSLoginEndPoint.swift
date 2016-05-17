@@ -17,7 +17,9 @@ class WSLoginEndPoint : WSAPIEndPointProtocol {
     var path: String { return "/services/rest/user/login" }
     
     var method: HttpMethod { return .Post }
-    
+#if TEST
+    var mode: WSLoginEndPointTestingMode = .Success
+#endif
     func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
         
         guard let sessionName = json.valueForKey("session_name") as? String else {

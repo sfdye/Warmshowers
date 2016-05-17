@@ -12,6 +12,7 @@ enum WSAPICommunicatorError : ErrorType {
     case Offline
     case NoSessionCookie
     case NoToken
+    case InvalidImageResourceURL
     case ServerError(statusCode: Int, body: String?)
     case NoData
 }

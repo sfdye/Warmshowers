@@ -9,6 +9,10 @@
 import Foundation
 
 protocol WSAPIResponseDelegate {
-    func didRecieveAPISuccessResponse(data: AnyObject?)
-    func didRecieveAPIFailureResponse(error: ErrorType)
+    
+    /** Handles successful API request responses. */
+    func request(request: WSAPIRequest, didSuceedWithData data: AnyObject?)
+    
+    /** Handles API request error responses. */
+    func request(request: WSAPIRequest, didFailWithError error: ErrorType)
 }

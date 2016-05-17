@@ -16,7 +16,7 @@ enum WSUserLocationError: ErrorType {
 
 class WSUserLocation : WSUser {
     
-    // MARK - Properties
+    // MARK: Properties
     
     var additional: String?
     var city: String?
@@ -33,7 +33,7 @@ class WSUserLocation : WSUser {
     var thumbnailImage: UIImage?
     var tileID: String?
     
-    // MARK - Calculated Properties
+    // MARK: Calculated Properties
     
     var location: CLLocation { return CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude) }
     
@@ -68,7 +68,7 @@ class WSUserLocation : WSUser {
         return address
     }
     
-    // MARK - Initializers
+    // MARK: Initializers
     
     init(fullname: String, name: String, uid: Int, lat: Double, lon: Double) {
         self.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
