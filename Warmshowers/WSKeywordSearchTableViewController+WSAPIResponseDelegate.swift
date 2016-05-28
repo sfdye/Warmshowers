@@ -13,7 +13,7 @@ extension WSKeywordSearchTableViewController : WSAPIResponseDelegate {
     func request(request: WSAPIRequest, didSuceedWithData data: AnyObject?) {
         switch request.endPoint.type {
         case .SearchByKeyword:
-            reloadTableWithHosts(data as! [WSUserLocation])
+            reloadTableWithHosts(data as? [WSUserLocation])
         case .ImageResource:
             guard let hosts = hosts else { break }
             let image = data as? UIImage

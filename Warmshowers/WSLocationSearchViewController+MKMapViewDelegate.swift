@@ -11,7 +11,7 @@ import CCHMapClusterController
 
 extension WSLocationSearchViewController : MKMapViewDelegate {
     
-    // Used to display tiles for maps other than Apple Maps
+    /** Used to display tiles for maps other than Apple Maps. */
     func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
         
         if mapOverlay != nil {
@@ -22,6 +22,7 @@ extension WSLocationSearchViewController : MKMapViewDelegate {
         if overlay.isKindOfClass(MKPolygon) {
             let renderer = MKPolygonRenderer(polygon: overlay as! MKPolygon)
             renderer.strokeColor = UIColor.redColor()
+            renderer.fillColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.5)
             renderer.lineWidth = 2
             return renderer
         }
@@ -30,7 +31,6 @@ extension WSLocationSearchViewController : MKMapViewDelegate {
         return MKTileOverlayRenderer.init();
     }
     
-    // Called for every annotation
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         
         if annotation is MKUserLocation {
@@ -104,27 +104,41 @@ extension WSLocationSearchViewController : MKMapViewDelegate {
         //        }
     }
     
-    // Called when the details button on an annotation is pressed
-    //
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        if let clusterAnnotation = view.annotation as? CCHMapClusterAnnotation {
-            if clusterAnnotation.isCluster() {
-                print(clusterAnnotation.annotations)
-//                performSegueWithIdentifier(ToHostListSegueID, sender: clusterAnnotation)
-            } else {
-                if let user = clusterAnnotation.annotations.first as? WSUserLocation {
-                    print(user)
-//                    performSegueWithIdentifier(MapToUserAccountSegueID, sender: user)
-                }
-            }
-        }
-        print("Coordinates: \(view.annotation?.coordinate)")
+//        if let clusterAnnotation = view.annotation as? CCHMapClusterAnnotation {
+//            if clusterAnnotation.isCluster() {
+//                print(clusterAnnotation.annotations)
+////                performSegueWithIdentifier(ToHostListSegueID, sender: clusterAnnotation)
+//            } else {
+//                if let user = clusterAnnotation.annotations.first as? WSUserLocation {
+//                    print(user)
+////                    performSegueWithIdentifier(MapToUserAccountSegueID, sender: user)
+//                }
+//            }
+//        }
+//        print("Coordinates: \(view.annotation?.coordinate)")
     }
     
-    // Called when the map view changes
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         
-        // Update the annotation on the map
-        //        mapController.updateAnnotationsInView()
+        // Get the tiles that can be seen in the new screen.
+        guard let tiles = WSMapTile.tilesForMapRegion(mapView.region, atZoomLevel: 3) else {
+            return
+        }
+        
+        print("Tiles on screen: \(tiles.count)")
+        
+        for tile in tiles {
+            // Add the users to the map if the data is still fresh, otherwise, initiate a download to refresh the tile.
+            if store.hasValidHostDataForMapTile(tile) {
+                // Add users from the store to the map
+                let users = store.usersForMapTile(tile)
+                addUsersToMap(users)
+            } else {
+                // Grey the tile with an overlay and start a download.
+                addOverlayForMapTile(tile)
+//                apiCommunicator.searchByLocation(tile.regionLimits(), andNotify: self)
+            }
+        }
     }
 }

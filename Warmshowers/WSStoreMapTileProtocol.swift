@@ -25,6 +25,12 @@ protocol WSStoreMapTileProtocol {
     /** Returns an existing map tile, or a new map tile into the private context. */
     func newOrExistingMapTileAtPosition(x: UInt, y: UInt, z: UInt) throws -> CDWSMapTile
     
+    /** Returns true if the store has recently refreshed host data for the area covered by the given map tile. */
+    func hasValidHostDataForMapTile(tile: WSMapTile) -> Bool
+    
+    /** Returns users on a given map tile from the store. */
+    func usersForMapTile(tile: WSMapTile) -> [WSUserLocation]?
+    
     /** Removes tiles from the data base that haven't been loaded in a while. */
     func clearoutOldTiles()
     

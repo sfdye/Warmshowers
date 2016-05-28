@@ -25,6 +25,7 @@ class WSMOCKAPICommunicator : WSAPICommunicatorProtocol {
     var getAllMessageThreadsAndNotifyCalled = false
     var getMessagesOnThreadCalled = false
     var markMessageCalled = false
+    var getImageForURLCalled = false
     
     func getTokenAndNotify(requester: WSAPIResponseDelegate) {
         getTokenCalled = true
@@ -80,5 +81,9 @@ class WSMOCKAPICommunicator : WSAPICommunicatorProtocol {
     
     func markMessage(threadID: Int, andNotify requester: WSAPIResponseDelegate) {
         markMessageCalled = true
+    }
+    
+    func getImageAtURL(imageURL: String, andNotify requester: WSAPIResponseDelegate) {
+        getImageForURLCalled = true
     }
 }

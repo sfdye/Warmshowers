@@ -20,6 +20,7 @@ class WSLoginViewControllerTests: XCTestCase {
     var mockNavigationDelegate: WSMOCKNavigationDelegate?
     var mockAPICommunicator: WSMOCKAPICommunicator?
     var mockAlertDelegate: WSMOCKAlertDelegate?
+    let request = WSAPIRequest(endPoint: .Login, withDelegate: WSAPICommunicator.sharedAPICommunicator, andRequester: nil)
     
     override func setUp() {
         super.setUp()
@@ -116,13 +117,13 @@ class WSLoginViewControllerTests: XCTestCase {
         _ = loginViewController?.view
         
         // when
-        loginViewController?.didRecieveAPISuccessResponse(nil)
+        loginViewController?.request(request, didSuceedWithData: nil)
         
         // then
         XCTAssertTrue(mockAPICommunicator!.getTokenCalled, "API not contacted with a token request after a successful login.")
         
         // when
-        loginViewController?.didRecieveAPISuccessResponse("mock token string")
+        loginViewController?.request(request, didSuceedWithData: "mock token string")
         
         // then
         XCTAssertTrue(mockSessionState!.savePasswordForUsernameCalled, "Username and password not updated on a successful login.")
@@ -134,7 +135,7 @@ class WSLoginViewControllerTests: XCTestCase {
         _ = loginViewController?.view
         
         // when
-        loginViewController?.didRecieveAPIFailureResponse(WSAPICommunicatorError.NoData)
+        loginViewController?.request(request, didFailWithError: WSAPICommunicatorError.NoData)
         
         // then
         XCTAssertTrue(mockAlertDelegate!.presentAlertCalled, "Alert delegate not notified on API error response.")

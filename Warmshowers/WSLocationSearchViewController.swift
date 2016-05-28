@@ -26,7 +26,8 @@ class WSLocationSearchViewController : UIViewController {
     
     // Delegates
     var alertDelegate: WSAlertDelegate = WSAlertDelegate.sharedAlertDelegate
-    var apiCommunicator: WSAPICommunicator? = WSAPICommunicator.sharedAPICommunicator
+    var apiCommunicator: WSAPICommunicator = WSAPICommunicator.sharedAPICommunicator
+    var store: WSStoreMapTileProtocol = WSStore.sharedStore
     
     override func viewDidLoad() {
         configureToolbar()
@@ -46,12 +47,20 @@ class WSLocationSearchViewController : UIViewController {
         toolbar.setShadowImage(UIImage(), forToolbarPosition: .Any)
     }
     
-    // MARK: Map centring
+    // MARK: Utility methods
     
     func centreOnRegion() {
         if let userLocation = locationManager.location?.coordinate {
             let region = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: kDefaultRegionLatitudeDelta, longitudeDelta: kDefaultRegionLongitudeDelta))
             mapView.setRegion(region, animated: true)
         }
+    }
+    
+    func addUsersToMap(users: [WSUserLocation]?) {
+        print("adding to map")
+    }
+    
+    func addOverlayForMapTile(tile: WSMapTile) {
+        print("adding overlay")
     }
 }

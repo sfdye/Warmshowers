@@ -18,6 +18,9 @@ class WSMOCKAlertDelegate : WSAlertProtocol {
     var handler: ((UIAlertAction) -> Void)?
     var error: ErrorType?
     
+    var showNoInternetBannerCalled = false
+    var hideAllBannersCalled = false
+    
     func presentAlertFor(delegator: UIViewController?, withTitle title: String?, button: String?) {
         presentAlertFor(delegator, withTitle: title, button: button, message: nil, andHandler: nil)
     }
@@ -37,5 +40,13 @@ class WSMOCKAlertDelegate : WSAlertProtocol {
     func presentAPIError(error: ErrorType, forDelegator delegator: UIViewController?) {
         self.error = error
         presentAlertCalled = true
+    }
+    
+    func showNoInternetBanner() {
+        showNoInternetBannerCalled = true
+    }
+    
+    func hideAllBanners() {
+        hideAllBannersCalled = true
     }
 }

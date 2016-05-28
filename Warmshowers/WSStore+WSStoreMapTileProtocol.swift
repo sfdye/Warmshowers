@@ -62,6 +62,17 @@ extension WSStore : WSStoreMapTileProtocol {
         }
     }
     
+    func hasValidHostDataForMapTile(tile: WSMapTile) -> Bool {
+        
+        print("no users")
+        return false
+    }
+    
+    func usersForMapTile(tile: WSMapTile) -> [WSUserLocation]? {
+        
+        return nil
+    }
+    
     func clearoutOldTiles() {
         do {
             let tiles = try allMapTiles()
