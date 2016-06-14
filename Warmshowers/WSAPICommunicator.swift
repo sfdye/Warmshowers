@@ -78,13 +78,12 @@ class WSAPICommunicator {
         do {
             let urlRequest = try NSMutableURLRequest.mutableURLRequestForEndpoint(request.endPoint, withPostParameters: request.params)
             #if TEST
-                print("MOCKING REQUEST")
-                let (data, response, error) = request.endPoint.generateMockResponseForURLRequest(urlRequest)
-                request.delegate.request(request, didRecieveHTTPResponse: data, response: response, andError: error)
+//                print("MOCKING REQUEST")
+//                let (data, response, error) = request.endPoint.generateMockResponseForURLRequest(urlRequest)
+//                request.delegate.request(request, didRecieveHTTPResponse: data, response: response, andError: error)
             #else
                 print("MAKING REQUEST ONLINE")
-                let task = session.dataTaskWithRequest(urlRequest) { (data, response, error) in
-                    print("GOT RESPONSE")
+                let task = session.dataTaskWithRequest(urlRequest) { (data, response, error) in         
                     request.delegate.request(request, didRecieveHTTPResponse: data, response: response, andError: error)
                 }
                 task.resume()

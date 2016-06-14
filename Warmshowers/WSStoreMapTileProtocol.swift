@@ -16,14 +16,11 @@ protocol WSStoreMapTileProtocol {
     /** Returns all the map tiles in the store. */
     func allMapTiles() throws -> [CDWSMapTile]
     
-    /** Checks if a map tile is already in the store. */
-    func mapTileAtPosition(x: UInt, y: UInt, z: UInt) throws -> CDWSMapTile?
-    
     /** Returns a map tile by its identifer.*/
-    func mapTileWithID(id: String) throws -> CDWSMapTile?
+    func mapTileWithQuadKey(quadKey: String) throws -> CDWSMapTile?
     
     /** Returns an existing map tile, or a new map tile into the private context. */
-    func newOrExistingMapTileAtPosition(x: UInt, y: UInt, z: UInt) throws -> CDWSMapTile
+    func newOrExistingMapTileWithQuadKey(quadKey: String) throws -> CDWSMapTile
     
     /** Returns true if the store has recently refreshed host data for the area covered by the given map tile. */
     func hasValidHostDataForMapTile(tile: WSMapTile) -> Bool

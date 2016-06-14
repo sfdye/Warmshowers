@@ -24,40 +24,15 @@ class WSSearchByLocationEndPoint : WSAPIEndPointProtocol {
             throw WSAPIEndPointError.ParsingError(endPoint: path, key: "accounts")
         }
         
-//        WSStore.sharedStore.privateContext.performBlockAndWait {
-//            
-//            var tile: CDWSMapTile!
-//            do {
-//                //                tile = try WSStore.newOrExistingMapTileAtPosition(self.x!, y: self.y!, z: self.z!)
-//            } catch let nserror as NSError {
-//                self.error = nserror
-//                return
-//            }
-//            
-//            print("got \(accounts.count) accounts")
-//            
-//            // Parse the json and add the users to the map tile
-//            for userLocationJSON in accounts {
-//                do {
-//                    //                    try WSStore.addUserToMapTile(tile, withLocationJSON:userLocationJSON)
-//                } catch let nserror as NSError {
-//                    self.error = nserror
-//                    return
-//                }
-//            }
-//            
-//            // Mark the tile as updated
-//            tile.setValue(NSDate(timeIntervalSinceNow: 0), forKey: "last_updated")
-//            print(tile.last_updated)
-//            do {
-//                //                try store.savePrivateContext()
-//                //                print("Successfully updated tile data")
-//            } catch let nserror as NSError {
-//                self.error = nserror
-//                return
-//            }
-//        }
+        var userLocations = [WSUserLocation]()
+        for account in accounts {
+            if let userLocation = WSUserLocation(json: account) {
+                userLocations.append(userLocation)
+            } else {
+                throw WSAPIEndPointError.ParsingError(endPoint: path, key: nil)
+            }
+        }
         
-        return nil
+        return userLocations
     }
 }

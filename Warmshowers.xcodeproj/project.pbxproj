@@ -632,7 +632,6 @@
 				E573D1761C0E5FD4004C3BFC /* WSMessageThreadsTableViewController */,
 				E5967BB91C3921F40037F4B7 /* WSMessageThreadTableViewController */,
 				E573D1771C0E6065004C3BFC /* WSSettingsTableViewController */,
-				E573D17B1C0E617C004C3BFC /* WSTabBarController */,
 				E5DA03D21C48891400FAD1D7 /* WSLazyImageTableVIewController */,
 			);
 			name = Controllers;
@@ -818,6 +817,7 @@
 		E573D1771C0E6065004C3BFC /* WSSettingsTableViewController */ = {
 			isa = PBXGroup;
 			children = (
+				E573D17B1C0E617C004C3BFC /* WSTabBarController */,
 				E56CC08F1BFD496400AAF973 /* WSSettingsTableViewController.swift */,
 				E59FE1E51CD411D30024F354 /* WSSettingsTableViewController+UITableViewDataSource.swift */,
 				E59FE1E71CD412430024F354 /* WSSettingsTableViewController+UITableViewDelegate.swift */,

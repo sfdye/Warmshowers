@@ -22,7 +22,7 @@ extension WSLocationSearchViewController : MKMapViewDelegate {
         if overlay.isKindOfClass(MKPolygon) {
             let renderer = MKPolygonRenderer(polygon: overlay as! MKPolygon)
             renderer.strokeColor = UIColor.redColor()
-            renderer.fillColor = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 0.5)
+            renderer.fillColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.2)
             renderer.lineWidth = 2
             return renderer
         }
@@ -122,22 +122,22 @@ extension WSLocationSearchViewController : MKMapViewDelegate {
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         
         // Get the tiles that can be seen in the new screen.
-        guard let tiles = WSMapTile.tilesForMapRegion(mapView.region, atZoomLevel: 3) else {
+        guard let tiles = WSMapTile.tilesForMapRegion(mapView.region, atZoomLevel: 4) else {
             return
         }
         
+        let region = mapView.region
         print("Tiles on screen: \(tiles.count)")
-        
+
         for tile in tiles {
-            // Add the users to the map if the data is still fresh, otherwise, initiate a download to refresh the tile.
             if store.hasValidHostDataForMapTile(tile) {
                 // Add users from the store to the map
                 let users = store.usersForMapTile(tile)
                 addUsersToMap(users)
             } else {
                 // Grey the tile with an overlay and start a download.
-                addOverlayForMapTile(tile)
-//                apiCommunicator.searchByLocation(tile.regionLimits(), andNotify: self)
+                dimTile(tile)
+                apiCommunicator.searchByLocation(tile.regionLimits, andNotify: self)
             }
         }
     }

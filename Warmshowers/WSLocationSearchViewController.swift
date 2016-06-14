@@ -57,10 +57,35 @@ class WSLocationSearchViewController : UIViewController {
     }
     
     func addUsersToMap(users: [WSUserLocation]?) {
-        print("adding to map")
+        
     }
     
-    func addOverlayForMapTile(tile: WSMapTile) {
-        print("adding overlay")
+    func storeUsers(users: [WSUserLocation], onMapTileWithQuadKey quadKey: String) {
+        
+        
+        //        var error: ErrorType? = nil
+        //        WSStore.sharedStore.privateContext.performBlockAndWait {
+        //
+        //            var tile: CDWSMapTile!
+        //            do {
+        //                tile = try WSStore.sharedStore.newOrExistingMapTileWithQuadKey(quadKey)
+        //                // Parse the json and add the users to the map tile
+        //                for userLocationJSON in accounts {
+        //                    do {
+        //                        try WSStore.sharedStore.addUserToMapTile(tile, withLocationJSON:userLocationJSON)
+        //                    }
+        //                }
+        //                tile.setValue(NSDate(timeIntervalSinceNow: 0), forKey: "last_updated")
+        //                try WSStore.sharedStore.savePrivateContext()
+        //            } catch let storeError {
+        //                error = storeError
+        //                return
+        //            }
+        //        }
     }
+    
+    func dimTile(tile: WSMapTile) {
+        mapView.addOverlay(tile.polygon())
+    }
+
 }

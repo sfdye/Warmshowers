@@ -9,17 +9,66 @@
 import UIKit
 import MapKit
 
-class WSMapTile: Hashable {
+class WSMapTile {
     
+    /** The tile longitude index */
     var x: UInt
+    
+    /** The tile latitude index */
     var y: UInt
+    
+    /** The tile zoom index */
     var z: UInt
-    var quadKey: Int
+    
+    /** The quad key (base on Bing maps) to uniquely identify tiles */
+    var quadKey: String
+    
+    /** The minimum longitude bound of the tile. */
+    var minimumLongitude: Double {
+        return Double(x) / pow(2.0, Double(z)) * 360.0 - 180.0
+    }
+    
+    /** The maximum longitude bound of the tile. */
+    var maximumLongitude: Double {
+        return Double(x + 1) / pow(2.0, Double(z)) * 360.0 - 180.0
+    }
+    
+    /** The minimum latitude bound of the tile. */
+    var minimumLatitude: Double {
+        return degrees(atan(sinh(M_PI - Double(y + 1) / pow(2.0, Double(z)) * 2 * M_PI)))
+    }
+    
+    /** The maximum latitude bound of the tile. */
+    var maximumLatitude: Double {
+        return degrees(atan(sinh(M_PI - Double(y) / pow(2.0, Double(z)) * 2 * M_PI)))
+    }
+    
+    var centerLongitude: Double {
+        return (Double(x) + 0.5) / pow(2.0, Double(z)) * 360.0 - 180.0
+        //        return (minimumLongitude + maximumLongitude) / 2
+    }
+    
+    var centerLatitude: Double {
+        return degrees(atan(sinh(M_PI - (Double(y) + 0.5) / pow(2.0, Double(z)) * 2 * M_PI)))
+//        return (minimumLatitude + maximumLatitude) / 2
+    }
+    
+    /** Returns the coordinate limits of a map tile. */
+    var regionLimits: [String: String] {
+        return [
+            "minlat": String(minimumLatitude),
+            "maxlat": String(maximumLatitude),
+            "minlon": String(minimumLongitude),
+            "maxlon": String(maximumLongitude),
+            "centerlat": String(centerLatitude),
+            "centerlon": String(centerLongitude)
+        ]
+    }
 
     
     // MARK: Hashable
     
-    var hashValue: Int { return quadKey }
+//    var hashValue: Int { return quadKey }
     
     
     // MARK: Initialisers
@@ -28,95 +77,129 @@ class WSMapTile: Hashable {
      Initialises a WSMapTile with x, y, z indexes as per google maps tile numbering.
      e.g. at zoom level 0 (z = 0) there are only 1 x 1 tiles in the world so x = 0, and y = 0
      */
-    init(x: UInt, y: UInt, z: UInt) {
+    init?(x: UInt, y: UInt, z: UInt) {
+        let n = 1 << z
+        guard x < n else { return nil }
+        guard y < n else { return nil }
         self.x = x
         self.y = y
         self.z = z
+        self.quadKey = WSMapTile.quadKeyFromX(x, y: y, z: z)
+    }
+    
+    convenience init?(latitude: CLLocationDegrees, longitude: CLLocationDegrees, zoom: UInt) {
         
-        // Calculate the store the quad key to identify the tile.
-        func paddedBinaryIntArray(x: UInt, length: UInt) -> [UInt] {
+        func moveDegrees(inout degrees: CLLocationDegrees, intoRangeWithLowerBound lowerBound: Double, andUpperBound upperBound: Double) {
+            let range = upperBound - lowerBound
+            while degrees < lowerBound {
+                degrees += range
+            }
+            while degrees >= upperBound {
+                degrees -= range
+            }
+        }
+        
+        // Limit latitude to the domain of -85 < lat < 85. These are the limits of mercator projection.
+        let lat = latitude
+        if lat < -85.0 { return nil }
+        if lat > 85.0 { return nil }
+        
+        // Ensure longitude is on the domain of -180 < lon < 180
+        var lon = longitude
+        moveDegrees(&lon, intoRangeWithLowerBound: -180.0, andUpperBound: 180.0)
+        
+        let x = UInt(floor((lon + 180.0) / 360.0 * Double(1 << zoom)))
+        let y = UInt(floor((1.0 - log( tan(lat * M_PI / 180.0) + 1.0 / cos(lat * M_PI / 180.0)) / M_PI) / 2.0 * pow(2.0, Double(zoom))))
+        self.init(x: x, y: y, z: zoom)
+    }
+    
+    /** Returns the quad key for the given tile index */
+    private class func quadKeyFromX(x: UInt, y: UInt, z: UInt) -> String {
+        
+        func moveInt(inout int: UInt, intoRangeWithLowerBound lowerBound: UInt, andUpperBound upperBound: UInt) {
+            let range = upperBound - lowerBound
+            while int < lowerBound {
+                int += range
+            }
+            while int > upperBound {
+                int -= range
+            }
+        }
+        
+        func paddedBinaryIntArray(x: UInt, length: UInt) -> [Int] {
             var binaryStringArray = String(x, radix:2).characters.map { (character) -> String in
                 String(character)
             }
             while binaryStringArray.count < Int(length) {
                 binaryStringArray.insert("0", atIndex: 0)
             }
-            let binaryIntArray = binaryStringArray.map { (string) -> UInt in
-                return UInt(string) ?? 0
+            let binaryIntArray = binaryStringArray.map { (string) -> Int in
+                return Int(string) ?? 0
             }
             return binaryIntArray
         }
-        let xBinary = paddedBinaryIntArray(x, length: z)
-        let yBinary = paddedBinaryIntArray(y, length: z)
+        
+        let n = UInt(pow(2.0, Double(z)))
+        var x = x
+        var y = y
+        moveInt(&x, intoRangeWithLowerBound: 0, andUpperBound: n)
+        moveInt(&y, intoRangeWithLowerBound: 0, andUpperBound: n)
+
+        let xBinary = paddedBinaryIntArray(UInt(Double(x) % pow(2.0, Double(z))), length: z)
+        let yBinary = paddedBinaryIntArray(UInt(Double(y) % pow(2.0, Double(z))), length: z)
         var quadKeyString = ""
         for index in 0..<Int(z) {
             quadKeyString += String(xBinary[index] + 2 * yBinary[index])
         }
-        self.quadKey = Int(quadKeyString)!
+        return quadKeyString
     }
     
-    convenience init(lon: CLLocationDegrees, lat: CLLocationDegrees, zoom: UInt) {
-        let x = UInt(floor((lon + 180.0) / 360.0 * pow(2.0, Double(zoom))))
-        let y = UInt(floor((1.0 - log(tan(lat * M_PI / 180.0) + 1.0 / cos(lat * M_PI / 180.0)) / M_PI) * pow(2.0, Double(zoom) - 1.0)))
-        self.init(x: x, y: y, z: zoom)
-    }
-    
-    /** Factory method to return an array of map tiles from x and y tile index ranges at a given zoom level */
-    class func tilesWithXRange(xRange: Range<UInt>, yRange: Range<UInt>, atZoomLevel z: UInt) -> [WSMapTile]? {
+    /** Factory method to return all the map tiles that are it a given map region */
+    class func tilesForMapRegion(region: MKCoordinateRegion, atZoomLevel z: UInt) -> [WSMapTile]? {
+        
+        // Only return tiles within the latitude range pf -85 < lat < 85.
+        let minLat = max(region.minimumLatitude, -85.0)
+        let maxLat = min(region.maximumLatitude, 85.0)
+        let minLon = region.minimumLongitude
+        let maxLon = region.maximumLongitude
+        
+        // Return nil if on the tiles in the corners of the region are out of bounds and hence can not be initialized.
+        guard
+            let northWest = WSMapTile(latitude: maxLat, longitude: minLon, zoom: z),
+            let southEast = WSMapTile(latitude: minLat, longitude: maxLon, zoom: z)
+            else {
+                return nil
+        }
+        
+        let n = 1 << z
+        var xRange: [UInt]
+        let yRange = northWest.y...southEast.y
+        if southEast.x < northWest.x {
+            xRange = Array(northWest.x...n) + Array(0...southEast.x)
+        } else {
+            xRange = Array(northWest.x...southEast.x)
+        }
+        
         var tiles = [WSMapTile]()
         for x in xRange {
             for y in yRange {
-                tiles.append(WSMapTile(x: x, y: y, z: z))
+                if let tile = WSMapTile(x: x, y: y, z: z) {
+                    tiles.append(tile)
+                }
             }
         }
         return tiles
     }
     
-    /** Factory method to return all the map tiles that are it a given map region */
-    class func tilesForMapRegion(region: MKCoordinateRegion, atZoomLevel z: UInt) -> [WSMapTile]? {
-        print("lat: \(region.minimumLatitude), \(region.maximumLatitude), lon: \(region.minimumLongitude), \(region.maximumLongitude)")
-        
-        let northWest = WSMapTile(lon: region.minimumLongitude, lat: region.maximumLatitude, zoom: z)
-        northWest.printTile()
-        let southEast = WSMapTile(lon: region.maximumLongitude, lat: region.minimumLatitude, zoom: z)
-        southEast.printTile()
-        return WSMapTile.tilesWithXRange(northWest.x...southEast.x, yRange: northWest.y...southEast.y, atZoomLevel: z)
-    }
-
-    
-    
-//    var minimumLatitude: Double {
-//        return self.region.center.latitude - self.region.span.latitudeDelta / 2.0
-//    }
-//    
-//    var maximumLatitude: Double {
-//        return self.region.center.latitude + self.region.span.latitudeDelta / 2.0
-//    }
-//    
-//    var minimumLongitude: Double {
-//        return self.region.center.longitude - self.region.span.longitudeDelta / 2.0
-//    }
-//    
-//    var maximumLongitude: Double {
-//        return self.region.center.longitude + self.region.span.longitudeDelta / 2.0
-//    }
-    
-    // Returns the coordinate limits of a map tile
-    // Used for getting hosts in the current displayed region in getHostDataForMapView
-    //
-    func regionLimits(limit: Int = 100) -> [String: String] {
-//
-//        let regionLimits: [String: String] = [
-//            "minlat": String(minimumLatitude),
-//            "maxlat": String(maximumLatitude),
-//            "minlon": String(minimumLongitude),
-//            "maxlon": String(maximumLongitude),
-//            "centerlat": String(region.center.latitude),
-//            "centerlon": String(region.center.longitude)
-//        ]
-//        
-        return [String: String]()
-//        return regionLimits
+    /** Returns a polygon that overlays the tile. */
+    func polygon() -> MKPolygon {
+        var vertices = [CLLocationCoordinate2D]()
+        vertices.append(CLLocationCoordinate2D(latitude: maximumLatitude, longitude: minimumLongitude))
+        vertices.append(CLLocationCoordinate2D(latitude: maximumLatitude, longitude: maximumLongitude))
+        vertices.append(CLLocationCoordinate2D(latitude: minimumLatitude, longitude: maximumLongitude))
+        vertices.append(CLLocationCoordinate2D(latitude: minimumLatitude, longitude: minimumLongitude))
+        let box = MKPolygon(coordinates: &vertices, count: 4)
+        return box
     }
     
     /** Utility method for debugging */
@@ -124,8 +207,16 @@ class WSMapTile: Hashable {
         print("x: \(x), y: \(y), z: \(z)")
     }
     
+    private func radians(degrees: Double) -> Double {
+        return degrees * M_PI / 180.0
+    }
+    
+    private func degrees(radians: Double) -> Double {
+        return radians * 180.0 / M_PI
+    }
+    
 }
 
-func == (lhs: WSMapTile, rhs: WSMapTile) -> Bool {
-    return lhs.hashValue == rhs.hashValue
-}
+//func == (lhs: WSMapTile, rhs: WSMapTile) -> Bool {
+//    return lhs.hashValue == rhs.hashValue
+//}
