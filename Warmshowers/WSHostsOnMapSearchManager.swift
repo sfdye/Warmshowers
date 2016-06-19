@@ -42,7 +42,7 @@ class WSHostsOnMapSearchManager : WSRequestWithCSRFToken, WSRequestDelegate {
     func requestForDownload() throws -> NSURLRequest {
         do {
             let service = WSRestfulService(type: .SearchByLocation)!
-            var params = tileForUpdate()!.getWSMapRegionLimits()
+            var params = [String: String]() //tileForUpdate()!.getWSMapRegionLimits()
             params["limit"] = String(MapSearchLimit)
             let request = try WSRequest.requestWithService(service, params: params, token: token)
             return request

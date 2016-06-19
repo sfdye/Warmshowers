@@ -20,6 +20,6 @@ extension WSHostSearchViewController {
     }
     
     @IBAction func accountButtonPressed(sender: UIBarButtonItem) {
-        performSegueWithIdentifier(MapToUserAccountSegueID, sender: nil)
+        performSegueWithIdentifier(SID_MapToUserAccount, sender: nil)
     }
 }

@@ -87,6 +87,7 @@ extension WSAPICommunicator : WSAPIRequestDelegate {
     func request(request: WSAPIRequest, didSucceedWithData data: AnyObject?) {
         
         // notify the requester
+        request.requester?.requestdidComplete(request)
         request.requester?.request(request, didSuceedWithData: data)
         
         // remove request from queue
@@ -96,6 +97,7 @@ extension WSAPICommunicator : WSAPIRequestDelegate {
     func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
         
         // notify the requester
+        request.requester?.requestdidComplete(request)
         request.requester?.request(request, didFailWithError: error)
         
         // remove request from queue

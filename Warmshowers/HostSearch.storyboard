@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="pYF-jY-7y6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="pYF-jY-7y6">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Sue Ellen Francisco.ttf">
+            <string>SueEllenFrancisco</string>
+        </mutableArray>
+    </customFonts>
     <scenes>
         <!--Host Search-->
         <scene sceneID="hNz-n2-bh7">
@@ -20,13 +25,13 @@
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4bd-cf-BPR" userLabel="Location Search View">
                                 <rect key="frame" x="0.0" y="64" width="600" height="492"/>
                                 <connections>
-                                    <segue destination="VMl-c2-Hgr" kind="embed" id="Yka-gp-yvb"/>
+                                    <segue destination="VMl-c2-Hgr" kind="embed" id="5qe-j3-BWn"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7E5-S6-tID" userLabel="Keyword Search Table View">
                                 <rect key="frame" x="0.0" y="64" width="600" height="492"/>
                                 <connections>
-                                    <segue destination="Ddd-EB-4w4" kind="embed" id="swC-hG-scq"/>
+                                    <segue destination="Ddd-EB-4w4" kind="embed" id="k1L-8r-Y9E"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -59,8 +64,8 @@
                     <connections>
                         <outlet property="keywordSearchView" destination="7E5-S6-tID" id="vwT-nn-Il8"/>
                         <outlet property="locationSearchView" destination="4bd-cf-BPR" id="flo-Gy-Yk2"/>
-                        <segue destination="nEv-Yc-3Kx" kind="showDetail" identifier="MapToUserAccount" id="hkh-3S-gg7"/>
-                        <segue destination="JpQ-pS-sYY" kind="showDetail" identifier="ToHostList" id="Aa5-lT-YEz"/>
+                        <segue destination="nEv-Yc-3Kx" kind="show" identifier="MapToUserAccount" id="dDb-Jv-xbh"/>
+                        <segue destination="JpQ-pS-sYY" kind="show" identifier="MapToHostList" id="sZy-TC-WAA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
@@ -101,7 +106,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vhb-Ct-dme" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1888" y="-1255"/>
+            <point key="canvasLocation" x="2192" y="-967"/>
         </scene>
         <!--Root View Controller-->
         <scene sceneID="Uao-jn-H3o">
@@ -175,7 +180,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Oar-Jo-ppe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2638" y="-368"/>
+            <point key="canvasLocation" x="2958" y="-1640"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="0rI-Xt-thn">
@@ -191,7 +196,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zd8-0V-NEp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1888" y="-368"/>
+            <point key="canvasLocation" x="2192" y="-1640"/>
         </scene>
         <!--UserProfile-->
         <scene sceneID="Vua-k9-ewz">
@@ -201,7 +206,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qnU-fU-C9Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3327.5" y="-1238"/>
+            <point key="canvasLocation" x="2963.5" y="-967"/>
         </scene>
         <!--Location Search View Controller-->
         <scene sceneID="3Lc-lM-xGW">
@@ -221,10 +226,10 @@
                                     <outlet property="delegate" destination="VMl-c2-Hgr" id="u7X-4C-alt"/>
                                 </connections>
                             </mapView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UNj-rN-h0W">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Status" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UNj-rN-h0W">
                                 <rect key="frame" x="20" y="20" width="560" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="SueEllenFrancisco" family="Sue Ellen Francisco" pointSize="17"/>
+                                <color key="textColor" red="0.0039215686269999999" green="0.61960784310000006" blue="0.23529411759999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="72C-Vn-U1r">
@@ -262,7 +267,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CN5-Oc-HBk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1062" y="-422"/>
+            <point key="canvasLocation" x="754" y="-516"/>
         </scene>
         <!--Keyword Search Table View Controller-->
         <scene sceneID="1Rz-1h-Qfm">
@@ -400,7 +405,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uGm-cP-uCW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1881" y="-2050"/>
+            <point key="canvasLocation" x="1402" y="-516"/>
         </scene>
     </scenes>
     <resources>

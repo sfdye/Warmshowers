@@ -15,6 +15,7 @@ enum CDWSUserLocationError : ErrorType {
 }
 
 class CDWSUserLocation: NSManagedObject {
+    
 
     // Calculated properties
     

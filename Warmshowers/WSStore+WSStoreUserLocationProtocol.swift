@@ -33,47 +33,29 @@ extension WSStore : WSStoreUserLocationProtocol {
         }
     }
     
-    func addUserToMapTile(mapTile: CDWSMapTile, withLocationJSON json: AnyObject) throws {
+    func addUserLocations(userLocations: [WSUserLocation], ToMapTile mapTile: CDWSMapTile) throws {
         
-        guard let fullname = json.valueForKey("fullname") as? String else {
-            throw CDWSUserLocationError.FailedValueForKey(key: "fullname")
-        }
-        
-        guard let name = json.valueForKey("name") as? String else {
-            throw CDWSUserLocationError.FailedValueForKey(key: "name")
-        }
-        
-        guard let uid = json.valueForKey("uid")?.integerValue else {
-            throw CDWSUserLocationError.FailedValueForKey(key: "uid")
-        }
-        
-        guard let latitude = json.valueForKey("latitude")?.doubleValue else {
-            throw CDWSUserLocationError.FailedValueForKey(key: "latitude")
-        }
-        
-        guard let longitude = json.valueForKey("longitude")?.doubleValue else {
-            throw CDWSUserLocationError.FailedValueForKey(key: "longitude")
-        }
-        
-        do {
-            let user = try newOrExistingUserLocation(uid)
-            // Critical properties
-            user.fullname = fullname
-            user.name = name
-            user.uid = uid
-            user.latitude = latitude
-            user.longitude = longitude
-            // Other Properties
-            user.additional = json.valueForKey("additional") as? String
-            user.city = json.valueForKey("city") as? String
-            user.country = json.valueForKey("country") as? String
-            user.distance = json.valueForKey("distance")?.doubleValue
-            user.notcurrentlyavailable = json.valueForKey("notcurrentlyavailable")?.boolValue
-            user.post_code = json.valueForKey("postal_code") as? String
-            user.province = json.valueForKey("province") as? String
-            user.image_url = json.valueForKey("profile_image_map_infoWindow") as? String
-            user.street = json.valueForKey("street") as? String
-            user.map_tile = mapTile
+        for userLocation in userLocations {
+            do {
+                let user = try newOrExistingUserLocation(userLocation.uid)
+                // Critical properties
+                user.fullname = userLocation.fullname
+                user.name = userLocation.name
+                user.uid = userLocation.uid
+                user.latitude = userLocation.latitude
+                user.longitude = userLocation.longitude
+                // Other Properties
+                user.additional = userLocation.additional
+                user.city = userLocation.city
+                user.country = userLocation.country
+                user.distance = userLocation.distance
+                user.notcurrentlyavailable = userLocation.notcurrentlyavailable
+                user.post_code = userLocation.postCode
+                user.province = userLocation.province
+                user.image_url = userLocation.imageURL
+                user.street = userLocation.street
+                user.map_tile = mapTile
+            }
         }
     }
     

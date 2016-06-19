@@ -11,7 +11,6 @@ import CCHMapClusterController
 
 extension WSLocationSearchViewController : MKMapViewDelegate {
     
-    /** Used to display tiles for maps other than Apple Maps. */
     func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
         
         if mapOverlay != nil {
@@ -21,9 +20,7 @@ extension WSLocationSearchViewController : MKMapViewDelegate {
         // tile colouring overlay
         if overlay.isKindOfClass(MKPolygon) {
             let renderer = MKPolygonRenderer(polygon: overlay as! MKPolygon)
-            renderer.strokeColor = UIColor.redColor()
-            renderer.fillColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.2)
-            renderer.lineWidth = 2
+            renderer.fillColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: dimLevel)
             return renderer
         }
         
@@ -78,64 +75,51 @@ extension WSLocationSearchViewController : MKMapViewDelegate {
         return annotationView;
     }
     
-    //    // Moves the map to users location
-    //    func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
-    //        let userLocation = (locationManager.location?.coordinate)!
-    //        mapView.setCenterCoordinate(userLocation , animated: true)
-    //    }
+    func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
+        let userLocation = (locationManager.location?.coordinate)!
+        mapView.setCenterCoordinate(userLocation , animated: true)
+    }
     
-    // Called when a pin is selected
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
-        print("tapped")
-        //        if let clusterAnnotation = view.annotation as? CCHMapClusterAnnotation {
-        //            print("cluster tapped")
-        ////            let cluster = view.annotation as! KPAnnotation
-        ////
-        ////             zooms to location
-        ////            if cluster.annotations.count > 1 {
-        ////                let region = MKCoordinateRegionMakeWithDistance(cluster.coordinate,
-        ////                    cluster.radius * 2.5,
-        ////                    cluster.radius * 2.5)
-        ////
-        ////                mapView.setRegion(region, animated: true)
-        ////            }
-        //        } else {
-        //            print("single tapped")
-        //        }
+        // Callout titles are set by the CCHMapClusterControllerDelegate
     }
     
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-//        if let clusterAnnotation = view.annotation as? CCHMapClusterAnnotation {
-//            if clusterAnnotation.isCluster() {
-//                print(clusterAnnotation.annotations)
-////                performSegueWithIdentifier(ToHostListSegueID, sender: clusterAnnotation)
-//            } else {
-//                if let user = clusterAnnotation.annotations.first as? WSUserLocation {
-//                    print(user)
-////                    performSegueWithIdentifier(MapToUserAccountSegueID, sender: user)
-//                }
-//            }
-//        }
-//        print("Coordinates: \(view.annotation?.coordinate)")
+        if let clusterAnnotation = view.annotation as? CCHMapClusterAnnotation {
+            if clusterAnnotation.isCluster() {
+                parentViewController?.performSegueWithIdentifier(SID_MapToHostList, sender: clusterAnnotation)
+            } else {
+                if let user = clusterAnnotation.annotations.first as? WSUserLocation {
+                    parentViewController?.performSegueWithIdentifier(SID_MapToUserAccount, sender: user)
+                }
+            }
+        }
+        print("Coordinates: \(view.annotation?.coordinate)")
     }
     
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         
         // Get the tiles that can be seen in the new screen.
-        guard let tiles = WSMapTile.tilesForMapRegion(mapView.region, atZoomLevel: 4) else {
+        guard let tiles = WSMapTile.tilesForMapRegion(mapView.region, atZoomLevel: TileUpdateZoomLevel) where tiles.count < 20 else {
+            statusLabel.text = "Please zoom in to update."
             return
         }
-        
-        let region = mapView.region
+        statusLabel.text = "Updating..."
         print("Tiles on screen: \(tiles.count)")
+        
+        // Clear out annotations that are not on the tiles shown in the view.
+        clearAnnotationsNotOnTiles(tiles)
 
+        // Update the annotation for the tiles in the view.
         for tile in tiles {
             if store.hasValidHostDataForMapTile(tile) {
                 // Add users from the store to the map
+                print("Loading users from the store.")
                 let users = store.usersForMapTile(tile)
                 addUsersToMap(users)
             } else {
                 // Grey the tile with an overlay and start a download.
+                print("Requesting users from the api.")
                 dimTile(tile)
                 apiCommunicator.searchByLocation(tile.regionLimits, andNotify: self)
             }

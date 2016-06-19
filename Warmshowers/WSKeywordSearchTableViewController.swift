@@ -43,7 +43,7 @@ class WSKeywordSearchTableViewController : UITableViewController {
         }
         
         let user = hosts[indexPath.row]
-        if let url = user.thumbnailImageURL where user.thumbnailImage == nil {
+        if let url = user.imageURL where user.image == nil {
             apiCommunicator?.getImageAtURL(url, andNotify: self)
         }
     }

@@ -198,8 +198,9 @@ class WSMapTile {
         vertices.append(CLLocationCoordinate2D(latitude: maximumLatitude, longitude: maximumLongitude))
         vertices.append(CLLocationCoordinate2D(latitude: minimumLatitude, longitude: maximumLongitude))
         vertices.append(CLLocationCoordinate2D(latitude: minimumLatitude, longitude: minimumLongitude))
-        let box = MKPolygon(coordinates: &vertices, count: 4)
-        return box
+        let polygon = MKPolygon(coordinates: &vertices, count: 4)
+        polygon.title = quadKey
+        return polygon
     }
     
     /** Utility method for debugging */

@@ -37,11 +37,11 @@ extension WSKeywordSearchTableViewController {
             cell.nameLabel.text = user.fullname
             cell.locationLabel.text = user.shortAddress
             cell.setNotAvailible(user.notcurrentlyavailable)
-            cell.profileImage.image = user.thumbnailImage ?? placeholderImage
+            cell.profileImage.image = user.image ?? placeholderImage
             
             // Download the users thumbnail image if needed.
-            if let _ = user.thumbnailImageURL
-                where user.thumbnailImage == nil && !tableView.dragging && !tableView.decelerating {
+            if let _ = user.imageURL
+                where user.image == nil && !tableView.dragging && !tableView.decelerating {
                 startImageDownloadForIndexPath(indexPath)
             }
 

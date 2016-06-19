@@ -22,15 +22,15 @@ class WSUserLocation : WSUser {
     var city: String?
     var country: String?
     var distance: Double?
-//    var latitude: Double?
-//    var longitude: Double?
+    var latitude: Double { return coordinate.latitude }
+    var longitude: Double { return coordinate.longitude }
     var coordinate: CLLocationCoordinate2D
     var notcurrentlyavailable: Bool?
     var postCode: String?
     var province: String?
-    var thumbnailImageURL: String?
+    var imageURL: String?
     var street: String? = nil
-    var thumbnailImage: UIImage?
+    var image: UIImage?
     var tileID: String?
     
     // MARK: Calculated Properties
@@ -103,12 +103,12 @@ class WSUserLocation : WSUser {
             notcurrentlyavailable = json.valueForKey("notcurrentlyavailable")?.boolValue
             postCode = data.valueForKey("postal_code") as? String
             province = json.valueForKey("province") as? String
-            thumbnailImageURL = json.valueForKey("profile_image_map_infoWindow") as? String
+            imageURL = json.valueForKey("profile_image_map_infoWindow") as? String
             street = json.valueForKey("street") as? String
         }
     }
     
-    convenience init?(user: CDWSUserLocation, tileID: String) {
+    convenience init?(user: CDWSUserLocation) {
         
         self.init(fullname: "", name: "", uid: 0, lat: 0.0, lon: 0.0)
         
@@ -126,8 +126,9 @@ class WSUserLocation : WSUser {
         self.name = name
         self.uid = uid
         self.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-        self.thumbnailImage = user.image as? UIImage
-        self.thumbnailImageURL = user.image_url
+        self.image = user.image as? UIImage
+        self.imageURL = user.image_url
+        self.tileID = user.map_tile?.quad_key
     }
     
 }

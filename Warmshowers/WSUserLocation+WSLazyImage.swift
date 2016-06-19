@@ -10,13 +10,13 @@ import UIKit
 
 extension WSUserLocation : WSLazyImage {
     
-    var lazyImageURL: String? { return thumbnailImageURL }
+    var lazyImageURL: String? { return imageURL }
     var lazyImage: UIImage? {
         get {
-            return thumbnailImage
+            return image
         }
         set(newImage) {
-            thumbnailImage = newImage
+            image = newImage
         }
     }
     

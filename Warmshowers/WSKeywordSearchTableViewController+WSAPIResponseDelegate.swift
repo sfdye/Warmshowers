@@ -18,8 +18,8 @@ extension WSKeywordSearchTableViewController : WSAPIResponseDelegate {
             guard let hosts = hosts else { break }
             let image = data as? UIImage
             for (index, host) in hosts.enumerate() {
-                if host.thumbnailImageURL == request.endPoint.path {
-                    host.thumbnailImage = image ?? placeholderImage
+                if host.imageURL == request.endPoint.path {
+                    host.image = image ?? placeholderImage
                     dispatch_async(dispatch_get_main_queue(), { [weak self] () -> Void in
                         self?.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .None)
                     })

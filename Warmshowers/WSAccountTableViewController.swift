@@ -130,7 +130,7 @@ class WSAccountTableViewController: UITableViewController {
                 }
                 
                 if let user = WSUserLocation(json: info) {
-                    feedback.authorImageURL = user.thumbnailImageURL
+                    feedback.authorImageURL = user.imageURL
                 }
             })
         }
@@ -266,16 +266,15 @@ class WSAccountTableViewController: UITableViewController {
             case 0:
                 // Photo
                 let cell = tableView.dequeueReusableCellWithIdentifier(ImageCellID, forIndexPath: indexPath) as! ProfileImageTableViewCell
+                cell.nameLabel.text = self.info?["fullname"] as? String
                 // TODO set the photo height to 35% of the screen height
                 if let photo = photo {
-                    cell.nameLabel.text = self.info?.valueForKey("fullname") as? String
                     cell.nameLabel.textColor = UIColor.whiteColor()
                     cell.noImageLabel.hidden = true
                     cell.profileImage.hidden = false
                     cell.profileImage.image = photo
                     cell.profileImage.contentMode = .ScaleAspectFill
                 } else {
-                    cell.nameLabel.text = self.info?.valueForKey("fullname") as? String
                     cell.nameLabel.textColor = WSColor.DarkBlue
                     cell.profileImage.hidden = true
                     cell.noImageLabel.hidden = false

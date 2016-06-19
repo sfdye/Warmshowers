@@ -17,5 +17,5 @@ protocol WSStoreUserLocationProtocol {
     func newOrExistingUserLocation(uid: Int) throws -> CDWSUserLocation
     
     /** Adds a user to the store with json describing a host location. */
-    func addUserToMapTile(mapTile: CDWSMapTile, withLocationJSON json: AnyObject) throws
+    func addUserLocations(userLocations: [WSUserLocation], ToMapTile mapTile: CDWSMapTile) throws
 }

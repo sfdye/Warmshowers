@@ -8,12 +8,15 @@
 
 import UIKit
 import MapKit
+import CCHMapClusterController
 
 class WSLocationSearchViewController : UIViewController {
     
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var toolbar: UIToolbar!
     @IBOutlet var statusLabel: UILabel!
+    
+    var clusterController: CCHMapClusterController!
     
     var mapOverlay: MKTileOverlay?
     var mapSource: WSMapSource = WSMapSource.AppleMaps
@@ -24,12 +27,26 @@ class WSLocationSearchViewController : UIViewController {
     let kDefaultRegionLatitudeDelta: CLLocationDegrees = 1
     let kDefaultRegionLongitudeDelta: CLLocationDegrees = 1
     
+    // This is the zoom level at which api request will be made
+    let TileUpdateZoomLevel: UInt = 5
+    
+    // The level of dimming for tiles that are updating. A value between 0 and 1.
+    let dimLevel: CGFloat = 0.3
+    
+//    // This is the minimum zoom level at which tiles should be updated.
+//    let MinimumZoomLevelForTileUpdates: UInt = 5
+//    
+//    // This is the minimum zoom level that annotation will be shown
+//    let MinimumZoomLevelToShowAnnotations: UInt = 2
+    
     // Delegates
     var alertDelegate: WSAlertDelegate = WSAlertDelegate.sharedAlertDelegate
     var apiCommunicator: WSAPICommunicator = WSAPICommunicator.sharedAPICommunicator
     var store: WSStoreMapTileProtocol = WSStore.sharedStore
     
     override func viewDidLoad() {
+        clusterController = CCHMapClusterController(mapView: mapView)
+        clusterController.delegate = self
         configureToolbar()
         statusLabel.text = nil
         
@@ -52,40 +69,65 @@ class WSLocationSearchViewController : UIViewController {
     func centreOnRegion() {
         if let userLocation = locationManager.location?.coordinate {
             let region = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: kDefaultRegionLatitudeDelta, longitudeDelta: kDefaultRegionLongitudeDelta))
-            mapView.setRegion(region, animated: true)
+            dispatch_async(dispatch_get_main_queue(), { [weak self] in
+                self?.mapView.setRegion(region, animated: true)
+                })
         }
     }
     
     func addUsersToMap(users: [WSUserLocation]?) {
         
+        guard let users = users else { return }
+        
+        dispatch_async(dispatch_get_main_queue(), { [weak self] in
+            self?.clusterController.addAnnotations(users, withCompletionHandler: nil)
+            })
+        
+//        mapView.performSelectorOnMainThread(#selector(MKMapView.addAnnotations(_:)), withObject: users, waitUntilDone: false)
     }
     
-    func storeUsers(users: [WSUserLocation], onMapTileWithQuadKey quadKey: String) {
+    func clearAnnotationsNotOnTiles(tiles: [WSMapTile]) {
         
+        let quadKeys = tiles.map { (tile) -> String in return tile.quadKey }
+        let unrequiredAnnotations = mapView.annotations.filter { (annotation) -> Bool in
+            if annotation is WSUserLocation {
+                if let tileID = (annotation as! WSUserLocation).tileID {
+                    return !quadKeys.contains(tileID)
+                }
+            }
+            return false
+        }
         
-        //        var error: ErrorType? = nil
-        //        WSStore.sharedStore.privateContext.performBlockAndWait {
-        //
-        //            var tile: CDWSMapTile!
-        //            do {
-        //                tile = try WSStore.sharedStore.newOrExistingMapTileWithQuadKey(quadKey)
-        //                // Parse the json and add the users to the map tile
-        //                for userLocationJSON in accounts {
-        //                    do {
-        //                        try WSStore.sharedStore.addUserToMapTile(tile, withLocationJSON:userLocationJSON)
-        //                    }
-        //                }
-        //                tile.setValue(NSDate(timeIntervalSinceNow: 0), forKey: "last_updated")
-        //                try WSStore.sharedStore.savePrivateContext()
-        //            } catch let storeError {
-        //                error = storeError
-        //                return
-        //            }
-        //        }
+        print("\(unrequiredAnnotations.count) / \(mapView.annotations.count) being removed from the map.")
+        
+        if unrequiredAnnotations.count > 0 {
+            dispatch_async(dispatch_get_main_queue(), { [weak self] in
+                self?.clusterController.removeAnnotations(unrequiredAnnotations, withCompletionHandler: nil)
+                })
+            
+//            mapView.performSelectorOnMainThread(#selector(MKMapView.removeAnnotations(_:)), withObject: unrequiredAnnotations, waitUntilDone: false)
+        }
+        
+        print("\(mapView.annotations.count) remaining.")
     }
     
     func dimTile(tile: WSMapTile) {
-        mapView.addOverlay(tile.polygon())
+        
+        let polygon = tile.polygon()
+        polygon.title = tile.quadKey
+        
+        mapView.performSelectorOnMainThread(#selector(MKMapView.addOverlay(_:)), withObject: polygon, waitUntilDone: false)
+    }
+    
+    func undimTile(tile: WSMapTile) {
+        
+        let overlay = mapView.overlays.filter { (overlay) -> Bool in
+            return overlay.title ?? "" ?? "" == tile.quadKey
+        }.first
+        
+        if overlay != nil {
+            mapView.performSelectorOnMainThread(#selector(MKMapView.removeOverlay(_:)), withObject: overlay!, waitUntilDone: true)
+        }
     }
 
 }

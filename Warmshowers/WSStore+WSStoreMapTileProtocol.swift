@@ -57,6 +57,13 @@ extension WSStore : WSStoreMapTileProtocol {
     
     func usersForMapTile(tile: WSMapTile) -> [WSUserLocation]? {
         
+        do {
+            if let storedTile = try mapTileWithQuadKey(tile.quadKey) {
+                return storedTile.userLocations
+            }
+        } catch {
+            return nil
+        }
         return nil
     }
     

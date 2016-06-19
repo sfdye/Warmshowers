@@ -13,52 +13,28 @@ import MapKit
 @objc(CDWSMapTile)
 class CDWSMapTile: NSManagedObject {
     
-    /**
-     * The time at which user location data is deemed to old and should be updated (in seconds)
-     * Set to 10 minutes
+    /** 
+     The time at which user location data is deemed to old and should be updated (in seconds).
+     Set to 10 minutes.
      */
     let UpdateThresholdTime: Double = 60.0 * 10.0
     
-    // MARK: Map tile region properties
-    
-//    var latitudeDelta: CLLocationDegrees {
-//        return 180 / pow(2.0, Double(z!))
-//    }
-//    
-//    var longitudeDelta: CLLocationDegrees {
-//        return 360 / pow(2.0, Double(z!))
-//    }
-//    
-//    var minimumLatitude: CLLocationDegrees {
-//        return (-y!.doubleValue * latitudeDelta) + 90
-//    }
-//    
-//    var maximumLatitude: CLLocationDegrees { 
-//        return (-(y!.doubleValue + 1) * latitudeDelta) + 90
-//    }
-//    
-//    var minimumLongitude: CLLocationDegrees {
-//        return (x!.doubleValue * longitudeDelta) - 180
-//    }
-//    
-//    var maximumLongitude: CLLocationDegrees {
-//        return ((x!.doubleValue + 1) * longitudeDelta) - 180
-//    }
-    
-//    var latitudeCentre: CLLocationDegrees {
-//        return minimumLatitude + latitudeDelta / 2.0
-//    }
-//    
-//    var longitudeCentre: CLLocationDegrees {
-//        return minimumLongitude + longitudeDelta / 2.0
-//    }
-//    
-//    var region: MKCoordinateRegion {
-//        let centre = CLLocationCoordinate2D(latitude: latitudeCentre, longitude: longitudeCentre)
-//        let span = MKCoordinateSpan(latitudeDelta: latitudeDelta, longitudeDelta: longitudeDelta)
-//        let region = MKCoordinateRegion(center: centre, span: span)
-//        return region
-//    }
+    var userLocations: [WSUserLocation]? {
+        
+        guard let users = users else {
+            return nil
+        }
+        
+        var userLocations = [WSUserLocation]()
+        for user in users {
+            if user is CDWSUserLocation {
+                if let userLocation = WSUserLocation(user: user as! CDWSUserLocation) {
+                    userLocations.append(userLocation)
+                }
+            }
+        }
+        return userLocations
+    }
     
     // MARK: Utility methods
     
@@ -74,23 +50,5 @@ class CDWSMapTile: NSManagedObject {
         return abs(last_updated.timeIntervalSinceNow) > UpdateThresholdTime
     }
     
-    /**
-     * Returns the coordinate limits of a map tile. 
-     * Used for getting hosts in the current displayed region in getHostDataForMapView
-     */
-    func getWSMapRegionLimits() -> [String: String] {
-        
-//        let regionLimits: [String: String] = [
-//            "minlat": String(latitudeCentre - latitudeDelta / 2.0),
-//            "maxlat": String(latitudeCentre + latitudeDelta / 2.0),
-//            "minlon": String(longitudeCentre - longitudeDelta / 2.0),
-//            "maxlon": String(longitudeCentre + longitudeDelta / 2.0),
-//            "centerlat": String(latitudeCentre),
-//            "centerlon": String(longitudeCentre)
-//        ]
-//        
-//        return regionLimits
-        return [String: String]()
-    }
 
 }
