@@ -1,5 +1,5 @@
 //
-//  MapTemplate.swift
+//  MapTileServerURLTemplate.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 25/11/15.
@@ -8,15 +8,16 @@
 
 import UIKit
 
-// Class to provie template URLs for different map tile servers
+/**
+ Provides template URLs for different map tile servers.
+ */
 class MapTileServerURLTemplate {
-    static let sharedInstance = MapTileServerURLTemplate()
     
-    class func OpenStreetMaps() -> String {
+    static var OpenStreetMaps: String {
         return "http://tile.openstreetmap.org/{z}/{x}/{y}.png"
     }
     
-    class func OpenCycleMaps() -> String {
+    static var OpenCycleMaps: String {
         return "http://tile.opencyclemap.org/cycle/{z}/{x}/{y}.png"
     }
 }
