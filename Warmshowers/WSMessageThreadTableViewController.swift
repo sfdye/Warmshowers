@@ -13,19 +13,19 @@ class WSMessageThreadTableViewController: UITableViewController {
     
     var threadID: Int!
 
-    lazy var messageUpdater: WSMessageUpdater = {
-        let messageUpdater = WSMessageUpdater(
-            threadID: self.threadID,
-            success: {
-                self.reload(true)
-            },
-            failure: { (error) -> Void in
-                // Reload and show an error alert
-                self.setErrorAlert(error)
-                self.reload(true)
-        })
-        return messageUpdater
-    }()
+//    lazy var messageUpdater: WSMessageUpdater = {
+//        let messageUpdater = WSMessageUpdater(
+//            threadID: self.threadID,
+//            success: {
+//                self.reload(true)
+//            },
+//            failure: { (error) -> Void in
+//                // Reload and show an error alert
+//                self.setErrorAlert(error)
+//                self.reload(true)
+//        })
+//        return messageUpdater
+//    }()
     var refreshController = UIRefreshControl()
     var fetchedResultsController: NSFetchedResultsController!
     var alert: UIAlertController?
@@ -98,7 +98,7 @@ class WSMessageThreadTableViewController: UITableViewController {
     // Updates the messages
     //
     func update() {
-        messageUpdater.update()
+//        messageUpdater.update()
     }
     
     // Reloads the tableview and hides any activity indicators
@@ -167,22 +167,22 @@ class WSMessageThreadTableViewController: UITableViewController {
                     
                     let uid = author.uid!.integerValue
                     
-                    WSRequest.getUserThumbnailImage(uid, doWithImage: { (image) -> Void in
-                        
-                        guard let image = image else {
-                            return
-                        }
-                        
-                        do {
-                            // TODO: This should be refactored so that the store remains as a delegate variable
-                            try WSStore.sharedStore.updateParticipant(uid, withImage: image)
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                self.reloadImage(image, forAuthor: uid)
-                            })
-                        } catch {
-                            // Not a big deal if the thumbnails don't load
-                        }
-                    })
+//                    WSRequest.getUserThumbnailImage(uid, doWithImage: { (image) -> Void in
+//                        
+//                        guard let image = image else {
+//                            return
+//                        }
+//                        
+//                        do {
+//                            // TODO: This should be refactored so that the store remains as a delegate variable
+//                            try WSStore.sharedStore.updateParticipant(uid, withImage: image)
+//                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                                self.reloadImage(image, forAuthor: uid)
+//                            })
+//                        } catch {
+//                            // Not a big deal if the thumbnails don't load
+//                        }
+//                    })
                 }
             }
         } catch {
@@ -254,12 +254,12 @@ class WSMessageThreadTableViewController: UITableViewController {
             }
             
             if thread.is_new!.boolValue {
-                let marker = WSMessageThreadMarker(
-                    threadID: threadID,
-                    success: nil,
-                    failure: nil
-                )
-                marker.markAsRead()
+//                let marker = WSMessageThreadMarker(
+//                    threadID: threadID,
+//                    success: nil,
+//                    failure: nil
+//                )
+//                marker.markAsRead()
             }
         } catch {
             // Not too important

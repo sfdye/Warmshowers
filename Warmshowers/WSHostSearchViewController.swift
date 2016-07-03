@@ -30,6 +30,7 @@ class WSHostSearchViewController: UIViewController {
 
     // Delegates
     var alertDelegate: WSAlertDelegate = WSAlertDelegate.sharedAlertDelegate
+    var apiCommunicator: WSAPICommunicator = WSAPICommunicator.sharedAPICommunicator
     var connection: WSReachabilityProtocol = WSReachabilityManager.sharedReachabilityManager
     var session: WSSessionStateProtocol = WSSessionState.sharedSessionState
     

@@ -8,15 +8,14 @@
 
 import UIKit
 
-class WSFeedbackTableViewController: WSLazyImageTableViewController {
+class WSFeedbackTableViewController: UITableViewController {
 
-    var feedback: [AnyObject] { return lazyImageObjects }
+    var feedback: [WSRecommendation]?
     
     // MARK: View life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dataSource = self
         
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 122

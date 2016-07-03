@@ -15,15 +15,15 @@ class WSMessageThreadsTableViewController: UITableViewController {
     
     // MARK: Properties
     
-    var messageThreadUpdater: WSMessageThreadsUpdater!
     var lastUpdated: NSDate?
-    var updatesInProgress = [Int: WSMessageUpdater]()
+    var updatesInProgress = [Int: String]()
     var alert: UIAlertController?
     var presentingAlert = false
     var fetchedResultsController: NSFetchedResultsController!
     
     // Delegates
-    var alertDelegate: WSAlertProtocol = WSAlertDelegate.sharedAlertDelegate
+    var alertDelegate: WSAlertDelegate = WSAlertDelegate.sharedAlertDelegate
+    var apiCommunicator: WSAPICommunicator = WSAPICommunicator.sharedAPICommunicator
     let store: WSStoreMessageThreadProtocol = WSStore.sharedStore
     var connection: WSReachabilityProtocol = WSReachabilityManager.sharedReachabilityManager
     
@@ -47,7 +47,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
         initializeRefreshController()
         
         // Set up the message thread updater
-        configureMessageThreadsUpdater()
+//        configureMessageThreadsUpdater()
         
         // Table view autolayout options
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -75,17 +75,17 @@ class WSMessageThreadsTableViewController: UITableViewController {
         }
     }
     
-    func configureMessageThreadsUpdater() {
-        messageThreadUpdater = WSMessageThreadsUpdater(
-            success: {
-                self.lastUpdated = NSDate()
-                self.updateAllMessages()
-            },
-            failure: { (error) -> Void in
-                self.setErrorAlert(error)
-                self.finishedUpdates()
-        })
-    }
+//    func configureMessageThreadsUpdater() {
+//        messageThreadUpdater = WSMessageThreadsUpdater(
+//            success: {
+//                self.lastUpdated = NSDate()
+//                self.updateAllMessages()
+//            },
+//            failure: { (error) -> Void in
+//                self.setErrorAlert(error)
+//                self.finishedUpdates()
+//        })
+//    }
     
     func initializeFetchedResultsController() {
         let request = NSFetchRequest(entityName: WSEntity.Thread.rawValue)
@@ -139,7 +139,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
         if lastUpdated == nil {
             WSProgressHUD.show("Updating messages ...")
         }
-        messageThreadUpdater.update()
+//        messageThreadUpdater.update()
     }
     
     // Updates the table view and shows sny error alerts
@@ -165,7 +165,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
             let threadIDs = try store.messageThreadsThatNeedUpdating()
             if threadIDs.count > 0 {
                 for threadID in threadIDs {
-                    self.updateMessagesOnThread(threadID)
+//                    self.updateMessagesOnThread(threadID)
                 }
             } else {
                 finishedUpdates()
@@ -178,11 +178,11 @@ class WSMessageThreadsTableViewController: UITableViewController {
     
     // Cancels all message update requests
     //
-    func cancelAllUpdates() {
-        for (_, update) in updatesInProgress {
-            update.cancel()
-        }
-    }
+//    func cancelAllUpdates() {
+//        for (_, update) in updatesInProgress {
+////            update.cancel()
+//        }
+//    }
     
     // Sets an updater for a message thread, but does not start it
     //
@@ -197,18 +197,18 @@ class WSMessageThreadsTableViewController: UITableViewController {
             return
         }
         
-        let messageUpdater = WSMessageUpdater(
-            threadID: threadID,
-            success: {
-                self.updateFinishedForThreadID(threadID)
-            },
-            failure: { (error) -> Void in
-                self.setErrorAlert(error)
-                self.updateFinishedForThreadID(threadID)
-            }
-        )
-        updatesInProgress[threadID] = messageUpdater
-        messageUpdater.update()
+//        let messageUpdater = WSMessageUpdater(
+//            threadID: threadID,
+//            success: {
+//                self.updateFinishedForThreadID(threadID)
+//            },
+//            failure: { (error) -> Void in
+//                self.setErrorAlert(error)
+//                self.updateFinishedForThreadID(threadID)
+//            }
+//        )
+//        updatesInProgress[threadID] = messageUpdater
+//        messageUpdater.update()
     }
 
     // Removes the message updater object assign to a given thread and reloads the table if all updates are done

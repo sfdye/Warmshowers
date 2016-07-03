@@ -54,15 +54,15 @@ class WSAccountTableViewController: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         if uid != nil {
             
-            // Get the users profile
-            WSRequest.getUserInfo(uid!, doWithUserInfo: { (info) -> Void in
-                self.updateWithUserInfo(info)
-            })
-            
-            // Get the users feedback
-            WSRequest.getUserFeedback(uid!, doWithUserFeedback: { (feedback) -> Void in
-                self.updateWithFeedback(feedback)
-            })
+//            // Get the users profile
+//            WSRequest.getUserInfo(uid!, doWithUserInfo: { (info) -> Void in
+//                self.updateWithUserInfo(info)
+//            })
+//            
+//            // Get the users feedback
+//            WSRequest.getUserFeedback(uid!, doWithUserFeedback: { (feedback) -> Void in
+//                self.updateWithFeedback(feedback)
+//            })
             
         } else {
             print("No uid")
@@ -123,16 +123,16 @@ class WSAccountTableViewController: UITableViewController {
                 return
             }
             
-            WSRequest.getUserInfo(uid, doWithUserInfo: { (info) -> Void in
-                
-                guard let info = info else {
-                    return
-                }
-                
-                if let user = WSUserLocation(json: info) {
-                    feedback.authorImageURL = user.imageURL
-                }
-            })
+//            WSRequest.getUserInfo(uid, doWithUserInfo: { (info) -> Void in
+//                
+//                guard let info = info else {
+//                    return
+//                }
+//                
+//                if let user = WSUserLocation(json: info) {
+//                    feedback.authorImageURL = user.imageURL
+//                }
+//            })
         }
     }
     
@@ -143,13 +143,13 @@ class WSAccountTableViewController: UITableViewController {
             return
         }
         
-        // Get the users profile image
-        WSRequest.getImageWithURL(imageURL, doWithImage: { (image) -> Void in
-            self.photo = image
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
-            })
-        })
+//        // Get the users profile image
+//        WSRequest.getImageWithURL(imageURL, doWithImage: { (image) -> Void in
+//            self.photo = image
+//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+//            })
+//        })
     }
     
     func userIsLoggedIn() -> Bool {
@@ -185,22 +185,22 @@ class WSAccountTableViewController: UITableViewController {
                 
                 // Logout and return the login screeen
                 let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-                let logoutManager = WSLogoutManager(
-                    success: {
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            WSProgressHUD.hide()
-//                            appDelegate.logout() // DISABLED FOR NOW WHILE UPGRADING TO PROTOCOL ORIENTATED DESIGN
-                        })
-                    },
-                    failure: { (error) -> Void in
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            WSProgressHUD.hide()
-//                            appDelegate.logout() // DISABLED FOR NOW WHILE UPGRADING TO PROTOCOL ORIENTATED DESIGN
-                        })
-                    }
-                )
-                WSProgressHUD.show(self.navigationController!.view, label: "Logging out ...")
-                logoutManager.logout()
+//                let logoutManager = WSLogoutManager(
+//                    success: {
+//                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                            WSProgressHUD.hide()
+////                            appDelegate.logout() // DISABLED FOR NOW WHILE UPGRADING TO PROTOCOL ORIENTATED DESIGN
+//                        })
+//                    },
+//                    failure: { (error) -> Void in
+//                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                            WSProgressHUD.hide()
+////                            appDelegate.logout() // DISABLED FOR NOW WHILE UPGRADING TO PROTOCOL ORIENTATED DESIGN
+//                        })
+//                    }
+//                )
+//                WSProgressHUD.show(self.navigationController!.view, label: "Logging out ...")
+//                logoutManager.logout()
             }
             actionAlert.addAction(logoutAction)
             
@@ -452,8 +452,7 @@ class WSAccountTableViewController: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == ToFeedbackSegueID {
             let feedbackVC = segue.destinationViewController as! WSFeedbackTableViewController
-            feedbackVC.lazyImageObjects = feedback
-            feedbackVC.placeholderImageName = "ThumbnailPlaceholder"
+            feedbackVC.feedback = feedback
         }
         if segue.identifier == ToSendNewMessageSegueID {
             let navVC = segue.destinationViewController as! UINavigationController

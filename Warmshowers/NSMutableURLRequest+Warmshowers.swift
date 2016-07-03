@@ -75,19 +75,5 @@ extension NSMutableURLRequest {
         
         return request
     }
-    
-    // KEEP FOR LEGACY UNTIL HTTP CLIENT TRANSER IS COMPLETE
-    class func withWSRestfulService(service: WSRestfulService) -> NSMutableURLRequest {
-        
-        let request = NSMutableURLRequest.init()
-        request.URL = service.url
-        request.HTTPMethod = service.methodAsString
-        
-        if service.type == .Token {
-            request.addValue("text/plain", forHTTPHeaderField: "Accept")
-        } else {
-            request.addValue("application/json", forHTTPHeaderField: "Accept")
-        }
-        
-        return request
-    }}
+
+}

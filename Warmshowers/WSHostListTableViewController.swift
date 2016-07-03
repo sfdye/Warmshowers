@@ -8,18 +8,17 @@
 
 import UIKit
 
-class WSHostListTableViewController: WSLazyImageTableViewController {
+class WSHostListTableViewController: UITableViewController {
     
-    var users: [AnyObject] { return lazyImageObjects }
+    var users: [WSUserLocation]?
         
     // MARK: View life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dataSource = self
         
-        if users.count > 0 {
-            self.navigationItem.title = "\(users.count) Hosts"
+        if users!.count > 0 {
+            self.navigationItem.title = "\(users!.count) Hosts"
         } else {
             self.navigationItem.title = "Hosts"
             // No users in the data source. Dismiss the view with an error message

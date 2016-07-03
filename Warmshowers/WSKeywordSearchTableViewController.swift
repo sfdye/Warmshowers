@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WSKeywordSearchTableViewController : UITableViewController {
+class WSKeywordSearchTableViewController: UITableViewController {
     
     var debounceTimer: NSTimer?
     var placeholderImage: UIImage? = UIImage(named: "ThumbnailPlaceholder")

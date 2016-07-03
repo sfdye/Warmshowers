@@ -75,8 +75,7 @@ extension WSHostSearchViewController {
             
             if let clusterAnnotation = sender as? CCHMapClusterAnnotation {
                 if let users = Array(clusterAnnotation.annotations) as? [WSUserLocation] {
-                    hostListTVC.lazyImageObjects = users
-                    hostListTVC.placeholderImageName = "ThumbnailPlaceholder"
+                    hostListTVC.users = users
                 }
             }
             

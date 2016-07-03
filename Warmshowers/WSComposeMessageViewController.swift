@@ -21,11 +21,11 @@ class WSComposeMessageViewController: UIViewController {
     var threadID: Int?
     var replyOnMessageThread: CDWSMessageThread?
     
-    var messageSender: WSMessageSender?
-    
     // Delegates
     let store: WSStoreMessageThreadProtocol = WSStore.sharedStore
     let session: WSSessionStateProtocol = WSSessionState.sharedSessionState
+    var alertDelegate: WSAlertDelegate = WSAlertDelegate.sharedAlertDelegate
+    var apiCommunicator: WSAPICommunicator = WSAPICommunicator.sharedAPICommunicator
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -164,37 +164,39 @@ class WSComposeMessageViewController: UIViewController {
             return
         }
         
-        if let threadID = threadID {
-            // Send message as a reply on an existing thread
-            messageSender = WSMessageSender(
-                threadID: threadID,
-                body: body,
-                success: self.successfulSend,
-                failure: self.failedSend
-            )
-        } else {
-            // Send as a new message
-            messageSender = WSMessageSender(
-                recipients: recipients,
-                subject: subject,
-                body: body,
-                success: self.successfulSend,
-                failure: self.failedSend
-            )
-        }
-        sendMessage()
+//        if let threadID = threadID {
+//            // Send message as a reply on an existing thread
+//            messageSender = WSMessageSender(
+//                threadID: threadID,
+//                body: body,
+//                success: self.successfulSend,
+//                failure: self.failedSend
+//            )
+//        } else {
+//            // Send as a new message
+//            messageSender = WSMessageSender(
+//                recipients: recipients,
+//                subject: subject,
+//                body: body,
+//                success: self.successfulSend,
+//                failure: self.failedSend
+//            )
+//        }
+        
+        // Show the spinner
+        WSProgressHUD.show(navigationController!.view, label: "Sending message ...")
+//        sendMessage()
     }
     
-    func sendMessage() {
-        if messageSender != nil {
-
-            // Show the spinner
-            WSProgressHUD.show(navigationController!.view, label: "Sending message ...")
-
-            // Start the message sender
-            messageSender!.send()
-        }
-    }
+//    func sendMessage() {
+//        if messageSender != nil {
+//
+//            
+//
+//            // Start the message sender
+//            messageSender!.send()
+//        }
+//    }
     
     func successfulSend() {
         let notificationCentre = NSNotificationCenter.defaultCenter()
@@ -207,7 +209,6 @@ class WSComposeMessageViewController: UIViewController {
     
     func failedSend(error: NSError) {
         WSProgressHUD.hide(navigationController!.view)
-        messageSender = nil
         let alert = UIAlertController(title: "Could not send message.", message: "Sorry, an error occured while sending you message. Please check you are connected to the internet and try again later.", preferredStyle: .Alert)
         let okAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
         alert.addAction(okAction)
