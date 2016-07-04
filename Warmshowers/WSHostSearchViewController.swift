@@ -54,6 +54,7 @@ class WSHostSearchViewController: UIViewController {
         
         // Search controller
         searchController = UISearchController(searchResultsController:nil)
+        searchController.loadViewIfNeeded()
         searchController.delegate = self
         searchController.searchResultsUpdater = keywordSearchTableViewController!
         searchController.hidesNavigationBarDuringPresentation = false
