@@ -12,16 +12,16 @@ class WSSearchByKeywordEndPoint : WSAPIEndPointProtocol {
     
     static let sharedEndPoint = WSSearchByKeywordEndPoint()
     
-    var type: WSAPIEndPoint { return .SearchByKeyword }
+    var type: WSAPIEndPoint { return .searchByKeyword }
     
     var path: String { return "/services/rest/hosts/by_keyword" }
     
     var method: HttpMethod { return .Post }
     
-    func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
+    func request(_ request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
         
         guard let accounts = json["accounts"] as? NSDictionary else {
-            throw WSAPIEndPointError.ParsingError(endPoint: path, key: "accounts")
+            throw WSAPIEndPointError.parsingError(endPoint: path, key: "accounts")
         }
         
         var hosts = [WSUserLocation]()

@@ -34,15 +34,15 @@ class WSMOCKSessionState : WSSessionStateProtocol {
         }
     }
 
-    func setUsername(username: String) {
+    func setUsername(_ username: String) {
         setUsernameCalled = true
     }
     
-    func savePassword(password: String, forUsername username: String) throws {
+    func savePassword(_ password: String, forUsername username: String) throws {
         savePasswordForUsernameCalled = true
     }
     
-    func saveSessionData(sessionCookie: String, token: String, uid: Int) {
+    func saveSessionData(_ sessionCookie: String, token: String, uid: Int) {
         saveSessionDataCalled = true
     }
     
@@ -50,7 +50,7 @@ class WSMOCKSessionState : WSSessionStateProtocol {
         deleteSessionDataCalled = true
     }
     
-    func setToken(token: String) {
+    func setToken(_ token: String) {
         setTokenCalled = true
     }
     

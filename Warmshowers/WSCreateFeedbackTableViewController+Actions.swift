@@ -10,26 +10,26 @@ import UIKit
 
 extension WSCreateFeedbackTableViewController {
     
-    @IBAction func cancelButtonPressed(sender: AnyObject?) {
+    @IBAction func cancelButtonPressed(_ sender: AnyObject?) {
         
         self.view.endEditing(true)
         
         if feedback.hasBody {
             // TODO: Delegate this to the alertDelgate
-            let alert = UIAlertController(title: nil, message: "Are you sure you want to discard the current feedback?", preferredStyle: .Alert)
-            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+            let alert = UIAlertController(title: nil, message: "Are you sure you want to discard the current feedback?", preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
             alert.addAction(cancelAction)
-            let continueAction = UIAlertAction(title: "Continue", style: .Default) { (continueAction) -> Void in
-                self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+            let continueAction = UIAlertAction(title: "Continue", style: .default) { (continueAction) -> Void in
+                self.navigationController?.dismiss(animated: true, completion: nil)
             }
             alert.addAction(continueAction)
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
         } else {
-            self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+            self.navigationController?.dismiss(animated: true, completion: nil)
         }
     }
     
-    @IBAction func sumbitButtonPressed(sender: AnyObject?) {
+    @IBAction func sumbitButtonPressed(_ sender: AnyObject?) {
         
         self.view.endEditing(true)
         

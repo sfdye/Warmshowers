@@ -12,7 +12,7 @@ class WSTokenEndPoint : WSAPIEndPointProtocol {
     
     static let sharedEndPoint = WSTokenEndPoint()
     
-    var type: WSAPIEndPoint { return .Token }
+    var type: WSAPIEndPoint { return .token }
     
     var path: String { return "/services/session/token" }
     
@@ -20,15 +20,15 @@ class WSTokenEndPoint : WSAPIEndPointProtocol {
     
     var accept: AcceptType { return .PlainText }
     
-    func request(request: WSAPIRequest, didRecievedResponseWithText text: String) throws -> AnyObject? {
+    func request(_ request: WSAPIRequest, didRecievedResponseWithText text: String) throws -> AnyObject? {
         WSSessionState.sharedSessionState.setToken(text)
         return text
     }
     
-    func generateMockResponseForURLRequest(urlRequest: NSMutableURLRequest) -> (NSData?, NSURLResponse?, NSError?) {
+    func generateMockResponseForURLRequest(_ urlRequest: NSMutableURLRequest) -> (Data?, URLResponse?, NSError?) {
         assertionFailure("No testing data added")
-        let data = NSData()
-        let response = NSURLResponse()
+        let data = Data()
+        let response = URLResponse()
         return (data, response, nil)
     }
 }

@@ -12,13 +12,13 @@ class WSNewMessageEndPoint: WSAPIEndPointProtocol {
     
     static let sharedEndPoint = WSNewMessageEndPoint()
     
-    var type: WSAPIEndPoint { return .NewMessage }
+    var type: WSAPIEndPoint { return .newMessage }
     
     var path: String { return "/services/rest/message/send" }
     
     var method: HttpMethod { return .Post }
     
-    func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
+    func request(_ request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
         // Check for success in response
         return nil
     }

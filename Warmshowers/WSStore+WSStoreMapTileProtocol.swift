@@ -11,7 +11,7 @@ import CoreData
 
 extension WSStore : WSStoreMapTileProtocol {
     
-    var MapTileExpiryTime: NSTimeInterval { return 60.0 * 60.0 * 24.0 }
+    var MapTileExpiryTime: TimeInterval { return 60.0 * 60.0 * 24.0 }
     
     func allMapTiles() throws -> [CDWSMapTile] {
         
@@ -21,10 +21,10 @@ extension WSStore : WSStoreMapTileProtocol {
         }
     }
     
-    func mapTileWithQuadKey(quadKey: String) throws -> CDWSMapTile? {
+    func mapTileWithQuadKey(_ quadKey: String) throws -> CDWSMapTile? {
         
         let request = requestForEntity(.MapTile)
-        request.predicate = NSPredicate(format: "%K like %@", "quad_key", quadKey)
+        request.predicate = Predicate(format: "%K like %@", "quad_key", quadKey)
         
         do {
             let tile = try executeFetchRequest(request).first as? CDWSMapTile
@@ -32,20 +32,20 @@ extension WSStore : WSStoreMapTileProtocol {
         }
     }
     
-    func newOrExistingMapTileWithQuadKey(quadKey: String) throws -> CDWSMapTile {
+    func newOrExistingMapTileWithQuadKey(_ quadKey: String) throws -> CDWSMapTile {
         
         do {
             if let tile = try mapTileWithQuadKey(quadKey) {
                 return tile
             } else {
-                let tile = NSEntityDescription.insertNewObjectForEntityForName(WSEntity.MapTile.rawValue, inManagedObjectContext: privateContext) as! CDWSMapTile
+                let tile = NSEntityDescription.insertNewObject(forEntityName: WSEntity.MapTile.rawValue, into: privateContext) as! CDWSMapTile
                 tile.quad_key = quadKey
                 return tile
             }
         }
     }
     
-    func hasValidHostDataForMapTile(tile: WSMapTile) -> Bool {
+    func hasValidHostDataForMapTile(_ tile: WSMapTile) -> Bool {
         
         do {
             let storedTile = try mapTileWithQuadKey(tile.quadKey)
@@ -55,7 +55,7 @@ extension WSStore : WSStoreMapTileProtocol {
         }
     }
     
-    func usersForMapTile(tile: WSMapTile) -> [WSUserLocation]? {
+    func usersForMapTile(_ tile: WSMapTile) -> [WSUserLocation]? {
         
         do {
             if let storedTile = try mapTileWithQuadKey(tile.quadKey) {
@@ -74,7 +74,7 @@ extension WSStore : WSStoreMapTileProtocol {
                 if let last_updated = tile.last_updated {
                     if abs(last_updated.timeIntervalSinceNow) > MapTileExpiryTime {
                         print("deleting tile")
-                        privateContext.deleteObject(tile)
+                        privateContext.delete(tile)
                     }
                 }
             }
@@ -88,7 +88,7 @@ extension WSStore : WSStoreMapTileProtocol {
             let tiles = try allMapTiles()
             for tile in tiles {
                 print("deleting tile with quad key \(tile.quad_key)")
-                privateContext.deleteObject(tile)
+                privateContext.delete(tile)
                 try savePrivateContext()
             }
         } catch {

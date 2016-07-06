@@ -15,7 +15,7 @@ let SIB_ResultsToUserAccount = "SearchResultsToUserAccount"
 
 extension WSHostSearchViewController {
     
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: AnyObject?) -> Bool {
         
         switch identifier {
             
@@ -42,7 +42,7 @@ extension WSHostSearchViewController {
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
         
         guard let segueIdentifier = segue.identifier else { return }
         

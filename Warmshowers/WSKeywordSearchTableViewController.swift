@@ -10,7 +10,7 @@ import UIKit
 
 class WSKeywordSearchTableViewController: UITableViewController {
     
-    var debounceTimer: NSTimer?
+    var debounceTimer: Timer?
     var placeholderImage: UIImage? = UIImage(named: "ThumbnailPlaceholder")
     var hosts: [WSUserLocation]?
     var numberOfHosts: Int { return hosts?.count ?? 0 }
@@ -26,7 +26,7 @@ class WSKeywordSearchTableViewController: UITableViewController {
     
     // MARK: Utility methods
     
-    func searchWithKeywordOnTimer(timer: NSTimer) {
+    func searchWithKeywordOnTimer(_ timer: Timer) {
         
         guard let keyword = timer.userInfo as? String else {
             return
@@ -36,13 +36,13 @@ class WSKeywordSearchTableViewController: UITableViewController {
         apiCommunicator?.searchByKeyword(keyword, offset: 0, andNotify: self)
     }
     
-    func startImageDownloadForIndexPath(indexPath: NSIndexPath) {
+    func startImageDownloadForIndexPath(_ indexPath: IndexPath) {
         
-        guard let hosts = hosts where indexPath.row < numberOfHosts else {
+        guard let hosts = hosts where (indexPath as NSIndexPath).row < numberOfHosts else {
             return
         }
         
-        let user = hosts[indexPath.row]
+        let user = hosts[(indexPath as NSIndexPath).row]
         if let url = user.imageURL where user.image == nil {
             apiCommunicator?.getImageAtURL(url, andNotify: self)
         }
@@ -63,9 +63,9 @@ class WSKeywordSearchTableViewController: UITableViewController {
     }
     
     /** Reloads the table view with an array of results. */
-    func reloadTableWithHosts(hosts: [WSUserLocation]?) {
+    func reloadTableWithHosts(_ hosts: [WSUserLocation]?) {
         self.hosts = hosts
-        dispatch_async(dispatch_get_main_queue(), { [weak self] in
+        DispatchQueue.main.async(execute: { [weak self] in
             self?.tableView.reloadData()
             })
     }

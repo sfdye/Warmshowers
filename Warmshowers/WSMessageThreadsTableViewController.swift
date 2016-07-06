@@ -15,11 +15,11 @@ class WSMessageThreadsTableViewController: UITableViewController {
     
     // MARK: Properties
     
-    var lastUpdated: NSDate?
+    var lastUpdated: Date?
     var updatesInProgress = [Int: String]()
     var alert: UIAlertController?
     var presentingAlert = false
-    var fetchedResultsController: NSFetchedResultsController!
+    var fetchedResultsController: NSFetchedResultsController<AnyObject>!
     
     // Delegates
     var alertDelegate: WSAlertDelegate = WSAlertDelegate.sharedAlertDelegate
@@ -38,7 +38,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
         
         navigationItem.title = "Messages"
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: WSColor.Green, NSFontAttributeName: WSFont.SueEllenFrancisco(26)]
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: self, action: #selector(WSMessageThreadsTableViewController.update))
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(WSMessageThreadsTableViewController.update))
         
         // Set up the fetch results controller
         initializeFetchedResultsController()
@@ -57,7 +57,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
         connection.registerForAndStartNotifications(self, selector: #selector(WSMessageThreadsTableViewController.reachabilityChanged(_:)))
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         // Reset the navigation bar text properties
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: WSColor.Green, NSFontAttributeName: WSFont.SueEllenFrancisco(26)]
@@ -65,7 +65,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
         showReachabilityBannerIfNeeded()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         
         // Update the message threads on loading the view or if more than 10 minutes has elapsed
         if let lastUpdated = lastUpdated where lastUpdated.timeIntervalSinceNow < 600 {
@@ -89,7 +89,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
     
     func initializeFetchedResultsController() {
         let request = NSFetchRequest(entityName: WSEntity.Thread.rawValue)
-        request.sortDescriptors = [NSSortDescriptor(key: "last_updated", ascending: false)]
+        request.sortDescriptors = [SortDescriptor(key: "last_updated", ascending: false)]
         let moc = WSStore.sharedStore.managedObjectContext
         self.fetchedResultsController = NSFetchedResultsController(
             fetchRequest: request,
@@ -107,14 +107,14 @@ class WSMessageThreadsTableViewController: UITableViewController {
     
     func initializeRefreshController() {
         let refreshController = UIRefreshControl()
-        refreshController.addTarget(self, action: #selector(WSMessageThreadsTableViewController.update), forControlEvents: UIControlEvents.ValueChanged)
+        refreshController.addTarget(self, action: #selector(WSMessageThreadsTableViewController.update), for: UIControlEvents.valueChanged)
         self.refreshControl = refreshController
     }
     
     
     // MARK: Reachability
     
-    func reachabilityChanged(note: NSNotification) {
+    func reachabilityChanged(_ note: Notification) {
         showReachabilityBannerIfNeeded()
     }
     
@@ -147,7 +147,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
     func finishedUpdates() {
         
         // Hide any activity indecators
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+        DispatchQueue.main.async { () -> Void in
             self.refreshControl!.endRefreshing()
             WSProgressHUD.hide()
         }
@@ -186,7 +186,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
     
     // Sets an updater for a message thread, but does not start it
     //
-    func updateMessagesOnThread(threadID: Int) {
+    func updateMessagesOnThread(_ threadID: Int) {
         
         guard connection.isOnline else {
             self.updateFinishedForThreadID(threadID)
@@ -213,10 +213,10 @@ class WSMessageThreadsTableViewController: UITableViewController {
 
     // Removes the message updater object assign to a given thread and reloads the table if all updates are done
     //
-    func updateFinishedForThreadID(threadID: Int) {
+    func updateFinishedForThreadID(_ threadID: Int) {
         
         // Remove the updater
-        self.updatesInProgress.removeValueForKey(threadID)
+        self.updatesInProgress.removeValue(forKey: threadID)
         
         // Reload the table view if all the updates are finished
         if updatesInProgress.count == 0 {
@@ -229,7 +229,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
     func updateTabBarBadge() {
         do {
             let unread = try store.numberOfUnreadMessageThreads()
-            dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            DispatchQueue.main.async { () -> Void in
                 if unread > 0 {
                     self.navigationController?.tabBarItem.badgeValue = String(unread)
                 } else {
@@ -243,7 +243,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
     
     // Sets an failed update alert to be displayed at the end of the updates
     //
-    func setErrorAlert(error: NSError? = nil) {
+    func setErrorAlert(_ error: NSError? = nil) {
         
         guard alert == nil else {
             return
@@ -254,8 +254,8 @@ class WSMessageThreadsTableViewController: UITableViewController {
             if let error = error {
                 message = error.localizedDescription
             }
-            let alert = UIAlertController(title: "Failed to update messages", message: message, preferredStyle: .Alert)
-            let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            let alert = UIAlertController(title: "Failed to update messages", message: message, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
             alert.addAction(okAction)
             self.alert = alert
         }
@@ -271,8 +271,8 @@ class WSMessageThreadsTableViewController: UITableViewController {
         
         if !presentingAlert {
             presentingAlert = true
-            dispatch_async(dispatch_get_main_queue(), {
-                self.presentViewController(alert, animated: true, completion: { () -> Void in
+            DispatchQueue.main.async(execute: {
+                self.present(alert, animated: true, completion: { () -> Void in
                     self.alert = nil
                     self.presentingAlert = false
                 })
@@ -283,7 +283,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
     
     // MARK: Navigation
     
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: AnyObject?) -> Bool {
         if identifier == MessageSegueID {
             if let cell = sender as? MessageThreadsTableViewCell {
                 if cell.threadID != nil {
@@ -294,7 +294,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
         return false
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == MessageSegueID {
             // Assign the message thread data to the destination view controller
             let messageThreadVC = segue.destinationViewController as! WSMessageThreadTableViewController

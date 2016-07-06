@@ -10,7 +10,7 @@ import Foundation
 
 extension WSLocationSearchViewController : WSAPIResponseDelegate {
     
-    func request(request: WSAPIRequest, didSuceedWithData data: AnyObject?) {
+    func request(_ request: WSAPIRequest, didSuceedWithData data: AnyObject?) {
         
         if let users = data as? [WSUserLocation] {
             
@@ -31,15 +31,15 @@ extension WSLocationSearchViewController : WSAPIResponseDelegate {
         }
     }
     
-    func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
+    func request(_ request: WSAPIRequest, didFailWithError error: ErrorProtocol) {
         alertDelegate.presentAPIError(error, forDelegator: self)
     }
     
     // LEAVE HERE FOR NOW. SHOULD REALLY BE MOVED TO A DATA DELEGATES RESPONSBILITY
-    func storeUsers(users: [WSUserLocation], onMapTileWithQuadKey quadKey: String) {
+    func storeUsers(_ users: [WSUserLocation], onMapTileWithQuadKey quadKey: String) {
         
-        var error: ErrorType? = nil
-        WSStore.sharedStore.privateContext.performBlockAndWait {
+        var error: ErrorProtocol? = nil
+        WSStore.sharedStore.privateContext.performAndWait {
             
             var tile: CDWSMapTile!
             do {
@@ -47,7 +47,7 @@ extension WSLocationSearchViewController : WSAPIResponseDelegate {
                 do {
                     try WSStore.sharedStore.addUserLocations(users, ToMapTile: tile)
                 }
-                tile.setValue(NSDate(), forKey: "last_updated")
+                tile.setValue(Date(), forKey: "last_updated")
                 try WSStore.sharedStore.savePrivateContext()
             } catch let storeError {
                 error = storeError

@@ -9,9 +9,9 @@
 import UIKit
 import CoreData
 
-enum CDWSMessageThreadError : ErrorType {
-    case FailedValueForKey(key: String)
-    case ThreadWithIDNotFound(id: Int)
+enum CDWSMessageThreadError : ErrorProtocol {
+    case failedValueForKey(key: String)
+    case threadWithIDNotFound(id: Int)
 }
 
 class CDWSMessageThread: NSManagedObject {
@@ -20,7 +20,7 @@ class CDWSMessageThread: NSManagedObject {
     
     // Returns a string of the message thread participant names
     //
-    func getParticipantString(currentUserUID: Int?) -> String {
+    func getParticipantString(_ currentUserUID: Int?) -> String {
         
         guard let users = participants?.allObjects as? [CDWSUser] else {
             return ""
@@ -46,20 +46,20 @@ class CDWSMessageThread: NSManagedObject {
     }
     
     // Returns the message thread participants with the currently logged-in user removed
-    func otherParticipants(currentUserUID: Int) -> [CDWSUser] {
+    func otherParticipants(_ currentUserUID: Int) -> [CDWSUser] {
         
         guard var users = participants?.allObjects as? [CDWSUser] else {
             return [CDWSUser]()
         }
         
         var index: Int?
-        for (i, user) in users.enumerate() {
+        for (i, user) in users.enumerated() {
             if user.uid == currentUserUID {
                 index = i
             }
         }
         if let index = index {
-            users.removeAtIndex(index)
+            users.remove(at: index)
         }
         
         return users
@@ -80,8 +80,8 @@ class CDWSMessageThread: NSManagedObject {
         }
         
         // Sort the messages to latest first
-        messages.sortInPlace {
-            return $0.timestamp!.laterDate($1.timestamp!).isEqualToDate($0.timestamp!)
+        messages.sort {
+            return ($0.timestamp!.laterDate($1.timestamp! as Date) == $0.timestamp! as Date)
         }
         
         return messages.first

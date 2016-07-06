@@ -12,38 +12,38 @@ struct WSColor {
     
     // General styling colors
     static var LightGrey = WSColor.colorFromHexString("F4F6F6")
-    static var MediumGrey = UIColor.grayColor()
-    static var DarkGrey = UIColor.darkGrayColor()
+    static var MediumGrey = UIColor.gray()
+    static var DarkGrey = UIColor.darkGray()
     static var Blue = WSColor.colorFromHexString("266ACF")
     static var DarkBlue = WSColor.colorFromHexString("304767")
     static var Green = WSColor.colorFromHexString("009835")
     
     // Positivity colors
     static var Positive = WSColor.colorFromHexString("019E3C")
-    static var Neutral = UIColor.orangeColor()
-    static var Negative = UIColor.redColor()
+    static var Neutral = UIColor.orange()
+    static var Negative = UIColor.red()
     
     // Availiblity colors
     static var Available = WSColor.colorFromHexString("019E3C")
-    static var NotAvailable = UIColor.redColor()
+    static var NotAvailable = UIColor.red()
     
     // OS colours
     static var NavbarGrey = UIColor(red: 247.0/255.0, green: 247.0/255.0, blue: 247.0/255.0, alpha: 1)
     
     // Returns a UIColor from a hex color as a string e.g. "F493A2"
-    static func colorFromHexString(hex: String) -> UIColor {
+    static func colorFromHexString(_ hex: String) -> UIColor {
         
-        func hexToDecimal(hex: String) -> CGFloat {
+        func hexToDecimal(_ hex: String) -> CGFloat {
             return CGFloat(strtoul(hex, nil, 16))
         }
         
-        let redRange = hex.startIndex.advancedBy(0) ..< hex.startIndex.advancedBy(2)
-        let greenRange = hex.startIndex.advancedBy(2) ..< hex.startIndex.advancedBy(4)
-        let blueRange = hex.startIndex.advancedBy(4) ..< hex.startIndex.advancedBy(6)
+        let redRange = hex.characters.index(hex.startIndex, offsetBy: 0) ..< hex.characters.index(hex.startIndex, offsetBy: 2)
+        let greenRange = hex.characters.index(hex.startIndex, offsetBy: 2) ..< hex.characters.index(hex.startIndex, offsetBy: 4)
+        let blueRange = hex.characters.index(hex.startIndex, offsetBy: 4) ..< hex.characters.index(hex.startIndex, offsetBy: 6)
         
-        let red = hexToDecimal(hex.substringWithRange(redRange))/255
-        let green = hexToDecimal(hex.substringWithRange(greenRange))/255
-        let blue = hexToDecimal(hex.substringWithRange(blueRange))/255
+        let red = hexToDecimal(hex.substring(with: redRange))/255
+        let green = hexToDecimal(hex.substring(with: greenRange))/255
+        let blue = hexToDecimal(hex.substring(with: blueRange))/255
         
         return UIColor(red: red, green: green, blue: blue, alpha: 1)
     }

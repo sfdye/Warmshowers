@@ -17,11 +17,11 @@ protocol WSStoreMessageProtocol {
      Checks if a message is already in the store by message id.
      Returns the existing message, or a new message inserted into the private context.
      */
-    func messageWithID(messageID: Int) throws -> CDWSMessage?
+    func messageWithID(_ messageID: Int) throws -> CDWSMessage?
     
     /** Checks if a message exists and returns it or a new one if it doesn't exist. */
-    func newOrExistingMessage(messageID: Int) throws -> CDWSMessage
+    func newOrExistingMessage(_ messageID: Int) throws -> CDWSMessage
     
     /** Adds a message to the store with json. */
-    func addMessage(json: AnyObject, onThreadWithID threadID: Int) throws
+    func addMessage(_ json: AnyObject, onThreadWithID threadID: Int) throws
 }

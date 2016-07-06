@@ -12,27 +12,27 @@ class FeedbackOptionTableViewCell: UITableViewCell {
     
     // Configures the picker for feedback type
     //
-    func configureForTypeWithFeedback(feedback: WSRecommendation) {
+    func configureForTypeWithFeedback(_ feedback: WSRecommendation) {
         textLabel?.text = "Feedback for"
         detailTextLabel?.text = feedback.type.rawValue
     }
     
     // Configures the picker for feedback ratings
     //
-    func configureForRatingWithFeedback(feedback: WSRecommendation) {
+    func configureForRatingWithFeedback(_ feedback: WSRecommendation) {
         textLabel?.text = "Overall experiencer"
         detailTextLabel?.text = feedback.rating.rawValue
     }
     
     // Configures the picker for feedback dates
     //
-    func configureForDateWithFeedback(feedback: WSRecommendation) {
-        let formatter = NSDateFormatter()
+    func configureForDateWithFeedback(_ feedback: WSRecommendation) {
+        let formatter = DateFormatter()
         let template = "MMMyyyy"
-        let locale = NSLocale.currentLocale()
-        formatter.dateFormat = NSDateFormatter.dateFormatFromTemplate(template, options: 0, locale: locale)
+        let locale = Locale.current()
+        formatter.dateFormat = DateFormatter.dateFormat(fromTemplate: template, options: 0, locale: locale)
         textLabel?.text = "Date we met"
-        detailTextLabel?.text = formatter.stringFromDate(feedback.date)
+        detailTextLabel?.text = formatter.string(from: feedback.date as Date)
     }
 
 }

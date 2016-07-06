@@ -13,7 +13,7 @@ class WSRecommendation {
     // MARK: Properties
     
     var body: String?
-    var date: NSDate = NSDate()
+    var date: Date = Date()
     var type: WSRecommendationType = .ForHost
     var rating: WSRecommendationRating = .Positive
     var author: WSUser?
@@ -23,13 +23,13 @@ class WSRecommendation {
     var authorImage: UIImage?
     
     var month: Int {
-        let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
-        return calendar.components([.Month], fromDate: date).month
+        let calendar = Calendar(calendarIdentifier: Calendar.Identifier.gregorian)!
+        return calendar.components([.month], from: date).month!
     }
     
     var year: Int {
-        let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
-        return calendar.components([.Year], fromDate: date).year
+        let calendar = Calendar(calendarIdentifier: Calendar.Identifier.gregorian)!
+        return calendar.components([.year], from: date).year!
     }
     
     var hasBody: Bool {
@@ -43,21 +43,21 @@ class WSRecommendation {
     
     init?(json: AnyObject) {
         
-        guard let body = json.valueForKey("body") as? String,
-              let date = json.valueForKey("field_hosting_date")?.integerValue,
-              let type = json.valueForKey("field_guest_or_host") as? String,
-              let rating = json.valueForKey("field_rating") as? String,
-              let fullname = json.valueForKey("fullname") as? String,
-              let name = json.valueForKey("name") as? String,
-              let uid = json.valueForKey("uid")?.integerValue,
-              let uid_1 = json.valueForKey("uid_1")?.integerValue
+        guard let body = json.value(forKey: "body") as? String,
+              let date = json.value(forKey: "field_hosting_date")?.intValue,
+              let type = json.value(forKey: "field_guest_or_host") as? String,
+              let rating = json.value(forKey: "field_rating") as? String,
+              let fullname = json.value(forKey: "fullname") as? String,
+              let name = json.value(forKey: "name") as? String,
+              let uid = json.value(forKey: "uid")?.intValue,
+              let uid_1 = json.value(forKey: "uid_1")?.intValue
         else {
             print("Failed to initialise WSRecommendation due to invalid input")
             return nil
         }
         
         self.body = body
-        self.date = NSDate(timeIntervalSince1970: Double(date))
+        self.date = Date(timeIntervalSince1970: Double(date))
         switch type {
         case "Guest":
             self.type = .ForGuest

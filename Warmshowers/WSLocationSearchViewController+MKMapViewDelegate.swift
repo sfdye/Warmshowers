@@ -11,7 +11,7 @@ import CCHMapClusterController
 
 extension WSLocationSearchViewController : MKMapViewDelegate {
     
-    func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
+    func mapView(_ mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
         
         if mapOverlay != nil {
             return MKTileOverlayRenderer.init(overlay: overlay)
@@ -28,7 +28,7 @@ extension WSLocationSearchViewController : MKMapViewDelegate {
         return MKTileOverlayRenderer.init();
     }
     
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(_ mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         
         if annotation is MKUserLocation {
             // return nil so map view draws "blue dot" for standard user location
@@ -67,7 +67,7 @@ extension WSLocationSearchViewController : MKMapViewDelegate {
             }
             
             // Common cluster/non-cluster annotation configurations
-            let button = UIButton(type: UIButtonType.DetailDisclosure)
+            let button = UIButton(type: UIButtonType.detailDisclosure)
             annotationView?.rightCalloutAccessoryView = button
             annotationView?.canShowCallout = true;
         }
@@ -75,16 +75,16 @@ extension WSLocationSearchViewController : MKMapViewDelegate {
         return annotationView;
     }
     
-    func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
+    func mapView(_ mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
         let userLocation = (locationManager.location?.coordinate)!
         mapView.setCenterCoordinate(userLocation , animated: true)
     }
     
-    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
+    func mapView(_ mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
         // Callout titles are set by the CCHMapClusterControllerDelegate
     }
     
-    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if let clusterAnnotation = view.annotation as? CCHMapClusterAnnotation {
             if clusterAnnotation.isCluster() {
                 parentViewController?.performSegueWithIdentifier(SID_MapToHostList, sender: clusterAnnotation)
@@ -97,7 +97,7 @@ extension WSLocationSearchViewController : MKMapViewDelegate {
         print("Coordinates: \(view.annotation?.coordinate)")
     }
     
-    func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         
         // Get the tiles that can be seen in the new screen.
         guard let tiles = WSMapTile.tilesForMapRegion(mapView.region, atZoomLevel: TileUpdateZoomLevel) where tiles.count < 20 else {

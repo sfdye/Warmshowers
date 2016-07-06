@@ -11,20 +11,20 @@ import UIKit
 extension WSAccountTableViewController : SegmentTableViewCellActions {
     
     func didSelectAbout() {
-        switchToTab(.About)
+        switchToTab(.about)
     }
     
     func didSelectHosting() {
-        switchToTab(.Hosting)
+        switchToTab(.hosting)
     }
     
     func didSelectContact() {
-        switchToTab(.Contact)
+        switchToTab(.contact)
     }
     
-    func switchToTab(tab: HostProfileTab) {
+    func switchToTab(_ tab: HostProfileTab) {
         self.tab = tab
-        self.tableView.reloadSections(NSIndexSet(index: 3), withRowAnimation: UITableViewRowAnimation.None)
+        self.tableView.reloadSections(IndexSet(integer: 3), with: UITableViewRowAnimation.none)
     }
     
 }

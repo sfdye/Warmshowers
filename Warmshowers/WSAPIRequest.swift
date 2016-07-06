@@ -17,19 +17,19 @@ class WSAPIRequest : Hashable {
     var delegate: WSAPIRequestDelegate
     var requester: WSAPIResponseDelegate?
     var params: [String: String]?
-    var status: WSAPIRequestStatus = .Created
+    var status: WSAPIRequestStatus = .created
     
         
     // MARK: Hashable
     
-    var madeAt: NSDate
+    var madeAt: Date
     var hashValue: Int { return Int(self.madeAt.timeIntervalSince1970 * 1000) }
     
     
     // MARK: Initialiser
     
     init(endPoint: WSAPIEndPoint, withDelegate delegate: WSAPIRequestDelegate, andRequester requester: WSAPIResponseDelegate?, andParameters params: [String : String]? = nil) {
-        self.madeAt = NSDate()
+        self.madeAt = Date()
         self.requester = requester
         self.delegate = delegate
         self.endPoint = endPoint.sharedEndPoint
@@ -37,7 +37,7 @@ class WSAPIRequest : Hashable {
     }
     
     init(imageURL: String, withDelegate delegate: WSAPIRequestDelegate, andRequester requester: WSAPIResponseDelegate) {
-        self.madeAt = NSDate()
+        self.madeAt = Date()
         self.requester = requester
         self.delegate = delegate
         self.endPoint = WSImageResourceURL(url: imageURL)

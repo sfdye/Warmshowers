@@ -89,7 +89,7 @@ class WSMapTile {
     
     convenience init?(latitude: CLLocationDegrees, longitude: CLLocationDegrees, zoom: UInt) {
         
-        func moveDegrees(inout degrees: CLLocationDegrees, intoRangeWithLowerBound lowerBound: Double, andUpperBound upperBound: Double) {
+        func moveDegrees(_ degrees: inout CLLocationDegrees, intoRangeWithLowerBound lowerBound: Double, andUpperBound upperBound: Double) {
             let range = upperBound - lowerBound
             while degrees < lowerBound {
                 degrees += range
@@ -114,9 +114,9 @@ class WSMapTile {
     }
     
     /** Returns the quad key for the given tile index */
-    private class func quadKeyFromX(x: UInt, y: UInt, z: UInt) -> String {
+    private class func quadKeyFromX(_ x: UInt, y: UInt, z: UInt) -> String {
         
-        func moveInt(inout int: UInt, intoRangeWithLowerBound lowerBound: UInt, andUpperBound upperBound: UInt) {
+        func moveInt(_ int: inout UInt, intoRangeWithLowerBound lowerBound: UInt, andUpperBound upperBound: UInt) {
             let range = upperBound - lowerBound
             while int < lowerBound {
                 int += range
@@ -126,12 +126,12 @@ class WSMapTile {
             }
         }
         
-        func paddedBinaryIntArray(x: UInt, length: UInt) -> [Int] {
+        func paddedBinaryIntArray(_ x: UInt, length: UInt) -> [Int] {
             var binaryStringArray = String(x, radix:2).characters.map { (character) -> String in
                 String(character)
             }
             while binaryStringArray.count < Int(length) {
-                binaryStringArray.insert("0", atIndex: 0)
+                binaryStringArray.insert("0", at: 0)
             }
             let binaryIntArray = binaryStringArray.map { (string) -> Int in
                 return Int(string) ?? 0
@@ -145,8 +145,8 @@ class WSMapTile {
         moveInt(&x, intoRangeWithLowerBound: 0, andUpperBound: n)
         moveInt(&y, intoRangeWithLowerBound: 0, andUpperBound: n)
 
-        let xBinary = paddedBinaryIntArray(UInt(Double(x) % pow(2.0, Double(z))), length: z)
-        let yBinary = paddedBinaryIntArray(UInt(Double(y) % pow(2.0, Double(z))), length: z)
+        let xBinary = paddedBinaryIntArray(UInt(Double(x).truncatingRemainder(dividingBy: pow(2.0, Double(z)))), length: z)
+        let yBinary = paddedBinaryIntArray(UInt(Double(y).truncatingRemainder(dividingBy: pow(2.0, Double(z)))), length: z)
         var quadKeyString = ""
         for index in 0..<Int(z) {
             quadKeyString += String(xBinary[index] + 2 * yBinary[index])
@@ -155,7 +155,7 @@ class WSMapTile {
     }
     
     /** Factory method to return all the map tiles that are it a given map region */
-    class func tilesForMapRegion(region: MKCoordinateRegion, atZoomLevel z: UInt) -> [WSMapTile]? {
+    class func tilesForMapRegion(_ region: MKCoordinateRegion, atZoomLevel z: UInt) -> [WSMapTile]? {
         
         // Only return tiles within the latitude range pf -85 < lat < 85.
         let minLat = max(region.minimumLatitude, -85.0)
@@ -208,11 +208,11 @@ class WSMapTile {
         print("x: \(x), y: \(y), z: \(z)")
     }
     
-    private func radians(degrees: Double) -> Double {
+    private func radians(_ degrees: Double) -> Double {
         return degrees * M_PI / 180.0
     }
     
-    private func degrees(radians: Double) -> Double {
+    private func degrees(_ radians: Double) -> Double {
         return radians * 180.0 / M_PI
     }
     

@@ -12,16 +12,16 @@ class WSSearchByLocationEndPoint : WSAPIEndPointProtocol {
     
     static let sharedEndPoint = WSSearchByLocationEndPoint()
     
-    var type: WSAPIEndPoint { return .SearchByLocation }
+    var type: WSAPIEndPoint { return .searchByLocation }
     
     var path: String { return "/services/rest/hosts/by_location" }
     
     var method: HttpMethod { return .Post }
     
-    func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
+    func request(_ request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
         
         guard let accounts = json["accounts"] as? NSArray else {
-            throw WSAPIEndPointError.ParsingError(endPoint: path, key: "accounts")
+            throw WSAPIEndPointError.parsingError(endPoint: path, key: "accounts")
         }
         
         var userLocations = [WSUserLocation]()
@@ -29,7 +29,7 @@ class WSSearchByLocationEndPoint : WSAPIEndPointProtocol {
             if let userLocation = WSUserLocation(json: account) {
                 userLocations.append(userLocation)
             } else {
-                throw WSAPIEndPointError.ParsingError(endPoint: path, key: nil)
+                throw WSAPIEndPointError.parsingError(endPoint: path, key: nil)
             }
         }
         

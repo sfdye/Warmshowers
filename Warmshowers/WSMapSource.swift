@@ -9,7 +9,7 @@
 import UIKit
 
 enum WSMapSource {
-    case AppleMaps
-    case OpenCycleMaps
-    case OpenStreetMaps
+    case appleMaps
+    case openCycleMaps
+    case openStreetMaps
 }

@@ -9,9 +9,9 @@
 import Foundation
 
 enum WSAPIRequestStatus {
-    case Created
-    case Queued
-    case Sent
-    case RecievedResponse
-    case Parsing
+    case created
+    case queued
+    case sent
+    case recievedResponse
+    case parsing
 }

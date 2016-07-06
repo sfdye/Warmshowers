@@ -19,7 +19,7 @@ class WSLocationSearchViewController : UIViewController {
     var clusterController: CCHMapClusterController!
     
     var mapOverlay: MKTileOverlay?
-    var mapSource: WSMapSource = WSMapSource.AppleMaps
+    var mapSource: WSMapSource = WSMapSource.appleMaps
     
     // MARK: Constants
     
@@ -51,7 +51,7 @@ class WSLocationSearchViewController : UIViewController {
         statusLabel.text = nil
         
         // Ask the users permission to use location services
-        if CLLocationManager.authorizationStatus() == .NotDetermined {
+        if CLLocationManager.authorizationStatus() == .notDetermined {
             locationManager.requestWhenInUseAuthorization()
         }
         mapView.showsUserLocation = true
@@ -60,8 +60,8 @@ class WSLocationSearchViewController : UIViewController {
     
     func configureToolbar() {
         // This fix removes a shadow line from the top of the toolbar.
-        toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .Any, barMetrics: .Default)
-        toolbar.setShadowImage(UIImage(), forToolbarPosition: .Any)
+        toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .any, barMetrics: .default)
+        toolbar.setShadowImage(UIImage(), forToolbarPosition: .any)
     }
     
     // MARK: Utility methods
@@ -69,24 +69,24 @@ class WSLocationSearchViewController : UIViewController {
     func centreOnRegion() {
         if let userLocation = locationManager.location?.coordinate {
             let region = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: kDefaultRegionLatitudeDelta, longitudeDelta: kDefaultRegionLongitudeDelta))
-            dispatch_async(dispatch_get_main_queue(), { [weak self] in
+            DispatchQueue.main.async(execute: { [weak self] in
                 self?.mapView.setRegion(region, animated: true)
                 })
         }
     }
     
-    func addUsersToMap(users: [WSUserLocation]?) {
+    func addUsersToMap(_ users: [WSUserLocation]?) {
         
         guard let users = users else { return }
         
-        dispatch_async(dispatch_get_main_queue(), { [weak self] in
+        DispatchQueue.main.async(execute: { [weak self] in
             self?.clusterController.addAnnotations(users, withCompletionHandler: nil)
             })
         
 //        mapView.performSelectorOnMainThread(#selector(MKMapView.addAnnotations(_:)), withObject: users, waitUntilDone: false)
     }
     
-    func clearAnnotationsNotOnTiles(tiles: [WSMapTile]) {
+    func clearAnnotationsNotOnTiles(_ tiles: [WSMapTile]) {
         
         let quadKeys = tiles.map { (tile) -> String in return tile.quadKey }
         let unrequiredAnnotations = mapView.annotations.filter { (annotation) -> Bool in
@@ -101,7 +101,7 @@ class WSLocationSearchViewController : UIViewController {
         print("\(unrequiredAnnotations.count) / \(mapView.annotations.count) being removed from the map.")
         
         if unrequiredAnnotations.count > 0 {
-            dispatch_async(dispatch_get_main_queue(), { [weak self] in
+            DispatchQueue.main.async(execute: { [weak self] in
                 self?.clusterController.removeAnnotations(unrequiredAnnotations, withCompletionHandler: nil)
                 })
             
@@ -111,7 +111,7 @@ class WSLocationSearchViewController : UIViewController {
         print("\(mapView.annotations.count) remaining.")
     }
     
-    func dimTile(tile: WSMapTile) {
+    func dimTile(_ tile: WSMapTile) {
         
         let polygon = tile.polygon()
         polygon.title = tile.quadKey
@@ -119,7 +119,7 @@ class WSLocationSearchViewController : UIViewController {
         mapView.performSelectorOnMainThread(#selector(MKMapView.addOverlay(_:)), withObject: polygon, waitUntilDone: false)
     }
     
-    func undimTile(tile: WSMapTile) {
+    func undimTile(_ tile: WSMapTile) {
         
         let overlay = mapView.overlays.filter { (overlay) -> Bool in
             return overlay.title ?? "" ?? "" == tile.quadKey

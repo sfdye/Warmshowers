@@ -8,9 +8,9 @@
 
 import UIKit
 
-enum WSURLError : ErrorType {
-    case InvalidInput
-    case UnrecognisedWSServiceType
+enum WSURLError : ErrorProtocol {
+    case invalidInput
+    case unrecognisedWSServiceType
 }
 
 // Class to provide URLs for the various warmshowers.org RESTful services
@@ -18,6 +18,6 @@ class WSURL {
     
     // RESTful services URLs
     
-    static let BASE = NSURL.init(string: "https://www.warmshowers.org")!
+    static let BASE = URL.init(string: "https://www.warmshowers.org")!
 
 }

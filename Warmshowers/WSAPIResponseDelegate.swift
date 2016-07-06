@@ -11,17 +11,17 @@ import Foundation
 protocol WSAPIResponseDelegate {
     
     /** Is called when a request is completed before either .didSucceedWithData or .didFailWithData is called. */
-    func requestdidComplete(request: WSAPIRequest)
+    func requestdidComplete(_ request: WSAPIRequest)
     
     /** Handles successful API request responses. */
-    func request(request: WSAPIRequest, didSuceedWithData data: AnyObject?)
+    func request(_ request: WSAPIRequest, didSuceedWithData data: AnyObject?)
     
     /** Handles API request error responses. */
-    func request(request: WSAPIRequest, didFailWithError error: ErrorType)
+    func request(_ request: WSAPIRequest, didFailWithError error: ErrorProtocol)
 }
 
 extension WSAPIResponseDelegate {
     
-    func requestdidComplete(request: WSAPIRequest) { }
+    func requestdidComplete(_ request: WSAPIRequest) { }
     
 }

@@ -31,14 +31,14 @@ class MessageThreadsTableViewCell: UITableViewCell {
     // Configures the cell for a given message thread
     // If the input is nil the cell labels are cleared
     //
-    func configureWithMessageThread(messageThread: CDWSMessageThread?) {
+    func configureWithMessageThread(_ messageThread: CDWSMessageThread?) {
         
         guard let messageThread = messageThread else {
             participantsLabel.text = nil
             dateLabel.text = nil
             subjectLabel.text = nil
             bodyPreviewLabel.text = nil
-            newDot.hidden = true
+            newDot.isHidden = true
             threadID = nil
             return
         }
@@ -46,18 +46,18 @@ class MessageThreadsTableViewCell: UITableViewCell {
         participantsLabel.text = messageThread.getParticipantString(currentUserUID)
         setDate(messageThread.last_updated)
         subjectLabel.text = messageThread.subject ?? ""
-        newDot.hidden = (messageThread.is_new == 0)
+        newDot.isHidden = (messageThread.is_new == 0)
         bodyPreviewLabel.text = messageThread.lastestMessagePreview() ?? "\n"
-        threadID = messageThread.thread_id?.integerValue
+        threadID = messageThread.thread_id?.intValue
     }
     
-    func setDate(date: NSDate?) {
+    func setDate(_ date: Date?) {
         if date != nil {
-            let formatter = NSDateFormatter()
+            let formatter = DateFormatter()
             let template = "dd/MM/yy"
-            let locale = NSLocale.currentLocale()
-            formatter.dateFormat = NSDateFormatter.dateFormatFromTemplate(template, options: 0, locale: locale)
-            dateLabel.text = formatter.stringFromDate(date!)
+            let locale = Locale.current()
+            formatter.dateFormat = DateFormatter.dateFormat(fromTemplate: template, options: 0, locale: locale)
+            dateLabel.text = formatter.string(from: date!)
         } else {
             dateLabel.text = ""
         }

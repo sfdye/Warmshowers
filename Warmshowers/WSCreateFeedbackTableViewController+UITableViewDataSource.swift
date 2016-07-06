@@ -10,11 +10,11 @@ import UIKit
 
 extension WSCreateFeedbackTableViewController {
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
             return pickerIndexPath == nil ? 3 : 4
@@ -23,21 +23,21 @@ extension WSCreateFeedbackTableViewController {
         }
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         // Feedback options section
-        if indexPath.section == 0 {
+        if (indexPath as NSIndexPath).section == 0 {
             
             // if we have a date picker open whose cell is above the cell we want to update,
             // then we have one more cell than the model allows, so decrement the modelRow index
-            var modelRow = indexPath.row
-            if let pickerIndexPath = pickerIndexPath where pickerIndexPath.row <= indexPath.row {
+            var modelRow = (indexPath as NSIndexPath).row
+            if let pickerIndexPath = pickerIndexPath where (pickerIndexPath as NSIndexPath).row <= (indexPath as NSIndexPath).row {
                 modelRow -= 1
             }
             
             // configure a picker cell
-            if let pickerIndexPath = pickerIndexPath where pickerIndexPath.row == indexPath.row {
-                let cell = tableView.dequeueReusableCellWithIdentifier(FeedbackOptionPickerCellID, forIndexPath: indexPath) as! FeedbackOptionPickerTableViewCell
+            if let pickerIndexPath = pickerIndexPath where (pickerIndexPath as NSIndexPath).row == (indexPath as NSIndexPath).row {
+                let cell = tableView.dequeueReusableCell(withIdentifier: FeedbackOptionPickerCellID, for: indexPath) as! FeedbackOptionPickerTableViewCell
                 cell.picker.delegate = self
                 cell.picker.dataSource = self
                 switch modelRow {
@@ -55,7 +55,7 @@ extension WSCreateFeedbackTableViewController {
             }
             
             // configure a option cell
-            let cell = tableView.dequeueReusableCellWithIdentifier(FeedbackOptionCellID, forIndexPath: indexPath) as! FeedbackOptionTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: FeedbackOptionCellID, for: indexPath) as! FeedbackOptionTableViewCell
             switch modelRow {
             case 0:
                 // Feedback guest or host picker
@@ -72,13 +72,13 @@ extension WSCreateFeedbackTableViewController {
         } else {
             
             // Written feedback section
-            let cell = tableView.dequeueReusableCellWithIdentifier(FeedbackBodyCellID, forIndexPath: indexPath) as! FeedbackBodyTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: FeedbackBodyCellID, for: indexPath) as! FeedbackBodyTableViewCell
             cell.textView.delegate = self
             return cell
         }
     }
     
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case 0:
             return "Options"

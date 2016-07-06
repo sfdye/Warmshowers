@@ -10,7 +10,7 @@ import UIKit
 
 struct WSOffers {
     
-    var allValues = [Bool](count: 8, repeatedValue: false)
+    var allValues = [Bool](repeating: false, count: 8)
     var stringValues: [String] = [
         "Bed",
         "Food",
@@ -69,20 +69,20 @@ struct WSOffers {
         return count
     }
     
-    mutating func update(userData: AnyObject?) {
+    mutating func update(_ userData: AnyObject?) {
         
         guard let userData = userData else {
             return
         }
 
-        guard let bed = userData.valueForKey("bed")?.boolValue,
-              let food = userData.valueForKey("food")?.boolValue,
-              let laundry = userData.valueForKey("laundry")?.boolValue,
-              let lawnspace = userData.valueForKey("lawnspace")?.boolValue,
-              let sag = userData.valueForKey("sag")?.boolValue,
-              let shower = userData.valueForKey("shower")?.boolValue,
-              let storage = userData.valueForKey("storage")?.boolValue,
-              let kitchenuse = userData.valueForKey("kitchenuse")?.boolValue
+        guard let bed = userData.value(forKey: "bed")?.boolValue,
+              let food = userData.value(forKey: "food")?.boolValue,
+              let laundry = userData.value(forKey: "laundry")?.boolValue,
+              let lawnspace = userData.value(forKey: "lawnspace")?.boolValue,
+              let sag = userData.value(forKey: "sag")?.boolValue,
+              let shower = userData.value(forKey: "shower")?.boolValue,
+              let storage = userData.value(forKey: "storage")?.boolValue,
+              let kitchenuse = userData.value(forKey: "kitchenuse")?.boolValue
             else {
                 return
         }
@@ -99,7 +99,7 @@ struct WSOffers {
     
     // Returns the nth true offer (offers are kept in alphabetical order)
     //
-    func offerAtIndex(index: Int) -> String? {
+    func offerAtIndex(_ index: Int) -> String? {
         
         guard let indexes = offerIndexes() where index < indexes.count else {
             return nil
@@ -118,7 +118,7 @@ struct WSOffers {
         
         var indexes = [Int]()
         
-        for (i, value) in allValues.enumerate() {
+        for (i, value) in allValues.enumerated() {
             if value {
                 indexes.append(i)
             }

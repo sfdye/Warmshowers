@@ -16,7 +16,7 @@ enum WSRecommendationType : String {
     
     static let allValues = [ForGuest, ForHost, MetTraveling, Other]
     
-    mutating func setFromRawValue(rawValue: String) {
+    mutating func setFromRawValue(_ rawValue: String) {
         let allValues = WSRecommendationType.allValues
         for value in allValues {
             if value.rawValue == rawValue {

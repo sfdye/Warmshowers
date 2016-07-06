@@ -16,12 +16,12 @@ class FeedbackTableViewCell: UITableViewCell {
     @IBOutlet var ratingLabel: UILabel!
     @IBOutlet var forLabel: UILabel!
     @IBOutlet var bodyLabel: UILabel!
-    let formatter = NSDateFormatter()
+    let formatter = DateFormatter()
     
-    func configureWithFeedback(feedback: WSRecommendation) {
+    func configureWithFeedback(_ feedback: WSRecommendation) {
 //        setAuthorThumbnailImage(feedback.authorImage)
         authorNameLabel.text = feedback.author?.fullname
-        setDate(feedback.date)
+        setDate(feedback.date as Date)
         setRating(feedback.rating)
         setType(feedback.type)
         bodyLabel.text = feedback.body
@@ -36,15 +36,15 @@ class FeedbackTableViewCell: UITableViewCell {
 //        self.authorImage.image = image!
 //    }
     
-    func setDate(date: NSDate) {
-        let formatter = NSDateFormatter()
+    func setDate(_ date: Date) {
+        let formatter = DateFormatter()
         let template = "ddMMMyyyy"
-        let locale = NSLocale.currentLocale()
-        formatter.dateFormat = NSDateFormatter.dateFormatFromTemplate(template, options: 0, locale: locale)
-        dateLabel.text = formatter.stringFromDate(date)
+        let locale = Locale.current()
+        formatter.dateFormat = DateFormatter.dateFormat(fromTemplate: template, options: 0, locale: locale)
+        dateLabel.text = formatter.string(from: date)
     }
     
-    func setRating(rating: WSRecommendationRating) {
+    func setRating(_ rating: WSRecommendationRating) {
         ratingLabel.text = rating.rawValue
         switch rating {
         case .Positive:
@@ -56,7 +56,7 @@ class FeedbackTableViewCell: UITableViewCell {
         }
     }
     
-    func setType(type: WSRecommendationType) {
+    func setType(_ type: WSRecommendationType) {
         switch type {
         case .ForGuest:
             forLabel.text = "Host, "

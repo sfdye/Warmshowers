@@ -12,13 +12,13 @@ class WSUnreadMessageCountEndPoint: WSAPIEndPointProtocol {
     
     static let sharedEndPoint = WSUnreadMessageCountEndPoint()
     
-    var type: WSAPIEndPoint { return .UnreadMessageCount }
+    var type: WSAPIEndPoint { return .unreadMessageCount }
     
     var path: String { return "/services/rest/message/unreadCount" }
     
     var method: HttpMethod { return .Post }
     
-    func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
+    func request(_ request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
         return nil
     }
 }

@@ -8,6 +8,6 @@
 
 import Foundation
 
-enum WSAPIEndPointError : ErrorType {
-    case ParsingError(endPoint: String, key: String?)
+enum WSAPIEndPointError : ErrorProtocol {
+    case parsingError(endPoint: String, key: String?)
 }

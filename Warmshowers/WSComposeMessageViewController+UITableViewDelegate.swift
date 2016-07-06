@@ -10,8 +10,8 @@ import UIKit
 
 extension WSComposeMessageViewController : UITableViewDelegate {
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.section == 0 && indexPath.row == 2 {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if (indexPath as NSIndexPath).section == 0 && (indexPath as NSIndexPath).row == 2 {
             return tableView.bounds.height - 2 * detailCellHeight - (navigationController?.navigationBar.bounds.height)!
         } else {
             return detailCellHeight

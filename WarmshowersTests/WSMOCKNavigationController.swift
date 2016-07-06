@@ -12,7 +12,7 @@ class WSMOCKNavigationController : UINavigationController {
     
     var dismissViewControllerAnimatedCalled = false
     
-    override func dismissViewControllerAnimated(flag: Bool, completion: (() -> Void)?) {
+    override func dismiss(animated flag: Bool, completion: (() -> Void)?) {
         dismissViewControllerAnimatedCalled = true
     }
 }

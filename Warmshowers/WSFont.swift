@@ -9,7 +9,7 @@
 import UIKit
 
 struct WSFont {
-    static func SueEllenFrancisco(size: CGFloat) -> UIFont {
+    static func SueEllenFrancisco(_ size: CGFloat) -> UIFont {
         return UIFont(name: "SueEllenFrancisco", size: size)!
     }
 }

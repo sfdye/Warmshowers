@@ -11,12 +11,12 @@ import UIKit
 protocol WSAlertProtocol {
     
     /** Attempts to present an alert on the given view controller */
-    func presentAlertFor(delegator: UIViewController?, withTitle: String?, button: String?)
-    func presentAlertFor(delegator: UIViewController?, withTitle: String?, button: String?, message: String?)
-    func presentAlertFor(delegator: UIViewController?, withTitle: String?, button: String?, message: String?, andHandler handler: ((UIAlertAction) -> Void)?)
+    func presentAlertFor(_ delegator: UIViewController?, withTitle: String?, button: String?)
+    func presentAlertFor(_ delegator: UIViewController?, withTitle: String?, button: String?, message: String?)
+    func presentAlertFor(_ delegator: UIViewController?, withTitle: String?, button: String?, message: String?, andHandler handler: ((UIAlertAction) -> Void)?)
     
     /** Attempts to present an api error alert on the given view controller */
-    func presentAPIError(error: ErrorType, forDelegator delegator: UIViewController?)
+    func presentAPIError(_ error: ErrorProtocol, forDelegator delegator: UIViewController?)
     
     /** Shows a 'No Internet Connection' info banner under the nav bar*/
     func showNoInternetBanner()

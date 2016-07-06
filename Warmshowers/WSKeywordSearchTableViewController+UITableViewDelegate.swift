@@ -10,7 +10,7 @@ import UIKit
 
 extension WSKeywordSearchTableViewController {
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return CGFloat(74)
     }
 }

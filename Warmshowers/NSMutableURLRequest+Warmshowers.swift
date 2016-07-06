@@ -14,7 +14,7 @@ extension NSMutableURLRequest {
     
     // To convert a dictionary of post parameters into a parameter string and sets the string as the http body
     //
-    func setBodyContent(params: [String: String]) {
+    func setBodyContent(_ params: [String: String]) {
         
         var requestBodyAsString = ""
         var firstOneAdded = false
@@ -30,36 +30,36 @@ extension NSMutableURLRequest {
             }
         }
         
-        self.HTTPBody = requestBodyAsString.dataUsingEncoding(NSUTF8StringEncoding)
+        self.httpBody = requestBodyAsString.data(using: String.Encoding.utf8)
     }
     
     // Initialises a NSMutableURLRequest for a particular Warmshowers Restful service
     //
-    class func mutableURLRequestForEndpoint(endPoint: WSAPIEndPointProtocol, withPostParameters params: [String: String]? = nil) throws -> NSMutableURLRequest {
+    class func mutableURLRequestForEndpoint(_ endPoint: WSAPIEndPointProtocol, withPostParameters params: [String: String]? = nil) throws -> NSMutableURLRequest {
         
-        if endPoint.type == .ImageResource {
-            if let url = NSURL(string: endPoint.path) {
-                return NSMutableURLRequest(URL: url)
+        if endPoint.type == .imageResource {
+            if let url = URL(string: endPoint.path) {
+                return NSMutableURLRequest(url: url)
             } else {
-                throw WSAPICommunicatorError.InvalidImageResourceURL
+                throw WSAPICommunicatorError.invalidImageResourceURL
             }
         }
         
         let request = NSMutableURLRequest.init()
-        request.URL = WSURL.BASE.URLByAppendingPathComponent(endPoint.path)
-        request.HTTPMethod = endPoint.method.rawValue
+        request.url = try! WSURL.BASE.appendingPathComponent(endPoint.path)
+        request.httpMethod = endPoint.method.rawValue
         request.addValue(endPoint.accept.rawValue, forHTTPHeaderField: "Accept")
         
-        if (endPoint.type != .Login && endPoint.type != .Token) {
+        if (endPoint.type != .login && endPoint.type != .token) {
             
             let (sessionCookie, token, _) = WSSessionState.sharedSessionState.getSessionData()
             
             guard sessionCookie != nil else {
-                throw WSAPICommunicatorError.NoSessionCookie
+                throw WSAPICommunicatorError.noSessionCookie
             }
             
             guard token != nil else {
-                throw WSAPICommunicatorError.NoToken
+                throw WSAPICommunicatorError.noToken
             }
             
             // Add the session cookie to the header.

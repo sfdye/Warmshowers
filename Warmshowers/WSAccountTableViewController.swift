@@ -10,9 +10,9 @@ import UIKit
 import CoreData
 
 enum HostProfileTab {
-    case About
-    case Hosting
-    case Contact
+    case about
+    case hosting
+    case contact
 }
 
 class WSAccountTableViewController: UITableViewController {
@@ -29,7 +29,7 @@ class WSAccountTableViewController: UITableViewController {
     var photo: UIImage?
     var recipient: CDWSUser?
     
-    var tab: HostProfileTab = .About
+    var tab: HostProfileTab = .about
     
     var actionAlert = UIAlertController()
     
@@ -51,7 +51,7 @@ class WSAccountTableViewController: UITableViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         if uid != nil {
             
 //            // Get the users profile
@@ -69,7 +69,7 @@ class WSAccountTableViewController: UITableViewController {
         }
     }
     
-    func updateWithUserInfo(info: AnyObject?) {
+    func updateWithUserInfo(_ info: AnyObject?) {
         
         guard let info = info  else {
             return
@@ -82,8 +82,8 @@ class WSAccountTableViewController: UITableViewController {
         self.phoneNumbers.update(info)
         
         // Get the users profile photo
-        let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
-        dispatch_async(queue) { () -> Void in
+        let queue = DispatchQueue.global(attributes: DispatchQueue.GlobalAttributes.qosUserInitiated)
+        queue.async { () -> Void in
             self.getProfileImage()
         }
         
@@ -91,7 +91,7 @@ class WSAccountTableViewController: UITableViewController {
     }
     
     //
-    func updateWithFeedback(json: AnyObject?) {
+    func updateWithFeedback(_ json: AnyObject?) {
         
         guard let json = json else {
             return
@@ -100,9 +100,9 @@ class WSAccountTableViewController: UITableViewController {
         var feedback = [WSRecommendation]()
         
         // Parse the data
-        if let allRecommendations = json.valueForKey("recommendations") as? NSArray {
+        if let allRecommendations = json.value(forKey: "recommendations") as? NSArray {
             for recommendationObject in allRecommendations {
-                if let recommendationJSON = recommendationObject.valueForKey("recommendation") {
+                if let recommendationJSON = recommendationObject.value(forKey: "recommendation") {
                     if let recommendation = WSRecommendation(json: recommendationJSON) {
                         feedback.append(recommendation)
                     }
@@ -112,8 +112,8 @@ class WSAccountTableViewController: UITableViewController {
         
         // Set the feedback and update the table view
         self.feedback = feedback
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 2)], withRowAnimation: UITableViewRowAnimation.Automatic)
+        DispatchQueue.main.async(execute: { () -> Void in
+            self.tableView.reloadRows(at: [IndexPath(row: 0, section: 2)], with: UITableViewRowAnimation.automatic)
         })
         
         // Update the feedback with user thumbnail urls
@@ -139,7 +139,7 @@ class WSAccountTableViewController: UITableViewController {
     // Downloads the users profile photo and updates the view
     func getProfileImage() {
 
-        guard let imageURL = info?.valueForKey(PHOTO_KEY) as? String else {
+        guard let imageURL = info?.value(forKey: PHOTO_KEY) as? String else {
             return
         }
         
@@ -165,7 +165,7 @@ class WSAccountTableViewController: UITableViewController {
     //
     func configureDoneButton() {
         if navigationController?.viewControllers.count < 2 {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(WSAccountTableViewController.doneButtonPressed))
+            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(WSAccountTableViewController.doneButtonPressed))
         }
     }
     
@@ -174,17 +174,17 @@ class WSAccountTableViewController: UITableViewController {
     func configureActions() {
         
         // Common actions
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         actionAlert.addAction(cancelAction)
         
         if userIsLoggedIn() {
             
             // Options for the current user
             
-            let logoutAction = UIAlertAction(title: "Logout", style: .Default) { (logoutAction) -> Void in
+            let logoutAction = UIAlertAction(title: "Logout", style: .default) { (logoutAction) -> Void in
                 
                 // Logout and return the login screeen
-                let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                let appDelegate = UIApplication.shared().delegate as! AppDelegate
 //                let logoutManager = WSLogoutManager(
 //                    success: {
 //                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -208,14 +208,14 @@ class WSAccountTableViewController: UITableViewController {
             
             // Options for any other user
             
-            let messageAction = UIAlertAction(title: "Send Message", style: .Default) { (messageAction) -> Void in
+            let messageAction = UIAlertAction(title: "Send Message", style: .default) { (messageAction) -> Void in
                 // Present compose message view
-                self.performSegueWithIdentifier(ToSendNewMessageSegueID, sender: nil)
+                self.performSegue(withIdentifier: ToSendNewMessageSegueID, sender: nil)
             }
             actionAlert.addAction(messageAction)
-            let provideFeedbackAction = UIAlertAction(title: "Provide Feedback", style: .Default) { (messageAction) -> Void in
+            let provideFeedbackAction = UIAlertAction(title: "Provide Feedback", style: .default) { (messageAction) -> Void in
                 // Present provide feeback view
-                self.performSegueWithIdentifier(ToProvideFeeedbackSegueID, sender: nil)
+                self.performSegue(withIdentifier: ToProvideFeeedbackSegueID, sender: nil)
             }
             actionAlert.addAction(provideFeedbackAction)
         }
@@ -224,11 +224,11 @@ class WSAccountTableViewController: UITableViewController {
     
     // MARK: - Tableview Data Source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 4
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:
             return 2
@@ -238,15 +238,15 @@ class WSAccountTableViewController: UITableViewController {
             return 2
         case 3:
             switch tab {
-            case .About:
+            case .about:
                 return 1
-            case .Hosting:
+            case .hosting:
                 var cells = hostingInfo.count
                 if offers.count > 0 {
                     cells += 1 + offers.count
                 }
                 return cells
-            case .Contact:
+            case .contact:
                 var cells = phoneNumbers.count
                 if user != nil {
                     cells += 1
@@ -258,66 +258,66 @@ class WSAccountTableViewController: UITableViewController {
         }
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        switch indexPath.section {
+        switch (indexPath as NSIndexPath).section {
         case 0:
-            switch indexPath.row {
+            switch (indexPath as NSIndexPath).row {
             case 0:
                 // Photo
-                let cell = tableView.dequeueReusableCellWithIdentifier(ImageCellID, forIndexPath: indexPath) as! ProfileImageTableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: ImageCellID, for: indexPath) as! ProfileImageTableViewCell
                 cell.nameLabel.text = self.info?["fullname"] as? String
                 // TODO set the photo height to 35% of the screen height
                 if let photo = photo {
-                    cell.nameLabel.textColor = UIColor.whiteColor()
-                    cell.noImageLabel.hidden = true
-                    cell.profileImage.hidden = false
+                    cell.nameLabel.textColor = UIColor.white()
+                    cell.noImageLabel.isHidden = true
+                    cell.profileImage.isHidden = false
                     cell.profileImage.image = photo
-                    cell.profileImage.contentMode = .ScaleAspectFill
+                    cell.profileImage.contentMode = .scaleAspectFill
                 } else {
                     cell.nameLabel.textColor = WSColor.DarkBlue
-                    cell.profileImage.hidden = true
-                    cell.noImageLabel.hidden = false
+                    cell.profileImage.isHidden = true
+                    cell.noImageLabel.isHidden = false
                 }
                 return cell
             case 1:
                 // Availiblity
-                let cell = tableView.dequeueReusableCellWithIdentifier(AvailabilityCellID, forIndexPath: indexPath) as! AvailabilityTableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: AvailabilityCellID, for: indexPath) as! AvailabilityTableViewCell
                 cell.configureAsCurrentlyAvailable(info)
                 return cell
             default:
-                let cell = UITableViewCell(style: .Default, reuseIdentifier: nil)
+                let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
                 return cell
             }
             
         case 1:
             // Account details
-            switch indexPath.row {
+            switch (indexPath as NSIndexPath).row {
             case 0:
                 // Memeber for ...
-                let cell = tableView.dequeueReusableCellWithIdentifier(AccountDetailCellID, forIndexPath: indexPath) as! AccountDetailTableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: AccountDetailCellID, for: indexPath) as! AccountDetailTableViewCell
                 cell.configureAsMemberFor(info)
                 return cell
             case 1:
                 // Active ... ago
-                let cell = tableView.dequeueReusableCellWithIdentifier(AccountDetailCellID, forIndexPath: indexPath) as! AccountDetailTableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: AccountDetailCellID, for: indexPath) as! AccountDetailTableViewCell
                 cell.configureAsActiveAgo(info)
                 return cell
             case 2:
                 // Languages spoken: ...
-                let cell = tableView.dequeueReusableCellWithIdentifier(AccountDetailCellID, forIndexPath: indexPath) as! AccountDetailTableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: AccountDetailCellID, for: indexPath) as! AccountDetailTableViewCell
                 cell.configureAsLanguageSpoken(info)
                 return cell
             default:
-                let cell = UITableViewCell(style: .Default, reuseIdentifier: nil)
+                let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
                 return cell
             }
         case 2:
             // Feedback and tab cells
-            switch indexPath.row {
+            switch (indexPath as NSIndexPath).row {
             case 0:
                 // Feedback
-                let cell = tableView.dequeueReusableCellWithIdentifier(FeedbackCountCellID, forIndexPath: indexPath)
+                let cell = tableView.dequeueReusableCell(withIdentifier: FeedbackCountCellID, for: indexPath)
                 if feedback.count > 0 {
                     cell.textLabel?.text = String(format: "Feedback (%i)", arguments: [feedback.count])
                 } else {
@@ -326,61 +326,61 @@ class WSAccountTableViewController: UITableViewController {
                 return cell
             case 1:
                 // Info tabs
-                let cell = tableView.dequeueReusableCellWithIdentifier(SegmentCellID, forIndexPath: indexPath) as! SegmentTableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: SegmentCellID, for: indexPath) as! SegmentTableViewCell
                 cell.delegate = self
                 return cell
             default:
-                let cell = UITableViewCell(style: .Default, reuseIdentifier: nil)
+                let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
                 return cell
             }
         case 3:
             // Information tabs
-            let row = indexPath.row
+            let row = (indexPath as NSIndexPath).row
             switch tab {
-            case .About:
+            case .about:
                 // About tab
-                let cell = tableView.dequeueReusableCellWithIdentifier(AboutCellID, forIndexPath: indexPath) as! AboutTableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: AboutCellID, for: indexPath) as! AboutTableViewCell
                 if info != nil {
-                    cell.aboutLabel.text = info!.valueForKey("comments") as? String
+                    cell.aboutLabel.text = info!.value(forKey: "comments") as? String
                 } else {
                     cell.aboutLabel.text = nil
                 }
                 return cell
-            case .Hosting:
+            case .hosting:
                 // Hosting tab
                 if row < hostingInfo.count {
                     // Display host info
-                    let cell = tableView.dequeueReusableCellWithIdentifier(HostingInfoCellID, forIndexPath: indexPath) as! HostingInfoTableViewCell
+                    let cell = tableView.dequeueReusableCell(withIdentifier: HostingInfoCellID, for: indexPath) as! HostingInfoTableViewCell
                     cell.title = hostingInfo.titleValues[row]
                     cell.info = hostingInfo.infoValues[row]
                     return cell
                 } else if row == hostingInfo.count {
                     // Display "This host may offer"
-                    let cell = tableView.dequeueReusableCellWithIdentifier(OfferHeadingCellID, forIndexPath: indexPath)
+                    let cell = tableView.dequeueReusableCell(withIdentifier: OfferHeadingCellID, for: indexPath)
                     return cell
                 } else {
                     // Display an offer
-                    let cell = tableView.dequeueReusableCellWithIdentifier(OfferCellID, forIndexPath: indexPath) as! HostOfferTableViewCell
+                    let cell = tableView.dequeueReusableCell(withIdentifier: OfferCellID, for: indexPath) as! HostOfferTableViewCell
                     cell.offer = offers.offerAtIndex(row - 5)
                     return cell
                 }
-            case .Contact:
+            case .contact:
                 // Contact tab
                 var phoneRow = row
                 if let user = user {
                     if row == 0 {
-                        let cell = tableView.dequeueReusableCellWithIdentifier(ContactCellID, forIndexPath: indexPath) as! ContactTableViewCell
+                        let cell = tableView.dequeueReusableCell(withIdentifier: ContactCellID, for: indexPath) as! ContactTableViewCell
                         cell.setWithAddress(user.address)
                         return cell
                     }
                     phoneRow -= 1
                 }
-                let cell = tableView.dequeueReusableCellWithIdentifier(ContactCellID, forIndexPath: indexPath) as! ContactTableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: ContactCellID, for: indexPath) as! ContactTableViewCell
                 cell.setWithPhoneNumber(phoneNumbers.numbers[phoneRow])
                 return cell
             }
         default:
-            let cell = UITableViewCell(style: .Default, reuseIdentifier: nil)
+            let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
             return cell
             
         }
@@ -390,22 +390,22 @@ class WSAccountTableViewController: UITableViewController {
     
     // MARK: Tableview Delegate
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        let cell = tableView.cellForRow(at: indexPath)
         if cell?.reuseIdentifier == SegmentCellID {
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            tableView.deselectRow(at: indexPath, animated: true)
         }
     }
     
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return CGFloat.min
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return CGFloat.leastNormalMagnitude
     }
     
-    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         switch section {
         case 0:
-            return CGFloat.min
+            return CGFloat.leastNormalMagnitude
         case 1:
             return CGFloat.init(15)
         case 1:
@@ -413,12 +413,12 @@ class WSAccountTableViewController: UITableViewController {
         case 3:
             return CGFloat.init(20)
         default:
-            return CGFloat.min
+            return CGFloat.leastNormalMagnitude
         }
     }
     
-    override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        switch indexPath.section {
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch (indexPath as NSIndexPath).section {
         case 0:
             return 400
         default:
@@ -429,27 +429,27 @@ class WSAccountTableViewController: UITableViewController {
     // MARK: Navigation
     
     func doneButtonPressed() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func actionButtonPressed(sender: AnyObject) {
-        self.presentViewController(actionAlert, animated: true, completion: nil)
+    @IBAction func actionButtonPressed(_ sender: AnyObject) {
+        self.present(actionAlert, animated: true, completion: nil)
     }
     
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: AnyObject?) -> Bool {
         switch identifier {
         case ToFeedbackSegueID:
             return feedback.count > 0
         case ToSendNewMessageSegueID:
             return (info != nil && uid != nil && recipient != nil)
         case ToProvideFeeedbackSegueID:
-            return info?.valueForKey("name") as? String != nil ? true : false
+            return info?.value(forKey: "name") as? String != nil ? true : false
         default:
             return false
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == ToFeedbackSegueID {
             let feedbackVC = segue.destinationViewController as! WSFeedbackTableViewController
             feedbackVC.feedback = feedback
@@ -471,7 +471,7 @@ class WSAccountTableViewController: UITableViewController {
         if segue.identifier == ToProvideFeeedbackSegueID {
             let navVC = segue.destinationViewController as! UINavigationController
             let createFeedbackVC = navVC.viewControllers.first as! WSCreateFeedbackTableViewController
-            createFeedbackVC.configureForSendingFeedbackForUserWithUserName(info?.valueForKey("name") as? String)
+            createFeedbackVC.configureForSendingFeedbackForUserWithUserName(info?.value(forKey: "name") as? String)
         }
     }
 
@@ -480,8 +480,8 @@ class WSAccountTableViewController: UITableViewController {
     
     // Reloads the view
     func reload() {
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            self.navigationItem.title = self.info?.valueForKey("name") as? String
+        DispatchQueue.main.async(execute: { () -> Void in
+            self.navigationItem.title = self.info?.value(forKey: "name") as? String
             self.tableView.reloadData()
         })
     }

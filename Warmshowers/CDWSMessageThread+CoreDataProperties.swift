@@ -17,10 +17,10 @@ extension CDWSMessageThread {
     @NSManaged var count: NSNumber?
     @NSManaged var has_tokens: NSNumber?
     @NSManaged var is_new: NSNumber?
-    @NSManaged var last_updated: NSDate?
+    @NSManaged var last_updated: Date?
     @NSManaged var subject: String?
     @NSManaged var thread_id: NSNumber?
-    @NSManaged var thread_started: NSDate?
+    @NSManaged var thread_started: Date?
     @NSManaged var messages: NSSet?
     @NSManaged var participants: NSSet?
 

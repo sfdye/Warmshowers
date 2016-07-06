@@ -12,16 +12,16 @@ class WSGetAllMessageThreadsEndPoint: WSAPIEndPointProtocol {
     
     static let sharedEndPoint = WSGetAllMessageThreadsEndPoint()
     
-    var type: WSAPIEndPoint { return .GetAllMessageThreads }
+    var type: WSAPIEndPoint { return .getAllMessageThreads }
     
     var path: String { return "/services/rest/message/get" }
     
     var method: HttpMethod { return .Post }
     
-    func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
+    func request(_ request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
         
         guard let threadsJSON = json as? NSArray else {
-            throw WSAPIEndPointError.ParsingError(endPoint: path, key: nil)
+            throw WSAPIEndPointError.parsingError(endPoint: path, key: nil)
         }
         
 //        WSStore.sharedStore.privateContext.performBlockAndWait { () -> Void in

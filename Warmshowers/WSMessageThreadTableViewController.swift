@@ -27,7 +27,7 @@ class WSMessageThreadTableViewController: UITableViewController {
 //        return messageUpdater
 //    }()
     var refreshController = UIRefreshControl()
-    var fetchedResultsController: NSFetchedResultsController!
+    var fetchedResultsController: NSFetchedResultsController<AnyObject>!
     var alert: UIAlertController?
     var presentingAlert = false
     
@@ -61,11 +61,11 @@ class WSMessageThreadTableViewController: UITableViewController {
         // Reload the table
         self.reload(true)
         
-        let notificationCentre = NSNotificationCenter.defaultCenter()
+        let notificationCentre = NotificationCenter.default()
         notificationCentre.addObserver(self, selector: #selector(WSMessageThreadTableViewController.update), name: MessagesViewNeedsUpdateNotificationName, object: nil)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: WSColor.Green, NSFontAttributeName: WSFont.SueEllenFrancisco(18)]
     }
     
@@ -76,8 +76,8 @@ class WSMessageThreadTableViewController: UITableViewController {
         }
         
         let request = NSFetchRequest(entityName: "Message")
-        request.predicate = NSPredicate(format: "thread.thread_id==%i", threadID)
-        request.sortDescriptors = [NSSortDescriptor(key: "timestamp", ascending: true)]
+        request.predicate = Predicate(format: "thread.thread_id==%i", threadID)
+        request.sortDescriptors = [SortDescriptor(key: "timestamp", ascending: true)]
         
         self.fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: WSStore.sharedStore.privateContext, sectionNameKeyPath: nil, cacheName: nil)
         fetchedResultsController.delegate = self
@@ -91,7 +91,7 @@ class WSMessageThreadTableViewController: UITableViewController {
     
     func initializeRefreshController() {
         let refreshController = UIRefreshControl()
-        refreshController.addTarget(self, action: #selector(WSMessageThreadTableViewController.update), forControlEvents: UIControlEvents.ValueChanged)
+        refreshController.addTarget(self, action: #selector(WSMessageThreadTableViewController.update), for: UIControlEvents.valueChanged)
         self.refreshControl = refreshController
     }
     
@@ -103,23 +103,23 @@ class WSMessageThreadTableViewController: UITableViewController {
     
     // Reloads the tableview and hides any activity indicators
     //
-    func reload(scroll: Bool = false) {
+    func reload(_ scroll: Bool = false) {
         
         // Hide any activity indicators and reload the tableview
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+        DispatchQueue.main.async(execute: { () -> Void in
             self.refreshControl!.endRefreshing()
             do {
                 try self.fetchedResultsController.performFetch()
                 self.tableView.reloadData()
                 if scroll {
-                    let row = self.tableView.numberOfRowsInSection(0) - 1
-                    let indexPath = NSIndexPath(forRow: row, inSection: 0)
-                    self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Bottom, animated: true)
+                    let row = self.tableView.numberOfRows(inSection: 0) - 1
+                    let indexPath = IndexPath(row: row, section: 0)
+                    self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
                 }
             } catch {
                 // If there is a problem fetching suggest that the user reinstall the app
-                self.alert = UIAlertController(title: "There was a problem loading your messages.", message: "Please try uninstalling and reinstalling the app and report this issue.", preferredStyle: .Alert)
-                let okAction = UIAlertAction(title: "Dismiss", style: .Default, handler: nil)
+                self.alert = UIAlertController(title: "There was a problem loading your messages.", message: "Please try uninstalling and reinstalling the app and report this issue.", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
                 self.alert!.addAction(okAction)
             }
         })
@@ -131,7 +131,7 @@ class WSMessageThreadTableViewController: UITableViewController {
     
     // MARK: Navigation
     
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: AnyObject?) -> Bool {
         if identifier == ReplyToMessageThreadSegueID {
             do {
                 if let _ = try store.messageThreadWithID(threadID) {
@@ -144,7 +144,7 @@ class WSMessageThreadTableViewController: UITableViewController {
         return false
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == ReplyToMessageThreadSegueID {
             let navVC = segue.destinationViewController as! UINavigationController
             let composeMessageVC = navVC.viewControllers.first as! WSComposeMessageViewController
@@ -165,7 +165,7 @@ class WSMessageThreadTableViewController: UITableViewController {
             for author in authors {
                 if author.image == nil {
                     
-                    let uid = author.uid!.integerValue
+                    let uid = author.uid!.intValue
                     
 //                    WSRequest.getUserThumbnailImage(uid, doWithImage: { (image) -> Void in
 //                        
@@ -192,14 +192,14 @@ class WSMessageThreadTableViewController: UITableViewController {
 
     // Reloads thumbnails in the tableview for a given user
     //
-    func reloadImage(image: UIImage, forAuthor uid: Int) {
+    func reloadImage(_ image: UIImage, forAuthor uid: Int) {
         
-        let numberOfRows = tableView.numberOfRowsInSection(0)
+        let numberOfRows = tableView.numberOfRows(inSection: 0)
         for row in 0...numberOfRows - 1 {
-            let indexPath = NSIndexPath(forRow: row, inSection: 0)
-            let message = self.fetchedResultsController.objectAtIndexPath(indexPath) as! CDWSMessage
+            let indexPath = IndexPath(row: row, section: 0)
+            let message = self.fetchedResultsController.object(at: indexPath) as! CDWSMessage
             if message.author?.uid == uid {
-                if let cell = self.tableView.cellForRowAtIndexPath(indexPath) as? MessageTableViewCell {
+                if let cell = self.tableView.cellForRow(at: indexPath) as? MessageTableViewCell {
                     cell.authorImageView.image = image
                 }
             }
@@ -208,7 +208,7 @@ class WSMessageThreadTableViewController: UITableViewController {
     
     // Sets an failed update alert to be displayed at the end of the updates
     //
-    func setErrorAlert(error: NSError? = nil) {
+    func setErrorAlert(_ error: NSError? = nil) {
         
         guard alert == nil else {
             return
@@ -219,8 +219,8 @@ class WSMessageThreadTableViewController: UITableViewController {
             if let error = error {
                 message = error.localizedDescription
             }
-            let alert = UIAlertController(title: "Failed to update messages", message: message, preferredStyle: .Alert)
-            let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+            let alert = UIAlertController(title: "Failed to update messages", message: message, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
             alert.addAction(okAction)
             self.alert = alert
         }
@@ -236,8 +236,8 @@ class WSMessageThreadTableViewController: UITableViewController {
         
         if !presentingAlert {
             presentingAlert = true
-            dispatch_async(dispatch_get_main_queue(), {
-                self.presentViewController(alert, animated: true, completion: { () -> Void in
+            DispatchQueue.main.async(execute: {
+                self.present(alert, animated: true, completion: { () -> Void in
                     self.alert = nil
                     self.presentingAlert = false
                 })

@@ -39,11 +39,11 @@ class WSComposeMessageViewController: UIViewController {
         
         if isReply() {
             // Set the body text view as the first responder
-            let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 2, inSection: 0)) as! ComposeMessageBodyTableViewCell
+            let cell = tableView.cellForRow(at: IndexPath(row: 2, section: 0)) as! ComposeMessageBodyTableViewCell
             cell.textView.becomeFirstResponder()
         } else {
             // Set the subject text field as the first responder
-            let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 0)) as! ComposeMessageDetailTableViewCell
+            let cell = tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as! ComposeMessageDetailTableViewCell
             cell.detailTextField.becomeFirstResponder()
         }
     }
@@ -77,7 +77,7 @@ class WSComposeMessageViewController: UIViewController {
     
     // Sets up the message as a new message to a give set of hosts
     //
-    func initialiseAsNewMessageToUser(users: [CDWSUser]) {
+    func initialiseAsNewMessageToUser(_ users: [CDWSUser]) {
         
         // Set the navigation title
         navigationItem.title = "New Message"
@@ -88,7 +88,7 @@ class WSComposeMessageViewController: UIViewController {
     
     // Sets up the message as a reply on a given message thread
     //
-    func initialiseAsReply(threadID: Int?) {
+    func initialiseAsReply(_ threadID: Int?) {
         
         guard let threadID = threadID else {
             return
@@ -118,49 +118,49 @@ class WSComposeMessageViewController: UIViewController {
     
     // MARK: - Navigation
     
-    @IBAction func cancelButtonPressed(sender: AnyObject?) {
+    @IBAction func cancelButtonPressed(_ sender: AnyObject?) {
         
         // Show a warning message if the message body has some content
         guard let body = body where body != "" else {
-            let alert = UIAlertController(title: nil, message: "Are you sure you want to discard the current message?", preferredStyle: .Alert)
-            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+            let alert = UIAlertController(title: nil, message: "Are you sure you want to discard the current message?", preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
             alert.addAction(cancelAction)
-            let continueAction = UIAlertAction(title: "Continue", style: .Default) { (continueAction) -> Void in
-                self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+            let continueAction = UIAlertAction(title: "Continue", style: .default) { (continueAction) -> Void in
+                self.navigationController?.dismiss(animated: true, completion: nil)
             }
             alert.addAction(continueAction)
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
             return
         }
         
-        navigationController?.dismissViewControllerAnimated(true, completion: nil)
+        navigationController?.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func sendButtonPressed(sender: AnyObject?) {
+    @IBAction func sendButtonPressed(_ sender: AnyObject?) {
         
         self.view.endEditing(true)
         
         guard let body = body where body != "" else {
-            let alert = UIAlertController(title: "Could not send message.", message: "Message has no content.", preferredStyle: .Alert)
-            let okAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
+            let alert = UIAlertController(title: "Could not send message.", message: "Message has no content.", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
             alert.addAction(okAction)
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
             return
         }
         
         guard let recipients = recipients else {
-            let alert = UIAlertController(title: "Could not send message.", message: "Message has no recipients.", preferredStyle: .Alert)
-            let okAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
+            let alert = UIAlertController(title: "Could not send message.", message: "Message has no recipients.", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
             alert.addAction(okAction)
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
             return
         }
         
         guard let subject = subject where subject != "" else {
-            let alert = UIAlertController(title: "Could not send message.", message: "Message has no subject.", preferredStyle: .Alert)
-            let okAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
+            let alert = UIAlertController(title: "Could not send message.", message: "Message has no subject.", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
             alert.addAction(okAction)
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
             return
         }
         
@@ -199,21 +199,21 @@ class WSComposeMessageViewController: UIViewController {
 //    }
     
     func successfulSend() {
-        let notificationCentre = NSNotificationCenter.defaultCenter()
-        notificationCentre.postNotification(NSNotification(name: MessagesViewNeedsUpdateNotificationName, object: nil))
+        let notificationCentre = NotificationCenter.default()
+        notificationCentre.post(Notification(name: Name(rawValue: MessagesViewNeedsUpdateNotificationName), object: nil))
         WSProgressHUD.hide(navigationController!.view)
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+        DispatchQueue.main.async(execute: { () -> Void in
+            self.navigationController?.dismiss(animated: true, completion: nil)
         })
     }
     
-    func failedSend(error: NSError) {
+    func failedSend(_ error: NSError) {
         WSProgressHUD.hide(navigationController!.view)
-        let alert = UIAlertController(title: "Could not send message.", message: "Sorry, an error occured while sending you message. Please check you are connected to the internet and try again later.", preferredStyle: .Alert)
-        let okAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
+        let alert = UIAlertController(title: "Could not send message.", message: "Sorry, an error occured while sending you message. Please check you are connected to the internet and try again later.", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
         alert.addAction(okAction)
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            self.presentViewController(alert, animated: true, completion: nil)
+        DispatchQueue.main.async(execute: { () -> Void in
+            self.present(alert, animated: true, completion: nil)
         })
     }
 

@@ -11,11 +11,11 @@ import Foundation
 protocol WSStoreUserLocationProtocol {
     
     /** Checks if a user is already in the store by uid. */
-    func userLocationWithID(uid: Int) throws -> CDWSUserLocation?
+    func userLocationWithID(_ uid: Int) throws -> CDWSUserLocation?
     
     /** Returns an existing user, or a new user inserted into the private context. */
-    func newOrExistingUserLocation(uid: Int) throws -> CDWSUserLocation
+    func newOrExistingUserLocation(_ uid: Int) throws -> CDWSUserLocation
     
     /** Adds a user to the store with json describing a host location. */
-    func addUserLocations(userLocations: [WSUserLocation], ToMapTile mapTile: CDWSMapTile) throws
+    func addUserLocations(_ userLocations: [WSUserLocation], ToMapTile mapTile: CDWSMapTile) throws
 }

@@ -17,11 +17,11 @@ extension WSAPIEndPointProtocol {
     
     func doesExpectDataWithResponse() -> Bool { return true }
     
-    func request(request: WSAPIRequest, didRecievedResponseWithText text: String) throws -> AnyObject? { return nil }
+    func request(_ request: WSAPIRequest, didRecievedResponseWithText text: String) throws -> AnyObject? { return nil }
     
-    func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? { return nil }
+    func request(_ request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? { return nil }
     
-    func generateMockResponseForURLRequest(urlRequest: NSMutableURLRequest) -> (NSData?, NSURLResponse?, NSError?) {
+    func generateMockResponseForURLRequest(_ urlRequest: NSMutableURLRequest) -> (Data?, URLResponse?, NSError?) {
         return (nil, nil, nil)
     }
 }

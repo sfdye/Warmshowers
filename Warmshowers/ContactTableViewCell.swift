@@ -20,40 +20,40 @@ class ContactTableViewCell: UITableViewCell {
         // Phone icon tap gesture
         let phoneIconTap = UITapGestureRecognizer(target: self, action: #selector(ContactTableViewCell.phoneIconTapped))
         phoneIconTap.numberOfTapsRequired = 1
-        phoneIcon.userInteractionEnabled = true
+        phoneIcon.isUserInteractionEnabled = true
         phoneIcon.addGestureRecognizer(phoneIconTap)
         
         // Message icon tap gesture
         let messageIconTap = UITapGestureRecognizer(target: self, action: #selector(ContactTableViewCell.messageIconTapped))
         messageIconTap.numberOfTapsRequired = 1
-        messageIcon.userInteractionEnabled = true
+        messageIcon.isUserInteractionEnabled = true
         messageIcon.addGestureRecognizer(messageIconTap)
     }
     
     // Configures the table view cell for a phone number
     //
-    func setWithPhoneNumber(phoneNumber: WSPhoneNumber) {
+    func setWithPhoneNumber(_ phoneNumber: WSPhoneNumber) {
         titleLabel.text = phoneNumber.description
         detailLabel.text = phoneNumber.number
         
         switch phoneNumber.type {
-        case .Home, .Work:
-            phoneIcon.hidden = false
-            messageIcon.hidden = true
-        case .Mobile:
-            phoneIcon.hidden = false
-            messageIcon.hidden = false
+        case .home, .work:
+            phoneIcon.isHidden = false
+            messageIcon.isHidden = true
+        case .mobile:
+            phoneIcon.isHidden = false
+            messageIcon.isHidden = false
         }
     }
     
     // Configures the table view cell for an address
     //
-    func setWithAddress(address: String) {
+    func setWithAddress(_ address: String) {
         titleLabel.text = "Address"
         detailLabel.numberOfLines = 0
         detailLabel.text = address
-        phoneIcon.hidden = true
-        messageIcon.hidden = true
+        phoneIcon.isHidden = true
+        messageIcon.isHidden = true
     }
     
     // Called when the user taps the phone icon
@@ -64,7 +64,7 @@ class ContactTableViewCell: UITableViewCell {
             return
         }
         
-        UIApplication.sharedApplication().openURL(url)
+        UIApplication.shared().openURL(url)
     }
     
     // Called when the user taps the message bubble icon
@@ -75,29 +75,29 @@ class ContactTableViewCell: UITableViewCell {
             return
         }
         
-        UIApplication.sharedApplication().openURL(url)
+        UIApplication.shared().openURL(url)
     }
     
     // Returns the url to call the the phone number displayed in the cell
     //
-    func phoneNumberURL(number: String?) -> NSURL? {
+    func phoneNumberURL(_ number: String?) -> URL? {
         
         guard let number = detailLabel.text else {
             return nil
         }
         
-        return NSURL(string: "tel://" + number)
+        return URL(string: "tel://" + number)
     }
     
     // Returns the url to message the the phone number displayed in the cell
     //
-    func messageNumberURL(number: String?) -> NSURL? {
+    func messageNumberURL(_ number: String?) -> URL? {
         
         guard let number = detailLabel.text else {
             return nil
         }
         
-        return NSURL(string: "sms:" + number)
+        return URL(string: "sms:" + number)
     }
 
 }

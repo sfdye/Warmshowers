@@ -24,7 +24,7 @@ class HostListTableViewCell: UITableViewCell {
         profileImage.image = nil
     }
     
-    func setNotAvailible(notAvailible: Bool?) {
+    func setNotAvailible(_ notAvailible: Bool?) {
         if notAvailible ?? false {
             availibleDot?.color = WSColor.NotAvailable
         } else {

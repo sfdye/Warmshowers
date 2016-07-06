@@ -29,11 +29,11 @@ protocol WSAPIEndPointProtocol {
     func doesExpectDataWithResponse() -> Bool
     
     /** Describes how plain text recieved from this endpoint should be parsed */
-    func request(request: WSAPIRequest, didRecievedResponseWithText text: String) throws -> AnyObject?
+    func request(_ request: WSAPIRequest, didRecievedResponseWithText text: String) throws -> AnyObject?
     
     /** Describes how json recieved from this endpoint should be parsed */
-    func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject?
+    func request(_ request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject?
     
     /** Provides mock end point responses for testing */
-    func generateMockResponseForURLRequest(urlRequest: NSMutableURLRequest) -> (NSData?, NSURLResponse?, NSError?)
+    func generateMockResponseForURLRequest(_ urlRequest: NSMutableURLRequest) -> (Data?, URLResponse?, NSError?)
 }
