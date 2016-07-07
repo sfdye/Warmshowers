@@ -14,9 +14,9 @@ struct WSSettings {
     //
     static func metric() -> Bool {
         
-        let defaults = UserDefaults.standard()
+        let defaults = NSUserDefaults.standardUserDefaults()
         
-        if let units = defaults.value(forKey: "units") as? String {
+        if let units = defaults.valueForKey("units") as? String {
             if units != "metric" {
                 return false
             }

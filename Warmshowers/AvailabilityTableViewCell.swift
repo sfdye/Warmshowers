@@ -10,7 +10,7 @@ import UIKit
 
 class AvailabilityTableViewCell: UITableViewCell {
 
-    func configureAsCurrentlyAvailable(_ userInfo: AnyObject?) {
+    func configureAsCurrentlyAvailable(userInfo: AnyObject?) {
         
         textLabel?.text = ""
         
@@ -18,7 +18,7 @@ class AvailabilityTableViewCell: UITableViewCell {
             return
         }
         
-        guard let notavailible = userInfo.value(forKey: "notcurrentlyavailable")?.boolValue else {
+        guard let notavailible = userInfo.valueForKey("notcurrentlyavailable")?.boolValue else {
             return
         }
         

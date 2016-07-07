@@ -10,17 +10,17 @@ import UIKit
 
 extension WSFeedbackTableViewController {
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return feedback?.count ?? 0
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: FeedbackCellID, for: indexPath) as! FeedbackTableViewCell
-        if let feedback = feedback?[(indexPath as NSIndexPath).row] {
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier(FeedbackCellID, forIndexPath: indexPath) as! FeedbackTableViewCell
+        if let feedback = feedback?[indexPath.row] {
             cell.configureWithFeedback(feedback)
         }
         return cell

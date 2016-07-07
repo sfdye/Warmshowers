@@ -11,22 +11,22 @@ import Foundation
 protocol WSStoreMapTileProtocol {
     
     /** Set the map tiel expiry time to 24 hr. */
-    var MapTileExpiryTime: TimeInterval { get }
+    var MapTileExpiryTime: NSTimeInterval { get }
     
     /** Returns all the map tiles in the store. */
     func allMapTiles() throws -> [CDWSMapTile]
     
     /** Returns a map tile by its identifer.*/
-    func mapTileWithQuadKey(_ quadKey: String) throws -> CDWSMapTile?
+    func mapTileWithQuadKey(quadKey: String) throws -> CDWSMapTile?
     
     /** Returns an existing map tile, or a new map tile into the private context. */
-    func newOrExistingMapTileWithQuadKey(_ quadKey: String) throws -> CDWSMapTile
+    func newOrExistingMapTileWithQuadKey(quadKey: String) throws -> CDWSMapTile
     
     /** Returns true if the store has recently refreshed host data for the area covered by the given map tile. */
-    func hasValidHostDataForMapTile(_ tile: WSMapTile) -> Bool
+    func hasValidHostDataForMapTile(tile: WSMapTile) -> Bool
     
     /** Returns users on a given map tile from the store. */
-    func usersForMapTile(_ tile: WSMapTile) -> [WSUserLocation]?
+    func usersForMapTile(tile: WSMapTile) -> [WSUserLocation]?
     
     /** Removes tiles from the data base that haven't been loaded in a while. */
     func clearoutOldTiles()

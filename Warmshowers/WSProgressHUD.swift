@@ -13,15 +13,15 @@ class WSProgressHUD {
     
     // Shows the progress hud coving the whoel screen
     //
-    static func show(_ label: String) {
-        if let view = (UIApplication.shared().delegate as! AppDelegate).window?.rootViewController?.view {
+    static func show(label: String) {
+        if let view = (UIApplication.sharedApplication().delegate as! AppDelegate).window?.rootViewController?.view {
             let hud = MBProgressHUD.showHUDAddedTo(view, animated: true)
             hud.label.text = label
             hud.WSStyle()
         }
     }
     
-    static func show(_ view: UIView, label: String) {
+    static func show(view: UIView, label: String) {
         let hud = MBProgressHUD.showHUDAddedTo(view, animated: true)
         hud.label.text = label
         hud.WSStyle()
@@ -30,15 +30,15 @@ class WSProgressHUD {
     // Hides the progress hud
     //
     static func hide() {
-        if let view = (UIApplication.shared().delegate as! AppDelegate).window?.rootViewController?.view {
-            DispatchQueue.main.async(execute: { [unowned view] in
+        if let view = (UIApplication.sharedApplication().delegate as! AppDelegate).window?.rootViewController?.view {
+            dispatch_async(dispatch_get_main_queue(), { [unowned view] in
                 MBProgressHUD.hideHUDForView(view, animated: true)
             })
         }
     }
     
-    static func hide(_ view: UIView) {
-        DispatchQueue.main.async(execute: { [unowned view] in
+    static func hide(view: UIView) {
+        dispatch_async(dispatch_get_main_queue(), { [unowned view] in
             MBProgressHUD.hideHUDForView(view, animated: true)
         })
     }

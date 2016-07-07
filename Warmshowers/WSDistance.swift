@@ -23,7 +23,7 @@ struct WSDistance {
     }
     
     // Returns a string of the metric distance with its units
-    func stringWithUnits(_ metric: Bool) -> String {
+    func stringWithUnits(metric: Bool) -> String {
         if metric {
             if metres < 1000 {
                 return String(format: "%.0f m", arguments: [metres])

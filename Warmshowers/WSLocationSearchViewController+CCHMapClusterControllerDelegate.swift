@@ -11,7 +11,7 @@ import CCHMapClusterController
 
 extension WSLocationSearchViewController: CCHMapClusterControllerDelegate {
     
-    func mapClusterController(_ mapClusterController: CCHMapClusterController!, titleForMapClusterAnnotation mapClusterAnnotation: CCHMapClusterAnnotation!) -> String! {
+    func mapClusterController(mapClusterController: CCHMapClusterController!, titleForMapClusterAnnotation mapClusterAnnotation: CCHMapClusterAnnotation!) -> String! {
         let numberOfHosts = mapClusterAnnotation.annotations.count
         if numberOfHosts > 1 {
             return "\(numberOfHosts) Hosts"

@@ -10,9 +10,9 @@ import UIKit
 
 extension WSSettingsTableViewController {
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        if let cell = tableView.cellForRow(at: indexPath){
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        if let cell = tableView.cellForRowAtIndexPath(indexPath){
             switch cell.tag {
             case 10:
                 navigationDelegate?.openWarmshowersHomePage()

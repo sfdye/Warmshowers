@@ -10,8 +10,8 @@ import UIKit
 import MapKit
 import Contacts
 
-enum WSUserLocationError: ErrorProtocol {
-    case invalidInput
+enum WSUserLocationError: ErrorType {
+    case InvalidInput
 }
 
 class WSUserLocation : WSUser {
@@ -41,7 +41,7 @@ class WSUserLocation : WSUser {
         get {
             let lm = CLLocationManager()
             if let location = lm.location {
-                return location.distance(from: self.location)
+                return location.distanceFromLocation(self.location)
             }
             return nil
         }
@@ -51,7 +51,7 @@ class WSUserLocation : WSUser {
         var address: String = ""
         address.appendWithComma(city)
         if let country = country {
-            address.appendWithComma(country.uppercased())
+            address.appendWithComma(country.uppercaseString)
         }
         return address
     }
@@ -63,7 +63,7 @@ class WSUserLocation : WSUser {
         address.appendWithNewLine(city)
         address.appendWithSpace(postCode)
         if let country = country {
-            address.appendWithNewLine(country.uppercased())
+            address.appendWithNewLine(country.uppercaseString)
         }
         return address
     }
@@ -81,11 +81,11 @@ class WSUserLocation : WSUser {
         self.init(fullname: "", name: "", uid: 0, lat: 0.0, lon: 0.0)
         
         // At a minimum, the object must have a uid, latitude and longitude
-        guard let fullname = json.value(forKey: "fullname") as? String,
-              let name = json.value(forKey: "name") as? String,
-              let uid = json.value(forKey: "uid")?.intValue,
-              let lat = json.value(forKey: "latitude")?.doubleValue,
-              let lon = json.value(forKey: "longitude")?.doubleValue
+        guard let fullname = json.valueForKey("fullname") as? String,
+              let name = json.valueForKey("name") as? String,
+              let uid = json.valueForKey("uid")?.integerValue,
+              let lat = json.valueForKey("latitude")?.doubleValue,
+              let lon = json.valueForKey("longitude")?.doubleValue
             else {
                 return nil
         }
@@ -96,15 +96,15 @@ class WSUserLocation : WSUser {
         self.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
         
         if let data = json as? NSDictionary {
-            additional = data.value(forKey: "additional") as? String
-            city = data.value(forKey: "city") as? String
-            country = data.value(forKey: "country") as? String
-            distance = data.value(forKey: "distance")?.doubleValue
-            notcurrentlyavailable = json.value(forKey: "notcurrentlyavailable")?.boolValue
-            postCode = data.value(forKey: "postal_code") as? String
-            province = json.value(forKey: "province") as? String
-            imageURL = json.value(forKey: "profile_image_map_infoWindow") as? String
-            street = json.value(forKey: "street") as? String
+            additional = data.valueForKey("additional") as? String
+            city = data.valueForKey("city") as? String
+            country = data.valueForKey("country") as? String
+            distance = data.valueForKey("distance")?.doubleValue
+            notcurrentlyavailable = json.valueForKey("notcurrentlyavailable")?.boolValue
+            postCode = data.valueForKey("postal_code") as? String
+            province = json.valueForKey("province") as? String
+            imageURL = json.valueForKey("profile_image_map_infoWindow") as? String
+            street = json.valueForKey("street") as? String
         }
     }
     
@@ -115,7 +115,7 @@ class WSUserLocation : WSUser {
         // At a minimum, the object must have a uid, latitude and longitude
         guard let fullname = user.fullname,
             let name = user.name,
-            let uid = user.uid?.intValue,
+            let uid = user.uid?.integerValue,
             let lat = user.latitude?.doubleValue,
             let lon = user.longitude?.doubleValue
             else {

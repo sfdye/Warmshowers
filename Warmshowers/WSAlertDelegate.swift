@@ -13,30 +13,30 @@ class WSAlertDelegate : WSAlertProtocol {
     
     static let sharedAlertDelegate = WSAlertDelegate()
     
-    func presentAlertFor(_ delegator: UIViewController?, withTitle title: String?, button: String?) {
+    func presentAlertFor(delegator: UIViewController?, withTitle title: String?, button: String?) {
         presentAlertFor(delegator, withTitle: title, button: button, message: nil, andHandler: nil)
     }
     
-    func presentAlertFor(_ delegator: UIViewController?, withTitle title: String?, button: String?, message: String?) {
+    func presentAlertFor(delegator: UIViewController?, withTitle title: String?, button: String?, message: String?) {
         presentAlertFor(delegator, withTitle: title, button: button, message: message, andHandler: nil)
     }
     
-    func presentAlertFor(_ delegator: UIViewController?, withTitle title: String?, button: String?, message: String?, andHandler handler: ((UIAlertAction) -> Void)?) {
-        DispatchQueue.main.async { [weak delegator] in
-            let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-            let action = UIAlertAction(title: button, style: UIAlertActionStyle.default, handler: handler)
+    func presentAlertFor(delegator: UIViewController?, withTitle title: String?, button: String?, message: String?, andHandler handler: ((UIAlertAction) -> Void)?) {
+        dispatch_async(dispatch_get_main_queue()) { [weak delegator] in
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+            let action = UIAlertAction(title: button, style: UIAlertActionStyle.Default, handler: handler)
             alertController.addAction(action)
-            delegator?.present(alertController, animated: true, completion: nil)
+            delegator?.presentViewController(alertController, animated: true, completion: nil)
         }
     }
     
-    func presentAPIError(_ error: ErrorProtocol, forDelegator delegator: UIViewController?) {
+    func presentAPIError(error: ErrorType, forDelegator delegator: UIViewController?) {
         var title: String = "Error"
         var message: String = "An unknown error ocurred."
         switch error {
         case is WSAPIEndPointError:
             switch (error as! WSAPIEndPointError) {
-            case .parsingError(let endPoint, let key):
+            case .ParsingError(let endPoint, let key):
                 title = "Data Parsing Error"
                 message = "An error occured while parsing data from the Warmshowers API end point \(endPoint). "
                 if key != nil {
@@ -46,13 +46,13 @@ class WSAlertDelegate : WSAlertProtocol {
             }
         case is WSAPICommunicatorError:
             switch (error as! WSAPICommunicatorError) {
-            case .noSessionCookie, .noToken:
+            case .NoSessionCookie, .NoToken:
                 // Do not show errors for these. Auto login is handled by WSAPICommunicator.
                 return
-            case .offline:
+            case .Offline:
                 // Case is handled by the reachability banner.
                 return
-            case .serverError(let statusCode):
+            case .ServerError(let statusCode):
                 title = "Server Error"
                 message = "The server responded with \(statusCode)."
             default:
@@ -66,7 +66,7 @@ class WSAlertDelegate : WSAlertProtocol {
     }
     
     func showNoInternetBanner() {
-        DispatchQueue.main.async { () -> Void in
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
             let banner = AFMInfoBanner()
             banner.text = "No Internet Connection"
             banner.style = .Error
@@ -75,7 +75,7 @@ class WSAlertDelegate : WSAlertProtocol {
     }
     
     func hideAllBanners() {
-        DispatchQueue.main.async { () -> Void in
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
             AFMInfoBanner.hideAll()
         }
     }

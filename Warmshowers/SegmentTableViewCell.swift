@@ -24,8 +24,8 @@ class SegmentTableViewCell: UITableViewCell {
     // Text and background colors for active and inactive states
     //
     let activeTextColor = UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
-    let activeBackgroundColor = UIColor.white()
-    let inactiveTextColor = UIColor.white()
+    let activeBackgroundColor = UIColor.whiteColor()
+    let inactiveTextColor = UIColor.whiteColor()
     let inactiveBackgroundColor = UIColor(red: 104/255, green: 109/255, blue: 117/255, alpha: 1)
     
     // The three 'tab' buttons
@@ -67,15 +67,15 @@ class SegmentTableViewCell: UITableViewCell {
     
     // Sets a button's style to active (white background with blue text)
     //
-    func configureButtonAsActive(_ button: UIButton) {
-        button.setTitleColor(activeTextColor, for: UIControlState())
+    func configureButtonAsActive(button: UIButton) {
+        button.setTitleColor(activeTextColor, forState: .Normal)
         button.backgroundColor = activeBackgroundColor
     }
     
     // Sets a button's style to inactive (grey background with white text)
     //
-    func configureButtonAsInactive(_ button: UIButton) {
-        button.setTitleColor(inactiveTextColor, for: UIControlState())
+    func configureButtonAsInactive(button: UIButton) {
+        button.setTitleColor(inactiveTextColor, forState: .Normal)
         button.backgroundColor = inactiveBackgroundColor
     }
     
@@ -89,7 +89,7 @@ class SegmentTableViewCell: UITableViewCell {
     
     // Sets the style of one button to active and the others as inactive
     //
-    func selectTab(_ tab: UIButton) {
+    func selectTab(tab: UIButton) {
         configureAllButtonsAsInactive()
         configureButtonAsActive(tab)
     }

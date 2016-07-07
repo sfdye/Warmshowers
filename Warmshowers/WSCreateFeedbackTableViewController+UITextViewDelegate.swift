@@ -10,11 +10,11 @@ import UIKit
 
 extension WSCreateFeedbackTableViewController : UITextViewDelegate {
     
-    func textViewDidChange(_ textView: UITextView) {
+    func textViewDidChange(textView: UITextView) {
         
         // Resize the table cell
         let size = textView.bounds.size
-        let newSize = textView.sizeThatFits(CGSize(width: size.width, height: CGFloat.greatestFiniteMagnitude))
+        let newSize = textView.sizeThatFits(CGSize(width: size.width, height: CGFloat.max))
         
         // Resize the cell only when cell's size is changed
         if size.height != newSize.height {
@@ -22,21 +22,21 @@ extension WSCreateFeedbackTableViewController : UITextViewDelegate {
             tableView?.beginUpdates()
             tableView?.endUpdates()
             UIView.setAnimationsEnabled(true)
-            tableView.scrollToRow(at: IndexPath(row: 0, section: 1), at: .bottom, animated: false)
+            tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 1), atScrollPosition: .Bottom, animated: false)
         }
         
         // Update the model
         feedback.body = textView.text
     }
     
-    func textViewDidEndEditing(_ textView: UITextView) {
+    func textViewDidEndEditing(textView: UITextView) {
         feedback.body = textView.text
     }
     
-    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+    func textViewShouldBeginEditing(textView: UITextView) -> Bool {
         if textView.text == PlaceholderFeedback {
             textView.text = ""
-            textView.textColor = UIColor.black()
+            textView.textColor = UIColor.blackColor()
         }
         removeAllPickerCells()
         return true

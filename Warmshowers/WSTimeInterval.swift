@@ -17,7 +17,7 @@ enum TimeUnit {
     case months
     case years
     
-    func stringValue(_ plural: Bool) -> String {
+    func stringValue(plural: Bool) -> String {
         switch self {
         case seconds:
             return plural ? "seconds" : "second"
@@ -62,7 +62,7 @@ struct WSTimeInterval {
     
     var time: Int
     
-    init(timeInterval: TimeInterval) {
+    init(timeInterval: NSTimeInterval) {
         time = Int(timeInterval)
     }
     
@@ -84,11 +84,11 @@ struct WSTimeInterval {
             return (count >= maxUnitsInString) ? true : false
         }
         
-        func integerTime(_ unit: TimeUnit) -> Int {
+        func integerTime(unit: TimeUnit) -> Int {
             return time / unit.inSeconds()
         }
         
-        func addToString(_ value: Int, unit: TimeUnit) {
+        func addToString(value: Int, unit: TimeUnit) {
             if !done() {
                 let plural = (value != 1) ? true : false
                 if count > 0 {
@@ -102,7 +102,7 @@ struct WSTimeInterval {
             }
         }
         
-        func addToTime(_ value: Int, unit: TimeUnit) {
+        func addToTime(value: Int, unit: TimeUnit) {
             time += value * unit.inSeconds()
         }
         

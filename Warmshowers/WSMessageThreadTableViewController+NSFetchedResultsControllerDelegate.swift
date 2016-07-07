@@ -11,47 +11,47 @@ import CoreData
 
 extension WSMessageThreadTableViewController : NSFetchedResultsControllerDelegate {
     
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        DispatchQueue.main.async { () -> Void in
+    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
             self.tableView.beginUpdates()
         }
     }
     
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
-        DispatchQueue.main.async { () -> Void in
+    func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
             switch type {
-            case .insert:
-                self.tableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
-            case .delete:
-                self.tableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
-            case .move:
+            case .Insert:
+                self.tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
+            case .Delete:
+                self.tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
+            case .Move:
                 break
-            case .update:
+            case .Update:
                 break
             }
         }
     }
     
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: AnyObject, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        DispatchQueue.main.async { () -> Void in
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
             switch type {
-            case .insert:
-                self.tableView.insertRows(at: [newIndexPath!], with: .fade)
-            case .delete:
-                self.tableView.deleteRows(at: [indexPath!], with: .fade)
-            case .update:
-                if let cell = self.tableView.cellForRow(at: indexPath!) {
+            case .Insert:
+                self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+            case .Delete:
+                self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+            case .Update:
+                if let cell = self.tableView.cellForRowAtIndexPath(indexPath!) {
                     self.configureCell(cell, indexPath: indexPath!)
                 }
-            case .move:
-                self.tableView.deleteRows(at: [indexPath!], with: .fade)
-                self.tableView.insertRows(at: [indexPath!], with: .fade)
+            case .Move:
+                self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+                self.tableView.insertRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
             }
         }
     }
     
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        DispatchQueue.main.async { () -> Void in
+    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
             self.tableView.endUpdates()
         }
     }

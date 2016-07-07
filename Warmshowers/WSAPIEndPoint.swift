@@ -9,54 +9,54 @@
 import Foundation
 
 enum WSAPIEndPoint {
-    case token
-    case login
-    case logout
-    case searchByLocation
-    case searchByKeyword
-    case userInfo
-    case userFeedback
-    case createFeedback
-    case newMessage
-    case replyToMessage
-    case unreadMessageCount
-    case getAllMessageThreads
-    case getMessageThread
-    case markMessage
-    case imageResource
+    case Token
+    case Login
+    case Logout
+    case SearchByLocation
+    case SearchByKeyword
+    case UserInfo
+    case UserFeedback
+    case CreateFeedback
+    case NewMessage
+    case ReplyToMessage
+    case UnreadMessageCount
+    case GetAllMessageThreads
+    case GetMessageThread
+    case MarkMessage
+    case ImageResource
     
     /** Returns the shared instance of the end point */
     var sharedEndPoint: WSAPIEndPointProtocol {
         switch self {
-        case .token:
+        case .Token:
             return WSTokenEndPoint.sharedEndPoint
-        case .login:
+        case .Login:
             return WSLoginEndPoint.sharedEndPoint
-        case .logout:
+        case .Logout:
             return WSLogoutEndPoint.sharedEndPoint
-        case .searchByLocation:
+        case .SearchByLocation:
             return WSSearchByLocationEndPoint.sharedEndPoint
-        case .searchByKeyword:
+        case .SearchByKeyword:
             return WSSearchByKeywordEndPoint.sharedEndPoint
-        case .userInfo:
+        case .UserInfo:
             return WSUserInfoEndPoint.sharedEndPoint
-        case .userFeedback:
+        case .UserFeedback:
             return WSUserFeedbackEndPoint.sharedEndPoint
-        case .createFeedback:
+        case .CreateFeedback:
             return WSCreateFeedbackEndPoint.sharedEndPoint
-        case .newMessage:
+        case .NewMessage:
             return WSNewMessageEndPoint.sharedEndPoint
-        case .replyToMessage:
+        case .ReplyToMessage:
             return WSReplyToMessageEndPoint.sharedEndPoint
-        case .unreadMessageCount:
+        case .UnreadMessageCount:
             return WSUnreadMessageCountEndPoint.sharedEndPoint
-        case .getAllMessageThreads:
+        case .GetAllMessageThreads:
             return WSGetAllMessageThreadsEndPoint.sharedEndPoint
-        case .getMessageThread:
+        case .GetMessageThread:
             return WSGetMessageThreadEndPoint.sharedEndPoint
-        case .markMessage:
+        case .MarkMessage:
             return WSMarkMessageEndPoint.sharedEndPoint
-        case .imageResource:
+        case .ImageResource:
             assertionFailure("Resources can not be requested from a shared end point object. Create an instance of WSResourceURL instead.")
             return WSImageResourceURL(url: "")
         }

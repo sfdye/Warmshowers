@@ -8,11 +8,11 @@
 
 import Foundation
 
-enum WSAPICommunicatorError : ErrorProtocol {
-    case offline
-    case noSessionCookie
-    case noToken
-    case invalidImageResourceURL
-    case serverError(statusCode: Int, body: String?)
-    case noData
+enum WSAPICommunicatorError : ErrorType {
+    case Offline
+    case NoSessionCookie
+    case NoToken
+    case InvalidImageResourceURL
+    case ServerError(statusCode: Int, body: String?)
+    case NoData
 }

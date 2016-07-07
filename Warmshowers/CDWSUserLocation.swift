@@ -10,8 +10,8 @@ import Foundation
 import CoreData
 import MapKit
 
-enum CDWSUserLocationError : ErrorProtocol {
-    case failedValueForKey(key: String)
+enum CDWSUserLocationError : ErrorType {
+    case FailedValueForKey(key: String)
 }
 
 class CDWSUserLocation: NSManagedObject {
@@ -29,7 +29,7 @@ class CDWSUserLocation: NSManagedObject {
         get {
             let lm = CLLocationManager()
             if let location = lm.location {
-                return location.distance(from: self.location)
+                return location.distanceFromLocation(self.location)
             }
             return nil
         }

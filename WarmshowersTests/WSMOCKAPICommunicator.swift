@@ -27,63 +27,63 @@ class WSMOCKAPICommunicator : WSAPICommunicatorProtocol {
     var markMessageCalled = false
     var getImageForURLCalled = false
     
-    func getTokenAndNotify(_ requester: WSAPIResponseDelegate) {
+    func getTokenAndNotify(requester: WSAPIResponseDelegate) {
         getTokenCalled = true
     }
     
-    func login(_ username: String, password: String, andNotify: WSAPIResponseDelegate) {
+    func login(username: String, password: String, andNotify: WSAPIResponseDelegate) {
         loginCalled = true
     }
     
-    func logoutAndNotify(_ requester: WSAPIResponseDelegate) {
+    func logoutAndNotify(requester: WSAPIResponseDelegate) {
         logoutCalled = true
     }
     
-    func searchByLocation(_ regionLimits: [String: String], andNotify requester: WSAPIResponseDelegate) {
+    func searchByLocation(regionLimits: [String: String], andNotify requester: WSAPIResponseDelegate) {
         searchByLocationCalled = true
     }
     
-    func searchByKeyword(_ keyword: String, offset: Int, andNotify requester: WSAPIResponseDelegate) {
+    func searchByKeyword(keyword: String, offset: Int, andNotify requester: WSAPIResponseDelegate) {
         searchByKeywordCalled = true
     }
     
-    func getUserInfo(_ uid: Int, andNotify requester: WSAPIResponseDelegate) {
+    func getUserInfo(uid: Int, andNotify requester: WSAPIResponseDelegate) {
         getUserInfoCalled = true
     }
     
-    func getUserFeedback(_ uid: Int, andNotify requester: WSAPIResponseDelegate) {
+    func getUserFeedback(uid: Int, andNotify requester: WSAPIResponseDelegate) {
         getUserFeedbackCalled = true
     }
     
-    func createFeedback(_ feedback: WSRecommendation, andNotify: WSAPIResponseDelegate) {
+    func createFeedback(feedback: WSRecommendation, andNotify: WSAPIResponseDelegate) {
         createFeedbackCalled = true
     }
 
-    func sendNewMessageToRecipients(_ recipients: [CDWSUser], withSubject subject: String, andMessageBody body: String, thenNotify requester: WSAPIResponseDelegate) {
+    func sendNewMessageToRecipients(recipients: [CDWSUser], withSubject subject: String, andMessageBody body: String, thenNotify requester: WSAPIResponseDelegate) {
         sendNewMessageToRecipientsCalled = true
     }
     
-    func replyToMessageOnThread(_ threadID: Int, withMessageBody body: String, thenNotify requester: WSAPIResponseDelegate) {
+    func replyToMessageOnThread(threadID: Int, withMessageBody body: String, thenNotify requester: WSAPIResponseDelegate) {
         replyToMessageOnThreadCalled = true
     }
     
-    func getUnreadMessageCountAndNotify(_ requester: WSAPIResponseDelegate) {
+    func getUnreadMessageCountAndNotify(requester: WSAPIResponseDelegate) {
         getUnreadMessageCountAndNotifyCalled = true
     }
     
-    func getAllMessageThreadsAndNotify(_ requester: WSAPIResponseDelegate) {
+    func getAllMessageThreadsAndNotify(requester: WSAPIResponseDelegate) {
         getAllMessageThreadsAndNotifyCalled = true
     }
     
-    func getMessagesOnThread(_ threadID: Int, andNotify requester: WSAPIResponseDelegate) {
+    func getMessagesOnThread(threadID: Int, andNotify requester: WSAPIResponseDelegate) {
         getMessagesOnThreadCalled = true
     }
     
-    func markMessage(_ threadID: Int, andNotify requester: WSAPIResponseDelegate) {
+    func markMessage(threadID: Int, andNotify requester: WSAPIResponseDelegate) {
         markMessageCalled = true
     }
     
-    func getImageAtURL(_ imageURL: String, andNotify requester: WSAPIResponseDelegate) {
+    func getImageAtURL(imageURL: String, andNotify requester: WSAPIResponseDelegate) {
         getImageForURLCalled = true
     }
 }

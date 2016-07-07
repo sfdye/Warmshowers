@@ -11,11 +11,11 @@ import Foundation
 protocol WSReachabilityProtocol {
     var isOnline: Bool { get }
     
-    func registerForNotifications(_ observer: AnyObject, selector aSelector: Selector)
+    func registerForNotifications(observer: AnyObject, selector aSelector: Selector)
     
-    func deregisterFromNotifications(_ observer: AnyObject)
+    func deregisterFromNotifications(observer: AnyObject)
     
-    func registerForAndStartNotifications(_ observer: AnyObject, selector aSelector: Selector)
+    func registerForAndStartNotifications(observer: AnyObject, selector aSelector: Selector)
     
-    func deregisterAndStopNotifications(_ observer: AnyObject)
+    func deregisterAndStopNotifications(observer: AnyObject)
 }

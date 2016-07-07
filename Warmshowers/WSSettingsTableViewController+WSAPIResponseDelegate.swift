@@ -10,7 +10,7 @@ import Foundation
 
 extension WSSettingsTableViewController : WSAPIResponseDelegate {
     
-    func request(_ request: WSAPIRequest, didSuceedWithData data: AnyObject?) {
+    func request(request: WSAPIRequest, didSuceedWithData data: AnyObject?) {
         
         session?.deleteSessionData()
         
@@ -27,7 +27,7 @@ extension WSSettingsTableViewController : WSAPIResponseDelegate {
         navigationDelegate?.showLoginScreen()
     }
     
-    func request(_ request: WSAPIRequest, didFailWithError error: ErrorProtocol) {
+    func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
         alertDelegate?.presentAlertFor(self, withTitle: "Logout failed", button: "Dismiss", message: "Please try again.")
     }
 }

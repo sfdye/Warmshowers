@@ -10,13 +10,13 @@ import UIKit
 
 extension WSKeywordSearchTableViewController {
     
-    override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if !decelerate {
             loadImagesForObjectsOnScreen()
         }
     }
     
-    override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         loadImagesForObjectsOnScreen()
     }
 }

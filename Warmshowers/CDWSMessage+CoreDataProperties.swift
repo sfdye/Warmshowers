@@ -17,7 +17,7 @@ extension CDWSMessage {
     @NSManaged var body: String?
     @NSManaged var is_new: NSNumber?
     @NSManaged var message_id: NSNumber?
-    @NSManaged var timestamp: Date?
+    @NSManaged var timestamp: NSDate?
     @NSManaged var author: CDWSUser?
     @NSManaged var thread: CDWSMessageThread?
 

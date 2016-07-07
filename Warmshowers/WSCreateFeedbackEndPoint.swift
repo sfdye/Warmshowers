@@ -12,20 +12,20 @@ class WSCreateFeedbackEndPoint : WSAPIEndPointProtocol {
     
     static let sharedEndPoint = WSCreateFeedbackEndPoint()
     
-    var type: WSAPIEndPoint { return .createFeedback }
+    var type: WSAPIEndPoint { return .CreateFeedback }
     
     var path: String { return "/services/rest/node" }
     
     var method: HttpMethod { return .Post }
     
-    func request(_ request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
+    func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
         // No need for response data.
         return nil
     }
     
-    func generateMockResponseForURLRequest(_ urlRequest: NSMutableURLRequest) -> (Data?, URLResponse?, NSError?) {
-        let data = Data()
-        let response = URLResponse()
+    func generateMockResponseForURLRequest(urlRequest: NSMutableURLRequest) -> (NSData?, NSURLResponse?, NSError?) {
+        let data = NSData()
+        let response = NSURLResponse()
         return (data, response, nil)
     }
 }

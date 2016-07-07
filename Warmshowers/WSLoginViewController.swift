@@ -28,5 +28,4 @@ class WSLoginViewController: UIViewController {
         // Load the default username
         usernameTextField.text = sessionState?.username
     }
-    
 }

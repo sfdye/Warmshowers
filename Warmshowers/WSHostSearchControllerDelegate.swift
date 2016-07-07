@@ -11,7 +11,7 @@ import UIKit
 protocol WSHostSearchControllerDelegate {
     
     /** Presents an error alert */
-    func presentErrorAlertWithError(_ error: ErrorProtocol)
+    func presentErrorAlertWithError(error: ErrorType)
     
 //    /** Presents a simple OK alert */
 //    func showAlertWithTitle(title: String, andMessage: String?)

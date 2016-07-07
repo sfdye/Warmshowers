@@ -12,15 +12,15 @@ protocol WSStoreParticipantProtocol {
     
     func allMessageParticipants() throws -> [CDWSUser]
     
-    func participantWithID(_ uid: Int) throws -> CDWSUser?
+    func participantWithID(uid: Int) throws -> CDWSUser?
     
-    func newOrExistingParticipant(_ uid: Int) throws -> CDWSUser
+    func newOrExistingParticipant(uid: Int) throws -> CDWSUser
     
-    func participantSetFromJSON(_ json: AnyObject) throws -> NSSet
+    func participantSetFromJSON(json: AnyObject) throws -> NSSet
     
-    func addParticipantWithJSON(_ json: AnyObject) throws
+    func addParticipantWithJSON(json: AnyObject) throws
     
-    func updateParticipantImageURLWithJSON(_ json: AnyObject) throws
+    func updateParticipantImageURLWithJSON(json: AnyObject) throws
     
-    func updateParticipant(_ uid: Int, withImage image: UIImage) throws
+    func updateParticipant(uid: Int, withImage image: UIImage) throws
 }

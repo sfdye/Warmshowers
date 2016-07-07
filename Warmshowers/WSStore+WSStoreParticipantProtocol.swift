@@ -18,10 +18,10 @@ extension WSStore : WSStoreParticipantProtocol {
         }
     }
     
-    func participantWithID(_ uid: Int) throws -> CDWSUser? {
+    func participantWithID(uid: Int) throws -> CDWSUser? {
         
         let request = requestForEntity(.Participant)
-        request.predicate = Predicate(format: "uid == %i", uid)
+        request.predicate = NSPredicate(format: "uid == %i", uid)
         
         do {
             let user = try executeFetchRequest(request).first as? CDWSUser
@@ -29,28 +29,28 @@ extension WSStore : WSStoreParticipantProtocol {
         }
     }
     
-    func newOrExistingParticipant(_ uid: Int) throws -> CDWSUser {
+    func newOrExistingParticipant(uid: Int) throws -> CDWSUser {
         do {
             if let user = try participantWithID(uid) {
                 return user
             } else {
-                let user = NSEntityDescription.insertNewObject(forEntityName: WSEntity.Participant.rawValue, into: privateContext) as! CDWSUser
+                let user = NSEntityDescription.insertNewObjectForEntityForName(WSEntity.Participant.rawValue, inManagedObjectContext: privateContext) as! CDWSUser
                 return user
             }
         }
     }
     
-    func participantSetFromJSON(_ json: AnyObject) throws -> NSSet {
+    func participantSetFromJSON(json: AnyObject) throws -> NSSet {
         
         guard let users = json as? NSArray else {
-            throw DataError.invalidInput
+            throw DataError.InvalidInput
         }
         
         var participants = [CDWSUser]()
         for user in users {
             
             // Get the user uid of the message participant.
-            if let uid = user.value(forKey: "uid")?.intValue {
+            if let uid = user.valueForKey("uid")?.integerValue {
                 
                 // Check if the participant exists in the store.
                 do {
@@ -63,25 +63,25 @@ extension WSStore : WSStoreParticipantProtocol {
                 }
                 
             } else {
-                throw DataError.invalidInput
+                throw DataError.InvalidInput
             }
         }
         
         return NSSet(array: participants)
     }
     
-    func addParticipantWithJSON(_ json: AnyObject) throws {
+    func addParticipantWithJSON(json: AnyObject) throws {
         
-        guard let fullname = json.value(forKey: "fullname") as? String else {
-            throw CDWSUserError.failedValueForKey(key: "fullname")
+        guard let fullname = json.valueForKey("fullname") as? String else {
+            throw CDWSUserError.FailedValueForKey(key: "fullname")
         }
         
-        guard let name = json.value(forKey: "name") as? String else {
-            throw CDWSUserError.failedValueForKey(key: "name")
+        guard let name = json.valueForKey("name") as? String else {
+            throw CDWSUserError.FailedValueForKey(key: "name")
         }
         
-        guard let uid = json.value(forKey: "uid")?.intValue else {
-            throw CDWSUserError.failedValueForKey(key: "uid")
+        guard let uid = json.valueForKey("uid")?.integerValue else {
+            throw CDWSUserError.FailedValueForKey(key: "uid")
         }
         
         do {
@@ -93,15 +93,15 @@ extension WSStore : WSStoreParticipantProtocol {
         }
     }
     
-    func updateParticipantImageURLWithJSON(_ json: AnyObject) throws {
+    func updateParticipantImageURLWithJSON(json: AnyObject) throws {
         
-        guard let uid = json.value(forKey: "uid")?.intValue else {
-            throw DataError.invalidInput
+        guard let uid = json.valueForKey("uid")?.integerValue else {
+            throw DataError.InvalidInput
         }
         
         do {
             if let user = try participantWithID(uid) {
-                user.image_url = json.value(forKey: "profile_image_map_infoWindow") as? String
+                user.image_url = json.valueForKey("profile_image_map_infoWindow") as? String
                 try savePrivateContext()
             } else {
                 let error = NSError(domain: "WSStore", code: 1, userInfo: [NSLocalizedDescriptionKey : "Can not update image url for user. User is not in the store."])
@@ -110,7 +110,7 @@ extension WSStore : WSStoreParticipantProtocol {
         }
     }
     
-    func updateParticipant(_ uid: Int, withImage image: UIImage) throws {
+    func updateParticipant(uid: Int, withImage image: UIImage) throws {
         do {
             if let user = try participantWithID(uid) {
                 user.image = image

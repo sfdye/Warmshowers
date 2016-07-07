@@ -10,11 +10,11 @@ import Foundation
 
 extension WSComposeMessageViewController : WSAPIResponseDelegate {
     
-    func request(_ request: WSAPIRequest, didSuceedWithData data: AnyObject?) {
+    func request(request: WSAPIRequest, didSuceedWithData data: AnyObject?) {
         
     }
     
-    func request(_ request: WSAPIRequest, didFailWithError error: ErrorProtocol) {
+    func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
         alertDelegate.presentAPIError(error, forDelegator: self)
     }
 

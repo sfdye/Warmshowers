@@ -10,8 +10,8 @@ import Foundation
 import ReachabilitySwift
 
 enum WSAPICommunicatorMode {
-    case online
-    case mocking
+    case Online
+    case Mocking
 }
 
 /**
@@ -40,7 +40,7 @@ class WSAPICommunicator {
             mode = .Mocking
             print("Initialising as MOCK")
         #else
-            mode = .online
+            mode = .Online
             print("Initialising as ONLINE")
         #endif
     }
@@ -51,19 +51,19 @@ class WSAPICommunicator {
     
     // MARK: Utilities
     
-    func contactEndPoint(_ endPoint: WSAPIEndPoint, withParameters params: [String: String]? = nil, thenNotify requester: WSAPIResponseDelegate) {
+    func contactEndPoint(endPoint: WSAPIEndPoint, withParameters params: [String: String]? = nil, thenNotify requester: WSAPIResponseDelegate) {
         let request = WSAPIRequest(endPoint: endPoint, withDelegate: self, andRequester:requester, andParameters: params)
         addRequestToQueue(request)
         executeRequest(request)
     }
     
-    func downloadImageAtURL(_ imageURL: String, thenNotify requester: WSAPIResponseDelegate) {
+    func downloadImageAtURL(imageURL: String, thenNotify requester: WSAPIResponseDelegate) {
         let request = WSAPIRequest(imageURL: imageURL, withDelegate: self, andRequester:requester)
         addRequestToQueue(request)
         executeRequest(request)
     }
     
-    func executeRequest(_ request: WSAPIRequest) {
+    func executeRequest(request: WSAPIRequest) {
         
         guard connection.isOnline else {
             // Only keep requests to be processed online later when explicitly specified
@@ -71,7 +71,7 @@ class WSAPICommunicator {
                 removeRequestFromQueue(request)
             }
             connection.registerForAndStartNotifications(self, selector: #selector(reachabilityDidChange))
-            request.requester?.request(request, didFailWithError: WSAPICommunicatorError.offline)
+            request.requester?.request(request, didFailWithError: WSAPICommunicatorError.Offline)
             return
         }
     
@@ -83,12 +83,12 @@ class WSAPICommunicator {
 //                request.delegate.request(request, didRecieveHTTPResponse: data, response: response, andError: error)
             #else
                 print("MAKING REQUEST ONLINE")
-                let task = session.dataTask(with: urlRequest) { (data, response, error) in         
+                let task = session.dataTaskWithRequest(urlRequest) { (data, response, error) in         
                     request.delegate.request(request, didRecieveHTTPResponse: data, response: response, andError: error)
                 }
                 task.resume()
             #endif
-            request.status = .sent
+            request.status = .Sent
         } catch let error {
             request.delegate.request(request, didFailWithError: error)
         }
@@ -100,18 +100,18 @@ class WSAPICommunicator {
         }
     }
     
-    func addRequestToQueue(_ request: WSAPIRequest) {
-        request.status = .queued
+    func addRequestToQueue(request: WSAPIRequest) {
+        request.status = .Queued
         requests.insert(request)
     }
     
-    func removeRequestFromQueue(_ request: WSAPIRequest) {
+    func removeRequestFromQueue(request: WSAPIRequest) {
         requests.remove(request)
     }
     
     func flushQueue() {
         for request in requests {
-            if request.status == .queued {
+            if request.status == .Queued {
                 executeRequest(request)
             }
         }

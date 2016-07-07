@@ -10,22 +10,22 @@ import UIKit
 
 extension WSCreateFeedbackTableViewController : WSAPIResponseDelegate {
     
-    func request(_ request: WSAPIRequest, didSuceedWithData data: AnyObject?) {
+    func request(request: WSAPIRequest, didSuceedWithData data: AnyObject?) {
         print("In API success")
-        DispatchQueue.main.async(execute: { [weak self] in
+        dispatch_async(dispatch_get_main_queue(), { [weak self] in
             WSProgressHUD.hide()
-            self?.navigationController?.dismiss(animated: true, completion: nil)
+            self?.navigationController?.dismissViewControllerAnimated(true, completion: nil)
         })
     }
     
-    func request(_ request: WSAPIRequest, didFailWithError error: ErrorProtocol) {
+    func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
         print("In API fail")
-        DispatchQueue.main.async(execute: { () -> Void in
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
             WSProgressHUD.hide()
-            let alert = UIAlertController(title: "Could not submit feedback", message: "Sorry, an error occured while submitted your feedback. Please check you are connected to the internet and try again later.", preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            let alert = UIAlertController(title: "Could not submit feedback", message: "Sorry, an error occured while submitted your feedback. Please check you are connected to the internet and try again later.", preferredStyle: .Alert)
+            let okAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
             alert.addAction(okAction)
-            self.present(alert, animated: true, completion: nil)
+            self.presentViewController(alert, animated: true, completion: nil)
         })
     }
 }

@@ -10,42 +10,42 @@ import UIKit
 
 extension WSSettingsTableViewController {
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return settings[section]["section_title"] as? String
     }
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return settings.count
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let cells = settings[section]["cells"]
         assert(cells != nil, "No cells found for settings sections \(section).")
         return cells?.count ?? 0
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cells = settings[(indexPath as NSIndexPath).section]["cells"] as? [AnyObject]
-        let contents = cells?[(indexPath as NSIndexPath).row]
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cells = settings[indexPath.section]["cells"] as? [AnyObject]
+        let contents = cells?[indexPath.row]
         let cellID = contents?["cell_id"] as! String
         switch cellID  {
         case SwitchCellID:
-            let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! SwitchTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(cellID, forIndexPath: indexPath) as! SwitchTableViewCell
             cell.label?.text = contents?["title"] as? String
             cell.tag = contents!["tag"] as! Int
             return cell
         case DisclosureCellID:
-            let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
+            let cell = tableView.dequeueReusableCellWithIdentifier(cellID, forIndexPath: indexPath)
             cell.textLabel!.text = contents?["title"] as? String
             cell.detailTextLabel!.text = contents?["detail"] as? String
             cell.tag = contents!["tag"] as! Int
             return cell
         case LogoutCellID:
-            let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
+            let cell = tableView.dequeueReusableCellWithIdentifier(cellID, forIndexPath: indexPath)
             cell.tag = contents!["tag"] as! Int
             return cell
         default:
-            let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
+            let cell = UITableViewCell(style: .Default, reuseIdentifier: nil)
             return cell
         }
     }

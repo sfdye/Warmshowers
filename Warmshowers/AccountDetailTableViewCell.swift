@@ -13,7 +13,7 @@ class AccountDetailTableViewCell: UITableViewCell {
     @IBOutlet var label: UILabel!
     
     // Configures the cell to show
-    func configureAsMemberFor(_ userInfo: AnyObject?) {
+    func configureAsMemberFor(userInfo: AnyObject?) {
         
         label.text = "Member for"
         
@@ -21,18 +21,18 @@ class AccountDetailTableViewCell: UITableViewCell {
             return
         }
         
-        guard let created: TimeInterval = userInfo.value(forKey: "created")?.doubleValue else {
+        guard let created: NSTimeInterval = userInfo.valueForKey("created")?.doubleValue else {
             return
         }
         
-        let now = Date().timeIntervalSince1970
+        let now = NSDate().timeIntervalSince1970
         let since = WSTimeInterval(timeInterval: now - created)
         label.text = "Member for " + since.asString()
     }
     
     // Configures the cell to show how long ago the user was last logged in
     //
-    func configureAsActiveAgo(_ userInfo: AnyObject?) {
+    func configureAsActiveAgo(userInfo: AnyObject?) {
         
         label.text = "Active"
         
@@ -40,17 +40,17 @@ class AccountDetailTableViewCell: UITableViewCell {
             return
         }
         
-        guard let loginTime: TimeInterval = userInfo.value(forKey: "login")?.doubleValue else {
+        guard let loginTime: NSTimeInterval = userInfo.valueForKey("login")?.doubleValue else {
             return
         }
         
-        let now = Date().timeIntervalSince1970
+        let now = NSDate().timeIntervalSince1970
         let ago = WSTimeInterval(timeInterval: now - loginTime)
         label.text = "Active " + ago.asString() + " ago"
         
     }
     
-    func configureAsLanguageSpoken(_ userInfo: AnyObject?) {
+    func configureAsLanguageSpoken(userInfo: AnyObject?) {
         
         label.text = "Languages spoken: "
         
@@ -58,7 +58,7 @@ class AccountDetailTableViewCell: UITableViewCell {
             return
         }
         
-        guard let languages = userInfo.value(forKey: "languagesspoken") as? String else {
+        guard let languages = userInfo.valueForKey("languagesspoken") as? String else {
             return
         }
         

@@ -10,7 +10,7 @@ import Foundation
 
 class WSMockNetworkResponse {
     
-    class func networkResponseFromFixture() -> (Data?, URLResponse?, NSError?) {
+    class func networkResponseFromFixture() -> (NSData?, NSURLResponse?, NSError?) {
         
 //        // Load the data from the JSON fixture
 //        guard

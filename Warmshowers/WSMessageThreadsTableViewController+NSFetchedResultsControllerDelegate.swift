@@ -11,7 +11,7 @@ import CoreData
 
 extension WSMessageThreadsTableViewController : NSFetchedResultsControllerDelegate {
     
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    func controllerWillChangeContent(controller: NSFetchedResultsController) {
         self.tableView.beginUpdates()
         self.updateTabBarBadge()
     }
@@ -29,26 +29,26 @@ extension WSMessageThreadsTableViewController : NSFetchedResultsControllerDelega
 //        }
 //    }
     
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: AnyObject, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
             switch type {
-            case .insert:
+            case .Insert:
                 print("insert")
-                self.tableView.insertRows(at: [newIndexPath!], with: .fade)
-            case .delete:
+                self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+            case .Delete:
                 print("delete")
-                self.tableView.deleteRows(at: [indexPath!], with: .fade)
-            case .update:
+                self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+            case .Update:
                 print("update")
-                if let cell = self.tableView.cellForRow(at: indexPath!) {
+                if let cell = self.tableView.cellForRowAtIndexPath(indexPath!) {
                     self.configureCell(cell, indexPath: indexPath!)
                 }
-            case .move:
-                self.tableView.deleteRows(at: [indexPath!], with: .fade)
-                self.tableView.insertRows(at: [indexPath!], with: .fade)
+            case .Move:
+                self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+                self.tableView.insertRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
             }
     }
     
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    func controllerDidChangeContent(controller: NSFetchedResultsController) {
             self.tableView.endUpdates()
     }
     

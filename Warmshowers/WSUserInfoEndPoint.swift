@@ -14,13 +14,13 @@ class WSUserInfoEndPoint: WSAPIEndPointProtocol {
     
     var type: WSAPIEndPoint {
         assertionFailure("path needs uid")
-        return .userInfo }
+        return .UserInfo }
     
     var path: String { return "/services/rest/user/<UID>" }
     
     var method: HttpMethod { return .Get }
     
-    func request(_ request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
+    func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
         return json
     }
 }

@@ -10,48 +10,48 @@ import Foundation
 
 extension WSAPICommunicator : WSAPICommunicatorProtocol {
     
-    func getTokenAndNotify(_ requester: WSAPIResponseDelegate) {
-        contactEndPoint(.token, thenNotify: requester)
+    func getTokenAndNotify(requester: WSAPIResponseDelegate) {
+        contactEndPoint(.Token, thenNotify: requester)
     }
     
-    func login(_ username: String, password: String, andNotify requester: WSAPIResponseDelegate) {
+    func login(username: String, password: String, andNotify requester: WSAPIResponseDelegate) {
         
         let params = ["username" : username, "password" : password]
         
-        contactEndPoint(.login, withParameters: params, thenNotify: requester)
+        contactEndPoint(.Login, withParameters: params, thenNotify: requester)
     }
     
-    func logoutAndNotify(_ requester: WSAPIResponseDelegate) {
-        contactEndPoint(.logout, thenNotify: requester)
+    func logoutAndNotify(requester: WSAPIResponseDelegate) {
+        contactEndPoint(.Logout, thenNotify: requester)
     }
     
-    func searchByLocation(_ regionLimits: [String: String], andNotify requester: WSAPIResponseDelegate) {
+    func searchByLocation(regionLimits: [String: String], andNotify requester: WSAPIResponseDelegate) {
         
         var params = regionLimits
         params["limit"] = String(MapSearchLimit)
         
-        contactEndPoint(.searchByLocation, withParameters: params, thenNotify: requester)
+        contactEndPoint(.SearchByLocation, withParameters: params, thenNotify: requester)
     }
     
-    func searchByKeyword(_ keyword: String, offset: Int, andNotify requester: WSAPIResponseDelegate) {
+    func searchByKeyword(keyword: String, offset: Int, andNotify requester: WSAPIResponseDelegate) {
         
         var params = [String: String]()
         params["keyword"] = keyword ?? " "
         params["offset"] = String(offset)
         params["limit"] = String(KeywordSearchLimit)
         
-        contactEndPoint(.searchByKeyword, withParameters: params, thenNotify: requester)
+        contactEndPoint(.SearchByKeyword, withParameters: params, thenNotify: requester)
     }
     
-    func getUserInfo(_ uid: Int, andNotify requester: WSAPIResponseDelegate) {
+    func getUserInfo(uid: Int, andNotify requester: WSAPIResponseDelegate) {
         
     }
     
-    func getUserFeedback(_ uid: Int, andNotify requester: WSAPIResponseDelegate) {
+    func getUserFeedback(uid: Int, andNotify requester: WSAPIResponseDelegate) {
         
     }
     
-    func createFeedback(_ feedback: WSRecommendation, andNotify requester: WSAPIResponseDelegate) {
+    func createFeedback(feedback: WSRecommendation, andNotify requester: WSAPIResponseDelegate) {
         
         var params = [String: String]()
         params["node[type]"] = "trust_referral"
@@ -62,34 +62,34 @@ extension WSAPICommunicator : WSAPICommunicatorProtocol {
         params["node[field_hosting_date][0][value][year]"] = String(feedback.year)
         params["node[field_hosting_date][0][value][month]"] = String(feedback.month)
         
-        contactEndPoint(.createFeedback, withParameters: params, thenNotify: requester)
+        contactEndPoint(.CreateFeedback, withParameters: params, thenNotify: requester)
     }
     
-    func sendNewMessageToRecipients(_ recipients: [CDWSUser], withSubject subject: String, andMessageBody body: String, thenNotify requester: WSAPIResponseDelegate) {
+    func sendNewMessageToRecipients(recipients: [CDWSUser], withSubject subject: String, andMessageBody body: String, thenNotify requester: WSAPIResponseDelegate) {
         
     }
     
-    func replyToMessageOnThread(_ threadID: Int, withMessageBody body: String, thenNotify requester: WSAPIResponseDelegate) {
+    func replyToMessageOnThread(threadID: Int, withMessageBody body: String, thenNotify requester: WSAPIResponseDelegate) {
         
     }
     
-    func getUnreadMessageCountAndNotify(_ requester: WSAPIResponseDelegate) {
+    func getUnreadMessageCountAndNotify(requester: WSAPIResponseDelegate) {
     
     }
     
-    func getAllMessageThreadsAndNotify(_ requester: WSAPIResponseDelegate) {
+    func getAllMessageThreadsAndNotify(requester: WSAPIResponseDelegate) {
         
     }
     
-    func getMessagesOnThread(_ threadID: Int, andNotify requester: WSAPIResponseDelegate) {
+    func getMessagesOnThread(threadID: Int, andNotify requester: WSAPIResponseDelegate) {
         
     }
     
-    func markMessage(_ threadID: Int, andNotify requester: WSAPIResponseDelegate) {
+    func markMessage(threadID: Int, andNotify requester: WSAPIResponseDelegate) {
         
     }
     
-    func getImageAtURL(_ imageURL: String, andNotify requester: WSAPIResponseDelegate) {
+    func getImageAtURL(imageURL: String, andNotify requester: WSAPIResponseDelegate) {
         downloadImageAtURL(imageURL, thenNotify: requester)
     }
 }

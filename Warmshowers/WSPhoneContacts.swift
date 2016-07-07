@@ -13,7 +13,7 @@ struct WSPhoneContacts {
     var numbers = [WSPhoneNumber]()
     var count: Int { return numbers.count }
     
-    mutating func update(_ userData: AnyObject?) {
+    mutating func update(userData: AnyObject?) {
         
         guard let userData = userData else {
             return
@@ -26,11 +26,11 @@ struct WSPhoneContacts {
             let type: WSPhoneNumberType
             switch key {
             case "homephone":
-                type = .home
+                type = .Home
             case "mobilephone":
-                type = .mobile
+                type = .Mobile
             case "workphone":
-                type = .work
+                type = .Work
             default:
                 continue
             }
@@ -41,9 +41,9 @@ struct WSPhoneContacts {
         }
     }
     
-    func numberForKey(_ key: String, inData data: AnyObject) -> String? {
+    func numberForKey(key: String, inData data: AnyObject) -> String? {
         
-        let number = data.value(forKey: key) as? String
+        let number = data.valueForKey(key) as? String
         if number == "" {
             return nil
         }

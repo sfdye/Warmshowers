@@ -11,10 +11,10 @@ import CoreData
 
 extension WSStore : WSStoreUserLocationProtocol {
     
-    func userLocationWithID(_ uid: Int) throws -> CDWSUserLocation? {
+    func userLocationWithID(uid: Int) throws -> CDWSUserLocation? {
         
         let request = requestForEntity(.UserLocation)
-        request.predicate = Predicate(format: "uid == %i", uid)
+        request.predicate = NSPredicate(format: "uid == %i", uid)
         
         do {
             let user = try executeFetchRequest(request).first as? CDWSUserLocation
@@ -22,18 +22,18 @@ extension WSStore : WSStoreUserLocationProtocol {
         }
     }
     
-    func newOrExistingUserLocation(_ uid: Int) throws -> CDWSUserLocation {
+    func newOrExistingUserLocation(uid: Int) throws -> CDWSUserLocation {
         do {
             if let user = try userLocationWithID(uid) {
                 return user
             } else {
-                let user = NSEntityDescription.insertNewObject(forEntityName: WSEntity.UserLocation.rawValue, into: privateContext) as! CDWSUserLocation
+                let user = NSEntityDescription.insertNewObjectForEntityForName(WSEntity.UserLocation.rawValue, inManagedObjectContext: privateContext) as! CDWSUserLocation
                 return user
             }
         }
     }
     
-    func addUserLocations(_ userLocations: [WSUserLocation], ToMapTile mapTile: CDWSMapTile) throws {
+    func addUserLocations(userLocations: [WSUserLocation], ToMapTile mapTile: CDWSMapTile) throws {
         
         for userLocation in userLocations {
             do {

@@ -10,59 +10,59 @@ import UIKit
 
 extension WSAPICommunicator : WSAPIRequestDelegate {
     
-    func requestShouldBeQueuedWhileOffline(_ request: WSAPIRequest) -> Bool {
+    func requestShouldBeQueuedWhileOffline(request: WSAPIRequest) -> Bool {
         switch request.endPoint.type {
-        case .createFeedback:
+        case .CreateFeedback:
             return true
         default:
             return false
         }
     }
     
-    func request(_ request: WSAPIRequest, didRecieveHTTPResponse data: Data?, response: URLResponse?, andError error: NSError?) {
-        request.status = .recievedResponse
+    func request(request: WSAPIRequest, didRecieveHTTPResponse data: NSData?, response: NSURLResponse?, andError error: NSError?) {
+        request.status = .RecievedResponse
         
         guard error == nil else {
             request.delegate.request(request, didFailWithError: error!)
             return
         }
         
-        let statusCode = (response as! HTTPURLResponse).statusCode
+        let statusCode = (response as! NSHTTPURLResponse).statusCode
         
         guard request.endPoint.successCodes.contains(statusCode) else {
             
             var body: String?
             if let data = data {
                 do {
-                    let json = try JSONSerialization.jsonObject(with: data, options: [])
+                    let json = try NSJSONSerialization.JSONObjectWithData(data, options: [])
                     if json.count > 0 {
-                        body = json.object(0) as? String
+                        body = json.objectAtIndex(0) as? String
                     }
                 } catch {
                     // Leave body as nil
                 }
             }
 
-            let error = WSAPICommunicatorError.serverError(statusCode: statusCode, body: body)
+            let error = WSAPICommunicatorError.ServerError(statusCode: statusCode, body: body)
             request.delegate.request(request, didFailWithError: error)
             return
         }
         
         guard let data = data where request.endPoint.doesExpectDataWithResponse() == true else {
-            let error = WSAPICommunicatorError.noData
+            let error = WSAPICommunicatorError.NoData
             request.delegate.request(request, didFailWithError: error)
             return
         }
         
-        request.status = .parsing
+        request.status = .Parsing
         
         switch request.endPoint.type {
-        case .imageResource:
+        case .ImageResource:
             // Image resouces
             if let image = UIImage(data: data) {
                 request.delegate.request(request, didSucceedWithData: image)
             } else {
-                request.delegate.request(request, didFailWithError: WSAPIEndPointError.parsingError(endPoint: request.endPoint.path, key: nil))
+                request.delegate.request(request, didFailWithError: WSAPIEndPointError.ParsingError(endPoint: request.endPoint.path, key: nil))
             }
         default:
             // Text resources
@@ -70,11 +70,11 @@ extension WSAPICommunicator : WSAPIRequestDelegate {
                 var parsedData: AnyObject? = nil
                 switch request.endPoint.accept {
                 case .PlainText:
-                    if let text = String.init(data: data, encoding: String.Encoding.utf8) {
+                    if let text = String.init(data: data, encoding: NSUTF8StringEncoding) {
                         parsedData = try request.endPoint.request(request, didRecievedResponseWithText: text)
                     }
                 case .JSON:
-                    let json = try JSONSerialization.jsonObject(with: data, options: [])
+                    let json = try NSJSONSerialization.JSONObjectWithData(data, options: [])
                     parsedData = try request.endPoint.request(request, didRecievedResponseWithJSON: json)
                 }
                 request.delegate.request(request, didSucceedWithData: parsedData)
@@ -84,7 +84,7 @@ extension WSAPICommunicator : WSAPIRequestDelegate {
         }
     }
     
-    func request(_ request: WSAPIRequest, didSucceedWithData data: AnyObject?) {
+    func request(request: WSAPIRequest, didSucceedWithData data: AnyObject?) {
         
         // notify the requester
         request.requester?.requestdidComplete(request)
@@ -94,7 +94,7 @@ extension WSAPICommunicator : WSAPIRequestDelegate {
         removeRequestFromQueue(request)
     }
     
-    func request(_ request: WSAPIRequest, didFailWithError error: ErrorProtocol) {
+    func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
         
         // notify the requester
         request.requester?.requestdidComplete(request)

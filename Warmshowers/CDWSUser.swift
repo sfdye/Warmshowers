@@ -10,8 +10,8 @@ import UIKit
 import CoreData
 import MapKit
 
-enum CDWSUserError : ErrorProtocol {
-    case failedValueForKey(key: String)
+enum CDWSUserError : ErrorType {
+    case FailedValueForKey(key: String)
 }
 
 class CDWSUser: NSManagedObject {
@@ -40,7 +40,7 @@ class CDWSUser: NSManagedObject {
         var address: String = ""
         address.appendWithComma(city)
         if let country = country {
-            address.appendWithComma(country.uppercased())
+            address.appendWithComma(country.uppercaseString)
         }
         return address
     }
@@ -52,7 +52,7 @@ class CDWSUser: NSManagedObject {
         address.appendWithNewLine(city)
         address.appendWithSpace(post_code)
         if let country = country {
-            address.appendWithNewLine(country.uppercased())
+            address.appendWithNewLine(country.uppercaseString)
         }
         return address
     }
@@ -61,7 +61,7 @@ class CDWSUser: NSManagedObject {
 
 extension String {
     
-    mutating func appendWithCharacter(_ character: Character, other: String?) {
+    mutating func appendWithCharacter(character: Character, other: String?) {
         
         guard let other = other else {
             return
@@ -78,15 +78,15 @@ extension String {
         }
     }
     
-    mutating func appendWithComma(_ other: String?) {
+    mutating func appendWithComma(other: String?) {
         appendWithCharacter(",", other: other)
     }
     
-    mutating func appendWithNewLine(_ other: String?) {
+    mutating func appendWithNewLine(other: String?) {
         appendWithCharacter("\n", other: other)
     }
     
-    mutating func appendWithSpace(_ other: String?) {
+    mutating func appendWithSpace(other: String?) {
         appendWithCharacter(" ", other: other)
     }
     

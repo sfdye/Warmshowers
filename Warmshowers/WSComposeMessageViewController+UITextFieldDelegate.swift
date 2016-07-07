@@ -10,7 +10,7 @@ import UIKit
 
 extension WSComposeMessageViewController : UITextFieldDelegate {
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
+    func textFieldDidEndEditing(textField: UITextField) {
         subject = textField.text
     }
     

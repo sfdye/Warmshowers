@@ -36,15 +36,15 @@ class WSReachabilityManager : WSReachabilityProtocol {
         reachability.stopNotifier()
     }
     
-    func registerForNotifications(_ observer: AnyObject, selector aSelector: Selector) {
-        NotificationCenter.defaultCenter().addObserver(observer,
+    func registerForNotifications(observer: AnyObject, selector aSelector: Selector) {
+        NSNotificationCenter.defaultCenter().addObserver(observer,
             selector: aSelector,
             name: ReachabilityChangedNotification,
             object: reachability)
     }
     
-    func deregisterFromNotifications(_ observer: AnyObject) {
-        NotificationCenter.defaultCenter().removeObserver(observer,
+    func deregisterFromNotifications(observer: AnyObject) {
+        NSNotificationCenter.defaultCenter().removeObserver(observer,
             name: ReachabilityChangedNotification,
             object: reachability)
     }
@@ -52,12 +52,12 @@ class WSReachabilityManager : WSReachabilityProtocol {
     
     // MARK: Convenience notification methods
     
-    func registerForAndStartNotifications(_ observer: AnyObject, selector aSelector: Selector) {
+    func registerForAndStartNotifications(observer: AnyObject, selector aSelector: Selector) {
         registerForNotifications(observer, selector: aSelector)
         startReachabilityNotifications()
     }
     
-    func deregisterAndStopNotifications(_ observer: AnyObject) {
+    func deregisterAndStopNotifications(observer: AnyObject) {
         stopReachabilityNotifications()
         deregisterFromNotifications(observer)
     }

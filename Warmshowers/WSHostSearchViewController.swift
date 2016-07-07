@@ -65,13 +65,13 @@ class WSHostSearchViewController: UIViewController {
         searchBar.placeholder = "Search by name, email or town"
     }
 
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewWillAppear(animated: Bool) {
         showReachabilityBannerIfNeeded()
     }
 
     // MARK: Reachability
     
-    func reachabilityChanged(_ note: Notification) {
+    func reachabilityChanged(note: NSNotification) {
         showReachabilityBannerIfNeeded()
     }
     
@@ -88,15 +88,15 @@ class WSHostSearchViewController: UIViewController {
     
     /** Shows the host map and hides the search by keyword table view */
     func showMapView() {
-        UIView.transition(with: keywordSearchView, duration: 0.1, options: .transitionCrossDissolve, animations: { [weak self] () -> Void in
-            self?.keywordSearchView.isHidden = true
+        UIView.transitionWithView(keywordSearchView, duration: 0.1, options: .TransitionCrossDissolve, animations: { [weak self] () -> Void in
+            self?.keywordSearchView.hidden = true
             }, completion: nil)
     }
     
     /** Shows the search by keyword table view and hides the host map */
     func showTableView() {
-        UIView.transition(with: keywordSearchView, duration: 0.1, options: .transitionCrossDissolve, animations: { [weak self] () -> Void in
-            self?.keywordSearchView.isHidden = false
+        UIView.transitionWithView(keywordSearchView, duration: 0.1, options: .TransitionCrossDissolve, animations: { [weak self] () -> Void in
+            self?.keywordSearchView.hidden = false
             }, completion: nil)
     }
 }

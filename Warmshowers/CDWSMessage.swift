@@ -9,8 +9,8 @@
 import UIKit
 import CoreData
 
-enum CDWSMessageError : ErrorProtocol {
-    case failedValueForKey(key: String)
+enum CDWSMessageError : ErrorType {
+    case FailedValueForKey(key: String)
 }
 
 class CDWSMessage: NSManagedObject {

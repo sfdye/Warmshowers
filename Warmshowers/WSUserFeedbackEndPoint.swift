@@ -12,7 +12,7 @@ class WSUserFeedbackEndPoint: WSAPIEndPointProtocol {
     
     static let sharedEndPoint = WSUserFeedbackEndPoint()
     
-    var type: WSAPIEndPoint { return .userFeedback }
+    var type: WSAPIEndPoint { return .UserFeedback }
     
     var path: String {
         assertionFailure("path needs uid")
@@ -20,7 +20,7 @@ class WSUserFeedbackEndPoint: WSAPIEndPointProtocol {
     
     var method: HttpMethod { return .Get }
     
-    func request(_ request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
+    func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
         
 //        var feedback = [WSRecommendation]()
 //        

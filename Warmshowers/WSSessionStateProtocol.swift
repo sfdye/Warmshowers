@@ -17,19 +17,19 @@ protocol WSSessionStateProtocol {
     var username: String? { get }
     
     /** Saves the users username to the standard defaults. */
-    func setUsername(_ username: String)
+    func setUsername(username: String)
     
     /** Saves a users username and password. */
-    func savePassword(_ password: String, forUsername username: String) throws
+    func savePassword(password: String, forUsername username: String) throws
     
     /** Saves a session cookie, token and current user uid to NSUserDefaults. */
-    func saveSessionData(_ sessionCookie: String, token: String, uid: Int)
+    func saveSessionData(sessionCookie: String, token: String, uid: Int)
     
     /** Deletes the session cookie, token and current user uid from NSUserDefaults. */
     func deleteSessionData()
     
     /** Saves a session CSRF token. */
-    func setToken(_ token: String)
+    func setToken(token: String)
     
     /** Returns true is a user is logged in. */
     var isLoggedIn: Bool { get }

@@ -9,17 +9,17 @@
 import UIKit
 
 
-class WSURLSession : NSObject, URLSessionDelegate {
+class WSURLSession : NSObject, NSURLSessionDelegate {
     
-    private let session = URLSession.init(configuration: URLSessionConfiguration.default())
+    private let session = NSURLSession.init(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
     
     static let sharedSession = WSURLSession().session
     
-    static func cancelAllDataTasksWithCompletionHandler(_ handler: (() -> Void)? = nil) {
+    static func cancelAllDataTasksWithCompletionHandler(handler: (() -> Void)? = nil) {
         
         let session = WSURLSession.sharedSession
         
-        session.getTasksWithCompletionHandler { (dataTasks: [URLSessionDataTask], uploadTasks: [URLSessionUploadTask], downloadTasks: [URLSessionDownloadTask]) -> Void in
+        session.getTasksWithCompletionHandler { (dataTasks: [NSURLSessionDataTask], uploadTasks: [NSURLSessionUploadTask], downloadTasks: [NSURLSessionDownloadTask]) -> Void in
             for task in dataTasks {
                 task.cancel()
             }

@@ -18,9 +18,9 @@ extension WSStore : WSStoreMessageThreadProtocol {
         }
     }
     
-    func messageThreadWithID(_ threadID: Int) throws -> CDWSMessageThread? {
+    func messageThreadWithID(threadID: Int) throws -> CDWSMessageThread? {
         let request = requestForEntity(.Thread)
-        request.predicate = Predicate(format: "thread_id==%i", threadID)
+        request.predicate = NSPredicate(format: "thread_id==%i", threadID)
         
         do {
             let thread = try executeFetchRequest(request).first as? CDWSMessageThread
@@ -28,45 +28,45 @@ extension WSStore : WSStoreMessageThreadProtocol {
         }
     }
     
-    func newOrExistingMessageThread(_ threadID: Int) throws -> CDWSMessageThread {
+    func newOrExistingMessageThread(threadID: Int) throws -> CDWSMessageThread {
         do {
             if let thread = try messageThreadWithID(threadID) {
                 return thread
             } else {
-                let thread = NSEntityDescription.insertNewObject(forEntityName: WSEntity.Thread.rawValue, into: privateContext) as! CDWSMessageThread
+                let thread = NSEntityDescription.insertNewObjectForEntityForName(WSEntity.Thread.rawValue, inManagedObjectContext: privateContext) as! CDWSMessageThread
                 return thread
             }
         }
     }
     
-    func addMessageThread(_ json: AnyObject) throws {
+    func addMessageThread(json: AnyObject) throws {
         
-        guard let count = json.value(forKey: "count")?.intValue else {
-            throw CDWSMessageThreadError.failedValueForKey(key: "count")
+        guard let count = json.valueForKey("count")?.integerValue else {
+            throw CDWSMessageThreadError.FailedValueForKey(key: "count")
         }
         
-        guard let has_tokens = json.value(forKey: "has_tokens")?.intValue else {
-            throw CDWSMessageThreadError.failedValueForKey(key: "has_tokens")
+        guard let has_tokens = json.valueForKey("has_tokens")?.integerValue else {
+            throw CDWSMessageThreadError.FailedValueForKey(key: "has_tokens")
         }
         
-        guard let is_new = json.value(forKey: "is_new")?.intValue else {
-            throw CDWSMessageThreadError.failedValueForKey(key: "is_new")
+        guard let is_new = json.valueForKey("is_new")?.integerValue else {
+            throw CDWSMessageThreadError.FailedValueForKey(key: "is_new")
         }
         
-        guard let last_updated = json.value(forKey: "last_updated")?.doubleValue else {
-            throw CDWSMessageThreadError.failedValueForKey(key: "last_updated")
+        guard let last_updated = json.valueForKey("last_updated")?.doubleValue else {
+            throw CDWSMessageThreadError.FailedValueForKey(key: "last_updated")
         }
         
-        guard let subject = json.value(forKey: "subject") as? String else {
-            throw CDWSMessageThreadError.failedValueForKey(key: "subject")
+        guard let subject = json.valueForKey("subject") as? String else {
+            throw CDWSMessageThreadError.FailedValueForKey(key: "subject")
         }
         
-        guard let thread_id = json.value(forKey: "thread_id")?.intValue else {
-            throw CDWSMessageThreadError.failedValueForKey(key: "thread_id")
+        guard let thread_id = json.valueForKey("thread_id")?.integerValue else {
+            throw CDWSMessageThreadError.FailedValueForKey(key: "thread_id")
         }
         
-        guard let thread_started = json.value(forKey: "thread_started")?.doubleValue else {
-            throw CDWSMessageThreadError.failedValueForKey(key: "thread_started")
+        guard let thread_started = json.valueForKey("thread_started")?.doubleValue else {
+            throw CDWSMessageThreadError.FailedValueForKey(key: "thread_started")
         }
         
         // Get the message participants, then save the message
@@ -75,16 +75,16 @@ extension WSStore : WSStoreMessageThreadProtocol {
             thread.count = count
             thread.has_tokens = has_tokens
             thread.is_new = is_new
-            thread.last_updated = Date(timeIntervalSince1970: last_updated)
+            thread.last_updated = NSDate(timeIntervalSince1970: last_updated)
             thread.subject = subject
             thread.thread_id = thread_id
-            thread.thread_started = Date(timeIntervalSince1970: thread_started)
+            thread.thread_started = NSDate(timeIntervalSince1970: thread_started)
             
             // Don't need change the message participants if they already exist
             if let participants = thread.participants where participants.count == 0 {
                 
-                guard let participantsJSON = json.value(forKey: "participants") else {
-                    throw DataError.invalidInput
+                guard let participantsJSON = json.valueForKey("participants") else {
+                    throw DataError.InvalidInput
                 }
                 
                 let participants = try participantSetFromJSON(participantsJSON)
@@ -95,7 +95,7 @@ extension WSStore : WSStoreMessageThreadProtocol {
         }
     }
     
-    func numberOfDownloadedMessagesOnThread(_ threadID: Int) throws -> Int {
+    func numberOfDownloadedMessagesOnThread(threadID: Int) throws -> Int {
         do {
             if let messageThread = try messageThreadWithID(threadID) {
                 if let messages = messageThread.messages {
@@ -109,7 +109,7 @@ extension WSStore : WSStoreMessageThreadProtocol {
     func numberOfUnreadMessageThreads() throws -> Int {
         do {
             let threads = try allMessageThreads() as NSArray
-            let isNew = threads.value(forKey: "is_new") as! [Int]
+            let isNew = threads.valueForKey("is_new") as! [Int]
             let sum = isNew.reduce(0, combine: +)
             return sum
         }
@@ -121,7 +121,7 @@ extension WSStore : WSStoreMessageThreadProtocol {
             let threads = try allMessageThreads()
             for thread in threads {
                 if thread.needsUpdating() {
-                    if let threadID = thread.thread_id?.intValue {
+                    if let threadID = thread.thread_id?.integerValue {
                         threadIDs.append(threadID)
                     }
                 }
@@ -130,7 +130,7 @@ extension WSStore : WSStoreMessageThreadProtocol {
         }
     }
     
-    func allMessagesOnThread(_ threadID: Int) throws -> [CDWSMessage]? {
+    func allMessagesOnThread(threadID: Int) throws -> [CDWSMessage]? {
         do {
             var messages: [CDWSMessage]?
             if let messageThread = try messageThreadWithID(threadID) {
@@ -140,7 +140,7 @@ extension WSStore : WSStoreMessageThreadProtocol {
         }
     }
     
-    func subjectForMessageThreadWithID(_ threadID: Int) -> String? {
+    func subjectForMessageThreadWithID(threadID: Int) -> String? {
         do {
             let messageThread = try messageThreadWithID(threadID)
             let subject = messageThread?.subject
@@ -150,7 +150,7 @@ extension WSStore : WSStoreMessageThreadProtocol {
         }
     }
     
-    func markMessageThread(_ threadID: Int, unread: Bool) throws {
+    func markMessageThread(threadID: Int, unread: Bool) throws {
         do {
             let messageThread = try messageThreadWithID(threadID)
             messageThread?.is_new = unread

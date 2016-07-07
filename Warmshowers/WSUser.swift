@@ -28,9 +28,9 @@ class WSUser: NSObject {
     
     convenience init?(json: AnyObject) {
         
-        guard let fullname = json.value(forKey: "fullname") as? String,
-              let name = json.value(forKey: "name") as? String,
-              let uid = json.value(forKey: "laundry")?.intValue
+        guard let fullname = json.valueForKey("fullname") as? String,
+              let name = json.valueForKey("name") as? String,
+              let uid = json.valueForKey("laundry")?.integerValue
             else {
                 return nil
         }

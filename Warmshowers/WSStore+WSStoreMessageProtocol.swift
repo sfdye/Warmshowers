@@ -18,10 +18,10 @@ extension WSStore : WSStoreMessageProtocol {
         }
     }
     
-    func messageWithID(_ messageID: Int) throws -> CDWSMessage? {
+    func messageWithID(messageID: Int) throws -> CDWSMessage? {
         
         let request = requestForEntity(.Message)
-        request.predicate = Predicate(format: "message_id==%i", messageID)
+        request.predicate = NSPredicate(format: "message_id==%i", messageID)
         
         do {
             let message = try executeFetchRequest(request).first as? CDWSMessage
@@ -29,38 +29,38 @@ extension WSStore : WSStoreMessageProtocol {
         }
     }
     
-    func newOrExistingMessage(_ messageID: Int) throws -> CDWSMessage {
+    func newOrExistingMessage(messageID: Int) throws -> CDWSMessage {
         do {
             if let message = try messageWithID(messageID) {
                 return message
             } else {
-                let message = NSEntityDescription.insertNewObject(forEntityName: WSEntity.Message.rawValue, into: privateContext) as! CDWSMessage
+                let message = NSEntityDescription.insertNewObjectForEntityForName(WSEntity.Message.rawValue, inManagedObjectContext: privateContext) as! CDWSMessage
                 return message
             }
         }
     }
     
-    func addMessage(_ json: AnyObject, onThreadWithID threadID: Int) throws {
+    func addMessage(json: AnyObject, onThreadWithID threadID: Int) throws {
         
         // JSON input checks
-        guard let body = json.value(forKey: "body") as? String else {
-            throw CDWSMessageThreadError.failedValueForKey(key: "count")
+        guard let body = json.valueForKey("body") as? String else {
+            throw CDWSMessageThreadError.FailedValueForKey(key: "count")
         }
         
-        guard let message_id = json.value(forKey: "mid")?.intValue else {
-            throw CDWSMessageThreadError.failedValueForKey(key: "mid")
+        guard let message_id = json.valueForKey("mid")?.integerValue else {
+            throw CDWSMessageThreadError.FailedValueForKey(key: "mid")
         }
         
-        guard let timestamp = json.value(forKey: "timestamp")?.doubleValue else {
-            throw CDWSMessageThreadError.failedValueForKey(key: "timestamp")
+        guard let timestamp = json.valueForKey("timestamp")?.doubleValue else {
+            throw CDWSMessageThreadError.FailedValueForKey(key: "timestamp")
         }
         
-        guard let is_new = json.value(forKey: "is_new")?.boolValue else {
-            throw CDWSMessageThreadError.failedValueForKey(key: "is_new")
+        guard let is_new = json.valueForKey("is_new")?.boolValue else {
+            throw CDWSMessageThreadError.FailedValueForKey(key: "is_new")
         }
         
-        guard let author_uid = json.value(forKey: "author")?.intValue else {
-            throw CDWSMessageThreadError.failedValueForKey(key: "author")
+        guard let author_uid = json.valueForKey("author")?.integerValue else {
+            throw CDWSMessageThreadError.FailedValueForKey(key: "author")
         }
         
         // Get the message author and thread, then save the message
@@ -72,7 +72,7 @@ extension WSStore : WSStoreMessageProtocol {
             message.thread = thread
             message.body = body
             message.message_id = message_id
-            message.timestamp = Date(timeIntervalSince1970: timestamp)
+            message.timestamp = NSDate(timeIntervalSince1970: timestamp)
             message.is_new = is_new
             try savePrivateContext()
         }

@@ -10,11 +10,11 @@ import UIKit
 
 extension WSComposeMessageViewController : UITextViewDelegate {
     
-    func textViewDidChange(_ textView: UITextView) {
+    func textViewDidChange(textView: UITextView) {
         
         // Resize the table cell
         let size = textView.bounds.size
-        let newSize = textView.sizeThatFits(CGSize(width: size.width, height: CGFloat.greatestFiniteMagnitude))
+        let newSize = textView.sizeThatFits(CGSize(width: size.width, height: CGFloat.max))
         
         // Resize the cell only when cell's size is changed
         if size.height != newSize.height {
@@ -22,14 +22,14 @@ extension WSComposeMessageViewController : UITextViewDelegate {
             tableView?.beginUpdates()
             tableView?.endUpdates()
             UIView.setAnimationsEnabled(true)
-            tableView.scrollToRow(at: IndexPath(row: 2, section: 0), at: .bottom, animated: false)
+            tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 2, inSection: 0), atScrollPosition: .Bottom, animated: false)
         }
         
         // Update the model
         body = textView.text
     }
     
-    func textViewDidEndEditing(_ textView: UITextView) {
+    func textViewDidEndEditing(textView: UITextView) {
         body = textView.text
     }
     

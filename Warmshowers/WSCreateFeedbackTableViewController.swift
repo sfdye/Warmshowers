@@ -14,19 +14,19 @@ class WSCreateFeedbackTableViewController: UITableViewController {
     // MARK: Properties
     
     // Feedback date
-    let calendar = Calendar(calendarIdentifier: Calendar.Identifier.gregorian)
+    let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
     let BaseYear = 2008
     var thisYear: Int?
-    let formatter = DateFormatter()
-    let monthFormat = DateFormatter.dateFormat(fromTemplate: "MMMM", options: 0, locale: Locale.current())
-    let yearTemplate = DateFormatter.dateFormat(fromTemplate: "yyyy", options: 0, locale: Locale.current())
+    let formatter = NSDateFormatter()
+    let monthFormat = NSDateFormatter.dateFormatFromTemplate("MMMM", options: 0, locale: NSLocale.currentLocale())
+    let yearTemplate = NSDateFormatter.dateFormatFromTemplate("yyyy", options: 0, locale: NSLocale.currentLocale())
     
     // Feedback model
     var feedback = WSRecommendation()
     var userName: String?
     
     // View state variables
-    var pickerIndexPath: IndexPath? = nil
+    var pickerIndexPath: NSIndexPath? = nil
     let PlaceholderFeedback = "Type your feedback here."
     
     // API communicator
@@ -40,7 +40,7 @@ class WSCreateFeedbackTableViewController: UITableViewController {
         super.viewDidLoad()
         
         // Get the current year
-        thisYear = calendar?.components([.year], from: Date()).year
+        thisYear = calendar?.components([.Year], fromDate: NSDate()).year
         
         // Configure the table view
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -51,7 +51,7 @@ class WSCreateFeedbackTableViewController: UITableViewController {
     // MARK: Configuration
     
     // Configures the view controller
-    func configureForSendingFeedbackForUserWithUserName(_ userName: String?) {
+    func configureForSendingFeedbackForUserWithUserName(userName: String?) {
         feedback.recommendedUserName = userName
     }
     
@@ -60,8 +60,8 @@ class WSCreateFeedbackTableViewController: UITableViewController {
     
     // Checks if a picker is at the given index path
     //
-    func hasPickerAtIndexPath(_ indexPath: IndexPath) -> Bool {
-        if let pickerIndexPath = pickerIndexPath where (pickerIndexPath as NSIndexPath).row == (indexPath as NSIndexPath).row {
+    func hasPickerAtIndexPath(indexPath: NSIndexPath) -> Bool {
+        if let pickerIndexPath = pickerIndexPath where pickerIndexPath.row == indexPath.row {
             return true
         } else {
             return false
@@ -69,9 +69,9 @@ class WSCreateFeedbackTableViewController: UITableViewController {
     }
     
     // Displays an inline picker for a given index path
-    func displayInlinePickerForRowAtIndexPath(_ indexPath: IndexPath) {
+    func displayInlinePickerForRowAtIndexPath(indexPath: NSIndexPath) {
         
-        guard (indexPath as NSIndexPath).section == 0 else {
+        guard indexPath.section == 0 else {
             return
         }
         
@@ -82,13 +82,13 @@ class WSCreateFeedbackTableViewController: UITableViewController {
         if let pickerIndexPath = pickerIndexPath {
             
             // Find if the picker is before the index path
-            before = (pickerIndexPath as NSIndexPath).row < (indexPath as NSIndexPath).row
+            before = pickerIndexPath.row < indexPath.row
             
             // Find the option cell with a pick was tapped
-            sameCellClicked = ((pickerIndexPath as NSIndexPath).row - 1) == (indexPath as NSIndexPath).row
+            sameCellClicked = (pickerIndexPath.row - 1) == indexPath.row
             
             // Remove any picker cell that exists
-            tableView.deleteRows(at: [pickerIndexPath], with: UITableViewRowAnimation.automatic)
+            tableView.deleteRowsAtIndexPaths([pickerIndexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
             self.pickerIndexPath = nil
         }
         
@@ -96,22 +96,22 @@ class WSCreateFeedbackTableViewController: UITableViewController {
         if !sameCellClicked {
             
             // Display the new picker
-            let rowToReveal = before ? (indexPath as NSIndexPath).row - 1 : (indexPath as NSIndexPath).row
-            let indexPathToReveal = IndexPath(row: rowToReveal, section: 0)
+            let rowToReveal = before ? indexPath.row - 1 : indexPath.row
+            let indexPathToReveal = NSIndexPath(forRow: rowToReveal, inSection: 0)
             showPickerForIndexPath(indexPathToReveal)
-            pickerIndexPath = IndexPath(row: (indexPathToReveal as NSIndexPath).row + 1, section: 0)
+            pickerIndexPath = NSIndexPath(forRow: indexPathToReveal.row + 1, inSection: 0)
         }
         
-        tableView.deselectRow(at: indexPath, animated: true)
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
         tableView.endUpdates()
     }
     
     // Inserts a picker cell under the cell at the given index path
     //
-    func showPickerForIndexPath(_ indexPath: IndexPath) {
+    func showPickerForIndexPath(indexPath: NSIndexPath) {
         tableView.beginUpdates()
-        let pickerIndexPath = IndexPath(row: (indexPath as NSIndexPath).row + 1, section: (indexPath as NSIndexPath).section)
-        tableView.insertRows(at: [pickerIndexPath], with: UITableViewRowAnimation.automatic)
+        let pickerIndexPath = NSIndexPath(forRow: indexPath.row + 1, inSection: indexPath.section)
+        tableView.insertRowsAtIndexPaths([pickerIndexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
         tableView.endUpdates()
     }
     
@@ -120,7 +120,7 @@ class WSCreateFeedbackTableViewController: UITableViewController {
     func removeAllPickerCells() {
         if let pickerIndexPath = pickerIndexPath {
             tableView.beginUpdates()
-            tableView.deleteRows(at: [pickerIndexPath], with: UITableViewRowAnimation.automatic)
+            tableView.deleteRowsAtIndexPaths([pickerIndexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
             self.pickerIndexPath = nil
             tableView.endUpdates()
         }

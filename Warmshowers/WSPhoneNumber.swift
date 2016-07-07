@@ -14,11 +14,11 @@ struct WSPhoneNumber {
     var type: WSPhoneNumberType
     var description: String {
         switch type {
-        case .home:
+        case .Home:
             return "Home Number"
-        case .mobile:
+        case .Mobile:
             return "Mobile Number"
-        case .work:
+        case .Work:
             return "Work Number"
         }
     }

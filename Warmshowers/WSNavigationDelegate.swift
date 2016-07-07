@@ -16,33 +16,33 @@ class WSNavigationDelegate : WSNavigationProtocol {
     let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
     
     func showLoginScreen() {
-        DispatchQueue.main.async { [weak self] in
-            let loginViewController = self?.mainStoryboard.instantiateViewController(withIdentifier: LoginSBID)
-            let appDelegate = UIApplication.shared().delegate as! AppDelegate
+        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+            let loginViewController = self?.mainStoryboard.instantiateViewControllerWithIdentifier(LoginSBID)
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
             appDelegate.window?.rootViewController = loginViewController
         }
     }
     
     func showMainApp() {
-        DispatchQueue.main.async { [weak self] in
-            let appDelegate = UIApplication.shared().delegate as! AppDelegate
+        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+            let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
             appDelegate.window?.rootViewController = self?.mainStoryboard.instantiateInitialViewController()
         }
     }
     
     func openWarmshowersHomePage() {
-        UIApplication.shared().openURL(URL(string: "https://www.warmshowers.org")!)
+        UIApplication.sharedApplication().openURL(NSURL(string: "https://www.warmshowers.org")!)
     }
     
     func openWarmshowersSignUpPage() {
-        UIApplication.shared().openURL(URL(string: "https://www.warmshowers.org/user/register")!)
+        UIApplication.sharedApplication().openURL(NSURL(string: "https://www.warmshowers.org/user/register")!)
     }
     
     func openWarmshowersFAQPage() {
-        UIApplication.shared().openURL(URL(string: "https://www.warmshowers.org/faq")!)
+        UIApplication.sharedApplication().openURL(NSURL(string: "https://www.warmshowers.org/faq")!)
     }
     
     func openFeedbackEmail() {
-        UIApplication.shared().openURL(URL(string: "mailto:rajan.fernandez@hotmail.com?subject=Warmshowers%20app")!)
+        UIApplication.sharedApplication().openURL(NSURL(string: "mailto:rajan.fernandez@hotmail.com?subject=Warmshowers%20app")!)
     }
 }

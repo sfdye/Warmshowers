@@ -10,11 +10,11 @@ import UIKit
 
 extension WSHostSearchViewController : UISearchControllerDelegate {
     
-    func didPresent(_ searchController: UISearchController) {
+    func didPresentSearchController(searchController: UISearchController) {
         showTableView()
     }
     
-    func didDismiss(_ searchController: UISearchController) {
+    func didDismissSearchController(searchController: UISearchController) {
         showMapView()
     }
 }

@@ -15,20 +15,20 @@ class MessageTableViewCell: UITableViewCell {
     @IBOutlet var bodyTextView: UITextView!
     @IBOutlet var authorImageView: UIImageView!
     
-    func configureWithMessage(_ message: CDWSMessage) {
+    func configureWithMessage(message: CDWSMessage) {
         fromLabel.text = message.authorName ?? ""
         setDate(message.timestamp)
         bodyTextView.text = message.body
         authorImageView.image = message.authorThumbnail ?? UIImage(named: "ThumbnailPlaceholder")
     }
 
-    func setDate(_ date: Date?) {
+    func setDate(date: NSDate?) {
         if date != nil {
-            let formatter = DateFormatter()
+            let formatter = NSDateFormatter()
             let template = "HHmmddMMMyyyy"
-            let locale = Locale.current()
-            formatter.dateFormat = DateFormatter.dateFormat(fromTemplate: template, options: 0, locale: locale)
-            dateLabel.text = formatter.string(from: date!)
+            let locale = NSLocale.currentLocale()
+            formatter.dateFormat = NSDateFormatter.dateFormatFromTemplate(template, options: 0, locale: locale)
+            dateLabel.text = formatter.stringFromDate(date!)
         }
     }
 

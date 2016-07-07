@@ -10,7 +10,7 @@ import UIKit
 
 extension WSCreateFeedbackTableViewController : UIPickerViewDelegate {
     
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
         guard let pickerRow = pickerIndexPath?.row else {
             return
@@ -32,7 +32,7 @@ extension WSCreateFeedbackTableViewController : UIPickerViewDelegate {
             feedback.rating.setFromRawValue(selectedValue)
         case 2:
             // Feedback date picker
-            if let comps = calendar?.components([.month, .year], from: feedback.date) {
+            if let comps = calendar?.components([.Month, .Year], fromDate: feedback.date) {
                 switch component {
                 case 0:
                     comps.month = row + 1
@@ -41,7 +41,7 @@ extension WSCreateFeedbackTableViewController : UIPickerViewDelegate {
                 default:
                     break
                 }
-                if let date = calendar?.date(from: comps) {
+                if let date = calendar?.dateFromComponents(comps) {
                     feedback.date = date
                 }
             }
@@ -50,10 +50,10 @@ extension WSCreateFeedbackTableViewController : UIPickerViewDelegate {
             return
         }
         
-        tableView.reloadRows(at: [IndexPath(row: optionCellRow, section: 0)], with: .none)
+        tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: optionCellRow, inSection: 0)], withRowAnimation: .None)
     }
     
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         
         guard let modelRow = pickerIndexPath?.row else {
             return nil
@@ -70,11 +70,11 @@ extension WSCreateFeedbackTableViewController : UIPickerViewDelegate {
             // Feedback date picker
             switch component {
             case 0:
-                var dateComps = DateComponents()
+                let dateComps = NSDateComponents()
                 dateComps.month = row + 1
-                let date = calendar?.date(from: dateComps)
+                let date = calendar?.dateFromComponents(dateComps)
                 formatter.dateFormat = monthFormat
-                return formatter.string(from: date!)
+                return formatter.stringFromDate(date!)
             case 1:
                 return String(BaseYear + row)
             default:

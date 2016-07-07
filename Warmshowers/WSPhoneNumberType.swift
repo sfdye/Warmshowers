@@ -9,7 +9,7 @@
 import UIKit
 
 enum WSPhoneNumberType: Int {
-    case home
-    case mobile
-    case work
+    case Home
+    case Mobile
+    case Work
 }

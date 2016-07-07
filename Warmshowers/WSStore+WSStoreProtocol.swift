@@ -19,7 +19,7 @@ extension WSStore : WSStoreProtocol {
             for entity in entities {
                 let objects = try getAllEntriesFromEntity(entity) as! [NSManagedObject]
                 for object in objects {
-                    privateContext.delete(object)
+                    privateContext.deleteObject(object)
                     try savePrivateContext()
                 }
             }

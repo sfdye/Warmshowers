@@ -16,7 +16,7 @@ class WSImageResourceURL: WSAPIEndPointProtocol {
         self.url = url
     }
     
-    var type: WSAPIEndPoint { return .imageResource }
+    var type: WSAPIEndPoint { return .ImageResource }
     
     var path: String { return url ?? "" }
     

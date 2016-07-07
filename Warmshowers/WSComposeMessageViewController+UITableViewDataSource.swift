@@ -10,32 +10,32 @@ import UIKit
 
 extension WSComposeMessageViewController : UITableViewDataSource {
     
-    func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return 3
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch (indexPath as NSIndexPath).row {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        switch indexPath.row {
         case 0:
-            let cell = tableView.dequeueReusableCell(withIdentifier: ComposeMessageDetailCellID, for: indexPath) as! ComposeMessageDetailTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(ComposeMessageDetailCellID, forIndexPath: indexPath) as! ComposeMessageDetailTableViewCell
             cell.detailLabel!.text = "To:"
             cell.detailTextField!.text = getRecipientString()
-            cell.isUserInteractionEnabled = false
+            cell.userInteractionEnabled = false
             return cell
         case 1:
-            let cell = tableView.dequeueReusableCell(withIdentifier: ComposeMessageDetailCellID, for: indexPath) as! ComposeMessageDetailTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(ComposeMessageDetailCellID, forIndexPath: indexPath) as! ComposeMessageDetailTableViewCell
             cell.detailLabel!.text = "Subject:"
             cell.detailTextField!.text = subject
             cell.detailTextField!.delegate = self
             return cell
         default:
-            let cell = tableView.dequeueReusableCell(withIdentifier: ComposeMessageBodyCellID, for: indexPath) as! ComposeMessageBodyTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(ComposeMessageBodyCellID, forIndexPath: indexPath) as! ComposeMessageBodyTableViewCell
             cell.textView.delegate = self
             return cell
         }

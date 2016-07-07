@@ -10,22 +10,22 @@ import UIKit
 
 extension WSCreateFeedbackTableViewController {
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        if (indexPath as NSIndexPath).section == 0 {
+        if indexPath.section == 0 {
             
             hideKeyboard()
             
             // show a picker
-            let cell = tableView.cellForRow(at: indexPath)
+            let cell = tableView.cellForRowAtIndexPath(indexPath)
             if cell?.reuseIdentifier == FeedbackOptionCellID {
                 displayInlinePickerForRowAtIndexPath(indexPath)
             } else {
-                tableView.deselectRow(at: indexPath, animated: true)
+                tableView.deselectRowAtIndexPath(indexPath, animated: true)
             }
         } else {
             
-            tableView.deselectRow(at: indexPath, animated: true)
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
             removeAllPickerCells()
         }
     }

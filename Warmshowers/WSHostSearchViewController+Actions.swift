@@ -10,16 +10,16 @@ import UIKit
 
 extension WSHostSearchViewController {
     
-    @IBAction func searchButtonPressed(_ sender: UIBarButtonItem) {
+    @IBAction func searchButtonPressed(sender: UIBarButtonItem) {
         showTableView()
-        present(searchController, animated: true, completion: { [weak self] () -> Void in
-            self?.searchController.isActive = true
+        presentViewController(searchController, animated: true, completion: { [weak self] () -> Void in
+            self?.searchController.active = true
             })
 //
 //        didPresentSearchController(searchController)
     }
     
-    @IBAction func accountButtonPressed(_ sender: UIBarButtonItem) {
-        performSegue(withIdentifier: SID_MapToUserAccount, sender: nil)
+    @IBAction func accountButtonPressed(sender: UIBarButtonItem) {
+        performSegueWithIdentifier(SID_MapToUserAccount, sender: nil)
     }
 }

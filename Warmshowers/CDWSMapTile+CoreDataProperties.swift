@@ -14,7 +14,7 @@ import CoreData
 
 extension CDWSMapTile {
 
-    @NSManaged var last_updated: Date?
+    @NSManaged var last_updated: NSDate?
     @NSManaged var quad_key: String?
     @NSManaged var users: NSSet?
 

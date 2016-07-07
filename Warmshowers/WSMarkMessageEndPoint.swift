@@ -12,17 +12,17 @@ class WSMarkMessageEndPoint: WSAPIEndPointProtocol {
     
     static let sharedEndPoint = WSMarkMessageEndPoint()
     
-    var type: WSAPIEndPoint { return .markMessage }
+    var type: WSAPIEndPoint { return .MarkMessage }
     
     var path: String { return "/services/rest/message/markThreadRead" }
     
     var method: HttpMethod { return .Post }
     
-    func request(_ request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
+    func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
         
         // Successful requests get a response with "1" in the body
         if json.count == 1 {
-            if let success = json.object(0) as? Bool {
+            if let success = json.objectAtIndex(0) as? Bool {
                 return success
             }
         }

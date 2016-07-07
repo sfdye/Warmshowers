@@ -15,7 +15,7 @@ enum WSRecommendationRating : String {
     
     static let allValues = [Positive, Neutral, Negative]
     
-    mutating func setFromRawValue(_ rawValue: String) {
+    mutating func setFromRawValue(rawValue: String) {
         let allValues = WSRecommendationRating.allValues
         for value in allValues {
             if value.rawValue == rawValue {
