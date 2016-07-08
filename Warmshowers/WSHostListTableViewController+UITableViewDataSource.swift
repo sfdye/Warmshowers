@@ -19,13 +19,16 @@ extension WSHostListTableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCellWithIdentifier(HostListCellID, forIndexPath: indexPath)
-        if (users?.count ?? 0) > 0 {
-            if let user = users![indexPath.row] as? WSUserLocation, let cell = cell as? HostListTableViewCell {
-                cell.nameLabel.text = user.fullname
-                cell.locationLabel.text = user.shortAddress
-                cell.uid = user.uid
-            }
+        guard (users?.count ?? 0) > 0 else { return cell }
+        
+        let user = users?[indexPath.row]
+        
+        if let user = user, cell = cell as? HostListTableViewCell {
+            cell.nameLabel.text = user.fullname
+            cell.locationLabel.text = user.shortAddress
+            cell.uid = user.uid
         }
         return cell
     }

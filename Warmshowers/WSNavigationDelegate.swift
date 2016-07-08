@@ -17,7 +17,7 @@ class WSNavigationDelegate : WSNavigationProtocol {
     
     func showLoginScreen() {
         dispatch_async(dispatch_get_main_queue()) { [weak self] in
-            let loginViewController = self?.mainStoryboard.instantiateViewControllerWithIdentifier(LoginSBID)
+            let loginViewController = self?.mainStoryboard.instantiateViewControllerWithIdentifier(SBID_Login)
             let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
             appDelegate.window?.rootViewController = loginViewController
         }

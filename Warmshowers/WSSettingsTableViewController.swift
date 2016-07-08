@@ -8,14 +8,16 @@
 
 import UIKit
 
+let SBID_Settings = "Settings"
+
 class WSSettingsTableViewController: UITableViewController {
     
     // Delegates
-    var navigationDelegate: WSNavigationProtocol? = WSNavigationDelegate.sharedNavigationDelegate
-    var apiCommunicator: WSAPICommunicatorProtocol? = WSAPICommunicator.sharedAPICommunicator
+    var navigation: WSNavigationProtocol? = WSNavigationDelegate.sharedNavigationDelegate
+    var api: WSAPICommunicatorProtocol? = WSAPICommunicator.sharedAPICommunicator
     var session: WSSessionStateProtocol? = WSSessionState.sharedSessionState
     var store: WSStoreProtocol? = WSStore.sharedStore
-    var alertDelegate: WSAlertProtocol? = WSAlertDelegate.sharedAlertDelegate
+    var alert: WSAlertProtocol? = WSAlertDelegate.sharedAlertDelegate
     
     let settings = [
         [
@@ -55,6 +57,6 @@ class WSSettingsTableViewController: UITableViewController {
     ]
     
     override func viewWillAppear(animated: Bool) {
-        alertDelegate?.hideAllBanners()
+        alert?.hideAllBanners()
     }
 }

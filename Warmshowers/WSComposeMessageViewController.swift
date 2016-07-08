@@ -24,8 +24,8 @@ class WSComposeMessageViewController: UIViewController {
     // Delegates
     let store: WSStoreMessageThreadProtocol = WSStore.sharedStore
     let session: WSSessionStateProtocol = WSSessionState.sharedSessionState
-    var alertDelegate: WSAlertDelegate = WSAlertDelegate.sharedAlertDelegate
-    var apiCommunicator: WSAPICommunicator = WSAPICommunicator.sharedAPICommunicator
+    var alert: WSAlertDelegate = WSAlertDelegate.sharedAlertDelegate
+    var api: WSAPICommunicator = WSAPICommunicator.sharedAPICommunicator
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -140,29 +140,29 @@ class WSComposeMessageViewController: UIViewController {
         
         self.view.endEditing(true)
         
-        guard let body = body where body != "" else {
-            let alert = UIAlertController(title: "Could not send message.", message: "Message has no content.", preferredStyle: .Alert)
-            let okAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
-            alert.addAction(okAction)
-            self.presentViewController(alert, animated: true, completion: nil)
-            return
-        }
-        
-        guard let recipients = recipients else {
-            let alert = UIAlertController(title: "Could not send message.", message: "Message has no recipients.", preferredStyle: .Alert)
-            let okAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
-            alert.addAction(okAction)
-            self.presentViewController(alert, animated: true, completion: nil)
-            return
-        }
-        
-        guard let subject = subject where subject != "" else {
-            let alert = UIAlertController(title: "Could not send message.", message: "Message has no subject.", preferredStyle: .Alert)
-            let okAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
-            alert.addAction(okAction)
-            self.presentViewController(alert, animated: true, completion: nil)
-            return
-        }
+//        guard let body = body where body != "" else {
+//            let alert = UIAlertController(title: "Could not send message.", message: "Message has no content.", preferredStyle: .Alert)
+//            let okAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
+//            alert.addAction(okAction)
+//            self.presentViewController(alert, animated: true, completion: nil)
+//            return
+//        }
+//        
+//        guard let recipients = recipients else {
+//            let alert = UIAlertController(title: "Could not send message.", message: "Message has no recipients.", preferredStyle: .Alert)
+//            let okAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
+//            alert.addAction(okAction)
+//            self.presentViewController(alert, animated: true, completion: nil)
+//            return
+//        }
+//        
+//        guard let subject = subject where subject != "" else {
+//            let alert = UIAlertController(title: "Could not send message.", message: "Message has no subject.", preferredStyle: .Alert)
+//            let okAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
+//            alert.addAction(okAction)
+//            self.presentViewController(alert, animated: true, completion: nil)
+//            return
+//        }
         
 //        if let threadID = threadID {
 //            // Send message as a reply on an existing thread

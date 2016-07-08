@@ -15,7 +15,7 @@ extension WSComposeMessageViewController : WSAPIResponseDelegate {
     }
     
     func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
-        alertDelegate.presentAPIError(error, forDelegator: self)
+        alert.presentAPIError(error, forDelegator: self)
     }
 
 }

@@ -12,10 +12,7 @@ import MapKit
 import ReachabilitySwift
 import CCHMapClusterController
 
-// TODOs
-// address this issue (add gps routes to the map)
-// https://ro.warmshowers.org/node/112508
-// - make the pin clustering like the website and android app
+let SBID_HostSearch = "HostSearch"
 
 class WSHostSearchViewController: UIViewController {
     
@@ -29,8 +26,8 @@ class WSHostSearchViewController: UIViewController {
     var keywordSearchTableViewController: UISearchResultsUpdating?
 
     // Delegates
-    var alertDelegate: WSAlertDelegate = WSAlertDelegate.sharedAlertDelegate
-    var apiCommunicator: WSAPICommunicator = WSAPICommunicator.sharedAPICommunicator
+    var alert: WSAlertProtocol = WSAlertDelegate.sharedAlertDelegate
+    var api: WSAPICommunicatorProtocol = WSAPICommunicator.sharedAPICommunicator
     var connection: WSReachabilityProtocol = WSReachabilityManager.sharedReachabilityManager
     var session: WSSessionStateProtocol = WSSessionState.sharedSessionState
     
@@ -77,9 +74,9 @@ class WSHostSearchViewController: UIViewController {
     
     func showReachabilityBannerIfNeeded() {
         if !connection.isOnline {
-            alertDelegate.showNoInternetBanner()
+            alert.showNoInternetBanner()
         } else {
-            alertDelegate.hideAllBanners()
+            alert.hideAllBanners()
         }
     }
     

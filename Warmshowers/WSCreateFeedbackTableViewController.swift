@@ -9,6 +9,8 @@
 import UIKit
 import MBProgressHUD
 
+let SBID_CreateFeedback = "CreateFeedback"
+
 class WSCreateFeedbackTableViewController: UITableViewController {
     
     // MARK: Properties
@@ -30,8 +32,8 @@ class WSCreateFeedbackTableViewController: UITableViewController {
     let PlaceholderFeedback = "Type your feedback here."
     
     // API communicator
-    var apiCommunicator: WSAPICommunicatorProtocol? = WSAPICommunicator.sharedAPICommunicator
-    var alertDelegate: WSAlertProtocol? = WSAlertDelegate.sharedAlertDelegate
+    var api: WSAPICommunicatorProtocol? = WSAPICommunicator.sharedAPICommunicator
+    var alert: WSAlertProtocol? = WSAlertDelegate.sharedAlertDelegate
     
     
     // MARK: View life cycle

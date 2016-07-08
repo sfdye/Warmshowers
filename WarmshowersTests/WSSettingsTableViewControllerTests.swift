@@ -12,13 +12,13 @@ import XCTest
 class WSSettingsTableViewControllerTests: XCTestCase {
     
     let storyboard = UIStoryboard.init(name: "Settings", bundle: nil)
-    let storyboardID = SettingsSBID
+    let storyboardID = SBID_Settings
     
     // Test objects
     var settingsTableViewController: WSSettingsTableViewController?
-    var mockNavigationDelegate: WSMOCKNavigationDelegate?
-    var mockAPICommunicator: WSMOCKAPICommunicator?
-    var mockAlertDelegate: WSMOCKAlertDelegate?
+    var mockNavigationDelegate: WSMOCKNavigationDelegate!
+    var mockAPICommunicator: WSMOCKAPICommunicator!
+    var mockAlertDelegate: WSMOCKAlertDelegate!
     
     override func setUp() {
         super.setUp()
@@ -32,9 +32,9 @@ class WSSettingsTableViewControllerTests: XCTestCase {
         mockAlertDelegate = WSMOCKAlertDelegate()
         
         // Set the mocks that don't require the view
-        settingsTableViewController?.navigationDelegate = mockNavigationDelegate
-        settingsTableViewController?.apiCommunicator = mockAPICommunicator
-        settingsTableViewController?.alertDelegate = mockAlertDelegate
+        settingsTableViewController?.navigation = mockNavigationDelegate
+        settingsTableViewController?.api = mockAPICommunicator
+        settingsTableViewController?.alert = mockAlertDelegate
     }
     
     override func tearDown() {

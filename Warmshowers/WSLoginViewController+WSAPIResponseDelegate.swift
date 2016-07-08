@@ -16,16 +16,16 @@ extension WSLoginViewController : WSAPIResponseDelegate {
             WSProgressHUD.hide()
             let username = usernameTextField.text, password = passwordTextField.text
             do {
-                try sessionState?.savePassword(password!, forUsername: username!)
-                navigationDelegate?.showMainApp()
+                try session.savePassword(password!, forUsername: username!)
+                navigation.showMainApp()
             } catch {
                 // This case is very unlikely.
-                alertDelegate?.presentAlertFor(self, withTitle: "App error", button: "Sorry, an error occured while saving your username. Please report this as a bug, sorry for the inconvenience.")
+                alert.presentAlertFor(self, withTitle: "App error", button: "Sorry, an error occured while saving your username. Please report this as a bug, sorry for the inconvenience.")
             }
         } else {
             // Recieved login response: request a token
             print("back in login controller: getting toke.")
-            apiCommunicator?.getTokenAndNotify(self)
+            api.getTokenAndNotify(self)
         }
     }
     
@@ -46,6 +46,6 @@ extension WSLoginViewController : WSAPIResponseDelegate {
             message = "Please try login again."
         }
         
-        alertDelegate?.presentAlertFor(self, withTitle: title, button: "Dismiss", message: message)
+        alert.presentAlertFor(self, withTitle: title, button: "Dismiss", message: message)
     }
 }

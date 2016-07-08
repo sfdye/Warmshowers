@@ -159,35 +159,35 @@ class WSMessageThreadTableViewController: UITableViewController {
     //
     func updateAuthorImages() {
         
-        do {
-            let messageThread = try store.messageThreadWithID(threadID)
-            let authors = messageThread?.participants?.allObjects as! [CDWSUser]
-            for author in authors {
-                if author.image == nil {
-                    
-                    let uid = author.uid!.integerValue
-                    
-//                    WSRequest.getUserThumbnailImage(uid, doWithImage: { (image) -> Void in
-//                        
-//                        guard let image = image else {
-//                            return
-//                        }
-//                        
-//                        do {
-//                            // TODO: This should be refactored so that the store remains as a delegate variable
-//                            try WSStore.sharedStore.updateParticipant(uid, withImage: image)
-//                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                                self.reloadImage(image, forAuthor: uid)
-//                            })
-//                        } catch {
-//                            // Not a big deal if the thumbnails don't load
-//                        }
-//                    })
-                }
-            }
-        } catch {
-            // Not a big deal if the thumbnails don't load
-        }
+//        do {
+//            let messageThread = try store.messageThreadWithID(threadID)
+//            let authors = messageThread?.participants?.allObjects as! [CDWSUser]
+//            for author in authors {
+//                if author.image == nil {
+//                    
+//                    let uid = author.uid!.integerValue
+//                    
+////                    WSRequest.getUserThumbnailImage(uid, doWithImage: { (image) -> Void in
+////                        
+////                        guard let image = image else {
+////                            return
+////                        }
+////                        
+////                        do {
+////                            // TODO: This should be refactored so that the store remains as a delegate variable
+////                            try WSStore.sharedStore.updateParticipant(uid, withImage: image)
+////                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+////                                self.reloadImage(image, forAuthor: uid)
+////                            })
+////                        } catch {
+////                            // Not a big deal if the thumbnails don't load
+////                        }
+////                    })
+//                }
+//            }
+//        } catch {
+//            // Not a big deal if the thumbnails don't load
+//        }
     }
 
     // Reloads thumbnails in the tableview for a given user

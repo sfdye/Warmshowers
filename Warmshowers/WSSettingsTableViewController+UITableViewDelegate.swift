@@ -15,14 +15,14 @@ extension WSSettingsTableViewController {
         if let cell = tableView.cellForRowAtIndexPath(indexPath){
             switch cell.tag {
             case 10:
-                navigationDelegate?.openWarmshowersHomePage()
+                navigation?.openWarmshowersHomePage()
             case 11:
-                navigationDelegate?.openWarmshowersFAQPage()
+                navigation?.openWarmshowersFAQPage()
             case 20:
-                navigationDelegate?.openFeedbackEmail()
+                navigation?.openFeedbackEmail()
             case 30:
                 WSProgressHUD.show("Logging out ...")
-                apiCommunicator?.logoutAndNotify(self)
+                api?.logoutAndNotify(self)
             default:
                 return
             }

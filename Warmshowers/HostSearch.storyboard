@@ -13,7 +13,7 @@
         <!--Host Search-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
-                <viewController title="Host Search" id="9pv-A4-QxB" customClass="WSHostSearchViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HostSearch" title="Host Search" id="9pv-A4-QxB" customClass="WSHostSearchViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="eue-pw-TMU"/>
                         <viewControllerLayoutGuide type="bottom" id="pLQ-OG-6LL"/>
@@ -124,37 +124,35 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="90.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="ThumbnailPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="Ner-yB-7W8">
-                                            <rect key="frame" x="16" y="16" width="65" height="61"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ThumbnailPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="Ner-yB-7W8">
+                                            <rect key="frame" x="18" y="12" width="50" height="50"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="50" id="H3K-ls-ilU"/>
                                                 <constraint firstAttribute="height" constant="50" id="XsC-tl-ysq"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Host Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Id-iI-Xs0">
-                                            <rect key="frame" x="104" y="16" width="174" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Host Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Id-iI-Xs0">
+                                            <rect key="frame" x="86" y="12" width="496" height="19.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" red="0.18823529410000001" green="0.2784313725" blue="0.4039215686" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bsu-JR-I0Z">
-                                            <rect key="frame" x="104" y="47" width="71" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bsu-JR-I0Z">
+                                            <rect key="frame" x="86" y="39.5" width="496" height="16"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="Ner-yB-7W8" firstAttribute="top" secondItem="thT-Gi-unf" secondAttribute="top" constant="12" id="4nn-Hx-dSt"/>
-                                        <constraint firstItem="Ner-yB-7W8" firstAttribute="leading" secondItem="thT-Gi-unf" secondAttribute="leading" constant="18" id="Hrm-Mc-LO2"/>
-                                        <constraint firstAttribute="trailing" secondItem="2Id-iI-Xs0" secondAttribute="trailing" constant="18" id="Oc5-ic-C0X"/>
-                                        <constraint firstItem="bsu-JR-I0Z" firstAttribute="top" secondItem="2Id-iI-Xs0" secondAttribute="bottom" constant="2" id="Q8d-og-rOj"/>
-                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="bsu-JR-I0Z" secondAttribute="bottom" constant="12" id="Qdc-BO-JHD"/>
-                                        <constraint firstItem="2Id-iI-Xs0" firstAttribute="top" secondItem="thT-Gi-unf" secondAttribute="top" constant="12" id="RBG-Ge-LU3"/>
-                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Ner-yB-7W8" secondAttribute="bottom" constant="12" id="avw-Ph-dEz"/>
-                                        <constraint firstItem="2Id-iI-Xs0" firstAttribute="leading" secondItem="Ner-yB-7W8" secondAttribute="trailing" constant="18" id="bD6-Lp-UFH"/>
-                                        <constraint firstItem="2Id-iI-Xs0" firstAttribute="leading" secondItem="bsu-JR-I0Z" secondAttribute="leading" id="d3f-Sr-SRj"/>
-                                        <constraint firstAttribute="trailing" secondItem="bsu-JR-I0Z" secondAttribute="trailing" constant="18" id="pFR-Dt-Q32"/>
+                                        <constraint firstItem="2Id-iI-Xs0" firstAttribute="leading" secondItem="Ner-yB-7W8" secondAttribute="trailing" constant="18" id="Ekm-ex-9lb"/>
+                                        <constraint firstItem="bsu-JR-I0Z" firstAttribute="top" secondItem="2Id-iI-Xs0" secondAttribute="bottom" constant="8" id="Jwq-8E-d7f"/>
+                                        <constraint firstItem="bsu-JR-I0Z" firstAttribute="leading" secondItem="2Id-iI-Xs0" secondAttribute="leading" id="K5D-Fp-E2w"/>
+                                        <constraint firstItem="Ner-yB-7W8" firstAttribute="top" secondItem="thT-Gi-unf" secondAttribute="top" constant="12" id="Rrh-XT-k9Q"/>
+                                        <constraint firstItem="2Id-iI-Xs0" firstAttribute="top" secondItem="Ner-yB-7W8" secondAttribute="top" id="eW4-57-hbt"/>
+                                        <constraint firstItem="Ner-yB-7W8" firstAttribute="leading" secondItem="thT-Gi-unf" secondAttribute="leading" constant="18" id="oso-yx-YoX"/>
+                                        <constraint firstAttribute="trailing" secondItem="2Id-iI-Xs0" secondAttribute="trailing" constant="18" id="pHn-Kf-4Fi"/>
+                                        <constraint firstItem="bsu-JR-I0Z" firstAttribute="width" secondItem="2Id-iI-Xs0" secondAttribute="width" id="pnN-Kq-clv"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -226,8 +224,8 @@
                                     <outlet property="delegate" destination="VMl-c2-Hgr" id="u7X-4C-alt"/>
                                 </connections>
                             </mapView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Status" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UNj-rN-h0W">
-                                <rect key="frame" x="20" y="20" width="560" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UNj-rN-h0W">
+                                <rect key="frame" x="20" y="20" width="560" height="33"/>
                                 <fontDescription key="fontDescription" name="SueEllenFrancisco" family="Sue Ellen Francisco" pointSize="17"/>
                                 <color key="textColor" red="0.0039215686269999999" green="0.61960784310000006" blue="0.23529411759999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -278,65 +276,58 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="HostList" rowHeight="75" id="9Tk-cS-7wq" customClass="HostListTableViewCell" customModule="Warmshowers" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="600" height="75"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="HostList" rowHeight="68" id="9Tk-cS-7wq" customClass="HostListTableViewCell" customModule="Warmshowers" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="600" height="68"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9Tk-cS-7wq" id="w5a-Xb-WK4">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="74.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="67.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="hkq-0f-O7X">
-                                            <rect key="frame" x="8" y="12" width="584" height="50"/>
-                                            <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="b52-gd-2Gy">
-                                                    <rect key="frame" x="0.0" y="0.0" width="67" height="50"/>
-                                                    <subviews>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ush-CM-tTY" customClass="WSColoredDot" customModule="Warmshowers" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="19" width="12" height="12"/>
-                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="12" id="5RP-dx-ygM"/>
-                                                                <constraint firstAttribute="height" constant="12" id="A7k-XV-uSI"/>
-                                                            </constraints>
-                                                            <userDefinedRuntimeAttributes>
-                                                                <userDefinedRuntimeAttribute type="color" keyPath="color">
-                                                                    <color key="value" red="0.0039215686269999999" green="0.61960784310000006" blue="0.23529411759999999" alpha="1" colorSpace="calibratedRGB"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                            </userDefinedRuntimeAttributes>
-                                                        </view>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ThumbnailPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="1cJ-r2-gaJ">
-                                                            <rect key="frame" x="17" y="0.0" width="50" height="50"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="50" id="6cp-L4-rpr"/>
-                                                                <constraint firstAttribute="height" constant="50" id="w7c-Mx-zs6"/>
-                                                            </constraints>
-                                                        </imageView>
-                                                    </subviews>
-                                                </stackView>
-                                                <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="DuX-n6-MDA">
-                                                    <rect key="frame" x="72" y="0.0" width="512" height="36"/>
-                                                    <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Host Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y4R-V8-Pc8">
-                                                            <rect key="frame" x="0.0" y="0.0" width="81" height="20"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                            <color key="textColor" red="0.18823529410000001" green="0.2784313725" blue="0.4039215686" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" misplaced="YES" text="Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LpK-Va-oN3">
-                                                            <rect key="frame" x="0.0" y="20" width="50" height="16"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                    </subviews>
-                                                </stackView>
-                                            </subviews>
-                                        </stackView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Host Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y4R-V8-Pc8">
+                                            <rect key="frame" x="97" y="8" width="495" height="20"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" red="0.18823529410000001" green="0.2784313725" blue="0.4039215686" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LpK-Va-oN3">
+                                            <rect key="frame" x="97" y="36" width="495" height="16"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ush-CM-tTY" customClass="WSColoredDot" customModule="Warmshowers" customModuleProvider="target">
+                                            <rect key="frame" x="8" y="26.5" width="12" height="12"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="12" id="5RP-dx-ygM"/>
+                                                <constraint firstAttribute="height" constant="12" id="A7k-XV-uSI"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="color">
+                                                    <color key="value" red="0.0039215686269999999" green="0.61960784310000006" blue="0.23529411759999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </view>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ThumbnailPlaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="1cJ-r2-gaJ">
+                                            <rect key="frame" x="32" y="8" width="50" height="50"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="50" id="6cp-L4-rpr"/>
+                                                <constraint firstAttribute="height" constant="50" id="w7c-Mx-zs6"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="hkq-0f-O7X" firstAttribute="top" secondItem="w5a-Xb-WK4" secondAttribute="topMargin" constant="4" id="WCS-y6-OH2"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="hkq-0f-O7X" secondAttribute="trailing" id="mDz-jl-PSO"/>
-                                        <constraint firstItem="hkq-0f-O7X" firstAttribute="leading" secondItem="w5a-Xb-WK4" secondAttribute="leadingMargin" id="uNE-fp-D2J"/>
+                                        <constraint firstItem="Ush-CM-tTY" firstAttribute="centerY" secondItem="1cJ-r2-gaJ" secondAttribute="centerY" id="EH4-rS-Ce5"/>
+                                        <constraint firstItem="LpK-Va-oN3" firstAttribute="top" secondItem="Y4R-V8-Pc8" secondAttribute="bottom" constant="8" id="Fsd-ae-U8k"/>
+                                        <constraint firstItem="Ush-CM-tTY" firstAttribute="leading" secondItem="w5a-Xb-WK4" secondAttribute="leadingMargin" id="J8b-YN-uGt"/>
+                                        <constraint firstItem="Y4R-V8-Pc8" firstAttribute="top" secondItem="1cJ-r2-gaJ" secondAttribute="top" id="OKV-09-dFo"/>
+                                        <constraint firstItem="Y4R-V8-Pc8" firstAttribute="leading" secondItem="1cJ-r2-gaJ" secondAttribute="trailing" constant="15" id="gKU-Q5-6Zl"/>
+                                        <constraint firstItem="LpK-Va-oN3" firstAttribute="leading" secondItem="Y4R-V8-Pc8" secondAttribute="leading" id="kcY-9R-T9r"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Y4R-V8-Pc8" secondAttribute="trailing" id="lHW-99-GGe"/>
+                                        <constraint firstItem="LpK-Va-oN3" firstAttribute="width" secondItem="Y4R-V8-Pc8" secondAttribute="width" id="onw-SG-SnM"/>
+                                        <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="1cJ-r2-gaJ" secondAttribute="bottom" id="pA9-W9-iST"/>
+                                        <constraint firstItem="1cJ-r2-gaJ" firstAttribute="top" secondItem="w5a-Xb-WK4" secondAttribute="topMargin" id="uUz-90-gKK"/>
+                                        <constraint firstItem="1cJ-r2-gaJ" firstAttribute="leading" secondItem="Ush-CM-tTY" secondAttribute="trailing" constant="12" id="y6o-Cw-Jxa"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -347,15 +338,15 @@
                                     <segue destination="nEv-Yc-3Kx" kind="showDetail" identifier="SearchResultsToUserAccount" id="chp-Mq-xSE"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Spinner" rowHeight="74" id="M9A-dt-xBT" customClass="SpinnerTableViewCell" customModule="Warmshowers" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="103" width="600" height="74"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Spinner" rowHeight="70" id="M9A-dt-xBT" customClass="SpinnerTableViewCell" customModule="Warmshowers" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="96" width="600" height="70"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="M9A-dt-xBT" id="MAL-Df-c5g">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="73.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="69.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="7ka-f8-g9q">
-                                            <rect key="frame" x="290" y="27" width="20" height="20"/>
+                                            <rect key="frame" x="290" y="25" width="20" height="20"/>
                                         </activityIndicatorView>
                                     </subviews>
                                     <constraints>
@@ -368,7 +359,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NoHosts" rowHeight="74" id="bB4-FC-r2F" customClass="PlaceholderTableViewCell" customModule="Warmshowers" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="177" width="600" height="74"/>
+                                <rect key="frame" x="0.0" y="166" width="600" height="74"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bB4-FC-r2F" id="03Y-BE-8x7">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="73.5"/>

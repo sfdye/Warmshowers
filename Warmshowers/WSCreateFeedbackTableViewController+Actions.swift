@@ -34,17 +34,17 @@ extension WSCreateFeedbackTableViewController {
         self.view.endEditing(true)
         
         guard let _ = feedback.recommendedUserName else {
-            alertDelegate?.presentAlertFor(self, withTitle: "An error occured", button: "OK", message: "Recommended user not set. Please report this as a bug, sorry for the inconvenience.")
+            alert?.presentAlertFor(self, withTitle: "An error occured", button: "OK", message: "Recommended user not set. Please report this as a bug, sorry for the inconvenience.")
             return
         }
         
         guard feedback.hasBody else {
-            alertDelegate?.presentAlertFor(self, withTitle: "No feedback to submit", button: "OK", message: "Please enter some feedback before submitting.")
+            alert?.presentAlertFor(self, withTitle: "No feedback to submit", button: "OK", message: "Please enter some feedback before submitting.")
             return
         }
         
         // Submit the feedback
         WSProgressHUD.show("Submitting feedback ...")
-        apiCommunicator?.createFeedback(feedback, andNotify: self)
+        api?.createFeedback(feedback, andNotify: self)
     }
 }

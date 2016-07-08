@@ -9,16 +9,18 @@
 import UIKit
 import MBProgressHUD
 
+let SBID_Login = "Login"
+
 class WSLoginViewController: UIViewController {
     
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
 
     // Delegates
-    var sessionState: WSSessionStateProtocol? = WSSessionState.sharedSessionState
-    var navigationDelegate: WSNavigationProtocol? = WSNavigationDelegate.sharedNavigationDelegate
-    var apiCommunicator: WSAPICommunicatorProtocol? = WSAPICommunicator.sharedAPICommunicator
-    var alertDelegate: WSAlertProtocol? = WSAlertDelegate.sharedAlertDelegate
+    var session: WSSessionStateProtocol = WSSessionState.sharedSessionState
+    var navigation: WSNavigationProtocol = WSNavigationDelegate.sharedNavigationDelegate
+    var api: WSAPICommunicatorProtocol = WSAPICommunicator.sharedAPICommunicator
+    var alert: WSAlertProtocol = WSAlertDelegate.sharedAlertDelegate
     
 
     // MARK: View life cycle
@@ -26,6 +28,6 @@ class WSLoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Load the default username
-        usernameTextField.text = sessionState?.username
+        usernameTextField.text = session.username
     }
 }

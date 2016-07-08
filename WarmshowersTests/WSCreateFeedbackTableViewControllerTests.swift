@@ -12,12 +12,12 @@ import XCTest
 class WSCreateFeedbackTableViewControllerTests: XCTestCase {
     
     let storyboard = UIStoryboard.init(name: "UserProfile", bundle: nil)
-    let storyboardID = CreateFeedbackSBID
+    let storyboardID = SBID_CreateFeedback
     
     // Test objects
     var createFeedbackViewController: WSCreateFeedbackTableViewController?
-    var mockAPICommunicator: WSMOCKAPICommunicator?
-    var mockAlertDelegate: WSMOCKAlertDelegate?
+    var mockAPICommunicator: WSMOCKAPICommunicator!
+    var mockAlertDelegate: WSMOCKAlertDelegate!
     
     override func setUp() {
         super.setUp()
@@ -30,8 +30,8 @@ class WSCreateFeedbackTableViewControllerTests: XCTestCase {
         mockAlertDelegate = WSMOCKAlertDelegate()
         
         // Set the mocks that don't require the view
-        createFeedbackViewController?.apiCommunicator = mockAPICommunicator
-        createFeedbackViewController?.alertDelegate = mockAlertDelegate
+        createFeedbackViewController?.api = mockAPICommunicator
+        createFeedbackViewController?.alert = mockAlertDelegate
     }
     
     override func tearDown() {

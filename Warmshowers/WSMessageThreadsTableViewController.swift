@@ -17,13 +17,12 @@ class WSMessageThreadsTableViewController: UITableViewController {
     
     var lastUpdated: NSDate?
     var updatesInProgress = [Int: String]()
-    var alert: UIAlertController?
     var presentingAlert = false
     var fetchedResultsController: NSFetchedResultsController!
     
     // Delegates
-    var alertDelegate: WSAlertDelegate = WSAlertDelegate.sharedAlertDelegate
-    var apiCommunicator: WSAPICommunicator = WSAPICommunicator.sharedAPICommunicator
+    var alert: WSAlertDelegate = WSAlertDelegate.sharedAlertDelegate
+    var api: WSAPICommunicator = WSAPICommunicator.sharedAPICommunicator
     let store: WSStoreMessageThreadProtocol = WSStore.sharedStore
     var connection: WSReachabilityProtocol = WSReachabilityManager.sharedReachabilityManager
     
@@ -120,9 +119,9 @@ class WSMessageThreadsTableViewController: UITableViewController {
     
     func showReachabilityBannerIfNeeded() {
         if !connection.isOnline {
-            alertDelegate.showNoInternetBanner()
+            alert.showNoInternetBanner()
         } else {
-            alertDelegate.hideAllBanners()
+            alert.hideAllBanners()
         }
     }
     
@@ -160,20 +159,20 @@ class WSMessageThreadsTableViewController: UITableViewController {
     //
     func updateAllMessages() {
         
-        // Update the messages if necessary, or just reload if no updates are required
-        do {
-            let threadIDs = try store.messageThreadsThatNeedUpdating()
-            if threadIDs.count > 0 {
-                for threadID in threadIDs {
-//                    self.updateMessagesOnThread(threadID)
-                }
-            } else {
-                finishedUpdates()
-            }
-        } catch let error as NSError {
-            setErrorAlert(error)
-            finishedUpdates()
-        }
+//        // Update the messages if necessary, or just reload if no updates are required
+//        do {
+//            let threadIDs = try store.messageThreadsThatNeedUpdating()
+//            if threadIDs.count > 0 {
+//                for threadID in threadIDs {
+////                    self.updateMessagesOnThread(threadID)
+//                }
+//            } else {
+//                finishedUpdates()
+//            }
+//        } catch let error as NSError {
+//            setErrorAlert(error)
+//            finishedUpdates()
+//        }
     }
     
     // Cancels all message update requests
@@ -245,39 +244,39 @@ class WSMessageThreadsTableViewController: UITableViewController {
     //
     func setErrorAlert(error: NSError? = nil) {
         
-        guard alert == nil else {
-            return
-        }
-        
-        if !presentingAlert {
-            var message: String = "Please check that you are connected to the internet and try again."
-            if let error = error {
-                message = error.localizedDescription
-            }
-            let alert = UIAlertController(title: "Failed to update messages", message: message, preferredStyle: .Alert)
-            let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-            alert.addAction(okAction)
-            self.alert = alert
-        }
+//        guard alert == nil else {
+//            return
+//        }
+//        
+//        if !presentingAlert {
+//            var message: String = "Please check that you are connected to the internet and try again."
+//            if let error = error {
+//                message = error.localizedDescription
+//            }
+//            let alert = UIAlertController(title: "Failed to update messages", message: message, preferredStyle: .Alert)
+//            let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+//            alert.addAction(okAction)
+//            self.alert = alert
+//        }
     }
     
     // Presents any alerts set during message updates
     //
     func showAlert() {
 
-        guard let alert = alert else {
-            return
-        }
-        
-        if !presentingAlert {
-            presentingAlert = true
-            dispatch_async(dispatch_get_main_queue(), {
-                self.presentViewController(alert, animated: true, completion: { () -> Void in
-                    self.alert = nil
-                    self.presentingAlert = false
-                })
-            })
-        }
+//        guard let alert = alert else {
+//            return
+//        }
+//        
+//        if !presentingAlert {
+//            presentingAlert = true
+//            dispatch_async(dispatch_get_main_queue(), {
+//                self.presentViewController(alert, animated: true, completion: { () -> Void in
+//                    self.alert = nil
+//                    self.presentingAlert = false
+//                })
+//            })
+//        }
     }
     
     

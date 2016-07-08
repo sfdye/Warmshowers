@@ -32,7 +32,7 @@ class WSLogoutEndPoint : WSAPIEndPointProtocol {
         // Update the session state.
 //        WSSessionState.
         
-        return nil
+        return success
     }
     
     func generateMockResponseForURLRequest(urlRequest: NSMutableURLRequest) -> (NSData?, NSURLResponse?, NSError?) {

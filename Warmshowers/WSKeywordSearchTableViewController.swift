@@ -16,8 +16,8 @@ class WSKeywordSearchTableViewController: UITableViewController {
     var numberOfHosts: Int { return hosts?.count ?? 0 }
     
     // Delegates
-    var alertDelegate: WSAlertDelegate = WSAlertDelegate.sharedAlertDelegate
-    var apiCommunicator: WSAPICommunicator? = WSAPICommunicator.sharedAPICommunicator
+    var alert: WSAlertDelegate = WSAlertDelegate.sharedAlertDelegate
+    var api: WSAPICommunicator? = WSAPICommunicator.sharedAPICommunicator
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +33,7 @@ class WSKeywordSearchTableViewController: UITableViewController {
         }
         
         debounceTimer = nil
-        apiCommunicator?.searchByKeyword(keyword, offset: 0, andNotify: self)
+        api?.searchByKeyword(keyword, offset: 0, andNotify: self)
     }
     
     func startImageDownloadForIndexPath(indexPath: NSIndexPath) {
@@ -44,7 +44,7 @@ class WSKeywordSearchTableViewController: UITableViewController {
         
         let user = hosts[indexPath.row]
         if let url = user.imageURL where user.image == nil {
-            apiCommunicator?.getImageAtURL(url, andNotify: self)
+            api?.getImageAtURL(url, andNotify: self)
         }
     }
     

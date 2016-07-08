@@ -40,8 +40,8 @@ class WSLocationSearchViewController : UIViewController {
 //    let MinimumZoomLevelToShowAnnotations: UInt = 2
     
     // Delegates
-    var alertDelegate: WSAlertDelegate = WSAlertDelegate.sharedAlertDelegate
-    var apiCommunicator: WSAPICommunicator = WSAPICommunicator.sharedAPICommunicator
+    var alert: WSAlertDelegate = WSAlertDelegate.sharedAlertDelegate
+    var api: WSAPICommunicator = WSAPICommunicator.sharedAPICommunicator
     var store: WSStoreMapTileProtocol = WSStore.sharedStore
     
     override func viewDidLoad() {

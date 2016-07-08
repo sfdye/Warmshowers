@@ -12,14 +12,14 @@ import XCTest
 class WSLoginViewControllerTests: XCTestCase {
     
     let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-    let storyboardID = LoginSBID
+    let storyboardID = SBID_Login
     
     // Test objects
-    var loginViewController: WSLoginViewController?
-    var mockSessionState: WSMOCKSessionState?
-    var mockNavigationDelegate: WSMOCKNavigationDelegate?
-    var mockAPICommunicator: WSMOCKAPICommunicator?
-    var mockAlertDelegate: WSMOCKAlertDelegate?
+    var loginViewController: WSLoginViewController!
+    var mockSessionState: WSMOCKSessionState!
+    var mockNavigationDelegate: WSMOCKNavigationDelegate!
+    var mockAPICommunicator: WSMOCKAPICommunicator!
+    var mockAlertDelegate: WSMOCKAlertDelegate!
     let request = WSAPIRequest(endPoint: .Login, withDelegate: WSAPICommunicator.sharedAPICommunicator, andRequester: nil)
     
     override func setUp() {
@@ -35,10 +35,10 @@ class WSLoginViewControllerTests: XCTestCase {
         mockAlertDelegate = WSMOCKAlertDelegate()
         
         // Set the mocks that don't require the view
-        loginViewController?.sessionState = mockSessionState
-        loginViewController?.navigationDelegate = mockNavigationDelegate
-        loginViewController?.apiCommunicator = mockAPICommunicator
-        loginViewController?.alertDelegate = mockAlertDelegate
+        loginViewController?.session = mockSessionState
+        loginViewController?.navigation = mockNavigationDelegate
+        loginViewController?.api = mockAPICommunicator
+        loginViewController?.alert = mockAlertDelegate
     }
     
     override func tearDown() {
@@ -57,7 +57,7 @@ class WSLoginViewControllerTests: XCTestCase {
         _ = loginViewController?.view
         
         // then
-        XCTAssertNotNil(loginViewController?.alertDelegate, "Alert delegate not set after loading the view.")
+        XCTAssertNotNil(loginViewController?.alert, "Alert delegate not set after loading the view.")
         XCTAssertNil(loginViewController?.presentedViewController, "Login view should not be presenting on load.")
     }
     

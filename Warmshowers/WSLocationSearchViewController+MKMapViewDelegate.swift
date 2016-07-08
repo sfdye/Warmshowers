@@ -121,7 +121,7 @@ extension WSLocationSearchViewController : MKMapViewDelegate {
                 // Grey the tile with an overlay and start a download.
                 print("Requesting users from the api.")
                 dimTile(tile)
-                apiCommunicator.searchByLocation(tile.regionLimits, andNotify: self)
+                api.searchByLocation(tile.regionLimits, andNotify: self)
             }
         }
     }

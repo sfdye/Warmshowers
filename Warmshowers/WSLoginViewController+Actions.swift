@@ -19,14 +19,14 @@ extension WSLoginViewController {
         self.view.endEditing(true)
         
         guard let username = usernameTextField.text where username != "" else {
-            alertDelegate?.presentAlertFor(self, withTitle: "Missing Username", button: "Dismiss", message: "Please enter your username or email", andHandler: { [weak self] (action) in
+            alert.presentAlertFor(self, withTitle: "Missing Username", button: "Dismiss", message: "Please enter your username or email", andHandler: { [weak self] (action) in
                 self?.usernameTextField.becomeFirstResponder()
                 })
             return
         }
         
         guard let password = passwordTextField.text where password != "" else {
-            alertDelegate?.presentAlertFor(self, withTitle: "Missing Password", button: "Dismiss", message: "Please enter your password", andHandler: { [weak self] (action) in
+            alert.presentAlertFor(self, withTitle: "Missing Password", button: "Dismiss", message: "Please enter your password", andHandler: { [weak self] (action) in
                 self?.passwordTextField.becomeFirstResponder()
                 })
             return
@@ -36,13 +36,13 @@ extension WSLoginViewController {
         WSProgressHUD.show("Logging in ...")
         
         // Login
-        apiCommunicator?.login(username, password: password, andNotify: self)
+        api.login(username, password: password, andNotify: self)
     }
     
     /**
      Method to take the user to the Warmshowers sign up page when the 'create account' button is pressed.
      */
     @IBAction func createAccountButtonPressed(_: UIButton) {
-        navigationDelegate?.openWarmshowersSignUpPage()
+        navigation.openWarmshowersSignUpPage()
     }
 }

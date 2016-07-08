@@ -32,7 +32,7 @@ extension WSLocationSearchViewController : WSAPIResponseDelegate {
     }
     
     func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
-        alertDelegate.presentAPIError(error, forDelegator: self)
+        alert.presentAPIError(error, forDelegator: self)
     }
     
     // LEAVE HERE FOR NOW. SHOULD REALLY BE MOVED TO A DATA DELEGATES RESPONSBILITY

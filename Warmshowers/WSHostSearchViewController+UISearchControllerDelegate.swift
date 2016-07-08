@@ -17,4 +17,5 @@ extension WSHostSearchViewController : UISearchControllerDelegate {
     func didDismissSearchController(searchController: UISearchController) {
         showMapView()
     }
+    
 }

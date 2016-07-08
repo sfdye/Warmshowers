@@ -117,11 +117,11 @@ class WSAccountTableViewController: UITableViewController {
         })
         
         // Update the feedback with user thumbnail urls
-        for feedback in self.feedback {
-            
-            guard let uid = feedback.author?.uid else {
-                return
-            }
+//        for feedback in self.feedback {
+//            
+//            guard let uid = feedback.author?.uid else {
+//                return
+//            }
             
 //            WSRequest.getUserInfo(uid, doWithUserInfo: { (info) -> Void in
 //                
@@ -133,15 +133,15 @@ class WSAccountTableViewController: UITableViewController {
 //                    feedback.authorImageURL = user.imageURL
 //                }
 //            })
-        }
+//        }
     }
     
     // Downloads the users profile photo and updates the view
     func getProfileImage() {
 
-        guard let imageURL = info?.valueForKey(PHOTO_KEY) as? String else {
-            return
-        }
+//        guard let imageURL = info?.valueForKey(PHOTO_KEY) as? String else {
+//            return
+//        }
         
 //        // Get the users profile image
 //        WSRequest.getImageWithURL(imageURL, doWithImage: { (image) -> Void in
@@ -184,7 +184,7 @@ class WSAccountTableViewController: UITableViewController {
             let logoutAction = UIAlertAction(title: "Logout", style: .Default) { (logoutAction) -> Void in
                 
                 // Logout and return the login screeen
-                let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+//                let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 //                let logoutManager = WSLogoutManager(
 //                    success: {
 //                        dispatch_async(dispatch_get_main_queue(), { () -> Void in

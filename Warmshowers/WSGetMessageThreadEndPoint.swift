@@ -20,9 +20,9 @@ class WSGetMessageThreadEndPoint: WSAPIEndPointProtocol {
     
     func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
         
-        guard let messagesJSON = json.valueForKey("messages") as? NSArray else {
-            throw WSAPIEndPointError.ParsingError(endPoint: path, key: "messages")
-        }
+//        guard let messagesJSON = json.valueForKey("messages") as? NSArray else {
+//            throw WSAPIEndPointError.ParsingError(endPoint: path, key: "messages")
+//        }
         
 //        WSStore.sharedStore.privateContext.performBlockAndWait {
 //            

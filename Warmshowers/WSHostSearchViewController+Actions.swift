@@ -15,8 +15,6 @@ extension WSHostSearchViewController {
         presentViewController(searchController, animated: true, completion: { [weak self] () -> Void in
             self?.searchController.active = true
             })
-//
-//        didPresentSearchController(searchController)
     }
     
     @IBAction func accountButtonPressed(sender: UIBarButtonItem) {
