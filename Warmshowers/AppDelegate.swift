@@ -65,6 +65,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Search bars
         UISearchBar.appearance().tintColor = WSColor.Blue
         UISearchBar.appearance().barTintColor = WSColor.NavbarGrey
+        
+        // Activity indicator
+        UIActivityIndicatorView.appearance().tintColor = WSColor.DarkBlue
     }
 
     func applicationWillResignActive(application: UIApplication) {
