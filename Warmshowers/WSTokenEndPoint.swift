@@ -10,25 +10,19 @@ import Foundation
 
 class WSTokenEndPoint : WSAPIEndPointProtocol {
     
-    static let sharedEndPoint = WSTokenEndPoint()
+    var type: WSAPIEndPoint = .Token
     
-    var type: WSAPIEndPoint { return .Token }
+    var httpMethod: HttpMethod = .Get
     
-    var path: String { return "/services/session/token" }
+    var acceptType: AcceptType = .PlainText
     
-    var method: HttpMethod { return .Get }
-    
-    var accept: AcceptType { return .PlainText }
+    func urlWithHostURL(hostURL: NSURL, andParameters parameters: AnyObject?) throws -> NSURL {
+        return hostURL.URLByAppendingPathComponent("/services/session/token")
+    }
     
     func request(request: WSAPIRequest, didRecievedResponseWithText text: String) throws -> AnyObject? {
         WSSessionState.sharedSessionState.setToken(text)
         return text
     }
     
-    func generateMockResponseForURLRequest(urlRequest: NSMutableURLRequest) -> (NSData?, NSURLResponse?, NSError?) {
-        assertionFailure("No testing data added")
-        let data = NSData()
-        let response = NSURLResponse()
-        return (data, response, nil)
-    }
 }

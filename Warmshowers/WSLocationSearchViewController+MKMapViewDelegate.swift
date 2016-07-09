@@ -96,7 +96,7 @@ extension WSLocationSearchViewController : MKMapViewDelegate {
         }
         
         // Abort updating if there are too many tiles on the screen.
-        guard tiles.count < 20 else {
+        guard tiles.count < maximumTilesInViewForUpdate else {
             statusLabel.text = textForStatusLabel()
             return
         }
@@ -105,7 +105,9 @@ extension WSLocationSearchViewController : MKMapViewDelegate {
         clearAnnotationsNotOnMapTiles(tiles)
 
         // Update the annotation for the tiles in the view.
-        loadAnnotationsForMapTiles(tiles)
+        for tile in tiles {
+            loadAnnotationsForMapTile(tile)
+        }
         
         // Update the status label
         statusLabel.text = textForStatusLabel()

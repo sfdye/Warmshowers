@@ -10,18 +10,23 @@ import Foundation
 
 class WSSearchByKeywordEndPoint : WSAPIEndPointProtocol {
     
-    static let sharedEndPoint = WSSearchByKeywordEndPoint()
+    var type: WSAPIEndPoint = .SearchByKeyword
     
-    var type: WSAPIEndPoint { return .SearchByKeyword }
+    var httpMethod: HttpMethod = .Post
     
-    var path: String { return "/services/rest/hosts/by_keyword" }
+    func urlWithHostURL(hostURL: NSURL, andParameters parameters: AnyObject?) throws -> NSURL {
+        return hostURL.URLByAppendingPathComponent("/services/rest/hosts/by_keyword")
+    }
     
-    var method: HttpMethod { return .Post }
+    func HTTPBodyWithData(data: AnyObject?) throws -> String {
+        guard data is WSKeywordSearchData else { throw WSAPIEndPointError.InvalidOutboundData }
+        return (data as! WSKeywordSearchData).asQueryString
+    }
     
     func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
         
         guard let accounts = json["accounts"] as? NSDictionary else {
-            throw WSAPIEndPointError.ParsingError(endPoint: path, key: "accounts")
+            throw WSAPIEndPointError.ParsingError(endPoint: name, key: "accounts")
         }
         
         var hosts = [WSUserLocation]()

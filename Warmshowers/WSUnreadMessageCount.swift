@@ -10,15 +10,16 @@ import Foundation
 
 class WSUnreadMessageCountEndPoint: WSAPIEndPointProtocol {
     
-    static let sharedEndPoint = WSUnreadMessageCountEndPoint()
+    var type: WSAPIEndPoint = .UnreadMessageCount
     
-    var type: WSAPIEndPoint { return .UnreadMessageCount }
+    var httpMethod: HttpMethod = .Post
     
-    var path: String { return "/services/rest/message/unreadCount" }
-    
-    var method: HttpMethod { return .Post }
+    func urlWithHostURL(hostURL: NSURL, andParameters parameters: AnyObject?) throws -> NSURL {
+        return hostURL.URLByAppendingPathComponent("/services/rest/message/unreadCount")
+    }
     
     func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
         return nil
     }
+    
 }

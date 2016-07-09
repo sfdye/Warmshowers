@@ -10,15 +10,15 @@ import Foundation
 
 class WSLogoutEndPoint : WSAPIEndPointProtocol {
     
-    static let sharedEndPoint = WSLogoutEndPoint()
+    var type: WSAPIEndPoint = .Logout
     
-    var type: WSAPIEndPoint { return .Logout }
+    var httpMethod: HttpMethod = .Get
     
-    var path: String { return "/services/session/token" }
+    var accept: AcceptType = .PlainText
     
-    var method: HttpMethod { return .Get }
-    
-    var accept: AcceptType { return .PlainText }
+    func urlWithHostURL(hostURL: NSURL, andParameters parameters: AnyObject?) throws -> NSURL {
+        return hostURL.URLByAppendingPathComponent("/services/session/token")
+    }
     
     func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
         
@@ -26,7 +26,7 @@ class WSLogoutEndPoint : WSAPIEndPointProtocol {
         //      - 0 : Not logged in
         //      - 1 : Successful logout
         guard let success = json.objectAtIndex(0) as? Bool else {
-            throw WSAPIEndPointError.ParsingError(endPoint: path, key: nil)
+            throw WSAPIEndPointError.ParsingError(endPoint: name, key: nil)
         }
         
         // Update the session state.

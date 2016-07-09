@@ -36,7 +36,8 @@ extension WSLoginViewController {
         WSProgressHUD.show("Logging in ...")
         
         // Login
-        api.login(username, password: password, andNotify: self)
+        let loginData = WSLoginData(username: username, password: password)
+        api.contactEndPoint(.Login, withPathParameters: nil, andData: loginData, thenNotify: self)
     }
     
     /**

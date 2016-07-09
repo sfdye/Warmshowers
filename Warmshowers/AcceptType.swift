@@ -11,4 +11,5 @@ import Foundation
 enum AcceptType : String {
     case PlainText = "text/plain"
     case JSON = "application/json"
+    case Image = "image/*"
 }

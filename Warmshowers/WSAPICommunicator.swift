@@ -17,53 +17,63 @@ enum WSAPICommunicatorMode {
 /**
  A central point of control for all api requests.
  */
-class WSAPICommunicator {
-    
-    // MARK: Properties
+class WSAPICommunicator: WSAPICommunicatorProtocol {
     
     static let sharedAPICommunicator = WSAPICommunicator()
     
-    let MapSearchLimit: Int = 500
-    let KeywordSearchLimit: Int = 50
-    
-    let session = WSURLSession.sharedSession
+    var session = WSURLSession.sharedSession
     var connection: WSReachabilityProtocol = WSReachabilityManager.sharedReachabilityManager
+    var host = WSAPIHost.sharedAPIHost
+    
+    var mode: WSAPICommunicatorMode
+    var logging: Bool = false
     
     var requests = Set<WSAPIRequest>()
-    var mode: WSAPICommunicatorMode
     
     
     // MARK: Initialisers
     
     init() {
-        #if TEST
-            mode = .Mocking
-            print("Initialising as MOCK")
-        #else
-            mode = .Online
-            print("Initialising as ONLINE")
-        #endif
+        mode = .Online
     }
     
     deinit {
         connection.deregisterFromNotifications(self)
     }
     
+    
     // MARK: Utilities
     
-    func contactEndPoint(endPoint: WSAPIEndPoint, withParameters params: [String: String]? = nil, thenNotify requester: WSAPIResponseDelegate) {
-        let request = WSAPIRequest(endPoint: endPoint, withDelegate: self, andRequester:requester, andParameters: params)
-        addRequestToQueue(request)
-        executeRequest(request)
+    private func log(message: String) {
+        if logging { print(message) }
     }
     
-    func downloadImageAtURL(imageURL: String, thenNotify requester: WSAPIResponseDelegate) {
-        let request = WSAPIRequest(imageURL: imageURL, withDelegate: self, andRequester:requester)
+    /** Creates and executes a request for the given end point with the given data. */
+    func contactEndPoint(endPoint: WSAPIEndPoint, withPathParameters parameters: AnyObject? = nil, andData data: AnyObject? = nil, thenNotify requester: WSAPIResponseDelegate) {
+        
+        var request = WSAPIRequest(endPoint: endPoint.instance, withDelegate: self, requester: requester, data: data, andParameters: parameters)
+        
         addRequestToQueue(request)
-        executeRequest(request)
+        executeRequest(&request)
     }
     
-    func executeRequest(request: WSAPIRequest) {
+    // MARK: Request handling
+    
+    /** Adds authroization headers to a request. */
+    private func authorizeURLRequest(inout urlRequest: NSMutableURLRequest) throws {
+        let (sessionCookie, token, _) = WSSessionState.sharedSessionState.getSessionData()
+        
+        // Add the session cookie to the header.
+        guard sessionCookie != nil else { throw WSAPICommunicatorError.NoSessionCookie }
+        urlRequest.addValue(sessionCookie!, forHTTPHeaderField: "Cookie")
+        
+        // Add the CSRF token to the header.
+        guard token != nil else { throw WSAPICommunicatorError.NoToken }
+        urlRequest.addValue(token!, forHTTPHeaderField: "X-CSRF-Token")
+    }
+    
+    /** Executes an API request. */
+    private func executeRequest(inout request: WSAPIRequest) {
         
         guard connection.isOnline else {
             // Only keep requests to be processed online later when explicitly specified
@@ -74,48 +84,139 @@ class WSAPICommunicator {
             request.requester?.request(request, didFailWithError: WSAPICommunicatorError.Offline)
             return
         }
-    
+        
         do {
-            let urlRequest = try NSMutableURLRequest.mutableURLRequestForEndpoint(request.endPoint, withPostParameters: request.params)
-            #if TEST
-//                print("MOCKING REQUEST")
-//                let (data, response, error) = request.endPoint.generateMockResponseForURLRequest(urlRequest)
-//                request.delegate.request(request, didRecieveHTTPResponse: data, response: response, andError: error)
-            #else
-                print("MAKING REQUEST ONLINE")
-                let task = session.dataTaskWithRequest(urlRequest) { (data, response, error) in         
-                    request.delegate.request(request, didRecieveHTTPResponse: data, response: response, andError: error)
+            // Generate the request and add any parameters if required.
+            var urlRequest = try request.urlRequest()
+            
+            // Authorize the request if required.
+            if request.endPoint.requiresAuthorization {
+                try authorizeURLRequest(&urlRequest)
+            }
+            
+            // Dispatch the request.
+            switch mode {
+            case .Online:
+                let task = session.dataTaskWithRequest(urlRequest) { [weak self] (data, response, error) in
+                    self?.didRecieveHTTPResponseWithData(data, response: response, andError: error, forRequest: &request)
                 }
                 task.resume()
-            #endif
+            case .Mocking:
+                assertionFailure("Mocking behaviour not yet defined.")
+            }
             request.status = .Sent
+            
+            log("Request dispatched to: \(urlRequest.URL)")
+            
         } catch let error {
             request.delegate.request(request, didFailWithError: error)
         }
     }
     
-    @objc func reachabilityDidChange() {
-        if connection.isOnline {
-            flushQueue()
+    /** Handles network responses and delegates control of the request. */
+    private func didRecieveHTTPResponseWithData(data: NSData?, response: NSURLResponse?, andError error: NSError?, inout forRequest request: WSAPIRequest) {
+        
+        request.status = .RecievedResponse
+        
+        // Handle HTTP errors
+        guard error == nil else {
+            request.delegate.request(request, didFailWithError: error!)
+            return
+        }
+        
+        let statusCode = (response as! NSHTTPURLResponse).statusCode
+        
+        // Handle error responses
+        guard request.endPoint.successCodes.contains(statusCode) else {
+            
+            var error: WSAPICommunicatorError
+            var body: String = ""
+            
+            if let data = data {
+                do {
+                    let json = try NSJSONSerialization.JSONObjectWithData(data, options: [])
+                    if let jsonArray = json as? NSArray {
+                        if let message = jsonArray.objectAtIndex(0) as? String {
+                            body = message
+                        }
+                    }
+                } catch {
+                    request.delegate.request(request, didFailWithError: error)
+                }
+            }
+            
+            error = .ServerError(statusCode: statusCode, body: body)
+            request.delegate.request(request, didFailWithError: error)
+            return
+        }
+        
+        guard let data = data where request.endPoint.doesExpectDataWithResponse() == true else {
+            let error = WSAPICommunicatorError.NoData
+            request.delegate.request(request, didFailWithError: error)
+            return
+        }
+        
+        // Begin parsing data
+        request.status = .Parsing
+        
+        do {
+            var parsedData: AnyObject? = nil
+            switch request.endPoint.acceptType {
+            case .PlainText:
+                if let text = String.init(data: data, encoding: NSUTF8StringEncoding) {
+                    log("Recieved text response: \(text)")
+                    parsedData = try request.endPoint.request(request, didRecievedResponseWithText: text)
+                }
+            case .JSON:
+                let json = try NSJSONSerialization.JSONObjectWithData(data, options: [])
+                log("Recieved JSON response: \(json)")
+                parsedData = try request.endPoint.request(request, didRecievedResponseWithJSON: json)
+            case .Image:
+                if let image = UIImage(data: data) {
+                    request.delegate.request(request, didSucceedWithData: image)
+                } else {
+                    request.delegate.request(request, didFailWithError: WSAPIEndPointError.ParsingError(endPoint: request.endPoint.name, key: nil))
+                }
+            }
+            request.delegate.request(request, didSucceedWithData: parsedData)
+        } catch let error {
+            request.delegate.request(request, didFailWithError: error)
         }
     }
     
+    
+    // MARK: Queuing
+    
+    /** Adds a request to the request queue. */
     func addRequestToQueue(request: WSAPIRequest) {
         request.status = .Queued
         requests.insert(request)
     }
     
+    /** Removes a request to the request queue. */
     func removeRequestFromQueue(request: WSAPIRequest) {
         requests.remove(request)
     }
     
-    func flushQueue() {
-        for request in requests {
+    /** Executes all queued request. */
+    private func flushQueue() {
+        for var request in requests {
             if request.status == .Queued {
-                executeRequest(request)
+                executeRequest(&request)
             }
         }
     }
+    
+    
+    // MARK: Reachability
+    
+    /** This method is called when the reachability status is changed */
+    @objc private func reachabilityDidChange() {
+        if connection.isOnline {
+            flushQueue()
+        }
+    }
+    
     
     // MARK: Network activity indicator control
     // TODO

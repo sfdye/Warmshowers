@@ -10,13 +10,13 @@ import Foundation
 
 class WSMarkMessageEndPoint: WSAPIEndPointProtocol {
     
-    static let sharedEndPoint = WSMarkMessageEndPoint()
+    var type: WSAPIEndPoint = .MarkMessage
     
-    var type: WSAPIEndPoint { return .MarkMessage }
+    var httpMethod: HttpMethod = .Post
     
-    var path: String { return "/services/rest/message/markThreadRead" }
-    
-    var method: HttpMethod { return .Post }
+    func urlWithHostURL(hostURL: NSURL, andParameters parameters: AnyObject?) throws -> NSURL {
+        return hostURL.URLByAppendingPathComponent("/services/rest/message/markThreadRead")
+    }
     
     func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
         

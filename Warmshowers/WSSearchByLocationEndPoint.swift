@@ -10,18 +10,27 @@ import Foundation
 
 class WSSearchByLocationEndPoint : WSAPIEndPointProtocol {
     
-    static let sharedEndPoint = WSSearchByLocationEndPoint()
+    let MapSearchLimit: Int = 500
     
-    var type: WSAPIEndPoint { return .SearchByLocation }
+    var type: WSAPIEndPoint = .SearchByLocation
     
-    var path: String { return "/services/rest/hosts/by_location" }
+    var httpMethod: HttpMethod = .Post
     
-    var method: HttpMethod { return .Post }
+    func urlWithHostURL(hostURL: NSURL, andParameters parameters: AnyObject?) throws -> NSURL {
+        return hostURL.URLByAppendingPathComponent("/services/rest/hosts/by_location")
+    }
+    
+    func HTTPBodyWithData(data: AnyObject?) throws -> String {
+        guard data is WSMapTile else { throw WSAPIEndPointError.InvalidOutboundData }
+        var params = (data as! WSMapTile).regionLimits
+        params["limit"] = String(MapSearchLimit)
+        return HttpBody.bodyStringWithParameters(params)
+    }
     
     func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
         
         guard let accounts = json["accounts"] as? NSArray else {
-            throw WSAPIEndPointError.ParsingError(endPoint: path, key: "accounts")
+            throw WSAPIEndPointError.ParsingError(endPoint: name, key: "accounts")
         }
         
         var userLocations = [WSUserLocation]()
@@ -29,10 +38,11 @@ class WSSearchByLocationEndPoint : WSAPIEndPointProtocol {
             if let userLocation = WSUserLocation(json: account) {
                 userLocations.append(userLocation)
             } else {
-                throw WSAPIEndPointError.ParsingError(endPoint: path, key: nil)
+                throw WSAPIEndPointError.ParsingError(endPoint: name, key: nil)
             }
         }
         
         return userLocations
     }
+    
 }

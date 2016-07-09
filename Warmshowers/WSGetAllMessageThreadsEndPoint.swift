@@ -10,13 +10,13 @@ import Foundation
 
 class WSGetAllMessageThreadsEndPoint: WSAPIEndPointProtocol {
     
-    static let sharedEndPoint = WSGetAllMessageThreadsEndPoint()
+    var type: WSAPIEndPoint = .GetAllMessageThreads
     
-    var type: WSAPIEndPoint { return .GetAllMessageThreads }
+    var httpMethod: HttpMethod = .Post
     
-    var path: String { return "/services/rest/message/get" }
-    
-    var method: HttpMethod { return .Post }
+    func urlWithHostURL(hostURL: NSURL, andParameters parameters: AnyObject?) throws -> NSURL {
+        return hostURL.URLByAppendingPathComponent("/services/rest/message/get")
+    }
     
     func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
         

@@ -17,7 +17,7 @@ class WSKeywordSearchTableViewController: UITableViewController {
     
     // Delegates
     var alert: WSAlertDelegate = WSAlertDelegate.sharedAlertDelegate
-    var api: WSAPICommunicator? = WSAPICommunicator.sharedAPICommunicator
+    var api: WSAPICommunicatorProtocol = WSAPICommunicator.sharedAPICommunicator
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +33,8 @@ class WSKeywordSearchTableViewController: UITableViewController {
         }
         
         debounceTimer = nil
-        api?.searchByKeyword(keyword, offset: 0, andNotify: self)
+        let searchData = WSKeywordSearchData(keyword: keyword)
+        api.contactEndPoint(.SearchByKeyword, withPathParameters: nil, andData: searchData, thenNotify: self)
     }
     
     func startImageDownloadForIndexPath(indexPath: NSIndexPath) {
@@ -44,7 +45,7 @@ class WSKeywordSearchTableViewController: UITableViewController {
         
         let user = hosts[indexPath.row]
         if let url = user.imageURL where user.image == nil {
-            api?.getImageAtURL(url, andNotify: self)
+            api.getImageAtURL(url, andNotify: self)
         }
     }
     

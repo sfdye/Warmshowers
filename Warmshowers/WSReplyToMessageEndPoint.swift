@@ -10,13 +10,13 @@ import Foundation
 
 class WSReplyToMessageEndPoint: WSAPIEndPointProtocol {
     
-    static let sharedEndPoint = WSReplyToMessageEndPoint()
+    var type: WSAPIEndPoint = .ReplyToMessage
     
-    var type: WSAPIEndPoint { return .ReplyToMessage }
+    var httpMethod: HttpMethod = .Post
     
-    var path: String { return "/services/rest/message/reply" }
-    
-    var method: HttpMethod { return .Post }
+    func urlWithHostURL(hostURL: NSURL, andParameters parameters: AnyObject?) throws -> NSURL {
+        return hostURL.URLByAppendingPathComponent("/services/rest/message/reply")
+    }
     
     func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
         // Check for success in response

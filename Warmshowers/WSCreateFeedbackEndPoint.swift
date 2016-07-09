@@ -10,13 +10,13 @@ import Foundation
 
 class WSCreateFeedbackEndPoint : WSAPIEndPointProtocol {
     
-    static let sharedEndPoint = WSCreateFeedbackEndPoint()
+    var type: WSAPIEndPoint = .CreateFeedback
     
-    var type: WSAPIEndPoint { return .CreateFeedback }
+    var httpMethod: HttpMethod = .Post
     
-    var path: String { return "/services/rest/node" }
-    
-    var method: HttpMethod { return .Post }
+    func urlWithHostURL(hostURL: NSURL, andParameters parameters: AnyObject?) throws -> NSURL {
+        return hostURL.URLByAppendingPathComponent("/services/rest/node")
+    }
     
     func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
         // No need for response data.

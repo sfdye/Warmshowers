@@ -8,17 +8,14 @@
 
 import Foundation
 
-class WSImageResourceURL: WSAPIEndPointProtocol {
+class WSImageResourceEndPoint: WSAPIEndPointProtocol {
     
-    var url: String
+    var type: WSAPIEndPoint = .ImageResource
     
-    init(url: String) {
-        self.url = url
+    var httpMethod: HttpMethod = .Get
+    
+    func urlWithHostURL(hostURL: NSURL, andParameters parameters: AnyObject?) throws -> NSURL {
+        return NSURL(string: parameters as? String ?? "")!
     }
     
-    var type: WSAPIEndPoint { return .ImageResource }
-    
-    var path: String { return url ?? "" }
-    
-    var method: HttpMethod { return .Get }
 }

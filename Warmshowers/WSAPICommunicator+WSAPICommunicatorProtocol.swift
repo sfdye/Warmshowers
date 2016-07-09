@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension WSAPICommunicator : WSAPICommunicatorProtocol {
+extension WSAPICommunicator {
     
     func getTokenAndNotify(requester: WSAPIResponseDelegate) {
         contactEndPoint(.Token, thenNotify: requester)
@@ -18,29 +18,11 @@ extension WSAPICommunicator : WSAPICommunicatorProtocol {
         
         let params = ["username" : username, "password" : password]
         
-        contactEndPoint(.Login, withParameters: params, thenNotify: requester)
+        contactEndPoint(.Login, withPathParameters: params, thenNotify: requester)
     }
     
     func logoutAndNotify(requester: WSAPIResponseDelegate) {
         contactEndPoint(.Logout, thenNotify: requester)
-    }
-    
-    func searchByLocation(mapTile: WSMapTile, andNotify requester: WSAPIResponseDelegate) {
-        
-        var params = mapTile.regionLimits
-        params["limit"] = String(MapSearchLimit)
-        
-        contactEndPoint(.SearchByLocation, withParameters: params, thenNotify: requester)
-    }
-    
-    func searchByKeyword(keyword: String, offset: Int, andNotify requester: WSAPIResponseDelegate) {
-        
-        var params = [String: String]()
-        params["keyword"] = keyword ?? " "
-        params["offset"] = String(offset)
-        params["limit"] = String(KeywordSearchLimit)
-        
-        contactEndPoint(.SearchByKeyword, withParameters: params, thenNotify: requester)
     }
     
     func getUserInfo(uid: Int, andNotify requester: WSAPIResponseDelegate) {
@@ -62,7 +44,7 @@ extension WSAPICommunicator : WSAPICommunicatorProtocol {
         params["node[field_hosting_date][0][value][year]"] = String(feedback.year)
         params["node[field_hosting_date][0][value][month]"] = String(feedback.month)
         
-        contactEndPoint(.CreateFeedback, withParameters: params, thenNotify: requester)
+        contactEndPoint(.CreateFeedback, withPathParameters: params, thenNotify: requester)
     }
     
     func sendNewMessageToRecipients(recipients: [CDWSUser], withSubject subject: String, andMessageBody body: String, thenNotify requester: WSAPIResponseDelegate) {
@@ -90,6 +72,6 @@ extension WSAPICommunicator : WSAPICommunicatorProtocol {
     }
     
     func getImageAtURL(imageURL: String, andNotify requester: WSAPIResponseDelegate) {
-        downloadImageAtURL(imageURL, thenNotify: requester)
+        
     }
 }

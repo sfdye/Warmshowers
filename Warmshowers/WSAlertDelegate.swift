@@ -36,6 +36,10 @@ class WSAlertDelegate : WSAlertProtocol {
         switch error {
         case is WSAPIEndPointError:
             switch (error as! WSAPIEndPointError) {
+            case .InvalidParameters:
+                assertionFailure("Invalid parameters used for request.")
+            case .InvalidOutboundData:
+                assertionFailure("Invalid outbound data for request.")
             case .ParsingError(let endPoint, let key):
                 title = "Data Parsing Error"
                 message = "An error occured while parsing data from the Warmshowers API end point \(endPoint). "

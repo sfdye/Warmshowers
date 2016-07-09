@@ -14,7 +14,7 @@ class WSSessionState : WSSessionStateProtocol {
     static let sharedSessionState = WSSessionState()
     
     let defaults = NSUserDefaults.standardUserDefaults()
-    let keychain = Keychain(server: WSURL.BASE, protocolType: .HTTPS)
+    let keychain = Keychain(server: WSAPIHost.sharedAPIHost.hostURLWithHTTPScheme()!, protocolType: .HTTPS)
     
     var uid: Int? { return defaults.integerForKey(WSUserDefaultsKeys.UIDKey) }
     var username: String? { return defaults.stringForKey(WSUserDefaultsKeys.UsernameKey) }

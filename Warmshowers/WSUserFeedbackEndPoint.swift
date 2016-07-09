@@ -10,15 +10,14 @@ import Foundation
 
 class WSUserFeedbackEndPoint: WSAPIEndPointProtocol {
     
-    static let sharedEndPoint = WSUserFeedbackEndPoint()
+    var type: WSAPIEndPoint = .UserFeedback
     
-    var type: WSAPIEndPoint { return .UserFeedback }
+    var httpMethod: HttpMethod = .Get
     
-    var path: String {
+    func urlWithHostURL(hostURL: NSURL, andParameters parameters: AnyObject?) throws -> NSURL {
         assertionFailure("path needs uid")
-        return "/user/<uid>/json_recommendations" }
-    
-    var method: HttpMethod { return .Get }
+        return hostURL.URLByAppendingPathComponent("/user/<uid>/json_recommendations")
+    }
     
     func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
         

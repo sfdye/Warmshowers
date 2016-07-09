@@ -9,5 +9,7 @@
 import Foundation
 
 enum WSAPIEndPointError : ErrorType {
+    case InvalidParameters
+    case InvalidOutboundData
     case ParsingError(endPoint: String, key: String?)
 }

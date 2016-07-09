@@ -11,12 +11,12 @@ import Foundation
 extension WSLocationSearchViewController : WSAPIResponseDelegate {
     
     func requestdidComplete(request: WSAPIRequest) {
-        guard let tile = request.data else { return }
+        guard let tile = request.data as? WSMapTile else { return }
         downloadDidEndForMapTile(tile)
     }
     
     func request(request: WSAPIRequest, didSuceedWithData data: AnyObject?) {
-        guard let tile = request.data else { return }
+        guard let tile = request.data as? WSMapTile else { return }
         if let users = data as? [WSUserLocation] {
             storeUsers(users, onMapTileWithQuadKey: tile.quadKey)
             addUsersToMap(users)

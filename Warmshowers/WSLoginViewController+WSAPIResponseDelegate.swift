@@ -24,8 +24,8 @@ extension WSLoginViewController : WSAPIResponseDelegate {
             }
         } else {
             // Recieved login response: request a token
-            print("back in login controller: getting toke.")
-            api.getTokenAndNotify(self)
+            print("Back in login controller: getting token.")
+            api.contactEndPoint(.Token, withPathParameters: nil, andData: nil, thenNotify: self)
         }
     }
     

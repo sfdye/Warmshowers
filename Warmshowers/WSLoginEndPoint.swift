@@ -10,36 +10,45 @@ import Foundation
 
 class WSLoginEndPoint : WSAPIEndPointProtocol {
     
-    static let sharedEndPoint = WSLoginEndPoint()
+    var type: WSAPIEndPoint = .Login
     
-    var type: WSAPIEndPoint { return .Login }
+    var httpMethod: HttpMethod = .Post
     
-    var path: String { return "/services/rest/user/login" }
+    var requiresAuthorization: Bool = false
     
-    var method: HttpMethod { return .Post }
 #if TEST
     var mode: WSLoginEndPointTestingMode = .Success
 #endif
+    
+    func urlWithHostURL(hostURL: NSURL, andParameters parameters: AnyObject?) throws -> NSURL {
+        return hostURL.URLByAppendingPathComponent("/services/rest/user/login")
+    }
+    
+    func HTTPBodyWithData(data: AnyObject?) throws -> String {
+        guard data is WSLoginData else { throw WSAPIEndPointError.InvalidOutboundData }
+        return (data as! WSLoginData).asQueryString
+    }
+    
     func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
         
         guard let sessionName = json.valueForKey("session_name") as? String else {
-            throw WSAPIEndPointError.ParsingError(endPoint: path, key: "session_name")
+            throw WSAPIEndPointError.ParsingError(endPoint: name, key: "session_name")
         }
         
         guard let sessid = json.valueForKey("sessid") as? String else {
-            throw WSAPIEndPointError.ParsingError(endPoint: path, key: "sessid")
+            throw WSAPIEndPointError.ParsingError(endPoint: name, key: "sessid")
         }
         
         guard let token = json.valueForKey("token") as? String else {
-            throw WSAPIEndPointError.ParsingError(endPoint: path, key: "token")
+            throw WSAPIEndPointError.ParsingError(endPoint: name, key: "token")
         }
         
         guard let user = json.valueForKey("user") else {
-            throw WSAPIEndPointError.ParsingError(endPoint: path, key: "user")
+            throw WSAPIEndPointError.ParsingError(endPoint: name, key: "user")
         }
         
         guard let uid = user.valueForKey("uid")?.integerValue else {
-            throw WSAPIEndPointError.ParsingError(endPoint: path, key: "uid")
+            throw WSAPIEndPointError.ParsingError(endPoint: name, key: "uid")
         }
         
         // Store the session data

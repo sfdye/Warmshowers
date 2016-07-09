@@ -22,7 +22,7 @@ class WSLocationSearchViewController : UIViewController {
     
     /** Convenience variable to returns the tiles in the current view. */
     var tilesInView: [WSMapTile]? {
-        return WSMapTile.tilesForMapRegion(mapView.region, atZoomLevel: TileUpdateZoomLevel)
+        return WSMapTile.tilesForMapRegion(mapView.region, atZoomLevel: tileUpdateZoomLevel)
     }
     
     var mapOverlay: MKTileOverlay?
@@ -32,17 +32,15 @@ class WSLocationSearchViewController : UIViewController {
     
     let locationManager = CLLocationManager()
     
-    // This is the zoom level at which api request will be made
-    let TileUpdateZoomLevel: UInt = 5
+    // This is the zoom level at which api request will be made.
+    let tileUpdateZoomLevel: UInt = 5
+    
+    // The maximum number of tiles that can be on the screen for downloads to start.
+    let maximumTilesInViewForUpdate = 20
     
     // The level of dimming for tiles that are updating. A value between 0 and 1.
     let dimLevel: CGFloat = 0.3
-    
-//    // This is the minimum zoom level at which tiles should be updated.
-//    let MinimumZoomLevelForTileUpdates: UInt = 5
-//    
-//    // This is the minimum zoom level that annotation will be shown
-//    let MinimumZoomLevelToShowAnnotations: UInt = 2
+
     
     // Delegates
     var alert: WSAlertDelegate = WSAlertDelegate.sharedAlertDelegate
@@ -97,7 +95,7 @@ class WSLocationSearchViewController : UIViewController {
     /** Provides the string for the status label based on the current controller state. */
     func textForStatusLabel() -> String? {
         
-        if let tiles = tilesInView where tiles.count > 0 {
+        if let tiles = tilesInView where tiles.count > 20 {
             return "Please zoom in to update."
         }
         
@@ -133,19 +131,16 @@ class WSLocationSearchViewController : UIViewController {
     }
     
     /** Downloads user locations for the given map tiles and adds them as annotations to the map. */
-    func loadAnnotationsForMapTiles(tiles: [WSMapTile]) {
-        
-        for tile in tiles {
-            if store.hasValidHostDataForMapTile(tile) {
-                // Add users from the store to the map
-                print("Loading users from the store.")
-                let users = store.usersForMapTile(tile)
-                addUsersToMap(users)
-            } else {
-                // Grey the tile with an overlay and start a download.
-                print("Requesting users from the api.")
+    func loadAnnotationsForMapTile(tile: WSMapTile) {
+        if store.hasValidHostDataForMapTile(tile) {
+            // Add users from the store to the map
+            let users = store.usersForMapTile(tile)
+            addUsersToMap(users)
+        } else {
+            // Grey the tile with an overlay and start a download.
+            if !downloadsInProgress.contains(tile) {
                 downloadWillStartForMapTile(tile)
-                api.searchByLocation(tile, andNotify: self)
+                api.contactEndPoint(.SearchByLocation, withPathParameters: nil, andData: tile, thenNotify: self)
             }
         }
     }
@@ -167,6 +162,7 @@ class WSLocationSearchViewController : UIViewController {
     /** Called after a user locations API request has finished. */
     func downloadDidEndForMapTile(tile: WSMapTile) {
         downloadsInProgress.remove(tile)
+        statusLabel.text = textForStatusLabel()
         dimTiles()
     }
     

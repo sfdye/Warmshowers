@@ -10,15 +10,14 @@ import Foundation
 
 class WSUserInfoEndPoint: WSAPIEndPointProtocol {
     
-    static let sharedEndPoint = WSUserInfoEndPoint()
+    var type: WSAPIEndPoint = .UserInfo
     
-    var type: WSAPIEndPoint {
+    var httpMethod: HttpMethod = .Get
+    
+    func urlWithHostURL(hostURL: NSURL, andParameters parameters: AnyObject?) throws -> NSURL {
         assertionFailure("path needs uid")
-        return .UserInfo }
-    
-    var path: String { return "/services/rest/user/<UID>" }
-    
-    var method: HttpMethod { return .Get }
+        return hostURL.URLByAppendingPathComponent("/services/rest/user/<UID>")
+    }
     
     func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
         return json
