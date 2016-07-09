@@ -11,8 +11,7 @@ import MBProgressHUD
 
 class WSProgressHUD {
     
-    // Shows the progress hud coving the whoel screen
-    //
+    /** Shows the progress HUD covering the whole screen. */
     static func show(label: String) {
         if let view = (UIApplication.sharedApplication().delegate as! AppDelegate).window?.rootViewController?.view {
             let hud = MBProgressHUD.showHUDAddedTo(view, animated: true)
@@ -27,8 +26,7 @@ class WSProgressHUD {
         hud.WSStyle()
     }
     
-    // Hides the progress hud
-    //
+    /** Hides the progress HUD. */
     static func hide() {
         if let view = (UIApplication.sharedApplication().delegate as! AppDelegate).window?.rootViewController?.view {
             dispatch_async(dispatch_get_main_queue(), { [unowned view] in

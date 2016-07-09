@@ -74,8 +74,8 @@ extension WSHostSearchViewController {
             let hostListTVC = navVC.viewControllers.first as! WSHostListTableViewController
             
             if let clusterAnnotation = sender as? CCHMapClusterAnnotation {
-                if let users = Array(clusterAnnotation.annotations) as? [WSUserLocation] {
-                    hostListTVC.users = users
+                if let hosts = Array(clusterAnnotation.annotations) as? [WSUserLocation] {
+                    hostListTVC.hosts = hosts
                 }
             }
             

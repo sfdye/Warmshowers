@@ -10,16 +10,23 @@ import UIKit
 
 class WSHostListTableViewController: UITableViewController {
     
-    var users: [WSUserLocation]?
-        
+    var placeholderImage: UIImage? = UIImage(named: "ThumbnailPlaceholder")
+    var hosts: [WSUserLocation]?
+    var numberOfHosts: Int { return hosts?.count ?? 0 }
+    
+    // Delegates
+    var api: WSAPICommunicator? = WSAPICommunicator.sharedAPICommunicator
+    
     // MARK: View life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if users!.count > 0 {
-            self.navigationItem.title = "\(users!.count) Hosts"
-        } else {
+        // Configure the table view
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 74
+        
+        guard let hosts = hosts where hosts.count > 0 else {
             self.navigationItem.title = "Hosts"
             // No users in the data source. Dismiss the view with an error message
             let alert = UIAlertController(title: "Sorry, an error occured.", message: nil, preferredStyle: .Alert)
@@ -28,11 +35,38 @@ class WSHostListTableViewController: UITableViewController {
             })
             alert.addAction(okAction)
             self.presentViewController(alert, animated: true, completion: nil)
+            return
         }
         
-        // Configure the table view
-        tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 74 
+        self.navigationItem.title = "\(hosts.count) Hosts"
+    }
+    
+    // MARK: Utilities
+    
+    func startImageDownloadForIndexPath(indexPath: NSIndexPath) {
+        
+        guard let hosts = hosts where indexPath.row < numberOfHosts else {
+            return
+        }
+        
+        let user = hosts[indexPath.row]
+        if let url = user.imageURL where user.image == nil {
+            api?.getImageAtURL(url, andNotify: self)
+        }
+    }
+    
+    func loadImagesForObjectsOnScreen() {
+        
+        guard
+            let visiblePaths = tableView.indexPathsForVisibleRows
+            where hosts != nil && numberOfHosts > 0
+            else {
+                return
+        }
+        
+        for indexPath in visiblePaths {
+            startImageDownloadForIndexPath(indexPath)
+        }
     }
     
     // MARK: Navigation

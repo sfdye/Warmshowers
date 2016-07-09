@@ -33,15 +33,15 @@ extension WSKeywordSearchTableViewController {
             return cell
         } else {
             let cell = tableView.dequeueReusableCellWithIdentifier(HostListCellID, forIndexPath: indexPath) as! HostListTableViewCell
-            let user = hosts[indexPath.row]
-            cell.nameLabel.text = user.fullname
-            cell.locationLabel.text = user.shortAddress
-            cell.setNotAvailible(user.notcurrentlyavailable)
-            cell.profileImage.image = user.image ?? placeholderImage
+            let host = hosts[indexPath.row]
+            cell.nameLabel.text = host.fullname
+            cell.locationLabel.text = host.shortAddress
+            cell.profileImage.image = host.image ?? placeholderImage
+            cell.setNotAvailible(host.notcurrentlyavailable)
             
-            // Download the users thumbnail image if needed.
-            if let _ = user.imageURL
-                where user.image == nil && !tableView.dragging && !tableView.decelerating {
+            // Download the hosts thumbnail image if needed.
+            if let _ = host.imageURL
+                where host.image == nil && !tableView.dragging && !tableView.decelerating {
                 startImageDownloadForIndexPath(indexPath)
             }
 

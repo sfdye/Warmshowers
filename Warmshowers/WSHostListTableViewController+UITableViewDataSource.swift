@@ -15,21 +15,27 @@ extension WSHostListTableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return users?.count ?? 0
+        return hosts?.count ?? 0
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier(HostListCellID, forIndexPath: indexPath)
-        guard (users?.count ?? 0) > 0 else { return cell }
+        let cell = tableView.dequeueReusableCellWithIdentifier(HostListCellID, forIndexPath: indexPath) as! HostListTableViewCell
+        guard let hosts = hosts else { return cell }
         
-        let user = users?[indexPath.row]
+        let host = hosts[indexPath.row]
+        cell.nameLabel.text = host.fullname
+        cell.locationLabel.text = host.shortAddress
+        cell.profileImage.image = host.image ?? placeholderImage
+        cell.setNotAvailible(host.notcurrentlyavailable)
+        cell.uid = host.uid
         
-        if let user = user, cell = cell as? HostListTableViewCell {
-            cell.nameLabel.text = user.fullname
-            cell.locationLabel.text = user.shortAddress
-            cell.uid = user.uid
+        // Download the hosts thumbnail image if needed.
+        if let _ = host.imageURL
+            where host.image == nil && !tableView.dragging && !tableView.decelerating {
+            startImageDownloadForIndexPath(indexPath)
         }
+
         return cell
     }
     
