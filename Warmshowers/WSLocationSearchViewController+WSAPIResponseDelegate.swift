@@ -10,22 +10,14 @@ import Foundation
 
 extension WSLocationSearchViewController : WSAPIResponseDelegate {
     
+    func requestdidComplete(request: WSAPIRequest) {
+        guard let tile = request.data else { return }
+        downloadDidEndForMapTile(tile)
+    }
+    
     func request(request: WSAPIRequest, didSuceedWithData data: AnyObject?) {
-        
+        guard let tile = request.data else { return }
         if let users = data as? [WSUserLocation] {
-            
-            guard
-                let centerLatitude = request.params?["centerlat"],
-                let centerLongitude = request.params?["centerlon"],
-                let latitude = Double(centerLatitude),
-                let longitude = Double(centerLongitude),
-                let tile = WSMapTile(latitude: latitude, longitude: longitude, zoom: TileUpdateZoomLevel)
-                else {
-                    // handle error
-                    return
-            }
-
-            undimTile(tile)
             storeUsers(users, onMapTileWithQuadKey: tile.quadKey)
             addUsersToMap(users)
         }

@@ -91,29 +91,23 @@ extension WSLocationSearchViewController : MKMapViewDelegate {
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         
         // Get the tiles that can be seen in the new screen.
-        guard let tiles = WSMapTile.tilesForMapRegion(mapView.region, atZoomLevel: TileUpdateZoomLevel) where tiles.count < 20 else {
-            statusLabel.text = "Please zoom in to update."
+        guard let tiles = tilesInView else {
             return
         }
-        statusLabel.text = "Updating..."
-        print("Tiles on screen: \(tiles.count)")
+        
+        // Abort updating if there are too many tiles on the screen.
+        guard tiles.count < 20 else {
+            statusLabel.text = textForStatusLabel()
+            return
+        }
         
         // Clear out annotations that are not on the tiles shown in the view.
-        clearAnnotationsNotOnTiles(tiles)
+        clearAnnotationsNotOnMapTiles(tiles)
 
         // Update the annotation for the tiles in the view.
-        for tile in tiles {
-            if store.hasValidHostDataForMapTile(tile) {
-                // Add users from the store to the map
-                print("Loading users from the store.")
-                let users = store.usersForMapTile(tile)
-                addUsersToMap(users)
-            } else {
-                // Grey the tile with an overlay and start a download.
-                print("Requesting users from the api.")
-                dimTile(tile)
-                api.searchByLocation(tile.regionLimits, andNotify: self)
-            }
-        }
+        loadAnnotationsForMapTiles(tiles)
+        
+        // Update the status label
+        statusLabel.text = textForStatusLabel()
     }
 }

@@ -25,9 +25,9 @@ extension WSAPICommunicator : WSAPICommunicatorProtocol {
         contactEndPoint(.Logout, thenNotify: requester)
     }
     
-    func searchByLocation(regionLimits: [String: String], andNotify requester: WSAPIResponseDelegate) {
+    func searchByLocation(mapTile: WSMapTile, andNotify requester: WSAPIResponseDelegate) {
         
-        var params = regionLimits
+        var params = mapTile.regionLimits
         params["limit"] = String(MapSearchLimit)
         
         contactEndPoint(.SearchByLocation, withParameters: params, thenNotify: requester)

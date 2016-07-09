@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class WSMapTile {
+class WSMapTile: Hashable {
     
     /** The tile longitude index */
     var x: UInt
@@ -68,7 +68,7 @@ class WSMapTile {
     
     // MARK: Hashable
     
-//    var hashValue: Int { return quadKey }
+    var hashValue: Int { return quadKey.hashValue }
     
     
     // MARK: Initialisers
@@ -218,6 +218,6 @@ class WSMapTile {
     
 }
 
-//func == (lhs: WSMapTile, rhs: WSMapTile) -> Bool {
-//    return lhs.hashValue == rhs.hashValue
-//}
+func == (lhs: WSMapTile, rhs: WSMapTile) -> Bool {
+    return lhs.quadKey == rhs.quadKey
+}

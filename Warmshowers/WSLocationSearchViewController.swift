@@ -18,7 +18,12 @@ class WSLocationSearchViewController : UIViewController {
     
     var navigationDelegate: WSHostSearchNavigationDelegate?
     var clusterController: CCHMapClusterController!
-    var downloadsInProgress = [String]()
+    var downloadsInProgress = Set<WSMapTile>()
+    
+    /** Convenience variable to returns the tiles in the current view. */
+    var tilesInView: [WSMapTile]? {
+        return WSMapTile.tilesForMapRegion(mapView.region, atZoomLevel: TileUpdateZoomLevel)
+    }
     
     var mapOverlay: MKTileOverlay?
     var mapSource: WSMapSource = WSMapSource.AppleMaps
@@ -89,18 +94,22 @@ class WSLocationSearchViewController : UIViewController {
         }
     }
     
-    /** Addes user annotations to the map. */
-    func addUsersToMap(users: [WSUserLocation]?) {
+    /** Provides the string for the status label based on the current controller state. */
+    func textForStatusLabel() -> String? {
         
-        guard let users = users else { return }
+        if let tiles = tilesInView where tiles.count > 0 {
+            return "Please zoom in to update."
+        }
         
-        dispatch_async(dispatch_get_main_queue(), { [weak self] in
-            self?.clusterController.addAnnotations(users, withCompletionHandler: nil)
-            })
+        if downloadsInProgress.count > 0 {
+            return "Updating ..."
+        }
+        
+        return nil
     }
     
     /** Removes all user location annotations from the map that aren't on the given map tiles. */
-    func clearAnnotationsNotOnTiles(tiles: [WSMapTile]) {
+    func clearAnnotationsNotOnMapTiles(tiles: [WSMapTile]) {
         
         let quadKeys = tiles.map { (tile) -> String in return tile.quadKey }
         let unrequiredAnnotations = mapView.annotations.filter { (annotation) -> Bool in
@@ -123,25 +132,57 @@ class WSLocationSearchViewController : UIViewController {
         print("\(mapView.annotations.count) remaining.")
     }
     
-    /** Adds a dimming overlay to the map area described by the given map tile. */
-    func dimTile(tile: WSMapTile) {
+    /** Downloads user locations for the given map tiles and adds them as annotations to the map. */
+    func loadAnnotationsForMapTiles(tiles: [WSMapTile]) {
         
-        let polygon = tile.polygon()
-        polygon.title = tile.quadKey
-        
-        mapView.performSelectorOnMainThread(#selector(MKMapView.addOverlay(_:)), withObject: polygon, waitUntilDone: false)
+        for tile in tiles {
+            if store.hasValidHostDataForMapTile(tile) {
+                // Add users from the store to the map
+                print("Loading users from the store.")
+                let users = store.usersForMapTile(tile)
+                addUsersToMap(users)
+            } else {
+                // Grey the tile with an overlay and start a download.
+                print("Requesting users from the api.")
+                downloadWillStartForMapTile(tile)
+                api.searchByLocation(tile, andNotify: self)
+            }
+        }
     }
     
-    /** Removes a dimming overlay to the map area described by the given map tile. */
-    func undimTile(tile: WSMapTile) {
-        
-        let overlay = mapView.overlays.filter { (overlay) -> Bool in
-            return overlay.title ?? "" ?? "" == tile.quadKey
-        }.first
-        
-        if overlay != nil {
-            mapView.performSelectorOnMainThread(#selector(MKMapView.removeOverlay(_:)), withObject: overlay!, waitUntilDone: true)
+    /** Addes user annotations to the map. */
+    func addUsersToMap(users: [WSUserLocation]?) {
+        guard let users = users else { return }
+        dispatch_async(dispatch_get_main_queue(), { [weak self] in
+            self?.clusterController.addAnnotations(users, withCompletionHandler: nil)
+            })
+    }
+    
+    /** Called just before an API request for user locations on the given map tile is made. */
+    func downloadWillStartForMapTile(tile: WSMapTile) {
+        downloadsInProgress.insert(tile)
+        dimTiles()
+    }
+    
+    /** Called after a user locations API request has finished. */
+    func downloadDidEndForMapTile(tile: WSMapTile) {
+        downloadsInProgress.remove(tile)
+        dimTiles()
+    }
+    
+    /** Dims areas of the map that have user location data downloads in progress. */
+    func dimTiles() {
+        mapView.performSelectorOnMainThread(#selector(MKMapView.removeOverlays(_:)), withObject: mapView.overlays, waitUntilDone: true)
+        for tile in downloadsInProgress {
+            dimTile(tile)
         }
+    }
+    
+    /** Adds a dimming overlay to the map area described by the given map tile. */
+    func dimTile(tile: WSMapTile) {
+        let polygon = tile.polygon()
+        polygon.title = tile.quadKey
+        mapView.performSelectorOnMainThread(#selector(MKMapView.addOverlay(_:)), withObject: polygon, waitUntilDone: false)
     }
 
 }

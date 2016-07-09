@@ -12,7 +12,7 @@ protocol WSAPICommunicatorProtocol {
     func getTokenAndNotify(requester: WSAPIResponseDelegate)
     func login(username: String, password: String, andNotify requester: WSAPIResponseDelegate)
     func logoutAndNotify(requester: WSAPIResponseDelegate)
-    func searchByLocation(regionLimits: [String: String], andNotify requester: WSAPIResponseDelegate)
+    func searchByLocation(mapTile: WSMapTile, andNotify requester: WSAPIResponseDelegate)
     func searchByKeyword(keyword: String, offset: Int, andNotify requester: WSAPIResponseDelegate)
     func getUserInfo(uid: Int, andNotify requester: WSAPIResponseDelegate)
     func getUserFeedback(uid: Int, andNotify requester: WSAPIResponseDelegate)
