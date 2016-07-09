@@ -21,7 +21,7 @@ extension WSHostSearchViewController {
             
         case SID_MapToUserAccount:
             
-            return sender as? WSUserLocation != nil
+            return sender is WSUserLocation
             
         case SIB_ResultsToUserAccount:
             
@@ -32,10 +32,7 @@ extension WSHostSearchViewController {
             
         case SID_MapToHostList:
             
-            if let clusterAnnotation = sender as? CCHMapClusterAnnotation {
-                return Array(clusterAnnotation.annotations) as? [WSUserLocation] != nil
-            }
-            return false
+            return sender is [WSUserLocation]
             
         default:
             return true
@@ -72,12 +69,7 @@ extension WSHostSearchViewController {
             
             let navVC = segue.destinationViewController as! UINavigationController
             let hostListTVC = navVC.viewControllers.first as! WSHostListTableViewController
-            
-            if let clusterAnnotation = sender as? CCHMapClusterAnnotation {
-                if let hosts = Array(clusterAnnotation.annotations) as? [WSUserLocation] {
-                    hostListTVC.hosts = hosts
-                }
-            }
+            hostListTVC.hosts = sender as? [WSUserLocation]
             
         default:
             return

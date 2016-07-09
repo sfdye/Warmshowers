@@ -22,7 +22,7 @@ class WSHostSearchViewController: UIViewController {
     var searchController: UISearchController!
     var searchBar: UISearchBar!
     
-    // var locationSearchViewController: WSLocationSearchViewController?
+    var locationSearchViewController: WSLocationSearchViewController?
     var keywordSearchTableViewController: UISearchResultsUpdating?
 
     // Delegates
@@ -41,6 +41,9 @@ class WSHostSearchViewController: UIViewController {
         super.viewDidLoad()
         
         // Set references to child views
+        locationSearchViewController = self.childViewControllers.first as? WSLocationSearchViewController
+        assert(locationSearchViewController != nil, "Location Search Table View Controller not set while loading the Host Search View Controller.")
+        locationSearchViewController?.navigationDelegate = self
         keywordSearchTableViewController = self.childViewControllers.last as? UISearchResultsUpdating
         assert(keywordSearchTableViewController != nil, "Keyword Search Table View Controller not set while loading the Host Search View Controller. Check that WSKeywordSearchTableViewCOntroller conforms to UISearchResultsUpdating.")
         

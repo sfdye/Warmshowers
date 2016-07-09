@@ -6,13 +6,28 @@
 //  Copyright © 2016 Rajan Fernandez. All rights reserved.
 //
 
-import Foundation
+import UIKit
+import MapKit
 
 extension WSLocationSearchViewController {
     
-    @IBAction func centreOnLocation() {
-        if let coordinate = locationManager.location?.coordinate {
-            mapView.setCenterCoordinate(coordinate, animated: true)
+    /** Centres the map on the users location. */
+    @IBAction func centerOnUserLocation(sender:AnyObject?) {
+        if CLLocationManager.authorizationStatus() == .AuthorizedWhenInUse {
+            mapView.setCenterCoordinate(mapView.userLocation.coordinate, animated: true)
+        } else {
+            let alert = UIAlertController(title: "Enable location services", message: "To centre the map on your location we need to know your location. Please change your location access settings.", preferredStyle: .Alert)
+            let settingsAction = UIAlertAction(title: "Settings", style: .Default, handler: { (action) in
+                if let url = NSURL(string: UIApplicationOpenSettingsURLString) where UIApplication.sharedApplication().canOpenURL(url) {
+                    UIApplication.sharedApplication().openURL(url)
+                }
+            })
+            alert.addAction(settingsAction)
+            let okAction = UIAlertAction(title: "Ok", style: .Default, handler: nil)
+            alert.addAction(okAction)
+            dispatch_async(dispatch_get_main_queue(), { [weak self] in
+                self?.presentViewController(alert, animated: true, completion: nil)
+                })
         }
     }
 }

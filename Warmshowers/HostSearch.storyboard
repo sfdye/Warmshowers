@@ -136,8 +136,8 @@
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="owk-IM-5LY" customClass="WSColoredDot" customModule="Warmshowers" customModuleProvider="target">
-                                            <rect key="frame" x="8" y="26" width="12" height="12"/>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="owk-IM-5LY" customClass="WSColoredDot" customModule="Warmshowers" customModuleProvider="target">
+                                            <rect key="frame" x="8" y="27" width="12" height="12"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="12" id="IfW-qk-rla"/>
@@ -252,7 +252,7 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="PrD-GV-L6p"/>
                                     <barButtonItem image="Location" id="Wb1-PZ-8Ey">
                                         <connections>
-                                            <action selector="centreOnLocation" destination="VMl-c2-Hgr" id="dBf-Vk-wCY"/>
+                                            <action selector="centerOnUserLocation:" destination="VMl-c2-Hgr" id="euU-az-NfQ"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
@@ -361,8 +361,8 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="53.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="7ka-f8-g9q">
-                                            <rect key="frame" x="290" y="25" width="20" height="20"/>
+                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="7ka-f8-g9q">
+                                            <rect key="frame" x="290" y="17" width="20" height="20"/>
                                         </activityIndicatorView>
                                     </subviews>
                                     <constraints>
@@ -381,8 +381,8 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="53.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="No Hosts" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Ux-ii-EKB">
-                                            <rect key="frame" x="254" y="24" width="91" height="26.5"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Hosts" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Ux-ii-EKB">
+                                            <rect key="frame" x="254" y="13.5" width="91" height="26.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>

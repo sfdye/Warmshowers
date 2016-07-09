@@ -17,21 +17,29 @@ extension WSLocationSearchViewController : MKMapViewDelegate {
             return MKTileOverlayRenderer.init(overlay: overlay)
         }
         
-        // tile colouring overlay
+        // Tile coloring overlay.
         if overlay.isKindOfClass(MKPolygon) {
             let renderer = MKPolygonRenderer(polygon: overlay as! MKPolygon)
             renderer.fillColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: dimLevel)
             return renderer
         }
         
-        // Defautlt overlay renderer
+        // Defautlt overlay renderer.
         return MKTileOverlayRenderer.init();
     }
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         
+        func pinAnnotationViewForAnnotation(annotation: MKAnnotation, forReuseIdentifier reuseIdentifier: String) -> MKPinAnnotationView? {
+            if let dequeueView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseIdentifier) as? MKPinAnnotationView {
+                return dequeueView
+            } else {
+                return MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseIdentifier)
+            }
+        }
+        
         if annotation is MKUserLocation {
-            // return nil so map view draws "blue dot" for standard user location
+            // Return nil so map view draws "blue dot" for standard user location.
             return nil
         }
         
@@ -39,40 +47,22 @@ extension WSLocationSearchViewController : MKMapViewDelegate {
         if let clusterAnnotation = annotation as? CCHMapClusterAnnotation {
             
             if clusterAnnotation.isCluster() {
-                
-                // Clustered host map pins
-                let reuseidentifier = "cluster"
-                if let dequeueView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseidentifier) as? MKPinAnnotationView {
-                    annotationView = dequeueView
-                } else {
-                    annotationView =
-                        MKPinAnnotationView(annotation: clusterAnnotation, reuseIdentifier: reuseidentifier)
-                }
-                
-                // Purple pins for clusters
+                // Clustered host map pins.
+                annotationView = pinAnnotationViewForAnnotation(annotation, forReuseIdentifier: "cluster")
                 annotationView?.pinTintColor = UIColor.purpleColor()
-                
             } else {
-                
-                // Single host map pins
-                let reuseidentifier = "single"
-                if let dequeuedView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseidentifier) as? MKPinAnnotationView {
-                    annotationView = dequeuedView
-                } else {
-                    annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseidentifier)
-                }
-                
-                // Red pins for single hosts
+                // Single host map pins.
+                annotationView = pinAnnotationViewForAnnotation(annotation, forReuseIdentifier: "single")
                 annotationView?.pinTintColor = UIColor.redColor()
             }
             
-            // Common cluster/non-cluster annotation configurations
+            // Common cluster/non-cluster annotation configurations.
             let button = UIButton(type: UIButtonType.DetailDisclosure)
             annotationView?.rightCalloutAccessoryView = button
-            annotationView?.canShowCallout = true;
+            annotationView?.canShowCallout = true
         }
         
-        return annotationView;
+        return annotationView
     }
     
     func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
@@ -87,14 +77,15 @@ extension WSLocationSearchViewController : MKMapViewDelegate {
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if let clusterAnnotation = view.annotation as? CCHMapClusterAnnotation {
             if clusterAnnotation.isCluster() {
-                parentViewController?.performSegueWithIdentifier(SID_MapToHostList, sender: clusterAnnotation)
+                if let hosts = Array(clusterAnnotation.annotations) as? [WSUserLocation] {
+                    navigationDelegate?.showHostListWithHosts(hosts)
+                }
             } else {
                 if let user = clusterAnnotation.annotations.first as? WSUserLocation {
-                    parentViewController?.performSegueWithIdentifier(SID_MapToUserAccount, sender: user)
+                    navigationDelegate?.showUserProfileForHost(user)
                 }
             }
         }
-        print("Coordinates: \(view.annotation?.coordinate)")
     }
     
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {

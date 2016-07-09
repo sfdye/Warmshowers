@@ -16,7 +16,9 @@ class WSLocationSearchViewController : UIViewController {
     @IBOutlet var toolbar: UIToolbar!
     @IBOutlet var statusLabel: UILabel!
     
+    var navigationDelegate: WSHostSearchNavigationDelegate?
     var clusterController: CCHMapClusterController!
+    var downloadsInProgress = [String]()
     
     var mapOverlay: MKTileOverlay?
     var mapSource: WSMapSource = WSMapSource.AppleMaps
@@ -24,8 +26,6 @@ class WSLocationSearchViewController : UIViewController {
     // MARK: Constants
     
     let locationManager = CLLocationManager()
-    let kDefaultRegionLatitudeDelta: CLLocationDegrees = 1
-    let kDefaultRegionLongitudeDelta: CLLocationDegrees = 1
     
     // This is the zoom level at which api request will be made
     let TileUpdateZoomLevel: UInt = 5
@@ -50,12 +50,23 @@ class WSLocationSearchViewController : UIViewController {
         configureToolbar()
         statusLabel.text = nil
         
-        // Ask the users permission to use location services
+        // Ask the users permission to use location services.
         if CLLocationManager.authorizationStatus() == .NotDetermined {
             locationManager.requestWhenInUseAuthorization()
         }
         mapView.showsUserLocation = true
-        centreOnRegion()
+        centerOnRegion()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        assert(navigationDelegate != nil, "The navigation delegate for WSLocationSearchViewController not set. Please ensure the delegate is set before the view appears.")
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        if CLLocationManager.authorizationStatus() == .NotDetermined {
+            locationManager.requestWhenInUseAuthorization()
+        }
+        mapView.showsUserLocation = CLLocationManager.authorizationStatus() == .AuthorizedWhenInUse
     }
     
     func configureToolbar() {
@@ -66,15 +77,19 @@ class WSLocationSearchViewController : UIViewController {
     
     // MARK: Utility methods
     
-    func centreOnRegion() {
-        if let userLocation = locationManager.location?.coordinate {
-            let region = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: kDefaultRegionLatitudeDelta, longitudeDelta: kDefaultRegionLongitudeDelta))
+    /** Centres the map on the region around the users location at a set zoom level. */
+    func centerOnRegion() {
+        let DefaultRegionLatitudeDelta: CLLocationDegrees = 1
+        let DefaultRegionLongitudeDelta: CLLocationDegrees = 1
+        if CLLocationManager.authorizationStatus() == .AuthorizedWhenInUse {
+            let region = MKCoordinateRegion(center: mapView.userLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: DefaultRegionLatitudeDelta, longitudeDelta: DefaultRegionLongitudeDelta))
             dispatch_async(dispatch_get_main_queue(), { [weak self] in
                 self?.mapView.setRegion(region, animated: true)
                 })
         }
     }
     
+    /** Addes user annotations to the map. */
     func addUsersToMap(users: [WSUserLocation]?) {
         
         guard let users = users else { return }
@@ -82,10 +97,9 @@ class WSLocationSearchViewController : UIViewController {
         dispatch_async(dispatch_get_main_queue(), { [weak self] in
             self?.clusterController.addAnnotations(users, withCompletionHandler: nil)
             })
-        
-//        mapView.performSelectorOnMainThread(#selector(MKMapView.addAnnotations(_:)), withObject: users, waitUntilDone: false)
     }
     
+    /** Removes all user location annotations from the map that aren't on the given map tiles. */
     func clearAnnotationsNotOnTiles(tiles: [WSMapTile]) {
         
         let quadKeys = tiles.map { (tile) -> String in return tile.quadKey }
@@ -104,13 +118,12 @@ class WSLocationSearchViewController : UIViewController {
             dispatch_async(dispatch_get_main_queue(), { [weak self] in
                 self?.clusterController.removeAnnotations(unrequiredAnnotations, withCompletionHandler: nil)
                 })
-            
-//            mapView.performSelectorOnMainThread(#selector(MKMapView.removeAnnotations(_:)), withObject: unrequiredAnnotations, waitUntilDone: false)
         }
         
         print("\(mapView.annotations.count) remaining.")
     }
     
+    /** Adds a dimming overlay to the map area described by the given map tile. */
     func dimTile(tile: WSMapTile) {
         
         let polygon = tile.polygon()
@@ -119,6 +132,7 @@ class WSLocationSearchViewController : UIViewController {
         mapView.performSelectorOnMainThread(#selector(MKMapView.addOverlay(_:)), withObject: polygon, waitUntilDone: false)
     }
     
+    /** Removes a dimming overlay to the map area described by the given map tile. */
     func undimTile(tile: WSMapTile) {
         
         let overlay = mapView.overlays.filter { (overlay) -> Bool in
