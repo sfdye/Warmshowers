@@ -241,7 +241,7 @@
                                     <outlet property="offerLabel" destination="fdr-P1-SPC" id="AFG-My-7iQ"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Contact" rowHeight="57" id="eN6-YS-1gd" customClass="ContactTableViewCell" customModule="Warmshowers" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Contact" rowHeight="57" id="eN6-YS-1gd" customClass="PhoneNumberTableViewCell" customModule="Warmshowers" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="601.5" width="600" height="57"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eN6-YS-1gd" id="X2v-QM-aAt">

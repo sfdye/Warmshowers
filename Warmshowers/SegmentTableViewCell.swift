@@ -8,14 +8,6 @@
 
 import UIKit
 
-protocol SegmentTableViewCellActions {
-    
-    func didSelectAbout()
-    func didSelectHosting()
-    func didSelectContact()
-    
-}
-
 class SegmentTableViewCell: UITableViewCell {
     
     

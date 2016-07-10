@@ -73,7 +73,7 @@ struct WSTimeInterval {
     // Formats an integer time (in seconds) to a String with the two largest time units
     // i.e. 4 months 6 days
     //      2 hours 3 minutes
-    func asString() -> String {
+    var asString: String {
         
         var time = self.time
         var count = 0

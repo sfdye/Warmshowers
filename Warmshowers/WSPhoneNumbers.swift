@@ -13,16 +13,18 @@ struct WSPhoneNumbers {
     var numbers = [WSPhoneNumber]()
     var count: Int { return numbers.count }
     
-    mutating func update(userData: AnyObject?) {
+    var numberOfPhoneNumbers: Int {
+        return numbers.count
+    }
+    
+    mutating func update(json: AnyObject?) {
         
-        guard let userData = userData else {
-            return
-        }
+        guard let json = json else { return }
         
         let keys = ["homephone", "mobilephone", "workphone"]
         
         for key in keys {
-            let number = numberForKey(key, inData: userData)
+            let number = numberForKey(key, inJSON: json)
             let type: WSPhoneNumberType
             switch key {
             case "homephone":
@@ -41,12 +43,8 @@ struct WSPhoneNumbers {
         }
     }
     
-    func numberForKey(key: String, inData data: AnyObject) -> String? {
-        
-        let number = data.valueForKey(key) as? String
-        if number == "" {
-            return nil
-        }
+    private func numberForKey(key: String, inJSON json: AnyObject) -> String? {
+        guard let number = json[key] as? String where number != "" else { return nil }
         return number
     }
     

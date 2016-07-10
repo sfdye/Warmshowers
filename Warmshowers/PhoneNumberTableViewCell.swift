@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ContactTableViewCell: UITableViewCell {
+class PhoneNumberTableViewCell: UITableViewCell {
     
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var detailLabel: UILabel!
@@ -18,32 +18,16 @@ class ContactTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         
         // Phone icon tap gesture
-        let phoneIconTap = UITapGestureRecognizer(target: self, action: #selector(ContactTableViewCell.phoneIconTapped))
+        let phoneIconTap = UITapGestureRecognizer(target: self, action: #selector(PhoneNumberTableViewCell.phoneIconTapped))
         phoneIconTap.numberOfTapsRequired = 1
         phoneIcon.userInteractionEnabled = true
         phoneIcon.addGestureRecognizer(phoneIconTap)
         
         // Message icon tap gesture
-        let messageIconTap = UITapGestureRecognizer(target: self, action: #selector(ContactTableViewCell.messageIconTapped))
+        let messageIconTap = UITapGestureRecognizer(target: self, action: #selector(PhoneNumberTableViewCell.messageIconTapped))
         messageIconTap.numberOfTapsRequired = 1
         messageIcon.userInteractionEnabled = true
         messageIcon.addGestureRecognizer(messageIconTap)
-    }
-    
-    // Configures the table view cell for a phone number
-    //
-    func setWithPhoneNumber(phoneNumber: WSPhoneNumber) {
-        titleLabel.text = phoneNumber.description
-        detailLabel.text = phoneNumber.number
-        
-        switch phoneNumber.type {
-        case .Home, .Work:
-            phoneIcon.hidden = false
-            messageIcon.hidden = true
-        case .Mobile:
-            phoneIcon.hidden = false
-            messageIcon.hidden = false
-        }
     }
     
     // Configures the table view cell for an address

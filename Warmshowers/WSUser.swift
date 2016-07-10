@@ -13,7 +13,27 @@ class WSUser: Hashable {
     var fullname: String
     var name: String
     var uid: Int
-    var phoneNumbers: WSPhoneNumbers?
+    var isAvailable: Bool = false
+    var joined: NSDate?
+    var lastLoggedIn: NSDate?
+    var languagesSpoken: String?
+    var comments: String?
+    var hostingInfo = WSHostingInfo()
+    var offers = WSOffers()
+    var phoneNumbers = WSPhoneNumbers()
+    var feedback = [WSRecommendation]()
+    var profileImage: UIImage?
+    var profileImageURL: String?
+    
+    var membershipDuration: WSTimeInterval? {
+        guard let joined = joined else { return nil }
+        return WSTimeInterval(timeInterval: NSDate().timeIntervalSince1970 - joined.timeIntervalSince1970)
+    }
+    
+    var lastLoggedInAgo: WSTimeInterval? {
+        guard let lastLoggedIn = lastLoggedIn else { return nil }
+        return WSTimeInterval(timeInterval: NSDate().timeIntervalSince1970 - lastLoggedIn.timeIntervalSince1970)
+    }
     
     // MARK: Hashable
     
@@ -39,6 +59,25 @@ class WSUser: Hashable {
         }
         
         self.init(fullname: fullname, name: name, uid: uid)
+        
+        isAvailable = json["notcurrentlyavailable"] != "true"
+
+        if let created: NSTimeInterval = json["created"], let createdDouble = Double(created) {
+            joined = NSDate(timeIntervalSince1970: createdDouble)
+        }
+        
+        if let login: NSTimeInterval = json["login"], let loginDouble = Double(created) {
+            lastLoggedIn = NSDate(timeIntervalSince1970: loginDouble)
+        }
+
+        comments = json["comments"]
+        languagesSpoken = json["languagesspoken"]
+
+        hostingInfo.update(json)
+        offers.update(json)
+        phoneNumbers.update(json)
+        
+        profileImageURL = json["profile_image_mobile_profile_photo_std"]
     }
 }
 

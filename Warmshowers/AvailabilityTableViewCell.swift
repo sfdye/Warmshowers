@@ -10,26 +10,19 @@ import UIKit
 
 class AvailabilityTableViewCell: UITableViewCell {
 
-    func configureAsCurrentlyAvailable(userInfo: AnyObject?) {
-        
+    override func awakeFromNib() {
         textLabel?.text = ""
-        
-        guard let userInfo = userInfo else {
-            return
-        }
-        
-        guard let notavailible = userInfo.valueForKey("notcurrentlyavailable")?.boolValue else {
-            return
-        }
-        
-        
-        if notavailible {
-            textLabel?.text = "Unavailable"
-            self.backgroundColor = WSColor.NotAvailable
-        } else {
-            textLabel?.text = "Currently Available"
-            self.backgroundColor = WSColor.Available
-        }
+        backgroundColor = UIColor.grayColor()
+    }
+    
+    func configureAsAvailable() {
+        textLabel?.text = "Currently Available"
+        backgroundColor = WSColor.Available
+    }
+    
+    func configureAsNotAvailable() {
+        textLabel?.text = "Unavailable"
+        backgroundColor = WSColor.NotAvailable
     }
     
 }

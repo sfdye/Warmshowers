@@ -15,8 +15,8 @@ class WSUserFeedbackEndPoint: WSAPIEndPointProtocol {
     var httpMethod: HttpMethod = .Get
     
     func urlWithHostURL(hostURL: NSURL, andParameters parameters: AnyObject?) throws -> NSURL {
-        assertionFailure("path needs uid")
-        return hostURL.URLByAppendingPathComponent("/user/<uid>/json_recommendations")
+        guard let uidString = parameters as? NSString else { throw WSAPIEndPointError.InvalidPathParameters }
+        return hostURL.URLByAppendingPathComponent("/user/\(uidString)/json_recommendations")
     }
     
     func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
@@ -32,31 +32,6 @@ class WSUserFeedbackEndPoint: WSAPIEndPointProtocol {
 //                    }
 //                }
 //            }
-//        }
-//        
-//        // Set the feedback and update the table view
-//        self.feedback = feedback
-//        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//            self.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: 2)], withRowAnimation: UITableViewRowAnimation.Automatic)
-//        })
-//        
-//        // Update the feedback with user thumbnail urls
-//        for feedback in self.feedback {
-//            
-//            guard let uid = feedback.author?.uid else {
-//                return
-//            }
-//            
-//            WSRequest.getUserInfo(uid, doWithUserInfo: { (info) -> Void in
-//                
-//                guard let info = info else {
-//                    return
-//                }
-//                
-//                if let user = WSUserLocation(json: info) {
-//                    feedback.authorImageURL = user.thumbnailImageURL
-//                }
-//            })
 //        }
         
         return nil
