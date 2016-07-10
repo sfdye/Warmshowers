@@ -19,16 +19,9 @@ extension WSHostSearchViewController {
         
         switch identifier {
             
-        case SID_MapToUserAccount:
+        case SID_SearchViewToUserAccount:
             
-            return sender is WSUserLocation
-            
-        case SIB_ResultsToUserAccount:
-            
-            if let cell = sender as? HostListTableViewCell {
-                return cell.uid != nil
-            }
-            return false
+            return sender is WSUser
             
         case SID_MapToHostList:
             
@@ -47,9 +40,10 @@ extension WSHostSearchViewController {
             
         case SID_SearchViewToUserAccount:
             
+            guard sender is WSUser else { return }
             let navVC = segue.destinationViewController as! UINavigationController
             let accountTVC = navVC.viewControllers.first as! WSAccountTableViewController
-            accountTVC.userInfo = sender as? WSUser
+            accountTVC.user = sender as? WSUser
             
         case SID_MapToHostList:
             

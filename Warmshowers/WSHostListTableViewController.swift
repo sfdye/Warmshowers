@@ -89,26 +89,6 @@ class WSHostListTableViewController: UITableViewController {
     func showUserProfileForHostWithUID(uid: Int) {
         WSProgressHUD.show(navigationController!.view, label: nil)
         api.contactEndPoint(.UserInfo, withPathParameters: String(uid) as NSString, andData: nil, thenNotify: self)
-    }
+    }  
     
-    // MARK: Navigation
-    
-    @IBAction func doneButtonPressed() {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
-        if let cell = sender as? HostListTableViewCell {
-            if let _ = cell.uid {
-                return true
-            }
-        }
-        return false
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let cell = sender as? HostListTableViewCell
-        let accountTVC = segue.destinationViewController as! WSAccountTableViewController
-        accountTVC.uid = cell?.uid
-    }
 }

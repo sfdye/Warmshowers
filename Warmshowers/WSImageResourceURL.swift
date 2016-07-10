@@ -18,15 +18,19 @@ class WSImageResourceEndPoint: WSAPIEndPointProtocol {
     
     func urlWithHostURL(hostURL: NSURL, andParameters parameters: AnyObject?) throws -> NSURL {
         
-        guard let stringURL = parameters as? NSString where stringURL != "" else {
-            throw WSAPIEndPointError.InvalidPathParameters
-        }
+        switch parameters {
         
-        guard let url = NSURL(string: stringURL as String) else {
+        case is String:
+            
+            guard let url = NSURL(string: parameters as! String) else {
+                throw WSAPIEndPointError.InvalidPathParameters
+            }
+            
+            return url
+
+        default:
             throw WSAPIEndPointError.InvalidPathParameters
         }
-
-        return url
     }
     
 }

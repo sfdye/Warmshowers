@@ -21,19 +21,22 @@ class WSUserFeedbackEndPoint: WSAPIEndPointProtocol {
     
     func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
         
-//        var feedback = [WSRecommendation]()
-//        
-//        // Parse the data
-//        if let allRecommendations = json.valueForKey("recommendations") as? NSArray {
-//            for recommendationObject in allRecommendations {
-//                if let recommendationJSON = recommendationObject.valueForKey("recommendation") {
-//                    if let recommendation = WSRecommendation(json: recommendationJSON) {
-//                        feedback.append(recommendation)
-//                    }
-//                }
-//            }
-//        }
+        guard let recommendations = json["recommendations"] as? [AnyObject] else {
+            throw WSAPIEndPointError.ParsingError(endPoint: name, key: "recommendations")
+        }
         
-        return nil
+        var feedback = [WSRecommendation]()
+        for recommendation in recommendations {
+            
+            guard
+                let recommendationJSON = recommendation["recommendation"],
+                let wsrecommendation = WSRecommendation(json: recommendationJSON!)
+                else {
+                    throw WSAPIEndPointError.ParsingError(endPoint: name, key: "recommendation")
+            }
+
+            feedback.append(wsrecommendation)
+        }
+        return feedback
     }
 }

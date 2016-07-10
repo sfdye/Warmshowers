@@ -19,20 +19,26 @@ extension WSAccountTableViewController {
         guard let user = user else { return 0 }
         switch section {
         case 0:
+            // Profile image and availability
             return 2
         case 1:
+            // Account details
             return 3
         case 2:
-            return 2
+            // Feedback
+            return 1
         case 3:
+            // About
             return 1
         case 4:
+            // Hosting info
             var cells = user.hostingInfo.count
             if user.offers.count > 0 {
                 cells += 1 + user.offers.count
             }
-            return 0 //cells
+            return 1 //cells
         case 5:
+            // Contact details
             return user.phoneNumbers.count
         default:
             return 0
@@ -43,9 +49,10 @@ extension WSAccountTableViewController {
         guard let user = user else { return UITableViewCell() }
         switch indexPath.section {
         case 0:
+            // Profile image and availability
             switch indexPath.row {
             case 0:
-                // Photo
+                // Profile image
                 let cell = tableView.dequeueReusableCellWithIdentifier(ImageCellID, forIndexPath: indexPath) as! ProfileImageTableViewCell
                 cell.nameLabel.text = user.fullname
                 // TODO set the photo height to 35% of the screen height
@@ -64,10 +71,10 @@ extension WSAccountTableViewController {
             case 1:
                 // Availiblity
                 let cell = tableView.dequeueReusableCellWithIdentifier(AvailabilityCellID, forIndexPath: indexPath) as! AvailabilityTableViewCell
-                if user.isAvailable {
-                    cell.configureAsAvailable()
-                } else {
+                if user.isNotAvailable ?? true {
                     cell.configureAsNotAvailable()
+                } else {
+                    cell.configureAsAvailable()
                 }
                 return cell
             default:

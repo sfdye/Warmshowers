@@ -44,7 +44,7 @@ class WSAccountTableViewController: UITableViewController {
         
         // Get the users profile image if they have one.
         if user?.profileImage == nil && user?.profileImageURL != nil {
-            api.contactEndPoint(.ImageResource, withPathParameters: user?.profileImage, andData: nil, thenNotify: self)
+            api.contactEndPoint(.ImageResource, withPathParameters: user?.profileImageURL, andData: nil, thenNotify: self)
         }
         
         // Download the users feedback.
@@ -139,7 +139,7 @@ class WSAccountTableViewController: UITableViewController {
     
     func languagesSpokenTextForUser(user: WSUser) -> String? {
         guard let languagesSpoken = user.languagesSpoken else { return "Languages spoken:" }
-        return "Languages spoken: \(user.languagesSpoken)"
+        return "Languages spoken: \(languagesSpoken)"
     }
 
 }
