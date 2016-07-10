@@ -14,10 +14,13 @@ enum WSUserLocationError: ErrorType {
     case InvalidInput
 }
 
-class WSUserLocation : WSUser {
+class WSUserLocation: NSObject {
     
     // MARK: Properties
     
+    var fullname: String
+    var name: String
+    var uid: Int
     var additional: String?
     var city: String?
     var country: String?
@@ -33,7 +36,10 @@ class WSUserLocation : WSUser {
     var image: UIImage?
     var tileID: String?
     
+    
     // MARK: Calculated Properties
+    
+    override var hashValue: Int { return uid }
     
     var location: CLLocation { return CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude) }
     
@@ -71,11 +77,35 @@ class WSUserLocation : WSUser {
     // MARK: Initializers
     
     init(fullname: String, name: String, uid: Int, lat: Double, lon: Double) {
+        self.fullname = fullname
+        self.name = name
+        self.uid = uid
         self.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-        super.init(fullname: fullname, name: name, uid: uid)
     }
     
-    // initialises a WSUserLocation instance with json data
+    init?(user: CDWSUserLocation) {
+        
+        // At a minimum, the object must have a uid, latitude and longitude
+        guard
+            let fullname = user.fullname,
+            let name = user.name,
+            let uid = user.uid?.integerValue,
+            let lat = user.latitude?.doubleValue,
+            let lon = user.longitude?.doubleValue
+            else {
+                return nil
+        }
+        
+        self.fullname = fullname
+        self.name = name
+        self.uid = uid
+        self.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+        self.image = user.image as? UIImage
+        self.imageURL = user.image_url
+        self.tileID = user.map_tile?.quad_key
+    }
+    
+    // Initialises a WSUserLocation instance with json data.
     convenience init?(json: AnyObject) {
         
         self.init(fullname: "", name: "", uid: 0, lat: 0.0, lon: 0.0)
@@ -108,27 +138,8 @@ class WSUserLocation : WSUser {
         }
     }
     
-    convenience init?(user: CDWSUserLocation) {
-        
-        self.init(fullname: "", name: "", uid: 0, lat: 0.0, lon: 0.0)
-        
-        // At a minimum, the object must have a uid, latitude and longitude
-        guard let fullname = user.fullname,
-            let name = user.name,
-            let uid = user.uid?.integerValue,
-            let lat = user.latitude?.doubleValue,
-            let lon = user.longitude?.doubleValue
-            else {
-                return nil
-        }
-        
-        self.fullname = fullname
-        self.name = name
-        self.uid = uid
-        self.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-        self.image = user.image as? UIImage
-        self.imageURL = user.image_url
-        self.tileID = user.map_tile?.quad_key
-    }
-    
+}
+
+func ==(lhs: WSUserLocation, rhs: WSUserLocation) -> Bool {
+    return lhs.hashValue == rhs.hashValue
 }

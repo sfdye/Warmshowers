@@ -10,15 +10,35 @@ import UIKit
 
 extension WSHostListTableViewController : WSAPIResponseDelegate {
     
+    func requestdidComplete(request: WSAPIRequest) {
+        WSProgressHUD.hide(navigationController!.view)
+    }
+    
     func request(request: WSAPIRequest, didSuceedWithData data: AnyObject?) {
-        guard
-            let imageURL = request.parameters as? String,
-            let image = data as? UIImage
-            else { return }
-        setImage(image, forHostWithImageURL: imageURL)
+        switch request.endPoint.type {
+        case .ImageResource:
+            guard
+                let imageURL = request.parameters as? String,
+                let image = data as? UIImage
+                else { return }
+            setImage(image, forHostWithImageURL: imageURL)
+        case .UserInfo:
+            guard let host = data as? WSUser else { return }
+            performSegueWithIdentifier(SID_HostListToUserAccount, sender: host)
+        default:
+            break
+        }
     }
     
     func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
-        // No need for action.
+        switch request.endPoint.type {
+        case .ImageResource:
+            // No need for action.
+            break
+        case .UserInfo:
+            alert.presentAlertFor(self, withTitle: "Error", button: "OK", message: "Failed to get user info.")
+        default:
+            break
+        }
     }
 }

@@ -82,7 +82,7 @@ extension WSLocationSearchViewController : MKMapViewDelegate {
                 }
             } else {
                 if let user = clusterAnnotation.annotations.first as? WSUserLocation {
-                    navigationDelegate?.showUserProfileForHost(user)
+                    navigationDelegate?.showUserProfileForHostWithUID(user.uid)
                 }
             }
         }

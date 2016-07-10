@@ -8,6 +8,8 @@
 
 import UIKit
 
+let SID_HostListToUserAccount = "HostListToUserAccount"
+
 class WSHostListTableViewController: UITableViewController {
     
     var placeholderImage: UIImage? = UIImage(named: "ThumbnailPlaceholder")
@@ -15,6 +17,7 @@ class WSHostListTableViewController: UITableViewController {
     var numberOfHosts: Int { return hosts?.count ?? 0 }
     
     // Delegates
+    var alert: WSAlertDelegate = WSAlertDelegate.sharedAlertDelegate
     var api: WSAPICommunicatorProtocol = WSAPICommunicator.sharedAPICommunicator
     
     // MARK: View life cycle
@@ -34,7 +37,7 @@ class WSHostListTableViewController: UITableViewController {
                 self.dismissViewControllerAnimated(true, completion: nil)
             })
             alert.addAction(okAction)
-            self.presentViewController(alert, animated: true, completion: nil)
+            presentViewController(alert, animated: true, completion: nil)
             return
         }
         
@@ -80,6 +83,12 @@ class WSHostListTableViewController: UITableViewController {
                     })
             }
         }
+    }
+    
+    /** Initiates a download of a users profile. */
+    func showUserProfileForHostWithUID(uid: Int) {
+        WSProgressHUD.show(navigationController!.view, label: nil)
+        api.contactEndPoint(.UserInfo, withPathParameters: String(uid) as NSString, andData: nil, thenNotify: self)
     }
     
     // MARK: Navigation

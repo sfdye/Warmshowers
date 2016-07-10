@@ -8,7 +8,6 @@
 
 import UIKit
 import CoreData
-import MBProgressHUD
 import ReachabilitySwift
 
 class WSMessageThreadsTableViewController: UITableViewController {

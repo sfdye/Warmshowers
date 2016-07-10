@@ -93,7 +93,7 @@
 		E5967B9F1C3490740037F4B7 /* WSOffers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967B9E1C3490740037F4B7 /* WSOffers.swift */; };
 		E5967BA11C35D59C0037F4B7 /* WSHostingInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967BA01C35D59C0037F4B7 /* WSHostingInfo.swift */; };
 		E5967BA31C361A9F0037F4B7 /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967BA21C361A9F0037F4B7 /* ContactTableViewCell.swift */; };
-		E5967BA51C361D2B0037F4B7 /* WSPhoneContacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967BA41C361D2B0037F4B7 /* WSPhoneContacts.swift */; };
+		E5967BA51C361D2B0037F4B7 /* WSPhoneNumbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967BA41C361D2B0037F4B7 /* WSPhoneNumbers.swift */; };
 		E5967BA71C3620470037F4B7 /* WSPhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967BA61C3620470037F4B7 /* WSPhoneNumber.swift */; };
 		E5967BA91C36910C0037F4B7 /* AvailabilityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967BA81C36910C0037F4B7 /* AvailabilityTableViewCell.swift */; };
 		E5967BAB1C38814F0037F4B7 /* WSTimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967BAA1C38814F0037F4B7 /* WSTimeInterval.swift */; };
@@ -162,6 +162,8 @@
 		E5E920051D30D95E00435070 /* WSHostListTableViewController+WSAPIResponseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E920041D30D95E00435070 /* WSHostListTableViewController+WSAPIResponseDelegate.swift */; };
 		E5E920071D30EB8400435070 /* WSHostSearchNavigationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E920061D30EB8400435070 /* WSHostSearchNavigationDelegate.swift */; };
 		E5E920091D30EBE000435070 /* WSHostSearchViewController+WSHostSearchNavigationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E920081D30EBE000435070 /* WSHostSearchViewController+WSHostSearchNavigationDelegate.swift */; };
+		E5E9200B1D31E35000435070 /* WSHostSearchViewController+WSAPIResponseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E9200A1D31E35000435070 /* WSHostSearchViewController+WSAPIResponseDelegate.swift */; };
+		E5E9200D1D31E86600435070 /* WSHostListTableViewController+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E9200C1D31E86600435070 /* WSHostListTableViewController+UITableViewDelegate.swift */; };
 		E5ED1E8E1CD416BB0017D12F /* WSNavigationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5ED1E8D1CD416BB0017D12F /* WSNavigationDelegate.swift */; };
 		E5ED1E901CD41A460017D12F /* WSSettingsTableViewController+WSAPIResponseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5ED1E8F1CD41A460017D12F /* WSSettingsTableViewController+WSAPIResponseDelegate.swift */; };
 		E5ED1E931CD433440017D12F /* WSLogoutEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5ED1E921CD433440017D12F /* WSLogoutEndpoint.swift */; };
@@ -207,6 +209,7 @@
 		E5F9BCA21CDF25FA006494FE /* WSStoreMapTileProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F9BCA11CDF25FA006494FE /* WSStoreMapTileProtocol.swift */; };
 		E5F9BCA41CDF2615006494FE /* WSStoreParticipantProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F9BCA31CDF2615006494FE /* WSStoreParticipantProtocol.swift */; };
 		E5F9BCA61CDF26B0006494FE /* WSUserLocationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F9BCA51CDF26B0006494FE /* WSUserLocationProtocol.swift */; };
+		FE52353394AC0B33058F967E /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A17687885A5BDB7132D6EBF2 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -227,6 +230,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		27D8681A0DFA737199F22923 /* Pods.test.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.test.xcconfig; path = "Pods/Target Support Files/Pods/Pods.test.xcconfig"; sourceTree = "<group>"; };
+		32064E91A7DCC6FB1E36E99F /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		70D4A397FB63280C2373C260 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		A17687885A5BDB7132D6EBF2 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E505EF131CE2DE2200F7B417 /* WSLocationSearchViewController+WSAPIResponseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSLocationSearchViewController+WSAPIResponseDelegate.swift"; sourceTree = "<group>"; };
 		E50FD8A11C053A42004D38A3 /* MapTileServerURLTemplate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapTileServerURLTemplate.swift; sourceTree = "<group>"; };
@@ -315,7 +321,7 @@
 		E5967B9E1C3490740037F4B7 /* WSOffers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSOffers.swift; sourceTree = "<group>"; };
 		E5967BA01C35D59C0037F4B7 /* WSHostingInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSHostingInfo.swift; sourceTree = "<group>"; };
 		E5967BA21C361A9F0037F4B7 /* ContactTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactTableViewCell.swift; sourceTree = "<group>"; };
-		E5967BA41C361D2B0037F4B7 /* WSPhoneContacts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSPhoneContacts.swift; sourceTree = "<group>"; };
+		E5967BA41C361D2B0037F4B7 /* WSPhoneNumbers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSPhoneNumbers.swift; sourceTree = "<group>"; };
 		E5967BA61C3620470037F4B7 /* WSPhoneNumber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSPhoneNumber.swift; sourceTree = "<group>"; };
 		E5967BA81C36910C0037F4B7 /* AvailabilityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvailabilityTableViewCell.swift; sourceTree = "<group>"; };
 		E5967BAA1C38814F0037F4B7 /* WSTimeInterval.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSTimeInterval.swift; sourceTree = "<group>"; };
@@ -391,6 +397,8 @@
 		E5E920041D30D95E00435070 /* WSHostListTableViewController+WSAPIResponseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSHostListTableViewController+WSAPIResponseDelegate.swift"; sourceTree = "<group>"; };
 		E5E920061D30EB8400435070 /* WSHostSearchNavigationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSHostSearchNavigationDelegate.swift; sourceTree = "<group>"; };
 		E5E920081D30EBE000435070 /* WSHostSearchViewController+WSHostSearchNavigationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSHostSearchViewController+WSHostSearchNavigationDelegate.swift"; sourceTree = "<group>"; };
+		E5E9200A1D31E35000435070 /* WSHostSearchViewController+WSAPIResponseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSHostSearchViewController+WSAPIResponseDelegate.swift"; sourceTree = "<group>"; };
+		E5E9200C1D31E86600435070 /* WSHostListTableViewController+UITableViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSHostListTableViewController+UITableViewDelegate.swift"; sourceTree = "<group>"; };
 		E5ED1E8D1CD416BB0017D12F /* WSNavigationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSNavigationDelegate.swift; sourceTree = "<group>"; };
 		E5ED1E8F1CD41A460017D12F /* WSSettingsTableViewController+WSAPIResponseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSSettingsTableViewController+WSAPIResponseDelegate.swift"; sourceTree = "<group>"; };
 		E5ED1E921CD433440017D12F /* WSLogoutEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSLogoutEndpoint.swift; sourceTree = "<group>"; };
@@ -444,6 +452,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E56CC0881BFD166200AAF973 /* MapKit.framework in Frameworks */,
+				FE52353394AC0B33058F967E /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -464,6 +473,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		925BAF60A7853CBB0E66D08B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				32064E91A7DCC6FB1E36E99F /* Pods.debug.xcconfig */,
+				27D8681A0DFA737199F22923 /* Pods.test.xcconfig */,
+				70D4A397FB63280C2373C260 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		D6001CC5D7394753D8ED4DB7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -531,7 +550,7 @@
 				E5DA03FE1C4CA9CF00FAD1D7 /* WSDistance.swift */,
 				E5967BA01C35D59C0037F4B7 /* WSHostingInfo.swift */,
 				E5967B9E1C3490740037F4B7 /* WSOffers.swift */,
-				E5967BA41C361D2B0037F4B7 /* WSPhoneContacts.swift */,
+				E5967BA41C361D2B0037F4B7 /* WSPhoneNumbers.swift */,
 				E5967BA61C3620470037F4B7 /* WSPhoneNumber.swift */,
 				E54276811C3E54BA00047029 /* WSPhoneNumberType.swift */,
 				E5967BB31C38A8ED0037F4B7 /* WSRecommendation.swift */,
@@ -631,6 +650,7 @@
 				E5700C571C45C057008C8A87 /* WSHostListTableViewController.swift */,
 				E5DA03DF1C490ECC00FAD1D7 /* WSHostListTableViewController+UITableViewDataSource.swift */,
 				E5E920041D30D95E00435070 /* WSHostListTableViewController+WSAPIResponseDelegate.swift */,
+				E5E9200C1D31E86600435070 /* WSHostListTableViewController+UITableViewDelegate.swift */,
 			);
 			name = WSHostListTableViewController;
 			sourceTree = "<group>";
@@ -705,6 +725,7 @@
 				E5F4A7A91CE1D5E00010BEC7 /* WSHostSearchViewController+WSHostSearchControllerDelegate.swift */,
 				E5E920061D30EB8400435070 /* WSHostSearchNavigationDelegate.swift */,
 				E5E920081D30EBE000435070 /* WSHostSearchViewController+WSHostSearchNavigationDelegate.swift */,
+				E5E9200A1D31E35000435070 /* WSHostSearchViewController+WSAPIResponseDelegate.swift */,
 			);
 			name = WSHostSearchViewController;
 			sourceTree = "<group>";
@@ -912,6 +933,7 @@
 				E5D96B181BFB1CA700AFAFEE /* WarmshowersUITests */,
 				E5D96AF51BFB1CA700AFAFEE /* Products */,
 				D6001CC5D7394753D8ED4DB7 /* Frameworks */,
+				925BAF60A7853CBB0E66D08B /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1190,9 +1212,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E5D96B1E1BFB1CA700AFAFEE /* Build configuration list for PBXNativeTarget "Warmshowers" */;
 			buildPhases = (
+				DED38364EDB518B1F44E3A0F /* Check Pods Manifest.lock */,
 				E5D96AF01BFB1CA700AFAFEE /* Sources */,
 				E5D96AF11BFB1CA700AFAFEE /* Frameworks */,
 				E5D96AF21BFB1CA700AFAFEE /* Resources */,
+				5D069F5DCB7201F901B37DBB /* Embed Pods Frameworks */,
+				834981B8BD4106EC91AC4026 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1324,6 +1349,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		5D069F5DCB7201F901B37DBB /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		834981B8BD4106EC91AC4026 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DED38364EDB518B1F44E3A0F /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		E5D96AF01BFB1CA700AFAFEE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -1334,7 +1407,7 @@
 				E542767C1C3E4C2A00047029 /* FeedbackOptionPickerTableViewCell.swift in Sources */,
 				E51397671C06945E00FD8EC1 /* WSUserLocation.swift in Sources */,
 				E5F6F3171C3140BD0000A87E /* AboutTableViewCell.swift in Sources */,
-				E5967BA51C361D2B0037F4B7 /* WSPhoneContacts.swift in Sources */,
+				E5967BA51C361D2B0037F4B7 /* WSPhoneNumbers.swift in Sources */,
 				E57AF72F1CAA4E40002785D1 /* WSStore+WSStoreParticipantProtocol.swift in Sources */,
 				E59FE1B61CD0A0C60024F354 /* WSCreateFeedbackTableViewController+Actions.swift in Sources */,
 				E5D96B281BFC493B00AFAFEE /* WSLoginViewController.swift in Sources */,
@@ -1400,6 +1473,7 @@
 				E57AF7311CAA4E58002785D1 /* WSStore+WSStoreUserLocationProtocol.swift in Sources */,
 				E5D961541C62BFD4004E1F31 /* WSMessageThreadTableViewController+NSFetchedResultsControllerDelegate.swift in Sources */,
 				E5F4A79C1CE092F30010BEC7 /* WSReplyToMessageEndPoint.swift in Sources */,
+				E5E9200B1D31E35000435070 /* WSHostSearchViewController+WSAPIResponseDelegate.swift in Sources */,
 				E5F4A7A01CE093110010BEC7 /* WSUserFeedbackEndPoint.swift in Sources */,
 				E564905E1CD5F57600645331 /* WSLocationSearchViewController+MKMapViewDelegate.swift in Sources */,
 				E574AED21D311787008676BC /* WSKeywordSearchData.swift in Sources */,
@@ -1432,6 +1506,7 @@
 				E5F4A7921CE086EA0010BEC7 /* WSMarkMessageEndPoint.swift in Sources */,
 				E5F4A7961CE092A10010BEC7 /* WSGetMessageThreadEndPoint.swift in Sources */,
 				E54276751C3E0CE200047029 /* ComposeMessageBodyTableViewCell.swift in Sources */,
+				E5E9200D1D31E86600435070 /* WSHostListTableViewController+UITableViewDelegate.swift in Sources */,
 				E542768A1C41AAAF00047029 /* WSRecommendationMonths.swift in Sources */,
 				E5DA03E81C49AE5300FAD1D7 /* HostListTableViewCell+WSLazyImageTableViewCell.swift in Sources */,
 				E5A9F1211C55F79A006D6499 /* WSProgressHUD.swift in Sources */,
@@ -1635,6 +1710,7 @@
 		};
 		E57057EF1CC9803A00FA5D9F /* Test */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 27D8681A0DFA737199F22923 /* Pods.test.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1764,6 +1840,7 @@
 		};
 		E5D96B1F1BFB1CA700AFAFEE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 32064E91A7DCC6FB1E36E99F /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1781,6 +1858,7 @@
 		};
 		E5D96B201BFB1CA700AFAFEE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 70D4A397FB63280C2373C260 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

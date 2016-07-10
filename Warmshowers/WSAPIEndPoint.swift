@@ -42,7 +42,7 @@ enum WSAPIEndPoint: String {
         case .SearchByKeyword:
             return WSSearchByKeywordEndPoint()
         case .UserInfo:
-            return WSUserInfoEndPoint()
+            return WSUserEndPoint()
         case .UserFeedback:
             return WSUserFeedbackEndPoint()
         case .CreateFeedback:

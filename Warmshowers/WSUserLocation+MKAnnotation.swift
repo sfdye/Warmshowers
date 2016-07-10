@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-extension WSUserLocation : MKAnnotation {
+extension WSUserLocation: MKAnnotation {
     
     @objc var title: String? {
         return fullname

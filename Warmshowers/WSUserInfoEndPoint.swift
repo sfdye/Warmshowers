@@ -1,5 +1,5 @@
 //
-//  WSUserInfoEndPoint.swift
+//  WSUserEndPoint.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 9/05/16.
@@ -8,18 +8,21 @@
 
 import Foundation
 
-class WSUserInfoEndPoint: WSAPIEndPointProtocol {
+class WSUserEndPoint: WSAPIEndPointProtocol {
     
     var type: WSAPIEndPoint = .UserInfo
     
     var httpMethod: HttpMethod = .Get
     
     func urlWithHostURL(hostURL: NSURL, andParameters parameters: AnyObject?) throws -> NSURL {
-        assertionFailure("path needs uid")
-        return hostURL.URLByAppendingPathComponent("/services/rest/user/<UID>")
+        guard let uidString = parameters as? NSString else { throw WSAPIEndPointError.InvalidPathParameters }
+        return hostURL.URLByAppendingPathComponent("/services/rest/user/\(uidString)")
     }
     
     func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
-        return json
+        print(json)
+        guard let userInfo = WSUser(json: json) else { throw WSAPIEndPointError.ParsingError(endPoint: name, key: nil) }
+        return userInfo
     }
+    
 }

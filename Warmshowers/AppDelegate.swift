@@ -38,10 +38,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         configureGlobalViewSettings()
         
-        #if DEBUG
-            WSAPICommunicator.sharedAPICommunicator.logging = true
-        #endif
-        
         if !WSSessionState.sharedSessionState.isLoggedIn {
             WSNavigationDelegate.sharedNavigationDelegate.showLoginScreen()
         } else {

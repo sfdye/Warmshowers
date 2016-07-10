@@ -38,6 +38,7 @@ extension WSKeywordSearchTableViewController {
             cell.locationLabel.text = host.shortAddress
             cell.profileImage.image = host.image ?? placeholderImage
             cell.setNotAvailible(host.notcurrentlyavailable)
+            cell.uid = host.uid
             
             // Download the hosts thumbnail image if needed.
             if let _ = host.imageURL

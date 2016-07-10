@@ -64,7 +64,7 @@
                     <connections>
                         <outlet property="keywordSearchView" destination="7E5-S6-tID" id="vwT-nn-Il8"/>
                         <outlet property="locationSearchView" destination="4bd-cf-BPR" id="flo-Gy-Yk2"/>
-                        <segue destination="nEv-Yc-3Kx" kind="show" identifier="MapToUserAccount" id="dDb-Jv-xbh"/>
+                        <segue destination="nEv-Yc-3Kx" kind="show" identifier="SearchViewToUserAccount" id="dDb-Jv-xbh"/>
                         <segue destination="JpQ-pS-sYY" kind="show" identifier="MapToHostList" id="sZy-TC-WAA"/>
                     </connections>
                 </viewController>
@@ -106,7 +106,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vhb-Ct-dme" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2192" y="-967"/>
+            <point key="canvasLocation" x="2192" y="-895"/>
         </scene>
         <!--Hosts-->
         <scene sceneID="Uao-jn-H3o">
@@ -191,6 +191,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="0bQ-fh-Jya" kind="show" identifier="HostListToUserAccount" id="TeR-0V-B6Y"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Oar-Jo-ppe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -220,7 +223,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qnU-fU-C9Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2963.5" y="-967"/>
+            <point key="canvasLocation" x="2958.5" y="-895"/>
         </scene>
         <!--Location Search View Controller-->
         <scene sceneID="3Lc-lM-xGW">
@@ -351,7 +354,6 @@
                                     <outlet property="locationLabel" destination="LpK-Va-oN3" id="bKC-HU-oVF"/>
                                     <outlet property="nameLabel" destination="Y4R-V8-Pc8" id="ZHB-ly-KML"/>
                                     <outlet property="profileImage" destination="1cJ-r2-gaJ" id="D1U-Tn-Czs"/>
-                                    <segue destination="nEv-Yc-3Kx" kind="showDetail" identifier="SearchResultsToUserAccount" id="chp-Mq-xSE"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Spinner" id="M9A-dt-xBT" customClass="SpinnerTableViewCell" customModule="Warmshowers" customModuleProvider="target">
@@ -409,6 +411,9 @@
                             <outlet property="delegate" destination="Ddd-EB-4w4" id="zq4-N7-LSG"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <segue destination="nEv-Yc-3Kx" kind="showDetail" identifier="SearchResultsToUserAccount" id="yA2-nP-TAF"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uGm-cP-uCW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -423,6 +428,7 @@
         <image name="UserIcon" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="chp-Mq-xSE"/>
+        <segue reference="dDb-Jv-xbh"/>
+        <segue reference="yRc-eW-HTh"/>
     </inferredMetricsTieBreakers>
 </document>

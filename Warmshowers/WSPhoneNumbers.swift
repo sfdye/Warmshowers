@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct WSPhoneContacts {
+struct WSPhoneNumbers {
     
     var numbers = [WSPhoneNumber]()
     var count: Int { return numbers.count }

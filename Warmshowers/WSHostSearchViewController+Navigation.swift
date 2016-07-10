@@ -45,25 +45,11 @@ extension WSHostSearchViewController {
         
         switch segueIdentifier {
             
-        case SID_MapToUserAccount:
+        case SID_SearchViewToUserAccount:
             
             let navVC = segue.destinationViewController as! UINavigationController
             let accountTVC = navVC.viewControllers.first as! WSAccountTableViewController
-            
-            if let user = sender as? WSUserLocation {
-                accountTVC.uid = user.uid
-            } else {
-                accountTVC.uid = session.uid
-            }
-            
-        case SIB_ResultsToUserAccount:
-            
-            let navVC = segue.destinationViewController as! UINavigationController
-            let accountTVC = navVC.viewControllers.first as! WSAccountTableViewController
-            
-            if let cell = sender as? HostListTableViewCell {
-                accountTVC.uid = cell.uid
-            }
+            accountTVC.userInfo = sender as? WSUser
             
         case SID_MapToHostList:
             

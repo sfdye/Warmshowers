@@ -12,7 +12,7 @@ import MapKit
 import ReachabilitySwift
 import CCHMapClusterController
 
-let SBID_HostSearch = "HostSearch"
+let SID_SearchViewToUserAccount = "SearchViewToUserAccount"
 
 class WSHostSearchViewController: UIViewController {
     
@@ -23,7 +23,7 @@ class WSHostSearchViewController: UIViewController {
     var searchBar: UISearchBar!
     
     var locationSearchViewController: WSLocationSearchViewController?
-    var keywordSearchTableViewController: UISearchResultsUpdating?
+    var keywordSearchTableViewController: WSKeywordSearchTableViewController?
 
     // Delegates
     var alert: WSAlertProtocol = WSAlertDelegate.sharedAlertDelegate
@@ -44,8 +44,10 @@ class WSHostSearchViewController: UIViewController {
         locationSearchViewController = self.childViewControllers.first as? WSLocationSearchViewController
         assert(locationSearchViewController != nil, "Location Search Table View Controller not set while loading the Host Search View Controller.")
         locationSearchViewController?.navigationDelegate = self
-        keywordSearchTableViewController = self.childViewControllers.last as? UISearchResultsUpdating
-        assert(keywordSearchTableViewController != nil, "Keyword Search Table View Controller not set while loading the Host Search View Controller. Check that WSKeywordSearchTableViewCOntroller conforms to UISearchResultsUpdating.")
+        keywordSearchTableViewController = self.childViewControllers.last as? WSKeywordSearchTableViewController
+        assert(keywordSearchTableViewController != nil, "Keyword Search Table View Controller not set while loading the Host Search View Controller.")
+        assert(keywordSearchTableViewController is UISearchResultsUpdating, "WSKeywordSearchTableViewCOntroller must conform to UISearchResultsUpdating.")
+        keywordSearchTableViewController?.navigationDelegate = self
         
         showMapView()
         
@@ -56,7 +58,7 @@ class WSHostSearchViewController: UIViewController {
         searchController = UISearchController(searchResultsController:nil)
         searchController.loadViewIfNeeded()
         searchController.delegate = self
-        searchController.searchResultsUpdater = keywordSearchTableViewController!
+        searchController.searchResultsUpdater = (keywordSearchTableViewController as! UISearchResultsUpdating)
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.dimsBackgroundDuringPresentation = false
         

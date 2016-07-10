@@ -56,7 +56,7 @@ extension WSAPIEndPointProtocol {
     
     var httpScheme: HttpScheme { return .HTTPS }
     
-    var requiresAuthorization: Bool { return httpMethod == .Post }
+    var requiresAuthorization: Bool { return type != .Login || type != .Token }
     
     var acceptType: AcceptType { return .JSON }
     

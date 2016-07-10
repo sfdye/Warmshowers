@@ -19,13 +19,15 @@ class WSAccountTableViewController: UITableViewController {
     
     let PHOTO_KEY = "profile_image_mobile_profile_photo_std"
     
+    var userInfo: WSUser?
+    
     var uid: Int!
     var info: AnyObject?
     var user: WSUserLocation?
     var feedback = [WSRecommendation]()
     var hostingInfo = WSHostingInfo()
     var offers = WSOffers()
-    var phoneNumbers = WSPhoneContacts()
+    var phoneNumbers = WSPhoneNumbers()
     var photo: UIImage?
     var recipient: CDWSUser?
     
@@ -40,6 +42,16 @@ class WSAccountTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        assert(userInfo != nil, "Account view loaded with nil user info.")
+        guard userInfo != nil else {
+            let alert = UIAlertController(title: "Sorry, an error occured.", message: nil, preferredStyle: .Alert)
+            let okAction = UIAlertAction(title: "OK", style: .Default, handler: { (okAction) -> Void in
+                self.dismissViewControllerAnimated(true, completion: nil)
+            })
+            alert.addAction(okAction)
+            presentViewController(alert, animated: true, completion: nil)
+            return
+        }
         
         navigationItem.title = ""
         navigationItem.leftBarButtonItem?.tintColor = WSColor.LightGrey

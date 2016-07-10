@@ -10,11 +10,13 @@ import Foundation
 
 extension WSHostSearchViewController: WSHostSearchNavigationDelegate {
     
-    func showUserProfileForHost(host: WSUserLocation) {
-        performSegueWithIdentifier(SID_MapToUserAccount, sender: host)
+    func showUserProfileForHostWithUID(uid: Int) {
+        WSProgressHUD.show(nil)
+        api.contactEndPoint(.UserInfo, withPathParameters: String(uid) as NSString, andData: nil, thenNotify: self)
     }
     
     func showHostListWithHosts(hosts: [WSUserLocation]) {
         performSegueWithIdentifier(SID_MapToHostList, sender: hosts)
     }
+    
 }

@@ -8,15 +8,16 @@
 
 import UIKit
 
-class WSUser: NSObject {
+class WSUser: Hashable {
     
     var fullname: String
     var name: String
     var uid: Int
+    var phoneNumbers: WSPhoneNumbers?
     
     // MARK: Hashable
     
-    override var hashValue: Int { return uid }
+    var hashValue: Int { return uid }
     
     // MARK: Initialisers
     
@@ -28,9 +29,11 @@ class WSUser: NSObject {
     
     convenience init?(json: AnyObject) {
         
-        guard let fullname = json.valueForKey("fullname") as? String,
-              let name = json.valueForKey("name") as? String,
-              let uid = json.valueForKey("laundry")?.integerValue
+        guard
+            let fullname = json["fullname"] as? String,
+            let name = json["name"] as? String,
+            let uidString = json["uid"] as? String,
+            let uid = Int(uidString)
             else {
                 return nil
         }

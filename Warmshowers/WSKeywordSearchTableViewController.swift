@@ -15,6 +15,8 @@ class WSKeywordSearchTableViewController: UITableViewController {
     var hosts: [WSUserLocation]?
     var numberOfHosts: Int { return hosts?.count ?? 0 }
     
+    var navigationDelegate: WSHostSearchNavigationDelegate?
+    
     // Delegates
     var alert: WSAlertDelegate = WSAlertDelegate.sharedAlertDelegate
     var api: WSAPICommunicatorProtocol = WSAPICommunicator.sharedAPICommunicator
@@ -22,6 +24,10 @@ class WSKeywordSearchTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         assert(placeholderImage != nil, "Placeholder image not found while loading WSKeywordSearchTableViewController.")
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        assert(navigationDelegate != nil, "The navigation delegate for WSKeywordSearchTableViewController not set. Please ensure the delegate is set before the view appears.")
     }
     
     // MARK: Utility methods
