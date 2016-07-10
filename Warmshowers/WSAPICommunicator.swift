@@ -166,11 +166,15 @@ class WSAPICommunicator: WSAPICommunicatorProtocol {
                 if let text = String.init(data: data, encoding: NSUTF8StringEncoding) {
                     log("Recieved text response: \(text)")
                     parsedData = try request.endPoint.request(request, didRecievedResponseWithText: text)
+                    request.delegate.request(request, didSucceedWithData: parsedData)
+                } else {
+                    request.delegate.request(request, didFailWithError: WSAPIEndPointError.ParsingError(endPoint: request.endPoint.name, key: nil))
                 }
             case .JSON:
                 let json = try NSJSONSerialization.JSONObjectWithData(data, options: [])
                 log("Recieved JSON response: \(json)")
                 parsedData = try request.endPoint.request(request, didRecievedResponseWithJSON: json)
+                request.delegate.request(request, didSucceedWithData: parsedData)
             case .Image:
                 if let image = UIImage(data: data) {
                     request.delegate.request(request, didSucceedWithData: image)
@@ -178,7 +182,6 @@ class WSAPICommunicator: WSAPICommunicatorProtocol {
                     request.delegate.request(request, didFailWithError: WSAPIEndPointError.ParsingError(endPoint: request.endPoint.name, key: nil))
                 }
             }
-            request.delegate.request(request, didSucceedWithData: parsedData)
         } catch let error {
             request.delegate.request(request, didFailWithError: error)
         }

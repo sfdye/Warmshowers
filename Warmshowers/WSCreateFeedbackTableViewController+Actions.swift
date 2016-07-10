@@ -45,6 +45,6 @@ extension WSCreateFeedbackTableViewController {
         
         // Submit the feedback
         WSProgressHUD.show("Submitting feedback ...")
-        api?.createFeedback(feedback, andNotify: self)
+//        api?.createFeedback(feedback, andNotify: self)
     }
 }

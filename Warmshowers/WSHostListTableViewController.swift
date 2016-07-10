@@ -15,7 +15,7 @@ class WSHostListTableViewController: UITableViewController {
     var numberOfHosts: Int { return hosts?.count ?? 0 }
     
     // Delegates
-    var api: WSAPICommunicator? = WSAPICommunicator.sharedAPICommunicator
+    var api: WSAPICommunicatorProtocol = WSAPICommunicator.sharedAPICommunicator
     
     // MARK: View life cycle
     
@@ -51,7 +51,7 @@ class WSHostListTableViewController: UITableViewController {
         
         let user = hosts[indexPath.row]
         if let url = user.imageURL where user.image == nil {
-            api?.getImageAtURL(url, andNotify: self)
+            api.contactEndPoint(.ImageResource, withPathParameters: url, andData: nil, thenNotify: self)
         }
     }
     
@@ -66,6 +66,19 @@ class WSHostListTableViewController: UITableViewController {
         
         for indexPath in visiblePaths {
             startImageDownloadForIndexPath(indexPath)
+        }
+    }
+    
+    /** Sets the image for a host in the list with the given image URL. */
+    func setImage(image: UIImage, forHostWithImageURL imageURL: String) {
+        guard let hosts = hosts else { return }
+        for (index, host) in hosts.enumerate() {
+            if host.imageURL == imageURL {
+                host.image = image ?? placeholderImage
+                dispatch_async(dispatch_get_main_queue(), { [weak self] () -> Void in
+                    self?.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .None)
+                    })
+            }
         }
     }
     

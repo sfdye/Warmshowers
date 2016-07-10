@@ -45,7 +45,7 @@ class WSKeywordSearchTableViewController: UITableViewController {
         
         let user = hosts[indexPath.row]
         if let url = user.imageURL where user.image == nil {
-            api.getImageAtURL(url, andNotify: self)
+            api.contactEndPoint(.ImageResource, withPathParameters: url as NSString, andData: nil, thenNotify: self)
         }
     }
     
@@ -60,6 +60,19 @@ class WSKeywordSearchTableViewController: UITableViewController {
         
         for indexPath in visiblePaths {
             startImageDownloadForIndexPath(indexPath)
+        }
+    }
+    
+    /** Sets the image for a host in the list with the given image URL. */
+    func setImage(image: UIImage, forHostWithImageURL imageURL: String) {
+        guard let hosts = hosts else { return }
+        for (index, host) in hosts.enumerate() {
+            if host.imageURL == imageURL {
+                host.image = image ?? placeholderImage
+                dispatch_async(dispatch_get_main_queue(), { [weak self] () -> Void in
+                    self?.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .None)
+                    })
+            }
         }
     }
     

@@ -650,7 +650,7 @@
 		E57058101CCA304F00FA5D9F /* EndPoints */ = {
 			isa = PBXGroup;
 			children = (
-				E5ED45F11CE87B50008E3C02 /* Resource */,
+				E5ED45F11CE87B50008E3C02 /* ImageResource */,
 				E5F9BC9B1CDE9025006494FE /* MarkMessage */,
 				E5F9BC9A1CDE901C006494FE /* GetMessageThread */,
 				E5F9BC991CDE9016006494FE /* GetAllMessageThreads */,
@@ -1032,12 +1032,12 @@
 			name = Delegates;
 			sourceTree = "<group>";
 		};
-		E5ED45F11CE87B50008E3C02 /* Resource */ = {
+		E5ED45F11CE87B50008E3C02 /* ImageResource */ = {
 			isa = PBXGroup;
 			children = (
 				E5ED45F21CE87B77008E3C02 /* WSImageResourceURL.swift */,
 			);
-			name = Resource;
+			name = ImageResource;
 			sourceTree = "<group>";
 		};
 		E5ED45FA1CE9B747008E3C02 /* Fixtures */ = {

@@ -10,20 +10,4 @@ import Foundation
 
 protocol WSAPICommunicatorProtocol {
     func contactEndPoint(endPoint: WSAPIEndPoint, withPathParameters parameters: AnyObject?, andData data: AnyObject?, thenNotify requester: WSAPIResponseDelegate)
-    
-    func getTokenAndNotify(requester: WSAPIResponseDelegate)
-    func login(username: String, password: String, andNotify requester: WSAPIResponseDelegate)
-    func logoutAndNotify(requester: WSAPIResponseDelegate)
-//    func searchByLocation(mapTile: WSMapTile, andNotify requester: WSAPIResponseDelegate)
-//    func searchByKeyword(keyword: String, offset: Int, andNotify requester: WSAPIResponseDelegate)
-    func getUserInfo(uid: Int, andNotify requester: WSAPIResponseDelegate)
-    func getUserFeedback(uid: Int, andNotify requester: WSAPIResponseDelegate)
-    func createFeedback(feedback: WSRecommendation, andNotify requester: WSAPIResponseDelegate)
-    func sendNewMessageToRecipients(recipients: [CDWSUser], withSubject subject: String, andMessageBody body: String, thenNotify requester: WSAPIResponseDelegate)
-    func replyToMessageOnThread(threadID: Int, withMessageBody body: String, thenNotify requester: WSAPIResponseDelegate)
-    func getUnreadMessageCountAndNotify(requester: WSAPIResponseDelegate)
-    func getAllMessageThreadsAndNotify(requester: WSAPIResponseDelegate)
-    func getMessagesOnThread(threadID: Int, andNotify requester: WSAPIResponseDelegate)
-    func markMessage(threadID: Int, andNotify requester: WSAPIResponseDelegate)
-    func getImageAtURL(imageURL: String, andNotify requester: WSAPIResponseDelegate)
 }

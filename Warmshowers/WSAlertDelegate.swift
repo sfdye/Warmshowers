@@ -36,7 +36,7 @@ class WSAlertDelegate : WSAlertProtocol {
         switch error {
         case is WSAPIEndPointError:
             switch (error as! WSAPIEndPointError) {
-            case .InvalidParameters:
+            case .InvalidPathParameters:
                 assertionFailure("Invalid parameters used for request.")
             case .InvalidOutboundData:
                 assertionFailure("Invalid outbound data for request.")

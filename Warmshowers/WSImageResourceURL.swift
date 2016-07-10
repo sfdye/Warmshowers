@@ -14,8 +14,19 @@ class WSImageResourceEndPoint: WSAPIEndPointProtocol {
     
     var httpMethod: HttpMethod = .Get
     
+    var acceptType: AcceptType = .Image
+    
     func urlWithHostURL(hostURL: NSURL, andParameters parameters: AnyObject?) throws -> NSURL {
-        return NSURL(string: parameters as? String ?? "")!
+        
+        guard let stringURL = parameters as? NSString where stringURL != "" else {
+            throw WSAPIEndPointError.InvalidPathParameters
+        }
+        
+        guard let url = NSURL(string: stringURL as String) else {
+            throw WSAPIEndPointError.InvalidPathParameters
+        }
+
+        return url
     }
     
 }

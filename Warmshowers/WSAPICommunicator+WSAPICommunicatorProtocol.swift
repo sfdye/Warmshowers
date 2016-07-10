@@ -10,29 +10,6 @@ import Foundation
 
 extension WSAPICommunicator {
     
-    func getTokenAndNotify(requester: WSAPIResponseDelegate) {
-        contactEndPoint(.Token, thenNotify: requester)
-    }
-    
-    func login(username: String, password: String, andNotify requester: WSAPIResponseDelegate) {
-        
-        let params = ["username" : username, "password" : password]
-        
-        contactEndPoint(.Login, withPathParameters: params, thenNotify: requester)
-    }
-    
-    func logoutAndNotify(requester: WSAPIResponseDelegate) {
-        contactEndPoint(.Logout, thenNotify: requester)
-    }
-    
-    func getUserInfo(uid: Int, andNotify requester: WSAPIResponseDelegate) {
-        
-    }
-    
-    func getUserFeedback(uid: Int, andNotify requester: WSAPIResponseDelegate) {
-        
-    }
-    
     func createFeedback(feedback: WSRecommendation, andNotify requester: WSAPIResponseDelegate) {
         
         var params = [String: String]()
@@ -55,23 +32,4 @@ extension WSAPICommunicator {
         
     }
     
-    func getUnreadMessageCountAndNotify(requester: WSAPIResponseDelegate) {
-    
-    }
-    
-    func getAllMessageThreadsAndNotify(requester: WSAPIResponseDelegate) {
-        
-    }
-    
-    func getMessagesOnThread(threadID: Int, andNotify requester: WSAPIResponseDelegate) {
-        
-    }
-    
-    func markMessage(threadID: Int, andNotify requester: WSAPIResponseDelegate) {
-        
-    }
-    
-    func getImageAtURL(imageURL: String, andNotify requester: WSAPIResponseDelegate) {
-        
-    }
 }
