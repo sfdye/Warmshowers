@@ -30,18 +30,7 @@ class PhoneNumberTableViewCell: UITableViewCell {
         messageIcon.addGestureRecognizer(messageIconTap)
     }
     
-    // Configures the table view cell for an address
-    //
-    func setWithAddress(address: String) {
-        titleLabel.text = "Address"
-        detailLabel.numberOfLines = 0
-        detailLabel.text = address
-        phoneIcon.hidden = true
-        messageIcon.hidden = true
-    }
-    
-    // Called when the user taps the phone icon
-    //
+    /** Opens the phone app when the user taps the phone icon. */
     func phoneIconTapped() {
         
         guard let url = phoneNumberURL(detailLabel.text) else {
@@ -51,8 +40,7 @@ class PhoneNumberTableViewCell: UITableViewCell {
         UIApplication.sharedApplication().openURL(url)
     }
     
-    // Called when the user taps the message bubble icon
-    //
+    /** Opens the messages app when the user taps the message bubble icon. */
     func messageIconTapped() {
         
         guard let url = messageNumberURL(detailLabel.text) else {
@@ -62,9 +50,8 @@ class PhoneNumberTableViewCell: UITableViewCell {
         UIApplication.sharedApplication().openURL(url)
     }
     
-    // Returns the url to call the the phone number displayed in the cell
-    //
-    func phoneNumberURL(number: String?) -> NSURL? {
+    /** Returns the url to call the the phone number displayed in the cell. */
+    private func phoneNumberURL(number: String?) -> NSURL? {
         
         guard let number = detailLabel.text else {
             return nil
@@ -73,9 +60,8 @@ class PhoneNumberTableViewCell: UITableViewCell {
         return NSURL(string: "tel://" + number)
     }
     
-    // Returns the url to message the the phone number displayed in the cell
-    //
-    func messageNumberURL(number: String?) -> NSURL? {
+    /** Returns the url to message the the phone number displayed in the cell. */
+    private func messageNumberURL(number: String?) -> NSURL? {
         
         guard let number = detailLabel.text else {
             return nil

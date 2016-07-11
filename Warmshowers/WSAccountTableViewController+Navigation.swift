@@ -18,7 +18,7 @@ extension WSAccountTableViewController {
         guard let user = user else { return false }
         switch identifier {
         case ToFeedbackSegueID:
-            return user.feedback.count > 0
+            return user.feedback?.count ?? 0 > 0
         case ToSendNewMessageSegueID:
             assertionFailure("Broken")
             return false //(info != nil && uid != nil && recipient != nil)

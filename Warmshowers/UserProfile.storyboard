@@ -90,7 +90,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Account detail" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ctg-Rr-GTT">
-                                            <rect key="frame" x="16" y="5" width="568" height="20"/>
+                                            <rect key="frame" x="16" y="5" width="568" height="21"/>
                                             <fontDescription key="fontDescription" type="italicSystem" pointSize="13"/>
                                             <color key="textColor" red="0.18823529411764706" green="0.27843137254901962" blue="0.40392156862745099" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -98,7 +98,7 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="ctg-Rr-GTT" firstAttribute="leading" secondItem="6js-uQ-dqn" secondAttribute="leading" constant="16" id="3uK-eE-0hs"/>
-                                        <constraint firstAttribute="bottom" secondItem="ctg-Rr-GTT" secondAttribute="bottom" constant="1" id="LvD-nl-I6Y"/>
+                                        <constraint firstAttribute="bottom" secondItem="ctg-Rr-GTT" secondAttribute="bottom" id="LvD-nl-I6Y"/>
                                         <constraint firstItem="ctg-Rr-GTT" firstAttribute="top" secondItem="6js-uQ-dqn" secondAttribute="top" constant="5" id="c3R-K7-OMi"/>
                                         <constraint firstAttribute="trailing" secondItem="ctg-Rr-GTT" secondAttribute="trailing" constant="16" id="dv5-U9-idN"/>
                                     </constraints>
@@ -129,33 +129,35 @@
                                     <segue destination="rgL-BL-hqm" kind="show" identifier="ToFeedback" id="gWM-dr-ADs"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="About" rowHeight="43" id="nu7-uW-C5B" userLabel="About" customClass="AboutTableViewCell" customModule="Warmshowers" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="427.5" width="600" height="43"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="About" rowHeight="59" id="nu7-uW-C5B" userLabel="About" customClass="AboutTableViewCell" customModule="Warmshowers" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="427.5" width="600" height="59"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nu7-uW-C5B" id="aoB-dX-aB4">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="59"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="About" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8em-cX-aTP">
-                                            <rect key="frame" x="18" y="12" width="564" height="23"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="About" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Q3K-XS-pYs">
+                                            <rect key="frame" x="12" y="12" width="576" height="35"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="textColor" red="0.18823529410000001" green="0.2784313725" blue="0.4039215686" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
+                                        </textView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="8em-cX-aTP" secondAttribute="trailing" constant="18" id="UJh-LP-MF8"/>
-                                        <constraint firstAttribute="bottom" secondItem="8em-cX-aTP" secondAttribute="bottom" constant="8" id="alr-dV-9JH"/>
-                                        <constraint firstItem="8em-cX-aTP" firstAttribute="top" secondItem="aoB-dX-aB4" secondAttribute="top" constant="12" id="btM-L7-6nc"/>
-                                        <constraint firstItem="8em-cX-aTP" firstAttribute="leading" secondItem="aoB-dX-aB4" secondAttribute="leading" constant="18" id="ySS-Qa-fWI"/>
+                                        <constraint firstAttribute="bottom" secondItem="Q3K-XS-pYs" secondAttribute="bottom" constant="12" id="4wm-VJ-Kb3"/>
+                                        <constraint firstAttribute="trailing" secondItem="Q3K-XS-pYs" secondAttribute="trailing" constant="12" id="KB8-7f-Tar"/>
+                                        <constraint firstItem="Q3K-XS-pYs" firstAttribute="leading" secondItem="aoB-dX-aB4" secondAttribute="leading" constant="12" id="sHr-Gc-eGR"/>
+                                        <constraint firstItem="Q3K-XS-pYs" firstAttribute="top" secondItem="aoB-dX-aB4" secondAttribute="top" constant="12" id="uCW-A0-IMa"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="aboutLabel" destination="8em-cX-aTP" id="s2O-BC-V3q"/>
+                                    <outlet property="aboutTextView" destination="Q3K-XS-pYs" id="434-Dx-DkV"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="HostingInfo" rowHeight="33" id="Nva-dz-IPB" customClass="HostingInfoTableViewCell" customModule="Warmshowers" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="470.5" width="600" height="33"/>
+                                <rect key="frame" x="0.0" y="486.5" width="600" height="33"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Nva-dz-IPB" id="R35-9k-Mny">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="33"/>
@@ -190,7 +192,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="OfferHeading" rowHeight="56" id="7Ji-rc-BlH" userLabel="OfferHeading">
-                                <rect key="frame" x="0.0" y="503.5" width="600" height="56"/>
+                                <rect key="frame" x="0.0" y="519.5" width="600" height="56"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7Ji-rc-BlH" id="IZD-hb-f1M">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="56"/>
@@ -217,7 +219,7 @@
                                 </tableViewCellContentView>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Offer" rowHeight="42" id="Jtz-ey-GCa" customClass="HostOfferTableViewCell" customModule="Warmshowers" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="559.5" width="600" height="42"/>
+                                <rect key="frame" x="0.0" y="575.5" width="600" height="42"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Jtz-ey-GCa" id="bXp-jb-upG">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="42"/>
@@ -242,7 +244,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Contact" rowHeight="57" id="eN6-YS-1gd" customClass="PhoneNumberTableViewCell" customModule="Warmshowers" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="601.5" width="600" height="57"/>
+                                <rect key="frame" x="0.0" y="617.5" width="600" height="57"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eN6-YS-1gd" id="X2v-QM-aAt">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="57"/>

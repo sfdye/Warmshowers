@@ -12,7 +12,7 @@ extension WSAccountTableViewController {
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         guard let _ = user else { return 0 }
-        return 6
+        return 7
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -32,14 +32,15 @@ extension WSAccountTableViewController {
             return 1
         case 4:
             // Hosting info
-            var cells = user.hostingInfo.count
-            if user.offers.count > 0 {
-                cells += 1 + user.offers.count
-            }
-            return 1 //cells
+            var count = user.numberOfHostingInfo
+            if user.numberOfOffers > 0 { count += 1 + user.numberOfOffers }
+            return count
         case 5:
             // Contact details
-            return user.phoneNumbers.count
+            return user.numberOfPhoneNumbers
+        case 6:
+            // Address
+            return 1
         default:
             return 0
         }
@@ -71,7 +72,7 @@ extension WSAccountTableViewController {
             case 1:
                 // Availiblity
                 let cell = tableView.dequeueReusableCellWithIdentifier(AvailabilityCellID, forIndexPath: indexPath) as! AvailabilityTableViewCell
-                if user.isNotAvailable ?? true {
+                if user.notcurrentlyavailable ?? true {
                     cell.configureAsNotAvailable()
                 } else {
                     cell.configureAsAvailable()
@@ -108,52 +109,59 @@ extension WSAccountTableViewController {
         case 2:
             // Feedback
             let cell = tableView.dequeueReusableCellWithIdentifier(FeedbackCountCellID, forIndexPath: indexPath)
-            if user.feedback.count > 0 {
-                cell.textLabel?.text = String(format: "Feedback (%i)", arguments: [user.feedback.count])
-            } else {
-                cell.textLabel?.text = "Feedback"
-            }
+            cell.textLabel?.text = feedbackCellTextForUser(user)
             return cell
             
         case 3:
             // About
             let cell = tableView.dequeueReusableCellWithIdentifier(AboutCellID, forIndexPath: indexPath) as! AboutTableViewCell
-            cell.aboutLabel.text = user.comments
+            cell.aboutTextView.text = user.comments
             return cell
             
         case 4:
             // Hosting info
-            if indexPath.row < user.hostingInfo.count {
+            if indexPath.row < user.numberOfHostingInfo {
                 // Display host info
                 let cell = tableView.dequeueReusableCellWithIdentifier(HostingInfoCellID, forIndexPath: indexPath) as! HostingInfoTableViewCell
-                cell.title = user.hostingInfo.titleValues[indexPath.row]
-                cell.info = user.hostingInfo.infoValues[indexPath.row]
+                cell.titleLabel.text = hostingInfoTitleForInfoNumber(indexPath.row, fromUser: user)
+                cell.infoLabel.text = hostingInfoDetailForInfoNumber(indexPath.row, fromUser: user)
                 return cell
-            } else if indexPath.row == user.hostingInfo.count {
+            } else if indexPath.row == user.numberOfHostingInfo {
                 // Display "This host may offer"
                 let cell = tableView.dequeueReusableCellWithIdentifier(OfferHeadingCellID, forIndexPath: indexPath)
                 return cell
             } else {
                 // Display an offer
                 let cell = tableView.dequeueReusableCellWithIdentifier(OfferCellID, forIndexPath: indexPath) as! HostOfferTableViewCell
-                cell.offer = user.offers.offerAtIndex(indexPath.row - 5)
+                cell.offerLabel.text = offerTextForOfferNumber(indexPath.row - 5, fromUser: user)
                 return cell
             }
             
         case 5:
             // Contact details
-            let phoneNumber = user.phoneNumbers.numbers[indexPath.row]
             let cell = tableView.dequeueReusableCellWithIdentifier(ContactCellID, forIndexPath: indexPath) as! PhoneNumberTableViewCell
-            cell.titleLabel.text = phoneNumber.description
-            cell.detailLabel.text = phoneNumber.number
-            switch phoneNumber.type {
-            case .Home, .Work:
-                cell.phoneIcon.hidden = false
-                cell.messageIcon.hidden = true
-            case .Mobile:
-                cell.phoneIcon.hidden = false
-                cell.messageIcon.hidden = false
+            cell.titleLabel.text = phoneNumberDescriptionForNumberNumber(indexPath.row, fromUser: user)
+            cell.detailLabel.text = phoneNumberForPhoneNumberNumber(indexPath.row, fromUser: user)
+            if let type = phoneNumberTypeForPhoneNumberNumber(indexPath.row, fromUser: user) {
+                switch type {
+                case .Home, .Work:
+                    cell.phoneIcon.hidden = false
+                    cell.messageIcon.hidden = true
+                case .Mobile:
+                    cell.phoneIcon.hidden = false
+                    cell.messageIcon.hidden = false
+                }
             }
+            return cell
+            
+        case 6:
+            // Address
+            let cell = tableView.dequeueReusableCellWithIdentifier(ContactCellID, forIndexPath: indexPath) as! PhoneNumberTableViewCell
+            cell.titleLabel.numberOfLines = 0
+            cell.titleLabel.text = "Address"
+            cell.detailLabel.text = addressTextForUser(user)
+            cell.phoneIcon.hidden = true
+            cell.messageIcon.hidden = true
             return cell
             
         default:

@@ -12,17 +12,4 @@ class HostOfferTableViewCell: UITableViewCell {
     
     @IBOutlet var offerLabel: UILabel!
     
-    var offer: String? {
-        get {
-            return offerLabel.text
-        }
-        set(newOffer) {
-            guard newOffer != nil else {
-                self.offerLabel.text = nil
-                return
-            }
-            self.offerLabel.text = "\u{2022} " + newOffer!
-        }
-    }
-    
 }

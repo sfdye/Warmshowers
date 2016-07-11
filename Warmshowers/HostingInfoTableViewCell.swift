@@ -12,31 +12,5 @@ class HostingInfoTableViewCell: UITableViewCell {
     
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var infoLabel: UILabel!
-    
-    var title: String? {
-        get {
-            return titleLabel.text
-        }
-        set(newTitle) {
-            guard newTitle != nil else {
-                self.titleLabel.text = nil
-                return
-            }
-            self.titleLabel.text = newTitle!
-        }
-    }
-    
-    var info: String? {
-        get {
-            return infoLabel.text
-        }
-        set(newInfo) {
-            guard newInfo != nil && newInfo != "" else {
-                self.infoLabel.text = "-"
-                return
-            }
-            self.infoLabel.text = newInfo!
-        }
-    }
 
 }

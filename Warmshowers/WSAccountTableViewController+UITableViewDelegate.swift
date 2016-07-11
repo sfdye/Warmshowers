@@ -27,7 +27,7 @@ extension WSAccountTableViewController {
         case 0:
             return CGFloat.min
         case 1:
-            return CGFloat.init(15)
+            return CGFloat.init(10)
         case 2:
             return CGFloat.init(15)
         case 3:

@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum WSPhoneNumberType: Int {
+enum WSPhoneNumberType {
     case Home
     case Mobile
     case Work

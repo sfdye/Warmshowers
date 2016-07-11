@@ -10,6 +10,6 @@ import UIKit
 
 class AboutTableViewCell: UITableViewCell {
     
-    @IBOutlet var aboutLabel: UILabel!
+    @IBOutlet var aboutTextView: UITextView!
 
 }

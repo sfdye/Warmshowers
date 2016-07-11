@@ -128,7 +128,7 @@ class WSAccountTableViewController: UITableViewController {
     }
     
     func memberForTextForUser(user: WSUser) -> String? {
-        guard let membershipDuration = user.membershipDuration else { return nil }
+        guard let membershipDuration = user.membershipDuration else { return "Duration of membership unknown." }
         return "Member for \(membershipDuration.asString)"
     }
     
@@ -138,8 +138,86 @@ class WSAccountTableViewController: UITableViewController {
     }
     
     func languagesSpokenTextForUser(user: WSUser) -> String? {
-        guard let languagesSpoken = user.languagesSpoken else { return "Languages spoken:" }
-        return "Languages spoken: \(languagesSpoken)"
+        guard let languagesspoken = user.languagesspoken else { return "Languages spoken: - " }
+        return "Languages spoken: \(languagesspoken)"
+    }
+    
+    func feedbackCellTextForUser(user: WSUser) -> String {
+        guard let feedback = user.feedback else { return "Feedback" }
+        return feedback.count > 0 ? "Feedback (\(feedback.count))" : "No feedback"
+    }
+    
+    func hostingInfoTitleForInfoNumber(infoNumber: Int, fromUser user: WSUser) -> String? {
+        
+        return nil
+    }
+    
+    func hostingInfoDetailForInfoNumber(infoNumber: Int, fromUser user: WSUser) -> String? {
+        
+        return nil
+    }
+    
+    func offerTextForOfferNumber(offerNumber: Int, fromUser user: WSUser) -> String? {
+//        var offer: String? {
+//            get {
+//                return offerLabel.text
+//            }
+//            set(newOffer) {
+//                guard newOffer != nil else {
+//                    self.offerLabel.text = nil
+//                    return
+//                }
+//                self.offerLabel.text = "\u{2022} " + newOffer!
+//            }
+//        }
+//        user.offers.offerAtIndex(indexPath.row - 5)
+        return nil
+    }
+    
+    func phoneNumberDescriptionForNumberNumber(number: Int, fromUser user: WSUser) -> String? {
+        
+        return nil
+    }
+    
+    func phoneNumberForPhoneNumberNumber(number: Int, fromUser user: WSUser) -> String? {
+        if let homephone = user.homephone where number == 0 {
+            return homephone
+        }
+        if let mobilephone = user.mobilephone where number < 1 {
+            return mobilephone
+        }
+        if let workphone = user.workphone where number < 2 {
+            return workphone
+        }
+        return nil
+        
+//        let keys = ["homephone", "mobilephone", "workphone"]
+//        
+//        for key in keys {
+//            let number = numberForKey(key, inJSON: json)
+//            let type: WSPhoneNumberType
+//            switch key {
+//            case "homephone":
+//                type = .Home
+//            case "mobilephone":
+//                type = .Mobile
+//            case "workphone":
+//                type = .Work
+//            default:
+//                continue
+//            }
+//        
+//        return nil
+    }
+    
+    func phoneNumberTypeForPhoneNumberNumber(number: Int, fromUser user: WSUser) -> WSPhoneNumberType? {
+        
+        return nil
+    }
+    
+    func addressTextForUser(user: WSUser) -> String? {
+        
+        return nil
     }
 
 }
