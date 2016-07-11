@@ -12,12 +12,17 @@ class WSLogoutEndPoint : WSAPIEndPointProtocol {
     
     var type: WSAPIEndPoint = .Logout
     
-    var httpMethod: HttpMethod = .Get
+    var httpMethod: HttpMethod = .Post
     
-    var accept: AcceptType = .PlainText
+    var accept: AcceptType = .JSON
     
     func urlWithHostURL(hostURL: NSURL, andParameters parameters: AnyObject?) throws -> NSURL {
-        return hostURL.URLByAppendingPathComponent("/services/session/token")
+        return hostURL.URLByAppendingPathComponent("/services/rest/user/logout")
+    }
+    
+    func HTTPBodyWithData(data: AnyObject?) throws -> String {
+        // Logout is a post request. However, it has no path parameters or body data.
+        return ""
     }
     
     func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
@@ -28,10 +33,7 @@ class WSLogoutEndPoint : WSAPIEndPointProtocol {
         guard let success = json.objectAtIndex(0) as? Bool else {
             throw WSAPIEndPointError.ParsingError(endPoint: name, key: nil)
         }
-        
-        // Update the session state.
-//        WSSessionState.
-        
+
         return success
     }
     

@@ -171,7 +171,7 @@ class WSAPICommunicator: WSAPICommunicatorProtocol {
                     request.delegate.request(request, didFailWithError: WSAPIEndPointError.ParsingError(endPoint: request.endPoint.name, key: nil))
                 }
             case .JSON:
-                let json = try NSJSONSerialization.JSONObjectWithData(data, options: [])
+                let json = try NSJSONSerialization.JSONObjectWithData(data, options: [.AllowFragments])
                 log("Recieved JSON response: \(json)")
                 parsedData = try request.endPoint.request(request, didRecievedResponseWithJSON: json)
                 request.delegate.request(request, didSucceedWithData: parsedData)

@@ -21,10 +21,12 @@ class WSAccountTableViewController: UITableViewController {
     var recipient: CDWSUser?
     
     // Delegates
-    let store: WSStoreParticipantProtocol = WSStore.sharedStore
+    var navigation: WSNavigationProtocol = WSNavigationDelegate.sharedNavigationDelegate
     let session: WSSessionStateProtocol = WSSessionState.sharedSessionState
     var api: WSAPICommunicatorProtocol = WSAPICommunicator.sharedAPICommunicator
     var connection: WSReachabilityProtocol = WSReachabilityManager.sharedReachabilityManager
+    var store: WSStoreProtocol = WSStore.sharedStore
+    var alert: WSAlertProtocol = WSAlertDelegate.sharedAlertDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,8 +41,11 @@ class WSAccountTableViewController: UITableViewController {
             return
         }
         
+        // Configure the view
         navigationItem.title = ""
         navigationItem.leftBarButtonItem?.tintColor = WSColor.LightGrey
+        tableView.rowHeight = UITableViewAutomaticDimension
+        configureDoneButton()
         
         // Get the users profile image if they have one.
         if user?.profileImage == nil && user?.profileImageURL != nil {
@@ -49,78 +54,60 @@ class WSAccountTableViewController: UITableViewController {
         
         // Download the users feedback.
         api.contactEndPoint(.UserFeedback, withPathParameters: String(user!.uid) as NSString, andData: nil, thenNotify: self)
-        
-        configureDoneButton()
-        configureActions()
-        
-        // configure the tableview
-        tableView.rowHeight = UITableViewAutomaticDimension
     }
 
     
-    // Sets up a done button if one is needed
-    //
+    /** Sets up a done button if one is needed. */
     func configureDoneButton() {
         if navigationController?.viewControllers.count < 2 {
             navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(WSAccountTableViewController.doneButtonPressed))
         }
     }
     
-    // Configures the popover menu for when the action button is pressed
-    //
-    func configureActions() {
+    /** Configures the popover menu for when the action button is pressed. */
+    func actionAlertForUserWithUID(uid: Int) -> UIAlertController? {
         
-//        // Common actions
-//        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
-//        actionAlert.addAction(cancelAction)
-//        
-//        if userIsLoggedIn() {
-//            
-//            // Options for the current user
-//            
-//            let logoutAction = UIAlertAction(title: "Logout", style: .Default) { (logoutAction) -> Void in
+        guard let user = user, let uid = session.uid else { return nil }
         
-                // Logout and return the login screeen
-//                let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-//                let logoutManager = WSLogoutManager(
-//                    success: {
-//                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                            WSProgressHUD.hide()
-////                            appDelegate.logout() // DISABLED FOR NOW WHILE UPGRADING TO PROTOCOL ORIENTATED DESIGN
-//                        })
-//                    },
-//                    failure: { (error) -> Void in
-//                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                            WSProgressHUD.hide()
-////                            appDelegate.logout() // DISABLED FOR NOW WHILE UPGRADING TO PROTOCOL ORIENTATED DESIGN
-//                        })
-//                    }
-//                )
-//                WSProgressHUD.show(self.navigationController!.view, label: "Logging out ...")
-//                logoutManager.logout()
-//            }
-//            actionAlert.addAction(logoutAction)
-//            
-//        } else {
-//            
-//            // Options for any other user
-//            
-//            let messageAction = UIAlertAction(title: "Send Message", style: .Default) { (messageAction) -> Void in
-//                // Present compose message view
-//                self.performSegueWithIdentifier(ToSendNewMessageSegueID, sender: nil)
-//            }
-//            actionAlert.addAction(messageAction)
-//            let provideFeedbackAction = UIAlertAction(title: "Provide Feedback", style: .Default) { (messageAction) -> Void in
-//                // Present provide feeback view
-//                self.performSegueWithIdentifier(ToProvideFeeedbackSegueID, sender: nil)
-//            }
-//            actionAlert.addAction(provideFeedbackAction)
-//        }
+        let actionAlert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        
+        // Common actions
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        actionAlert.addAction(cancelAction)
+        
+        if uid == user.uid {
+            
+            // Options for the logged in user.
+            
+            let logoutAction = UIAlertAction(title: "Logout", style: .Default) { (logoutAction) -> Void in
+                // Logout and return the login screeen.
+                self.api.contactEndPoint(.Logout, withPathParameters: nil, andData: nil, thenNotify: self)
+                WSProgressHUD.show(self.navigationController!.view, label: "Logging out ...")
+            }
+            actionAlert.addAction(logoutAction)
+            
+        } else {
+            
+            // Options while viewing other host profiles.
+            
+            let messageAction = UIAlertAction(title: "Send Message", style: .Default) { (messageAction) -> Void in
+                // Present compose message view
+                self.performSegueWithIdentifier(ToSendNewMessageSegueID, sender: nil)
+            }
+            actionAlert.addAction(messageAction)
+            let provideFeedbackAction = UIAlertAction(title: "Provide Feedback", style: .Default) { (messageAction) -> Void in
+                // Present provide feeback view
+                self.performSegueWithIdentifier(ToProvideFeeedbackSegueID, sender: nil)
+            }
+            actionAlert.addAction(provideFeedbackAction)
+        }
+        
+        return actionAlert
     }
 
     // MARK: Utilities
     
-    // Reloads the view
+    /** Reloads the view. */
     func reload() {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.tableView.reloadData()

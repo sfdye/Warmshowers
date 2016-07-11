@@ -10,6 +10,10 @@ import UIKit
 
 extension WSAccountTableViewController: WSAPIResponseDelegate {
     
+    func requestdidComplete(request: WSAPIRequest) {
+        WSProgressHUD.hide(self.navigationController!.view)
+    }
+    
     func request(request: WSAPIRequest, didSuceedWithData data: AnyObject?) {
         switch request.endPoint.type {
         case .ImageResource:
@@ -26,6 +30,17 @@ extension WSAccountTableViewController: WSAPIResponseDelegate {
                 let indexPath = NSIndexPath(forRow: 0, inSection: 2)
                 self?.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                 })
+        case .Logout:
+            do {
+                session.deleteSessionData()
+                try store.clearout()
+                navigation.showLoginScreen()
+            } catch {
+                // Suggest that the user delete the app for privacy.
+                alert.presentAlertFor(self, withTitle: "Data Error", button: "OK", message: "Sorry, an error occured while removing your account data from this iPhone. If you would like to remove your Warmshowers messages from this iPhone please try deleting the Warmshowers app.", andHandler: { [weak self] (action) in
+                    self?.navigation.showLoginScreen()
+                    })
+            }
         default:
             break
         }

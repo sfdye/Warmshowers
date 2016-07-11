@@ -18,6 +18,8 @@ extension WSHostSearchViewController {
     }
     
     @IBAction func accountButtonPressed(sender: UIBarButtonItem) {
-        performSegueWithIdentifier(SID_MapToUserAccount, sender: nil)
+        if let uid = session.uid {
+            showUserProfileForHostWithUID(uid)
+        }
     }
 }
