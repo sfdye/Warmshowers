@@ -18,8 +18,14 @@ class WSGetMessageThreadEndPoint: WSAPIEndPointProtocol {
         return hostURL.URLByAppendingPathComponent("/services/rest/message/getThread")
     }
     
+    func HTTPBodyWithData(data: AnyObject?) throws -> String {
+        guard let threadID = data as? Int else { throw WSAPIEndPointError.InvalidOutboundData }
+        let parameters = ["thread_id": String(threadID)]
+        return HttpBody.bodyStringWithParameters(parameters)
+    }
+    
     func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
-        
+        print(json)
 //        guard let messagesJSON = json.valueForKey("messages") as? NSArray else {
 //            throw WSAPIEndPointError.ParsingError(endPoint: path, key: "messages")
 //        }

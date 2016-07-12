@@ -9,6 +9,9 @@
 import UIKit
 import CoreData
 
+let RUID_MessageThread = "MessageThreadCell"
+let RUID_NoMessageThreadsCell = "NoMessages"
+
 extension WSMessageThreadsTableViewController {
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -16,20 +19,42 @@ extension WSMessageThreadsTableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let sections = self.fetchedResultsController.sections!
+        guard let sections = fetchedResultsController.sections else { return 0 }
         let sectionInfo = sections[section]
-        return sectionInfo.numberOfObjects
+        return sectionInfo.numberOfObjects == 0 ? 1 : sectionInfo.numberOfObjects
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(MessageThreadCellID, forIndexPath: indexPath) as! MessageThreadsTableViewCell
-        self.configureCell(cell, indexPath: indexPath)
-        return cell
-    }
+        
+        if let sections = fetchedResultsController.sections {
+            let sectionInfo = sections[indexPath.section]
+            if sectionInfo.numberOfObjects == 0 {
+                let cell = tableView.dequeueReusableCellWithIdentifier(RUID_NoMessageThreadsCell, forIndexPath: indexPath) as! PlaceholderTableViewCell
+                cell.placeholderLabel.text = "No messages"
+                return cell
+            }
+        }
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier(RUID_MessageThread, forIndexPath: indexPath) as! MessageThreadsTableViewCell
+        
+        guard let messageThread = self.fetchedResultsController.objectAtIndexPath(indexPath) as? CDWSMessageThread else {
+            cell.participantsLabel.text = ""
+            cell.dateLabel.text = ""
+            cell.subjectLabel.text = ""
+            cell.bodyPreviewLabel.text = "\n"
+            cell.newDot.hidden = true
+            cell.threadID = nil
+            return cell
+        }
+        
+        cell.participantsLabel.text = messageThread.getParticipantString(currentUserUID)
+        cell.dateLabel.text = textForMessageThreadDate(messageThread.last_updated)
+        cell.subjectLabel.text = messageThread.subject ?? ""
+        cell.bodyPreviewLabel.text = messageThread.lastestMessagePreview() ?? "\n"
+        cell.newDot.hidden = !(messageThread.is_new?.boolValue ?? false)
+        cell.threadID = messageThread.thread_id?.integerValue
     
-    func configureCell(cell: UITableViewCell, indexPath: NSIndexPath) {
-        let messageThread = self.fetchedResultsController.objectAtIndexPath(indexPath) as! CDWSMessageThread
-        (cell as! MessageThreadsTableViewCell).configureWithMessageThread(messageThread)
+        return cell
     }
 
 }

@@ -10,57 +10,17 @@ import UIKit
 
 class MessageThreadsTableViewCell: UITableViewCell {
     
-    // MARK: Properties
-    
     @IBOutlet weak var participantsLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var subjectLabel: UILabel!
     @IBOutlet weak var bodyPreviewLabel: UILabel!
     @IBOutlet weak var newDot: WSColoredDot!
     var threadID: Int?
-    
-    // TODO: This logic should not be in the view. Move it to the controller.
-    var currentUserUID: Int? { return WSSessionState.sharedSessionState.uid }
-        
+
     override func awakeFromNib() {
         super.awakeFromNib()
         newDot.color = WSColor.Blue
         newDot.setNeedsDisplay()
     }
     
-    // Configures the cell for a given message thread
-    // If the input is nil the cell labels are cleared
-    //
-    func configureWithMessageThread(messageThread: CDWSMessageThread?) {
-        
-        guard let messageThread = messageThread else {
-            participantsLabel.text = nil
-            dateLabel.text = nil
-            subjectLabel.text = nil
-            bodyPreviewLabel.text = nil
-            newDot.hidden = true
-            threadID = nil
-            return
-        }
-        
-        participantsLabel.text = messageThread.getParticipantString(currentUserUID)
-        setDate(messageThread.last_updated)
-        subjectLabel.text = messageThread.subject ?? ""
-        newDot.hidden = (messageThread.is_new == 0)
-        bodyPreviewLabel.text = messageThread.lastestMessagePreview() ?? "\n"
-        threadID = messageThread.thread_id?.integerValue
-    }
-    
-    func setDate(date: NSDate?) {
-        if date != nil {
-            let formatter = NSDateFormatter()
-            let template = "dd/MM/yy"
-            let locale = NSLocale.currentLocale()
-            formatter.dateFormat = NSDateFormatter.dateFormatFromTemplate(template, options: 0, locale: locale)
-            dateLabel.text = formatter.stringFromDate(date!)
-        } else {
-            dateLabel.text = ""
-        }
-    }
-
 }
