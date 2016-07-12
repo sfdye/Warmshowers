@@ -11,7 +11,7 @@ import UIKit
 extension WSFeedbackTableViewController {
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return feedback != nil ? 1 : 0
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -20,9 +20,18 @@ extension WSFeedbackTableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(FeedbackCellID, forIndexPath: indexPath) as! FeedbackTableViewCell
-        if let feedback = feedback?[indexPath.row] {
-            cell.configureWithFeedback(feedback)
-        }
+        guard let feedback = feedback where indexPath.row < feedback.count else { return cell }
+        
+        let recommendation = feedback[indexPath.row]
+        
+        cell.authorImage.image = recommendation.authorImage ?? placeholderImage
+        cell.authorNameLabel.text = recommendation.author?.fullname
+        cell.dateLabel.text = textForRecommendationDate(recommendation.date)
+        cell.ratingLabel.text = recommendation.rating.rawValue
+        cell.ratingLabel.textColor = textColorForRecommedationRating(recommendation.rating)
+        cell.forLabel.text = textForRecommendationType(recommendation.type)
+        cell.bodyLabel.text = recommendation.body
+    
         return cell
     }
     

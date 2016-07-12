@@ -20,7 +20,6 @@ class WSUserEndPoint: WSAPIEndPointProtocol {
     }
     
     func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
-        print(json)
         guard let userInfo = WSUser(json: json) else { throw WSAPIEndPointError.ParsingError(endPoint: name, key: nil) }
         return userInfo
     }

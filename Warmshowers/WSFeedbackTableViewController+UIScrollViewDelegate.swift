@@ -1,14 +1,14 @@
 //
-//  WSKeywordSearchTableViewController+UIScrollViewDelegate.swift
+//  WSFeedbackTableViewController+UIScrollViewDelegate.swift
 //  Warmshowers
 //
-//  Created by Rajan Fernandez on 15/05/16.
+//  Created by Rajan Fernandez on 12/07/16.
 //  Copyright © 2016 Rajan Fernandez. All rights reserved.
 //
 
 import UIKit
 
-extension WSKeywordSearchTableViewController {
+extension WSFeedbackTableViewController {
     
     override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if !decelerate {

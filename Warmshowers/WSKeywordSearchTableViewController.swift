@@ -44,11 +44,7 @@ class WSKeywordSearchTableViewController: UITableViewController {
     }
     
     func startImageDownloadForIndexPath(indexPath: NSIndexPath) {
-        
-        guard let hosts = hosts where indexPath.row < numberOfHosts else {
-            return
-        }
-        
+        guard let hosts = hosts where indexPath.row < numberOfHosts else { return }
         let user = hosts[indexPath.row]
         if let url = user.imageURL where user.image == nil {
             api.contactEndPoint(.ImageResource, withPathParameters: url as NSString, andData: nil, thenNotify: self)
