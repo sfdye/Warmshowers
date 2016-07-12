@@ -8,6 +8,9 @@
 
 import UIKit
 
+let RUI_MessageFromSelf = "MessageFromSelf"
+let RUI_MessageFromUser = "MessageFromUser"
+
 extension WSMessageThreadTableViewController {
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -15,22 +18,27 @@ extension WSMessageThreadTableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let sections = self.fetchedResultsController.sections!
+        guard let sections = fetchedResultsController.sections else { return 0 }
         let sectionInfo = sections[section]
         return sectionInfo.numberOfObjects
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let message = self.fetchedResultsController.objectAtIndexPath(indexPath) as! CDWSMessage
-        let cellID = (message.author!.uid == session.uid) ? MessageFromSelfCellID : MessageFromUserCellID
+        
+        guard let message = self.fetchedResultsController.objectAtIndexPath(indexPath) as? CDWSMessage else {
+            let cell = tableView.dequeueReusableCellWithIdentifier(RUI_MessageFromSelf, forIndexPath: indexPath) as! MessageTableViewCell
+            return cell
+        }
+        
+        let cellID = (message.author?.uid ?? 0 == session.uid) ? RUI_MessageFromSelf : RUI_MessageFromUser
         let cell = tableView.dequeueReusableCellWithIdentifier(cellID, forIndexPath: indexPath) as! MessageTableViewCell
-        self.configureCell(cell, indexPath: indexPath)
+        
+        cell.fromLabel.text = message.authorName ?? ""
+        cell.dateLabel.text = textForMessageDate(message.timestamp)
+        cell.bodyTextView.text = message.body
+        cell.authorImageView.image = message.authorThumbnail ?? UIImage(named: "ThumbnailPlaceholder")
+        
         return cell
-    }
-    
-    func configureCell(cell: UITableViewCell, indexPath: NSIndexPath) {
-        let message = self.fetchedResultsController.objectAtIndexPath(indexPath) as! CDWSMessage
-        (cell as! MessageTableViewCell).configureWithMessage(message)
     }
     
 }

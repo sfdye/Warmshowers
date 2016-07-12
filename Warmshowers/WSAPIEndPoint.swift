@@ -22,7 +22,7 @@ enum WSAPIEndPoint: String {
     case UnreadMessageCount = "UnreadMessageCount"
     case GetAllMessageThreads = "GetAllMessageThreads"
     case GetMessageThread = "GetMessageThread"
-    case MarkMessage = "MarkMessage"
+    case MarkThreadRead = "MarkThreadRead"
     case ImageResource = "ImageResource"
     
     /** Returns the name of the end point. */
@@ -57,8 +57,8 @@ enum WSAPIEndPoint: String {
             return WSGetAllMessageThreadsEndPoint()
         case .GetMessageThread:
             return WSGetMessageThreadEndPoint()
-        case .MarkMessage:
-            return WSMarkMessageEndPoint()
+        case .MarkThreadRead:
+            return WSMarkThreadReadEndPoint()
         case .ImageResource:
             return WSImageResourceEndPoint()
         }

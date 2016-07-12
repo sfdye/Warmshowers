@@ -25,50 +25,54 @@ class WSGetAllMessageThreadsEndPoint: WSAPIEndPointProtocol {
     
     func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
         
-        print(json)
-//        guard let threadsJSON = json as? NSArray else {
-//            throw WSAPIEndPointError.ParsingError(endPoint: path, key: nil)
-//        }
+        guard let threadsJSON = json as? [AnyObject] else {
+            throw WSAPIEndPointError.ParsingError(endPoint: name, key: nil)
+        }
         
-//        WSStore.sharedStore.privateContext.performBlockAndWait { () -> Void in
-//            
-//            // Parse the json
-//            var currentThreadIDs = [Int]()
-//            for threadJSON in threadsJSON {
-//                
-//                // Fail parsing if a message thread doesn't have an ID as it will cause problems later
-//                guard let threadID = threadJSON.valueForKey("thread_id")?.integerValue else {
-//                    self.setError(202, description: "Thread ID missing in message thread JSON.")
-//                    return
-//                }
-//                
-//                do {
-//                    //                    try WSStore.addMessageThread(threadJSON)
-//                } catch let nserror as NSError {
-//                    self.error = nserror
-//                    return
-//                }
-//                
-//                // Save the thread id
-//                currentThreadIDs.append(threadID)
-//            }
-//            
-//            // Delete all threads that are not in the json
-//            do {
-//                //                let allMessageThreads = try WSStore.allMessageThreads()
-//                //                for messageThread in allMessageThreads {
-//                //                    if let threadID = messageThread.thread_id?.integerValue {
-//                //                        if !(currentThreadIDs.contains(threadID)){
-//                //                            WSStore.sharedStore.privateContext.deleteObject(messageThread)
-//                //                        }
-//                //                    }
-//                //                }
-//                //                try WSStore.savePrivateContext()
-//            } catch let error as NSError {
-//                self.error = error
-//                return
-//            }
-//        }
+        let store = WSStore.sharedStore
+        var error: ErrorType?
+        store.privateContext.performBlockAndWait { () -> Void in
+            
+            // Parse the json
+            var currentThreadIDs = [Int]()
+            for threadJSON in threadsJSON {
+                
+                // Fail parsing if a message thread doesn't have an ID as it will cause problems later
+                guard let threadID = Int.fromJSON(threadJSON, withKey: "thread_id") else {
+                    error = WSAPIEndPointError.ParsingError(endPoint: self.name, key: "thread_id")
+                    return
+                }
+                
+                do {
+                    try store.addMessageThread(threadJSON)
+                } catch let storeError {
+                    error = storeError
+                    return
+                }
+                
+                // Save the thread id
+                currentThreadIDs.append(threadID)
+            }
+            
+            // Delete all threads that are not in the json
+            do {
+                let allMessageThreads = try store.allMessageThreads()
+                for messageThread in allMessageThreads {
+                    if let threadID = messageThread.thread_id?.integerValue {
+                        if !(currentThreadIDs.contains(threadID)){
+                            store.privateContext.deleteObject(messageThread)
+                        }
+                    }
+                }
+                try store.savePrivateContext()
+            } catch let storeError {
+                error = storeError
+                return
+            }
+        }
+        
+        if error != nil { throw error! }
+        
         return nil
     }
 }

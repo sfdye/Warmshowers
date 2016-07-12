@@ -25,7 +25,7 @@ class WSComposeMessageViewController: UIViewController {
     let store: WSStoreMessageThreadProtocol = WSStore.sharedStore
     let session: WSSessionStateProtocol = WSSessionState.sharedSessionState
     var alert: WSAlertDelegate = WSAlertDelegate.sharedAlertDelegate
-    var api: WSAPICommunicator = WSAPICommunicator.sharedAPICommunicator
+    var api: WSAPICommunicatorProtocol = WSAPICommunicator.sharedAPICommunicator
     
     override func viewDidLoad() {
         super.viewDidLoad()

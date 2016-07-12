@@ -41,7 +41,7 @@ extension WSMessageThreadTableViewController : NSFetchedResultsControllerDelegat
                 self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
             case .Update:
                 if let cell = self.tableView.cellForRowAtIndexPath(indexPath!) {
-                    self.configureCell(cell, indexPath: indexPath!)
+                    assertionFailure("update code here.")
                 }
             case .Move:
                 self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)

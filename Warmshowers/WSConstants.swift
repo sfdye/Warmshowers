@@ -28,8 +28,6 @@ let HostListCellID = "HostList"
 let FeedbackCellID = "Feedback"
 let SpinnerCellID = "Spinner"
 let NoHostsCellID = "NoHosts"
-let MessageFromUserCellID = "MessageFromUser"
-let MessageFromSelfCellID = "MessageFromSelf"
 let LogoutCellID = "Logout"
 let SwitchCellID = "Switch"
 let DisclosureCellID = "Disclosure"
@@ -38,8 +36,7 @@ let DisclosureCellID = "Disclosure"
 let ToFeedbackSegueID = "ToFeedback"
 let ToSendNewMessageSegueID = "ToSendNewMessage"
 let ToProvideFeeedbackSegueID = "ToProvideFeedback"
-let MessageSegueID = "ToMessageThread"
-let ReplyToMessageThreadSegueID = "ToReplyToMessage"
+
 
 // Notification identifiers
 let MessageUpdateNotificationName = "ws_update_messages"

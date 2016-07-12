@@ -8,14 +8,22 @@
 
 import Foundation
 
-class WSMarkMessageEndPoint: WSAPIEndPointProtocol {
+class WSMarkThreadReadEndPoint: WSAPIEndPointProtocol {
     
-    var type: WSAPIEndPoint = .MarkMessage
+    var type: WSAPIEndPoint = .MarkThreadRead
     
     var httpMethod: HttpMethod = .Post
     
     func urlWithHostURL(hostURL: NSURL, andParameters parameters: AnyObject?) throws -> NSURL {
         return hostURL.URLByAppendingPathComponent("/services/rest/message/markThreadRead")
+    }
+    
+    func HTTPBodyWithData(data: AnyObject?) throws -> String {
+        guard let readState = data as? WSMessageThreadReadState else { throw WSAPIEndPointError.InvalidOutboundData }
+        var params = [String: String]()
+        params["thread_id"] = String(readState.threadID)
+        params["status"] = String(readState.read ? 0 : 1)
+        return HttpBody.bodyStringWithParameters(params)
     }
     
     func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
@@ -26,6 +34,7 @@ class WSMarkMessageEndPoint: WSAPIEndPointProtocol {
                 return success
             }
         }
+        
         return nil
     }
 }

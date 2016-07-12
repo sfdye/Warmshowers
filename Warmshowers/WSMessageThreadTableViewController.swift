@@ -11,29 +11,16 @@ import CoreData
 
 class WSMessageThreadTableViewController: UITableViewController {
     
-    var threadID: Int!
-
-//    lazy var messageUpdater: WSMessageUpdater = {
-//        let messageUpdater = WSMessageUpdater(
-//            threadID: self.threadID,
-//            success: {
-//                self.reload(true)
-//            },
-//            failure: { (error) -> Void in
-//                // Reload and show an error alert
-//                self.setErrorAlert(error)
-//                self.reload(true)
-//        })
-//        return messageUpdater
-//    }()
+    var threadID: Int?
     var refreshController = UIRefreshControl()
     var fetchedResultsController: NSFetchedResultsController!
     var alert: UIAlertController?
-    var presentingAlert = false
+    let formatter = NSDateFormatter()
     
     // Delegates
     let store: WSStoreMessageThreadProtocol = WSStore.sharedStore
     let session: WSSessionStateProtocol = WSSessionState.sharedSessionState
+    var api: WSAPICommunicatorProtocol = WSAPICommunicator.sharedAPICommunicator
     
     
     // MARK: View life cycle
@@ -42,123 +29,101 @@ class WSMessageThreadTableViewController: UITableViewController {
         super.viewDidLoad()
         
         // Set the view title
-        navigationItem.title = store.subjectForMessageThreadWithID(threadID)
+        navigationItem.title = ""
         
         // Configure the table view
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 104
         
-        // Set up the fetch results controller
-        initializeFetchedResultsController()
+        // Set up the date formatter.
+        let template = "HHmmddMMMyyyy"
+        let locale = NSLocale.currentLocale()
+        formatter.dateFormat = NSDateFormatter.dateFormatFromTemplate(template, options: 0, locale: locale)
         
         // Set the refresh controller for the tableview
-        initializeRefreshController()
-
-        // Update the model
-        updateAuthorImages()
-        markAsRead()
+        let refreshController = UIRefreshControl()
+        refreshController.addTarget(self, action: #selector(WSMessageThreadTableViewController.update), forControlEvents: UIControlEvents.ValueChanged)
+        self.refreshControl = refreshController
         
-        // Reload the table
-        self.reload(true)
+        // Set the view title
+        navigationItem.title = store.subjectForMessageThreadWithID(threadID ?? 0)
         
-        let notificationCentre = NSNotificationCenter.defaultCenter()
-        notificationCentre.addObserver(self, selector: #selector(WSMessageThreadTableViewController.update), name: MessagesViewNeedsUpdateNotificationName, object: nil)
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: WSColor.Green, NSFontAttributeName: WSFont.SueEllenFrancisco(18)]
-    }
-    
-    func initializeFetchedResultsController() {
-        
-        guard let threadID = threadID else {
-            return
-        }
-        
+        // Set up the fetch results controller
         let request = NSFetchRequest(entityName: "Message")
-        request.predicate = NSPredicate(format: "thread.thread_id==%i", threadID)
+        request.predicate = NSPredicate(format: "thread.thread_id==%i", threadID ?? 0)
         request.sortDescriptors = [NSSortDescriptor(key: "timestamp", ascending: true)]
-        
         self.fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: WSStore.sharedStore.privateContext, sectionNameKeyPath: nil, cacheName: nil)
         fetchedResultsController.delegate = self
-        
         do {
             try self.fetchedResultsController.performFetch()
         } catch {
             fatalError("Failed to initialize FetchedResultsController: \(error)")
         }
+        
+        // Mark the thread as read.
+        markThread(threadID ?? 0, asRead: true)
+        
+        // Register for update notifications. This is fired after a reply is sent.
+//        let notificationCentre = NSNotificationCenter.defaultCenter()
+//        notificationCentre.addObserver(self, selector: #selector(WSMessageThreadTableViewController.update), name: MessagesViewNeedsUpdateNotificationName, object: nil)
+        
+//        // Reload the table
+//        self.reload(true)
     }
     
-    func initializeRefreshController() {
-        let refreshController = UIRefreshControl()
-        refreshController.addTarget(self, action: #selector(WSMessageThreadTableViewController.update), forControlEvents: UIControlEvents.ValueChanged)
-        self.refreshControl = refreshController
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: WSColor.Green, NSFontAttributeName: WSFont.SueEllenFrancisco(18)]
     }
     
-    // Updates the messages
-    //
+
+    // MARK: Utilities
+    
+    /** Updates the messages. */
     func update() {
-//        messageUpdater.update()
+        // UPDATE CODE HERE
     }
     
-    // Reloads the tableview and hides any activity indicators
-    //
-    func reload(scroll: Bool = false) {
+    /** Mark message thread as read. */
+    func markThread(threadID: Int, asRead read: Bool) {
         
-        // Hide any activity indicators and reload the tableview
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            self.refreshControl!.endRefreshing()
-            do {
-                try self.fetchedResultsController.performFetch()
-                self.tableView.reloadData()
-                if scroll {
-                    let row = self.tableView.numberOfRowsInSection(0) - 1
-                    let indexPath = NSIndexPath(forRow: row, inSection: 0)
-                    self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Bottom, animated: true)
-                }
-            } catch {
-                // If there is a problem fetching suggest that the user reinstall the app
-                self.alert = UIAlertController(title: "There was a problem loading your messages.", message: "Please try uninstalling and reinstalling the app and report this issue.", preferredStyle: .Alert)
-                let okAction = UIAlertAction(title: "Dismiss", style: .Default, handler: nil)
-                self.alert!.addAction(okAction)
-            }
-        })
+        guard
+            let storedThread = try? store.messageThreadWithID(threadID),
+            let thread = storedThread,
+            let threadID = thread.thread_id?.integerValue
+            else { return }
         
-        // Show errors
-        showAlert()
+        let readState = WSMessageThreadReadState(threadID: threadID, read: true)
+        api.contactEndPoint(.MarkThreadRead, withPathParameters: nil, andData: readState, thenNotify: self)
     }
     
+//    /** Reloads the tableview and hides any activity indicators. */
+//    func reload(scroll: Bool = false) {
+//        
+//        // Hide any activity indicators and reload the tableview
+//        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//            self.refreshControl!.endRefreshing()
+//            do {
+//                try self.fetchedResultsController.performFetch()
+//                self.tableView.reloadData()
+//                if scroll {
+//                    let row = self.tableView.numberOfRowsInSection(0) - 1
+//                    let indexPath = NSIndexPath(forRow: row, inSection: 0)
+//                    self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Bottom, animated: true)
+//                }
+//            } catch {
+//                // If there is a problem fetching suggest that the user reinstall the app
+//                self.alert = UIAlertController(title: "There was a problem loading your messages.", message: "Please try uninstalling and reinstalling the app and report this issue.", preferredStyle: .Alert)
+//                let okAction = UIAlertAction(title: "Dismiss", style: .Default, handler: nil)
+//                self.alert!.addAction(okAction)
+//            }
+//        })
+//    }
     
-    // MARK: Navigation
-    
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
-        if identifier == ReplyToMessageThreadSegueID {
-            do {
-                if let _ = try store.messageThreadWithID(threadID) {
-                    return true
-                }
-            } catch {
-                // Do not segue
-            }
-        }
-        return false
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == ReplyToMessageThreadSegueID {
-            let navVC = segue.destinationViewController as! UINavigationController
-            let composeMessageVC = navVC.viewControllers.first as! WSComposeMessageViewController
-            composeMessageVC.initialiseAsReply(threadID)
-        }
-    }
-    
-    
-    // MARK: Utility methods
-    
-    // Updates all the author thumbnails
-    //
-    func updateAuthorImages() {
-        
+//    // Updates all the author thumbnails
+//    //
+//    func updateAuthorImages() {
+//        
 //        do {
 //            let messageThread = try store.messageThreadWithID(threadID)
 //            let authors = messageThread?.participants?.allObjects as! [CDWSUser]
@@ -188,82 +153,66 @@ class WSMessageThreadTableViewController: UITableViewController {
 //        } catch {
 //            // Not a big deal if the thumbnails don't load
 //        }
-    }
+//    }
 
-    // Reloads thumbnails in the tableview for a given user
-    //
-    func reloadImage(image: UIImage, forAuthor uid: Int) {
-        
-        let numberOfRows = tableView.numberOfRowsInSection(0)
-        for row in 0...numberOfRows - 1 {
-            let indexPath = NSIndexPath(forRow: row, inSection: 0)
-            let message = self.fetchedResultsController.objectAtIndexPath(indexPath) as! CDWSMessage
-            if message.author?.uid == uid {
-                if let cell = self.tableView.cellForRowAtIndexPath(indexPath) as? MessageTableViewCell {
-                    cell.authorImageView.image = image
-                }
-            }
-        }
-    }
+//    // Reloads thumbnails in the tableview for a given user
+//    //
+//    func reloadImage(image: UIImage, forAuthor uid: Int) {
+//        
+//        let numberOfRows = tableView.numberOfRowsInSection(0)
+//        for row in 0...numberOfRows - 1 {
+//            let indexPath = NSIndexPath(forRow: row, inSection: 0)
+//            let message = self.fetchedResultsController.objectAtIndexPath(indexPath) as! CDWSMessage
+//            if message.author?.uid == uid {
+//                if let cell = self.tableView.cellForRowAtIndexPath(indexPath) as? MessageTableViewCell {
+//                    cell.authorImageView.image = image
+//                }
+//            }
+//        }
+//    }
     
-    // Sets an failed update alert to be displayed at the end of the updates
-    //
-    func setErrorAlert(error: NSError? = nil) {
-        
-        guard alert == nil else {
-            return
-        }
-        
-        if !presentingAlert {
-            var message: String = "Please check that you are connected to the internet and try again."
-            if let error = error {
-                message = error.localizedDescription
-            }
-            let alert = UIAlertController(title: "Failed to update messages", message: message, preferredStyle: .Alert)
-            let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-            alert.addAction(okAction)
-            self.alert = alert
-        }
-    }
+//    // Sets an failed update alert to be displayed at the end of the updates
+//    //
+//    func setErrorAlert(error: NSError? = nil) {
+//        
+//        guard alert == nil else {
+//            return
+//        }
+//        
+//        if !presentingAlert {
+//            var message: String = "Please check that you are connected to the internet and try again."
+//            if let error = error {
+//                message = error.localizedDescription
+//            }
+//            let alert = UIAlertController(title: "Failed to update messages", message: message, preferredStyle: .Alert)
+//            let okAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+//            alert.addAction(okAction)
+//            self.alert = alert
+//        }
+//    }
     
-    // Presents any alerts set during message updates
-    //
-    func showAlert() {
-        
-        guard let alert = alert else {
-            return
-        }
-        
-        if !presentingAlert {
-            presentingAlert = true
-            dispatch_async(dispatch_get_main_queue(), {
-                self.presentViewController(alert, animated: true, completion: { () -> Void in
-                    self.alert = nil
-                    self.presentingAlert = false
-                })
-            })
-        }
-    }
+//    // Presents any alerts set during message updates
+//    //
+//    func showAlert() {
+//        
+//        guard let alert = alert else {
+//            return
+//        }
+//        
+//        if !presentingAlert {
+//            presentingAlert = true
+//            dispatch_async(dispatch_get_main_queue(), {
+//                self.presentViewController(alert, animated: true, completion: { () -> Void in
+//                    self.alert = nil
+//                    self.presentingAlert = false
+//                })
+//            })
+//        }
+//    }
     
-    // Mark message thread as read
-    func markAsRead() {
-        
-        do {
-            guard let thread = try store.messageThreadWithID(threadID) where thread.is_new != nil else {
-                return
-            }
-            
-            if thread.is_new!.boolValue {
-//                let marker = WSMessageThreadMarker(
-//                    threadID: threadID,
-//                    success: nil,
-//                    failure: nil
-//                )
-//                marker.markAsRead()
-            }
-        } catch {
-            // Not too important
-        }
+    func textForMessageDate(date: NSDate?) -> String? {
+        guard let date = date else { return "" }
+        return formatter.stringFromDate(date)
     }
     
 }

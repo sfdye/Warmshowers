@@ -16,9 +16,7 @@ extension WSLocationSearchViewController : WSAPIResponseDelegate {
     }
     
     func request(request: WSAPIRequest, didSuceedWithData data: AnyObject?) {
-        guard let tile = request.data as? WSMapTile else { return }
         if let users = data as? [WSUserLocation] {
-            storeUsers(users, onMapTileWithQuadKey: tile.quadKey)
             addUsersToMap(users)
         }
     }
@@ -27,25 +25,4 @@ extension WSLocationSearchViewController : WSAPIResponseDelegate {
         alert.presentAPIError(error, forDelegator: self)
     }
     
-    // LEAVE HERE FOR NOW. SHOULD REALLY BE MOVED TO A DATA DELEGATES RESPONSBILITY
-    func storeUsers(users: [WSUserLocation], onMapTileWithQuadKey quadKey: String) {
-        
-        var error: ErrorType? = nil
-        WSStore.sharedStore.privateContext.performBlockAndWait {
-            
-            var tile: CDWSMapTile!
-            do {
-                tile = try WSStore.sharedStore.newOrExistingMapTileWithQuadKey(quadKey)
-                do {
-                    try WSStore.sharedStore.addUserLocations(users, ToMapTile: tile)
-                }
-                tile.setValue(NSDate(), forKey: "last_updated")
-                try WSStore.sharedStore.savePrivateContext()
-            } catch let storeError {
-                error = storeError
-                return
-            }
-        }
-        
-    }
 }

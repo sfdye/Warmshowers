@@ -29,6 +29,10 @@ class WSSearchByLocationEndPoint : WSAPIEndPointProtocol {
     
     func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
         
+        guard let quadKey = (request.data as? WSMapTile)?.quadKey else {
+            throw WSAPIEndPointError.InvalidOutboundData
+        }
+        
         guard let accounts = json["accounts"] as? NSArray else {
             throw WSAPIEndPointError.ParsingError(endPoint: name, key: "accounts")
         }
@@ -41,6 +45,26 @@ class WSSearchByLocationEndPoint : WSAPIEndPointProtocol {
                 throw WSAPIEndPointError.ParsingError(endPoint: name, key: nil)
             }
         }
+        
+        let store = WSStore.sharedStore
+        var error: ErrorType?
+        WSStore.sharedStore.privateContext.performBlockAndWait {
+            
+            var tile: CDWSMapTile!
+            do {
+                tile = try store.newOrExistingMapTileWithQuadKey(quadKey)
+                do {
+                    try store.addUserLocations(userLocations, ToMapTile: tile)
+                }
+                tile.setValue(NSDate(), forKey: "last_updated")
+                try WSStore.sharedStore.savePrivateContext()
+            } catch let storeError {
+                error = storeError
+                return
+            }
+        }
+        
+        if error != nil { throw error! }
         
         return userLocations
     }

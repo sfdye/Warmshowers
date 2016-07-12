@@ -25,51 +25,59 @@ class WSGetMessageThreadEndPoint: WSAPIEndPointProtocol {
     }
     
     func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
-        print(json)
-//        guard let messagesJSON = json.valueForKey("messages") as? NSArray else {
-//            throw WSAPIEndPointError.ParsingError(endPoint: path, key: "messages")
-//        }
+
+        guard let threadID = request.data as? Int else {
+            throw WSAPIEndPointError.InvalidOutboundData
+        }
         
-//        WSStore.sharedStore.privateContext.performBlockAndWait {
-//            
-//            // Parse the json
-//            var currentMessageIDs = [Int]()
-//            for messageJSON in messagesJSON {
-//                
-//                // Fail parsing if a message thread doesn't have an ID as it will cause problems later
-//                guard let messageID = messageJSON.valueForKey("mid")?.integerValue else {
-//                    self.setError(302, description: "Messages JSON missing message id key")
-//                    return
-//                }
-//                
-//                do {
-//                    try self.store.addMessage(messageJSON, onThreadWithID: self.threadID)
-//                } catch let nserror as NSError {
-//                    self.error = nserror
-//                    return
-//                }
-//                
-//                // Save the thread id
-//                currentMessageIDs.append(messageID)
-//            }
-//            
-//            //            // Delete all messages that are not in the json
-//            //            do {
-//            //                if let allMessages = try store.allMessagesOnThread(self.threadID) {
-//            //                    for message in allMessages {
-//            //                        if let messageID = message.message_id?.integerValue {
-//            //                            if !(currentMessageIDs.contains(messageID)){
-//            //                                WSStore.sharedStore.privateContext.deleteObject(message)
-//            //                            }
-//            //                        }
-//            //                    }
-//            //                }
-//            //                try store.savePrivateContext()
-//            //            } catch let error as NSError {
-//            //                self.error = error
-//            //                return
-//            //            }
-//        }
+        guard let messagesJSON = json.valueForKey("messages") as? [AnyObject] else {
+            throw WSAPIEndPointError.ParsingError(endPoint: name, key: "messages")
+        }
+        
+        let store = WSStore.sharedStore
+        var error: ErrorType?
+        store.privateContext.performBlockAndWait {
+            
+            // Parse the json
+            var currentMessageIDs = [Int]()
+            for messageJSON in messagesJSON {
+                
+                // Fail parsing if a message thread doesn't have an ID as it will cause problems later
+                guard let messageID = Int.fromJSON(messageJSON, withKey: "mid") else {
+                    WSAPIEndPointError.ParsingError(endPoint: self.name, key: "mid")
+                    return
+                }
+                
+                do {
+                    try store.addMessage(messageJSON, onThreadWithID: threadID)
+                } catch let storeError {
+                    error = storeError
+                    return
+                }
+                
+                // Save the thread id
+                currentMessageIDs.append(messageID)
+            }
+            
+            // Delete all messages that are not in the json
+            do {
+                if let allMessages = try store.allMessagesOnThread(threadID) {
+                    for message in allMessages {
+                        if let messageID = message.message_id?.integerValue {
+                            if !(currentMessageIDs.contains(messageID)){
+                                store.privateContext.deleteObject(message)
+                            }
+                        }
+                    }
+                }
+                try store.savePrivateContext()
+            } catch let storeError {
+                error = storeError
+                return
+            }
+        }
+        
+        if error != nil { throw error! }
         
         return nil
     }

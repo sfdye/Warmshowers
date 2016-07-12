@@ -8,21 +8,20 @@
 
 import UIKit
 
+let SID_ToMessageThread = "ToMessageThread"
+
 extension WSMessageThreadsTableViewController {
     
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
-        if identifier == MessageSegueID {
-            if let cell = sender as? MessageThreadsTableViewCell {
-                if cell.threadID != nil {
-                    return true
-                }
-            }
+        // Only perform the segue if the thread is in the store.
+        if let cell = sender as? MessageThreadsTableViewCell where identifier == SID_ToMessageThread {
+            return cell.threadID != nil
         }
         return false
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == MessageSegueID {
+        if segue.identifier == SID_ToMessageThread && sender is MessageThreadsTableViewCell {
             // Assign the message thread data to the destination view controller
             let messageThreadVC = segue.destinationViewController as! WSMessageThreadTableViewController
             messageThreadVC.threadID = (sender as? MessageThreadsTableViewCell)?.threadID
