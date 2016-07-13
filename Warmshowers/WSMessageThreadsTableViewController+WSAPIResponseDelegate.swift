@@ -10,7 +10,7 @@ import Foundation
 
 extension WSMessageThreadsTableViewController : WSAPIResponseDelegate {
     
-    func requestdidComplete(request: WSAPIRequest) {
+    func requestDidComplete(request: WSAPIRequest) {
         switch request.endPoint.type {
         case .GetMessageThread:
             guard let threadID = request.data as? Int else { return }

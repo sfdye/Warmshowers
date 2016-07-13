@@ -65,9 +65,8 @@ class WSMessageThreadsTableViewController: UITableViewController {
         }
         
         // Set the refresh controller for the tableview.
-        let refreshController = UIRefreshControl()
-        refreshController.addTarget(self, action: #selector(WSMessageThreadsTableViewController.update), forControlEvents: UIControlEvents.ValueChanged)
-        self.refreshControl = refreshController
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action: #selector(WSMessageThreadsTableViewController.update), forControlEvents: UIControlEvents.ValueChanged)
         
         // Reachability notifications
         connection.registerForAndStartNotifications(self, selector: #selector(WSMessageThreadsTableViewController.reachabilityChanged(_:)))
@@ -87,6 +86,10 @@ class WSMessageThreadsTableViewController: UITableViewController {
         guard let lastUpdated = lastUpdated where lastUpdated.timeIntervalSinceNow < 600 else {
             update()
             return
+        }
+        
+        dispatch_async(dispatch_get_main_queue()) {  [weak self] in
+            self?.tableView.reloadData()
         }
     }
     

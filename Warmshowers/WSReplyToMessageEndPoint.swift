@@ -18,6 +18,14 @@ class WSReplyToMessageEndPoint: WSAPIEndPointProtocol {
         return hostURL.URLByAppendingPathComponent("/services/rest/message/reply")
     }
     
+    func HTTPBodyWithData(data: AnyObject?) throws -> String {
+        guard let reply = data as? WSReplyMessageData else { throw WSAPIEndPointError.InvalidOutboundData }
+        var params = [String: String]()
+        params["thread_id"] = String(reply.threadID)
+        params["body"] = reply.body
+        return HttpBody.bodyStringWithParameters(params)
+    }
+    
     func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
         // Check for success in response
         return nil

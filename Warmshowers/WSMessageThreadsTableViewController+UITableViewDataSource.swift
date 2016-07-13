@@ -21,19 +21,10 @@ extension WSMessageThreadsTableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let sections = fetchedResultsController.sections else { return 0 }
         let sectionInfo = sections[section]
-        return sectionInfo.numberOfObjects == 0 ? 1 : sectionInfo.numberOfObjects
+        return sectionInfo.numberOfObjects
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        if let sections = fetchedResultsController.sections {
-            let sectionInfo = sections[indexPath.section]
-            if sectionInfo.numberOfObjects == 0 {
-                let cell = tableView.dequeueReusableCellWithIdentifier(RUID_NoMessageThreadsCell, forIndexPath: indexPath) as! PlaceholderTableViewCell
-                cell.placeholderLabel.text = "No messages"
-                return cell
-            }
-        }
         
         let cell = tableView.dequeueReusableCellWithIdentifier(RUID_MessageThread, forIndexPath: indexPath) as! MessageThreadsTableViewCell
         

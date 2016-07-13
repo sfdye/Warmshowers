@@ -51,7 +51,7 @@ extension WSAccountTableViewController {
 //                do {
 //                    try store.addParticipantWithJSON(info)
 //                    recipient = try store.participantWithID(uid)
-//                    composeMessageVC.initialiseAsNewMessageToUser([recipient!])
+//                    composeMessageVC.configureAsNewMessageToUser([recipient!])
 //                } catch {
 //                    print("Failed to get user for compose message view")
 //                }

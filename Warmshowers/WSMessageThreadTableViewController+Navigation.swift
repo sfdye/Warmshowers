@@ -25,7 +25,7 @@ extension WSMessageThreadTableViewController {
         if segue.identifier == SID_ReplyToMessageThread {
             let navVC = segue.destinationViewController as! UINavigationController
             let composeMessageVC = navVC.viewControllers.first as! WSComposeMessageViewController
-            composeMessageVC.initialiseAsReply(threadID)
+            composeMessageVC.configureAsReply(threadID)
         }
     }
     

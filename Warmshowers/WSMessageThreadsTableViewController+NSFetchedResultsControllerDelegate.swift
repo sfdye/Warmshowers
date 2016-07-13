@@ -13,7 +13,6 @@ extension WSMessageThreadsTableViewController : NSFetchedResultsControllerDelega
     
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
         self.tableView.beginUpdates()
-        self.updateTabBarBadge()
     }
     
 //    func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
@@ -32,10 +31,8 @@ extension WSMessageThreadsTableViewController : NSFetchedResultsControllerDelega
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
             switch type {
             case .Insert:
-                print("insert")
                 self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
             case .Delete:
-                print("delete")
                 self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
             case .Update:
                 print("update")
@@ -50,7 +47,8 @@ extension WSMessageThreadsTableViewController : NSFetchedResultsControllerDelega
     }
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
-            self.tableView.endUpdates()
+        self.tableView.endUpdates()
+        self.updateTabBarBadge()
     }
     
 }

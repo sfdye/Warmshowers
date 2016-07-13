@@ -12,8 +12,6 @@ import Foundation
 let FeedbackOptionCellID = "FeedbackOption"
 let FeedbackOptionPickerCellID = "FeedbackOptionPicker"
 let FeedbackBodyCellID = "FeedbackBody"
-let ComposeMessageDetailCellID = "ComposeMessageDetail"
-let ComposeMessageBodyCellID = "ComposeMessageBody"
 let ImageCellID = "Photo"
 let AvailabilityCellID = "Available"
 let AccountDetailCellID = "AccountDetail"
@@ -39,7 +37,6 @@ let ToProvideFeeedbackSegueID = "ToProvideFeedback"
 
 
 // Notification identifiers
-let MessageUpdateNotificationName = "ws_update_messages"
 let MessagesWereUpdatedNotificationName = "ws_messages_were_updated"
 let MessagesViewNeedsUpdateNotificationName = "ws_message_view_needs_update"
 

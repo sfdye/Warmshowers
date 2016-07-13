@@ -10,7 +10,7 @@ import Foundation
 
 extension WSHostSearchViewController: WSAPIResponseDelegate {
     
-    func requestdidComplete(request: WSAPIRequest) {
+    func requestDidComplete(request: WSAPIRequest) {
         WSProgressHUD.hide()
     }
     

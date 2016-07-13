@@ -10,7 +10,7 @@ import UIKit
 
 extension WSAccountTableViewController: WSAPIResponseDelegate {
     
-    func requestdidComplete(request: WSAPIRequest) {
+    func requestDidComplete(request: WSAPIRequest) {
         WSProgressHUD.hide(self.navigationController!.view)
     }
     

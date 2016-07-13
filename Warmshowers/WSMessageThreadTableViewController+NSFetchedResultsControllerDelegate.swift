@@ -40,8 +40,12 @@ extension WSMessageThreadTableViewController : NSFetchedResultsControllerDelegat
             case .Delete:
                 self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
             case .Update:
-                if let cell = self.tableView.cellForRowAtIndexPath(indexPath!) {
-                    assertionFailure("update code here.")
+                guard let message = anObject as? CDWSMessage else { return }
+                if let cell = self.tableView.cellForRowAtIndexPath(indexPath!) as? MessageTableViewCell {
+                    cell.fromLabel.text = message.authorName ?? ""
+                    cell.dateLabel.text = self.textForMessageDate(message.timestamp)
+                    cell.bodyTextView.text = message.body
+                    cell.authorImageView.image = message.authorThumbnail ?? UIImage(named: "ThumbnailPlaceholder")
                 }
             case .Move:
                 self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)

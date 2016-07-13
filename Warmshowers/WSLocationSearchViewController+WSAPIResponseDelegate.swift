@@ -10,7 +10,7 @@ import Foundation
 
 extension WSLocationSearchViewController : WSAPIResponseDelegate {
     
-    func requestdidComplete(request: WSAPIRequest) {
+    func requestDidComplete(request: WSAPIRequest) {
         guard let tile = request.data as? WSMapTile else { return }
         downloadDidEndForMapTile(tile)
     }

@@ -10,7 +10,7 @@ import UIKit
 
 extension WSHostListTableViewController : WSAPIResponseDelegate {
     
-    func requestdidComplete(request: WSAPIRequest) {
+    func requestDidComplete(request: WSAPIRequest) {
         WSProgressHUD.hide(navigationController!.view)
     }
     

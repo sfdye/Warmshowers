@@ -173,6 +173,11 @@
 		E5E920171D31FD3C00435070 /* WSAccountTableViewController+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E920161D31FD3C00435070 /* WSAccountTableViewController+Navigation.swift */; };
 		E5E920191D31FD4B00435070 /* WSAccountTableViewController+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E920181D31FD4B00435070 /* WSAccountTableViewController+Actions.swift */; };
 		E5E9201D1D34E30500435070 /* WSMessageThreadsTableViewController+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E9201C1D34E30500435070 /* WSMessageThreadsTableViewController+Navigation.swift */; };
+		E5E9201F1D36228600435070 /* WSComposeMessageViewController+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E9201E1D36228600435070 /* WSComposeMessageViewController+Navigation.swift */; };
+		E5E920211D3622A100435070 /* WSComposeMessageViewController+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E920201D3622A100435070 /* WSComposeMessageViewController+Actions.swift */; };
+		E5E920231D36283E00435070 /* WSReplyMessageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E920221D36283E00435070 /* WSReplyMessageData.swift */; };
+		E5E920251D36287F00435070 /* WSNewMessageData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E920241D36287F00435070 /* WSNewMessageData.swift */; };
+		E5E920271D3633C500435070 /* WSMessageThreadTableViewController+UIScrollViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E920261D3633C500435070 /* WSMessageThreadTableViewController+UIScrollViewDelegate.swift */; };
 		E5ED1E8E1CD416BB0017D12F /* WSNavigationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5ED1E8D1CD416BB0017D12F /* WSNavigationDelegate.swift */; };
 		E5ED1E901CD41A460017D12F /* WSSettingsTableViewController+WSAPIResponseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5ED1E8F1CD41A460017D12F /* WSSettingsTableViewController+WSAPIResponseDelegate.swift */; };
 		E5ED1E931CD433440017D12F /* WSLogoutEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5ED1E921CD433440017D12F /* WSLogoutEndpoint.swift */; };
@@ -411,6 +416,11 @@
 		E5E920161D31FD3C00435070 /* WSAccountTableViewController+Navigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSAccountTableViewController+Navigation.swift"; sourceTree = "<group>"; };
 		E5E920181D31FD4B00435070 /* WSAccountTableViewController+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSAccountTableViewController+Actions.swift"; sourceTree = "<group>"; };
 		E5E9201C1D34E30500435070 /* WSMessageThreadsTableViewController+Navigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSMessageThreadsTableViewController+Navigation.swift"; sourceTree = "<group>"; };
+		E5E9201E1D36228600435070 /* WSComposeMessageViewController+Navigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSComposeMessageViewController+Navigation.swift"; sourceTree = "<group>"; };
+		E5E920201D3622A100435070 /* WSComposeMessageViewController+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSComposeMessageViewController+Actions.swift"; sourceTree = "<group>"; };
+		E5E920221D36283E00435070 /* WSReplyMessageData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSReplyMessageData.swift; sourceTree = "<group>"; };
+		E5E920241D36287F00435070 /* WSNewMessageData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSNewMessageData.swift; sourceTree = "<group>"; };
+		E5E920261D3633C500435070 /* WSMessageThreadTableViewController+UIScrollViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSMessageThreadTableViewController+UIScrollViewDelegate.swift"; sourceTree = "<group>"; };
 		E5ED1E8D1CD416BB0017D12F /* WSNavigationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSNavigationDelegate.swift; sourceTree = "<group>"; };
 		E5ED1E8F1CD41A460017D12F /* WSSettingsTableViewController+WSAPIResponseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSSettingsTableViewController+WSAPIResponseDelegate.swift"; sourceTree = "<group>"; };
 		E5ED1E921CD433440017D12F /* WSLogoutEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSLogoutEndpoint.swift; sourceTree = "<group>"; };
@@ -517,6 +527,8 @@
 				E5700C531C44EE51008C8A87 /* WSComposeMessageViewController+UITextFieldDelegate.swift */,
 				E5700C511C44CB64008C8A87 /* WSComposeMessageViewController+UITextViewDelegate.swift */,
 				E58C37121D28F6A4001B03D5 /* WSComposeMessageViewController+WSAPIResponseDelegate.swift */,
+				E5E9201E1D36228600435070 /* WSComposeMessageViewController+Navigation.swift */,
+				E5E920201D3622A100435070 /* WSComposeMessageViewController+Actions.swift */,
 			);
 			name = WSComposeMessageViewController;
 			sourceTree = "<group>";
@@ -886,6 +898,7 @@
 				E5D961531C62BFD4004E1F31 /* WSMessageThreadTableViewController+NSFetchedResultsControllerDelegate.swift */,
 				E51180C21D3583180021F5F5 /* WSMessageThreadTableViewController+Navigation.swift */,
 				E51180C61D358B960021F5F5 /* WSMessageThreadTableViewController+WSAPIResponseDelegate.swift */,
+				E5E920261D3633C500435070 /* WSMessageThreadTableViewController+UIScrollViewDelegate.swift */,
 			);
 			name = WSMessageThreadTableViewController;
 			sourceTree = "<group>";
@@ -1154,6 +1167,7 @@
 			isa = PBXGroup;
 			children = (
 				E5F4A79D1CE092FF0010BEC7 /* WSNewMessageEndPoint.swift */,
+				E5E920241D36287F00435070 /* WSNewMessageData.swift */,
 			);
 			name = NewMessage;
 			sourceTree = "<group>";
@@ -1162,6 +1176,7 @@
 			isa = PBXGroup;
 			children = (
 				E5F4A79B1CE092F30010BEC7 /* WSReplyToMessageEndPoint.swift */,
+				E5E920221D36283E00435070 /* WSReplyMessageData.swift */,
 			);
 			name = ReplyToMessage;
 			sourceTree = "<group>";
@@ -1370,6 +1385,7 @@
 				E5DA03FD1C4C947100FAD1D7 /* WSSettings.swift in Sources */,
 				E56CC08C1BFD2EC300AAF973 /* WSTabBarController.swift in Sources */,
 				E598987B1C97EDC200AFB089 /* CDWSMapTile+CoreDataProperties.swift in Sources */,
+				E5E920211D3622A100435070 /* WSComposeMessageViewController+Actions.swift in Sources */,
 				E5ED45EE1CE86B86008E3C02 /* WSKeywordSearchTableViewController+UIScrollViewDelegate.swift in Sources */,
 				E56490501CD5E47F00645331 /* WSLocationSearchViewController.swift in Sources */,
 				E52E8AA11C0BD38D000391AB /* WSHostSearchViewController+UISearchControllerDelegate.swift in Sources */,
@@ -1409,6 +1425,7 @@
 				E5F9BCA01CDF25E0006494FE /* WSStoreMessageProtocol.swift in Sources */,
 				E5E920091D30EBE000435070 /* WSHostSearchViewController+WSHostSearchNavigationDelegate.swift in Sources */,
 				E5DA03F01C49C7A200FAD1D7 /* WSFont.swift in Sources */,
+				E5E9201F1D36228600435070 /* WSComposeMessageViewController+Navigation.swift in Sources */,
 				E52E8ABE1C0E463D000391AB /* Warmshowers.xcdatamodeld in Sources */,
 				E57058071CC9B9F600FA5D9F /* WSAPICommunicator+WSAPIRequestDelgate.swift in Sources */,
 				E54276801C3E546E00047029 /* WSRecommendationFor.swift in Sources */,
@@ -1442,6 +1459,7 @@
 				E5ED1E901CD41A460017D12F /* WSSettingsTableViewController+WSAPIResponseDelegate.swift in Sources */,
 				E5F9BC8F1CDE86D2006494FE /* WSStoreProtocol.swift in Sources */,
 				E59FE1E81CD412430024F354 /* WSSettingsTableViewController+UITableViewDelegate.swift in Sources */,
+				E5E920251D36287F00435070 /* WSNewMessageData.swift in Sources */,
 				E598987C1C97EDC200AFB089 /* CDWSMapTile.swift in Sources */,
 				E59FE1C21CD0AE640024F354 /* WSAPIEndPointError.swift in Sources */,
 				E570580D1CC9CFDA00FA5D9F /* HttpMethod.swift in Sources */,
@@ -1454,6 +1472,7 @@
 				E51180C51D358A290021F5F5 /* WSMessageThreadReadState.swift in Sources */,
 				E53548EC1C69AA8E00E22C3D /* WSUserDefaultsKeys.swift in Sources */,
 				E50FD8A21C053A42004D38A3 /* MapTileServerURLTemplate.swift in Sources */,
+				E5E920231D36283E00435070 /* WSReplyMessageData.swift in Sources */,
 				E54276821C3E54BA00047029 /* WSPhoneNumberType.swift in Sources */,
 				E59FE1CC1CD0C63C0024F354 /* WSLoginEndPoint+Testing.swift in Sources */,
 				E5DA03D81C488AE900FAD1D7 /* WSLazyImageTableViewCell.swift in Sources */,
@@ -1468,6 +1487,7 @@
 				E5A9F1211C55F79A006D6499 /* WSProgressHUD.swift in Sources */,
 				E5F4A7A81CE1D54E0010BEC7 /* WSHostSearchControllerDelegate.swift in Sources */,
 				E5F9BC8A1CDD3F03006494FE /* WSReachabilityProtocol.swift in Sources */,
+				E5E920271D3633C500435070 /* WSMessageThreadTableViewController+UIScrollViewDelegate.swift in Sources */,
 				E5F6F30F1C2FE3360000A87E /* ProfileImageTableViewCell.swift in Sources */,
 				E5ED1EA11CD47CA00017D12F /* WSHostSearchViewController+Actions.swift in Sources */,
 				E5F4A7A61CE1D2490010BEC7 /* WSLocationSearchViewController+Actions.swift in Sources */,

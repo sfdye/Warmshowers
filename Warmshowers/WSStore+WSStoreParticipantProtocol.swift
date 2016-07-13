@@ -121,4 +121,19 @@ extension WSStore : WSStoreParticipantProtocol {
             }
         }
     }
+    
+    func updateParticipantWithImageURL(imageURL: String, withImage image: UIImage) {
+        
+        let request = requestForEntity(.Participant)
+        request.predicate = NSPredicate(format: "image_url LIKE %@", imageURL)
+        
+        do {
+            let user = try executeFetchRequest(request).first as? CDWSUser
+            user?.image = image
+            try savePrivateContext()
+        } catch {
+            // No an important failure.
+        }
+    }
+    
 }
