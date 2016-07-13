@@ -32,12 +32,12 @@ extension WSAccountTableViewController {
             return 1
         case 4:
             // Hosting info
-            var count = user.numberOfHostingInfo
-            if user.numberOfOffers > 0 { count += 1 + user.numberOfOffers }
+            var count = user.hostingInfo.count
+            if user.offers.count > 0 { count += 1 + user.offers.count }
             return count
         case 5:
             // Contact details
-            return user.numberOfPhoneNumbers
+            return user.phoneNumbers.count
         case 6:
             // Address
             return 1
@@ -120,29 +120,29 @@ extension WSAccountTableViewController {
             
         case 4:
             // Hosting info
-            if indexPath.row < user.numberOfHostingInfo {
+            if indexPath.row < user.hostingInfo.count {
                 // Display host info
                 let cell = tableView.dequeueReusableCellWithIdentifier(HostingInfoCellID, forIndexPath: indexPath) as! HostingInfoTableViewCell
-                cell.titleLabel.text = hostingInfoTitleForInfoNumber(indexPath.row, fromUser: user)
-                cell.infoLabel.text = hostingInfoDetailForInfoNumber(indexPath.row, fromUser: user)
+                cell.titleLabel.text = hostingInfoTitleForInfoAtIndex(indexPath.row, fromUser: user)
+                cell.infoLabel.text = hostingInfoDetailForInfoAtIndex(indexPath.row, fromUser: user)
                 return cell
-            } else if indexPath.row == user.numberOfHostingInfo {
+            } else if indexPath.row == user.hostingInfo.count {
                 // Display "This host may offer"
                 let cell = tableView.dequeueReusableCellWithIdentifier(OfferHeadingCellID, forIndexPath: indexPath)
                 return cell
             } else {
                 // Display an offer
                 let cell = tableView.dequeueReusableCellWithIdentifier(OfferCellID, forIndexPath: indexPath) as! HostOfferTableViewCell
-                cell.offerLabel.text = offerTextForOfferNumber(indexPath.row - 5, fromUser: user)
+                cell.offerLabel.text = offerTextForOfferAtIndex(indexPath.row - 5, fromUser: user)
                 return cell
             }
             
         case 5:
             // Contact details
             let cell = tableView.dequeueReusableCellWithIdentifier(ContactCellID, forIndexPath: indexPath) as! PhoneNumberTableViewCell
-            cell.titleLabel.text = phoneNumberDescriptionForNumberNumber(indexPath.row, fromUser: user)
-            cell.detailLabel.text = phoneNumberForPhoneNumberNumber(indexPath.row, fromUser: user)
-            if let type = phoneNumberTypeForPhoneNumberNumber(indexPath.row, fromUser: user) {
+            cell.titleLabel.text = phoneNumberDescriptionForPhoneNumberAtIndex(indexPath.row, fromUser: user)
+            cell.detailLabel.text = phoneNumberForPhoneNumberAtIndex(indexPath.row, fromUser: user)
+            if let type = phoneNumberTypeForPhoneAtIndex(indexPath.row, fromUser: user) {
                 switch type {
                 case .Home, .Work:
                     cell.phoneIcon.hidden = false

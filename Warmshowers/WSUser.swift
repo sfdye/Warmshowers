@@ -50,7 +50,7 @@ class WSUser: Hashable {
     var additional: String?
     var becomeavailable: Int?
     var bed: Bool?
-    var bikeshop: Bool?
+    var bikeshop: String?
     var campground: String?
     var city: String?
     var comments: String?
@@ -97,6 +97,14 @@ class WSUser: Hashable {
     var feedback: [WSRecommendation]?
     var profileImage: UIImage?
     
+    
+    // MARK: Hashable
+    
+    var hashValue: Int { return uid }
+    
+    
+    // MARK: Convinience properties
+    
     var membershipDuration: WSTimeInterval? {
         guard let created = created else { return nil }
         return timeIntervalSinceTime(created)
@@ -107,10 +115,67 @@ class WSUser: Hashable {
         return timeIntervalSinceTime(login)
     }
     
+    /** Returns an array of hosting info points applicable to the users profile. */
+    var hostingInfo: [WSHostInfo] {
+        var info = [WSHostInfo]()
+        if maxcyclists != nil {
+            let description = maxcyclists! > 4 ? "5 or more" : "\(maxcyclists!)"
+            info.append(WSHostInfo(type: .MaxCyclists, description: description))
+        }
+        if bikeshop != nil {
+            info.append(WSHostInfo(type: .BikeShop, description: bikeshop!))
+        }
+        if campground != nil {
+            info.append(WSHostInfo(type: .Campground, description: campground!))
+        }
+        if motel != nil {
+            info.append(WSHostInfo(type: .Motel, description: motel!))
+        }
+        return info
+    }
     
-    // MARK: Hashable
+    /** Returns an array of types of offers applicable to the users profile. */
+    var offers: [WSOfferType] {
+        var offers = [WSOfferType]()
+        if bed ?? false { offers.append(.Bed) }
+        if food ?? false { offers.append(.Food) }
+        if laundry ?? false { offers.append(.Laundry) }
+        if lawnspace ?? false { offers.append(.LawnSpace) }
+        if sag ?? false { offers.append(.SAG) }
+        if shower ?? false { offers.append(.Shower) }
+        if storage ?? false { offers.append(.Storage) }
+        if kitchenuse ?? false { offers.append(.KitchenUse) }
+        return offers
+    }
+        
+    /** Returns an array of tuples with phone number type and phone number. */
+    var phoneNumbers: [WSPhoneNumber] {
+        var phoneNumbers = [WSPhoneNumber]()
+        if homephone ?? "" != "" {
+            phoneNumbers.append(WSPhoneNumber(type: .Home, number: homephone!))
+        }
+        if mobilephone ?? "" != "" {
+            phoneNumbers.append(WSPhoneNumber(type: .Mobile, number: mobilephone!))
+        }
+        if workphone ?? "" != "" {
+            phoneNumbers.append(WSPhoneNumber(type: .Work, number: workphone!))
+        }
+        return phoneNumbers
+    }
     
-    var hashValue: Int { return uid }
+    /** The user address as a string with new line characters seperating the street, city, etc. */
+    var address: String {
+        var address: String = ""
+        address.appendWithNewLine(street)
+        address.appendWithNewLine(additional)
+        address.appendWithNewLine(city)
+        address.appendWithSpace(postal_code)
+        if let country = country {
+            address.appendWithNewLine(country.uppercaseString)
+        }
+        return address
+    }
+    
     
     // MARK: Initialisers
     
@@ -137,7 +202,7 @@ class WSUser: Hashable {
         additional = String.fromJSON(json, withKey: "additional")
         becomeavailable = Int.fromJSON(json, withKey: "becomeavailable")
         bed = Bool.fromJSON(json, withKey: "bed")
-        bikeshop = Bool.fromJSON(json, withKey: "bikeshop")
+        bikeshop = String.fromJSON(json, withKey: "bikeshop")
         campground = String.fromJSON(json, withKey: "campground")
         city = String.fromJSON(json, withKey: "city")
         comments = String.fromJSON(json, withKey: "comments")
@@ -188,36 +253,6 @@ class WSUser: Hashable {
     private func timeIntervalSinceTime(time: Int) -> WSTimeInterval {
         let date = NSDate(timeIntervalSince1970: NSTimeInterval(time))
         return WSTimeInterval(timeInterval: NSDate().timeIntervalSince1970 - date.timeIntervalSince1970)
-    }
-    
-    var numberOfHostingInfo: Int {
-        var count = 0
-        if maxcyclists != nil { count += 1 }
-        if bikeshop != nil { count += 1 }
-        if campground != nil { count += 1 }
-        if motel != nil { count += 1 }
-        return count
-    }
-    
-    var numberOfOffers: Int {
-        var count = 0
-        if bed ?? false { count += 1 }
-        if food ?? false { count += 1 }
-        if laundry ?? false { count += 1 }
-        if lawnspace ?? false { count += 1 }
-        if sag ?? false { count += 1 }
-        if shower ?? false { count += 1 }
-        if storage ?? false { count += 1 }
-        if kitchenuse ?? false { count += 1 }
-        return count
-    }
-    
-    var numberOfPhoneNumbers: Int {
-        var count = 0
-        if homephone ?? "" != "" { count += 1 }
-        if mobilephone ?? "" != "" { count += 1 }
-        if workphone ?? "" != "" { count += 1 }
-        return count
     }
     
 }

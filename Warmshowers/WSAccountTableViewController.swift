@@ -134,77 +134,60 @@ class WSAccountTableViewController: UITableViewController {
         return feedback.count > 0 ? "Feedback (\(feedback.count))" : "No feedback"
     }
     
-    func hostingInfoTitleForInfoNumber(infoNumber: Int, fromUser user: WSUser) -> String? {
-        
-        return nil
-    }
-    
-    func hostingInfoDetailForInfoNumber(infoNumber: Int, fromUser user: WSUser) -> String? {
-        
-        return nil
-    }
-    
-    func offerTextForOfferNumber(offerNumber: Int, fromUser user: WSUser) -> String? {
-//        var offer: String? {
-//            get {
-//                return offerLabel.text
-//            }
-//            set(newOffer) {
-//                guard newOffer != nil else {
-//                    self.offerLabel.text = nil
-//                    return
-//                }
-//                self.offerLabel.text = "\u{2022} " + newOffer!
-//            }
-//        }
-//        user.offers.offerAtIndex(indexPath.row - 5)
-        return nil
-    }
-    
-    func phoneNumberDescriptionForNumberNumber(number: Int, fromUser user: WSUser) -> String? {
-        
-        return nil
-    }
-    
-    func phoneNumberForPhoneNumberNumber(number: Int, fromUser user: WSUser) -> String? {
-        if let homephone = user.homephone where number == 0 {
-            return homephone
+    func hostingInfoTitleForInfoAtIndex(index: Int, fromUser user: WSUser) -> String? {
+        guard index < user.hostingInfo.count else { return nil }
+        let info = user.hostingInfo[index]
+        switch info.type {
+        case .MaxCyclists:
+            return "Maximum Guests:"
+        case .BikeShop:
+            return "Distance to nearest bike shop:"
+        case .Campground:
+            return "Distance to nearest campground:"
+        case .Motel:
+            return "Distance to nearest hotel/motel:"
         }
-        if let mobilephone = user.mobilephone where number < 1 {
-            return mobilephone
-        }
-        if let workphone = user.workphone where number < 2 {
-            return workphone
-        }
-        return nil
-        
-//        let keys = ["homephone", "mobilephone", "workphone"]
-//        
-//        for key in keys {
-//            let number = numberForKey(key, inJSON: json)
-//            let type: WSPhoneNumberType
-//            switch key {
-//            case "homephone":
-//                type = .Home
-//            case "mobilephone":
-//                type = .Mobile
-//            case "workphone":
-//                type = .Work
-//            default:
-//                continue
-//            }
-//        
-//        return nil
     }
     
-    func phoneNumberTypeForPhoneNumberNumber(number: Int, fromUser user: WSUser) -> WSPhoneNumberType? {
-        
-        return nil
+    func hostingInfoDetailForInfoAtIndex(index: Int, fromUser user: WSUser) -> String? {
+        guard index < user.hostingInfo.count else { return nil }
+        let info = user.hostingInfo[index]
+        return info.description
+    }
+    
+    func offerTextForOfferAtIndex(index: Int, fromUser user: WSUser) -> String? {
+        guard index < user.offers.count else { return nil }
+        let offer = user.offers[index]
+        return "\u{2022} " + offer.rawValue
+    }
+    
+    func phoneNumberForPhoneNumberAtIndex(index: Int, fromUser user: WSUser) -> String? {
+        guard index < user.phoneNumbers.count else { return nil }
+        let phoneNumber = user.phoneNumbers[index]
+        return phoneNumber.number
+    }
+    
+    func phoneNumberDescriptionForPhoneNumberAtIndex(index: Int, fromUser user: WSUser) -> String? {
+        guard index < user.phoneNumbers.count else { return nil }
+        let phoneNumber = user.phoneNumbers[index]
+        switch phoneNumber.type {
+        case .Home:
+            return "Home"
+        case .Mobile:
+            return "Mobile"
+        case .Work:
+            return "Work"
+        }
+    }
+    
+    func phoneNumberTypeForPhoneAtIndex(index: Int, fromUser user: WSUser) -> WSPhoneNumberType? {
+        guard index < user.phoneNumbers.count else { return nil }
+        let phoneNumber = user.phoneNumbers[index]
+        return phoneNumber.type
     }
     
     func addressTextForUser(user: WSUser) -> String? {
-        
-        return nil
+        return user.address
     }
 
 }

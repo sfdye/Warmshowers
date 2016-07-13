@@ -14,6 +14,10 @@
 		E51180C71D358B960021F5F5 /* WSMessageThreadTableViewController+WSAPIResponseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51180C61D358B960021F5F5 /* WSMessageThreadTableViewController+WSAPIResponseDelegate.swift */; };
 		E51397671C06945E00FD8EC1 /* WSUserLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51397661C06945E00FD8EC1 /* WSUserLocation.swift */; };
 		E52A07271C580B1C006F80A5 /* WSComposeMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A07261C580B1C006F80A5 /* WSComposeMessageViewController.swift */; };
+		E52B35711D36CC0A00DD0F44 /* WSPhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52B35701D36CC0A00DD0F44 /* WSPhoneNumber.swift */; };
+		E52B35751D36CF6A00DD0F44 /* WSOfferType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52B35741D36CF6A00DD0F44 /* WSOfferType.swift */; };
+		E52B35771D36D2FB00DD0F44 /* WSHostInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52B35761D36D2FB00DD0F44 /* WSHostInfo.swift */; };
+		E52B35791D36D50000DD0F44 /* WSHostInfoType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52B35781D36D50000DD0F44 /* WSHostInfoType.swift */; };
 		E52E8AA11C0BD38D000391AB /* WSHostSearchViewController+UISearchControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8AA01C0BD38D000391AB /* WSHostSearchViewController+UISearchControllerDelegate.swift */; };
 		E52E8AAF1C0D056D000391AB /* WSMessageThreadsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8AAE1C0D056D000391AB /* WSMessageThreadsTableViewController.swift */; };
 		E52E8AB11C0D0B1A000391AB /* MessageThreadsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52E8AB01C0D0B1A000391AB /* MessageThreadsTableViewCell.swift */; };
@@ -249,6 +253,10 @@
 		E51180C61D358B960021F5F5 /* WSMessageThreadTableViewController+WSAPIResponseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSMessageThreadTableViewController+WSAPIResponseDelegate.swift"; sourceTree = "<group>"; };
 		E51397661C06945E00FD8EC1 /* WSUserLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSUserLocation.swift; sourceTree = "<group>"; };
 		E52A07261C580B1C006F80A5 /* WSComposeMessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSComposeMessageViewController.swift; sourceTree = "<group>"; };
+		E52B35701D36CC0A00DD0F44 /* WSPhoneNumber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSPhoneNumber.swift; sourceTree = "<group>"; };
+		E52B35741D36CF6A00DD0F44 /* WSOfferType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSOfferType.swift; sourceTree = "<group>"; };
+		E52B35761D36D2FB00DD0F44 /* WSHostInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSHostInfo.swift; sourceTree = "<group>"; };
+		E52B35781D36D50000DD0F44 /* WSHostInfoType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSHostInfoType.swift; sourceTree = "<group>"; };
 		E52E8AA01C0BD38D000391AB /* WSHostSearchViewController+UISearchControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSHostSearchViewController+UISearchControllerDelegate.swift"; sourceTree = "<group>"; };
 		E52E8AAE1C0D056D000391AB /* WSMessageThreadsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSMessageThreadsTableViewController.swift; sourceTree = "<group>"; };
 		E52E8AB01C0D0B1A000391AB /* MessageThreadsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageThreadsTableViewCell.swift; sourceTree = "<group>"; };
@@ -509,6 +517,60 @@
 			name = Map;
 			sourceTree = "<group>";
 		};
+		E52B356B1D36C95200DD0F44 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				E54276811C3E54BA00047029 /* WSPhoneNumberType.swift */,
+				E5A84A6A1C8FBCE1007609A9 /* WSUser.swift */,
+				E51397661C06945E00FD8EC1 /* WSUserLocation.swift */,
+				E5DA03E31C49187600FAD1D7 /* WSUserLocation+MKAnnotation.swift */,
+				E52B35701D36CC0A00DD0F44 /* WSPhoneNumber.swift */,
+				E52B35741D36CF6A00DD0F44 /* WSOfferType.swift */,
+				E52B35761D36D2FB00DD0F44 /* WSHostInfo.swift */,
+				E52B35781D36D50000DD0F44 /* WSHostInfoType.swift */,
+			);
+			name = User;
+			sourceTree = "<group>";
+		};
+		E52B356C1D36C96500DD0F44 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				E569E7941CF5A3940004B111 /* MKCoordinateRegion+Warmshowers.swift */,
+				E5A84A661C8E0A1D007609A9 /* WSMapTile.swift */,
+				E59898791C97EDC200AFB089 /* CDWSMapTile+CoreDataProperties.swift */,
+				E598987A1C97EDC200AFB089 /* CDWSMapTile.swift */,
+			);
+			name = Map;
+			sourceTree = "<group>";
+		};
+		E52B356D1D36C99400DD0F44 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				E5967BC71C39DBC00037F4B7 /* CDWSMessage.swift */,
+				E5967BC61C39DBC00037F4B7 /* CDWSMessage+CoreDataProperties.swift */,
+				E5967BC51C39DBC00037F4B7 /* CDWSMessageThread.swift */,
+				E5967BC41C39DBC00037F4B7 /* CDWSMessageThread+CoreDataProperties.swift */,
+				E5967BC91C39DBC00037F4B7 /* CDWSUser.swift */,
+				E5967BC81C39DBC00037F4B7 /* CDWSUser+CoreDataProperties.swift */,
+				E52E8ABC1C0E463D000391AB /* Warmshowers.xcdatamodeld */,
+				E57AF7481CAA6A0A002785D1 /* CDWSUserLocation+CoreDataProperties.swift */,
+				E57AF7491CAA6A0A002785D1 /* CDWSUserLocation.swift */,
+				E53BA74A1C76AE8C0076E825 /* WSEntity.swift */,
+			);
+			name = CoreData;
+			sourceTree = "<group>";
+		};
+		E52B356E1D36C9C000DD0F44 /* Feedback */ = {
+			isa = PBXGroup;
+			children = (
+				E5967BB31C38A8ED0037F4B7 /* WSRecommendation.swift */,
+				E542767F1C3E546E00047029 /* WSRecommendationFor.swift */,
+				E54276891C41AAAF00047029 /* WSRecommendationMonths.swift */,
+				E542767D1C3E544600047029 /* WSRecommendationRating.swift */,
+			);
+			name = Feedback;
+			sourceTree = "<group>";
+		};
 		E53BA7431C766F700076E825 /* ReachabilityManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -551,32 +613,14 @@
 		E54A57321BFE82F9000843A9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				E5967BC71C39DBC00037F4B7 /* CDWSMessage.swift */,
-				E5967BC61C39DBC00037F4B7 /* CDWSMessage+CoreDataProperties.swift */,
-				E5967BC51C39DBC00037F4B7 /* CDWSMessageThread.swift */,
-				E5967BC41C39DBC00037F4B7 /* CDWSMessageThread+CoreDataProperties.swift */,
-				E5967BC91C39DBC00037F4B7 /* CDWSUser.swift */,
-				E5967BC81C39DBC00037F4B7 /* CDWSUser+CoreDataProperties.swift */,
-				E52E8ABC1C0E463D000391AB /* Warmshowers.xcdatamodeld */,
+				E52B356E1D36C9C000DD0F44 /* Feedback */,
+				E52B356D1D36C99400DD0F44 /* CoreData */,
+				E52B356C1D36C96500DD0F44 /* Map */,
+				E52B356B1D36C95200DD0F44 /* User */,
 				E5DA03FE1C4CA9CF00FAD1D7 /* WSDistance.swift */,
-				E54276811C3E54BA00047029 /* WSPhoneNumberType.swift */,
-				E5967BB31C38A8ED0037F4B7 /* WSRecommendation.swift */,
-				E542767F1C3E546E00047029 /* WSRecommendationFor.swift */,
-				E54276891C41AAAF00047029 /* WSRecommendationMonths.swift */,
-				E542767D1C3E544600047029 /* WSRecommendationRating.swift */,
 				E5DA03FC1C4C947100FAD1D7 /* WSSettings.swift */,
 				E5967BAA1C38814F0037F4B7 /* WSTimeInterval.swift */,
 				E53548EB1C69AA8E00E22C3D /* WSUserDefaultsKeys.swift */,
-				E5A84A6A1C8FBCE1007609A9 /* WSUser.swift */,
-				E51397661C06945E00FD8EC1 /* WSUserLocation.swift */,
-				E5DA03E31C49187600FAD1D7 /* WSUserLocation+MKAnnotation.swift */,
-				E53BA74A1C76AE8C0076E825 /* WSEntity.swift */,
-				E5A84A661C8E0A1D007609A9 /* WSMapTile.swift */,
-				E59898791C97EDC200AFB089 /* CDWSMapTile+CoreDataProperties.swift */,
-				E598987A1C97EDC200AFB089 /* CDWSMapTile.swift */,
-				E57AF7481CAA6A0A002785D1 /* CDWSUserLocation+CoreDataProperties.swift */,
-				E57AF7491CAA6A0A002785D1 /* CDWSUserLocation.swift */,
-				E569E7941CF5A3940004B111 /* MKCoordinateRegion+Warmshowers.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1514,10 +1558,13 @@
 				E5967BB41C38A8ED0037F4B7 /* WSRecommendation.swift in Sources */,
 				E574AED81D32E6E5008676BC /* WSHostListTableViewController+Actions.swift in Sources */,
 				E5ED1E9C1CD468C70017D12F /* WSSessionStateProtocol.swift in Sources */,
+				E52B35751D36CF6A00DD0F44 /* WSOfferType.swift in Sources */,
 				E5F6F3111C3122740000A87E /* HostingInfoTableViewCell.swift in Sources */,
 				E5967BCE1C39DBC00037F4B7 /* CDWSUser+CoreDataProperties.swift in Sources */,
+				E52B35771D36D2FB00DD0F44 /* WSHostInfo.swift in Sources */,
 				E5AF670C1C576CAE00AC17A1 /* WSComposeMessageViewController+UITableViewDelegate.swift in Sources */,
 				E5F4A7A21CE0931F0010BEC7 /* WSUserInfoEndPoint.swift in Sources */,
+				E52B35791D36D50000DD0F44 /* WSHostInfoType.swift in Sources */,
 				E54276781C3E374400047029 /* WSCreateFeedbackTableViewController.swift in Sources */,
 				E56490401CD4B9B200645331 /* WSSearchByKeywordEndPoint.swift in Sources */,
 				E5F9BC911CDE8725006494FE /* WSStore+WSStoreProtocol.swift in Sources */,
@@ -1549,6 +1596,7 @@
 				E5F4A79E1CE092FF0010BEC7 /* WSNewMessageEndPoint.swift in Sources */,
 				E5967BCB1C39DBC00037F4B7 /* CDWSMessageThread.swift in Sources */,
 				E57057E21CC86C6600FA5D9F /* WSAPICommunicator.swift in Sources */,
+				E52B35711D36CC0A00DD0F44 /* WSPhoneNumber.swift in Sources */,
 				E54276901C44956F00047029 /* WSCreateFeedbackTableViewController+UITextViewDelegate.swift in Sources */,
 				E574AED41D3196E7008676BC /* WSLoginData.swift in Sources */,
 				E59FE1E61CD411D30024F354 /* WSSettingsTableViewController+UITableViewDataSource.swift in Sources */,
