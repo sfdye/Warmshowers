@@ -43,13 +43,13 @@ extension WSCreateFeedbackTableViewController {
                 switch modelRow {
                 case 0:
                     // Feedback guest or host picker
-                    cell.configureForTypeWithFeedback(feedback)
+                    cell.configureForTypeWithFeedback(recommendation)
                 case 1:
                     // Feedback rating picker
-                    cell.configureForRatingWithFeedback(feedback)
+                    cell.configureForRatingWithFeedback(recommendation)
                 default:
                     // Feedback date picker
-                    cell.configureForDateWithFeedback(feedback)
+                    cell.configureForDateWithFeedback(recommendation)
                 }
                 return cell
             }
@@ -59,13 +59,13 @@ extension WSCreateFeedbackTableViewController {
             switch modelRow {
             case 0:
                 // Feedback guest or host picker
-                cell.configureForTypeWithFeedback(feedback)
+                cell.configureForTypeWithFeedback(recommendation)
             case 1:
                 // Feedback rating picker
-                cell.configureForRatingWithFeedback(feedback)
+                cell.configureForRatingWithFeedback(recommendation)
             default:
                 // Feedback date picker
-                cell.configureForDateWithFeedback(feedback)
+                cell.configureForDateWithFeedback(recommendation)
             }
             return cell
             

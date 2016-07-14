@@ -26,13 +26,13 @@ extension WSCreateFeedbackTableViewController : UIPickerViewDelegate {
         switch optionCellRow {
         case 0:
             // Feedback guest or host picker
-            feedback.type.setFromRawValue(selectedValue)
+            recommendation.type.setFromRawValue(selectedValue)
         case 1:
             // Feedback rating picker
-            feedback.rating.setFromRawValue(selectedValue)
+            recommendation.rating.setFromRawValue(selectedValue)
         case 2:
             // Feedback date picker
-            if let comps = calendar?.components([.Month, .Year], fromDate: feedback.date) {
+            if let comps = calendar?.components([.Month, .Year], fromDate: recommendation.date) {
                 switch component {
                 case 0:
                     comps.month = row + 1
@@ -42,7 +42,7 @@ extension WSCreateFeedbackTableViewController : UIPickerViewDelegate {
                     break
                 }
                 if let date = calendar?.dateFromComponents(comps) {
-                    feedback.date = date
+                    recommendation.date = date
                 }
             }
             

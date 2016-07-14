@@ -26,11 +26,11 @@ extension WSCreateFeedbackTableViewController : UITextViewDelegate {
         }
         
         // Update the model
-        feedback.body = textView.text
+        recommendation.body = textView.text
     }
     
     func textViewDidEndEditing(textView: UITextView) {
-        feedback.body = textView.text
+        recommendation.body = textView.text
     }
     
     func textViewShouldBeginEditing(textView: UITextView) -> Bool {
