@@ -36,5 +36,5 @@ protocol WSStoreMessageThreadProtocol {
     
     func subjectForMessageThreadWithID(threadID: Int) -> String?
     
-    func markMessageThread(threadID: Int, unread: Bool) throws
+    func markMessageThread(threadID: Int, read: Bool) throws
 }

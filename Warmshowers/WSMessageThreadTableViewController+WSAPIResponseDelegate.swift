@@ -27,6 +27,9 @@ extension WSMessageThreadTableViewController: WSAPIResponseDelegate {
     
     func request(request: WSAPIRequest, didSuceedWithData data: AnyObject?) {
         switch request.endPoint.type {
+        case .MarkThreadRead:
+            guard let readState = request.data as? WSMessageThreadReadState else { return }
+            let _ = try? store.markMessageThread(readState.threadID, read: readState.read)
         case .UserInfo:
             guard
                 let user = data as? WSUser,

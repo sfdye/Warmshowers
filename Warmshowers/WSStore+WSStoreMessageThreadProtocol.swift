@@ -150,10 +150,10 @@ extension WSStore : WSStoreMessageThreadProtocol {
         }
     }
     
-    func markMessageThread(threadID: Int, unread: Bool) throws {
+    func markMessageThread(threadID: Int, read: Bool) throws {
         do {
             let messageThread = try messageThreadWithID(threadID)
-            messageThread?.is_new = unread
+            messageThread?.is_new = !read
             try savePrivateContext()
         }
     }

@@ -15,8 +15,7 @@ extension WSComposeMessageViewController : WSAPIResponseDelegate {
     }
     
     func request(request: WSAPIRequest, didSuceedWithData data: AnyObject?) {
-        let notificationCentre = NSNotificationCenter.defaultCenter()
-        notificationCentre.postNotification(NSNotification(name: MessagesViewNeedsUpdateNotificationName, object: nil))
+        NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: MessagesViewNeedsUpdateNotificationName, object: nil))
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
         })
