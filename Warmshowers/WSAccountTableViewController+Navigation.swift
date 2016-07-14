@@ -8,6 +8,10 @@
 
 import UIKit
 
+let SID_ToFeedback = "ToFeedback"
+let SID_ToSendNewMessage = "ToSendNewMessage"
+let SID_ToProvideFeeedback = "ToProvideFeedback"
+
 extension WSAccountTableViewController {
     
     func doneButtonPressed() {
@@ -17,12 +21,11 @@ extension WSAccountTableViewController {
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         guard let user = user else { return false }
         switch identifier {
-        case ToFeedbackSegueID:
+        case SID_ToFeedback:
             return user.feedback?.count ?? 0 > 0
-        case ToSendNewMessageSegueID:
-            assertionFailure("Broken")
-            return false //(info != nil && uid != nil && recipient != nil)
-        case ToProvideFeeedbackSegueID:
+        case SID_ToSendNewMessage:
+            return recipient != nil
+        case SID_ToProvideFeeedback:
             return user.name != ""
         default:
             return false
@@ -37,31 +40,29 @@ extension WSAccountTableViewController {
         
         switch identifier {
             
-        case ToFeedbackSegueID:
+        case SID_ToFeedback:
             
             let feedbackVC = segue.destinationViewController as! WSFeedbackTableViewController
             feedbackVC.feedback = user.feedback
             
-        case ToSendNewMessageSegueID:
-            assertionFailure("Broken")
-//            let navVC = segue.destinationViewController as! UINavigationController
-//            let composeMessageVC = navVC.viewControllers.first as! WSComposeMessageViewController
-//            if let info = info, let uid = uid {
-//                // Save the user to the store and pass the user object to the compose message view controller
-//                do {
-//                    try store.addParticipantWithJSON(info)
-//                    recipient = try store.participantWithID(uid)
-//                    composeMessageVC.configureAsNewMessageToUser([recipient!])
-//                } catch {
-//                    print("Failed to get user for compose message view")
-//                }
-//            }
+        case SID_ToSendNewMessage:
+
+            let navVC = segue.destinationViewController as! UINavigationController
+            let composeMessageVC = navVC.viewControllers.first as! WSComposeMessageViewController
+            // Save the user to the store and pass the user object to the compose message view controller
+            do {
+                try participantStore.addParticipant(user)
+                recipient = try participantStore.participantWithID(user.uid)
+                composeMessageVC.configureAsNewMessageToUser([recipient!])
+            } catch {
+                print("Failed to get user for compose message view")
+            }
             
-        case ToProvideFeeedbackSegueID:
-            assertionFailure("Broken")
-//            let navVC = segue.destinationViewController as! UINavigationController
-//            let createFeedbackVC = navVC.viewControllers.first as! WSCreateFeedbackTableViewController
-//            createFeedbackVC.configureForSendingFeedbackForUserWithUserName(info?.valueForKey("name") as? String)
+        case SID_ToProvideFeeedback:
+            
+            let navVC = segue.destinationViewController as! UINavigationController
+            let createFeedbackVC = navVC.viewControllers.first as! WSCreateFeedbackTableViewController
+            createFeedbackVC.configureForSendingFeedbackForUserWithUserName(user.name)
             
         default:
             break

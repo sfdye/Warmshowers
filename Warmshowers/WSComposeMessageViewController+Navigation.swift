@@ -13,7 +13,7 @@ extension WSComposeMessageViewController {
     @IBAction func cancelButtonPressed(sender: AnyObject?) {
         
         // Show a warning message if the message body has some content
-        guard let body = body where body != "" else {
+        guard body == nil || body ?? "" == "" else {
             let alert = UIAlertController(title: nil, message: "Are you sure you want to discard the current message?", preferredStyle: .Alert)
             let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
             alert.addAction(cancelAction)

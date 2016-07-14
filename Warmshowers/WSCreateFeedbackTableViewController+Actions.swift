@@ -14,7 +14,7 @@ extension WSCreateFeedbackTableViewController {
         
         self.view.endEditing(true)
         
-        if feedback.hasBody {
+        if recommendation.hasBody {
             // TODO: Delegate this to the alertDelgate
             let alert = UIAlertController(title: nil, message: "Are you sure you want to discard the current feedback?", preferredStyle: .Alert)
             let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
@@ -33,18 +33,18 @@ extension WSCreateFeedbackTableViewController {
         
         self.view.endEditing(true)
         
-        guard let _ = feedback.recommendedUserName else {
+        guard let _ = recommendation.recommendedUserName else {
             alert?.presentAlertFor(self, withTitle: "An error occured", button: "OK", message: "Recommended user not set. Please report this as a bug, sorry for the inconvenience.")
             return
         }
         
-        guard feedback.hasBody else {
+        guard recommendation.hasBody else {
             alert?.presentAlertFor(self, withTitle: "No feedback to submit", button: "OK", message: "Please enter some feedback before submitting.")
             return
         }
         
         // Submit the feedback
-        WSProgressHUD.show("Submitting feedback ...")
-//        api?.createFeedback(feedback, andNotify: self)
+        WSProgressHUD.show(navigationController!.view, label: "Submitting feedback ...")
+        api?.contactEndPoint(.CreateFeedback, withPathParameters: nil, andData: recommendation, thenNotify: self)
     }
 }

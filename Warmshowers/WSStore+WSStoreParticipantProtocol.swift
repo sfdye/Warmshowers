@@ -70,6 +70,18 @@ extension WSStore : WSStoreParticipantProtocol {
         return NSSet(array: participants)
     }
     
+    func addParticipant(newUser: WSUser) throws {
+        
+        do {
+            let user = try newOrExistingParticipant(newUser.uid)
+            user.fullname = newUser.fullname
+            user.name = newUser.name
+            user.uid = newUser.uid
+            try savePrivateContext()
+        }
+        
+    }
+    
     func addParticipantWithJSON(json: AnyObject) throws {
         
         guard let fullname = json.valueForKey("fullname") as? String else {

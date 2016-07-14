@@ -26,6 +26,7 @@ class WSAccountTableViewController: UITableViewController {
     var api: WSAPICommunicatorProtocol = WSAPICommunicator.sharedAPICommunicator
     var connection: WSReachabilityProtocol = WSReachabilityManager.sharedReachabilityManager
     var store: WSStoreProtocol = WSStore.sharedStore
+    var participantStore: WSStoreParticipantProtocol = WSStore.sharedStore
     var alert: WSAlertProtocol = WSAlertDelegate.sharedAlertDelegate
     
     override func viewDidLoad() {
@@ -51,7 +52,9 @@ class WSAccountTableViewController: UITableViewController {
         if user?.profileImage == nil && user?.profileImageURL != nil {
             api.contactEndPoint(.ImageResource, withPathParameters: user?.profileImageURL, andData: nil, thenNotify: self)
         }
-        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
         // Download the users feedback.
         api.contactEndPoint(.UserFeedback, withPathParameters: String(user!.uid) as NSString, andData: nil, thenNotify: self)
     }
@@ -92,12 +95,12 @@ class WSAccountTableViewController: UITableViewController {
             
             let messageAction = UIAlertAction(title: "Send Message", style: .Default) { (messageAction) -> Void in
                 // Present compose message view
-                self.performSegueWithIdentifier(ToSendNewMessageSegueID, sender: nil)
+                self.performSegueWithIdentifier(SID_ToSendNewMessage, sender: nil)
             }
             actionAlert.addAction(messageAction)
             let provideFeedbackAction = UIAlertAction(title: "Provide Feedback", style: .Default) { (messageAction) -> Void in
                 // Present provide feeback view
-                self.performSegueWithIdentifier(ToProvideFeeedbackSegueID, sender: nil)
+                self.performSegueWithIdentifier(SID_ToProvideFeeedback, sender: nil)
             }
             actionAlert.addAction(provideFeedbackAction)
         }

@@ -30,11 +30,6 @@ let LogoutCellID = "Logout"
 let SwitchCellID = "Switch"
 let DisclosureCellID = "Disclosure"
 
-// Segue identifiers
-let ToFeedbackSegueID = "ToFeedback"
-let ToSendNewMessageSegueID = "ToSendNewMessage"
-let ToProvideFeeedbackSegueID = "ToProvideFeedback"
-
 
 // Notification identifiers
 let MessagesWereUpdatedNotificationName = "ws_messages_were_updated"

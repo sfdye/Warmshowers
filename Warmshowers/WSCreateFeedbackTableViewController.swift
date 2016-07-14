@@ -24,14 +24,14 @@ class WSCreateFeedbackTableViewController: UITableViewController {
     let yearTemplate = NSDateFormatter.dateFormatFromTemplate("yyyy", options: 0, locale: NSLocale.currentLocale())
     
     // Feedback model
-    var feedback = WSRecommendation()
+    var recommendation = WSRecommendation()
     var userName: String?
     
     // View state variables
     var pickerIndexPath: NSIndexPath? = nil
     let PlaceholderFeedback = "Type your feedback here."
     
-    // API communicator
+    // Delegates
     var api: WSAPICommunicatorProtocol? = WSAPICommunicator.sharedAPICommunicator
     var alert: WSAlertProtocol? = WSAlertDelegate.sharedAlertDelegate
     
@@ -54,7 +54,7 @@ class WSCreateFeedbackTableViewController: UITableViewController {
     
     // Configures the view controller
     func configureForSendingFeedbackForUserWithUserName(userName: String?) {
-        feedback.recommendedUserName = userName
+        recommendation.recommendedUserName = userName
     }
     
    
