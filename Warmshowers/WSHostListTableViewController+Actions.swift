@@ -11,7 +11,9 @@ import Foundation
 extension WSHostListTableViewController {
     
     @IBAction func doneButtonPressed() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        dispatch_async(dispatch_get_main_queue()) { 
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
     }
     
 }

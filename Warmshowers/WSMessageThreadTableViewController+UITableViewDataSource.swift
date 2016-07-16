@@ -31,14 +31,16 @@ extension WSMessageThreadTableViewController {
         }
         
         let cellID = (message.author?.uid ?? 0 == session.uid) ? RUI_MessageFromSelf : RUI_MessageFromUser
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellID, forIndexPath: indexPath) as! MessageTableViewCell
-        
+        var cell = tableView.dequeueReusableCellWithIdentifier(cellID, forIndexPath: indexPath) as! MessageTableViewCell
+        configureCell(&cell, withMessage: message)
+        return cell
+    }
+    
+    func configureCell(inout cell: MessageTableViewCell, withMessage message: CDWSMessage) {
         cell.fromLabel.text = message.authorName ?? ""
         cell.dateLabel.text = textForMessageDate(message.timestamp)
         cell.bodyTextView.text = message.body
         cell.authorImageView.image = message.authorThumbnail ?? UIImage(named: "ThumbnailPlaceholder")
-        
-        return cell
     }
     
 }

@@ -95,12 +95,16 @@ class WSAccountTableViewController: UITableViewController {
             
             let messageAction = UIAlertAction(title: "Send Message", style: .Default) { (messageAction) -> Void in
                 // Present compose message view
-                self.performSegueWithIdentifier(SID_ToSendNewMessage, sender: nil)
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.performSegueWithIdentifier(SID_ToSendNewMessage, sender: nil)
+                })
             }
             actionAlert.addAction(messageAction)
             let provideFeedbackAction = UIAlertAction(title: "Provide Feedback", style: .Default) { (messageAction) -> Void in
                 // Present provide feeback view
-                self.performSegueWithIdentifier(SID_ToProvideFeeedback, sender: nil)
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.performSegueWithIdentifier(SID_ToProvideFeeedback, sender: nil)
+                })
             }
             actionAlert.addAction(provideFeedbackAction)
         }

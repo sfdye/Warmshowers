@@ -67,7 +67,9 @@ extension WSLocationSearchViewController : MKMapViewDelegate {
     
     func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
         let userLocation = (locationManager.location?.coordinate)!
-        mapView.setCenterCoordinate(userLocation , animated: true)
+        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+            self?.mapView.setCenterCoordinate(userLocation , animated: true)
+        }
     }
     
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
@@ -97,7 +99,9 @@ extension WSLocationSearchViewController : MKMapViewDelegate {
         
         // Abort updating if there are too many tiles on the screen.
         guard tiles.count < maximumTilesInViewForUpdate else {
-            statusLabel.text = textForStatusLabel()
+            dispatch_async(dispatch_get_main_queue(), { [weak self] in
+                self?.statusLabel.text = self?.textForStatusLabel()
+            })
             return
         }
 
@@ -115,6 +119,8 @@ extension WSLocationSearchViewController : MKMapViewDelegate {
         }
         
         // Update the status label
-        statusLabel.text = textForStatusLabel()
+        dispatch_async(dispatch_get_main_queue(), { [weak self] in
+            self?.statusLabel.text = self?.textForStatusLabel()
+            })
     }
 }

@@ -12,51 +12,33 @@ import CoreData
 extension WSMessageThreadTableViewController : NSFetchedResultsControllerDelegate {
     
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
-            self.tableView.beginUpdates()
-        }
-    }
-    
-    func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
-            switch type {
-            case .Insert:
-                self.tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
-            case .Delete:
-                self.tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
-            case .Move:
-                break
-            case .Update:
-                break
-            }
+        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+            self?.tableView.beginUpdates()
         }
     }
     
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+        dispatch_async(dispatch_get_main_queue()) { [weak self] in
             switch type {
             case .Insert:
-                self.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+                self?.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
             case .Delete:
-                self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+                self?.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
             case .Update:
                 guard let message = anObject as? CDWSMessage else { return }
-                if let cell = self.tableView.cellForRowAtIndexPath(indexPath!) as? MessageTableViewCell {
-                    cell.fromLabel.text = message.authorName ?? ""
-                    cell.dateLabel.text = self.textForMessageDate(message.timestamp)
-                    cell.bodyTextView.text = message.body
-                    cell.authorImageView.image = message.authorThumbnail ?? UIImage(named: "ThumbnailPlaceholder")
+                if var cell = self?.tableView.cellForRowAtIndexPath(indexPath!) as? MessageTableViewCell {
+                    self?.configureCell(&cell, withMessage: message)
                 }
             case .Move:
-                self.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-                self.tableView.insertRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+                self?.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+                self?.tableView.insertRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
             }
         }
     }
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
-            self.tableView.endUpdates()
+        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+            self?.tableView.endUpdates()
         }
     }
 }

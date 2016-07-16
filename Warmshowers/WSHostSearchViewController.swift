@@ -90,15 +90,19 @@ class WSHostSearchViewController: UIViewController {
     
     /** Shows the host map and hides the search by keyword table view */
     func showMapView() {
-        UIView.transitionWithView(keywordSearchView, duration: 0.1, options: .TransitionCrossDissolve, animations: { [weak self] () -> Void in
-            self?.keywordSearchView.hidden = true
-            }, completion: nil)
+        dispatch_async(dispatch_get_main_queue()) { [unowned self] in
+            UIView.transitionWithView(self.keywordSearchView, duration: 0.1, options: .TransitionCrossDissolve, animations: { [weak self] () -> Void in
+                self?.keywordSearchView.hidden = true
+                }, completion: nil)
+        }
     }
     
     /** Shows the search by keyword table view and hides the host map */
     func showTableView() {
-        UIView.transitionWithView(keywordSearchView, duration: 0.1, options: .TransitionCrossDissolve, animations: { [weak self] () -> Void in
-            self?.keywordSearchView.hidden = false
-            }, completion: nil)
+        dispatch_async(dispatch_get_main_queue()) { [unowned self] in
+            UIView.transitionWithView(self.keywordSearchView, duration: 0.1, options: .TransitionCrossDissolve, animations: { [weak self] () -> Void in
+                self?.keywordSearchView.hidden = false
+                }, completion: nil)
+        }
     }
 }

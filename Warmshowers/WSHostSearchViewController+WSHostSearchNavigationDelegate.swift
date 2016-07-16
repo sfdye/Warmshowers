@@ -17,7 +17,9 @@ extension WSHostSearchViewController: WSHostSearchNavigationDelegate {
     }
     
     func showHostListWithHosts(hosts: [WSUserLocation]) {
-        performSegueWithIdentifier(SID_MapToHostList, sender: hosts)
+        dispatch_async(dispatch_get_main_queue()) { 
+            self.performSegueWithIdentifier(SID_MapToHostList, sender: hosts)
+        }
     }
     
 }

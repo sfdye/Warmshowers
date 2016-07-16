@@ -14,7 +14,9 @@ extension WSLocationSearchViewController {
     /** Centres the map on the users location. */
     @IBAction func centerOnUserLocation(sender:AnyObject?) {
         if CLLocationManager.authorizationStatus() == .AuthorizedWhenInUse {
-            mapView.setCenterCoordinate(mapView.userLocation.coordinate, animated: true)
+            dispatch_async(dispatch_get_main_queue(), { [unowned self] in
+                self.mapView.setCenterCoordinate(self.mapView.userLocation.coordinate, animated: true)
+                })
         } else {
             let alert = UIAlertController(title: "Enable location services", message: "To centre the map on your location we need to know your location. Please change your location access settings.", preferredStyle: .Alert)
             let settingsAction = UIAlertAction(title: "Settings", style: .Default, handler: { (action) in

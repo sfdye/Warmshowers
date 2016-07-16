@@ -24,7 +24,9 @@ extension WSHostListTableViewController : WSAPIResponseDelegate {
             setImage(image, forHostWithImageURL: imageURL)
         case .UserInfo:
             guard let host = data as? WSUser else { return }
-            performSegueWithIdentifier(SID_HostListToUserAccount, sender: host)
+            dispatch_async(dispatch_get_main_queue(), { 
+                self.performSegueWithIdentifier(SID_HostListToUserAccount, sender: host)
+            })
         default:
             break
         }

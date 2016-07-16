@@ -11,10 +11,12 @@ import UIKit
 extension WSHostSearchViewController {
     
     @IBAction func searchButtonPressed(sender: UIBarButtonItem) {
-        showTableView()
-        presentViewController(searchController, animated: true, completion: { [weak self] () -> Void in
-            self?.searchController.active = true
-            })
+        dispatch_async(dispatch_get_main_queue()) { 
+            self.showTableView()
+            self.presentViewController(self.searchController, animated: true, completion: { [weak self] () -> Void in
+                self?.searchController.active = true
+                })
+        }
     }
     
     @IBAction func accountButtonPressed(sender: UIBarButtonItem) {

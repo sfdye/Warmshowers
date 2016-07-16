@@ -16,7 +16,9 @@ extension WSHostSearchViewController: WSAPIResponseDelegate {
     
     func request(request: WSAPIRequest, didSuceedWithData data: AnyObject?) {
         guard let host = data as? WSUser else { return }
-        performSegueWithIdentifier(SID_SearchViewToUserAccount, sender: host)
+        dispatch_async(dispatch_get_main_queue()) { 
+            self.performSegueWithIdentifier(SID_SearchViewToUserAccount, sender: host)
+        }
     }
     
     func request(request: WSAPIRequest, didFailWithError error: ErrorType) {

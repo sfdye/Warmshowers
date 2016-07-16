@@ -51,8 +51,11 @@ class WSLocationSearchViewController : UIViewController {
     override func viewDidLoad() {
         clusterController = CCHMapClusterController(mapView: mapView)
         clusterController.delegate = self
-        configureToolbar()
         statusLabel.text = nil
+        
+        // This fix removes a shadow line from the top of the toolbar.
+        toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .Any, barMetrics: .Default)
+        toolbar.setShadowImage(UIImage(), forToolbarPosition: .Any)
         
         // Ask the users permission to use location services.
         if CLLocationManager.authorizationStatus() == .NotDetermined {
@@ -70,14 +73,11 @@ class WSLocationSearchViewController : UIViewController {
         if CLLocationManager.authorizationStatus() == .NotDetermined {
             locationManager.requestWhenInUseAuthorization()
         }
-        mapView.showsUserLocation = CLLocationManager.authorizationStatus() == .AuthorizedWhenInUse
+        dispatch_async(dispatch_get_main_queue(), { [weak self] in
+            self?.mapView.showsUserLocation = CLLocationManager.authorizationStatus() == .AuthorizedWhenInUse
+            })
     }
     
-    func configureToolbar() {
-        // This fix removes a shadow line from the top of the toolbar.
-        toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .Any, barMetrics: .Default)
-        toolbar.setShadowImage(UIImage(), forToolbarPosition: .Any)
-    }
     
     // MARK: Utility methods
     
@@ -158,8 +158,10 @@ class WSLocationSearchViewController : UIViewController {
     /** Called after a user locations API request has finished. */
     func downloadDidEndForMapTile(tile: WSMapTile) {
         downloadsInProgress.remove(tile)
-        statusLabel.text = textForStatusLabel()
         dimTiles()
+        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+            self?.statusLabel.text = self?.textForStatusLabel()
+        }
     }
     
     /** Dims areas of the map that have user location data downloads in progress. */
