@@ -72,28 +72,19 @@ class WSComposeMessageViewController: UIViewController {
         do {
             let thread = try store.messageThreadWithID(threadID)
             guard let uid = session.uid else { return }
-            let recipients = thread?.otherParticipants(uid)
             self.threadID = threadID
             self.subject = thread?.subject
-            self.recipients = recipients
+            self.recipients = thread?.otherParticipants(uid)
         } catch {
             // Segue to reply should fail before this
         }
     }
     
     /** Returns a string of comma seperated full names of the message recipients. */
-    func recipientStringForRecipients(recipients: [CDWSUser]?) -> String {
-        
-        guard let recipients = recipients where recipients.count != 0 else { return "" }
-        
-        var recipientString = ""
-        for user in recipients {
-            if recipientString == "" {
-                recipientString += user.fullname!
-            } else {
-                recipientString += ", " + user.fullname!
-            }
-        }
+    func recipientStringForRecipients(recipients: [CDWSUser]?, joiner: String = ",") -> String {
+        guard let recipients = recipients where recipients.count > 0 else { return "" }
+        let names = recipients.map { (user) -> String in user.name! }
+        let recipientString = names.joinWithSeparator(joiner)
         return recipientString
     }
 

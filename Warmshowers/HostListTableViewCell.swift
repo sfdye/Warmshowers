@@ -25,7 +25,13 @@ class HostListTableViewCell: UITableViewCell {
     }
     
     func setNotAvailible(notAvailible: Bool?) {
-        if notAvailible ?? false {
+        
+        guard let notAvailible = notAvailible else {
+            availibleDot?.color = UIColor.whiteColor()
+            return
+        }
+        
+        if notAvailible {
             availibleDot?.color = WSColor.NotAvailable
         } else {
             availibleDot?.color = WSColor.Available

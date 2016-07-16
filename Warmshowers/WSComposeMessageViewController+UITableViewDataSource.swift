@@ -26,7 +26,7 @@ extension WSComposeMessageViewController : UITableViewDataSource {
         case 0:
             let cell = tableView.dequeueReusableCellWithIdentifier(RUID_ComposeMessageDetail, forIndexPath: indexPath) as! ComposeMessageDetailTableViewCell
             cell.detailLabel!.text = "To:"
-            cell.detailTextField!.text = recipientStringForRecipients(recipients)
+            cell.detailTextField!.text = recipientStringForRecipients(recipients, joiner: ", ")
             cell.userInteractionEnabled = false
             return cell
         case 1:

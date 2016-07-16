@@ -50,10 +50,12 @@ extension WSAccountTableViewController {
             let navVC = segue.destinationViewController as! UINavigationController
             let composeMessageVC = navVC.viewControllers.first as! WSComposeMessageViewController
             // Save the user to the store and pass the user object to the compose message view controller
+            
             do {
                 try participantStore.addParticipant(user)
-                recipient = try participantStore.participantWithID(user.uid)
-                composeMessageVC.configureAsNewMessageToUser([recipient!])
+                if let recipient = try? participantStore.participantWithID(user.uid) {
+                    composeMessageVC.configureAsNewMessageToUser([recipient!])
+                }
             } catch {
                 print("Failed to get user for compose message view")
             }
