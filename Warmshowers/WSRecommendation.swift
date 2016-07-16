@@ -52,7 +52,6 @@ class WSRecommendation {
               let uid = json.valueForKey("uid")?.integerValue,
               let uid_1 = json.valueForKey("uid_1")?.integerValue
         else {
-            print("Failed to initialise WSRecommendation due to invalid input")
             return nil
         }
         
@@ -68,7 +67,6 @@ class WSRecommendation {
         case "Other":
             self.type = .Other
         default:
-            print("Failed to initialise WSRecommendation due to an unrecognised guest_or_host value")
             return nil
         }
         switch rating {
@@ -79,7 +77,6 @@ class WSRecommendation {
         case "Neutral":
             self.rating = .Neutral
         default:
-            print("Failed to initialise WSRecommendation due to an unrecognised rating")
             return nil
         }
         self.author = WSUser(fullname: fullname, name: name, uid: uid)

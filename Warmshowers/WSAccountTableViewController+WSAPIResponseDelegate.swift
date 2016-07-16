@@ -48,7 +48,6 @@ extension WSAccountTableViewController: WSAPIResponseDelegate {
     
     func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
         // No need to action.
-        print(error)
     }
     
 }

@@ -20,7 +20,6 @@ extension WSHostSearchViewController: WSAPIResponseDelegate {
     }
     
     func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
-        print(error)
         alert.presentAlertFor(self, withTitle: "Error", button: "OK", message: "Failed to get user info.")
     }
     

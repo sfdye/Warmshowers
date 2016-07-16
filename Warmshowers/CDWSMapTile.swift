@@ -14,10 +14,10 @@ import MapKit
 class CDWSMapTile: NSManagedObject {
     
     /** 
-     The time at which user location data is deemed to old and should be updated (in seconds).
-     Set to 10 minutes.
+     The time (in seconds) at which cached user location data is deemed to old and should be updated by downloading fresh data from the the warmshowers website.
+     Set to 1 hour.
      */
-    let UpdateThresholdTime: Double = 60.0 * 10.0
+    let UpdateThresholdTime: Double = 60.0 * 60.0
     
     var userLocations: [WSUserLocation]? {
         
@@ -42,11 +42,7 @@ class CDWSMapTile: NSManagedObject {
      * Returns true if the map tile data has not been updated recently
      */
     func needsUpdating() -> Bool {
-        
-        guard let last_updated = last_updated else {
-            return true
-        }
-        
+        guard let last_updated = last_updated else { return true }
         return abs(last_updated.timeIntervalSinceNow) > UpdateThresholdTime
     }
     

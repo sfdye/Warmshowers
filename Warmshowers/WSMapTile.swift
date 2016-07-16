@@ -11,6 +11,12 @@ import MapKit
 
 class WSMapTile: Hashable {
     
+    /**
+    The time (in seconds) at which cached user location data is deemed to old and should be updated from either the store or from downloading fresh data.
+    Set to 15 minutes.
+    */
+    let UpdateThresholdTime: Double = 60.0 * 15.0
+    
     /** The tile longitude index */
     var x: UInt
     
@@ -20,8 +26,14 @@ class WSMapTile: Hashable {
     /** The tile zoom index */
     var z: UInt
     
+    /** Hosts whose location is within the bounds of the map tile. */
+    var users: [WSUserLocation]
+    
     /** The quad key (base on Bing maps) to uniquely identify tiles */
     var quadKey: String
+    
+    /** The time that the users on the tile were last updated. */
+    var last_updated: NSDate?
     
     /** The minimum longitude bound of the tile. */
     var minimumLongitude: Double {
@@ -45,12 +57,10 @@ class WSMapTile: Hashable {
     
     var centerLongitude: Double {
         return (Double(x) + 0.5) / pow(2.0, Double(z)) * 360.0 - 180.0
-        //        return (minimumLongitude + maximumLongitude) / 2
     }
     
     var centerLatitude: Double {
         return degrees(atan(sinh(M_PI - (Double(y) + 0.5) / pow(2.0, Double(z)) * 2 * M_PI)))
-//        return (minimumLatitude + maximumLatitude) / 2
     }
     
     /** Returns the coordinate limits of a map tile. */
@@ -63,6 +73,12 @@ class WSMapTile: Hashable {
             "centerlat": String(centerLatitude),
             "centerlon": String(centerLongitude)
         ]
+    }
+    
+    /** Returns true if the user data on the tile is older that the expiry time. */
+    var needsUpdating: Bool {
+        guard let last_updated = last_updated else { return true }
+        return abs(last_updated.timeIntervalSinceNow) > UpdateThresholdTime
     }
 
     
@@ -84,6 +100,7 @@ class WSMapTile: Hashable {
         self.x = x
         self.y = y
         self.z = z
+        self.users = [WSUserLocation]()
         self.quadKey = WSMapTile.quadKeyFromX(x, y: y, z: z)
     }
     
@@ -201,11 +218,6 @@ class WSMapTile: Hashable {
         let polygon = MKPolygon(coordinates: &vertices, count: 4)
         polygon.title = quadKey
         return polygon
-    }
-    
-    /** Utility method for debugging */
-    func printTile() {
-        print("x: \(x), y: \(y), z: \(z)")
     }
     
     private func radians(degrees: Double) -> Double {

@@ -19,6 +19,7 @@ class WSLocationSearchViewController : UIViewController {
     var navigationDelegate: WSHostSearchNavigationDelegate?
     var clusterController: CCHMapClusterController!
     var downloadsInProgress = Set<WSMapTile>()
+    var displayTiles = Set<WSMapTile>()
     
     /** Convenience variable to returns the tiles in the current view. */
     var tilesInView: [WSMapTile]? {
@@ -106,36 +107,15 @@ class WSLocationSearchViewController : UIViewController {
         return nil
     }
     
-    /** Removes all user location annotations from the map that aren't on the given map tiles. */
-    func clearAnnotationsNotOnMapTiles(tiles: [WSMapTile]) {
-        
-        let quadKeys = tiles.map { (tile) -> String in return tile.quadKey }
-        let unrequiredAnnotations = mapView.annotations.filter { (annotation) -> Bool in
-            if annotation is WSUserLocation {
-                if let tileID = (annotation as! WSUserLocation).tileID {
-                    return !quadKeys.contains(tileID)
-                }
-            }
-            return false
-        }
-        
-        print("\(unrequiredAnnotations.count) / \(mapView.annotations.count) being removed from the map.")
-        
-        if unrequiredAnnotations.count > 0 {
-            dispatch_async(dispatch_get_main_queue(), { [weak self] in
-                self?.clusterController.removeAnnotations(unrequiredAnnotations, withCompletionHandler: nil)
-                })
-        }
-        
-        print("\(mapView.annotations.count) remaining.")
-    }
-    
     /** Downloads user locations for the given map tiles and adds them as annotations to the map. */
     func loadAnnotationsForMapTile(tile: WSMapTile) {
+
         if store.hasValidHostDataForMapTile(tile) {
             // Add users from the store to the map
             let users = store.usersForMapTile(tile)
-            addUsersToMap(users)
+            tile.users = users
+            tile.last_updated = NSDate()
+            addUsersToMapWithMapTile(tile)
         } else {
             // Grey the tile with an overlay and start a download.
             if !downloadsInProgress.contains(tile) {
@@ -146,10 +126,26 @@ class WSLocationSearchViewController : UIViewController {
     }
     
     /** Addes user annotations to the map. */
-    func addUsersToMap(users: [WSUserLocation]?) {
-        guard let users = users else { return }
+    func addUsersToMapWithMapTile(tile: WSMapTile) {
+        
+        // Remove old map tile.
+        if displayTiles.contains(tile) {
+            displayTiles.remove(tile)
+        }
+        
+        // Add new/updated map tile
+        displayTiles.insert(tile)
+        
+        // Update the cluster controllers
+        var newAnnoations = Set<WSUserLocation>()
+        for tile in displayTiles {
+            newAnnoations.unionInPlace(tile.users)
+        }
+        
+        let oldAnnotations = clusterController.annotations
         dispatch_async(dispatch_get_main_queue(), { [weak self] in
-            self?.clusterController.addAnnotations(users, withCompletionHandler: nil)
+            self?.clusterController.removeAnnotations(Array(oldAnnotations), withCompletionHandler: { })
+            self?.clusterController.addAnnotations(Array(newAnnoations), withCompletionHandler: nil)
             })
     }
     

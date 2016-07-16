@@ -28,7 +28,7 @@ class WSReachabilityManager : WSReachabilityProtocol {
         do {
             try reachability.startNotifier()
         } catch {
-            print("Failed to start reachability notifications")
+            // Failed to start reachability notifications
         }
     }
     

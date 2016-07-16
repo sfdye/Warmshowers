@@ -16,8 +16,11 @@ extension WSLocationSearchViewController : WSAPIResponseDelegate {
     }
     
     func request(request: WSAPIRequest, didSuceedWithData data: AnyObject?) {
+        guard let tile = request.data as? WSMapTile else { return }
         if let users = data as? [WSUserLocation] {
-            addUsersToMap(users)
+            tile.users = users
+            tile.last_updated = NSDate()
+            addUsersToMapWithMapTile(tile)
         }
     }
     

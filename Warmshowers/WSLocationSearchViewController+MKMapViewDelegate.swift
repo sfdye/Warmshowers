@@ -100,13 +100,18 @@ extension WSLocationSearchViewController : MKMapViewDelegate {
             statusLabel.text = textForStatusLabel()
             return
         }
-        
-        // Clear out annotations that are not on the tiles shown in the view.
-        clearAnnotationsNotOnMapTiles(tiles)
 
         // Update the annotation for the tiles in the view.
         for tile in tiles {
-            loadAnnotationsForMapTile(tile)
+            
+            let displayTile = displayTiles.filter({ (aTile) -> Bool in
+                return aTile.quadKey == tile.quadKey
+            }).first
+            
+            // Only reload the tile data if the displayed data is old.
+            if displayTile?.needsUpdating ?? true {
+                loadAnnotationsForMapTile(tile)
+            }
         }
         
         // Update the status label

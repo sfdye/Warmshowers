@@ -26,7 +26,7 @@ protocol WSStoreMapTileProtocol {
     func hasValidHostDataForMapTile(tile: WSMapTile) -> Bool
     
     /** Returns users on a given map tile from the store. */
-    func usersForMapTile(tile: WSMapTile) -> [WSUserLocation]?
+    func usersForMapTile(tile: WSMapTile) -> [WSUserLocation]
     
     /** Removes tiles from the data base that haven't been loaded in a while. */
     func clearoutOldTiles()

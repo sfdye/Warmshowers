@@ -11,6 +11,7 @@ import CoreData
 
 extension WSStore : WSStoreMapTileProtocol {
     
+    /** This expiry time controls when host location records are removed from the store due to not being used. */
     var MapTileExpiryTime: NSTimeInterval { return 60.0 * 60.0 * 24.0 }
     
     func allMapTiles() throws -> [CDWSMapTile] {
@@ -55,16 +56,13 @@ extension WSStore : WSStoreMapTileProtocol {
         }
     }
     
-    func usersForMapTile(tile: WSMapTile) -> [WSUserLocation]? {
+    func usersForMapTile(tile: WSMapTile) -> [WSUserLocation] {
         
-        do {
-            if let storedTile = try mapTileWithQuadKey(tile.quadKey) {
-                return storedTile.userLocations
-            }
-        } catch {
-            return nil
+        if let storedTile = try? mapTileWithQuadKey(tile.quadKey) {
+            return storedTile?.userLocations ?? [WSUserLocation]()
+        } else {
+            return [WSUserLocation]()
         }
-        return nil
     }
     
     func clearoutOldTiles() {
@@ -73,13 +71,12 @@ extension WSStore : WSStoreMapTileProtocol {
             for tile in tiles {
                 if let last_updated = tile.last_updated {
                     if abs(last_updated.timeIntervalSinceNow) > MapTileExpiryTime {
-                        print("deleting tile")
                         privateContext.deleteObject(tile)
                     }
                 }
             }
         } catch {
-            print("Error clearing out old tiles")
+            // Error clearing out old tiles
         }
     }
     
@@ -87,12 +84,11 @@ extension WSStore : WSStoreMapTileProtocol {
         do {
             let tiles = try allMapTiles()
             for tile in tiles {
-                print("deleting tile with quad key \(tile.quad_key)")
                 privateContext.deleteObject(tile)
                 try savePrivateContext()
             }
         } catch {
-            print("Error clearing out map tiles")
+            // Error clearing out map tiles
         }
     }
     
