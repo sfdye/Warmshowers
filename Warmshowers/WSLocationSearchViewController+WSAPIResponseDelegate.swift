@@ -25,7 +25,9 @@ extension WSLocationSearchViewController : WSAPIResponseDelegate {
     }
     
     func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
-        alert.presentAPIError(error, forDelegator: self)
+        if downloadsInProgress.count == 0 {
+            alert.presentAPIError(error, forDelegator: self)
+        }
     }
     
 }

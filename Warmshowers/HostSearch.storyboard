@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="pYF-jY-7y6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="pYF-jY-7y6">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -13,7 +13,7 @@
         <!--Host Search-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
-                <viewController storyboardIdentifier="HostSearch" title="Host Search" id="9pv-A4-QxB" customClass="WSHostSearchViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HostSearch" title="Host Search" definesPresentationContext="YES" id="9pv-A4-QxB" customClass="WSHostSearchViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="eue-pw-TMU"/>
                         <viewControllerLayoutGuide type="bottom" id="pLQ-OG-6LL"/>
@@ -25,24 +25,14 @@
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4bd-cf-BPR" userLabel="Location Search View">
                                 <rect key="frame" x="0.0" y="64" width="600" height="492"/>
                                 <connections>
-                                    <segue destination="VMl-c2-Hgr" kind="embed" id="5qe-j3-BWn"/>
-                                </connections>
-                            </containerView>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7E5-S6-tID" userLabel="Keyword Search Table View">
-                                <rect key="frame" x="0.0" y="64" width="600" height="492"/>
-                                <connections>
-                                    <segue destination="Ddd-EB-4w4" kind="embed" id="k1L-8r-Y9E"/>
+                                    <segue destination="VMl-c2-Hgr" kind="embed" id="CUi-x5-5Cs"/>
                                 </connections>
                             </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="pLQ-OG-6LL" firstAttribute="top" secondItem="4bd-cf-BPR" secondAttribute="bottom" id="2ju-cj-xdo"/>
-                            <constraint firstItem="7E5-S6-tID" firstAttribute="leading" secondItem="TNk-wQ-Tx8" secondAttribute="leading" id="7Pt-2c-ubs"/>
                             <constraint firstItem="4bd-cf-BPR" firstAttribute="top" secondItem="eue-pw-TMU" secondAttribute="bottom" id="Msb-7s-uBU"/>
-                            <constraint firstItem="7E5-S6-tID" firstAttribute="top" secondItem="eue-pw-TMU" secondAttribute="bottom" id="NPg-7e-6zx"/>
-                            <constraint firstAttribute="trailing" secondItem="7E5-S6-tID" secondAttribute="trailing" id="XRF-hw-a62"/>
-                            <constraint firstItem="pLQ-OG-6LL" firstAttribute="top" secondItem="7E5-S6-tID" secondAttribute="bottom" id="kai-Al-gU5"/>
                             <constraint firstItem="4bd-cf-BPR" firstAttribute="leading" secondItem="TNk-wQ-Tx8" secondAttribute="leading" id="pxG-iD-Amn"/>
                             <constraint firstAttribute="trailing" secondItem="4bd-cf-BPR" secondAttribute="trailing" id="vDS-qb-MIQ"/>
                         </constraints>
@@ -62,8 +52,8 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="keywordSearchView" destination="7E5-S6-tID" id="vwT-nn-Il8"/>
-                        <outlet property="locationSearchView" destination="4bd-cf-BPR" id="flo-Gy-Yk2"/>
+                        <outlet property="containerView" destination="4bd-cf-BPR" id="h7a-vi-JDd"/>
+                        <outlet property="viewSwitcherButton" destination="PFi-9C-QCk" id="fr2-z7-wuo"/>
                         <segue destination="nEv-Yc-3Kx" kind="show" identifier="SearchViewToUserAccount" id="dDb-Jv-xbh"/>
                         <segue destination="JpQ-pS-sYY" kind="show" identifier="MapToHostList" id="sZy-TC-WAA"/>
                     </connections>
@@ -228,7 +218,7 @@
         <!--Location Search View Controller-->
         <scene sceneID="3Lc-lM-xGW">
             <objects>
-                <viewController id="VMl-c2-Hgr" customClass="WSLocationSearchViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LocationSearchView" id="VMl-c2-Hgr" customClass="WSLocationSearchViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="N2q-4C-vWX"/>
                         <viewControllerLayoutGuide type="bottom" id="YbP-6p-8pk"/>
@@ -284,14 +274,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CN5-Oc-HBk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="754" y="-516"/>
+            <point key="canvasLocation" x="728" y="-516"/>
         </scene>
         <!--Keyword Search Table View Controller-->
         <scene sceneID="1Rz-1h-Qfm">
             <objects>
-                <tableViewController id="Ddd-EB-4w4" customClass="WSKeywordSearchTableViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="KeywordSearchView" id="Ddd-EB-4w4" customClass="WSKeywordSearchTableViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="54" sectionHeaderHeight="28" sectionFooterHeight="28" id="qsF-uI-YXU">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="492"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -417,7 +407,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uGm-cP-uCW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1402" y="-516"/>
+            <point key="canvasLocation" x="1398" y="-462"/>
         </scene>
     </scenes>
     <resources>

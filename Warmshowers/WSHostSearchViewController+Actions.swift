@@ -11,11 +11,10 @@ import UIKit
 extension WSHostSearchViewController {
     
     @IBAction func searchButtonPressed(sender: UIBarButtonItem) {
-        dispatch_async(dispatch_get_main_queue()) { 
-            self.showTableView()
-            self.presentViewController(self.searchController, animated: true, completion: { [weak self] () -> Void in
-                self?.searchController.active = true
-                })
+        if !searchController.active {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.presentViewController(self.searchController, animated: true, completion: nil)
+            }
         }
     }
     
@@ -24,4 +23,5 @@ extension WSHostSearchViewController {
             showUserProfileForHostWithUID(uid)
         }
     }
+    
 }

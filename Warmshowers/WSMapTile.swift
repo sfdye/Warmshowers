@@ -105,7 +105,7 @@ class WSMapTile: Hashable {
     }
     
     convenience init?(latitude: CLLocationDegrees, longitude: CLLocationDegrees, zoom: UInt) {
-        
+
         func moveDegrees(inout degrees: CLLocationDegrees, intoRangeWithLowerBound lowerBound: Double, andUpperBound upperBound: Double) {
             let range = upperBound - lowerBound
             while degrees < lowerBound {

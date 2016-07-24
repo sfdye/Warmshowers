@@ -23,6 +23,10 @@ class WSLocationSearchViewController : UIViewController {
     
     /** Convenience variable to returns the tiles in the current view. */
     var tilesInView: [WSMapTile]? {
+        guard !mapView.region.center.latitude.isNaN && !mapView.region.center.longitude.isNaN else {
+            return nil
+        }
+        
         return WSMapTile.tilesForMapRegion(mapView.region, atZoomLevel: tileUpdateZoomLevel)
     }
     

@@ -13,11 +13,13 @@ import ReachabilitySwift
 import CCHMapClusterController
 
 let SID_SearchViewToUserAccount = "SearchViewToUserAccount"
+let SBID_LocationSearchView = "LocationSearchView"
+let SBID_KeywordSearchView = "KeywordSearchView"
 
 class WSHostSearchViewController: UIViewController {
     
-    @IBOutlet var locationSearchView: UIView!
-    @IBOutlet var keywordSearchView: UIView!
+    @IBOutlet var containerView: UIView!
+    @IBOutlet var viewSwitcherButton: UIBarButtonItem!
     
     var searchController: UISearchController!
     var searchBar: UISearchBar!
@@ -41,23 +43,20 @@ class WSHostSearchViewController: UIViewController {
         super.viewDidLoad()
         
         // Set references to child views
-        locationSearchViewController = self.childViewControllers.first as? WSLocationSearchViewController
+        locationSearchViewController = childViewControllers.first as? WSLocationSearchViewController
         assert(locationSearchViewController != nil, "Location Search Table View Controller not set while loading the Host Search View Controller.")
         locationSearchViewController?.navigationDelegate = self
-        keywordSearchTableViewController = self.childViewControllers.last as? WSKeywordSearchTableViewController
+        keywordSearchTableViewController = storyboard?.instantiateViewControllerWithIdentifier(SBID_KeywordSearchView) as? WSKeywordSearchTableViewController
         assert(keywordSearchTableViewController != nil, "Keyword Search Table View Controller not set while loading the Host Search View Controller.")
         assert(keywordSearchTableViewController is UISearchResultsUpdating, "WSKeywordSearchTableViewCOntroller must conform to UISearchResultsUpdating.")
         keywordSearchTableViewController?.navigationDelegate = self
-        
-        showMapView()
         
         // Reachability notifications
         connection.registerForAndStartNotifications(self, selector: #selector(WSHostSearchViewController.reachabilityChanged(_:)))
         
         // Search controller
-        searchController = UISearchController(searchResultsController:nil)
+        searchController = UISearchController(searchResultsController: keywordSearchTableViewController!)
         searchController.loadViewIfNeeded()
-        searchController.delegate = self
         searchController.searchResultsUpdater = (keywordSearchTableViewController as! UISearchResultsUpdating)
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.dimsBackgroundDuringPresentation = false
@@ -70,6 +69,7 @@ class WSHostSearchViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         showReachabilityBannerIfNeeded()
     }
+    
 
     // MARK: Reachability
     
@@ -85,24 +85,4 @@ class WSHostSearchViewController: UIViewController {
         }
     }
     
-    
-    // MARK: View switching
-    
-    /** Shows the host map and hides the search by keyword table view */
-    func showMapView() {
-        dispatch_async(dispatch_get_main_queue()) { [unowned self] in
-            UIView.transitionWithView(self.keywordSearchView, duration: 0.1, options: .TransitionCrossDissolve, animations: { [weak self] () -> Void in
-                self?.keywordSearchView.hidden = true
-                }, completion: nil)
-        }
-    }
-    
-    /** Shows the search by keyword table view and hides the host map */
-    func showTableView() {
-        dispatch_async(dispatch_get_main_queue()) { [unowned self] in
-            UIView.transitionWithView(self.keywordSearchView, duration: 0.1, options: .TransitionCrossDissolve, animations: { [weak self] () -> Void in
-                self?.keywordSearchView.hidden = false
-                }, completion: nil)
-        }
-    }
 }

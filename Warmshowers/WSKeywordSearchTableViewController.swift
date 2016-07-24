@@ -12,7 +12,7 @@ class WSKeywordSearchTableViewController: UITableViewController {
     
     var debounceTimer: NSTimer?
     var placeholderImage: UIImage? = UIImage(named: "ThumbnailPlaceholder")
-    var hosts: [WSUserLocation]?
+    var hosts: [WSUserLocation]? = [WSUserLocation]()
     var numberOfHosts: Int { return hosts?.count ?? 0 }
     
     var navigationDelegate: WSHostSearchNavigationDelegate?
@@ -23,7 +23,7 @@ class WSKeywordSearchTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        assert(placeholderImage != nil, "Placeholder image not found while loading WSKeywordSearchTableViewController.")
+        assert(placeholderImage != nil, "Placeholder image not found while loading WSKeywordSearchTableViewController.")        
     }
     
     override func viewWillAppear(animated: Bool) {
