@@ -41,27 +41,14 @@ extension WSAccountTableViewController: WSAPIResponseDelegate {
         switch request.endPoint.type {
         case .Logout:
             let nserror = error as NSError
+            // WSAPICommunicatorError.ServerError. This is usually a 406: user already logged out.
             if nserror.code == 4 {
-                // WSAPICommunicatorError.ServerError. This is usually a 406: user already logged out.
                 logout()
             } else {
                 alert.presentAlertFor(self, withTitle: "Logout failed", button: "Dismiss", message: "Please try again.")
             }
         default:
             break
-        }
-    }
-    
-    func logout() {
-        do {
-            session.deleteSessionData()
-            try store.clearout()
-            navigation.showLoginScreen()
-        } catch {
-            // Suggest that the user delete the app for privacy.
-            alert.presentAlertFor(self, withTitle: "Data Error", button: "OK", message: "Sorry, an error occured while removing your account data from this iPhone. If you would like to remove your Warmshowers messages from this iPhone please try deleting the Warmshowers app.", andHandler: { [weak self] (action) in
-                self?.navigation.showLoginScreen()
-                })
         }
     }
 

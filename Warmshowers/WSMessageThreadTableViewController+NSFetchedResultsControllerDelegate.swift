@@ -12,33 +12,42 @@ import CoreData
 extension WSMessageThreadTableViewController : NSFetchedResultsControllerDelegate {
     
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
-        dispatch_async(dispatch_get_main_queue()) { [weak self] in
-            self?.tableView.beginUpdates()
+        tableView.beginUpdates()
+    }
+    
+    func controller(controller: NSFetchedResultsController, didChangeSection sectionInfo: NSFetchedResultsSectionInfo, atIndex sectionIndex: Int, forChangeType type: NSFetchedResultsChangeType) {
+        switch type {
+        case .Insert:
+            tableView.insertSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
+        case .Delete:
+            tableView.deleteSections(NSIndexSet(index: sectionIndex), withRowAnimation: .Fade)
+        case .Move:
+            break
+        case .Update:
+            break
         }
     }
     
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
-        dispatch_async(dispatch_get_main_queue()) { [weak self] in
-            switch type {
-            case .Insert:
-                self?.tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
-            case .Delete:
-                self?.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-            case .Update:
-                guard let message = anObject as? CDWSMessage else { return }
-                if var cell = self?.tableView.cellForRowAtIndexPath(indexPath!) as? MessageTableViewCell {
-                    self?.configureCell(&cell, withMessage: message)
-                }
-            case .Move:
-                self?.tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-                self?.tableView.insertRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
-            }
+        switch type {
+        case .Insert:
+            tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: .Fade)
+        case .Delete:
+            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+        case .Update:
+            guard
+                let message = anObject as? CDWSMessage,
+                let indexPath = indexPath,
+                let cell = tableView.cellForRowAtIndexPath(indexPath) as? MessageTableViewCell
+                else { return }
+            configureCell(cell, withMessage: message)
+        case .Move:
+            tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
+            tableView.insertRowsAtIndexPaths([indexPath!], withRowAnimation: .Fade)
         }
     }
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        dispatch_async(dispatch_get_main_queue()) { [weak self] in
-            self?.tableView.endUpdates()
-        }
+        tableView.endUpdates()
     }
 }

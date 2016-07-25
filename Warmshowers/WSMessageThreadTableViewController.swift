@@ -53,16 +53,7 @@ class WSMessageThreadTableViewController: UITableViewController {
         navigationItem.title = store.subjectForMessageThreadWithID(threadID ?? 0)
         
         // Set up the fetch results controller
-        let request = NSFetchRequest(entityName: "Message")
-        request.predicate = NSPredicate(format: "thread.thread_id==%i", threadID ?? 0)
-        request.sortDescriptors = [NSSortDescriptor(key: "timestamp", ascending: true)]
-        self.fetchedResultsController = NSFetchedResultsController(fetchRequest: request, managedObjectContext: WSStore.sharedStore.privateContext, sectionNameKeyPath: nil, cacheName: nil)
-        fetchedResultsController.delegate = self
-        do {
-            try self.fetchedResultsController.performFetch()
-        } catch {
-            fatalError("Failed to initialize FetchedResultsController: \(error)")
-        }
+        initialiseFetchResultsController()
         
         // Mark the thread as read.
         markThread(threadID ?? 0, asRead: true)
@@ -74,11 +65,38 @@ class WSMessageThreadTableViewController: UITableViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: WSColor.Green, NSFontAttributeName: WSFont.SueEllenFrancisco(18)]
+        
+        if fetchedResultsController == nil {
+            initialiseFetchResultsController()
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
         loadImagesForObjectsOnScreen()
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        // This prevents the fetch results controller from updating while the view is not visible.
+        fetchedResultsController = nil
+    }
+    
+    func initialiseFetchResultsController() {
+        let request = NSFetchRequest(entityName: "Message")
+        request.predicate = NSPredicate(format: "thread.thread_id==%i", threadID ?? 0)
+        request.sortDescriptors = [NSSortDescriptor(key: "timestamp", ascending: true)]
+        self.fetchedResultsController = NSFetchedResultsController(
+            fetchRequest: request,
+            managedObjectContext: WSStore.sharedStore.managedObjectContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil)
+        fetchedResultsController.delegate = self
+        do {
+            try self.fetchedResultsController.performFetch()
+        } catch {
+            fatalError("Failed to initialize FetchedResultsController: \(error)")
+        }
     }
     
 
