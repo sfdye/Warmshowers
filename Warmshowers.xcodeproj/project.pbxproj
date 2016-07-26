@@ -282,6 +282,7 @@
 		E542768F1C44956F00047029 /* WSCreateFeedbackTableViewController+UITextViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSCreateFeedbackTableViewController+UITextViewDelegate.swift"; sourceTree = "<group>"; };
 		E54A572A1BFD664A000843A9 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		E54A57631C03E4A4000843A9 /* WSAccountTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSAccountTableViewController.swift; sourceTree = "<group>"; };
+		E54FF33E1D4732AA00E81483 /* Warmshowers v2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Warmshowers v2.xcdatamodel"; sourceTree = "<group>"; };
 		E564903F1CD4B9B200645331 /* WSSearchByKeywordEndPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSSearchByKeywordEndPoint.swift; sourceTree = "<group>"; };
 		E56490411CD5517200645331 /* WSHostSearchViewController+Navigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSHostSearchViewController+Navigation.swift"; sourceTree = "<group>"; };
 		E56490451CD555A800645331 /* WSKeywordSearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSKeywordSearchTableViewController.swift; sourceTree = "<group>"; };
@@ -2063,6 +2064,7 @@
 		E52E8ABC1C0E463D000391AB /* Warmshowers.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				E54FF33E1D4732AA00E81483 /* Warmshowers v2.xcdatamodel */,
 				E52E8ABD1C0E463D000391AB /* Warmshowers.xcdatamodel */,
 			);
 			currentVersion = E52E8ABD1C0E463D000391AB /* Warmshowers.xcdatamodel */;
