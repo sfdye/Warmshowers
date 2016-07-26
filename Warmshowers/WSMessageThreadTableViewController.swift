@@ -18,8 +18,7 @@ class WSMessageThreadTableViewController: UITableViewController {
     let formatter = NSDateFormatter()
     
     // Delegates
-    let store: WSStoreMessageThreadProtocol = WSStore.sharedStore
-    let participantStore: WSStoreParticipantProtocol = WSStore.sharedStore
+    let store: protocol<WSStoreMessageThreadProtocol, WSStoreParticipantProtocol>  = WSStore.sharedStore
     let session: WSSessionStateProtocol = WSSessionState.sharedSessionState
     var api: WSAPICommunicatorProtocol = WSAPICommunicator.sharedAPICommunicator
     
@@ -135,7 +134,20 @@ class WSMessageThreadTableViewController: UITableViewController {
     
     /** Sets the image for a host in the list with the given image URL. */
     func setImage(image: UIImage, forHostWithImageURL imageURL: String) {
-        participantStore.updateParticipantWithImageURL(imageURL, withImage: image)
+        store.updateParticipantWithImageURL(imageURL, withImage: image)
+        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+            guard let visiblePaths = self?.tableView.indexPathsForVisibleRows else { return }
+            for indexPath in visiblePaths {
+                if
+                    let cell = self?.tableView.cellForRowAtIndexPath(indexPath) as? MessageTableViewCell,
+                    let message = self?.fetchedResultsController.objectAtIndexPath(indexPath) as? CDWSMessage,
+                    let url = message.author?.image_url
+                    where url == imageURL
+                {
+                    cell.authorImageView.image = image
+                }
+            }
+        }
     }
     
     func textForMessageDate(date: NSDate?) -> String? {

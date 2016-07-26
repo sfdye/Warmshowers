@@ -35,7 +35,7 @@ class WSAPIRequest : Hashable {
     // MARK: Hashable
     
     var madeAt: NSDate
-    var hashValue: Int { return Int(self.madeAt.timeIntervalSince1970 * 1000) }
+    var hashValue: Int { return Int(self.madeAt.timeIntervalSince1970) }
     
     
     // MARK: Initialiser

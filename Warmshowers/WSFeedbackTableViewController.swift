@@ -74,8 +74,10 @@ class WSFeedbackTableViewController: UITableViewController {
         for (index, recommendation) in feedback.enumerate() {
             if recommendation.authorImageURL == imageURL {
                 recommendation.authorImage = image ?? placeholderImage
-                dispatch_async(dispatch_get_main_queue(), { [weak self] () -> Void in
-                    self?.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .None)
+                let indexPath = NSIndexPath(forRow: index, inSection: 0)
+                let cell = tableView.cellForRowAtIndexPath(indexPath)
+                dispatch_async(dispatch_get_main_queue(), { [weak cell] () -> Void in
+                    (cell as? FeedbackTableViewCell)?.authorImage.image = recommendation.authorImage
                     })
             }
         }

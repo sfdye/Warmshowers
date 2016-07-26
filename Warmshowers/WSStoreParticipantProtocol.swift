@@ -20,11 +20,12 @@ protocol WSStoreParticipantProtocol {
     
     func addParticipantWithJSON(json: AnyObject) throws
     
-    func updateParticipantImageURLWithJSON(json: AnyObject) throws
+    func updateParticipant(uid: Int, withImageURL imageURL: String) throws
     
     func addParticipant(newUser: WSUser) throws
     
     func updateParticipant(uid: Int, withImage image: UIImage) throws
     
     func updateParticipantWithImageURL(imageURL: String, withImage image: UIImage)
+    
 }

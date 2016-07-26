@@ -105,15 +105,10 @@ extension WSStore : WSStoreParticipantProtocol {
         }
     }
     
-    func updateParticipantImageURLWithJSON(json: AnyObject) throws {
-        
-        guard let uid = json.valueForKey("uid")?.integerValue else {
-            throw DataError.InvalidInput
-        }
-        
+    func updateParticipant(uid: Int, withImageURL imageURL: String) throws {
         do {
             if let user = try participantWithID(uid) {
-                user.image_url = json.valueForKey("profile_image_map_infoWindow") as? String
+                user.image_url = imageURL
                 try savePrivateContext()
             } else {
                 let error = NSError(domain: "WSStore", code: 1, userInfo: [NSLocalizedDescriptionKey : "Can not update image url for user. User is not in the store."])
