@@ -25,9 +25,21 @@ extension WSLocationSearchViewController : WSAPIResponseDelegate {
     }
     
     func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
-        if downloadsInProgress.count == 0 {
-            alert.presentAPIError(error, forDelegator: self)
+        switch error {
+        case is WSAPIEndPointError where (error as NSError).code == 3:
+            // WSAPIEndPointError.ReachedTileLimit
+            // Tile has the maximum number of users on it and needs to sub-divided.
+            guard let tile = request.data as? WSMapTile else { return }
+            let tiles = tile.subtiles
+            for tile in tiles {
+                loadAnnotationsForMapTile(tile)
+            }
+        default:
+            if downloadsInProgress.count == 0 {
+                alert.presentAPIError(error, forDelegator: self)
+            }
         }
+        
     }
     
 }

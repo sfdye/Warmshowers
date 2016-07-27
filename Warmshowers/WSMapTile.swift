@@ -75,6 +75,20 @@ class WSMapTile: Hashable {
         ]
     }
     
+    /** Returns the four quadrant sub-tiles on the tile. */
+    var subtiles: [WSMapTile] {
+        let z = self.z + 1
+        let xMin = self.x * 2
+        let yMin = self.y * 2
+        var tiles = [WSMapTile]()
+        for x in (xMin)...(xMin + 1) {
+            for y in (yMin)...(yMin + 1) {
+                tiles.append(WSMapTile(x: x, y: y, z: z)!)
+            }
+        }
+        return tiles
+    }
+    
     /** Returns true if the user data on the tile is older that the expiry time. */
     var needsUpdating: Bool {
         guard let last_updated = last_updated else { return true }

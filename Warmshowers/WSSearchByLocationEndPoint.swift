@@ -37,6 +37,10 @@ class WSSearchByLocationEndPoint : WSAPIEndPointProtocol {
             throw WSAPIEndPointError.ParsingError(endPoint: name, key: "accounts")
         }
         
+        guard accounts.count < 500 else {
+            throw WSAPIEndPointError.ReachedTileLimit
+        }
+        
         var userLocations = [WSUserLocation]()
         for account in accounts {
             if let userLocation = WSUserLocation(json: account) {

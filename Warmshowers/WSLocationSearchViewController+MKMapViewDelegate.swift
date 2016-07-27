@@ -93,34 +93,20 @@ extension WSLocationSearchViewController : MKMapViewDelegate {
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         
         // Get the tiles that can be seen in the new screen.
-        guard let tiles = tilesInView else {
-            return
-        }
+        guard let tiles = tilesInView else { return }
         
         // Abort updating if there are too many tiles on the screen.
         guard tiles.count < maximumTilesInViewForUpdate else {
-            dispatch_async(dispatch_get_main_queue(), { [weak self] in
-                self?.statusLabel.text = self?.textForStatusLabel()
-            })
+            updateStatus()
             return
         }
 
         // Update the annotation for the tiles in the view.
         for tile in tiles {
-            
-            let displayTile = displayTiles.filter({ (aTile) -> Bool in
-                return aTile.quadKey == tile.quadKey
-            }).first
-            
-            // Only reload the tile data if the displayed data is old.
-            if displayTile?.needsUpdating ?? true {
-                loadAnnotationsForMapTile(tile)
-            }
+            loadAnnotationsForMapTile(tile)  
         }
         
         // Update the status label
-        dispatch_async(dispatch_get_main_queue(), { [weak self] in
-            self?.statusLabel.text = self?.textForStatusLabel()
-            })
+        updateStatus()
     }
 }

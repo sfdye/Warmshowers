@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15F34" minimumToolsVersion="Xcode 7.0">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15G31" minimumToolsVersion="Xcode 7.0">
     <entity name="MapTile" representedClassName="CDWSMapTile" syncable="YES">
         <attribute name="last_updated" attributeType="Date" syncable="YES"/>
         <attribute name="quad_key" attributeType="String" syncable="YES"/>
+        <relationship name="sub_tiles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MapTile" syncable="YES"/>
         <relationship name="users" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="UserLocation" inverseName="map_tile" inverseEntity="UserLocation" syncable="YES"/>
     </entity>
     <entity name="Message" representedClassName=".CDWSMessage" syncable="YES">
@@ -62,7 +63,7 @@
         <relationship name="map_tile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MapTile" inverseName="users" inverseEntity="MapTile" syncable="YES"/>
     </entity>
     <elements>
-        <element name="MapTile" positionX="-342" positionY="189" width="128" height="90"/>
+        <element name="MapTile" positionX="-342" positionY="189" width="128" height="105"/>
         <element name="Message" positionX="-162" positionY="-144" width="128" height="135"/>
         <element name="MessageThread" positionX="-342" positionY="-144" width="128" height="180"/>
         <element name="Participant" positionX="18" positionY="-144" width="128" height="298"/>
