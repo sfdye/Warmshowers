@@ -13,11 +13,11 @@ class WSLoginData {
     var username: String
     var password: String
     
-    var asQueryString: String {
+    var asParameters: [String: String] {
         var params = [String: String]()
         params["username"] = username
         params["password"] = password
-        return HttpBody.bodyStringWithParameters(params)
+        return params
     }
     
     init(username: String, password: String) {

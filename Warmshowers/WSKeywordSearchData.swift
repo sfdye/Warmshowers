@@ -14,12 +14,12 @@ class WSKeywordSearchData {
     var offset: Int
     var limit: Int
     
-    var asQueryString: String {
+    var asParameters: [String: String] {
         var params = [String: String]()
         params["keyword"] = keyword
         params["offset"] = String(offset)
         params["limit"] = String(limit)
-        return HttpBody.bodyStringWithParameters(params)
+        return params
     }
     
     init(keyword: String, offset: Int = 0, limit: Int = 50) {

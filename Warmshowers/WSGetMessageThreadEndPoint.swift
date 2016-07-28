@@ -18,14 +18,14 @@ class WSGetMessageThreadEndPoint: WSAPIEndPointProtocol {
         return hostURL.URLByAppendingPathComponent("/services/rest/message/getThread")
     }
     
-    func HTTPBodyWithData(data: AnyObject?) throws -> String {
+    func HTTPBodyParametersWithData(data: AnyObject?) throws -> [String: String] {
         guard let threadID = data as? Int else { throw WSAPIEndPointError.InvalidOutboundData }
         let parameters = ["thread_id": String(threadID)]
-        return HttpBody.bodyStringWithParameters(parameters)
+        return parameters
     }
     
-    func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
-
+    func request(request: WSAPIRequest, updateStore store: WSStoreProtocol, withJSON json: AnyObject) throws {
+        
         guard let threadID = request.data as? Int else {
             throw WSAPIEndPointError.InvalidOutboundData
         }
@@ -34,7 +34,6 @@ class WSGetMessageThreadEndPoint: WSAPIEndPointProtocol {
             throw WSAPIEndPointError.ParsingError(endPoint: name, key: "messages")
         }
         
-        let store = WSStore.sharedStore
         var error: ErrorType?
         store.privateContext.performBlockAndWait {
             
@@ -78,7 +77,5 @@ class WSGetMessageThreadEndPoint: WSAPIEndPointProtocol {
         }
         
         if error != nil { throw error! }
-        
-        return nil
     }
 }

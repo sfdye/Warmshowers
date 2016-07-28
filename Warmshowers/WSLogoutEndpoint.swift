@@ -20,12 +20,12 @@ class WSLogoutEndPoint : WSAPIEndPointProtocol {
         return hostURL.URLByAppendingPathComponent("/services/rest/user/logout")
     }
     
-    func HTTPBodyWithData(data: AnyObject?) throws -> String {
+    func HTTPBodyParametersWithData(data: AnyObject?) throws -> [String: String] {
         // Logout is a post request. However, it has no path parameters or body data.
-        return ""
+        return [String: String]()
     }
     
-    func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
+    func request(request: WSAPIRequest, didRecieveResponseWithJSON json: AnyObject) throws -> AnyObject? {
         
         // Successful requests get a array response with:
         //      - 0 : Not logged in

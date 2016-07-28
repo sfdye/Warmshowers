@@ -18,12 +18,14 @@ class WSGetAllMessageThreadsEndPoint: WSAPIEndPointProtocol {
         return hostURL.URLByAppendingPathComponent("/services/rest/message/get")
     }
     
-    func HTTPBodyWithData(data: AnyObject?) throws -> String {
+    func HTTPBodyParametersWithData(data: AnyObject?) throws -> [String: String] {
         // End point uses HTTP POST. However no body parameters are required.
-        return ""
+        return [String: String]()
     }
     
-    func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
+
+    
+    func request(request: WSAPIRequest, updateStore store: WSStoreProtocol, withJSON json: AnyObject) throws {
         
         guard let threadsJSON = json as? [AnyObject] else {
             throw WSAPIEndPointError.ParsingError(endPoint: name, key: nil)
@@ -72,7 +74,5 @@ class WSGetAllMessageThreadsEndPoint: WSAPIEndPointProtocol {
         }
         
         if error != nil { throw error! }
-        
-        return nil
     }
 }

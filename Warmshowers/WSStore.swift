@@ -89,54 +89,17 @@ class WSStore : NSObject {
         managedObjectContext.performSelectorOnMainThread(#selector(NSManagedObjectContext.mergeChangesFromContextDidSaveNotification(_:)), withObject: notification, waitUntilDone: false)
     }
     
-
-    // MARK: Generic methods
-    
-    /** Saves the private content. */
-    func savePrivateContext() throws {
-        if privateContext.hasChanges {
-            do {
-                try privateContext.save()
+    /** Returns the name of the entity with the given managed object class name. */
+    func entityNameFromEntityClass(entityClass: NSManagedObject.Type) throws -> String {
+        let className = NSStringFromClass(entityClass)
+        let entities = managedObjectModel.entities
+        for entity in entities {
+            if entity.managedObjectClassName == className {
+                return entity.name!
             }
         }
+        throw PSStoreError.InvalidEntity
     }
     
-    /** Initialises a NSFetchRequest for a given entity. */
-    func requestForEntity(entity: WSEntity) -> NSFetchRequest {
-        let request = NSFetchRequest(entityName: entity.rawValue)
-        return request
-    }
-    
-    // Excecutes a syncronous fetch request with the private context
-    //
-    func executeFetchRequest(request: NSFetchRequest) throws -> [AnyObject] {
-        
-        var objects = [AnyObject]()
-        var error: NSError?
-        privateContext.performBlockAndWait { () -> Void in
-            do {
-                objects = try self.privateContext.executeFetchRequest(request)
-            } catch let nserror as NSError {
-                error = nserror
-            }
-        }
-        
-        guard error == nil else {
-            throw error!
-        }
-        
-        return objects
-    }
-    
-    /** Syncronous fetch of all entries in an entity. */
-    func getAllEntriesFromEntity(entity: WSEntity) throws -> [AnyObject] {
-        
-        let request = requestForEntity(entity)
-        
-        do {
-            let objects = try executeFetchRequest(request)
-            return objects
-        }
-    }
 }
 

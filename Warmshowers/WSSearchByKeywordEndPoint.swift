@@ -18,12 +18,12 @@ class WSSearchByKeywordEndPoint : WSAPIEndPointProtocol {
         return hostURL.URLByAppendingPathComponent("/services/rest/hosts/by_keyword")
     }
     
-    func HTTPBodyWithData(data: AnyObject?) throws -> String {
+    func HTTPBodyParametersWithData(data: AnyObject?) throws -> [String: String] {
         guard data is WSKeywordSearchData else { throw WSAPIEndPointError.InvalidOutboundData }
-        return (data as! WSKeywordSearchData).asQueryString
+        return (data as! WSKeywordSearchData).asParameters
     }
     
-    func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
+    func request(request: WSAPIRequest, didRecieveResponseWithJSON json: AnyObject) throws -> AnyObject? {
         
         guard let accounts = json["accounts"] as? NSDictionary else {
             throw WSAPIEndPointError.ParsingError(endPoint: name, key: "accounts")

@@ -19,7 +19,7 @@ class WSUserFeedbackEndPoint: WSAPIEndPointProtocol {
         return hostURL.URLByAppendingPathComponent("/user/\(uidString)/json_recommendations")
     }
     
-    func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
+    func request(request: WSAPIRequest, didRecieveResponseWithJSON json: AnyObject) throws -> AnyObject? {
         
         guard let recommendations = json["recommendations"] as? [AnyObject] else {
             throw WSAPIEndPointError.ParsingError(endPoint: name, key: "recommendations")

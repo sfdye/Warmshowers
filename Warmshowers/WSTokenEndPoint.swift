@@ -20,7 +20,7 @@ class WSTokenEndPoint : WSAPIEndPointProtocol {
         return hostURL.URLByAppendingPathComponent("/services/session/token")
     }
     
-    func request(request: WSAPIRequest, didRecievedResponseWithText text: String) throws -> AnyObject? {
+    func request(request: WSAPIRequest, didRecieveResponseWithText text: String) throws -> AnyObject? {
         WSSessionState.sharedSessionState.setToken(text)
         return text
     }

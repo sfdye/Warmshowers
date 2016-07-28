@@ -18,7 +18,7 @@ class WSUnreadMessageCountEndPoint: WSAPIEndPointProtocol {
         return hostURL.URLByAppendingPathComponent("/services/rest/message/unreadCount")
     }
     
-    func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
+    func request(request: WSAPIRequest, didRecieveResponseWithJSON json: AnyObject) throws -> AnyObject? {
         return nil
     }
     

@@ -33,4 +33,5 @@ protocol WSStoreMapTileProtocol {
     
     /** Removes all tiles from the store. */
     func clearoutAllTiles()
+    
 }

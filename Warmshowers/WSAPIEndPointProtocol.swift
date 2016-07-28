@@ -35,16 +35,19 @@ protocol WSAPIEndPointProtocol {
     func urlWithHostURL(hostURL: NSURL, andParameters parameters: AnyObject?) throws -> NSURL
     
     /** Adds parameters to requests about to be sent to this end point. */
-    func HTTPBodyWithData(data: AnyObject?) throws -> String
+    func HTTPBodyParametersWithData(data: AnyObject?) throws -> [String: String]
     
     /** Defines if responses from the end point are expected to include data. */
     func doesExpectDataWithResponse() -> Bool
     
     /** Describes how plain text recieved from this endpoint should be parsed. */
-    func request(request: WSAPIRequest, didRecievedResponseWithText text: String) throws -> AnyObject?
+    func request(request: WSAPIRequest, didRecieveResponseWithText text: String) throws -> AnyObject?
     
     /** Describes how json recieved from this endpoint should be parsed. Returns objects initialised with the json data. */
-    func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject?
+    func request(request: WSAPIRequest, didRecieveResponseWithJSON json: AnyObject) throws -> AnyObject?
+    
+    /** Provides opportunity to update the store when json is recieved. */
+    func request(request: WSAPIRequest, updateStore store: WSStoreProtocol, withJSON json: AnyObject) throws
     
     /** Provides mock end point responses for testing. */
     func generateMockResponseForURLRequest(urlRequest: NSMutableURLRequest) -> (NSData?, NSURLResponse?, NSError?)
@@ -62,16 +65,18 @@ extension WSAPIEndPointProtocol {
     
     var successCodes: Set<Int> { return [200] }
     
-    func HTTPBodyWithData(data: AnyObject?) throws -> String {
+    func HTTPBodyParametersWithData(data: AnyObject?) throws -> [String: String] {
         assertionFailure("addParametersToRequest:withData: not implemented for end point \(type.name)")
-        return ""
+        return [String: String]()
     }
     
     func doesExpectDataWithResponse() -> Bool { return true }
     
-    func request(request: WSAPIRequest, didRecievedResponseWithText text: String) throws -> AnyObject? { return nil }
+    func request(request: WSAPIRequest, didRecieveResponseWithText text: String) throws -> AnyObject? { return nil }
     
-    func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? { return nil }
+    func request(request: WSAPIRequest, didRecieveResponseWithJSON json: AnyObject) throws -> AnyObject? { return nil }
+    
+    func request(request: WSAPIRequest, updateStore store: WSStoreProtocol, withJSON json: AnyObject) throws { }
     
     func generateMockResponseForURLRequest(urlRequest: NSMutableURLRequest) -> (NSData?, NSURLResponse?, NSError?) {
         return (nil, nil, nil)

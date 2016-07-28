@@ -8,41 +8,6 @@
 
 import UIKit
 
-extension String {
-    
-    static func fromJSON(json: AnyObject, withKey key: String) -> String? {
-        return json[key] as? String
-    }
-    
-}
-
-extension Double {
-    
-    static func fromJSON(json: AnyObject, withKey key: String) -> Double? {
-        guard let valueString = String.fromJSON(json, withKey: key) else { return nil }
-        return Double(valueString)
-    }
-    
-}
-
-extension Int {
-    
-    static func fromJSON(json: AnyObject, withKey key: String) -> Int? {
-        guard let valueString = String.fromJSON(json, withKey: key) else { return nil }
-        return Int(valueString)
-    }
-    
-}
-
-extension Bool {
-    
-    static func fromJSON(json: AnyObject, withKey key: String) -> Bool? {
-        guard let valueString = String.fromJSON(json, withKey: key) else { return nil }
-        return (valueString as NSString).boolValue
-    }
-    
-}
-
 class WSUser: Hashable {
     
     var url: String?

@@ -19,7 +19,7 @@ class WSUserEndPoint: WSAPIEndPointProtocol {
         return hostURL.URLByAppendingPathComponent("/services/rest/user/\(uidString)")
     }
     
-    func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
+    func request(request: WSAPIRequest, didRecieveResponseWithJSON json: AnyObject) throws -> AnyObject? {
         guard let userInfo = WSUser(json: json) else { throw WSAPIEndPointError.ParsingError(endPoint: name, key: nil) }
         return userInfo
     }

@@ -24,12 +24,12 @@ class WSLoginEndPoint : WSAPIEndPointProtocol {
         return hostURL.URLByAppendingPathComponent("/services/rest/user/login")
     }
     
-    func HTTPBodyWithData(data: AnyObject?) throws -> String {
+    func HTTPBodyParametersWithData(data: AnyObject?) throws -> [String: String] {
         guard data is WSLoginData else { throw WSAPIEndPointError.InvalidOutboundData }
-        return (data as! WSLoginData).asQueryString
+        return (data as! WSLoginData).asParameters
     }
     
-    func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
+    func request(request: WSAPIRequest, didRecieveResponseWithJSON json: AnyObject) throws -> AnyObject? {
         
         guard let sessionName = json.valueForKey("session_name") as? String else {
             throw WSAPIEndPointError.ParsingError(endPoint: name, key: "session_name")

@@ -63,7 +63,8 @@ class WSAPIRequest : Hashable {
             urlRequest.HTTPMethod = endPoint.httpMethod.rawValue
             urlRequest.addValue(endPoint.acceptType.rawValue, forHTTPHeaderField: "Accept")
             if endPoint.httpMethod == .Post {
-                let body = try endPoint.HTTPBodyWithData(data)
+                let parameters = try endPoint.HTTPBodyParametersWithData(data)
+                let body = HttpBody.bodyStringWithParameters(parameters)
                 urlRequest.HTTPBody = body.dataUsingEncoding(NSUTF8StringEncoding)
             }
             return urlRequest

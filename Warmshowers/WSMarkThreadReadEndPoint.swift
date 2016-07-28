@@ -18,15 +18,15 @@ class WSMarkThreadReadEndPoint: WSAPIEndPointProtocol {
         return hostURL.URLByAppendingPathComponent("/services/rest/message/markThreadRead")
     }
     
-    func HTTPBodyWithData(data: AnyObject?) throws -> String {
+    func HTTPBodyParametersWithData(data: AnyObject?) throws -> [String: String] {
         guard let readState = data as? WSMessageThreadReadState else { throw WSAPIEndPointError.InvalidOutboundData }
         var params = [String: String]()
         params["thread_id"] = String(readState.threadID)
         params["status"] = String(readState.read ? 0 : 1)
-        return HttpBody.bodyStringWithParameters(params)
+        return params
     }
     
-    func request(request: WSAPIRequest, didRecievedResponseWithJSON json: AnyObject) throws -> AnyObject? {
+    func request(request: WSAPIRequest, didRecieveResponseWithJSON json: AnyObject) throws -> AnyObject? {
         
         // Successful requests get a response with "1" in the body
         if json.count == 1 {
