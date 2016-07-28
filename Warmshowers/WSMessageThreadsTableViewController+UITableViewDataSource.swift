@@ -19,16 +19,16 @@ extension WSMessageThreadsTableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let sections = fetchedResultsController.sections else { return 0 }
+        guard let sections = fetchedResultsController?.sections else { return 0 }
         let sectionInfo = sections[section]
         return sectionInfo.numberOfObjects
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell = tableView.dequeueReusableCellWithIdentifier(RUID_MessageThread, forIndexPath: indexPath) as! MessageThreadsTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(RUID_MessageThread, forIndexPath: indexPath) as! MessageThreadsTableViewCell
         
-        guard let messageThread = self.fetchedResultsController.objectAtIndexPath(indexPath) as? CDWSMessageThread else {
+        guard let messageThread = self.fetchedResultsController?.objectAtIndexPath(indexPath) as? CDWSMessageThread else {
             cell.participantsLabel.text = ""
             cell.dateLabel.text = ""
             cell.subjectLabel.text = ""
@@ -38,11 +38,11 @@ extension WSMessageThreadsTableViewController {
             return cell
         }
         
-        configureCell(&cell, withMessageThread: messageThread)    
+        configureCell(cell, withMessageThread: messageThread)
         return cell
     }
     
-    func configureCell(inout cell: MessageThreadsTableViewCell, withMessageThread messageThread: CDWSMessageThread) {
+    func configureCell(cell: MessageThreadsTableViewCell, withMessageThread messageThread: CDWSMessageThread) {
         cell.participantsLabel.text = messageThread.getParticipantString(currentUserUID)
         cell.dateLabel.text = textForMessageThreadDate(messageThread.last_updated)
         cell.subjectLabel.text = messageThread.subject ?? ""

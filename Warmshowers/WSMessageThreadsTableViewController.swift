@@ -17,7 +17,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
     var lastUpdated: NSDate?
     var downloadsInProgress = Set<Int>()
     var errorCache: ErrorType?
-    var fetchedResultsController: NSFetchedResultsController!
+    var fetchedResultsController: NSFetchedResultsController?
     let formatter = NSDateFormatter()
     
     var currentUserUID: Int? { return WSSessionState.sharedSessionState.uid }
@@ -42,31 +42,17 @@ class WSMessageThreadsTableViewController: UITableViewController {
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: WSColor.Green, NSFontAttributeName: WSFont.SueEllenFrancisco(26)]
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: self, action: #selector(WSMessageThreadsTableViewController.update))
         
-        
         // Set up the date formatter.
         let template = "dd/MM/yy"
         let locale = NSLocale.currentLocale()
         formatter.dateFormat = NSDateFormatter.dateFormatFromTemplate(template, options: 0, locale: locale)
         
-        // Set up the fetch results controller.
-        let request = NSFetchRequest(entityName: WSEntity.Thread.rawValue)
-        request.sortDescriptors = [NSSortDescriptor(key: "last_updated", ascending: false)]
-        let moc = WSStore.sharedStore.managedObjectContext
-        self.fetchedResultsController = NSFetchedResultsController(
-            fetchRequest: request,
-            managedObjectContext: moc,
-            sectionNameKeyPath: nil,
-            cacheName: nil)
-        fetchedResultsController.delegate = self
-        do {
-            try self.fetchedResultsController.performFetch()
-        } catch {
-            fatalError("Failed to initialize FetchedResultsController: \(error)")
-        }
-        
         // Set the refresh controller for the tableview.
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(WSMessageThreadsTableViewController.update), forControlEvents: UIControlEvents.ValueChanged)
+        
+        // Set up the fetch results controller.
+        initialiseFetchResultsController()
         
         // Reachability notifications
         connection.registerForAndStartNotifications(self, selector: #selector(WSMessageThreadsTableViewController.reachabilityChanged(_:)))
@@ -76,6 +62,10 @@ class WSMessageThreadsTableViewController: UITableViewController {
         
         // Reset the navigation bar text properties
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: WSColor.Green, NSFontAttributeName: WSFont.SueEllenFrancisco(26)]
+        
+        if fetchedResultsController == nil {
+            initialiseFetchResultsController()
+        }
         
         showReachabilityBannerIfNeeded()
     }
@@ -90,6 +80,28 @@ class WSMessageThreadsTableViewController: UITableViewController {
         
         dispatch_async(dispatch_get_main_queue()) {  [weak self] in
             self?.tableView.reloadData()
+        }
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        // This prevents the fetch results controller from updating while the view is not visible.
+        fetchedResultsController = nil
+    }
+    
+    func initialiseFetchResultsController() {
+        let request = NSFetchRequest(entityName: WSEntity.Thread.rawValue)
+        request.sortDescriptors = [NSSortDescriptor(key: "last_updated", ascending: false)]
+        let moc = WSStore.sharedStore.managedObjectContext
+        fetchedResultsController = NSFetchedResultsController(
+            fetchRequest: request,
+            managedObjectContext: moc,
+            sectionNameKeyPath: nil,
+            cacheName: nil)
+        fetchedResultsController!.delegate = self
+        do {
+            try fetchedResultsController!.performFetch()
+        } catch {
+            fatalError("Failed to initialize FetchedResultsController: \(error)")
         }
     }
     

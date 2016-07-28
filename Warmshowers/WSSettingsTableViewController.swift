@@ -59,4 +59,18 @@ class WSSettingsTableViewController: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         alert.hideAllBanners()
     }
+    
+    func logout() {
+        do {
+            session.deleteSessionData()
+            try store.clearout()
+            navigation.showLoginScreen()
+        } catch {
+            // Suggest that the user delete the app for privacy.
+            alert.presentAlertFor(self, withTitle: "Data Error", button: "OK", message: "Sorry, an error occured while removing your account data from this iPhone. If you would like to remove your Warmshowers messages from this iPhone please try deleting the Warmshowers app.", andHandler: { [weak self] (action) in
+                self?.navigation.showLoginScreen()
+                })
+        }
+    }
+    
 }

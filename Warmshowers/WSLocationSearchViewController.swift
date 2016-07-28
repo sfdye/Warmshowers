@@ -37,7 +37,7 @@ class WSLocationSearchViewController : UIViewController {
     
     let locationManager = CLLocationManager()
     
-    // This is the zoom level at which api request will be made.
+    // This is the zoom level at which api request will be made. i.e. each api request will be for the area specified at this zoom level.
     let tileUpdateZoomLevel: UInt = 5
     
     // The maximum number of tiles that can be on the screen for downloads to start.
@@ -97,6 +97,13 @@ class WSLocationSearchViewController : UIViewController {
         }
     }
     
+    /** Refreshes the status label according to the current controller state. */
+    func updateStatus() {
+        dispatch_async(dispatch_get_main_queue(), { [weak self] in
+            self?.statusLabel.text = self?.textForStatusLabel()
+            })
+    }
+    
     /** Provides the string for the status label based on the current controller state. */
     func textForStatusLabel() -> String? {
         
@@ -113,6 +120,13 @@ class WSLocationSearchViewController : UIViewController {
     
     /** Downloads user locations for the given map tiles and adds them as annotations to the map. */
     func loadAnnotationsForMapTile(tile: WSMapTile) {
+        
+        let displayTile = displayTiles.filter({ (aTile) -> Bool in
+            return aTile.quadKey == tile.quadKey
+        }).first
+        
+        // Only reload the tile data if the displayed data is old.
+        guard displayTile?.needsUpdating ?? true else { return }
 
         if store.hasValidHostDataForMapTile(tile) {
             // Add users from the store to the map

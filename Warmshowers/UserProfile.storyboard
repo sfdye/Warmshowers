@@ -2,8 +2,14 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Hb8-qn-N7z">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Sue Ellen Francisco.ttf">
+            <string>SueEllenFrancisco</string>
+        </mutableArray>
+    </customFonts>
     <scenes>
         <!--Account Table View Controller-->
         <scene sceneID="yHk-3J-1rW">
@@ -17,39 +23,40 @@
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="999" verticalHuggingPriority="999" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="999" selectionStyle="none" indentationWidth="10" reuseIdentifier="Photo" rowHeight="200" id="mz8-Xy-h6g" customClass="ProfileImageTableViewCell" customModule="Warmshowers" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="113.5" width="600" height="200"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="mz8-Xy-h6g" id="VtD-5b-gja">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mz8-Xy-h6g" id="VtD-5b-gja">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="200"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="751" verticalHuggingPriority="751" horizontalCompressionResistancePriority="251" verticalCompressionResistancePriority="251" ambiguous="YES" misplaced="YES" placeholderIntrinsicWidth="200" placeholderIntrinsicHeight="200" translatesAutoresizingMaskIntoConstraints="NO" id="71P-Q4-zEV">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="751" verticalHuggingPriority="751" horizontalCompressionResistancePriority="251" verticalCompressionResistancePriority="251" placeholderIntrinsicWidth="200" placeholderIntrinsicHeight="200" translatesAutoresizingMaskIntoConstraints="NO" id="71P-Q4-zEV">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="200"/>
+                                            <color key="backgroundColor" red="0.95686274509803915" green="0.96470588235294119" blue="0.96470588235294119" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="250" id="lce-QI-V7F"/>
+                                                <constraint firstAttribute="width" secondItem="71P-Q4-zEV" secondAttribute="height" multiplier="1.5:1" id="dbu-cv-tN1"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="No Profile Image" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QfE-XC-Bh4">
-                                            <rect key="frame" x="219" y="87" width="162" height="27"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Profile Image" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QfE-XC-Bh4">
+                                            <rect key="frame" x="243.5" y="79" width="113.5" height="43"/>
+                                            <fontDescription key="fontDescription" name="SueEllenFrancisco" family="Sue Ellen Francisco" pointSize="22"/>
+                                            <color key="textColor" red="0.46666666666666667" green="0.46666666666666667" blue="0.46666666666666667" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="749" verticalHuggingPriority="749" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" ambiguous="YES" misplaced="YES" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZOa-3l-Unm">
-                                            <rect key="frame" x="28" y="148" width="544" height="24"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="749" verticalHuggingPriority="749" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZOa-3l-Unm">
+                                            <rect key="frame" x="30" y="146" width="540" height="24"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="QfE-XC-Bh4" firstAttribute="centerY" secondItem="71P-Q4-zEV" secondAttribute="centerY" id="3O7-UQ-1Fo"/>
-                                        <constraint firstItem="71P-Q4-zEV" firstAttribute="top" secondItem="VtD-5b-gja" secondAttribute="top" id="ScE-Vt-oIP"/>
-                                        <constraint firstAttribute="bottom" secondItem="71P-Q4-zEV" secondAttribute="bottom" id="UrK-A0-KZ2"/>
-                                        <constraint firstItem="ZOa-3l-Unm" firstAttribute="leading" secondItem="VtD-5b-gja" secondAttribute="leadingMargin" constant="20" id="h1j-0U-Bwn"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="ZOa-3l-Unm" secondAttribute="trailing" constant="20" id="ixb-3a-JcJ"/>
-                                        <constraint firstAttribute="trailing" secondItem="71P-Q4-zEV" secondAttribute="trailing" id="snY-e7-3AI"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="ZOa-3l-Unm" secondAttribute="bottom" constant="20" id="xdw-QJ-gr3"/>
-                                        <constraint firstItem="71P-Q4-zEV" firstAttribute="leading" secondItem="VtD-5b-gja" secondAttribute="leading" id="xr0-WH-X7T"/>
-                                        <constraint firstItem="QfE-XC-Bh4" firstAttribute="centerX" secondItem="71P-Q4-zEV" secondAttribute="centerX" id="yFC-ec-rnd"/>
+                                        <constraint firstItem="71P-Q4-zEV" firstAttribute="top" secondItem="VtD-5b-gja" secondAttribute="top" id="0dv-ed-3Tj"/>
+                                        <constraint firstItem="ZOa-3l-Unm" firstAttribute="leading" secondItem="VtD-5b-gja" secondAttribute="leading" constant="30" id="1U6-df-ZtC"/>
+                                        <constraint firstItem="QfE-XC-Bh4" firstAttribute="centerX" secondItem="71P-Q4-zEV" secondAttribute="centerX" id="Jdb-yx-B2h"/>
+                                        <constraint firstAttribute="bottom" secondItem="71P-Q4-zEV" secondAttribute="bottom" id="UXB-ni-WC4"/>
+                                        <constraint firstItem="71P-Q4-zEV" firstAttribute="leading" secondItem="VtD-5b-gja" secondAttribute="leading" id="dZr-VZ-PQM"/>
+                                        <constraint firstAttribute="trailing" secondItem="71P-Q4-zEV" secondAttribute="trailing" id="fUL-YV-W0N"/>
+                                        <constraint firstAttribute="trailing" secondItem="ZOa-3l-Unm" secondAttribute="trailing" constant="30" id="fa8-SO-fri"/>
+                                        <constraint firstItem="QfE-XC-Bh4" firstAttribute="centerY" secondItem="71P-Q4-zEV" secondAttribute="centerY" id="ior-gn-ido"/>
+                                        <constraint firstAttribute="bottom" secondItem="ZOa-3l-Unm" secondAttribute="bottom" constant="30" id="jh1-VL-08f"/>
                                     </constraints>
                                     <variation key="heightClass=regular-widthClass=compact" ambiguous="YES">
                                         <rect key="frame" x="0.0" y="0.0" width="400" height="286"/>
@@ -199,7 +206,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This host may offer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WX7-Aq-kGD">
-                                            <rect key="frame" x="18" y="20" width="564" height="18"/>
+                                            <rect key="frame" x="18" y="20" width="564" height="26"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                             <color key="textColor" red="0.0039215686269999999" green="0.61960784310000006" blue="0.23529411759999999" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -209,6 +216,7 @@
                                         <constraint firstItem="WX7-Aq-kGD" firstAttribute="top" secondItem="IZD-hb-f1M" secondAttribute="top" constant="20" id="NUK-vk-bIB"/>
                                         <constraint firstItem="WX7-Aq-kGD" firstAttribute="leading" secondItem="IZD-hb-f1M" secondAttribute="leading" constant="18" id="UfG-2O-7GG"/>
                                         <constraint firstAttribute="trailing" secondItem="WX7-Aq-kGD" secondAttribute="trailing" constant="18" id="iqG-M3-n5m"/>
+                                        <constraint firstAttribute="bottom" secondItem="WX7-Aq-kGD" secondAttribute="bottom" constant="10" id="sLV-HQ-1k8"/>
                                     </constraints>
                                     <variation key="heightClass=regular-widthClass=compact" ambiguous="YES">
                                         <rect key="frame" x="0.0" y="0.0" width="400" height="33"/>

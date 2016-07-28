@@ -10,24 +10,18 @@ import UIKit
 import MapKit
 import CoreData
 
-// FIRST TODOs
-// fix map loading errors: manage map pins with core data to avoid memory warnings.
+// TODOs
+// link address in account view to open in maps/google maps options
 // fix views for ipad
-
-// LATER TODOs
-// convert user info request to subclass of wsrequestwithcsrftoken
-// add distance from loaction to account view
+// add distance from loaction user
 // account view actions: add action to go to messages if there are messages from the user
 // show account view modally when a author name is tapped in the message view
-// map search debouncing
 // background message check and app icon bagde/ notifications
-// add message sorter
 // add google translate feature to account view, translate from 'detect language' to system language
 // search filters, i.e. by country
 // - load gps files on map - start with american adventure routes on WS
 // - facebook integration for finding friends on map
 // - add offline country option: downloads users in one country for offline use for a few days.
-// link address in account view to open in maps/google maps options
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

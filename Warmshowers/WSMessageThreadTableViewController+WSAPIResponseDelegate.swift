@@ -19,7 +19,7 @@ extension WSMessageThreadTableViewController: WSAPIResponseDelegate {
             })
         case .UserInfo:
             guard let uid = request.parameters as? String else { return }
-            downloadsInProgress.insert(uid)
+            downloadsInProgress.remove(uid)
         default:
             break
         }
@@ -35,7 +35,12 @@ extension WSMessageThreadTableViewController: WSAPIResponseDelegate {
                 let user = data as? WSUser,
                 let url = user.profileImageURL
                 else { return }
-            api.contactEndPoint(.ImageResource, withPathParameters: url as NSString, andData: nil, thenNotify: self)
+            do {
+                try store.updateParticipant(user.uid, withImageURL: url)
+                api.contactEndPoint(.ImageResource, withPathParameters: url as NSString, andData: nil, thenNotify: self)
+            } catch {
+                // Not a big deal. The author profile image won't be downloaded.
+            }
         case .ImageResource:
             guard
                 let image = data as? UIImage,
