@@ -29,17 +29,25 @@ extension WSMessageThreadTableViewController: WSAPIResponseDelegate {
         switch request.endPoint.type {
         case .MarkThreadRead:
             guard let readState = request.data as? WSMessageThreadReadState else { return }
-            let _ = try? store.markMessageThread(readState.threadID, read: readState.read)
+            let predicate = NSPredicate(format: "p_thread_id == %d", readState.threadID)
+            if let messageThread = try! store.retrieve(WSMOMessageThread.self, sortBy: nil, isAscending: true, predicate: predicate).first {
+                messageThread.is_new = !readState.read
+                try! store.savePrivateContext()
+            }
         case .UserInfo:
             guard
                 let user = data as? WSUser,
                 let url = user.profileImageURL
                 else { return }
-            do {
-                try store.updateParticipant(user.uid, withImageURL: url)
-                api.contactEndPoint(.ImageResource, withPathParameters: url as NSString, andData: nil, thenNotify: self)
-            } catch {
-                // Not a big deal. The author profile image won't be downloaded.
+            let predicate = NSPredicate(format: "p_uid == %d", user.uid)
+            if let user = try? store.retrieve(WSMOUser.self, sortBy: nil, isAscending: true, predicate: predicate).first {
+                user?.image_url = url
+                do {
+                    try store.savePrivateContext()
+                    api.contactEndPoint(.ImageResource, withPathParameters: url as NSString, andData: nil, thenNotify: self)
+                } catch {
+                    // Not a big deal. The author profile image won't be downloaded.
+                }
             }
         case .ImageResource:
             guard
@@ -54,6 +62,7 @@ extension WSMessageThreadTableViewController: WSAPIResponseDelegate {
     
     func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
         //
+        print(error)
     }
     
 }

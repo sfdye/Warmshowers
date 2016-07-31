@@ -22,6 +22,7 @@ protocol WSStoreProtocol {
     
     /**
      Retrieves an existing entry or a new one if no matches exist.
+     If no JSON is provided, a new entry is returned.
      The returned object properties are updated from the given JSON.
      The returned object exists in the private managed object context of the store.
      If the object is updated after being returned, the called should later call WSStoreDelegate.savePrivateContext() to ensure the changes are persisted.

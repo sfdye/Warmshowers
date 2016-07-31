@@ -8,9 +8,11 @@
 
 import Foundation
 
-enum WSAPIEndPointError : ErrorType {
+enum WSAPIEndPointError: ErrorType {
     case InvalidPathParameters
     case InvalidOutboundData
     case ParsingError(endPoint: String, key: String?)
+    case NoMessageThreadForMessage
+    case NoAuthorForMessage
     case ReachedTileLimit
 }

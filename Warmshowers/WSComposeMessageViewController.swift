@@ -16,7 +16,7 @@ class WSComposeMessageViewController: UIViewController {
     let detailCellHeight: CGFloat = 40.0
     
     var threadID: Int?
-    var recipients: [CDWSUser]?
+    var recipients: [WSMOUser]?
     var subject: String?
     var body: String?
     
@@ -24,7 +24,7 @@ class WSComposeMessageViewController: UIViewController {
     var isReply: Bool { return threadID != nil }
     
     // Delegates
-    let store: WSStoreMessageThreadProtocol = WSStore.sharedStore
+    var store: WSStoreProtocol = WSStore.sharedStore
     let session: WSSessionStateProtocol = WSSessionState.sharedSessionState
     var alert: WSAlertDelegate = WSAlertDelegate.sharedAlertDelegate
     var api: WSAPICommunicatorProtocol = WSAPICommunicator.sharedAPICommunicator
@@ -54,7 +54,7 @@ class WSComposeMessageViewController: UIViewController {
     // MARK: Utility methods
     
     /** Sets up the message as a new message to a give set of hosts. */
-    func configureAsNewMessageToUser(users: [CDWSUser]) {
+    func configureAsNewMessageToUsers(users: [WSMOUser]) {
         navigationItem.title = "New Message"
         recipients = users
     }
@@ -68,20 +68,16 @@ class WSComposeMessageViewController: UIViewController {
         navigationItem.title = "Reply"
         
         // Set up the reply
+        let predicate = NSPredicate(format: "p_thread_id == %d", threadID)
+        guard let thread = try! store.retrieve(WSMOMessageThread.self, sortBy: nil, isAscending: true, predicate: predicate).first else { return }
+        guard let uid = session.uid else { return }
         self.threadID = threadID
-        do {
-            let thread = try store.messageThreadWithID(threadID)
-            guard let uid = session.uid else { return }
-            self.threadID = threadID
-            self.subject = thread?.subject
-            self.recipients = thread?.otherParticipants(uid)
-        } catch {
-            // Segue to reply should fail before this
-        }
+        self.subject = thread.subject
+        self.recipients = thread.otherParticipants(uid)
     }
     
     /** Returns a string of comma seperated full names of the message recipients. */
-    func recipientStringForRecipients(recipients: [CDWSUser]?, joiner: String = ",") -> String {
+    func recipientStringForRecipients(recipients: [WSMOUser]?, joiner: String = ",") -> String {
         guard let recipients = recipients where recipients.count > 0 else { return "" }
         let names = recipients.map { (user) -> String in user.name! }
         let recipientString = names.joinWithSeparator(joiner)

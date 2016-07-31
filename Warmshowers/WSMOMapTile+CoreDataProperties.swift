@@ -1,8 +1,8 @@
 //
-//  CDWSMapTile+CoreDataProperties.swift
+//  WSMOMapTile+CoreDataProperties.swift
 //  Warmshowers
 //
-//  Created by Rajan Fernandez on 6/06/16.
+//  Created by Rajan Fernandez on 31/07/16.
 //  Copyright © 2016 Rajan Fernandez. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -12,10 +12,11 @@
 import Foundation
 import CoreData
 
-extension CDWSMapTile {
+extension WSMOMapTile {
 
     @NSManaged var last_updated: NSDate?
     @NSManaged var quad_key: String?
     @NSManaged var users: NSSet?
+    @NSManaged var sub_tiles: NSSet?
 
 }

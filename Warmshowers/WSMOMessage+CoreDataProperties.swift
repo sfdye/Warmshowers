@@ -1,8 +1,8 @@
 //
-//  CDWSMessage+CoreDataProperties.swift
+//  WSMOMessage+CoreDataProperties.swift
 //  Warmshowers
 //
-//  Created by Rajan Fernandez on 29/03/16.
+//  Created by Rajan Fernandez on 31/07/16.
 //  Copyright © 2016 Rajan Fernandez. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -12,13 +12,13 @@
 import Foundation
 import CoreData
 
-extension CDWSMessage {
+extension WSMOMessage {
 
     @NSManaged var body: String?
-    @NSManaged var is_new: NSNumber?
-    @NSManaged var message_id: NSNumber?
+    @NSManaged var p_is_new: NSNumber?
+    @NSManaged var p_message_id: NSNumber?
     @NSManaged var timestamp: NSDate?
-    @NSManaged var author: CDWSUser?
-    @NSManaged var thread: CDWSMessageThread?
+    @NSManaged var author: WSMOUser?
+    @NSManaged var thread: WSMOMessageThread?
 
 }

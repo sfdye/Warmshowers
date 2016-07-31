@@ -18,7 +18,7 @@ enum HostProfileTab {
 class WSAccountTableViewController: UITableViewController {
     
     var user: WSUser?
-    var recipient: CDWSUser?
+    var recipient: WSMOUser?
     
     @IBOutlet var imageHeight: NSLayoutConstraint!
     
@@ -28,7 +28,6 @@ class WSAccountTableViewController: UITableViewController {
     var api: WSAPICommunicatorProtocol = WSAPICommunicator.sharedAPICommunicator
     var connection: WSReachabilityProtocol = WSReachabilityManager.sharedReachabilityManager
     var store: WSStoreProtocol = WSStore.sharedStore
-    var participantStore: WSStoreParticipantProtocol = WSStore.sharedStore
     var alert: WSAlertProtocol = WSAlertDelegate.sharedAlertDelegate
     
     override func viewDidLoad() {

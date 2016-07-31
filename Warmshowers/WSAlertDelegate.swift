@@ -47,6 +47,8 @@ class WSAlertDelegate : WSAlertProtocol {
                     message += "The error occured while parsing key: '\(key)'. "
                 }
                 message += "Please report this as a bug."
+            default:
+                break
             }
         case is WSAPICommunicatorError:
             switch (error as! WSAPICommunicatorError) {

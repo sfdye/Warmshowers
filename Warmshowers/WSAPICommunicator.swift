@@ -24,6 +24,7 @@ class WSAPICommunicator: WSAPICommunicatorProtocol {
     var session = WSURLSession.sharedSession
     var connection: WSReachabilityProtocol = WSReachabilityManager.sharedReachabilityManager
     var host = WSAPIHost.sharedAPIHost
+    var store = WSStore.sharedStore
     
     var mode: WSAPICommunicatorMode
     var logging: Bool = false
@@ -174,6 +175,7 @@ class WSAPICommunicator: WSAPICommunicatorProtocol {
                 let json = try NSJSONSerialization.JSONObjectWithData(data, options: [.AllowFragments])
                 log("Recieved JSON response: \(json)")
                 parsedData = try request.endPoint.request(request, didRecieveResponseWithJSON: json)
+                try request.endPoint.request(request, updateStore: store, withJSON: json)
                 request.delegate.request(request, didSucceedWithData: parsedData)
             case .Image:
                 if let image = UIImage(data: data) {

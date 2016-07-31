@@ -23,56 +23,50 @@ class WSGetAllMessageThreadsEndPoint: WSAPIEndPointProtocol {
         return [String: String]()
     }
     
-
-    
     func request(request: WSAPIRequest, updateStore store: WSStoreProtocol, withJSON json: AnyObject) throws {
         
         guard let threadsJSON = json as? [AnyObject] else {
             throw WSAPIEndPointError.ParsingError(endPoint: name, key: nil)
         }
         
-        let store = WSStore.sharedStore
-        var error: ErrorType?
-        store.privateContext.performBlockAndWait { () -> Void in
-            
-            // Parse the json
-            var currentThreadIDs = [Int]()
+        var threadIDs = Set<Int>()
+        do {
             for threadJSON in threadsJSON {
+                let threadID = try JSON.nonOptionalForKey("thread_id", fromDict: threadJSON, withType: Int.self)
+                threadIDs.insert(threadID)
+                let thread = try store.newOrExisting(WSMOMessageThread.self, withJSON: threadJSON)
                 
-                // Fail parsing if a message thread doesn't have an ID as it will cause problems later
-                guard let threadID = Int.fromJSON(threadJSON, withKey: "thread_id") else {
-                    error = WSAPIEndPointError.ParsingError(endPoint: self.name, key: "thread_id")
-                    return
+                // Don't need change the message participants if they already exist
+                if let existingParticipants = thread.participants where existingParticipants.count == 0 {
+                    
+                    guard let participantsJSON = threadJSON.valueForKey("participants") as? [AnyObject] else {
+                        throw WSAPIEndPointError.ParsingError(endPoint: name, key: "participants")
+                    }
+                    
+                    var participants = Set<WSMOUser>()
+                    for participantJSON in participantsJSON {
+                        let participant = try store.newOrExisting(WSMOUser.self, withJSON: participantJSON)
+                        participants.insert(participant)
+                    }
+                    thread.participants = participants
                 }
-                
-                do {
-                    try store.addMessageThread(threadJSON)
-                } catch let storeError {
-                    error = storeError
-                    return
-                }
-                
-                // Save the thread id
-                currentThreadIDs.append(threadID)
             }
             
-            // Delete all threads that are not in the json
-            do {
-                let allMessageThreads = try store.allMessageThreads()
-                for messageThread in allMessageThreads {
-                    if let threadID = messageThread.thread_id?.integerValue {
-                        if !(currentThreadIDs.contains(threadID)){
-                            store.privateContext.deleteObject(messageThread)
-                        }
-                    }
-                }
-                try store.savePrivateContext()
-            } catch let storeError {
-                error = storeError
-                return
-            }
+            try store.savePrivateContext()
         }
         
-        if error != nil { throw error! }
+        // Delete all threads that are not in the json
+        do {
+            let oldMessageThreads = try store.retrieve(WSMOMessageThread.self, sortBy: nil, isAscending: true, predicate: nil)
+            
+            for thread in oldMessageThreads {
+                if !threadIDs.contains(thread.thread_id!) {
+                    thread.managedObjectContext?.deleteObject(thread)
+                }
+            }
+            
+            try store.savePrivateContext()
+        }
     }
+    
 }

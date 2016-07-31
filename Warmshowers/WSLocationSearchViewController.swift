@@ -50,7 +50,7 @@ class WSLocationSearchViewController : UIViewController {
     // Delegates
     var alert: WSAlertDelegate = WSAlertDelegate.sharedAlertDelegate
     var api: WSAPICommunicator = WSAPICommunicator.sharedAPICommunicator
-    var store: WSStoreMapTileProtocol = WSStore.sharedStore
+    var store: WSStoreProtocol = WSStore.sharedStore
     
     override func viewDidLoad() {
         clusterController = CCHMapClusterController(mapView: mapView)
@@ -128,19 +128,19 @@ class WSLocationSearchViewController : UIViewController {
         // Only reload the tile data if the displayed data is old.
         guard displayTile?.needsUpdating ?? true else { return }
 
-        if store.hasValidHostDataForMapTile(tile) {
-            // Add users from the store to the map
-            let users = store.usersForMapTile(tile)
-            tile.users = users
-            tile.last_updated = NSDate()
-            addUsersToMapWithMapTile(tile)
-        } else {
-            // Grey the tile with an overlay and start a download.
-            if !downloadsInProgress.contains(tile) {
-                downloadWillStartForMapTile(tile)
-                api.contactEndPoint(.SearchByLocation, withPathParameters: nil, andData: tile, thenNotify: self)
-            }
-        }
+//        if store.hasValidHostDataForMapTile(tile) {
+//            // Add users from the store to the map
+//            let users = store.usersForMapTile(tile)
+//            tile.users = users
+//            tile.last_updated = NSDate()
+//            addUsersToMapWithMapTile(tile)
+//        } else {
+//            // Grey the tile with an overlay and start a download.
+//            if !downloadsInProgress.contains(tile) {
+//                downloadWillStartForMapTile(tile)
+//                api.contactEndPoint(.SearchByLocation, withPathParameters: nil, andData: tile, thenNotify: self)
+//            }
+//        }
     }
     
     /** Addes user annotations to the map. */

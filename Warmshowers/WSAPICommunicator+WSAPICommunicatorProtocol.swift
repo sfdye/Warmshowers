@@ -24,7 +24,7 @@ extension WSAPICommunicator {
         contactEndPoint(.CreateFeedback, withPathParameters: params, thenNotify: requester)
     }
     
-    func sendNewMessageToRecipients(recipients: [CDWSUser], withSubject subject: String, andMessageBody body: String, thenNotify requester: WSAPIResponseDelegate) {
+    func sendNewMessageToRecipients(recipients: [WSMOUser], withSubject subject: String, andMessageBody body: String, thenNotify requester: WSAPIResponseDelegate) {
         
     }
     

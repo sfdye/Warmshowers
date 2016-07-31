@@ -1,8 +1,8 @@
 //
-//  CDWSUserLocation+CoreDataProperties.swift
+//  WSMOUser+CoreDataProperties.swift
 //  Warmshowers
 //
-//  Created by Rajan Fernandez on 29/03/16.
+//  Created by Rajan Fernandez on 31/07/16.
 //  Copyright © 2016 Rajan Fernandez. All rights reserved.
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -12,23 +12,25 @@
 import Foundation
 import CoreData
 
-extension CDWSUserLocation {
+extension WSMOUser {
 
     @NSManaged var additional: String?
     @NSManaged var city: String?
     @NSManaged var country: String?
-    @NSManaged var distance: NSNumber?
+    @NSManaged var p_distance: NSNumber?
     @NSManaged var fullname: String?
     @NSManaged var image: NSObject?
     @NSManaged var image_url: String?
-    @NSManaged var latitude: NSNumber?
-    @NSManaged var longitude: NSNumber?
+    @NSManaged var p_latitude: NSNumber?
+    @NSManaged var p_longitude: NSNumber?
     @NSManaged var name: String?
-    @NSManaged var notcurrentlyavailable: NSNumber?
+    @NSManaged var p_not_currently_available: NSNumber?
     @NSManaged var post_code: String?
     @NSManaged var province: String?
     @NSManaged var street: String?
-    @NSManaged var uid: NSNumber?
-    @NSManaged var map_tile: CDWSMapTile?
+    @NSManaged var p_uid: NSNumber?
+    @NSManaged var sent_messages: NSSet?
+    @NSManaged var threads: NSSet?
+    @NSManaged var map_tile: WSMOMapTile?
 
 }

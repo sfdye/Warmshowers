@@ -25,6 +25,7 @@ extension WSMessageThreadsTableViewController : WSAPIResponseDelegate {
         switch request.endPoint.type {
         case .GetAllMessageThreads:
             updateAllMessages()
+            break
         case .GetMessageThread:
             if downloadsInProgress.count == 0 { didFinishedUpdates() }
         default:
@@ -33,6 +34,7 @@ extension WSMessageThreadsTableViewController : WSAPIResponseDelegate {
     }
     
     func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
+        print(error)
         switch request.endPoint.type {
         case .GetAllMessageThreads:
             errorCache = error

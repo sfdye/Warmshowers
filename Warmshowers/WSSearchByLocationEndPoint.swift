@@ -50,7 +50,7 @@ class WSSearchByLocationEndPoint : WSAPIEndPointProtocol {
 //        var error: ErrorType?
 //        WSStore.sharedStore.privateContext.performBlockAndWait {
 //            
-//            var tile: CDWSMapTile!
+//            var tile: WSMOMapTile!
 //            do {
 //                tile = try store.newOrExistingMapTileWithQuadKey(quadKey)
 //                do {
@@ -71,45 +71,45 @@ class WSSearchByLocationEndPoint : WSAPIEndPointProtocol {
     
     func request(request: WSAPIRequest, updateStore store: WSStoreProtocol, withJSON json: AnyObject) throws {
         
-        guard let quadKey = (request.data as? WSMapTile)?.quadKey else {
-            throw WSAPIEndPointError.InvalidOutboundData
-        }
-        
-        guard let accounts = json["accounts"] as? NSArray else {
-            throw WSAPIEndPointError.ParsingError(endPoint: name, key: "accounts")
-        }
-        
-        guard accounts.count < 500 else {
-            throw WSAPIEndPointError.ReachedTileLimit
-        }
-        
-        var userLocations = [WSUserLocation]()
-        for account in accounts {
-            if let userLocation = WSUserLocation(json: account) {
-                userLocations.append(userLocation)
-            } else {
-                throw WSAPIEndPointError.ParsingError(endPoint: name, key: nil)
-            }
-        }
-        
-        var error: ErrorType?
-        WSStore.sharedStore.privateContext.performBlockAndWait {
-            
-            var tile: CDWSMapTile!
-            do {
-                tile = try store.newOrExistingMapTileWithQuadKey(quadKey)
-                do {
-                    try store.addUserLocations(userLocations, ToMapTile: tile)
-                }
-                tile.setValue(NSDate(), forKey: "last_updated")
-                try WSStore.sharedStore.savePrivateContext()
-            } catch let storeError {
-                error = storeError
-                return
-            }
-        }
-        
-        if error != nil { throw error! }
+//        guard let quadKey = (request.data as? WSMapTile)?.quadKey else {
+//            throw WSAPIEndPointError.InvalidOutboundData
+//        }
+//        
+//        guard let accounts = json["accounts"] as? NSArray else {
+//            throw WSAPIEndPointError.ParsingError(endPoint: name, key: "accounts")
+//        }
+//        
+//        guard accounts.count < 500 else {
+//            throw WSAPIEndPointError.ReachedTileLimit
+//        }
+//        
+//        var userLocations = [WSUserLocation]()
+//        for account in accounts {
+//            if let userLocation = WSUserLocation(json: account) {
+//                userLocations.append(userLocation)
+//            } else {
+//                throw WSAPIEndPointError.ParsingError(endPoint: name, key: nil)
+//            }
+//        }
+//        
+//        var error: ErrorType?
+//        WSStore.sharedStore.privateContext.performBlockAndWait {
+//            
+//            var tile: WSMOMapTile!
+//            do {
+//                tile = try store.newOrExistingMapTileWithQuadKey(quadKey)
+//                do {
+//                    try store.addUserLocations(userLocations, ToMapTile: tile)
+//                }
+//                tile.setValue(NSDate(), forKey: "last_updated")
+//                try WSStore.sharedStore.savePrivateContext()
+//            } catch let storeError {
+//                error = storeError
+//                return
+//            }
+//        }
+//        
+//        if error != nil { throw error! }
     }
     
 }

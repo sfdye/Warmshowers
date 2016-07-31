@@ -28,7 +28,7 @@ extension WSMessageThreadsTableViewController {
         
         let cell = tableView.dequeueReusableCellWithIdentifier(RUID_MessageThread, forIndexPath: indexPath) as! MessageThreadsTableViewCell
         
-        guard let messageThread = self.fetchedResultsController?.objectAtIndexPath(indexPath) as? CDWSMessageThread else {
+        guard let messageThread = self.fetchedResultsController?.objectAtIndexPath(indexPath) as? WSMOMessageThread else {
             cell.participantsLabel.text = ""
             cell.dateLabel.text = ""
             cell.subjectLabel.text = ""
@@ -42,13 +42,13 @@ extension WSMessageThreadsTableViewController {
         return cell
     }
     
-    func configureCell(cell: MessageThreadsTableViewCell, withMessageThread messageThread: CDWSMessageThread) {
+    func configureCell(cell: MessageThreadsTableViewCell, withMessageThread messageThread: WSMOMessageThread) {
         cell.participantsLabel.text = messageThread.getParticipantString(currentUserUID)
         cell.dateLabel.text = textForMessageThreadDate(messageThread.last_updated)
         cell.subjectLabel.text = messageThread.subject ?? ""
         cell.bodyPreviewLabel.text = messageThread.lastestMessagePreview() ?? "\n"
-        cell.newDot.hidden = !(messageThread.is_new?.boolValue ?? false)
-        cell.threadID = messageThread.thread_id?.integerValue
+        cell.newDot.hidden = !messageThread.is_new
+        cell.threadID = messageThread.thread_id
     }
 
 }

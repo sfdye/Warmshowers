@@ -25,7 +25,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
     // Delegates
     var alert: WSAlertDelegate = WSAlertDelegate.sharedAlertDelegate
     var api: WSAPICommunicator = WSAPICommunicator.sharedAPICommunicator
-    let store: WSStoreMessageThreadProtocol = WSStore.sharedStore
+    var store: WSStoreProtocol = WSStore.sharedStore
     var connection: WSReachabilityProtocol = WSReachabilityManager.sharedReachabilityManager
     
     // MARK: View life cycle
@@ -89,7 +89,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
     }
     
     func initialiseFetchResultsController() {
-        let request = NSFetchRequest(entityName: WSEntity.Thread.rawValue)
+        let request = NSFetchRequest(entityName: WSMOMessageThread.entityName)
         request.sortDescriptors = [NSSortDescriptor(key: "last_updated", ascending: false)]
         let moc = WSStore.sharedStore.managedObjectContext
         fetchedResultsController = NSFetchedResultsController(
@@ -148,14 +148,24 @@ class WSMessageThreadsTableViewController: UITableViewController {
         
         // Update the messages if necessary, or just reload if no updates are required
         do {
-            let threadIDs = try store.messageThreadsThatNeedUpdating()
-            if threadIDs.count > 0 {
-                for threadID in threadIDs {
-                    api.contactEndPoint(.GetMessageThread, withPathParameters: nil, andData: threadID, thenNotify: self)
-                    downloadsInProgress.insert(threadID)
+            let messageThreads = try store.retrieve(WSMOMessageThread.self, sortBy: nil, isAscending: true, predicate: nil)
+            
+            var threadsNeedingUpdate = [WSMOMessageThread]()
+            for thread in messageThreads {
+                if thread.needsUpdating() {
+                    threadsNeedingUpdate.append(thread)
                 }
-            } else {
+            }
+            
+            guard threadsNeedingUpdate.count > 0 else {
                 didFinishedUpdates()
+                return
+            }
+            
+            for thread in threadsNeedingUpdate {
+                guard let threadID = thread.thread_id else { continue }
+                api.contactEndPoint(.GetMessageThread, withPathParameters: nil, andData: threadID, thenNotify: self)
+                downloadsInProgress.insert(threadID)
             }
         } catch let error as NSError {
             alert.presentAlertFor(self, withTitle: "Error", button: "OK", message: error.localizedDescription)
@@ -164,13 +174,23 @@ class WSMessageThreadsTableViewController: UITableViewController {
     
     /** Updates the tab bar badge with the number of unread threads. */
     func updateTabBarBadge() {
-        guard let unread = try? store.numberOfUnreadMessageThreads() else { return }
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
-            if unread > 0 {
-                self.navigationController?.tabBarItem.badgeValue = String(unread)
-            } else {
-                self.navigationController?.tabBarItem.badgeValue = nil
+        do {
+            let messageThreads = try store.retrieve(WSMOMessageThread.self, sortBy: nil, isAscending: true, predicate: nil)
+            
+            var unread = 0
+            for thread in messageThreads {
+                if thread.is_new { unread += 1 }
             }
+
+            dispatch_async(dispatch_get_main_queue()) { () -> Void in
+                if unread > 0 {
+                    self.navigationController?.tabBarItem.badgeValue = String(unread)
+                } else {
+                    self.navigationController?.tabBarItem.badgeValue = nil
+                }
+            }
+        } catch {
+            // Not an important error. The badge will get updated next message thread update.
         }
     }
     

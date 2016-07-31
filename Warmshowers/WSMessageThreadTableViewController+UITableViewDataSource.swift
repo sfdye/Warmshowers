@@ -27,7 +27,7 @@ extension WSMessageThreadTableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        guard let message = self.fetchedResultsController.objectAtIndexPath(indexPath) as? CDWSMessage else {
+        guard let message = self.fetchedResultsController.objectAtIndexPath(indexPath) as? WSMOMessage else {
             let cell = tableView.dequeueReusableCellWithIdentifier(RUI_MessageFromSelf, forIndexPath: indexPath) as! MessageTableViewCell
             return cell
         }
@@ -38,11 +38,11 @@ extension WSMessageThreadTableViewController {
         return cell
     }
     
-    func configureCell(cell: MessageTableViewCell, withMessage message: CDWSMessage) {
-        cell.fromLabel.text = message.authorName ?? ""
+    func configureCell(cell: MessageTableViewCell, withMessage message: WSMOMessage) {
+        cell.fromLabel.text = message.author?.fullname
         cell.dateLabel.text = textForMessageDate(message.timestamp)
         cell.bodyTextView.text = message.body
-        cell.authorImageView.image = message.authorThumbnail ?? UIImage(named: "ThumbnailPlaceholder")
+        cell.authorImageView.image = message.author?.image as? UIImage ?? UIImage(named: "ThumbnailPlaceholder")
     }
     
 }

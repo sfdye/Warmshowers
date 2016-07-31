@@ -83,22 +83,21 @@ class WSUserLocation: NSObject {
         self.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
     }
     
-    init?(user: CDWSUserLocation) {
+    init?(user: WSMOUser) {
         
         // At a minimum, the object must have a uid, latitude and longitude
         guard
             let fullname = user.fullname,
             let name = user.name,
-            let uid = user.uid?.integerValue,
-            let lat = user.latitude?.doubleValue,
-            let lon = user.longitude?.doubleValue
+            let lat = user.latitude,
+            let lon = user.longitude
             else {
                 return nil
         }
         
         self.fullname = fullname
         self.name = name
-        self.uid = uid
+        self.uid = user.uid
         self.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
         self.image = user.image as? UIImage
         self.imageURL = user.image_url

@@ -18,7 +18,7 @@ class WSMessageThreadTableViewController: UITableViewController {
     let formatter = NSDateFormatter()
     
     // Delegates
-    let store: protocol<WSStoreMessageThreadProtocol, WSStoreParticipantProtocol>  = WSStore.sharedStore
+    var store: WSStoreProtocol = WSStore.sharedStore
     let session: WSSessionStateProtocol = WSSessionState.sharedSessionState
     var api: WSAPICommunicatorProtocol = WSAPICommunicator.sharedAPICommunicator
     
@@ -49,7 +49,7 @@ class WSMessageThreadTableViewController: UITableViewController {
         refreshControl?.addTarget(self, action: #selector(WSMessageThreadTableViewController.update), forControlEvents: UIControlEvents.ValueChanged)
         
         // Set the view title
-        navigationItem.title = store.subjectForMessageThreadWithID(threadID ?? 0)
+        navigationItem.title = subjectForMessageThreadWithID(threadID ?? 0)
         
         // Set up the fetch results controller
         initialiseFetchResultsController()
@@ -83,7 +83,7 @@ class WSMessageThreadTableViewController: UITableViewController {
     
     func initialiseFetchResultsController() {
         let request = NSFetchRequest(entityName: "Message")
-        request.predicate = NSPredicate(format: "thread.thread_id==%i", threadID ?? 0)
+        request.predicate = NSPredicate(format: "thread.p_thread_id==%i", threadID ?? 0)
         request.sortDescriptors = [NSSortDescriptor(key: "timestamp", ascending: true)]
         self.fetchedResultsController = NSFetchedResultsController(
             fetchRequest: request,
@@ -101,6 +101,15 @@ class WSMessageThreadTableViewController: UITableViewController {
 
     // MARK: Utilities
     
+    /** Returns the subject of a message thread given the thread ID. */
+    func subjectForMessageThreadWithID(threadID: Int) -> String? {
+        let predicate = NSPredicate(format: "p_thread_id == %d", threadID)
+        guard let thread = try? store.retrieve(WSMOMessageThread.self, sortBy: nil, isAscending: true, predicate: predicate).first else {
+            return nil
+        }
+        return thread?.subject
+    }
+    
     /** Updates the messages. */
     func update() {
         guard let threadID = threadID else { return }
@@ -114,7 +123,7 @@ class WSMessageThreadTableViewController: UITableViewController {
     }
     
     func startImageDownloadForIndexPath(indexPath: NSIndexPath) {
-        guard let message = self.fetchedResultsController.objectAtIndexPath(indexPath) as? CDWSMessage else { return }
+        guard let message = self.fetchedResultsController.objectAtIndexPath(indexPath) as? WSMOMessage else { return }
         guard message.author?.image == nil else { return }
         if let url = message.author?.image_url {
             api.contactEndPoint(.ImageResource, withPathParameters: url as NSString, andData: nil, thenNotify: self)
@@ -134,13 +143,23 @@ class WSMessageThreadTableViewController: UITableViewController {
     
     /** Sets the image for a host in the list with the given image URL. */
     func setImage(image: UIImage, forHostWithImageURL imageURL: String) {
-        store.updateParticipantWithImageURL(imageURL, withImage: image)
+        
+        let predicate = NSPredicate(format: "image_url LIKE %@", imageURL)
+        
+        guard let participant = try? store.retrieve(WSMOUser.self, sortBy: nil, isAscending: true, predicate: predicate).first else {
+            return
+        }
+        
+        participant?.image = image
+        try! store.savePrivateContext()
+        
+        // Set the image in any message table view cells where the user in the author.
         dispatch_async(dispatch_get_main_queue()) { [weak self] in
             guard let visiblePaths = self?.tableView.indexPathsForVisibleRows else { return }
             for indexPath in visiblePaths {
                 if
                     let cell = self?.tableView.cellForRowAtIndexPath(indexPath) as? MessageTableViewCell,
-                    let message = self?.fetchedResultsController.objectAtIndexPath(indexPath) as? CDWSMessage,
+                    let message = self?.fetchedResultsController.objectAtIndexPath(indexPath) as? WSMOMessage,
                     let url = message.author?.image_url
                     where url == imageURL
                 {
