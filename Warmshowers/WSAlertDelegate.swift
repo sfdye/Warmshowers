@@ -23,6 +23,7 @@ class WSAlertDelegate : WSAlertProtocol {
     
     func presentAlertFor(delegator: UIViewController?, withTitle title: String?, button: String?, message: String?, andHandler handler: ((UIAlertAction) -> Void)?) {
         dispatch_async(dispatch_get_main_queue()) { [weak delegator] in
+            guard delegator?.presentedViewController == nil else { return }
             let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
             let action = UIAlertAction(title: button, style: UIAlertActionStyle.Default, handler: handler)
             alertController.addAction(action)

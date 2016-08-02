@@ -21,10 +21,11 @@ class WSAPICommunicator: WSAPICommunicatorProtocol {
     
     static let sharedAPICommunicator = WSAPICommunicator()
     
-    var session = WSURLSession.sharedSession
-    var connection: WSReachabilityProtocol = WSReachabilityManager.sharedReachabilityManager
+    var urlSession = WSURLSession.sharedSession
     var host = WSAPIHost.sharedAPIHost
-    var store = WSStore.sharedStore
+    var connection: WSReachabilityProtocol = WSReachabilityManager.sharedReachabilityManager
+    var store: WSStoreProtocol = WSStore.sharedStore
+    var session: WSSessionStateProtocol = WSSessionState.sharedSessionState
     
     var mode: WSAPICommunicatorMode
     var logging: Bool = false
@@ -98,7 +99,7 @@ class WSAPICommunicator: WSAPICommunicatorProtocol {
             // Dispatch the request.
             switch mode {
             case .Online:
-                let task = session.dataTaskWithRequest(urlRequest) { [weak self] (data, response, error) in
+                let task = urlSession.dataTaskWithRequest(urlRequest) { [weak self] (data, response, error) in
                     self?.didRecieveHTTPResponseWithData(data, response: response, andError: error, forRequest: &request)
                 }
                 task.resume()
@@ -129,6 +130,11 @@ class WSAPICommunicator: WSAPICommunicatorProtocol {
         
         // Handle error responses
         guard request.endPoint.successCodes.contains(statusCode) else {
+            
+            // The user is unauthorized and must log in again.
+            if statusCode == 403 {
+                session.didLogoutFromView(nil)
+            }
             
             var error: WSAPICommunicatorError
             var body: String = ""

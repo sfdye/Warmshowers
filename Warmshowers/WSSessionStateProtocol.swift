@@ -6,7 +6,7 @@
 //  Copyright © 2016 Rajan Fernandez. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol WSSessionStateProtocol {
     
@@ -33,4 +33,8 @@ protocol WSSessionStateProtocol {
     
     /** Returns true is a user is logged in. */
     var isLoggedIn: Bool { get }
+    
+    /** Deletes the the users session data and navigates to the login screen. */
+    func didLogoutFromView(viewContoller: UIViewController?)
+    
 }

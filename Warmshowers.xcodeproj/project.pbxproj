@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C648D55C81F29FDA48192364 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A17687885A5BDB7132D6EBF2 /* Pods.framework */; };
 		E505EF141CE2DE2200F7B417 /* WSLocationSearchViewController+WSAPIResponseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E505EF131CE2DE2200F7B417 /* WSLocationSearchViewController+WSAPIResponseDelegate.swift */; };
 		E50FD8A21C053A42004D38A3 /* MapTileServerURLTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50FD8A11C053A42004D38A3 /* MapTileServerURLTemplate.swift */; };
 		E51180C31D3583180021F5F5 /* WSMessageThreadTableViewController+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51180C21D3583180021F5F5 /* WSMessageThreadTableViewController+Navigation.swift */; };
@@ -94,8 +95,6 @@
 		E574AED41D3196E7008676BC /* WSLoginData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E574AED31D3196E7008676BC /* WSLoginData.swift */; };
 		E574AED61D32D31D008676BC /* WSHostListTableViewController+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E574AED51D32D31D008676BC /* WSHostListTableViewController+Navigation.swift */; };
 		E574AED81D32E6E5008676BC /* WSHostListTableViewController+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E574AED71D32E6E5008676BC /* WSHostListTableViewController+Actions.swift */; };
-		E57AF7311CAA4E58002785D1 /* WSStore+WSStoreUserLocationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57AF7301CAA4E58002785D1 /* WSStore+WSStoreUserLocationProtocol.swift */; };
-		E57AF7331CAA4EA4002785D1 /* WSStore+WSStoreMapTileProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57AF7321CAA4EA4002785D1 /* WSStore+WSStoreMapTileProtocol.swift */; };
 		E58C36781D16778A001B03D5 /* WSLocationSearchViewController+CCHMapClusterControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58C36771D16778A001B03D5 /* WSLocationSearchViewController+CCHMapClusterControllerDelegate.swift */; };
 		E58C37131D28F6A4001B03D5 /* WSComposeMessageViewController+WSAPIResponseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58C37121D28F6A4001B03D5 /* WSComposeMessageViewController+WSAPIResponseDelegate.swift */; };
 		E58C37151D28F741001B03D5 /* WSMessageThreadsTableViewController+WSAPIResponseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58C37141D28F741001B03D5 /* WSMessageThreadsTableViewController+WSAPIResponseDelegate.swift */; };
@@ -224,8 +223,6 @@
 		E5F9BC8F1CDE86D2006494FE /* WSStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F9BC8E1CDE86D2006494FE /* WSStoreProtocol.swift */; };
 		E5F9BC911CDE8725006494FE /* WSStore+WSStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F9BC901CDE8725006494FE /* WSStore+WSStoreProtocol.swift */; };
 		E5F9BC9E1CDE93A8006494FE /* WSAPIRequestStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F9BC9D1CDE93A8006494FE /* WSAPIRequestStatus.swift */; };
-		E5F9BCA21CDF25FA006494FE /* WSStoreMapTileProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F9BCA11CDF25FA006494FE /* WSStoreMapTileProtocol.swift */; };
-		E5F9BCA61CDF26B0006494FE /* WSUserLocationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F9BCA51CDF26B0006494FE /* WSUserLocationProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -246,7 +243,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		22A6BF73E1AA1E50DF34448C /* Pods.test.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.test.xcconfig; path = "Pods/Target Support Files/Pods/Pods.test.xcconfig"; sourceTree = "<group>"; };
+		2F0EED8D43986B3BB2B7F3D3 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		A17687885A5BDB7132D6EBF2 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B0A027361F9F920C8ED9DDE1 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		E505EF131CE2DE2200F7B417 /* WSLocationSearchViewController+WSAPIResponseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSLocationSearchViewController+WSAPIResponseDelegate.swift"; sourceTree = "<group>"; };
 		E50FD8A11C053A42004D38A3 /* MapTileServerURLTemplate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapTileServerURLTemplate.swift; sourceTree = "<group>"; };
 		E51180C21D3583180021F5F5 /* WSMessageThreadTableViewController+Navigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSMessageThreadTableViewController+Navigation.swift"; sourceTree = "<group>"; };
@@ -336,8 +336,6 @@
 		E574AED31D3196E7008676BC /* WSLoginData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSLoginData.swift; sourceTree = "<group>"; };
 		E574AED51D32D31D008676BC /* WSHostListTableViewController+Navigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSHostListTableViewController+Navigation.swift"; sourceTree = "<group>"; };
 		E574AED71D32E6E5008676BC /* WSHostListTableViewController+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSHostListTableViewController+Actions.swift"; sourceTree = "<group>"; };
-		E57AF7301CAA4E58002785D1 /* WSStore+WSStoreUserLocationProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSStore+WSStoreUserLocationProtocol.swift"; sourceTree = "<group>"; };
-		E57AF7321CAA4EA4002785D1 /* WSStore+WSStoreMapTileProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSStore+WSStoreMapTileProtocol.swift"; sourceTree = "<group>"; };
 		E58C36771D16778A001B03D5 /* WSLocationSearchViewController+CCHMapClusterControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSLocationSearchViewController+CCHMapClusterControllerDelegate.swift"; sourceTree = "<group>"; };
 		E58C37121D28F6A4001B03D5 /* WSComposeMessageViewController+WSAPIResponseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSComposeMessageViewController+WSAPIResponseDelegate.swift"; sourceTree = "<group>"; };
 		E58C37141D28F741001B03D5 /* WSMessageThreadsTableViewController+WSAPIResponseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSMessageThreadsTableViewController+WSAPIResponseDelegate.swift"; sourceTree = "<group>"; };
@@ -473,8 +471,6 @@
 		E5F9BC8E1CDE86D2006494FE /* WSStoreProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSStoreProtocol.swift; sourceTree = "<group>"; };
 		E5F9BC901CDE8725006494FE /* WSStore+WSStoreProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSStore+WSStoreProtocol.swift"; sourceTree = "<group>"; };
 		E5F9BC9D1CDE93A8006494FE /* WSAPIRequestStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSAPIRequestStatus.swift; sourceTree = "<group>"; };
-		E5F9BCA11CDF25FA006494FE /* WSStoreMapTileProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSStoreMapTileProtocol.swift; sourceTree = "<group>"; };
-		E5F9BCA51CDF26B0006494FE /* WSUserLocationProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSUserLocationProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -483,6 +479,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E56CC0881BFD166200AAF973 /* MapKit.framework in Frameworks */,
+				C648D55C81F29FDA48192364 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -503,6 +500,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8F54901319E7D8DE6FD85932 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2F0EED8D43986B3BB2B7F3D3 /* Pods.debug.xcconfig */,
+				22A6BF73E1AA1E50DF34448C /* Pods.test.xcconfig */,
+				B0A027361F9F920C8ED9DDE1 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		D6001CC5D7394753D8ED4DB7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -539,6 +546,7 @@
 			isa = PBXGroup;
 			children = (
 				E569E7941CF5A3940004B111 /* MKCoordinateRegion+Warmshowers.swift */,
+				E5A84A681C8E0AE9007609A9 /* MKMapView+Warmshowers.swift */,
 				E5A84A661C8E0A1D007609A9 /* WSMapTile.swift */,
 			);
 			name = Map;
@@ -651,17 +659,6 @@
 				E58C37181D290776001B03D5 /* HostSearch */,
 			);
 			name = Controllers;
-			sourceTree = "<group>";
-		};
-		E54FF3531D4D56F100E81483 /* old */ = {
-			isa = PBXGroup;
-			children = (
-				E57AF7321CAA4EA4002785D1 /* WSStore+WSStoreMapTileProtocol.swift */,
-				E57AF7301CAA4E58002785D1 /* WSStore+WSStoreUserLocationProtocol.swift */,
-				E5F9BCA11CDF25FA006494FE /* WSStoreMapTileProtocol.swift */,
-				E5F9BCA51CDF26B0006494FE /* WSUserLocationProtocol.swift */,
-			);
-			name = old;
 			sourceTree = "<group>";
 		};
 		E564903B1CD4AF4200645331 /* SearchByKeyword */ = {
@@ -1018,6 +1015,7 @@
 				E5D96B181BFB1CA700AFAFEE /* WarmshowersUITests */,
 				E5D96AF51BFB1CA700AFAFEE /* Products */,
 				D6001CC5D7394753D8ED4DB7 /* Frameworks */,
+				8F54901319E7D8DE6FD85932 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1168,7 +1166,6 @@
 				E5DA03A61C46FCBB00FAD1D7 /* WSColor.swift */,
 				E5DA03EF1C49C7A200FAD1D7 /* WSFont.swift */,
 				E5DA040B1C4DCBE700FAD1D7 /* WSColoredDot.swift */,
-				E5A84A681C8E0AE9007609A9 /* MKMapView+Warmshowers.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1200,7 +1197,6 @@
 		E5F9BC8B1CDE86AA006494FE /* Store */ = {
 			isa = PBXGroup;
 			children = (
-				E54FF3531D4D56F100E81483 /* old */,
 				E52B356D1D36C99400DD0F44 /* CoreData */,
 				E5D961511C61FC75004E1F31 /* WSStore.swift */,
 				E5F9BC901CDE8725006494FE /* WSStore+WSStoreProtocol.swift */,
@@ -1296,9 +1292,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E5D96B1E1BFB1CA700AFAFEE /* Build configuration list for PBXNativeTarget "Warmshowers" */;
 			buildPhases = (
+				1E8AE46178F9B77CF2281A2F /* Check Pods Manifest.lock */,
 				E5D96AF01BFB1CA700AFAFEE /* Sources */,
 				E5D96AF11BFB1CA700AFAFEE /* Frameworks */,
 				E5D96AF21BFB1CA700AFAFEE /* Resources */,
+				2F2EB46953344594F889AEAE /* Embed Pods Frameworks */,
+				A3530C5E61712320FB6E31DF /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1430,6 +1429,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1E8AE46178F9B77CF2281A2F /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		2F2EB46953344594F889AEAE /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A3530C5E61712320FB6E31DF /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		E5D96AF01BFB1CA700AFAFEE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -1505,7 +1552,6 @@
 				E5F4A7901CE086150010BEC7 /* WSAPICommunicator+WSAPICommunicatorProtocol.swift in Sources */,
 				E5A84A691C8E0AE9007609A9 /* MKMapView+Warmshowers.swift in Sources */,
 				E5F9BC9E1CDE93A8006494FE /* WSAPIRequestStatus.swift in Sources */,
-				E57AF7311CAA4E58002785D1 /* WSStore+WSStoreUserLocationProtocol.swift in Sources */,
 				E5D961541C62BFD4004E1F31 /* WSMessageThreadTableViewController+NSFetchedResultsControllerDelegate.swift in Sources */,
 				E5F4A79C1CE092F30010BEC7 /* WSReplyToMessageEndPoint.swift in Sources */,
 				E5E9200B1D31E35000435070 /* WSHostSearchViewController+WSAPIResponseDelegate.swift in Sources */,
@@ -1539,7 +1585,6 @@
 				E54276821C3E54BA00047029 /* WSPhoneNumberType.swift in Sources */,
 				E59FE1CC1CD0C63C0024F354 /* WSLoginEndPoint+Testing.swift in Sources */,
 				E5DA03D81C488AE900FAD1D7 /* WSLazyImageTableViewCell.swift in Sources */,
-				E5F9BCA21CDF25FA006494FE /* WSStoreMapTileProtocol.swift in Sources */,
 				E5AF1A8A1C58A44E0004806A /* WSMessageThreadsTableViewController+UITableViewDataSource.swift in Sources */,
 				E5F4A7921CE086EA0010BEC7 /* WSMarkThreadReadEndPoint.swift in Sources */,
 				E5F4A7961CE092A10010BEC7 /* WSGetMessageThreadEndPoint.swift in Sources */,
@@ -1602,7 +1647,6 @@
 				E56CC0921BFD569500AAF973 /* SwitchTableViewCell.swift in Sources */,
 				E57057E81CC879E300FA5D9F /* WSCreateFeedbackTableViewController+WSAPIResponseDelegate.swift in Sources */,
 				E51180C31D3583180021F5F5 /* WSMessageThreadTableViewController+Navigation.swift in Sources */,
-				E5F9BCA61CDF26B0006494FE /* WSUserLocationProtocol.swift in Sources */,
 				E59FE1BE1CD0AD630024F354 /* WSAPICommunicatorError.swift in Sources */,
 				E5AF1A881C58A41A0004806A /* WSMessageThreadTableViewController+UITableViewDataSource.swift in Sources */,
 				E59FE1C61CD0B3650024F354 /* WSLoginViewController+WSAPIResponseDelegate.swift in Sources */,
@@ -1629,7 +1673,6 @@
 				E57057DC1CC85CE100FA5D9F /* WSConstants.swift in Sources */,
 				E57057F31CC9895300FA5D9F /* WSAPIRequest.swift in Sources */,
 				E569E7951CF5A3940004B111 /* MKCoordinateRegion+Warmshowers.swift in Sources */,
-				E57AF7331CAA4EA4002785D1 /* WSStore+WSStoreMapTileProtocol.swift in Sources */,
 				E5ED1E931CD433440017D12F /* WSLogoutEndpoint.swift in Sources */,
 				E5A84A6B1C8FBCE1007609A9 /* WSUser.swift in Sources */,
 			);
@@ -1760,6 +1803,7 @@
 		};
 		E57057EF1CC9803A00FA5D9F /* Test */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 22A6BF73E1AA1E50DF34448C /* Pods.test.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1889,6 +1933,7 @@
 		};
 		E5D96B1F1BFB1CA700AFAFEE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2F0EED8D43986B3BB2B7F3D3 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1906,6 +1951,7 @@
 		};
 		E5D96B201BFB1CA700AFAFEE /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B0A027361F9F920C8ED9DDE1 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

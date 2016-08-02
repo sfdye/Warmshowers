@@ -15,7 +15,7 @@ class WSMapTile: Hashable {
     The time (in seconds) at which cached user location data is deemed to old and should be updated from either the store or from downloading fresh data.
     Set to 15 minutes.
     */
-    let UpdateThresholdTime: Double = 60.0 * 15.0
+    let UpdateThresholdTime: Double = 5 //60.0 * 15.0
     
     /** The tile longitude index */
     var x: UInt
@@ -27,7 +27,7 @@ class WSMapTile: Hashable {
     var z: UInt
     
     /** Hosts whose location is within the bounds of the map tile. */
-    var users: [WSUserLocation]
+    var users: Set<WSUserLocation>
     
     /** The quad key (base on Bing maps) to uniquely identify tiles */
     var quadKey: String
@@ -114,7 +114,7 @@ class WSMapTile: Hashable {
         self.x = x
         self.y = y
         self.z = z
-        self.users = [WSUserLocation]()
+        self.users = Set<WSUserLocation>()
         self.quadKey = WSMapTile.quadKeyFromX(x, y: y, z: z)
     }
     
@@ -185,8 +185,8 @@ class WSMapTile: Hashable {
         return quadKeyString
     }
     
-    /** Factory method to return all the map tiles that are it a given map region */
-    class func tilesForMapRegion(region: MKCoordinateRegion, atZoomLevel z: UInt) -> [WSMapTile]? {
+    /** Factory method to return all the map tiles that are it a given map region. */
+    class func tilesForMapRegion(region: MKCoordinateRegion, atZoomLevel z: UInt) -> Set<WSMapTile>? {
         
         // Only return tiles within the latitude range pf -85 < lat < 85.
         let minLat = max(region.minimumLatitude, -85.0)
@@ -211,17 +211,17 @@ class WSMapTile: Hashable {
             xRange = Array(northWest.x...southEast.x)
         }
         
-        var tiles = [WSMapTile]()
+        var tiles = Set<WSMapTile>()
         for x in xRange {
             for y in yRange {
                 if let tile = WSMapTile(x: x, y: y, z: z) {
-                    tiles.append(tile)
+                    tiles.insert(tile)
                 }
             }
         }
         return tiles
     }
-    
+
     /** Returns a polygon that overlays the tile. */
     func polygon() -> MKPolygon {
         var vertices = [CLLocationCoordinate2D]()

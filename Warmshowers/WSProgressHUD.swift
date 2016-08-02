@@ -22,8 +22,9 @@ class WSProgressHUD {
         }
     }
     
-    static func show(view: UIView, label: String?) {
-        dispatch_async(dispatch_get_main_queue(), { [unowned view] in
+    static func show(view: UIView?, label: String?) {
+        dispatch_async(dispatch_get_main_queue(), {
+            guard let view = view else { return }
             let hud = MBProgressHUD.showHUDAddedTo(view, animated: true)
             hud.label.text = label
             hud.WSStyle()
@@ -39,8 +40,9 @@ class WSProgressHUD {
         }
     }
     
-    static func hide(view: UIView) {
-        dispatch_async(dispatch_get_main_queue(), { [unowned view] in
+    static func hide(view: UIView?) {
+        dispatch_async(dispatch_get_main_queue(), {
+            guard let view = view else { return }
             MBProgressHUD.hideHUDForView(view, animated: true)
         })
     }

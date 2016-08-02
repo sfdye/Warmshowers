@@ -12,7 +12,7 @@ extension WSCreateFeedbackTableViewController : WSAPIResponseDelegate {
     
     func requestDidComplete(request: WSAPIRequest) {
         dispatch_async(dispatch_get_main_queue(), {
-            WSProgressHUD.hide(self.navigationController!.view)
+            WSProgressHUD.hide(self.navigationController?.view)
             })
     }
     

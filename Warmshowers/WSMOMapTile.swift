@@ -18,15 +18,12 @@ class WSMOMapTile: NSManagedObject, JSONUpdateable {
     
     static func predicateFromJSON(json: AnyObject) throws -> NSPredicate {
         do {
-            
-            let quad_key = try JSON.nonOptionalForKey("", fromDict: json, withType: Int.self)
+            let quad_key = try JSON.nonOptionalForKey("quad_key", fromDict: json, withType: String.self)
             return NSPredicate(format: "quad_key == %@", quad_key)
         }
     }
     
     func update(json: AnyObject) throws { }
-    
-    
     
     
     /**
@@ -35,22 +32,19 @@ class WSMOMapTile: NSManagedObject, JSONUpdateable {
      */
     let UpdateThresholdTime: Double = 60.0 * 60.0
     
-//    var userLocations: [WSUserLocation]? {
-//        
-//        guard let users = users else {
-//            return nil
-//        }
-//        
-//        var userLocations = [WSUserLocation]()
-//        for user in users {
-//            if user is WSMOUser {
-//                if let userLocation = WSUserLocation(user: user as! WSMOUser) {
-//                    userLocations.append(userLocation)
-//                }
-//            }
-//        }
-//        return userLocations
-//    }
+    var userLocations: Set<WSUserLocation>? {
+        guard let users = users else { return nil }
+        
+        var userLocations = Set<WSUserLocation>()
+        for user in users {
+            if user is WSMOUser {
+                if let userLocation = WSUserLocation(user: user as! WSMOUser) {
+                    userLocations.insert(userLocation)
+                }
+            }
+        }
+        return userLocations
+    }
     
     // MARK: Utility methods
     

@@ -17,7 +17,7 @@ extension WSSettingsTableViewController : WSAPIResponseDelegate {
     func request(request: WSAPIRequest, didSuceedWithData data: AnyObject?) {
         switch request.endPoint.type {
         case .Logout:
-            logout()
+            session.didLogoutFromView(self)
         default:
             break
         }
@@ -26,11 +26,18 @@ extension WSSettingsTableViewController : WSAPIResponseDelegate {
     func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
         switch request.endPoint.type {
         case .Logout:
-            let nserror = error as NSError
-            // WSAPICommunicatorError.ServerError. This is usually a 406: user already logged out.
-            if nserror.code == 4 {
-                logout()
-            } else {
+            switch error {
+            case is WSAPICommunicatorError:
+                switch (error as! WSAPICommunicatorError) {
+                case .ServerError(let statusCode, _):
+                    if statusCode == 406 {
+                        // 406: user already logged out.
+                        session.didLogoutFromView(self)
+                    }
+                default:
+                    break
+                }
+            default:
                 alert.presentAlertFor(self, withTitle: "Logout failed", button: "Dismiss", message: "Please try again.")
             }
         default:

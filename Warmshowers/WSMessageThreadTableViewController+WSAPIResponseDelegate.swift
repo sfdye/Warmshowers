@@ -30,9 +30,9 @@ extension WSMessageThreadTableViewController: WSAPIResponseDelegate {
         case .MarkThreadRead:
             guard let readState = request.data as? WSMessageThreadReadState else { return }
             let predicate = NSPredicate(format: "p_thread_id == %d", readState.threadID)
-            if let messageThread = try! store.retrieve(WSMOMessageThread.self, sortBy: nil, isAscending: true, predicate: predicate).first {
+            if let messageThread = try! store.retrieve(WSMOMessageThread.self, sortBy: nil, isAscending: true, predicate: predicate, context: store.managedObjectContext).first {
                 messageThread.is_new = !readState.read
-                try! store.savePrivateContext()
+                try! store.managedObjectContext.save()
             }
         case .UserInfo:
             guard
@@ -40,10 +40,10 @@ extension WSMessageThreadTableViewController: WSAPIResponseDelegate {
                 let url = user.profileImageURL
                 else { return }
             let predicate = NSPredicate(format: "p_uid == %d", user.uid)
-            if let user = try? store.retrieve(WSMOUser.self, sortBy: nil, isAscending: true, predicate: predicate).first {
+            if let user = try? store.retrieve(WSMOUser.self, sortBy: nil, isAscending: true, predicate: predicate, context: store.managedObjectContext).first {
                 user?.image_url = url
                 do {
-                    try store.savePrivateContext()
+                    try store.managedObjectContext.save()
                     api.contactEndPoint(.ImageResource, withPathParameters: url as NSString, andData: nil, thenNotify: self)
                 } catch {
                     // Not a big deal. The author profile image won't be downloaded.
@@ -62,7 +62,6 @@ extension WSMessageThreadTableViewController: WSAPIResponseDelegate {
     
     func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
         //
-        print(error)
     }
     
 }

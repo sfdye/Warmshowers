@@ -11,7 +11,7 @@ import UIKit
 extension WSAccountTableViewController: WSAPIResponseDelegate {
     
     func requestDidComplete(request: WSAPIRequest) {
-        WSProgressHUD.hide(self.navigationController!.view)
+        WSProgressHUD.hide(self.navigationController?.view)
     }
     
     func request(request: WSAPIRequest, didSuceedWithData data: AnyObject?) {
@@ -31,7 +31,7 @@ extension WSAccountTableViewController: WSAPIResponseDelegate {
                 self?.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                 })
         case .Logout:
-            logout()
+            session.didLogoutFromView(self)
         default:
             break
         }
@@ -40,11 +40,18 @@ extension WSAccountTableViewController: WSAPIResponseDelegate {
     func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
         switch request.endPoint.type {
         case .Logout:
-            let nserror = error as NSError
-            // WSAPICommunicatorError.ServerError. This is usually a 406: user already logged out.
-            if nserror.code == 4 {
-                logout()
-            } else {
+            switch error {
+            case is WSAPICommunicatorError:
+                switch (error as! WSAPICommunicatorError) {
+                case .ServerError(let statusCode, _):
+                    if statusCode == 406 {
+                        // 406: user already logged out.
+                        session.didLogoutFromView(self)
+                    }
+                default:
+                    break
+                }
+            default:
                 alert.presentAlertFor(self, withTitle: "Logout failed", button: "Dismiss", message: "Please try again.")
             }
         default:

@@ -11,37 +11,26 @@ import CoreData
 
 extension WSStore: WSStoreProtocol {
     
-    func savePrivateContext() throws {
-        if privateContext.hasChanges {
-            do {
-                try privateContext.save()
-            }
-        }
-    }
-    
     func clearout() throws {
         let entities = managedObjectModel.entities
         for entity in entities {
             do {
                 if let entityName = entity.name {
                     let request = NSFetchRequest(entityName: entityName)
-                    let objects = try privateContext.executeFetchRequest(request) as! [NSManagedObject]
+                    let objects = try managedObjectContext.executeFetchRequest(request) as! [NSManagedObject]
                     for object in objects {
-                        privateContext.deleteObject(object)
+                        managedObjectContext.deleteObject(object)
                     }
-                    try savePrivateContext()
+                    try managedObjectContext.save()
                 }
             }
         }
     }
     
-    func retrieve<T: NSManagedObject>(entityClass: T.Type, sortBy: String? = nil, isAscending: Bool = true, predicate: NSPredicate? = nil) throws -> [T] {
+    func retrieve<T: NSManagedObject where T: JSONUpdateable>(entityClass: T.Type, sortBy: String? = nil, isAscending: Bool = true, predicate: NSPredicate? = nil, context: NSManagedObjectContext = WSStore.sharedStore.managedObjectContext) throws -> [T] {
         do {
-            // Get the entity name from the model.
-            let entityName = try entityNameFromEntityClass(entityClass)
-            
             // Execute a fetch with the given criteria.
-            let request = NSFetchRequest(entityName: entityName)
+            let request = NSFetchRequest(entityName: entityClass.entityName)
             request.returnsObjectsAsFaults = false
             request.predicate = predicate
             
@@ -50,63 +39,37 @@ extension WSStore: WSStoreProtocol {
                 request.sortDescriptors = [sorter]
             }
             
-            let fetchedResult = try privateContext.executeFetchRequest(request) as! [T]
+            let fetchedResult = try context.executeFetchRequest(request) as! [T]
             return fetchedResult
         }
     }
     
-    func newOrExisting<T: NSManagedObject where T: JSONUpdateable>(entityClass: T.Type, withJSON json: AnyObject) throws -> T {
+    func newOrExisting<T: NSManagedObject where T: JSONUpdateable>(entityClass: T.Type, withJSON json: AnyObject, context: NSManagedObjectContext = WSStore.sharedStore.managedObjectContext) throws -> T {
         do {
             let predicate = try entityClass.predicateFromJSON(json)
-            if let exisitng = try retrieve(entityClass, sortBy: nil, isAscending: true, predicate: predicate).first {
+            if let exisitng = try retrieve(entityClass, sortBy: nil, isAscending: true, predicate: predicate, context: context).first {
                 try exisitng.update(json)
                 return exisitng
             } else {
-                let entityName = try entityNameFromEntityClass(entityClass)
-                let newEntry = NSEntityDescription.insertNewObjectForEntityForName(entityName, inManagedObjectContext: privateContext) as! T
+                let newEntry = NSEntityDescription.insertNewObjectForEntityForName(entityClass.entityName, inManagedObjectContext: context) as! T
                 try newEntry.update(json)
                 return newEntry
             }
         }
     }
     
-    
-//    /** Initialises a NSFetchRequest for a given entity. */
-//    func requestForEntity(entity: WSEntity) -> NSFetchRequest {
-//        let request = NSFetchRequest(entityName: entity.rawValue)
-//        return request
-//    }
-//    
-//    // Excecutes a syncronous fetch request with the private context
-//    //
-//    func executeFetchRequest(request: NSFetchRequest) throws -> [AnyObject] {
-//        
-//        var objects = [AnyObject]()
-//        var error: NSError?
-//        privateContext.performBlockAndWait { () -> Void in
-//            do {
-//                objects = try self.privateContext.executeFetchRequest(request)
-//            } catch let nserror as NSError {
-//                error = nserror
-//            }
-//        }
-//        
-//        guard error == nil else {
-//            throw error!
-//        }
-//        
-//        return objects
-//    }
-//    
-//    /** Syncronous fetch of all entries in an entity. */
-//    func getAllEntriesFromEntity(entity: WSEntity) throws -> [AnyObject] {
-//        
-//        let request = requestForEntity(entity)
-//        
-//        do {
-//            let objects = try executeFetchRequest(request)
-//            return objects
-//        }
-//    }
+    func performBlockInPrivateContextAndWait(block: (NSManagedObjectContext) throws -> Void) throws {
+        let privateContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        privateContext.parentContext = WSStore.sharedStore.managedObjectContext
+        var blockError: ErrorType?
+        privateContext.performBlockAndWait({
+            do {
+                try block(privateContext)
+            } catch {
+                blockError = error
+            }
+        })
+        if let error = blockError { throw error }
+    }
 
 }

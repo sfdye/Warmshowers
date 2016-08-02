@@ -69,7 +69,7 @@ class WSComposeMessageViewController: UIViewController {
         
         // Set up the reply
         let predicate = NSPredicate(format: "p_thread_id == %d", threadID)
-        guard let thread = try! store.retrieve(WSMOMessageThread.self, sortBy: nil, isAscending: true, predicate: predicate).first else { return }
+        guard let thread = try! store.retrieve(WSMOMessageThread.self, sortBy: nil, isAscending: true, predicate: predicate, context: store.managedObjectContext).first else { return }
         guard let uid = session.uid else { return }
         self.threadID = threadID
         self.subject = thread.subject

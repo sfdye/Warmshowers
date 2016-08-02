@@ -9,11 +9,9 @@
 import UIKit
 import CoreData
 
-class WSStore : NSObject {
+class WSStore: NSObject {
     
     static let sharedStore = WSStore()
-    
-    let privateContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
     
     // MARK: Core Data stack
     
@@ -62,39 +60,6 @@ class WSStore : NSObject {
         managedObjectContext.persistentStoreCoordinator = coordinator
         return managedObjectContext
     }()
-    
-    
-    // MARK: Life cycle
-    
-    private override init() {
-        super.init()
-        privateContext.persistentStoreCoordinator = managedObjectContext.persistentStoreCoordinator
-        
-        // Set up an observer to merge changes in the private context to the main context when it is saved
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(privateContextDidSave(_:)), name: NSManagedObjectContextDidSaveNotification, object: privateContext)
-    }
-    
-    deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
-    }
-    
-    // Merges the private context with the main context on notification
-    func privateContextDidSave(notification:NSNotification)
-    {
-        managedObjectContext.performSelectorOnMainThread(#selector(NSManagedObjectContext.mergeChangesFromContextDidSaveNotification(_:)), withObject: notification, waitUntilDone: false)
-    }
-    
-    /** Returns the name of the entity with the given managed object class name. */
-    func entityNameFromEntityClass(entityClass: NSManagedObject.Type) throws -> String {
-        let className = NSStringFromClass(entityClass)
-        let entities = managedObjectModel.entities
-        for entity in entities {
-            if entity.managedObjectClassName == className {
-                return entity.name!
-            }
-        }
-        throw PSStoreError.InvalidEntity
-    }
     
 }
 

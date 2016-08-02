@@ -93,12 +93,18 @@ extension WSLocationSearchViewController : MKMapViewDelegate {
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         
         // Get the tiles that can be seen in the new screen.
-        guard let tiles = tilesInView else { return }
+        guard let tiles = tilesInMapRegion(mapView.region) else { return }
         
         // Abort updating if there are too many tiles on the screen.
         guard tiles.count < maximumTilesInViewForUpdate else {
             updateStatus()
             return
+        }
+        
+        // Clear out display tiles that are not in the view anymore.
+        let tilesNotInView = displayTiles.subtract(tiles)
+        for tile in tilesNotInView {
+            displayTiles.remove(tile)
         }
 
         // Update the annotation for the tiles in the view.

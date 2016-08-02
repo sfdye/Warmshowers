@@ -52,7 +52,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
         refreshControl?.addTarget(self, action: #selector(WSMessageThreadsTableViewController.update), forControlEvents: UIControlEvents.ValueChanged)
         
         // Set up the fetch results controller.
-        initialiseFetchResultsController()
+        initialiseFetchResultsControllerWithStore(store)
         
         // Reachability notifications
         connection.registerForAndStartNotifications(self, selector: #selector(WSMessageThreadsTableViewController.reachabilityChanged(_:)))
@@ -64,7 +64,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: WSColor.Green, NSFontAttributeName: WSFont.SueEllenFrancisco(26)]
         
         if fetchedResultsController == nil {
-            initialiseFetchResultsController()
+            initialiseFetchResultsControllerWithStore(store)
         }
         
         showReachabilityBannerIfNeeded()
@@ -88,10 +88,10 @@ class WSMessageThreadsTableViewController: UITableViewController {
         fetchedResultsController = nil
     }
     
-    func initialiseFetchResultsController() {
+    func initialiseFetchResultsControllerWithStore(store: WSStoreProtocol) {
         let request = NSFetchRequest(entityName: WSMOMessageThread.entityName)
         request.sortDescriptors = [NSSortDescriptor(key: "last_updated", ascending: false)]
-        let moc = WSStore.sharedStore.managedObjectContext
+        let moc = store.managedObjectContext
         fetchedResultsController = NSFetchedResultsController(
             fetchRequest: request,
             managedObjectContext: moc,
@@ -148,7 +148,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
         
         // Update the messages if necessary, or just reload if no updates are required
         do {
-            let messageThreads = try store.retrieve(WSMOMessageThread.self, sortBy: nil, isAscending: true, predicate: nil)
+            let messageThreads = try store.retrieve(WSMOMessageThread.self, sortBy: nil, isAscending: true, predicate: nil, context: store.managedObjectContext)
             
             var threadsNeedingUpdate = [WSMOMessageThread]()
             for thread in messageThreads {
@@ -175,7 +175,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
     /** Updates the tab bar badge with the number of unread threads. */
     func updateTabBarBadge() {
         do {
-            let messageThreads = try store.retrieve(WSMOMessageThread.self, sortBy: nil, isAscending: true, predicate: nil)
+            let messageThreads = try store.retrieve(WSMOMessageThread.self, sortBy: nil, isAscending: true, predicate: nil, context: store.managedObjectContext)
             
             var unread = 0
             for thread in messageThreads {

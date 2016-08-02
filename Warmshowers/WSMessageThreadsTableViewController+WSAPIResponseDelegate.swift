@@ -34,7 +34,6 @@ extension WSMessageThreadsTableViewController : WSAPIResponseDelegate {
     }
     
     func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
-        print(error)
         switch request.endPoint.type {
         case .GetAllMessageThreads:
             errorCache = error

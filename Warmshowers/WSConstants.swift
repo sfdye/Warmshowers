@@ -29,12 +29,3 @@ let NoHostsCellID = "NoHosts"
 let LogoutCellID = "Logout"
 let SwitchCellID = "Switch"
 let DisclosureCellID = "Disclosure"
-
-
-// Notification identifiers
-let MessagesWereUpdatedNotificationName = "ws_messages_were_updated"
-let MessagesViewNeedsUpdateNotificationName = "ws_message_view_needs_update"
-
-// URLs
-//let WSBaseUrl = 
-

@@ -9,6 +9,8 @@
 import UIKit
 import CoreData
 
+let MessagesViewNeedsUpdateNotificationName = "ws_message_view_needs_update"
+
 class WSMessageThreadTableViewController: UITableViewController {
     
     var threadID: Int?
@@ -104,7 +106,7 @@ class WSMessageThreadTableViewController: UITableViewController {
     /** Returns the subject of a message thread given the thread ID. */
     func subjectForMessageThreadWithID(threadID: Int) -> String? {
         let predicate = NSPredicate(format: "p_thread_id == %d", threadID)
-        guard let thread = try? store.retrieve(WSMOMessageThread.self, sortBy: nil, isAscending: true, predicate: predicate).first else {
+        guard let thread = try? store.retrieve(WSMOMessageThread.self, sortBy: nil, isAscending: true, predicate: predicate, context: store.managedObjectContext).first else {
             return nil
         }
         return thread?.subject
@@ -146,12 +148,12 @@ class WSMessageThreadTableViewController: UITableViewController {
         
         let predicate = NSPredicate(format: "image_url LIKE %@", imageURL)
         
-        guard let participant = try? store.retrieve(WSMOUser.self, sortBy: nil, isAscending: true, predicate: predicate).first else {
+        guard let participant = try? store.retrieve(WSMOUser.self, sortBy: nil, isAscending: true, predicate: predicate, context: store.managedObjectContext).first else {
             return
         }
         
         participant?.image = image
-        try! store.savePrivateContext()
+        try! store.managedObjectContext.save()
         
         // Set the image in any message table view cells where the user in the author.
         dispatch_async(dispatch_get_main_queue()) { [weak self] in

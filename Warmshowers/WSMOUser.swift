@@ -29,9 +29,9 @@ class WSMOUser: NSManagedObject, JSONUpdateable {
         set(new) { p_longitude = new == nil ? nil : NSNumber(double: new!) }
     }
     
-    var not_currently_available: Bool {
-        get { return p_not_currently_available?.boolValue ?? false }
-        set(new) { p_not_currently_available = NSNumber(bool: new) }
+    var not_currently_available: Bool? {
+        get { return p_not_currently_available?.boolValue ?? true }
+        set(new) { p_not_currently_available = new == nil ? nil : NSNumber(bool: new!) }
     }
     
     var uid: Int {
@@ -101,6 +101,18 @@ class WSMOUser: NSManagedObject, JSONUpdateable {
             fullname = try JSON.nonOptionalForKey("fullname", fromDict: json, withType: String.self)
             name = try JSON.nonOptionalForKey("name", fromDict: json, withType: String.self)
             uid = try JSON.nonOptionalForKey("uid", fromDict: json, withType: Int.self)
+            // Non essential properties.
+            additional = JSON.optionalForKey("additional", fromDict: json, withType: String.self)
+            city = JSON.optionalForKey("city", fromDict: json, withType: String.self)
+            country = JSON.optionalForKey("country", fromDict: json, withType: String.self)
+            distance = JSON.optionalForKey("distance", fromDict: json, withType: Double.self)
+            image_url = JSON.optionalForKey("profile_image_map_infoWindow", fromDict: json, withType: String.self)
+            latitude = JSON.optionalForKey("latitude", fromDict: json, withType: Double.self)
+            longitude = JSON.optionalForKey("longitude", fromDict: json, withType: Double.self)
+            not_currently_available = JSON.optionalForKey("notcurrentlyavailable", fromDict: json, withType: Bool.self)
+            post_code = JSON.optionalForKey("post_code", fromDict: json, withType: String.self)
+            province = JSON.optionalForKey("province", fromDict: json, withType: String.self)
+            street = JSON.optionalForKey("street", fromDict: json, withType: String.self)
         }
     }
 

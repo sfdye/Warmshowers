@@ -15,7 +15,7 @@ extension WSMessageThreadTableViewController {
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         if identifier == SID_ReplyToMessageThread {
             let predicate = NSPredicate(format: "p_thread_id == %d", threadID!)
-            if let _ = try? store.retrieve(WSMOMessage.self, sortBy: nil, isAscending: true, predicate: predicate) {
+            if let _ = try? store.retrieve(WSMOMessage.self, sortBy: nil, isAscending: true, predicate: predicate, context: store.managedObjectContext) {
                 return true
             }
         }

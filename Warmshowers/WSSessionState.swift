@@ -19,6 +19,12 @@ class WSSessionState : WSSessionStateProtocol {
     var uid: Int? { return defaults.integerForKey(WSUserDefaultsKeys.UIDKey) }
     var username: String? { return defaults.stringForKey(WSUserDefaultsKeys.UsernameKey) }
     
+    // Delegates
+    var navigation: WSNavigationProtocol = WSNavigationDelegate.sharedNavigationDelegate
+    var store: WSStoreProtocol = WSStore.sharedStore
+    var alert: WSAlertProtocol = WSAlertDelegate.sharedAlertDelegate
+    
+    
     func setUsername(username: String) {
         defaults.setValue(username, forKey: WSUserDefaultsKeys.UsernameKey)
         defaults.synchronize()
@@ -63,4 +69,19 @@ class WSSessionState : WSSessionStateProtocol {
     var isLoggedIn: Bool {
         return defaults.objectForKey(WSUserDefaultsKeys.SessionCookieKey) != nil
     }
+    
+    func didLogoutFromView(viewContoller: UIViewController?) {
+        do {
+            deleteSessionData()
+            try store.clearout()
+            navigation.showLoginScreen()
+        } catch {
+            // Suggest that the user delete the app for privacy.
+            guard let viewContoller = viewContoller else { return }
+            alert.presentAlertFor(viewContoller, withTitle: "Data Error", button: "OK", message: "Sorry, an error occured while removing your account data from this iPhone. If you would like to remove your Warmshowers messages from this iPhone please try deleting the Warmshowers app.", andHandler: { [weak self] (action) in
+                self?.navigation.showLoginScreen()
+                })
+        }
+    }
+    
 }
