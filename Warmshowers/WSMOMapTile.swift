@@ -52,7 +52,10 @@ class WSMOMapTile: NSManagedObject, JSONUpdateable {
      * Returns true if the map tile data has not been updated recently
      */
     func needsUpdating() -> Bool {
+        
+        // Return true if it's not know when the tile was last updated. i.e. the tile has never been updated.
         guard let last_updated = last_updated else { return true }
+        
         return abs(last_updated.timeIntervalSinceNow) > UpdateThresholdTime
     }
 

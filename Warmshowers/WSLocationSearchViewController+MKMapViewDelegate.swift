@@ -95,19 +95,15 @@ extension WSLocationSearchViewController : MKMapViewDelegate {
         // Get the tiles that can be seen in the new screen.
         guard let tiles = tilesInMapRegion(mapView.region) else { return }
         
-        // Abort updating if there are too many tiles on the screen.
-        guard tiles.count < maximumTilesInViewForUpdate else {
+        // Abort updating if the user is zoomed out too far.
+        guard zoomLevel >= minimumUpdateZoomLevel else {
             updateStatus()
             return
         }
         
-        // Clear out display tiles that are not in the view anymore.
-        let tilesNotInView = displayTiles.subtract(tiles)
-        for tile in tilesNotInView {
-            displayTiles.remove(tile)
-        }
+        unloadAnnotationsOutOfRegion(mapView.region)
 
-        // Update the annotation for the tiles in the view.
+        // Update the annotations for the tiles in the view.
         for tile in tiles {
             loadAnnotationsForMapTile(tile)  
         }
@@ -115,4 +111,5 @@ extension WSLocationSearchViewController : MKMapViewDelegate {
         // Update the status label
         updateStatus()
     }
+    
 }

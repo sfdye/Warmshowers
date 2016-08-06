@@ -10,7 +10,7 @@ import Foundation
 
 class WSSearchByLocationEndPoint : WSAPIEndPointProtocol {
     
-    static let MapSearchLimit: Int = 500
+    static let MapSearchLimit: Int = 800
     
     var type: WSAPIEndPoint = .SearchByLocation
     
@@ -37,7 +37,29 @@ class WSSearchByLocationEndPoint : WSAPIEndPointProtocol {
             throw WSAPIEndPointError.ParsingError(endPoint: name, key: "accounts")
         }
         
-        guard accountsJSON.count < 500 else {
+        // If the API has returned the maximum number of hosts, save the map tile and link it to its parent, then throw an error so that to WSLocationSearchViewController can initate loading the subtiles for this tile.
+        guard accountsJSON.count < WSSearchByLocationEndPoint.MapSearchLimit else {
+            
+            do {
+                try store.performBlockInPrivateContextAndWait({ (context) in
+                    
+                    let tile = try store.newOrExisting(WSMOMapTile.self, withJSON: ["quad_key": quadKey], context: context)
+                    tile.last_updated = NSDate()
+                    tile.quad_key = quadKey
+                    
+                    // Link the map tile to its parent tile if neccessary
+                    let index = quadKey.endIndex.advancedBy(-1)
+                    let parentQuadKey = quadKey.substringToIndex(index)
+                    
+                    let predicate = NSPredicate(format: "quad_key == %@", parentQuadKey)
+                    if let parentTile = try! store.retrieve(WSMOMapTile.self, sortBy: nil, isAscending: true, predicate: predicate, context: context).first {
+                        tile.parent_tile = parentTile
+                    }
+                    
+                    try context.save()
+                })
+            }
+            
             throw WSAPIEndPointError.ReachedTileLimit
         }
         
@@ -65,7 +87,6 @@ class WSSearchByLocationEndPoint : WSAPIEndPointProtocol {
                 tile.users = users
                 
                 try context.save()
-                try store.managedObjectContext.save()
             })
         }
     }

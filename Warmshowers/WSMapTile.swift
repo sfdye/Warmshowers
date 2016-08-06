@@ -15,7 +15,7 @@ class WSMapTile: Hashable {
     The time (in seconds) at which cached user location data is deemed to old and should be updated from either the store or from downloading fresh data.
     Set to 15 minutes.
     */
-    let UpdateThresholdTime: Double = 5 //60.0 * 15.0
+    let UpdateThresholdTime: Double = 120 //60.0 * 15.0
     
     /** The tile longitude index */
     var x: UInt
@@ -27,7 +27,11 @@ class WSMapTile: Hashable {
     var z: UInt
     
     /** Hosts whose location is within the bounds of the map tile. */
-    var users: Set<WSUserLocation>
+    var users: Set<WSUserLocation> {
+        didSet {
+            last_updated = NSDate()
+        }
+    }
     
     /** The quad key (base on Bing maps) to uniquely identify tiles */
     var quadKey: String
@@ -185,6 +189,30 @@ class WSMapTile: Hashable {
         return quadKeyString
     }
     
+    private func xYFromQuadKey(quadKey: String) -> (x: UInt, y: UInt)? {
+        guard let _ = Int(quadKey) else { return nil }
+        let z = quadKey.characters.count
+        let max = pow(2.0, Double(z))
+        var x: UInt = 0
+        var y: UInt = 0
+        for (index, character) in quadKey.characters.enumerate() {
+            let increment = UInt(max / pow(2.0, Double(index + 1)))
+            let digit = Int(String(character))!
+            switch digit {
+            case 1:
+                x += increment
+            case 2:
+                y += increment
+            case 3:
+                x += increment
+                y += increment
+            default:
+                break
+            }
+        }
+        return (x, y)
+    }
+    
     /** Factory method to return all the map tiles that are it a given map region. */
     class func tilesForMapRegion(region: MKCoordinateRegion, atZoomLevel z: UInt) -> Set<WSMapTile>? {
         
@@ -220,6 +248,48 @@ class WSMapTile: Hashable {
             }
         }
         return tiles
+    }
+    
+    func isInRegion(region: MKCoordinateRegion) -> Bool {
+        
+        func moveDegrees(inout degrees: CLLocationDegrees, intoRangeWithLowerBound lowerBound: Double, andUpperBound upperBound: Double) {
+            let range = upperBound - lowerBound
+            while degrees < lowerBound {
+                degrees += range
+            }
+            while degrees >= upperBound {
+                degrees -= range
+            }
+        }
+        
+        guard
+            !region.center.latitude.isNaN
+                && !region.center.longitude.isNaN
+                && !region.span.longitudeDelta.isNaN
+                && !region.span.longitudeDelta.isNaN
+            else { return false }
+        
+        var minLon = region.minimumLongitude
+        moveDegrees(&minLon, intoRangeWithLowerBound: -180, andUpperBound: 180)
+        var maxLon = region.maximumLongitude
+        moveDegrees(&maxLon, intoRangeWithLowerBound: -180, andUpperBound: 180)
+        var minLat = region.minimumLatitude
+        moveDegrees(&minLat, intoRangeWithLowerBound: -90.0, andUpperBound: 90.0)
+        var maxLat = region.maximumLatitude
+        moveDegrees(&maxLat, intoRangeWithLowerBound: -90.0, andUpperBound: 90.0)
+        
+        return minimumLatitude < maxLat
+                && maximumLatitude > minLat
+                && minimumLongitude < maxLon
+                && maximumLongitude > minLon
+    }
+    
+    func parentAtZoomLevel(z: UInt) -> WSMapTile? {
+        guard z <= UInt(quadKey.characters.count) else { return nil }
+        let index = quadKey.startIndex.advancedBy(Int(z))
+        let parentQuadKey = quadKey.substringToIndex(index)
+        guard let (x, y) = xYFromQuadKey(parentQuadKey) else { return nil }
+        return WSMapTile(x: x, y: y, z: z)
     }
 
     /** Returns a polygon that overlays the tile. */

@@ -33,11 +33,8 @@ class WSLocationSearchViewController : UIViewController {
     
     let locationManager = CLLocationManager()
     
-    // This is the zoom level at which api request will be made. i.e. each api request will be for the area specified at this zoom level.
-    let tileUpdateZoomLevel: UInt = 5
-    
     // The maximum number of tiles that can be on the screen for downloads to start.
-    let maximumTilesInViewForUpdate = 20
+    let minimumUpdateZoomLevel: UInt = 6
     
     // The maximum number of users per map tile.
     let maximumUsersPerTile = WSSearchByLocationEndPoint.MapSearchLimit
@@ -81,6 +78,14 @@ class WSLocationSearchViewController : UIViewController {
             })
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dump the display tiles and annotations the reload
+        displayTiles = Set<WSMapTile>()
+        clusterController.removeAnnotations(Array(clusterController.annotations), withCompletionHandler: nil)
+        mapView.delegate?.mapView!(mapView, regionDidChangeAnimated: false)
+    }
+    
     
     // MARK: Utility methods
     
@@ -106,7 +111,7 @@ class WSLocationSearchViewController : UIViewController {
     /** Provides the string for the status label based on the current controller state. */
     func textForStatusLabel() -> String? {
         
-        if let tiles = tilesInMapRegion(mapView.region) where tiles.count > 20 {
+        if zoomLevel < minimumUpdateZoomLevel {
             return "Please zoom in to update."
         }
         
@@ -122,7 +127,7 @@ class WSLocationSearchViewController : UIViewController {
         guard !region.center.latitude.isNaN && !region.center.longitude.isNaN else { return nil }
         
         // The map tiles at the coarsest zoom level
-        guard var parentTiles = WSMapTile.tilesForMapRegion(mapView.region, atZoomLevel: tileUpdateZoomLevel) else {
+        guard var parentTiles = WSMapTile.tilesForMapRegion(mapView.region, atZoomLevel: minimumUpdateZoomLevel) else {
             return nil
         }
         
@@ -132,7 +137,6 @@ class WSLocationSearchViewController : UIViewController {
                 let tile = parentTiles.first!
                 
                 // Check for a saved tile. If there is none transfer the tile to the returned tiles.
-                
                 let predicate = NSPredicate(format: "%K like %@", "quad_key", tile.quadKey)
                 guard let storedTile = try? self.store.retrieve(WSMOMapTile.self, sortBy: nil, isAscending: true, predicate: predicate, context: self.store.managedObjectContext).first else {
                     tiles.insert(tile)
@@ -158,14 +162,15 @@ class WSLocationSearchViewController : UIViewController {
     /** Downloads user locations for the given map tiles and adds them as annotations to the map. */
     func loadAnnotationsForMapTile(tile: WSMapTile) {
         
-        /** Checks if the store is up-to-date for a given map tile. */
-        func storeNeedsUpdatingForMapTile(tile: WSMapTile) -> Bool {
-            var storeNeedsUpdate = true
+        func shouldDownloadHostsForMapTileMapTile(tile: WSMapTile) -> Bool {
+            var storeNeedsUpdating = true
+            var firstDownload = true
             let predicate = NSPredicate(format: "%K like %@", "quad_key", tile.quadKey)
             if let storedTile = try! store.retrieve(WSMOMapTile.self, sortBy: nil, isAscending: true, predicate: predicate, context: store.managedObjectContext).first {
-                storeNeedsUpdate = storedTile.needsUpdating()
+                storeNeedsUpdating = storedTile.needsUpdating()
+                firstDownload = storedTile.users == nil
             }
-            return storeNeedsUpdate
+            return storeNeedsUpdating && (firstDownload || tile.z <= zoomLevel)
         }
         
         /** Returns the users on a given map tile from the store. */
@@ -182,22 +187,33 @@ class WSLocationSearchViewController : UIViewController {
         let displayTile = displayTiles.filter({ (aTile) -> Bool in
             return aTile.quadKey == tile.quadKey
         }).first
-        guard displayTile?.needsUpdating ?? true else { return }
+        guard displayTile?.needsUpdating ?? true else {
+//            print("Tile already on map")
+            return }
+        
+        // Stop here if there is already a download in progress for this tile.
+        let downloadTile = downloadsInProgress.filter({ (aTile) -> Bool in
+            return aTile.quadKey == tile.quadKey
+        }).first
+        guard downloadTile == nil else {
+//            print("Download already started.")
+            return
+        }
         
         // If there is no exisiting tile, or the exiting tile needs updateing, start a download. Otherwise load the host location data from the store.
         // Note: If no tile is existing, one will be created by the end point descriptor when data is recieved.
-        if storeNeedsUpdatingForMapTile(tile) {
+        if shouldDownloadHostsForMapTileMapTile(tile) {
             // Grey the tile with an overlay and start a download.
-            
+//            print("Updating online.")
             if !downloadsInProgress.contains(tile) {
                 downloadWillStartForMapTile(tile)
                 api.contactEndPoint(.SearchByLocation, withPathParameters: nil, andData: tile, thenNotify: self)
             }
-        } else { 
+        } else {
+//            print("Loading from the store.")
             // Add users from the store to the map
             
             tile.users = storedUsersForMapTile(tile)
-            tile.last_updated = NSDate()
             
             // Remove old map tile.
             if displayTiles.contains(tile) {
@@ -207,48 +223,105 @@ class WSLocationSearchViewController : UIViewController {
             // Add new/updated map tile
             displayTiles.insert(tile)
             
-            // Update the cluster controllers
-            var newAnnoations = Set<WSUserLocation>()
-            for tile in displayTiles {
-                newAnnoations.unionInPlace(tile.users)
-            }
-            
-            let oldAnnotations = clusterController.annotations
-            dispatch_async(dispatch_get_main_queue(), { [weak self] in
-                self?.clusterController.removeAnnotations(Array(oldAnnotations), withCompletionHandler: nil)
-                self?.clusterController.addAnnotations(Array(newAnnoations), withCompletionHandler: nil)
-                })
+            updateAnnotationsFromDisplayTiles(displayTiles)
         }
+    }
+    
+    /** Unloads unrequired annotation from the map. */
+    func unloadAnnotationsOutOfRegion(region: MKCoordinateRegion) {
+        
+        // Create a buffer region around the viewed region that is proportional to the zoom level.
+        let regionMultiplier = 1.0 + 0.25 * Double(zoomLevel)
+        var bufferRegion = region
+        bufferRegion.span.latitudeDelta = bufferRegion.span.latitudeDelta * regionMultiplier
+        bufferRegion.span.longitudeDelta = bufferRegion.span.longitudeDelta * regionMultiplier
+
+        // Clear out display tiles that are not in this buffer region.
+        let tilesNotInView = displayTiles.filter { (tile) -> Bool in
+            return !tile.isInRegion(bufferRegion)
+        }
+        
+        for tile in tilesNotInView {
+            displayTiles.remove(tile)
+        }
+        
+        updateAnnotationsFromDisplayTiles(displayTiles)
+    }
+    
+    /** Updates the annotations grouped by the cluster controller with those in the current display tiles. */
+    func updateAnnotationsFromDisplayTiles(displayTiles: Set<WSMapTile>) {
+        
+        // Update the cluster controllers
+        var annotationsToDisplay = Set<WSUserLocation>()
+        for tile in displayTiles {
+            annotationsToDisplay.unionInPlace(tile.users)
+        }
+        
+        let annotationsToRemove = clusterController.annotations.subtract(annotationsToDisplay as Set<NSObject>)
+        let annotationToAdd = (annotationsToDisplay as Set<NSObject>).subtract(clusterController.annotations)
+        
+        dispatch_async(dispatch_get_main_queue(), { [weak self] in
+            self?.clusterController.removeAnnotations(Array(annotationsToRemove), withCompletionHandler: {
+                self?.clusterController.addAnnotations(Array(annotationToAdd), withCompletionHandler: nil)
+            })
+            })
     }
     
     /** Called just before an API request for user locations on the given map tile is made. */
     func downloadWillStartForMapTile(tile: WSMapTile) {
         downloadsInProgress.insert(tile)
-        dimTiles()
+        dimUpdatingTiles()
     }
     
     /** Called after a user locations API request has finished. */
     func downloadDidEndForMapTile(tile: WSMapTile) {
         downloadsInProgress.remove(tile)
-        dimTiles()
+        dimUpdatingTiles()
         dispatch_async(dispatch_get_main_queue()) { [weak self] in
             self?.statusLabel.text = self?.textForStatusLabel()
         }
     }
     
-    /** Dims areas of the map that have user location data downloads in progress. */
-    func dimTiles() {
-        mapView.performSelectorOnMainThread(#selector(MKMapView.removeOverlays(_:)), withObject: mapView.overlays, waitUntilDone: true)
+    /** Dims areas of the map that have user location data downloads in progress. Tiles are only dimmed at the minimum update zoom level. */
+    func dimUpdatingTiles() {
+        
+        // Get all the tiles to dim at the minimum update zoom level
+        var tilesToDim = Set<WSMapTile>()
         for tile in downloadsInProgress {
-            dimTile(tile)
+            tilesToDim.insert(tile.parentAtZoomLevel(minimumUpdateZoomLevel)!)
+        }
+        
+        // Dim all of these tiles if they are not dimmed already.
+        for tile in tilesToDim {
+            let existingOverlay = mapView.overlays.filter { (overlay) -> Bool in
+                return overlay.title ?? "" == tile.quadKey
+            }.first
+            guard existingOverlay == nil else { continue }
+            let polygon = tile.polygon()
+            polygon.title = tile.quadKey
+            mapView.performSelectorOnMainThread(#selector(MKMapView.addOverlay(_:)), withObject: polygon, waitUntilDone: true)
+        }
+        
+        // Undim any tiles not it this set.
+        for overlay in mapView.overlays {
+            guard let quadKey = overlay.title else { continue }
+            guard let _ = tilesToDim.filter({ (tile) -> Bool in
+                return tile.quadKey == quadKey
+            }).first else {
+                mapView.performSelectorOnMainThread(#selector(MKMapView.removeOverlay(_:)), withObject: overlay, waitUntilDone: false)
+                continue
+            }
         }
     }
     
-    /** Adds a dimming overlay to the map area described by the given map tile. */
-    func dimTile(tile: WSMapTile) {
-        let polygon = tile.polygon()
-        polygon.title = tile.quadKey
-        mapView.performSelectorOnMainThread(#selector(MKMapView.addOverlay(_:)), withObject: polygon, waitUntilDone: false)
+    /** The zoom level of the mapView. */
+    var zoomLevel: UInt {
+        var z: UInt = 1
+        let mapSpan = min(mapView.region.span.latitudeDelta, mapView.region.span.longitudeDelta)
+        while 360 / pow(2, Double(z)) > mapSpan {
+            z += 1
+        }
+        return z
     }
 
 }

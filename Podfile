@@ -1,11 +1,9 @@
-# Uncomment this line to define a global platform for your project
-# platform :ios, '8.0'
-# Uncomment this line if you're using Swift
 use_frameworks!
 
+target 'Warmshowers'
 pod 'MBProgressHUD', :git => 'https://github.com/jdg/MBProgressHUD.git'
 pod 'KeychainAccess'
-pod 'ReachabilitySwift', :git => 'https://github.com/ashleymills/Reachability.swift'
+pod 'ReachabilitySwift'
 pod 'AFMInfoBanner'
 pod 'CCHMapClusterController'
 pod 'HockeySDK'
