@@ -53,6 +53,15 @@ class WSSettingsTableViewController: UITableViewController {
                     "tag" : 30
                 ]
             ]
+        ],
+        [
+            "cells" : [
+                [
+                    "title" : "Delete cached data",
+                    "cell_id": LogoutCellID,
+                    "tag" : 40
+                ]
+            ]
         ]
     ]
     

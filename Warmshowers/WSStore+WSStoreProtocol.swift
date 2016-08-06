@@ -13,16 +13,18 @@ extension WSStore: WSStoreProtocol {
     
     func clearout() throws {
         let entities = managedObjectModel.entities
-        for entity in entities {
-            do {
-                if let entityName = entity.name {
-                    let request = NSFetchRequest(entityName: entityName)
-                    let objects = try managedObjectContext.executeFetchRequest(request) as! [NSManagedObject]
-                    for object in objects {
-                        managedObjectContext.deleteObject(object)
+        do {
+            try performBlockInPrivateContextAndWait { (context) throws in
+                for entity in entities {
+                    if let entityName = entity.name where entityName != WSMOMapTile.entityName {
+                        let request = NSFetchRequest(entityName: entityName)
+                        let objects = try context.executeFetchRequest(request) as! [NSManagedObject]
+                        for object in objects {
+                            context.deleteObject(object)
+                        }
                     }
-                    try managedObjectContext.save()
                 }
+                try context.save()
             }
         }
     }

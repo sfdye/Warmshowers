@@ -13,9 +13,9 @@ class WSMapTile: Hashable {
     
     /**
     The time (in seconds) at which cached user location data is deemed to old and should be updated from either the store or from downloading fresh data.
-    Set to 15 minutes.
+    Set to 30 minutes.
     */
-    let UpdateThresholdTime: Double = 120 //60.0 * 15.0
+    let UpdateThresholdTime: Double = 60.0 * 30.0
     
     /** The tile longitude index */
     var x: UInt

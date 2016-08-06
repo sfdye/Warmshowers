@@ -65,13 +65,6 @@ extension WSLocationSearchViewController : MKMapViewDelegate {
         return annotationView
     }
     
-    func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
-        let userLocation = (locationManager.location?.coordinate)!
-        dispatch_async(dispatch_get_main_queue()) { [weak self] in
-            self?.mapView.setCenterCoordinate(userLocation , animated: true)
-        }
-    }
-    
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
         // Callout titles are set by the CCHMapClusterControllerDelegate
     }

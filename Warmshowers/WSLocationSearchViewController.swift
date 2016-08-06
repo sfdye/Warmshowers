@@ -15,7 +15,7 @@ class WSLocationSearchViewController : UIViewController {
     
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var toolbar: UIToolbar!
-    @IBOutlet var statusLabel: UILabel!
+    @IBOutlet var statusLabel: WSMapLabel!
     
     var navigationDelegate: WSHostSearchNavigationDelegate?
     var clusterController: CCHMapClusterController!
@@ -62,7 +62,7 @@ class WSLocationSearchViewController : UIViewController {
             locationManager.requestWhenInUseAuthorization()
         }
         mapView.showsUserLocation = true
-        centerOnRegion()
+        mapView.setUserTrackingMode(.None, animated: false)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -89,22 +89,12 @@ class WSLocationSearchViewController : UIViewController {
     
     // MARK: Utility methods
     
-    /** Centres the map on the region around the users location at a set zoom level. */
-    func centerOnRegion() {
-        let DefaultRegionLatitudeDelta: CLLocationDegrees = 1
-        let DefaultRegionLongitudeDelta: CLLocationDegrees = 1
-        if CLLocationManager.authorizationStatus() == .AuthorizedWhenInUse {
-            let region = MKCoordinateRegion(center: mapView.userLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: DefaultRegionLatitudeDelta, longitudeDelta: DefaultRegionLongitudeDelta))
-            dispatch_async(dispatch_get_main_queue(), { [weak self] in
-                self?.mapView.setRegion(region, animated: true)
-                })
-        }
-    }
-    
     /** Refreshes the status label according to the current controller state. */
     func updateStatus() {
         dispatch_async(dispatch_get_main_queue(), { [weak self] in
-            self?.statusLabel.text = self?.textForStatusLabel()
+            let text = self?.textForStatusLabel()
+            self?.statusLabel.text = text
+            self?.statusLabel.hidden = text == nil
             })
     }
     
@@ -116,7 +106,17 @@ class WSLocationSearchViewController : UIViewController {
         }
         
         if downloadsInProgress.count > 0 {
-            return "Updating ..."
+            var highDensityArea = false
+            for tile in downloadsInProgress {
+                if tile.z - minimumUpdateZoomLevel > 1 {
+                    highDensityArea = true
+                }
+            }
+            if highDensityArea {
+                return "Updating ...\nThere are a lot of hosts in this area so this update may take a while."
+            } else {
+                return "Updating ..."
+            }
         }
         
         return nil
@@ -231,17 +231,17 @@ class WSLocationSearchViewController : UIViewController {
     func unloadAnnotationsOutOfRegion(region: MKCoordinateRegion) {
         
         // Create a buffer region around the viewed region that is proportional to the zoom level.
-        let regionMultiplier = 1.0 + 0.25 * Double(zoomLevel)
+        let regionMultiplier = 1.0 + Double(zoomLevel)
         var bufferRegion = region
         bufferRegion.span.latitudeDelta = bufferRegion.span.latitudeDelta * regionMultiplier
         bufferRegion.span.longitudeDelta = bufferRegion.span.longitudeDelta * regionMultiplier
 
         // Clear out display tiles that are not in this buffer region.
-        let tilesNotInView = displayTiles.filter { (tile) -> Bool in
-            return !tile.isInRegion(bufferRegion)
+        let tilesNotInViewAndOld = displayTiles.filter { (tile) -> Bool in
+            return !tile.isInRegion(bufferRegion) && tile.needsUpdating
         }
         
-        for tile in tilesNotInView {
+        for tile in tilesNotInViewAndOld {
             displayTiles.remove(tile)
         }
         

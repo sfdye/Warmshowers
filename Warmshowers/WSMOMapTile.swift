@@ -28,9 +28,9 @@ class WSMOMapTile: NSManagedObject, JSONUpdateable {
     
     /**
      The time (in seconds) at which cached user location data is deemed to old and should be updated by downloading fresh data from the the warmshowers website.
-     Set to 1 hour.
+     Set to 24 hours.
      */
-    let UpdateThresholdTime: Double = 60.0 * 60.0
+    let UpdateThresholdTime: Double = 24.0 * 60.0 * 60.0
     
     var userLocations: Set<WSUserLocation>? {
         guard let users = users else { return nil }

@@ -64,6 +64,7 @@ class WSHostSearchViewController: UIViewController {
         // Search bar
         searchBar = searchController.searchBar
         searchBar.placeholder = "Search by name, email or town"
+        searchBar.barTintColor = UIColor.whiteColor()
     }
 
     override func viewWillAppear(animated: Bool) {

@@ -41,7 +41,8 @@ extension WSSettingsTableViewController {
             cell.tag = contents!["tag"] as! Int
             return cell
         case LogoutCellID:
-            let cell = tableView.dequeueReusableCellWithIdentifier(cellID, forIndexPath: indexPath)
+            let cell = tableView.dequeueReusableCellWithIdentifier(cellID, forIndexPath: indexPath) as! LogoutTableViewCell
+            cell.label?.text = contents?["title"] as? String
             cell.tag = contents!["tag"] as! Int
             return cell
         default:
