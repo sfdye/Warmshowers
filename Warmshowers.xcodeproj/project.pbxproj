@@ -50,6 +50,7 @@
 		E54FF3571D4D6C8C00E81483 /* WSMOUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54FF3551D4D6C8C00E81483 /* WSMOUser.swift */; };
 		E54FF3591D558B4C00E81483 /* LogoutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54FF3581D558B4C00E81483 /* LogoutTableViewCell.swift */; };
 		E54FF35B1D55986400E81483 /* WSMapLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54FF35A1D55986400E81483 /* WSMapLabel.swift */; };
+		E54FF35D1D55ED7800E81483 /* WSHostListTableViewController+UIScrollViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54FF35C1D55ED7800E81483 /* WSHostListTableViewController+UIScrollViewDelegate.swift */; };
 		E56490401CD4B9B200645331 /* WSSearchByKeywordEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E564903F1CD4B9B200645331 /* WSSearchByKeywordEndPoint.swift */; };
 		E56490421CD5517200645331 /* WSHostSearchViewController+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56490411CD5517200645331 /* WSHostSearchViewController+Navigation.swift */; };
 		E56490461CD555A800645331 /* WSKeywordSearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56490451CD555A800645331 /* WSKeywordSearchTableViewController.swift */; };
@@ -293,6 +294,7 @@
 		E54FF3551D4D6C8C00E81483 /* WSMOUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSMOUser.swift; sourceTree = "<group>"; };
 		E54FF3581D558B4C00E81483 /* LogoutTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutTableViewCell.swift; sourceTree = "<group>"; };
 		E54FF35A1D55986400E81483 /* WSMapLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSMapLabel.swift; sourceTree = "<group>"; };
+		E54FF35C1D55ED7800E81483 /* WSHostListTableViewController+UIScrollViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSHostListTableViewController+UIScrollViewDelegate.swift"; sourceTree = "<group>"; };
 		E564903F1CD4B9B200645331 /* WSSearchByKeywordEndPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSSearchByKeywordEndPoint.swift; sourceTree = "<group>"; };
 		E56490411CD5517200645331 /* WSHostSearchViewController+Navigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSHostSearchViewController+Navigation.swift"; sourceTree = "<group>"; };
 		E56490451CD555A800645331 /* WSKeywordSearchTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSKeywordSearchTableViewController.swift; sourceTree = "<group>"; };
@@ -718,6 +720,7 @@
 				E5E9200C1D31E86600435070 /* WSHostListTableViewController+UITableViewDelegate.swift */,
 				E574AED51D32D31D008676BC /* WSHostListTableViewController+Navigation.swift */,
 				E574AED71D32E6E5008676BC /* WSHostListTableViewController+Actions.swift */,
+				E54FF35C1D55ED7800E81483 /* WSHostListTableViewController+UIScrollViewDelegate.swift */,
 			);
 			name = WSHostListTableViewController;
 			sourceTree = "<group>";
@@ -1666,6 +1669,7 @@
 				E5ED45F91CE9B657008E3C02 /* WSMockNetworkResponse.swift in Sources */,
 				E59FE1DE1CD3597D0024F354 /* WSAlertDelegate.swift in Sources */,
 				E5B2E6141D34C28B00396CE8 /* WSFeedbackTableViewController+UIScrollViewDelegate.swift in Sources */,
+				E54FF35D1D55ED7800E81483 /* WSHostListTableViewController+UIScrollViewDelegate.swift in Sources */,
 				E5DA03A71C46FCBB00FAD1D7 /* WSColor.swift in Sources */,
 				E54FF3511D4D554C00E81483 /* WSMOMessageThread+CoreDataProperties.swift in Sources */,
 				E56490421CD5517200645331 /* WSHostSearchViewController+Navigation.swift in Sources */,
