@@ -10,7 +10,7 @@ import UIKit
 
 extension WSHostSearchViewController {
     
-    @IBAction func searchButtonPressed(sender: UIBarButtonItem) {
+    @IBAction func searchButtonPressed(sender: UIBarButtonItem?) {
         if !searchController.active {
             dispatch_async(dispatch_get_main_queue()) {
                 self.presentViewController(self.searchController, animated: true, completion: nil)
@@ -18,7 +18,7 @@ extension WSHostSearchViewController {
         }
     }
     
-    @IBAction func accountButtonPressed(sender: UIBarButtonItem) {
+    @IBAction func accountButtonPressed(sender: UIBarButtonItem?) {
         if let uid = session.uid {
             showUserProfileForHostWithUID(uid)
         }

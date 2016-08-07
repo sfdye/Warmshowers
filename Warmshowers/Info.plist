@@ -2,6 +2,54 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>UIApplicationShortcutItems</key>
+    <array>
+        <dict>
+            <key>UIApplicationShortcutItemIconType</key>
+            <string>UIApplicationShortcutIconTypeSearch</string>
+            <key>UIApplicationShortcutItemSubtitle</key>
+            <string>shortcutSubtitle1</string>
+            <key>UIApplicationShortcutItemTitle</key>
+            <string>shortcutTitle1</string>
+            <key>UIApplicationShortcutItemType</key>
+            <string>$(PRODUCT_BUNDLE_IDENTIFIER).LocationSearch</string>
+            <key>UIApplicationShortcutItemUserInfo</key>
+            <dict>
+                <key></key>
+                <string></string>
+            </dict>
+        </dict>
+        <dict>
+            <key>UIApplicationShortcutItemIconType</key>
+            <string>UIApplicationShortcutIconTypeSearch</string>
+            <key>UIApplicationShortcutItemSubtitle</key>
+            <string>shortcutSubtitle2</string>
+            <key>UIApplicationShortcutItemTitle</key>
+            <string>shortcutTitle2</string>
+            <key>UIApplicationShortcutItemType</key>
+            <string>$(PRODUCT_BUNDLE_IDENTIFIER).KeywordSearch</string>
+            <key>UIApplicationShortcutItemUserInfo</key>
+            <dict>
+                <key></key>
+                <string></string>
+            </dict>
+        </dict>
+        <dict>
+            <key>UIApplicationShortcutItemIconType</key>
+            <string>UIApplicationShortcutIconTypeMail</string>
+            <key>UIApplicationShortcutItemSubtitle</key>
+            <string>shortcutSubtitle3</string>
+            <key>UIApplicationShortcutItemTitle</key>
+            <string>shortcutTitle3</string>
+            <key>UIApplicationShortcutItemType</key>
+            <string>$(PRODUCT_BUNDLE_IDENTIFIER).Messages</string>
+            <key>UIApplicationShortcutItemUserInfo</key>
+            <dict>
+                <key></key>
+                <string></string>
+            </dict>
+        </dict>
+    </array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDocumentTypes</key>
@@ -82,6 +130,7 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
-    <key>ITSAppUsesNonExemptEncryption</key><false/>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 </dict>
 </plist>

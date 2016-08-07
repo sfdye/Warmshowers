@@ -6,7 +6,7 @@
 //  Copyright © 2016 Rajan Fernandez. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol WSNavigationProtocol {
     
@@ -27,4 +27,8 @@ protocol WSNavigationProtocol {
     
     /** Opens mail to compose a feedback email */
     func openFeedbackEmail()
+    
+    /** Handles an application shortcut. */
+    func handleShortcutItem(shortcutItem: UIApplicationShortcutItem, withCompletionHandler completionHandler: (Bool) -> Void)
+    
 }

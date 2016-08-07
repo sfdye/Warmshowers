@@ -14,6 +14,8 @@
 		E51180C51D358A290021F5F5 /* WSMessageThreadReadState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51180C41D358A290021F5F5 /* WSMessageThreadReadState.swift */; };
 		E51180C71D358B960021F5F5 /* WSMessageThreadTableViewController+WSAPIResponseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51180C61D358B960021F5F5 /* WSMessageThreadTableViewController+WSAPIResponseDelegate.swift */; };
 		E51397671C06945E00FD8EC1 /* WSUserLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51397661C06945E00FD8EC1 /* WSUserLocation.swift */; };
+		E520C0C61D57C9C20094F716 /* ShortcutIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E520C0C51D57C9C20094F716 /* ShortcutIdentifier.swift */; };
+		E520C0C81D57CBA20094F716 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E520C0C71D57CBA20094F716 /* InfoPlist.strings */; };
 		E52A07271C580B1C006F80A5 /* WSComposeMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A07261C580B1C006F80A5 /* WSComposeMessageViewController.swift */; };
 		E52B35711D36CC0A00DD0F44 /* WSPhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52B35701D36CC0A00DD0F44 /* WSPhoneNumber.swift */; };
 		E52B35751D36CF6A00DD0F44 /* WSOfferType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52B35741D36CF6A00DD0F44 /* WSOfferType.swift */; };
@@ -257,6 +259,8 @@
 		E51180C41D358A290021F5F5 /* WSMessageThreadReadState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSMessageThreadReadState.swift; sourceTree = "<group>"; };
 		E51180C61D358B960021F5F5 /* WSMessageThreadTableViewController+WSAPIResponseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSMessageThreadTableViewController+WSAPIResponseDelegate.swift"; sourceTree = "<group>"; };
 		E51397661C06945E00FD8EC1 /* WSUserLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSUserLocation.swift; sourceTree = "<group>"; };
+		E520C0C51D57C9C20094F716 /* ShortcutIdentifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortcutIdentifier.swift; sourceTree = "<group>"; };
+		E520C0C71D57CBA20094F716 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
 		E52A07261C580B1C006F80A5 /* WSComposeMessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSComposeMessageViewController.swift; sourceTree = "<group>"; };
 		E52B35701D36CC0A00DD0F44 /* WSPhoneNumber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSPhoneNumber.swift; sourceTree = "<group>"; };
 		E52B35741D36CF6A00DD0F44 /* WSOfferType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSOfferType.swift; sourceTree = "<group>"; };
@@ -1111,6 +1115,7 @@
 			children = (
 				E59FE1D41CD206560024F354 /* WSNavigationProtocol.swift */,
 				E5ED1E8D1CD416BB0017D12F /* WSNavigationDelegate.swift */,
+				E520C0C51D57C9C20094F716 /* ShortcutIdentifier.swift */,
 			);
 			name = NavigationDelegate;
 			sourceTree = "<group>";
@@ -1188,6 +1193,7 @@
 				E58C37161D28FF33001B03D5 /* Fonts */,
 				E5D96B001BFB1CA700AFAFEE /* Assets.xcassets */,
 				E5D96B051BFB1CA700AFAFEE /* Info.plist */,
+				E520C0C71D57CBA20094F716 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1420,6 +1426,7 @@
 				E57057D51CC855BE00FA5D9F /* Messages.storyboard in Resources */,
 				E5DA03EE1C49C66A00FAD1D7 /* Sue Ellen Francisco.ttf in Resources */,
 				E5D96AFF1BFB1CA700AFAFEE /* Main.storyboard in Resources */,
+				E520C0C81D57CBA20094F716 /* InfoPlist.strings in Resources */,
 				E5F4A7A41CE1C67D0010BEC7 /* UserProfile.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1680,6 +1687,7 @@
 				E54276901C44956F00047029 /* WSCreateFeedbackTableViewController+UITextViewDelegate.swift in Sources */,
 				E574AED41D3196E7008676BC /* WSLoginData.swift in Sources */,
 				E59FE1E61CD411D30024F354 /* WSSettingsTableViewController+UITableViewDataSource.swift in Sources */,
+				E520C0C61D57C9C20094F716 /* ShortcutIdentifier.swift in Sources */,
 				E54276861C3E78E000047029 /* WSCreateFeedbackTableViewController+UIPickerViewDelegate.swift in Sources */,
 				E5700C541C44EE51008C8A87 /* WSComposeMessageViewController+UITextFieldDelegate.swift in Sources */,
 				E5967BA91C36910C0037F4B7 /* AvailabilityTableViewCell.swift in Sources */,
