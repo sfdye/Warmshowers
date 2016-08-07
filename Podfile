@@ -6,5 +6,4 @@ pod 'KeychainAccess'
 pod 'ReachabilitySwift'
 pod 'AFMInfoBanner'
 pod 'CCHMapClusterController'
-pod 'HockeySDK'
 
