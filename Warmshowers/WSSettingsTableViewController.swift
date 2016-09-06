@@ -9,6 +9,7 @@
 import UIKit
 
 let SBID_Settings = "Settings"
+let SID_SettingsToRoutes = "SettingsToRoutes"
 
 class WSSettingsTableViewController: UITableViewController {
     
@@ -46,11 +47,21 @@ class WSSettingsTableViewController: UITableViewController {
             ]
         ],
         [
+            "section_title" : "Map",
+            "cells" : [
+                [
+                    "title" : "Routes",
+                    "cell_id": DisclosureCellID,
+                    "tag" : 30
+                ]
+            ]
+        ],
+        [
             "cells" : [
                 [
                     "title" : "Logout",
                     "cell_id": LogoutCellID,
-                    "tag" : 30
+                    "tag" : 40
                 ]
             ]
         ],
@@ -59,7 +70,7 @@ class WSSettingsTableViewController: UITableViewController {
                 [
                     "title" : "Delete cached data",
                     "cell_id": LogoutCellID,
-                    "tag" : 40
+                    "tag" : 50
                 ]
             ]
         ]

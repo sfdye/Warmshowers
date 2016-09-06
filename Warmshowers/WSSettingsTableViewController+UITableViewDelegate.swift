@@ -21,14 +21,15 @@ extension WSSettingsTableViewController {
             case 20:
                 navigation.openFeedbackEmail()
             case 30:
+                performSegueWithIdentifier(SID_SettingsToRoutes, sender: nil)
+            case 40:
                 WSProgressHUD.show("Logging out ...")
                 api.contactEndPoint(.Logout, withPathParameters: nil, andData: nil, thenNotify: self)
-            case 40:
+            case 50:
                 WSProgressHUD.show("Deleting data ...")
                 do {
                     try store.clearout()
                 } catch {
-                    print(error)
                     alert.presentAlertFor(self, withTitle: "Data Error", button: "OK", message: "Sorry, an error occured while removing your account data from your device. Please try deleting and re-installing the Warmshowers app and report this as a bug.", andHandler: nil)
                 }
                 WSProgressHUD.hide()
