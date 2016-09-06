@@ -51,9 +51,6 @@ class WSHostSearchViewController: UIViewController {
         assert(keywordSearchTableViewController is UISearchResultsUpdating, "WSKeywordSearchTableViewCOntroller must conform to UISearchResultsUpdating.")
         keywordSearchTableViewController?.navigationDelegate = self
         
-        // Reachability notifications
-        connection.registerForAndStartNotifications(self, selector: #selector(WSHostSearchViewController.reachabilityChanged(_:)))
-        
         // Search controller
         searchController = UISearchController(searchResultsController: keywordSearchTableViewController!)
         searchController.loadViewIfNeeded()
@@ -65,6 +62,9 @@ class WSHostSearchViewController: UIViewController {
         searchBar = searchController.searchBar
         searchBar.placeholder = "Search by name, email or town"
         searchBar.barTintColor = UIColor.whiteColor()
+        
+        // Reachability notifications
+        connection.registerForAndStartNotifications(self, selector: #selector(WSHostSearchViewController.reachabilityChanged(_:)))
     }
 
     override func viewWillAppear(animated: Bool) {

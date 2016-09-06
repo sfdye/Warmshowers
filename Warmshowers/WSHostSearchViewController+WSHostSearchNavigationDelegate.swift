@@ -11,7 +11,6 @@ import Foundation
 extension WSHostSearchViewController: WSHostSearchNavigationDelegate {
     
     func showUserProfileForHostWithUID(uid: Int) {
-//        searchBar.resignFirstResponder()
         WSProgressHUD.show(nil)
         api.contactEndPoint(.UserInfo, withPathParameters: String(uid) as NSString, andData: nil, thenNotify: self)
     }

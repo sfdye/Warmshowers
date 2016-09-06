@@ -11,7 +11,7 @@ import UIKit
 extension WSHostSearchViewController {
     
     @IBAction func searchButtonPressed(sender: UIBarButtonItem?) {
-        if !searchController.active {
+        if !searchController.active && connection.isOnline {
             dispatch_async(dispatch_get_main_queue()) {
                 self.presentViewController(self.searchController, animated: true, completion: nil)
             }
@@ -19,6 +19,12 @@ extension WSHostSearchViewController {
     }
     
     @IBAction func accountButtonPressed(sender: UIBarButtonItem?) {
+        
+        guard connection.isOnline else {
+            alert.presentAlertFor(self, withTitle: "You are currently offline", button: "OK")
+            return
+        }
+        
         if let uid = session.uid {
             showUserProfileForHostWithUID(uid)
         }
