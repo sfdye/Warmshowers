@@ -18,14 +18,14 @@ extension WSLoginViewController {
         // Resign the keyboard
         self.view.endEditing(true)
         
-        guard let username = usernameTextField.text where username != "" else {
+        guard let username = usernameTextField.text , username != "" else {
             alert.presentAlertFor(self, withTitle: "Missing Username", button: "Dismiss", message: "Please enter your username or email", andHandler: { [weak self] (action) in
                 self?.usernameTextField.becomeFirstResponder()
                 })
             return
         }
         
-        guard let password = passwordTextField.text where password != "" else {
+        guard let password = passwordTextField.text , password != "" else {
             alert.presentAlertFor(self, withTitle: "Missing Password", button: "Dismiss", message: "Please enter your password", andHandler: { [weak self] (action) in
                 self?.passwordTextField.becomeFirstResponder()
                 })

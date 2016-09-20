@@ -10,18 +10,18 @@ import Foundation
 
 extension WSHostSearchViewController: WSAPIResponseDelegate {
     
-    func requestDidComplete(request: WSAPIRequest) {
+    func requestDidComplete(_ request: WSAPIRequest) {
         WSProgressHUD.hide()
     }
     
-    func request(request: WSAPIRequest, didSuceedWithData data: AnyObject?) {
+    func request(_ request: WSAPIRequest, didSuceedWithData data: Any?) {
         guard let host = data as? WSUser else { return }
-        dispatch_async(dispatch_get_main_queue()) { 
-            self.performSegueWithIdentifier(SID_SearchViewToUserAccount, sender: host)
+        DispatchQueue.main.async { 
+            self.performSegue(withIdentifier: SID_SearchViewToUserAccount, sender: host)
         }
     }
     
-    func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
+    func request(_ request: WSAPIRequest, didFailWithError error: Error) {
         alert.presentAlertFor(self, withTitle: "Error", button: "OK", message: "Failed to get user info.")
     }
     

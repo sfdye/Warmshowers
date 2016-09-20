@@ -17,7 +17,7 @@ extension WSMOMessage {
     @NSManaged var body: String?
     @NSManaged var p_is_new: NSNumber?
     @NSManaged var p_message_id: NSNumber?
-    @NSManaged var timestamp: NSDate?
+    @NSManaged var timestamp: Date?
     @NSManaged var author: WSMOUser?
     @NSManaged var thread: WSMOMessageThread?
 

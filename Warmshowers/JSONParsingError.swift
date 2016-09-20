@@ -8,6 +8,6 @@
 
 import Foundation
 
-enum JSONParsingError: ErrorType {
-    case NilForNonOptional(key: String)
+enum JSONParsingError: Error {
+    case nilForNonOptional(key: String)
 }

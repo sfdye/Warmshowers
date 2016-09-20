@@ -10,13 +10,13 @@ import UIKit
 
 extension WSHostListTableViewController {
     
-    override func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if !decelerate {
             loadImagesForObjectsOnScreen()
         }
     }
     
-    override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         loadImagesForObjectsOnScreen()
     }
     

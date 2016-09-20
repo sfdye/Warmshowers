@@ -27,12 +27,12 @@ class WSMapLabel: UILabel {
         clipsToBounds = true
     }
     
-    override func drawTextInRect(rect: CGRect) {
-        super.drawTextInRect(UIEdgeInsetsInsetRect(rect, insets))
+    override func drawText(in rect: CGRect) {
+        super.drawText(in: UIEdgeInsetsInsetRect(rect, insets))
     }
     
-    override func intrinsicContentSize() -> CGSize {
-        var size = super.intrinsicContentSize()
+    override var intrinsicContentSize : CGSize {
+        var size = super.intrinsicContentSize
         size.width  += self.insets.left + self.insets.right
         size.height += self.insets.top + self.insets.bottom
         return size

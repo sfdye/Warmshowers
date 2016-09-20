@@ -11,10 +11,10 @@ import UIKit
 @IBDesignable
 class WSColoredDot: UIView {
     
-    @IBInspectable var color: UIColor = UIColor.blueColor()
+    @IBInspectable var color: UIColor = UIColor.blue
     
-    override func drawRect(rect: CGRect) {
-        let path = UIBezierPath(ovalInRect: rect)
+    override func draw(_ rect: CGRect) {
+        let path = UIBezierPath(ovalIn: rect)
         color.setFill()
         path.fill()
     }

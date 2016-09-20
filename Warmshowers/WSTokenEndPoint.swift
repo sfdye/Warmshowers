@@ -16,11 +16,11 @@ class WSTokenEndPoint : WSAPIEndPointProtocol {
     
     var acceptType: AcceptType = .PlainText
     
-    func urlWithHostURL(hostURL: NSURL, andParameters parameters: AnyObject?) throws -> NSURL {
-        return hostURL.URLByAppendingPathComponent("/services/session/token")
+    func url(withHostURL hostURL: URL, andParameters parameters: Any?) throws -> URL {
+        return hostURL.appendingPathComponent("/services/session/token")
     }
     
-    func request(request: WSAPIRequest, didRecieveResponseWithText text: String) throws -> AnyObject? {
+    func request(_ request: WSAPIRequest, didRecieveResponseWithText text: String) throws -> Any? {
         WSSessionState.sharedSessionState.setToken(text)
         return text
     }

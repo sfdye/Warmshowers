@@ -11,9 +11,9 @@ import Foundation
 extension Bool: JSONParsingType {
     
     typealias DataType = Bool
-    static func fromJSON(json: AnyObject, withKey key: String) -> Bool? {
-        if json[key] is Bool { return json[key] as? Bool }
-        guard let valueString = String.fromJSON(json, withKey: key) else { return nil }
+    static func from(JSON json: Any, withKey key: String) -> Bool? {
+        if let json = json as? [String: Any], json[key] is Bool { return json[key] as? Bool}
+        guard let valueString = String.from(JSON: json, withKey: key) else { return nil }
         return (valueString as NSString).boolValue
     }
     

@@ -14,11 +14,11 @@ class WSAPIHost {
     static var sharedAPIHost = WSAPIHost()
     
     /** Returns the API host URL. */
-    func hostURLWithHTTPScheme(httpScheme: HttpScheme = .HTTP) -> NSURL? {
-        let urlComponents = NSURLComponents()
+    func hostURLWithHTTPScheme(_ httpScheme: HttpScheme = .HTTP) -> URL? {
+        var urlComponents = URLComponents()
         urlComponents.scheme = httpScheme.rawValue
         urlComponents.host = "www.warmshowers.org"
-        return urlComponents.URL
+        return urlComponents.url
     }
     
 }

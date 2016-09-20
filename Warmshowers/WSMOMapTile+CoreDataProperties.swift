@@ -14,7 +14,7 @@ import CoreData
 
 extension WSMOMapTile {
 
-    @NSManaged var last_updated: NSDate?
+    @NSManaged var last_updated: Date?
     @NSManaged var quad_key: String?
     @NSManaged var parent_tile: WSMOMapTile?
     @NSManaged var sub_tiles: NSSet?

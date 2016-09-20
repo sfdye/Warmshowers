@@ -9,8 +9,8 @@
 import Foundation
 
 enum WSHostInfoType {
-    case MaxCyclists
-    case BikeShop
-    case Campground
-    case Motel
+    case maxCyclists
+    case bikeShop
+    case campground
+    case motel
 }

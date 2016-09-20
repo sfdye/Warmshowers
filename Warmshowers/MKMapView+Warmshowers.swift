@@ -30,7 +30,7 @@ extension MKMapView {
     // Returns the current coordinate limits of a mapview
     // Used for getting hosts in the current displayed region in getHostDataForMapView
     //
-    func getWSMapRegion(limit: Int = 100) -> [String: String] {
+    func getWSMapRegion(_ limit: Int = 100) -> [String: String] {
         
         let region = self.region
         

@@ -12,7 +12,7 @@ class WSFeedbackTableViewController: UITableViewController {
 
     var placeholderImage: UIImage? = UIImage(named: "ThumbnailPlaceholder")
     var feedback: [WSRecommendation]?
-    let formatter = NSDateFormatter()
+    let formatter = DateFormatter()
     
     // Delegates
     var api: WSAPICommunicatorProtocol = WSAPICommunicator.sharedAPICommunicator
@@ -25,15 +25,15 @@ class WSFeedbackTableViewController: UITableViewController {
         tableView.estimatedRowHeight = 122
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         loadImagesForObjectsOnScreen()
     }
     
     // MARK: Utilities
     
-    func startImageDownloadForIndexPath(indexPath: NSIndexPath) {
-        guard let feedback = feedback where indexPath.row < feedback.count else { return }
-        let recommendation = feedback[indexPath.row]
+    func startImageDownloadForIndexPath(_ indexPath: IndexPath) {
+        guard let feedback = feedback , (indexPath as NSIndexPath).row < feedback.count else { return }
+        let recommendation = feedback[(indexPath as NSIndexPath).row]
         guard recommendation.authorImage == nil else { return }
         if let url = recommendation.authorImageURL {
             api.contactEndPoint(.ImageResource, withPathParameters: url as NSString, andData: nil, thenNotify: self)
@@ -48,7 +48,7 @@ class WSFeedbackTableViewController: UITableViewController {
         guard
             let feedback = feedback,
             let visiblePaths = tableView.indexPathsForVisibleRows
-            where feedback.count > 0
+            , feedback.count > 0
             else {
                 return
         }
@@ -59,38 +59,38 @@ class WSFeedbackTableViewController: UITableViewController {
     }
     
     /** Sets the author image URL on the recommendation given the author UID. */
-    func setAuthorImageURL(imageURL: String, forHostWithUID uid: Int) {
+    func setAuthorImageURL(_ imageURL: String, forHostWithUID uid: Int) {
         guard let feedback = feedback else { return }
         for recommedation in feedback {
-            if let authorUID = recommedation.author?.uid where authorUID == uid {
+            if let authorUID = recommedation.author?.uid , authorUID == uid {
                 recommedation.authorImageURL = imageURL
             }
         }
     }
     
     /** Sets the image for a host in the list with the given image URL. */
-    func setImage(image: UIImage, forHostWithImageURL imageURL: String) {
+    func setImage(_ image: UIImage, forHostWithImageURL imageURL: String) {
         guard let feedback = feedback else { return }
-        for (index, recommendation) in feedback.enumerate() {
+        for (index, recommendation) in feedback.enumerated() {
             if recommendation.authorImageURL == imageURL {
-                recommendation.authorImage = image ?? placeholderImage
-                let indexPath = NSIndexPath(forRow: index, inSection: 0)
-                let cell = tableView.cellForRowAtIndexPath(indexPath)
-                dispatch_async(dispatch_get_main_queue(), { [weak cell] () -> Void in
+                recommendation.authorImage = image 
+                let indexPath = IndexPath(row: index, section: 0)
+                let cell = tableView.cellForRow(at: indexPath)
+                DispatchQueue.main.async(execute: { [weak cell] () -> Void in
                     (cell as? FeedbackTableViewCell)?.authorImage.image = recommendation.authorImage
                     })
             }
         }
     }
     
-    func textForRecommendationDate(date: NSDate) -> String? {
+    func textForRecommendationDate(_ date: Date) -> String? {
         let template = "ddMMMyyyy"
-        let locale = NSLocale.currentLocale()
-        formatter.dateFormat = NSDateFormatter.dateFormatFromTemplate(template, options: 0, locale: locale)
-        return formatter.stringFromDate(date)
+        let locale = Locale.current
+        formatter.dateFormat = DateFormatter.dateFormat(fromTemplate: template, options: 0, locale: locale)
+        return formatter.string(from: date)
     }
     
-    func textColorForRecommedationRating(rating: WSRecommendationRating) -> UIColor {
+    func textColorForRecommedationRating(_ rating: WSRecommendationRating) -> UIColor {
         switch rating {
         case .Positive:
             return WSColor.Positive
@@ -101,7 +101,7 @@ class WSFeedbackTableViewController: UITableViewController {
         }
     }
     
-    func textForRecommendationType(type: WSRecommendationType) -> String? {
+    func textForRecommendationType(_ type: WSRecommendationType) -> String? {
         switch type {
         case .ForGuest:
             return "Host, "

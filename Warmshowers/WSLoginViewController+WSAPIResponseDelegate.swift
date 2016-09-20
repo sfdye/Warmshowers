@@ -10,7 +10,7 @@ import UIKit
 
 extension WSLoginViewController : WSAPIResponseDelegate {
     
-    func request(request: WSAPIRequest, didSuceedWithData data: AnyObject?) {
+    func request(_ request: WSAPIRequest, didSuceedWithData data: Any?) {
         if data is String {
             // Recieved the access token: proceed to the main app
             WSProgressHUD.hide()
@@ -28,14 +28,14 @@ extension WSLoginViewController : WSAPIResponseDelegate {
         }
     }
     
-    func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
+    func request(_ request: WSAPIRequest, didFailWithError error: Error) {
         WSProgressHUD.hide()
-        
+        print(error)
         var title: String?
         var message: String?
         
         switch error {
-        case WSAPICommunicatorError.ServerError(let statusCode, _):
+        case WSAPICommunicatorError.serverError(let statusCode, _):
             if statusCode == 401 {
                 title = "Login error"
                 message = "Incorrect username or password."

@@ -20,13 +20,13 @@ class PhoneNumberTableViewCell: UITableViewCell {
         // Phone icon tap gesture
         let phoneIconTap = UITapGestureRecognizer(target: self, action: #selector(PhoneNumberTableViewCell.phoneIconTapped))
         phoneIconTap.numberOfTapsRequired = 1
-        phoneIcon.userInteractionEnabled = true
+        phoneIcon.isUserInteractionEnabled = true
         phoneIcon.addGestureRecognizer(phoneIconTap)
         
         // Message icon tap gesture
         let messageIconTap = UITapGestureRecognizer(target: self, action: #selector(PhoneNumberTableViewCell.messageIconTapped))
         messageIconTap.numberOfTapsRequired = 1
-        messageIcon.userInteractionEnabled = true
+        messageIcon.isUserInteractionEnabled = true
         messageIcon.addGestureRecognizer(messageIconTap)
     }
     
@@ -37,7 +37,7 @@ class PhoneNumberTableViewCell: UITableViewCell {
             return
         }
         
-        UIApplication.sharedApplication().openURL(url)
+        UIApplication.shared.open(url, options: [String : Any](), completionHandler: nil)
     }
     
     /** Opens the messages app when the user taps the message bubble icon. */
@@ -47,27 +47,27 @@ class PhoneNumberTableViewCell: UITableViewCell {
             return
         }
         
-        UIApplication.sharedApplication().openURL(url)
+        UIApplication.shared.open(url, options: [String : Any](), completionHandler: nil)
     }
     
     /** Returns the url to call the the phone number displayed in the cell. */
-    private func phoneNumberURL(number: String?) -> NSURL? {
+    fileprivate func phoneNumberURL(_ number: String?) -> URL? {
         
         guard let number = detailLabel.text else {
             return nil
         }
         
-        return NSURL(string: "tel://" + number)
+        return URL(string: "tel://" + number)
     }
     
     /** Returns the url to message the the phone number displayed in the cell. */
-    private func messageNumberURL(number: String?) -> NSURL? {
+    fileprivate func messageNumberURL(_ number: String?) -> URL? {
         
         guard let number = detailLabel.text else {
             return nil
         }
         
-        return NSURL(string: "sms:" + number)
+        return URL(string: "sms:" + number)
     }
 
 }

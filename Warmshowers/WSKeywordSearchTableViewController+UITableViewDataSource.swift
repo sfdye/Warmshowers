@@ -10,30 +10,30 @@ import UIKit
 
 extension WSKeywordSearchTableViewController {
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let _ = hosts else { return 1 }
         return numberOfHosts == 0 ? 1 : numberOfHosts
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let hosts = hosts else {
-            let cell = tableView.dequeueReusableCellWithIdentifier(SpinnerCellID, forIndexPath: indexPath) as! SpinnerTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: SpinnerCellID, for: indexPath) as! SpinnerTableViewCell
             cell.startSpinner()
             return cell
         }
         
         if numberOfHosts == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier(NoHostsCellID, forIndexPath: indexPath) as! PlaceholderTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: NoHostsCellID, for: indexPath) as! PlaceholderTableViewCell
             cell.placeholderLabel.text = "No Hosts"
             return cell
         } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier(HostListCellID, forIndexPath: indexPath) as! HostListTableViewCell
-            let host = hosts[indexPath.row]
+            let cell = tableView.dequeueReusableCell(withIdentifier: HostListCellID, for: indexPath) as! HostListTableViewCell
+            let host = hosts[(indexPath as NSIndexPath).row]
             cell.nameLabel.text = host.fullname
             cell.locationLabel.text = host.shortAddress
             cell.profileImage.image = host.image ?? placeholderImage
@@ -42,7 +42,7 @@ extension WSKeywordSearchTableViewController {
             
             // Download the hosts thumbnail image if needed.
             if let _ = host.imageURL
-                where host.image == nil && !tableView.dragging && !tableView.decelerating {
+                , host.image == nil && !tableView.isDragging && !tableView.isDecelerating {
                 startImageDownloadForIndexPath(indexPath)
             }
 

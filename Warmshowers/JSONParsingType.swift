@@ -12,6 +12,6 @@ protocol JSONParsingType {
     associatedtype DataType
     
     /** Returns a value of it own type from the JSON dictionary for the given key, or nil if the value is nil, or casting to the desired type failed. */
-    static func fromJSON(json: AnyObject, withKey key: String) -> DataType?
+    static func from(JSON json: Any, withKey key: String) -> DataType?
     
 }

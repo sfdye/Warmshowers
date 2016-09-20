@@ -10,11 +10,11 @@ import Foundation
 
 extension WSSettingsTableViewController : WSAPIResponseDelegate {
     
-    func requestDidComplete(request: WSAPIRequest) {
+    func requestDidComplete(_ request: WSAPIRequest) {
         WSProgressHUD.hide()
     }
     
-    func request(request: WSAPIRequest, didSuceedWithData data: AnyObject?) {
+    func request(_ request: WSAPIRequest, didSuceedWithData data: Any?) {
         switch request.endPoint.type {
         case .Logout:
             session.didLogoutFromView(self)
@@ -23,13 +23,13 @@ extension WSSettingsTableViewController : WSAPIResponseDelegate {
         }
     }
     
-    func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
+    func request(_ request: WSAPIRequest, didFailWithError error: Error) {
         switch request.endPoint.type {
         case .Logout:
             switch error {
             case is WSAPICommunicatorError:
                 switch (error as! WSAPICommunicatorError) {
-                case .ServerError(let statusCode, _):
+                case .serverError(let statusCode, _):
                     if statusCode == 406 {
                         // 406: user already logged out.
                         session.didLogoutFromView(self)

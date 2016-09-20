@@ -11,9 +11,9 @@ import Foundation
 extension Int: JSONParsingType {
     
     typealias DataType = Int
-    static func fromJSON(json: AnyObject, withKey key: String) -> Int? {
-        if json[key] is Int { return json[key] as? Int }
-        guard let valueString = String.fromJSON(json, withKey: key) else { return nil }
+    static func from(JSON json: Any, withKey key: String) -> Int? {
+        if let json = json as? [String: Any], json[key] is Int { return json[key] as? Int}
+        guard let valueString = String.from(JSON: json, withKey: key) else { return nil }
         return Int(valueString)
     }
     

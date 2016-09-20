@@ -8,8 +8,8 @@
 
 import Foundation
 
-enum PSStoreError: ErrorType {
-    case InvalidInput
-    case FailedConversion
-    case InvalidEntity
+enum PSStoreError: Error {
+    case invalidInput
+    case failedConversion
+    case invalidEntity
 }

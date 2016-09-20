@@ -9,7 +9,6 @@
 import UIKit
 import CoreData
 import MapKit
-import ReachabilitySwift
 import CCHMapClusterController
 
 let SID_SearchViewToUserAccount = "SearchViewToUserAccount"
@@ -46,7 +45,7 @@ class WSHostSearchViewController: UIViewController {
         locationSearchViewController = childViewControllers.first as? WSLocationSearchViewController
         assert(locationSearchViewController != nil, "Location Search Table View Controller not set while loading the Host Search View Controller.")
         locationSearchViewController?.navigationDelegate = self
-        keywordSearchTableViewController = storyboard?.instantiateViewControllerWithIdentifier(SBID_KeywordSearchView) as? WSKeywordSearchTableViewController
+        keywordSearchTableViewController = storyboard?.instantiateViewController(withIdentifier: SBID_KeywordSearchView) as? WSKeywordSearchTableViewController
         assert(keywordSearchTableViewController != nil, "Keyword Search Table View Controller not set while loading the Host Search View Controller.")
         assert(keywordSearchTableViewController is UISearchResultsUpdating, "WSKeywordSearchTableViewCOntroller must conform to UISearchResultsUpdating.")
         keywordSearchTableViewController?.navigationDelegate = self
@@ -61,20 +60,20 @@ class WSHostSearchViewController: UIViewController {
         // Search bar
         searchBar = searchController.searchBar
         searchBar.placeholder = "Search by name, email or town"
-        searchBar.barTintColor = UIColor.whiteColor()
+        searchBar.barTintColor = UIColor.white
         
         // Reachability notifications
         connection.registerForAndStartNotifications(self, selector: #selector(WSHostSearchViewController.reachabilityChanged(_:)))
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         showReachabilityBannerIfNeeded()
     }
     
 
     // MARK: Reachability
     
-    func reachabilityChanged(note: NSNotification) {
+    func reachabilityChanged(_ note: Notification) {
         showReachabilityBannerIfNeeded()
     }
     

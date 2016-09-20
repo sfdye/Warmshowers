@@ -7,44 +7,41 @@
 //
 
 import UIKit
-import ReachabilitySwift
 
 class WSReachabilityManager : WSReachabilityProtocol {
     
     static let sharedReachabilityManager = WSReachabilityManager()
     
-    var reachability: Reachability
-    var isOnline: Bool { return reachability.isReachable() }
+    var reachability: Reachability? = Reachability()
+    var isOnline: Bool { return reachability?.isReachable ?? false }
     
     init() {
-        do {
-            reachability = try Reachability.reachabilityForInternetConnection()
-        } catch {
-            abort()
+        if reachability == nil {
+            fatalError("Reachability failed to initialise")
         }
     }
     
     func startReachabilityNotifications() {
         do {
-            try reachability.startNotifier()
+            try reachability?.startNotifier()
         } catch {
             // Failed to start reachability notifications
         }
     }
     
     func stopReachabilityNotifications() {
-        reachability.stopNotifier()
+        reachability?.stopNotifier()
     }
     
-    func registerForNotifications(observer: AnyObject, selector aSelector: Selector) {
-        NSNotificationCenter.defaultCenter().addObserver(observer,
+    func registerForNotifications(_ observer: AnyObject, selector aSelector: Selector) {
+        NotificationCenter.default.addObserver(observer,
             selector: aSelector,
             name: ReachabilityChangedNotification,
             object: reachability)
     }
     
-    func deregisterFromNotifications(observer: AnyObject) {
-        NSNotificationCenter.defaultCenter().removeObserver(observer,
+    func deregisterFromNotifications(_ observer: AnyObject) {
+        NotificationCenter.default.removeObserver(observer,
             name: ReachabilityChangedNotification,
             object: reachability)
     }
@@ -52,12 +49,12 @@ class WSReachabilityManager : WSReachabilityProtocol {
     
     // MARK: Convenience notification methods
     
-    func registerForAndStartNotifications(observer: AnyObject, selector aSelector: Selector) {
+    func registerForAndStartNotifications(_ observer: AnyObject, selector aSelector: Selector) {
         registerForNotifications(observer, selector: aSelector)
         startReachabilityNotifications()
     }
     
-    func deregisterAndStopNotifications(observer: AnyObject) {
+    func deregisterAndStopNotifications(_ observer: AnyObject) {
         stopReachabilityNotifications()
         deregisterFromNotifications(observer)
     }

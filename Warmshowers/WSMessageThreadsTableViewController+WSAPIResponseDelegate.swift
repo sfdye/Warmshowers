@@ -10,7 +10,7 @@ import Foundation
 
 extension WSMessageThreadsTableViewController : WSAPIResponseDelegate {
     
-    func requestDidComplete(request: WSAPIRequest) {
+    func requestDidComplete(_ request: WSAPIRequest) {
         switch request.endPoint.type {
         case .GetMessageThread:
             guard let threadID = request.data as? Int else { return }
@@ -21,7 +21,7 @@ extension WSMessageThreadsTableViewController : WSAPIResponseDelegate {
         }
     }
     
-    func request(request: WSAPIRequest, didSuceedWithData data: AnyObject?) {
+    func request(_ request: WSAPIRequest, didSuceedWithData data: Any?) {
         switch request.endPoint.type {
         case .GetAllMessageThreads:
             updateAllMessages()
@@ -33,7 +33,7 @@ extension WSMessageThreadsTableViewController : WSAPIResponseDelegate {
         }
     }
     
-    func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
+    func request(_ request: WSAPIRequest, didFailWithError error: Error) {
         switch request.endPoint.type {
         case .GetAllMessageThreads:
             errorCache = error

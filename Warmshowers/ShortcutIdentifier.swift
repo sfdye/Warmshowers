@@ -16,14 +16,14 @@ enum ShortcutIdentifier: String {
     // MARK: Initializers
     
     init?(fullType: String) {
-        guard let last = fullType.componentsSeparatedByString(".").last else { return nil }
+        guard let last = fullType.components(separatedBy: ".").last else { return nil }
         self.init(rawValue: last)
     }
     
     // MARK: Properties
     
     var type: String {
-        return NSBundle.mainBundle().bundleIdentifier! + ".\(self.rawValue)"
+        return Bundle.main.bundleIdentifier! + ".\(self.rawValue)"
     }
     
 }

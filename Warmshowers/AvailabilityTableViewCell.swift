@@ -12,7 +12,7 @@ class AvailabilityTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         textLabel?.text = ""
-        backgroundColor = UIColor.grayColor()
+        backgroundColor = UIColor.gray
     }
     
     func configureAsAvailable() {

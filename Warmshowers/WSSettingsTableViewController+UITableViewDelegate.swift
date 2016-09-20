@@ -10,9 +10,9 @@ import UIKit
 
 extension WSSettingsTableViewController {
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        if let cell = tableView.cellForRowAtIndexPath(indexPath){
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        if let cell = tableView.cellForRow(at: indexPath){
             switch cell.tag {
             case 10:
                 navigation.openWarmshowersHomePage()
@@ -21,7 +21,7 @@ extension WSSettingsTableViewController {
             case 20:
                 navigation.openFeedbackEmail()
             case 30:
-                performSegueWithIdentifier(SID_SettingsToRoutes, sender: nil)
+                performSegue(withIdentifier: SID_SettingsToRoutes, sender: nil)
             case 40:
                 WSProgressHUD.show("Logging out ...")
                 api.contactEndPoint(.Logout, withPathParameters: nil, andData: nil, thenNotify: self)

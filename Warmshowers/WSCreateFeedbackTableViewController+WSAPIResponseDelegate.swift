@@ -10,24 +10,24 @@ import UIKit
 
 extension WSCreateFeedbackTableViewController : WSAPIResponseDelegate {
     
-    func requestDidComplete(request: WSAPIRequest) {
-        dispatch_async(dispatch_get_main_queue(), {
+    func requestDidComplete(_ request: WSAPIRequest) {
+        DispatchQueue.main.async(execute: {
             WSProgressHUD.hide(self.navigationController?.view)
             })
     }
     
-    func request(request: WSAPIRequest, didSuceedWithData data: AnyObject?) {
-        dispatch_async(dispatch_get_main_queue(), { [weak self] in
-            self?.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+    func request(_ request: WSAPIRequest, didSuceedWithData data: Any?) {
+        DispatchQueue.main.async(execute: { [weak self] in
+            self?.navigationController?.dismiss(animated: true, completion: nil)
         })
     }
     
-    func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
-        dispatch_async(dispatch_get_main_queue(), { [weak self] () -> Void in
-            let alert = UIAlertController(title: "Could not submit feedback", message: "Sorry, an error occured while submitting your feedback. Please check you are connected to the internet and try again later.", preferredStyle: .Alert)
-            let okAction = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
+    func request(_ request: WSAPIRequest, didFailWithError error: Error) {
+        DispatchQueue.main.async(execute: { [weak self] () -> Void in
+            let alert = UIAlertController(title: "Could not submit feedback", message: "Sorry, an error occured while submitting your feedback. Please check you are connected to the internet and try again later.", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
             alert.addAction(okAction)
-            self?.presentViewController(alert, animated: true, completion: nil)
+            self?.present(alert, animated: true, completion: nil)
         })
     }
 }

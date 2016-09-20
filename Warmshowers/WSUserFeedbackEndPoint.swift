@@ -14,15 +14,19 @@ class WSUserFeedbackEndPoint: WSAPIEndPointProtocol {
     
     var httpMethod: HttpMethod = .Get
     
-    func urlWithHostURL(hostURL: NSURL, andParameters parameters: AnyObject?) throws -> NSURL {
-        guard let uidString = parameters as? NSString else { throw WSAPIEndPointError.InvalidPathParameters }
-        return hostURL.URLByAppendingPathComponent("/user/\(uidString)/json_recommendations")
+    func url(withHostURL hostURL: URL, andParameters parameters: Any?) throws -> URL {
+        guard let uidString = parameters as? NSString else { throw WSAPIEndPointError.invalidPathParameters }
+        return hostURL.appendingPathComponent("/user/\(uidString)/json_recommendations")
     }
     
-    func request(request: WSAPIRequest, didRecieveResponseWithJSON json: AnyObject) throws -> AnyObject? {
+    func request(_ request: WSAPIRequest, didRecieveResponseWithJSON json: Any) throws -> Any? {
+        
+        guard let json = json as? [String: Any] else {
+            throw WSAPIEndPointError.parsingError(endPoint: name, key: nil)
+        }
         
         guard let recommendations = json["recommendations"] as? [AnyObject] else {
-            throw WSAPIEndPointError.ParsingError(endPoint: name, key: "recommendations")
+            throw WSAPIEndPointError.parsingError(endPoint: name, key: "recommendations")
         }
         
         var feedback = [WSRecommendation]()
@@ -30,13 +34,13 @@ class WSUserFeedbackEndPoint: WSAPIEndPointProtocol {
             
             guard
                 let recommendationJSON = recommendation["recommendation"],
-                let wsrecommendation = WSRecommendation(json: recommendationJSON!)
+                let wsrecommendation = WSRecommendation(json: recommendationJSON! as AnyObject)
                 else {
-                    throw WSAPIEndPointError.ParsingError(endPoint: name, key: "recommendation")
+                    throw WSAPIEndPointError.parsingError(endPoint: name, key: "recommendation")
             }
 
             feedback.append(wsrecommendation)
         }
-        return feedback
+        return feedback as AnyObject?
     }
 }

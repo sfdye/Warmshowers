@@ -14,11 +14,11 @@ class WSUnreadMessageCountEndPoint: WSAPIEndPointProtocol {
     
     var httpMethod: HttpMethod = .Post
     
-    func urlWithHostURL(hostURL: NSURL, andParameters parameters: AnyObject?) throws -> NSURL {
-        return hostURL.URLByAppendingPathComponent("/services/rest/message/unreadCount")
+    func url(withHostURL hostURL: URL, andParameters parameters: Any?) throws -> URL {
+        return hostURL.appendingPathComponent("/services/rest/message/unreadCount")
     }
     
-    func request(request: WSAPIRequest, didRecieveResponseWithJSON json: AnyObject) throws -> AnyObject? {
+    func request(_ request: WSAPIRequest, didRecieveResponseWithJSON json: Any) throws -> Any? {
         return nil
     }
     

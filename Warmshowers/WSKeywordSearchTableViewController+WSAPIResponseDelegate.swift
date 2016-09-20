@@ -10,7 +10,7 @@ import UIKit
 
 extension WSKeywordSearchTableViewController : WSAPIResponseDelegate {
     
-    func request(request: WSAPIRequest, didSuceedWithData data: AnyObject?) {
+    func request(_ request: WSAPIRequest, didSuceedWithData data: Any?) {
         switch request.endPoint.type {
         case .SearchByKeyword:
             reloadTableWithHosts(data as? [WSUserLocation])
@@ -25,7 +25,7 @@ extension WSKeywordSearchTableViewController : WSAPIResponseDelegate {
         }
     }
     
-    func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
+    func request(_ request: WSAPIRequest, didFailWithError error: Error) {
         reloadTableWithHosts([WSUserLocation]())
     }
 }

@@ -14,25 +14,25 @@ class FeedbackOptionPickerTableViewCell: UITableViewCell {
     
     // Configures the picker for feedback type
     //
-    func configureForTypeWithFeedback(feedback: WSRecommendation) {
+    func configureForTypeWithFeedback(_ feedback: WSRecommendation) {
         let row = feedback.type.hashValue
         picker.selectRow(row, inComponent: 0, animated: false)
     }
     
     // Configures the picker for feedback ratings
     //
-    func configureForRatingWithFeedback(feedback: WSRecommendation) {
+    func configureForRatingWithFeedback(_ feedback: WSRecommendation) {
         let row = feedback.rating.hashValue
         picker.selectRow(row, inComponent: 0, animated: false)
     }
     
     // Configures the picker for feedback dates
     //
-    func configureForDateWithFeedback(feedback: WSRecommendation) {
-        let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)
-        let dateComps = calendar!.components([.Month, .Year], fromDate: feedback.date)
-        let yearSince2008 = dateComps.year - 2008
-        picker.selectRow(dateComps.month - 1, inComponent: 0, animated: false)
+    func configureForDateWithFeedback(_ feedback: WSRecommendation) {
+        let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
+        let dateComps = (calendar as NSCalendar).components([.month, .year], from: feedback.date as Date)
+        let yearSince2008 = dateComps.year! - 2008
+        picker.selectRow(dateComps.month! - 1, inComponent: 0, animated: false)
         picker.selectRow(yearSince2008, inComponent: 1, animated: false)
     }
     

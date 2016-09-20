@@ -10,12 +10,12 @@ import UIKit
 
 extension WSAccountTableViewController {
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         guard let _ = user else { return 0 }
         return 7
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let user = user else { return 0 }
         switch section {
         case 0:
@@ -46,32 +46,32 @@ extension WSAccountTableViewController {
         }
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let user = user else { return UITableViewCell() }
-        switch indexPath.section {
+        switch (indexPath as NSIndexPath).section {
         case 0:
             // Profile image and availability
-            switch indexPath.row {
+            switch (indexPath as NSIndexPath).row {
             case 0:
                 // Profile image
-                let cell = tableView.dequeueReusableCellWithIdentifier(ImageCellID, forIndexPath: indexPath) as! ProfileImageTableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: ImageCellID, for: indexPath) as! ProfileImageTableViewCell
                 cell.nameLabel.text = user.fullname
                 // TODO set the photo height to 35% of the screen height
                 if let photo = user.profileImage {
-                    cell.nameLabel.textColor = UIColor.whiteColor()
-                    cell.noImageLabel.hidden = true
-                    cell.profileImage.hidden = false
+                    cell.nameLabel.textColor = UIColor.white
+                    cell.noImageLabel.isHidden = true
+                    cell.profileImage.isHidden = false
                     cell.profileImage.image = photo
-                    cell.profileImage.contentMode = .ScaleAspectFill
+                    cell.profileImage.contentMode = .scaleAspectFill
                 } else {
                     cell.nameLabel.textColor = WSColor.DarkBlue
-                    cell.profileImage.hidden = true
-                    cell.noImageLabel.hidden = false
+                    cell.profileImage.isHidden = true
+                    cell.noImageLabel.isHidden = false
                 }
                 return cell
             case 1:
                 // Availiblity
-                let cell = tableView.dequeueReusableCellWithIdentifier(AvailabilityCellID, forIndexPath: indexPath) as! AvailabilityTableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: AvailabilityCellID, for: indexPath) as! AvailabilityTableViewCell
                 if user.notcurrentlyavailable ?? true {
                     cell.configureAsNotAvailable()
                 } else {
@@ -79,93 +79,93 @@ extension WSAccountTableViewController {
                 }
                 return cell
             default:
-                let cell = UITableViewCell(style: .Default, reuseIdentifier: nil)
+                let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
                 return cell
             }
             
         case 1:
             // Account details
-            switch indexPath.row {
+            switch (indexPath as NSIndexPath).row {
             case 0:
                 // Memeber for ...
-                let cell = tableView.dequeueReusableCellWithIdentifier(AccountDetailCellID, forIndexPath: indexPath) as! AccountDetailTableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: AccountDetailCellID, for: indexPath) as! AccountDetailTableViewCell
                 cell.label.text = memberForTextForUser(user)
                 return cell
             case 1:
                 // Active ... ago
-                let cell = tableView.dequeueReusableCellWithIdentifier(AccountDetailCellID, forIndexPath: indexPath) as! AccountDetailTableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: AccountDetailCellID, for: indexPath) as! AccountDetailTableViewCell
                 cell.label.text = activeAgoTextForUser(user)
                 return cell
             case 2:
                 // Languages spoken: ...
-                let cell = tableView.dequeueReusableCellWithIdentifier(AccountDetailCellID, forIndexPath: indexPath) as! AccountDetailTableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: AccountDetailCellID, for: indexPath) as! AccountDetailTableViewCell
                 cell.label.text = languagesSpokenTextForUser(user)
                 return cell
             default:
-                let cell = UITableViewCell(style: .Default, reuseIdentifier: nil)
+                let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
                 return cell
             }
             
         case 2:
             // Feedback
-            let cell = tableView.dequeueReusableCellWithIdentifier(FeedbackCountCellID, forIndexPath: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: FeedbackCountCellID, for: indexPath)
             cell.textLabel?.text = feedbackCellTextForUser(user)
             return cell
             
         case 3:
             // About
-            let cell = tableView.dequeueReusableCellWithIdentifier(AboutCellID, forIndexPath: indexPath) as! AboutTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: AboutCellID, for: indexPath) as! AboutTableViewCell
             cell.aboutTextView.text = user.comments
             return cell
             
         case 4:
             // Hosting info
-            if indexPath.row < user.hostingInfo.count {
+            if (indexPath as NSIndexPath).row < user.hostingInfo.count {
                 // Display host info
-                let cell = tableView.dequeueReusableCellWithIdentifier(HostingInfoCellID, forIndexPath: indexPath) as! HostingInfoTableViewCell
-                cell.titleLabel.text = hostingInfoTitleForInfoAtIndex(indexPath.row, fromUser: user)
-                cell.infoLabel.text = hostingInfoDetailForInfoAtIndex(indexPath.row, fromUser: user)
+                let cell = tableView.dequeueReusableCell(withIdentifier: HostingInfoCellID, for: indexPath) as! HostingInfoTableViewCell
+                cell.titleLabel.text = hostingInfoTitleForInfoAtIndex((indexPath as NSIndexPath).row, fromUser: user)
+                cell.infoLabel.text = hostingInfoDetailForInfoAtIndex((indexPath as NSIndexPath).row, fromUser: user)
                 return cell
-            } else if indexPath.row == user.hostingInfo.count {
+            } else if (indexPath as NSIndexPath).row == user.hostingInfo.count {
                 // Display "This host may offer"
-                let cell = tableView.dequeueReusableCellWithIdentifier(OfferHeadingCellID, forIndexPath: indexPath)
+                let cell = tableView.dequeueReusableCell(withIdentifier: OfferHeadingCellID, for: indexPath)
                 return cell
             } else {
                 // Display an offer
-                let cell = tableView.dequeueReusableCellWithIdentifier(OfferCellID, forIndexPath: indexPath) as! HostOfferTableViewCell
-                cell.offerLabel.text = offerTextForOfferAtIndex(indexPath.row - 5, fromUser: user)
+                let cell = tableView.dequeueReusableCell(withIdentifier: OfferCellID, for: indexPath) as! HostOfferTableViewCell
+                cell.offerLabel.text = offerTextForOfferAtIndex((indexPath as NSIndexPath).row - 5, fromUser: user)
                 return cell
             }
             
         case 5:
             // Contact details
-            let cell = tableView.dequeueReusableCellWithIdentifier(ContactCellID, forIndexPath: indexPath) as! PhoneNumberTableViewCell
-            cell.titleLabel.text = phoneNumberDescriptionForPhoneNumberAtIndex(indexPath.row, fromUser: user)
-            cell.detailLabel.text = phoneNumberForPhoneNumberAtIndex(indexPath.row, fromUser: user)
-            if let type = phoneNumberTypeForPhoneAtIndex(indexPath.row, fromUser: user) {
+            let cell = tableView.dequeueReusableCell(withIdentifier: ContactCellID, for: indexPath) as! PhoneNumberTableViewCell
+            cell.titleLabel.text = phoneNumberDescriptionForPhoneNumberAtIndex((indexPath as NSIndexPath).row, fromUser: user)
+            cell.detailLabel.text = phoneNumberForPhoneNumberAtIndex((indexPath as NSIndexPath).row, fromUser: user)
+            if let type = phoneNumberTypeForPhoneAtIndex((indexPath as NSIndexPath).row, fromUser: user) {
                 switch type {
-                case .Home, .Work:
-                    cell.phoneIcon.hidden = false
-                    cell.messageIcon.hidden = true
-                case .Mobile:
-                    cell.phoneIcon.hidden = false
-                    cell.messageIcon.hidden = false
+                case .home, .work:
+                    cell.phoneIcon.isHidden = false
+                    cell.messageIcon.isHidden = true
+                case .mobile:
+                    cell.phoneIcon.isHidden = false
+                    cell.messageIcon.isHidden = false
                 }
             }
             return cell
             
         case 6:
             // Address
-            let cell = tableView.dequeueReusableCellWithIdentifier(ContactCellID, forIndexPath: indexPath) as! PhoneNumberTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: ContactCellID, for: indexPath) as! PhoneNumberTableViewCell
             cell.titleLabel.numberOfLines = 0
             cell.titleLabel.text = "Address"
             cell.detailLabel.text = addressTextForUser(user)
-            cell.phoneIcon.hidden = true
-            cell.messageIcon.hidden = true
+            cell.phoneIcon.isHidden = true
+            cell.messageIcon.isHidden = true
             return cell
             
         default:
-            let cell = UITableViewCell(style: .Default, reuseIdentifier: nil)
+            let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
             return cell
         }
         

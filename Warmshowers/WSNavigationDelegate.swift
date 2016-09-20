@@ -15,39 +15,47 @@ class WSNavigationDelegate : WSNavigationProtocol {
     let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
     
     var appDelegate: AppDelegate {
-        return UIApplication.sharedApplication().delegate as! AppDelegate
+        return UIApplication.shared.delegate as! AppDelegate
     }
     
     func showLoginScreen() {
-        dispatch_async(dispatch_get_main_queue()) { [unowned self] in
-            let loginViewController = self.mainStoryboard.instantiateViewControllerWithIdentifier(SBID_Login)
+        DispatchQueue.main.async { [unowned self] in
+            let loginViewController = self.mainStoryboard.instantiateViewController(withIdentifier: SBID_Login)
             self.appDelegate.window?.rootViewController = loginViewController
         }
     }
     
     func showMainApp() {
-        dispatch_async(dispatch_get_main_queue()) { [unowned self] in
+        DispatchQueue.main.async { [unowned self] in
             self.appDelegate.window?.rootViewController = self.mainStoryboard.instantiateInitialViewController()
         }
     }
     
     func openWarmshowersHomePage() {
-        UIApplication.sharedApplication().openURL(NSURL(string: "https://www.warmshowers.org")!)
+        let url = URL(string: "https://www.warmshowers.org")!
+        UIApplication.shared.open(url, options: [String : Any](), completionHandler: nil)
     }
     
     func openWarmshowersSignUpPage() {
-        UIApplication.sharedApplication().openURL(NSURL(string: "https://www.warmshowers.org/user/register")!)
+        let url = URL(string: "https://www.warmshowers.org/user/register")!
+        UIApplication.shared.open(url, options: [String : Any](), completionHandler: nil)
     }
     
     func openWarmshowersFAQPage() {
-        UIApplication.sharedApplication().openURL(NSURL(string: "https://www.warmshowers.org/faq")!)
+        let url = URL(string: "https://www.warmshowers.org/faq")!
+        UIApplication.shared.open(url, options: [String : Any](), completionHandler: nil)
     }
     
     func openFeedbackEmail() {
-        UIApplication.sharedApplication().openURL(NSURL(string: "mailto:rajan.fernandez@hotmail.com?subject=Warmshowers%20app")!)
+        let url = URL(string: "mailto:rajan.fernandez@hotmail.com?subject=Warmshowers%20app")!
+        if #available(iOS 10.0, *) {
+            UIApplication.shared.open(url, options: [String : Any](), completionHandler: nil)
+        } else {
+            UIApplication.shared.openURL(url)
+        }
     }
     
-    func handleShortcutItem(shortcutItem: UIApplicationShortcutItem, withCompletionHandler completionHandler: (Bool) -> Void) {
+    func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem, withCompletionHandler completionHandler: (Bool) -> Void) {
         // If the user is not in the main app, do nothing.
         guard let tabVC = appDelegate.window?.rootViewController as? UITabBarController else { return }
         guard let shortcut = ShortcutIdentifier(fullType: shortcutItem.type) else { return }
@@ -59,7 +67,7 @@ class WSNavigationDelegate : WSNavigationProtocol {
         let hostSearchVC = (tabVC.selectedViewController as? UINavigationController)?.viewControllers.first as? WSHostSearchViewController
         if hostSearchVC != nil {
             if let presentedVC = hostSearchVC!.presentedViewController {
-                presentedVC.dismissViewControllerAnimated(true, completion: {
+                presentedVC.dismiss(animated: true, completion: {
                     
                 })
             }
@@ -67,7 +75,7 @@ class WSNavigationDelegate : WSNavigationProtocol {
         
         switch shortcut {
         case .LocationSearch, .KeywordSearch:
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 tabVC.selectedIndex = 0
                 // If the keyword search shortcut was used, activate the search controller.
                 if shortcut == .KeywordSearch {
@@ -75,7 +83,7 @@ class WSNavigationDelegate : WSNavigationProtocol {
                 }
             }
         case .Messages:
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 tabVC.selectedIndex = 1
             }
         }

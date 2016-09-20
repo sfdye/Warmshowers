@@ -29,7 +29,7 @@ class WSMapTile: Hashable {
     /** Hosts whose location is within the bounds of the map tile. */
     var users: Set<WSUserLocation> {
         didSet {
-            last_updated = NSDate()
+            last_updated = Date()
         }
     }
     
@@ -37,7 +37,7 @@ class WSMapTile: Hashable {
     var quadKey: String
     
     /** The time that the users on the tile were last updated. */
-    var last_updated: NSDate?
+    var last_updated: Date?
     
     /** The minimum longitude bound of the tile. */
     var minimumLongitude: Double {
@@ -51,12 +51,12 @@ class WSMapTile: Hashable {
     
     /** The minimum latitude bound of the tile. */
     var minimumLatitude: Double {
-        return degrees(atan(sinh(M_PI - Double(y + 1) / pow(2.0, Double(z)) * 2 * M_PI)))
+        return degrees(atan(sinh(Double.pi - Double(y + 1) / pow(2.0, Double(z)) * 2 * Double.pi)))
     }
     
     /** The maximum latitude bound of the tile. */
     var maximumLatitude: Double {
-        return degrees(atan(sinh(M_PI - Double(y) / pow(2.0, Double(z)) * 2 * M_PI)))
+        return degrees(atan(sinh(Double.pi - Double(y) / pow(2.0, Double(z)) * 2 * Double.pi)))
     }
     
     var centerLongitude: Double {
@@ -64,7 +64,7 @@ class WSMapTile: Hashable {
     }
     
     var centerLatitude: Double {
-        return degrees(atan(sinh(M_PI - (Double(y) + 0.5) / pow(2.0, Double(z)) * 2 * M_PI)))
+        return degrees(atan(sinh(Double.pi - (Double(y) + 0.5) / pow(2.0, Double(z)) * 2 * Double.pi)))
     }
     
     /** Returns the coordinate limits of a map tile. */
@@ -124,7 +124,7 @@ class WSMapTile: Hashable {
     
     convenience init?(latitude: CLLocationDegrees, longitude: CLLocationDegrees, zoom: UInt) {
 
-        func moveDegrees(inout degrees: CLLocationDegrees, intoRangeWithLowerBound lowerBound: Double, andUpperBound upperBound: Double) {
+        func moveDegrees(_ degrees: inout CLLocationDegrees, intoRangeWithLowerBound lowerBound: Double, andUpperBound upperBound: Double) {
             let range = upperBound - lowerBound
             while degrees < lowerBound {
                 degrees += range
@@ -144,14 +144,17 @@ class WSMapTile: Hashable {
         moveDegrees(&lon, intoRangeWithLowerBound: -180.0, andUpperBound: 180.0)
         
         let x = UInt(floor((lon + 180.0) / 360.0 * Double(1 << zoom)))
-        let y = UInt(floor((1.0 - log( tan(lat * M_PI / 180.0) + 1.0 / cos(lat * M_PI / 180.0)) / M_PI) / 2.0 * pow(2.0, Double(zoom))))
+        let tanpart = tan(lat * Double.pi / 180.0)
+        let cospart = cos(lat * Double.pi / 180.0)
+        let sub = tanpart + 1.0 / cospart
+        let y = UInt(floor((1.0 - log(sub) / Double.pi) / 2.0 * pow(2.0, Double(zoom))))
         self.init(x: x, y: y, z: zoom)
     }
     
     /** Returns the quad key for the given tile index */
-    private class func quadKeyFromX(x: UInt, y: UInt, z: UInt) -> String {
+    fileprivate class func quadKeyFromX(_ x: UInt, y: UInt, z: UInt) -> String {
         
-        func moveInt(inout int: UInt, intoRangeWithLowerBound lowerBound: UInt, andUpperBound upperBound: UInt) {
+        func moveInt(_ int: inout UInt, intoRangeWithLowerBound lowerBound: UInt, andUpperBound upperBound: UInt) {
             let range = upperBound - lowerBound
             while int < lowerBound {
                 int += range
@@ -161,12 +164,12 @@ class WSMapTile: Hashable {
             }
         }
         
-        func paddedBinaryIntArray(x: UInt, length: UInt) -> [Int] {
+        func paddedBinaryIntArray(_ x: UInt, length: UInt) -> [Int] {
             var binaryStringArray = String(x, radix:2).characters.map { (character) -> String in
                 String(character)
             }
             while binaryStringArray.count < Int(length) {
-                binaryStringArray.insert("0", atIndex: 0)
+                binaryStringArray.insert("0", at: 0)
             }
             let binaryIntArray = binaryStringArray.map { (string) -> Int in
                 return Int(string) ?? 0
@@ -180,8 +183,8 @@ class WSMapTile: Hashable {
         moveInt(&x, intoRangeWithLowerBound: 0, andUpperBound: n)
         moveInt(&y, intoRangeWithLowerBound: 0, andUpperBound: n)
 
-        let xBinary = paddedBinaryIntArray(UInt(Double(x) % pow(2.0, Double(z))), length: z)
-        let yBinary = paddedBinaryIntArray(UInt(Double(y) % pow(2.0, Double(z))), length: z)
+        let xBinary = paddedBinaryIntArray(UInt(Double(x).truncatingRemainder(dividingBy: pow(2.0, Double(z)))), length: z)
+        let yBinary = paddedBinaryIntArray(UInt(Double(y).truncatingRemainder(dividingBy: pow(2.0, Double(z)))), length: z)
         var quadKeyString = ""
         for index in 0..<Int(z) {
             quadKeyString += String(xBinary[index] + 2 * yBinary[index])
@@ -189,13 +192,13 @@ class WSMapTile: Hashable {
         return quadKeyString
     }
     
-    private func xYFromQuadKey(quadKey: String) -> (x: UInt, y: UInt)? {
+    fileprivate func xYFromQuadKey(_ quadKey: String) -> (x: UInt, y: UInt)? {
         guard let _ = Int(quadKey) else { return nil }
         let z = quadKey.characters.count
         let max = pow(2.0, Double(z))
         var x: UInt = 0
         var y: UInt = 0
-        for (index, character) in quadKey.characters.enumerate() {
+        for (index, character) in quadKey.characters.enumerated() {
             let increment = UInt(max / pow(2.0, Double(index + 1)))
             let digit = Int(String(character))!
             switch digit {
@@ -214,7 +217,7 @@ class WSMapTile: Hashable {
     }
     
     /** Factory method to return all the map tiles that are it a given map region. */
-    class func tilesForMapRegion(region: MKCoordinateRegion, atZoomLevel z: UInt) -> Set<WSMapTile>? {
+    class func tilesForMapRegion(_ region: MKCoordinateRegion, atZoomLevel z: UInt) -> Set<WSMapTile>? {
         
         // Only return tiles within the latitude range pf -85 < lat < 85.
         let minLat = max(region.minimumLatitude, -85.0)
@@ -250,9 +253,9 @@ class WSMapTile: Hashable {
         return tiles
     }
     
-    func isInRegion(region: MKCoordinateRegion) -> Bool {
+    func isInRegion(_ region: MKCoordinateRegion) -> Bool {
         
-        func moveDegrees(inout degrees: CLLocationDegrees, intoRangeWithLowerBound lowerBound: Double, andUpperBound upperBound: Double) {
+        func moveDegrees(_ degrees: inout CLLocationDegrees, intoRangeWithLowerBound lowerBound: Double, andUpperBound upperBound: Double) {
             let range = upperBound - lowerBound
             while degrees < lowerBound {
                 degrees += range
@@ -284,10 +287,10 @@ class WSMapTile: Hashable {
                 && maximumLongitude > minLon
     }
     
-    func parentAtZoomLevel(z: UInt) -> WSMapTile? {
+    func parentAtZoomLevel(_ z: UInt) -> WSMapTile? {
         guard z <= UInt(quadKey.characters.count) else { return nil }
-        let index = quadKey.startIndex.advancedBy(Int(z))
-        let parentQuadKey = quadKey.substringToIndex(index)
+        let index = quadKey.characters.index(quadKey.startIndex, offsetBy: Int(z))
+        let parentQuadKey = quadKey.substring(to: index)
         guard let (x, y) = xYFromQuadKey(parentQuadKey) else { return nil }
         return WSMapTile(x: x, y: y, z: z)
     }
@@ -304,12 +307,12 @@ class WSMapTile: Hashable {
         return polygon
     }
     
-    private func radians(degrees: Double) -> Double {
-        return degrees * M_PI / 180.0
+    fileprivate func radians(_ degrees: Double) -> Double {
+        return degrees * Double.pi / 180.0
     }
     
-    private func degrees(radians: Double) -> Double {
-        return radians * 180.0 / M_PI
+    fileprivate func degrees(_ radians: Double) -> Double {
+        return radians * 180.0 / Double.pi
     }
     
 }

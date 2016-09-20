@@ -10,10 +10,10 @@ import UIKit
 
 extension WSMessageThreadTableViewController: WSAPIResponseDelegate {
     
-    func requestDidComplete(request: WSAPIRequest) {
+    func requestDidComplete(_ request: WSAPIRequest) {
         switch request.endPoint.type {
         case .GetMessageThread:
-            dispatch_async(dispatch_get_main_queue(), { [weak self] in
+            DispatchQueue.main.async(execute: { [weak self] in
                 self?.refreshControl?.endRefreshing()
                 self?.tableView.reloadData()
             })
@@ -25,7 +25,7 @@ extension WSMessageThreadTableViewController: WSAPIResponseDelegate {
         }
     }
     
-    func request(request: WSAPIRequest, didSuceedWithData data: AnyObject?) {
+    func request(_ request: WSAPIRequest, didSuceedWithData data: Any?) {
         switch request.endPoint.type {
         case .MarkThreadRead:
             guard let readState = request.data as? WSMessageThreadReadState else { return }
@@ -60,7 +60,7 @@ extension WSMessageThreadTableViewController: WSAPIResponseDelegate {
         }
     }
     
-    func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
+    func request(_ request: WSAPIRequest, didFailWithError error: Error) {
         //
     }
     

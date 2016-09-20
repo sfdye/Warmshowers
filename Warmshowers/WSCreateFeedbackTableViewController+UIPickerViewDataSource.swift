@@ -10,9 +10,9 @@ import UIKit
 
 extension WSCreateFeedbackTableViewController : UIPickerViewDataSource {
     
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         
-        guard let pickerRow = pickerIndexPath?.row else {
+        guard let pickerRow = (pickerIndexPath as NSIndexPath?)?.row else {
             return 0
         }
         
@@ -26,9 +26,9 @@ extension WSCreateFeedbackTableViewController : UIPickerViewDataSource {
         }
     }
 
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         
-        guard let pickerRow = pickerIndexPath?.row else {
+        guard let pickerRow = (pickerIndexPath as NSIndexPath?)?.row else {
             return 0
         }
         

@@ -6,12 +6,11 @@
 //  Copyright © 2016 Rajan Fernandez. All rights reserved.
 //
 
-import Foundation
-import ReachabilitySwift
+import UIKit
 
 enum WSAPICommunicatorMode {
-    case Online
-    case Mocking
+    case online
+    case mocking
 }
 
 /**
@@ -36,7 +35,7 @@ class WSAPICommunicator: WSAPICommunicatorProtocol {
     // MARK: Initialisers
     
     init() {
-        mode = .Online
+        mode = .online
     }
     
     deinit {
@@ -46,36 +45,36 @@ class WSAPICommunicator: WSAPICommunicatorProtocol {
     
     // MARK: Utilities
     
-    private func log(message: String) {
+    fileprivate func log(_ message: String) {
         if logging { print(message) }
     }
     
     /** Creates and executes a request for the given end point with the given data. */
-    func contactEndPoint(endPoint: WSAPIEndPoint, withPathParameters parameters: AnyObject? = nil, andData data: AnyObject? = nil, thenNotify requester: WSAPIResponseDelegate) {
+    func contactEndPoint(_ endPoint: WSAPIEndPoint, withPathParameters parameters: Any? = nil, andData data: Any? = nil, thenNotify requester: WSAPIResponseDelegate) {
         
-        var request = WSAPIRequest(endPoint: endPoint.instance, withDelegate: self, requester: requester, data: data, andParameters: parameters)
+        let request = WSAPIRequest(endPoint: endPoint.instance, withDelegate: self, requester: requester, data: data, andParameters: parameters)
         
         addRequestToQueue(request)
-        executeRequest(&request)
+        execute(request: request)
     }
     
     // MARK: Request handling
     
     /** Adds authroization headers to a request. */
-    private func authorizeURLRequest(inout urlRequest: NSMutableURLRequest) throws {
+    fileprivate func authorize(urlRequest: inout URLRequest) throws {
         let (sessionCookie, token, _) = WSSessionState.sharedSessionState.getSessionData()
         
         // Add the session cookie to the header.
-        guard sessionCookie != nil else { throw WSAPICommunicatorError.NoSessionCookie }
+        guard sessionCookie != nil else { throw WSAPICommunicatorError.noSessionCookie }
         urlRequest.addValue(sessionCookie!, forHTTPHeaderField: "Cookie")
         
         // Add the CSRF token to the header.
-        guard token != nil else { throw WSAPICommunicatorError.NoToken }
+        guard token != nil else { throw WSAPICommunicatorError.noToken }
         urlRequest.addValue(token!, forHTTPHeaderField: "X-CSRF-Token")
     }
     
     /** Executes an API request. */
-    private func executeRequest(inout request: WSAPIRequest) {
+    fileprivate func execute(request: WSAPIRequest) {
         
         guard connection.isOnline else {
             // Only keep requests to be processed online later when explicitly specified
@@ -83,7 +82,7 @@ class WSAPICommunicator: WSAPICommunicatorProtocol {
                 removeRequestFromQueue(request)
             }
             connection.registerForAndStartNotifications(self, selector: #selector(reachabilityDidChange))
-            request.requester?.request(request, didFailWithError: WSAPICommunicatorError.Offline)
+            request.requester?.request(request, didFailWithError: WSAPICommunicatorError.offline)
             return
         }
         
@@ -93,22 +92,23 @@ class WSAPICommunicator: WSAPICommunicatorProtocol {
             
             // Authorize the request if required.
             if request.endPoint.requiresAuthorization {
-                try authorizeURLRequest(&urlRequest)
+                try authorize(urlRequest: &urlRequest)
             }
             
             // Dispatch the request.
             switch mode {
-            case .Online:
-                let task = urlSession.dataTaskWithRequest(urlRequest) { [weak self] (data, response, error) in
-                    self?.didRecieveHTTPResponseWithData(data, response: response, andError: error, forRequest: &request)
-                }
+            case .online:
+                let task = urlSession.dataTask(with: urlRequest, completionHandler: { [weak self] (data, response, error) in
+//                    self.didRecieveHTTPResponseWithData(data, response: response, andError: error, forRequest: request)
+                    self?.didRecieveHTTPResponse(withData: nil, response: nil, andError: nil, forRequest: request)
+                })
                 task.resume()
-            case .Mocking:
+            case .mocking:
                 assertionFailure("Mocking behaviour not yet defined.")
             }
-            request.status = .Sent
+//            request.status = .sent
             
-            log("Request dispatched to: \(urlRequest.URL)")
+            log("Request dispatched to: \(urlRequest.url)")
             
         } catch let error {
             request.delegate.request(request, didFailWithError: error)
@@ -116,9 +116,9 @@ class WSAPICommunicator: WSAPICommunicatorProtocol {
     }
     
     /** Handles network responses and delegates control of the request. */
-    private func didRecieveHTTPResponseWithData(data: NSData?, response: NSURLResponse?, andError error: NSError?, inout forRequest request: WSAPIRequest) {
+    fileprivate func didRecieveHTTPResponse(withData data: Data?, response: URLResponse?, andError error: NSError?, forRequest request: WSAPIRequest) {
         
-        request.status = .RecievedResponse
+//        request.status = .recievedResponse
         
         // Handle HTTP errors
         guard error == nil else {
@@ -126,7 +126,7 @@ class WSAPICommunicator: WSAPICommunicatorProtocol {
             return
         }
         
-        let statusCode = (response as! NSHTTPURLResponse).statusCode
+        let statusCode = (response as! HTTPURLResponse).statusCode
         
         // Handle error responses
         guard request.endPoint.successCodes.contains(statusCode) else {
@@ -141,9 +141,9 @@ class WSAPICommunicator: WSAPICommunicatorProtocol {
             
             if let data = data {
                 do {
-                    let json = try NSJSONSerialization.JSONObjectWithData(data, options: [])
+                    let json = try JSONSerialization.jsonObject(with: data, options: [])
                     if let jsonArray = json as? NSArray {
-                        if let message = jsonArray.objectAtIndex(0) as? String {
+                        if let message = jsonArray.object(at: 0) as? String {
                             body = message
                         }
                     }
@@ -152,33 +152,33 @@ class WSAPICommunicator: WSAPICommunicatorProtocol {
                 }
             }
             
-            error = .ServerError(statusCode: statusCode, body: body)
+            error = .serverError(statusCode: statusCode, body: body)
             request.delegate.request(request, didFailWithError: error)
             return
         }
         
-        guard let data = data where request.endPoint.doesExpectDataWithResponse() == true else {
-            let error = WSAPICommunicatorError.NoData
+        guard let data = data , request.endPoint.doesExpectDataWithResponse() == true else {
+            let error = WSAPICommunicatorError.noData
             request.delegate.request(request, didFailWithError: error)
             return
         }
         
         // Begin parsing data
-        request.status = .Parsing
+//        request.status = .parsing
         
         do {
-            var parsedData: AnyObject? = nil
+            var parsedData: Any? = nil
             switch request.endPoint.acceptType {
             case .PlainText:
-                if let text = String.init(data: data, encoding: NSUTF8StringEncoding) {
+                if let text = String.init(data: data, encoding: String.Encoding.utf8) {
                     log("Recieved text response: \(text)")
                     parsedData = try request.endPoint.request(request, didRecieveResponseWithText: text)
                     request.delegate.request(request, didSucceedWithData: parsedData)
                 } else {
-                    request.delegate.request(request, didFailWithError: WSAPIEndPointError.ParsingError(endPoint: request.endPoint.name, key: nil))
+                    request.delegate.request(request, didFailWithError: WSAPIEndPointError.parsingError(endPoint: request.endPoint.name, key: nil))
                 }
             case .JSON:
-                let json = try NSJSONSerialization.JSONObjectWithData(data, options: [.AllowFragments])
+                let json = try JSONSerialization.jsonObject(with: data, options: [.allowFragments])
                 log("Recieved JSON response: \(json)")
                 parsedData = try request.endPoint.request(request, didRecieveResponseWithJSON: json)
                 try request.endPoint.request(request, updateStore: store, withJSON: json)
@@ -187,7 +187,7 @@ class WSAPICommunicator: WSAPICommunicatorProtocol {
                 if let image = UIImage(data: data) {
                     request.delegate.request(request, didSucceedWithData: image)
                 } else {
-                    request.delegate.request(request, didFailWithError: WSAPIEndPointError.ParsingError(endPoint: request.endPoint.name, key: nil))
+                    request.delegate.request(request, didFailWithError: WSAPIEndPointError.parsingError(endPoint: request.endPoint.name, key: nil))
                 }
             }
         } catch let error {
@@ -199,21 +199,21 @@ class WSAPICommunicator: WSAPICommunicatorProtocol {
     // MARK: Queuing
     
     /** Adds a request to the request queue. */
-    func addRequestToQueue(request: WSAPIRequest) {
-        request.status = .Queued
+    func addRequestToQueue(_ request: WSAPIRequest) {
+//        request.status = .queued
         requests.insert(request)
     }
     
     /** Removes a request to the request queue. */
-    func removeRequestFromQueue(request: WSAPIRequest) {
+    func removeRequestFromQueue(_ request: WSAPIRequest) {
         requests.remove(request)
     }
     
     /** Executes all queued request. */
-    private func flushQueue() {
-        for var request in requests {
-            if request.status == .Queued {
-                executeRequest(&request)
+    fileprivate func flushQueue() {
+        for request in requests {
+            if request.status == .queued {
+                execute(request: request)
             }
         }
     }
@@ -222,7 +222,7 @@ class WSAPICommunicator: WSAPICommunicatorProtocol {
     // MARK: Reachability
     
     /** This method is called when the reachability status is changed */
-    @objc private func reachabilityDidChange() {
+    @objc fileprivate func reachabilityDidChange() {
         if connection.isOnline {
             flushQueue()
         }

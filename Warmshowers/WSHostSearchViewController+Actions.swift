@@ -10,15 +10,15 @@ import UIKit
 
 extension WSHostSearchViewController {
     
-    @IBAction func searchButtonPressed(sender: UIBarButtonItem?) {
-        if !searchController.active && connection.isOnline {
-            dispatch_async(dispatch_get_main_queue()) {
-                self.presentViewController(self.searchController, animated: true, completion: nil)
+    @IBAction func searchButtonPressed(_ sender: UIBarButtonItem?) {
+        if !searchController.isActive && connection.isOnline {
+            DispatchQueue.main.async {
+                self.present(self.searchController, animated: true, completion: nil)
             }
         }
     }
     
-    @IBAction func accountButtonPressed(sender: UIBarButtonItem?) {
+    @IBAction func accountButtonPressed(_ sender: UIBarButtonItem?) {
         
         guard connection.isOnline else {
             alert.presentAlertFor(self, withTitle: "You are currently offline", button: "OK")

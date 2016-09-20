@@ -11,7 +11,7 @@ import Foundation
 struct HttpBody {
     
     /** Utility method to return a dictionary of parameters as a query string. */
-    static func bodyStringWithParameters(parameters: [String: String]) -> String {
+    static func bodyStringWithParameters(_ parameters: [String: String]) -> String {
         
         var bodyString = ""
         let keys: [String] = Array(parameters.keys)

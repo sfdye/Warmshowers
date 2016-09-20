@@ -10,20 +10,20 @@ import UIKit
 
 extension WSHostListTableViewController {
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return hosts?.count ?? 0
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier(HostListCellID, forIndexPath: indexPath) as! HostListTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: HostListCellID, for: indexPath) as! HostListTableViewCell
         guard let hosts = hosts else { return cell }
         
-        let host = hosts[indexPath.row]
+        let host = hosts[(indexPath as NSIndexPath).row]
         cell.nameLabel.text = host.fullname
         cell.locationLabel.text = host.shortAddress
         cell.profileImage.image = host.image ?? placeholderImage
@@ -32,7 +32,7 @@ extension WSHostListTableViewController {
         
         // Download the hosts thumbnail image if needed.
         if let _ = host.imageURL
-            where host.image == nil && !tableView.dragging && !tableView.decelerating {
+            , host.image == nil && !tableView.isDragging && !tableView.isDecelerating {
             startImageDownloadForIndexPath(indexPath)
         }
 

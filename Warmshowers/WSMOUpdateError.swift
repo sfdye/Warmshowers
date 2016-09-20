@@ -8,10 +8,10 @@
 
 import Foundation
 
-enum WSMOUpdateError: ErrorType {
-    case ParsingError(className: String, key: String?)
-    case CastingError
-    case InvalidPropertyStatus
-    case InvalidDependency
-    case JSONPredicateError(className: String, key: String?)
+enum WSMOUpdateError: Error {
+    case parsingError(className: String, key: String?)
+    case castingError
+    case invalidPropertyStatus
+    case invalidDependency
+    case jsonPredicateError(className: String, key: String?)
 }

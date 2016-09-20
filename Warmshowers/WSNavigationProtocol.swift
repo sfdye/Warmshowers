@@ -29,6 +29,6 @@ protocol WSNavigationProtocol {
     func openFeedbackEmail()
     
     /** Handles an application shortcut. */
-    func handleShortcutItem(shortcutItem: UIApplicationShortcutItem, withCompletionHandler completionHandler: (Bool) -> Void)
+    func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem, withCompletionHandler completionHandler: (Bool) -> Void)
     
 }

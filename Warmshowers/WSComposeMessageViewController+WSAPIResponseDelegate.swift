@@ -10,18 +10,18 @@ import Foundation
 
 extension WSComposeMessageViewController : WSAPIResponseDelegate {
     
-    func requestDidComplete(request: WSAPIRequest) {
+    func requestDidComplete(_ request: WSAPIRequest) {
         WSProgressHUD.hide(navigationController?.view)
     }
     
-    func request(request: WSAPIRequest, didSuceedWithData data: AnyObject?) {
-        NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: MessagesViewNeedsUpdateNotificationName, object: nil))
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+    func request(_ request: WSAPIRequest, didSuceedWithData data: Any?) {
+        NotificationCenter.default.post(Notification(name: Notification.Name(rawValue: MessagesViewNeedsUpdateNotificationName), object: nil))
+        DispatchQueue.main.async(execute: { () -> Void in
+            self.navigationController?.dismiss(animated: true, completion: nil)
         })
     }
     
-    func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
+    func request(_ request: WSAPIRequest, didFailWithError error: Error) {
         alert.presentAPIError(error, forDelegator: self)
     }
 

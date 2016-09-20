@@ -10,11 +10,11 @@ import Foundation
 
 extension WSComposeMessageViewController {
     
-    @IBAction func sendButtonPressed(sender: AnyObject?) {
+    @IBAction func sendButtonPressed(_ sender: AnyObject?) {
         
         self.view.endEditing(true)
         
-        guard let body = body where body != "" else {
+        guard let body = body , body != "" else {
             alert.presentAlertFor(self, withTitle: "Could not send message.", button: "OK", message: "Message has no content.")
             return
         }
@@ -24,7 +24,7 @@ extension WSComposeMessageViewController {
             return
         }
         
-        guard let subject = subject where subject != "" else {
+        guard let subject = subject , subject != "" else {
             alert.presentAlertFor(self, withTitle: "Could not send message.", button: "OK", message: "Message has no subject.")
             return
         }

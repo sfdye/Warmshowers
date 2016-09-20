@@ -20,35 +20,39 @@ class WSLoginEndPoint : WSAPIEndPointProtocol {
     var mode: WSLoginEndPointTestingMode = .Success
 #endif
     
-    func urlWithHostURL(hostURL: NSURL, andParameters parameters: AnyObject?) throws -> NSURL {
-        return hostURL.URLByAppendingPathComponent("/services/rest/user/login")
+    func url(withHostURL hostURL: URL, andParameters parameters: Any?) throws -> URL {
+        return hostURL.appendingPathComponent("/services/rest/user/login")
     }
     
-    func HTTPBodyParametersWithData(data: AnyObject?) throws -> [String: String] {
-        guard data is WSLoginData else { throw WSAPIEndPointError.InvalidOutboundData }
+    func HTTPBodyParameters(withData data: Any?) throws -> [String: String] {
+        guard data is WSLoginData else { throw WSAPIEndPointError.invalidOutboundData }
         return (data as! WSLoginData).asParameters
     }
     
-    func request(request: WSAPIRequest, didRecieveResponseWithJSON json: AnyObject) throws -> AnyObject? {
+    func request(_ request: WSAPIRequest, didRecieveResponseWithJSON json: Any) throws -> Any? {
         
-        guard let sessionName = json.valueForKey("session_name") as? String else {
-            throw WSAPIEndPointError.ParsingError(endPoint: name, key: "session_name")
+        guard let json = json as? [String: Any] else {
+            throw WSAPIEndPointError.parsingError(endPoint: name, key: nil)
         }
         
-        guard let sessid = json.valueForKey("sessid") as? String else {
-            throw WSAPIEndPointError.ParsingError(endPoint: name, key: "sessid")
+        guard let sessionName = json["session_name"] as? String else {
+            throw WSAPIEndPointError.parsingError(endPoint: name, key: "session_name")
         }
         
-        guard let token = json.valueForKey("token") as? String else {
-            throw WSAPIEndPointError.ParsingError(endPoint: name, key: "token")
+        guard let sessid = json["sessid"] as? String else {
+            throw WSAPIEndPointError.parsingError(endPoint: name, key: "sessid")
         }
         
-        guard let user = json.valueForKey("user") else {
-            throw WSAPIEndPointError.ParsingError(endPoint: name, key: "user")
+        guard let token = json["token"] as? String else {
+            throw WSAPIEndPointError.parsingError(endPoint: name, key: "token")
         }
         
-        guard let uid = user.valueForKey("uid")?.integerValue else {
-            throw WSAPIEndPointError.ParsingError(endPoint: name, key: "uid")
+        guard let user = json["user"] as? [String: Any] else {
+            throw WSAPIEndPointError.parsingError(endPoint: name, key: "user")
+        }
+        
+        guard let uid = user["uid"] as? Int else {
+            throw WSAPIEndPointError.parsingError(endPoint: name, key: "uid")
         }
         
         // Store the session data

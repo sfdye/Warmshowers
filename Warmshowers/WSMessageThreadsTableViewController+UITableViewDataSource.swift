@@ -14,26 +14,26 @@ let RUID_NoMessageThreadsCell = "NoMessages"
 
 extension WSMessageThreadsTableViewController {
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let sections = fetchedResultsController?.sections else { return 0 }
         let sectionInfo = sections[section]
         return sectionInfo.numberOfObjects
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier(RUID_MessageThread, forIndexPath: indexPath) as! MessageThreadsTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: RUID_MessageThread, for: indexPath) as! MessageThreadsTableViewCell
         
-        guard let messageThread = self.fetchedResultsController?.objectAtIndexPath(indexPath) as? WSMOMessageThread else {
+        guard let messageThread = self.fetchedResultsController?.object(at: indexPath) else {
             cell.participantsLabel.text = ""
             cell.dateLabel.text = ""
             cell.subjectLabel.text = ""
             cell.bodyPreviewLabel.text = "\n"
-            cell.newDot.hidden = true
+            cell.newDot.isHidden = true
             cell.threadID = nil
             return cell
         }
@@ -42,12 +42,12 @@ extension WSMessageThreadsTableViewController {
         return cell
     }
     
-    func configureCell(cell: MessageThreadsTableViewCell, withMessageThread messageThread: WSMOMessageThread) {
-        cell.participantsLabel.text = messageThread.getParticipantString(currentUserUID)
+    func configureCell(_ cell: MessageThreadsTableViewCell, withMessageThread messageThread: WSMOMessageThread) {
+        cell.participantsLabel.text = messageThread.getParticipantString(currentUserUID: currentUserUID)
         cell.dateLabel.text = textForMessageThreadDate(messageThread.last_updated)
         cell.subjectLabel.text = messageThread.subject ?? ""
         cell.bodyPreviewLabel.text = messageThread.lastestMessagePreview() ?? "\n"
-        cell.newDot.hidden = !messageThread.is_new
+        cell.newDot.isHidden = !messageThread.is_new
         cell.threadID = messageThread.thread_id
     }
 

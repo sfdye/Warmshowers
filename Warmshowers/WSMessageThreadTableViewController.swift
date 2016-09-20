@@ -14,10 +14,10 @@ let MessagesViewNeedsUpdateNotificationName = "ws_message_view_needs_update"
 class WSMessageThreadTableViewController: UITableViewController {
     
     var threadID: Int?
-    var fetchedResultsController: NSFetchedResultsController!
+    var fetchedResultsController: NSFetchedResultsController<WSMOMessage>!
     var downloadsInProgress = Set<String>()
     var alert: UIAlertController?
-    let formatter = NSDateFormatter()
+    let formatter = DateFormatter()
     
     // Delegates
     var store: WSStoreProtocol = WSStore.sharedStore
@@ -28,7 +28,7 @@ class WSMessageThreadTableViewController: UITableViewController {
     // MARK: View life cycle
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func viewDidLoad() {
@@ -43,12 +43,12 @@ class WSMessageThreadTableViewController: UITableViewController {
         
         // Set up the date formatter.
         let template = "HHmmddMMMyyyy"
-        let locale = NSLocale.currentLocale()
-        formatter.dateFormat = NSDateFormatter.dateFormatFromTemplate(template, options: 0, locale: locale)
+        let locale = Locale.current
+        formatter.dateFormat = DateFormatter.dateFormat(fromTemplate: template, options: 0, locale: locale)
         
         // Set the refresh controller for the tableview
         refreshControl = UIRefreshControl()
-        refreshControl?.addTarget(self, action: #selector(WSMessageThreadTableViewController.update), forControlEvents: UIControlEvents.ValueChanged)
+        refreshControl?.addTarget(self, action: #selector(WSMessageThreadTableViewController.update), for: UIControlEvents.valueChanged)
         
         // Set the view title
         navigationItem.title = subjectForMessageThreadWithID(threadID ?? 0)
@@ -60,11 +60,11 @@ class WSMessageThreadTableViewController: UITableViewController {
         markThread(threadID ?? 0, asRead: true)
         
         // Register for update notifications. This is fired after a reply is sent.
-        let notificationCentre = NSNotificationCenter.defaultCenter()
-        notificationCentre.addObserver(self, selector: #selector(WSMessageThreadTableViewController.update), name: MessagesViewNeedsUpdateNotificationName, object: nil)
+        let notificationCentre = NotificationCenter.default
+        notificationCentre.addObserver(self, selector: #selector(WSMessageThreadTableViewController.update), name: NSNotification.Name(rawValue: MessagesViewNeedsUpdateNotificationName), object: nil)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: WSColor.Green, NSFontAttributeName: WSFont.SueEllenFrancisco(18)]
@@ -74,17 +74,17 @@ class WSMessageThreadTableViewController: UITableViewController {
         }
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         loadImagesForObjectsOnScreen()
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         // This prevents the fetch results controller from updating while the view is not visible.
         fetchedResultsController = nil
     }
     
     func initialiseFetchResultsController() {
-        let request = NSFetchRequest(entityName: "Message")
+        let request = NSFetchRequest<WSMOMessage>(entityName: WSMOMessage.entityName)
         request.predicate = NSPredicate(format: "thread.p_thread_id==%i", threadID ?? 0)
         request.sortDescriptors = [NSSortDescriptor(key: "timestamp", ascending: true)]
         self.fetchedResultsController = NSFetchedResultsController(
@@ -104,7 +104,7 @@ class WSMessageThreadTableViewController: UITableViewController {
     // MARK: Utilities
     
     /** Returns the subject of a message thread given the thread ID. */
-    func subjectForMessageThreadWithID(threadID: Int) -> String? {
+    func subjectForMessageThreadWithID(_ threadID: Int) -> String? {
         let predicate = NSPredicate(format: "p_thread_id == %d", threadID)
         guard let thread = try? store.retrieve(WSMOMessageThread.self, sortBy: nil, isAscending: true, predicate: predicate, context: store.managedObjectContext).first else {
             return nil
@@ -119,17 +119,17 @@ class WSMessageThreadTableViewController: UITableViewController {
     }
     
     /** Mark message thread as read. */
-    func markThread(threadID: Int, asRead read: Bool) {
+    func markThread(_ threadID: Int, asRead read: Bool) {
         let readState = WSMessageThreadReadState(threadID: threadID, read: true)
         api.contactEndPoint(.MarkThreadRead, withPathParameters: nil, andData: readState, thenNotify: self)
     }
     
-    func startImageDownloadForIndexPath(indexPath: NSIndexPath) {
-        guard let message = self.fetchedResultsController.objectAtIndexPath(indexPath) as? WSMOMessage else { return }
+    func startImageDownloadForIndexPath(_ indexPath: IndexPath) {
+        let message = self.fetchedResultsController.object(at: indexPath)
         guard message.author?.image == nil else { return }
         if let url = message.author?.image_url {
             api.contactEndPoint(.ImageResource, withPathParameters: url as NSString, andData: nil, thenNotify: self)
-        } else if let uid = message.author?.uid where !downloadsInProgress.contains(String(uid)) {
+        } else if let uid = message.author?.uid , !downloadsInProgress.contains(String(uid)) {
             // We first need to get the image URL from the authors profile.
             downloadsInProgress.insert(String(uid))
             api.contactEndPoint(.UserInfo, withPathParameters: String(uid) as NSString, andData: nil, thenNotify: self)
@@ -144,7 +144,7 @@ class WSMessageThreadTableViewController: UITableViewController {
     }
     
     /** Sets the image for a host in the list with the given image URL. */
-    func setImage(image: UIImage, forHostWithImageURL imageURL: String) {
+    func setImage(_ image: UIImage, forHostWithImageURL imageURL: String) {
         
         let predicate = NSPredicate(format: "image_url LIKE %@", imageURL)
         
@@ -156,24 +156,22 @@ class WSMessageThreadTableViewController: UITableViewController {
         try! store.managedObjectContext.save()
         
         // Set the image in any message table view cells where the user in the author.
-        dispatch_async(dispatch_get_main_queue()) { [weak self] in
-            guard let visiblePaths = self?.tableView.indexPathsForVisibleRows else { return }
+        DispatchQueue.main.async { [unowned self] in
+            guard let visiblePaths = self.tableView.indexPathsForVisibleRows else { return }
             for indexPath in visiblePaths {
-                if
-                    let cell = self?.tableView.cellForRowAtIndexPath(indexPath) as? MessageTableViewCell,
-                    let message = self?.fetchedResultsController.objectAtIndexPath(indexPath) as? WSMOMessage,
-                    let url = message.author?.image_url
-                    where url == imageURL
-                {
-                    cell.authorImageView.image = image
+                if let cell = self.tableView.cellForRow(at: indexPath) as? MessageTableViewCell {
+                    let message = self.fetchedResultsController.object(at: indexPath)
+                    if let url = message.author?.image_url, url == imageURL {
+                        cell.authorImageView.image = image
+                    }
                 }
             }
         }
     }
     
-    func textForMessageDate(date: NSDate?) -> String? {
+    func textForMessageDate(_ date: Date?) -> String? {
         guard let date = date else { return "" }
-        return formatter.stringFromDate(date)
+        return formatter.string(from: date)
     }
     
 }

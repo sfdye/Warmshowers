@@ -3,34 +3,22 @@ PODS:
     - CVKHierarchySearcher (~> 0.2)
   - CCHMapClusterController (1.7.0)
   - CVKHierarchySearcher (0.2.0)
-  - KeychainAccess (2.3.5)
-  - MBProgressHUD (0.9.2)
-  - ReachabilitySwift (2.3.3)
+  - KeychainAccess (3.0.0)
+  - MBProgressHUD (1.0.0)
 
 DEPENDENCIES:
   - AFMInfoBanner
   - CCHMapClusterController
   - KeychainAccess
-  - MBProgressHUD (from `https://github.com/jdg/MBProgressHUD.git`)
-  - ReachabilitySwift
-
-EXTERNAL SOURCES:
-  MBProgressHUD:
-    :git: https://github.com/jdg/MBProgressHUD.git
-
-CHECKOUT OPTIONS:
-  MBProgressHUD:
-    :commit: 5c3b93fe4ff9542e08e6b3a98d945805131eb55c
-    :git: https://github.com/jdg/MBProgressHUD.git
+  - MBProgressHUD
 
 SPEC CHECKSUMS:
   AFMInfoBanner: a7bcfd409faa624f043e604ae4fb789c84b22815
   CCHMapClusterController: d8cd12cd5682ec6cd76d911ac7198f981b6cc1b8
   CVKHierarchySearcher: 7be8d3bcbcc6f86ff07f785e6c632b5e40da2553
-  KeychainAccess: e283c1981a6c5655e1984cd411c6faf16fa165ae
-  MBProgressHUD: c10206b47acf9e1659bd80a366cc935e35745b9b
-  ReachabilitySwift: e0f6b6f280effb47731acfaaa2d5ffe223703793
+  KeychainAccess: 412bf2650d9aebfc8135a58103b90ec38caad7f8
+  MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
 
-PODFILE CHECKSUM: b72ebe03d64c29ac25bc3af3b2c501edadb9191b
+PODFILE CHECKSUM: 72b73fbfb58e3a832e7f2b3aeb53ed353dd11cf6
 
 COCOAPODS: 1.0.1

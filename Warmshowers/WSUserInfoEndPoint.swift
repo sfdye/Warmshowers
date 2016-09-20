@@ -14,13 +14,13 @@ class WSUserEndPoint: WSAPIEndPointProtocol {
     
     var httpMethod: HttpMethod = .Get
     
-    func urlWithHostURL(hostURL: NSURL, andParameters parameters: AnyObject?) throws -> NSURL {
-        guard let uidString = parameters as? NSString else { throw WSAPIEndPointError.InvalidPathParameters }
-        return hostURL.URLByAppendingPathComponent("/services/rest/user/\(uidString)")
+    func url(withHostURL hostURL: URL, andParameters parameters: Any?) throws -> URL {
+        guard let uidString = parameters as? NSString else { throw WSAPIEndPointError.invalidPathParameters }
+        return hostURL.appendingPathComponent("/services/rest/user/\(uidString)")
     }
     
-    func request(request: WSAPIRequest, didRecieveResponseWithJSON json: AnyObject) throws -> AnyObject? {
-        guard let userInfo = WSUser(json: json) else { throw WSAPIEndPointError.ParsingError(endPoint: name, key: nil) }
+    func request(_ request: WSAPIRequest, didRecieveResponseWithJSON json: Any) throws -> Any? {
+        guard let userInfo = WSUser(json: json) else { throw WSAPIEndPointError.parsingError(endPoint: name, key: nil) }
         return userInfo
     }
     

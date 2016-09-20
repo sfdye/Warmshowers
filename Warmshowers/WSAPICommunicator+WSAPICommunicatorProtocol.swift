@@ -10,7 +10,7 @@ import Foundation
 
 extension WSAPICommunicator {
     
-    func createFeedback(feedback: WSRecommendation, andNotify requester: WSAPIResponseDelegate) {
+    func createFeedback(_ feedback: WSRecommendation, andNotify requester: WSAPIResponseDelegate) {
         
         var params = [String: String]()
         params["node[type]"] = "trust_referral"
@@ -24,11 +24,11 @@ extension WSAPICommunicator {
         contactEndPoint(.CreateFeedback, withPathParameters: params, thenNotify: requester)
     }
     
-    func sendNewMessageToRecipients(recipients: [WSMOUser], withSubject subject: String, andMessageBody body: String, thenNotify requester: WSAPIResponseDelegate) {
+    func sendNewMessageToRecipients(_ recipients: [WSMOUser], withSubject subject: String, andMessageBody body: String, thenNotify requester: WSAPIResponseDelegate) {
         
     }
     
-    func replyToMessageOnThread(threadID: Int, withMessageBody body: String, thenNotify requester: WSAPIResponseDelegate) {
+    func replyToMessageOnThread(_ threadID: Int, withMessageBody body: String, thenNotify requester: WSAPIResponseDelegate) {
         
     }
     

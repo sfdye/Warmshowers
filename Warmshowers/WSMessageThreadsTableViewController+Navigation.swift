@@ -12,18 +12,18 @@ let SID_ToMessageThread = "ToMessageThread"
 
 extension WSMessageThreadsTableViewController {
     
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         // Only perform the segue if the thread is in the store.
-        if let cell = sender as? MessageThreadsTableViewCell where identifier == SID_ToMessageThread {
+        if let cell = sender as? MessageThreadsTableViewCell , identifier == SID_ToMessageThread {
             return cell.threadID != nil
         }
         return false
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == SID_ToMessageThread && sender is MessageThreadsTableViewCell {
             // Assign the message thread data to the destination view controller
-            let messageThreadVC = segue.destinationViewController as! WSMessageThreadTableViewController
+            let messageThreadVC = segue.destination as! WSMessageThreadTableViewController
             messageThreadVC.threadID = (sender as? MessageThreadsTableViewCell)?.threadID
         }
     }

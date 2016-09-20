@@ -10,9 +10,9 @@ import Foundation
 
 extension WSAccountTableViewController {
     
-    @IBAction func actionButtonPressed(sender: AnyObject) {
+    @IBAction func actionButtonPressed(_ sender: AnyObject) {
         guard let uid = session.uid, let actionAlert = actionAlertForUserWithUID(uid) else { return }
-        presentViewController(actionAlert, animated: true, completion: nil)
+        present(actionAlert, animated: true, completion: nil)
     }
     
 }

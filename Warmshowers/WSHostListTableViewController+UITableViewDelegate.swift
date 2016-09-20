@@ -10,10 +10,10 @@ import UIKit
 
 extension WSHostListTableViewController {
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         guard
-            let cell = tableView.cellForRowAtIndexPath(indexPath) as? HostListTableViewCell,
+            let cell = tableView.cellForRow(at: indexPath) as? HostListTableViewCell,
             let uid = cell.uid
             else { return }
         showUserProfileForHostWithUID(uid)

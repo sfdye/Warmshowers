@@ -85,16 +85,16 @@ class WSUser: Hashable {
         var info = [WSHostInfo]()
         if maxcyclists != nil {
             let description = maxcyclists! > 4 ? "5 or more" : "\(maxcyclists!)"
-            info.append(WSHostInfo(type: .MaxCyclists, description: description))
+            info.append(WSHostInfo(type: .maxCyclists, description: description))
         }
         if bikeshop != nil {
-            info.append(WSHostInfo(type: .BikeShop, description: bikeshop!))
+            info.append(WSHostInfo(type: .bikeShop, description: bikeshop!))
         }
         if campground != nil {
-            info.append(WSHostInfo(type: .Campground, description: campground!))
+            info.append(WSHostInfo(type: .campground, description: campground!))
         }
         if motel != nil {
-            info.append(WSHostInfo(type: .Motel, description: motel!))
+            info.append(WSHostInfo(type: .motel, description: motel!))
         }
         return info
     }
@@ -117,13 +117,13 @@ class WSUser: Hashable {
     var phoneNumbers: [WSPhoneNumber] {
         var phoneNumbers = [WSPhoneNumber]()
         if homephone ?? "" != "" {
-            phoneNumbers.append(WSPhoneNumber(type: .Home, number: homephone!))
+            phoneNumbers.append(WSPhoneNumber(type: .home, number: homephone!))
         }
         if mobilephone ?? "" != "" {
-            phoneNumbers.append(WSPhoneNumber(type: .Mobile, number: mobilephone!))
+            phoneNumbers.append(WSPhoneNumber(type: .mobile, number: mobilephone!))
         }
         if workphone ?? "" != "" {
-            phoneNumbers.append(WSPhoneNumber(type: .Work, number: workphone!))
+            phoneNumbers.append(WSPhoneNumber(type: .work, number: workphone!))
         }
         return phoneNumbers
     }
@@ -136,7 +136,7 @@ class WSUser: Hashable {
         address.appendWithNewLine(city)
         address.appendWithSpace(postal_code)
         if let country = country {
-            address.appendWithNewLine(country.uppercaseString)
+            address.appendWithNewLine(country.uppercased())
         }
         return address
     }
@@ -150,74 +150,76 @@ class WSUser: Hashable {
         self.uid = uid
     }
     
-    convenience init?(json: AnyObject) {
+    convenience init?(json: Any) {
+        
+        guard let json = json as? [String: Any] else { return nil }
         
         guard
-            let fullname = String.fromJSON(json, withKey: "fullname"),
-            let name = String.fromJSON(json, withKey: "name"),
-            let uid = Int.fromJSON(json, withKey: "uid")
+            let fullname = String.from(JSON: json, withKey: "fullname"),
+            let name = String.from(JSON: json, withKey: "name"),
+            let uid = Int.from(JSON: json, withKey: "uid")
             else {
                 return nil
         }
         
         self.init(fullname: fullname, name: name, uid: uid)
 
-        url = String.fromJSON(json, withKey: "URL")
-        access = Int.fromJSON(json, withKey: "access")
-        additional = String.fromJSON(json, withKey: "additional")
-        becomeavailable = Int.fromJSON(json, withKey: "becomeavailable")
-        bed = Bool.fromJSON(json, withKey: "bed")
-        bikeshop = String.fromJSON(json, withKey: "bikeshop")
-        campground = String.fromJSON(json, withKey: "campground")
-        city = String.fromJSON(json, withKey: "city")
-        comments = String.fromJSON(json, withKey: "comments")
-        country = String.fromJSON(json, withKey: "country")
-        created = Int.fromJSON(json, withKey: "created")
-        email_opt_out = Bool.fromJSON(json, withKey: "email_opt_out")
-        fax_number = Bool.fromJSON(json, withKey: "fax_number")
-        food = Bool.fromJSON(json, withKey: "food")
+        url = String.from(JSON: json, withKey: "URL")
+        access = Int.from(JSON: json, withKey: "access")
+        additional = String.from(JSON: json, withKey: "additional")
+        becomeavailable = Int.from(JSON: json, withKey: "becomeavailable")
+        bed = Bool.from(JSON: json, withKey: "bed")
+        bikeshop = String.from(JSON: json, withKey: "bikeshop")
+        campground = String.from(JSON: json, withKey: "campground")
+        city = String.from(JSON: json, withKey: "city")
+        comments = String.from(JSON: json, withKey: "comments")
+        country = String.from(JSON: json, withKey: "country")
+        created = Int.from(JSON: json, withKey: "created")
+        email_opt_out = Bool.from(JSON: json, withKey: "email_opt_out")
+        fax_number = Bool.from(JSON: json, withKey: "fax_number")
+        food = Bool.from(JSON: json, withKey: "food")
         // fullname: parsed above
-        hide_donation_status = Bool.fromJSON(json, withKey: "hide_donation_status")
-        homephone = String.fromJSON(json, withKey: "homephone")
-        kitchenuse = Bool.fromJSON(json, withKey: "kitchenuse")
-        language = String.fromJSON(json, withKey: "language")
-        languagesspoken = String.fromJSON(json, withKey: "languagesspoken")
-        last_unavailability_pester = Int.fromJSON(json, withKey: "last_unavailability_pester")
-        latitude = Double.fromJSON(json, withKey: "latitude")
-        laundry = Bool.fromJSON(json, withKey: "laundry")
-        lawnspace = Bool.fromJSON(json, withKey: "lawnspace")
-        login = Int.fromJSON(json, withKey: "login")
-        longitude = Double.fromJSON(json, withKey: "longitude")
-        maxcyclists = Int.fromJSON(json, withKey: "maxcyclists")
-        mobilephone = String.fromJSON(json, withKey: "mobilephone")
-        motel = String.fromJSON(json, withKey: "motel")
+        hide_donation_status = Bool.from(JSON: json, withKey: "hide_donation_status")
+        homephone = String.from(JSON: json, withKey: "homephone")
+        kitchenuse = Bool.from(JSON: json, withKey: "kitchenuse")
+        language = String.from(JSON: json, withKey: "language")
+        languagesspoken = String.from(JSON: json, withKey: "languagesspoken")
+        last_unavailability_pester = Int.from(JSON: json, withKey: "last_unavailability_pester")
+        latitude = Double.from(JSON: json, withKey: "latitude")
+        laundry = Bool.from(JSON: json, withKey: "laundry")
+        lawnspace = Bool.from(JSON: json, withKey: "lawnspace")
+        login = Int.from(JSON: json, withKey: "login")
+        longitude = Double.from(JSON: json, withKey: "longitude")
+        maxcyclists = Int.from(JSON: json, withKey: "maxcyclists")
+        mobilephone = String.from(JSON: json, withKey: "mobilephone")
+        motel = String.from(JSON: json, withKey: "motel")
         // name: parsed above
-        notcurrentlyavailable = Bool.fromJSON(json, withKey:"notcurrentlyavailable")
-        profileImageURL = String.fromJSON(json, withKey: "profile_image_mobile_profile_photo_std")
-        postal_code = String.fromJSON(json, withKey: "postal_code")
-        preferred_notice = String.fromJSON(json, withKey: "preferred_notice")
-        province = String.fromJSON(json, withKey: "province")
-        sag = Bool.fromJSON(json, withKey: "sag")
-        set_available_timestamp = Int.fromJSON(json, withKey: "set_available_timestamp")
-        set_unavailable_timestamp = Int.fromJSON(json, withKey: "set_unavailable_timestamp")
-        shower = Bool.fromJSON(json, withKey: "shower")
-        signature_format = Int.fromJSON(json, withKey: "signature_format")
-        source = Bool.fromJSON(json, withKey: "source")
-        status = Bool.fromJSON(json, withKey: "status")
-        storage = Bool.fromJSON(json, withKey: "storage")
-        street = String.fromJSON(json, withKey: "street")
-        theme = String.fromJSON(json, withKey: "theme")
-        timezone = String.fromJSON(json, withKey: "timezone")
+        notcurrentlyavailable = Bool.from(JSON: json, withKey:"notcurrentlyavailable")
+        profileImageURL = String.from(JSON: json, withKey: "profile_image_mobile_profile_photo_std")
+        postal_code = String.from(JSON: json, withKey: "postal_code")
+        preferred_notice = String.from(JSON: json, withKey: "preferred_notice")
+        province = String.from(JSON: json, withKey: "province")
+        sag = Bool.from(JSON: json, withKey: "sag")
+        set_available_timestamp = Int.from(JSON: json, withKey: "set_available_timestamp")
+        set_unavailable_timestamp = Int.from(JSON: json, withKey: "set_unavailable_timestamp")
+        shower = Bool.from(JSON: json, withKey: "shower")
+        signature_format = Int.from(JSON: json, withKey: "signature_format")
+        source = Bool.from(JSON: json, withKey: "source")
+        status = Bool.from(JSON: json, withKey: "status")
+        storage = Bool.from(JSON: json, withKey: "storage")
+        street = String.from(JSON: json, withKey: "street")
+        theme = String.from(JSON: json, withKey: "theme")
+        timezone = String.from(JSON: json, withKey: "timezone")
         // uid: parsed above
-        workphone = String.fromJSON(json, withKey: "workphone")
+        workphone = String.from(JSON: json, withKey: "workphone")
         
     }
     
     // MARK: Utility methods
     
-    private func timeIntervalSinceTime(time: Int) -> WSTimeInterval {
-        let date = NSDate(timeIntervalSince1970: NSTimeInterval(time))
-        return WSTimeInterval(timeInterval: NSDate().timeIntervalSince1970 - date.timeIntervalSince1970)
+    fileprivate func timeIntervalSinceTime(_ time: Int) -> WSTimeInterval {
+        let date = Date(timeIntervalSince1970: TimeInterval(time))
+        return WSTimeInterval(timeInterval: Date().timeIntervalSince1970 - date.timeIntervalSince1970)
     }
     
 }

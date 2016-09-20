@@ -172,6 +172,7 @@
 		E5DA04031C4CE6B500FAD1D7 /* PlaceholderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA04021C4CE6B500FAD1D7 /* PlaceholderTableViewCell.swift */; };
 		E5DA04051C4DA8D000FAD1D7 /* WSMapSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA04041C4DA8D000FAD1D7 /* WSMapSource.swift */; };
 		E5DA040C1C4DCBE700FAD1D7 /* WSColoredDot.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA040B1C4DCBE700FAD1D7 /* WSColoredDot.swift */; };
+		E5E8E7761D8B489B00CEB78F /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E8E7751D8B489B00CEB78F /* Reachability.swift */; };
 		E5E920051D30D95E00435070 /* WSHostListTableViewController+WSAPIResponseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E920041D30D95E00435070 /* WSHostListTableViewController+WSAPIResponseDelegate.swift */; };
 		E5E920071D30EB8400435070 /* WSHostSearchNavigationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E920061D30EB8400435070 /* WSHostSearchNavigationDelegate.swift */; };
 		E5E920091D30EBE000435070 /* WSHostSearchViewController+WSHostSearchNavigationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E920081D30EBE000435070 /* WSHostSearchViewController+WSHostSearchNavigationDelegate.swift */; };
@@ -424,6 +425,7 @@
 		E5DA04021C4CE6B500FAD1D7 /* PlaceholderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderTableViewCell.swift; sourceTree = "<group>"; };
 		E5DA04041C4DA8D000FAD1D7 /* WSMapSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSMapSource.swift; sourceTree = "<group>"; };
 		E5DA040B1C4DCBE700FAD1D7 /* WSColoredDot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSColoredDot.swift; sourceTree = "<group>"; };
+		E5E8E7751D8B489B00CEB78F /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		E5E920041D30D95E00435070 /* WSHostListTableViewController+WSAPIResponseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSHostListTableViewController+WSAPIResponseDelegate.swift"; sourceTree = "<group>"; };
 		E5E920061D30EB8400435070 /* WSHostSearchNavigationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSHostSearchNavigationDelegate.swift; sourceTree = "<group>"; };
 		E5E920081D30EBE000435070 /* WSHostSearchViewController+WSHostSearchNavigationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSHostSearchViewController+WSHostSearchNavigationDelegate.swift"; sourceTree = "<group>"; };
@@ -590,6 +592,7 @@
 		E53BA7431C766F700076E825 /* ReachabilityManager */ = {
 			isa = PBXGroup;
 			children = (
+				E5E8E7741D8B488B00CEB78F /* ReachabilitySwift */,
 				E53BA7441C766F850076E825 /* WSReachabilityManager.swift */,
 				E5F9BC891CDD3F03006494FE /* WSReachabilityProtocol.swift */,
 			);
@@ -1104,6 +1107,14 @@
 			path = WarmshowersUITests;
 			sourceTree = "<group>";
 		};
+		E5E8E7741D8B488B00CEB78F /* ReachabilitySwift */ = {
+			isa = PBXGroup;
+			children = (
+				E5E8E7751D8B489B00CEB78F /* Reachability.swift */,
+			);
+			name = ReachabilitySwift;
+			sourceTree = "<group>";
+		};
 		E5ED1E8C1CD4169C0017D12F /* NavigationDelegate */ = {
 			isa = PBXGroup;
 			children = (
@@ -1362,12 +1373,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0710;
-				LastUpgradeCheck = 0710;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Rajan Fernandez";
 				TargetAttributes = {
 					E5D96AF31BFB1CA700AFAFEE = {
 						CreatedOnToolsVersion = 7.1;
 						DevelopmentTeam = EF3Z2ZZH58;
+						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.Maps.iOS = {
 								enabled = 1;
@@ -1377,6 +1389,7 @@
 					E5D96B091BFB1CA700AFAFEE = {
 						CreatedOnToolsVersion = 7.1;
 						DevelopmentTeam = RZGK26E8DQ;
+						LastSwiftMigration = 0800;
 						TestTargetID = E5D96AF31BFB1CA700AFAFEE;
 					};
 					E5D96B141BFB1CA700AFAFEE = {
@@ -1620,6 +1633,7 @@
 				E5D392401D4A986B002279E9 /* JSON.swift in Sources */,
 				E59FE1D51CD206560024F354 /* WSNavigationProtocol.swift in Sources */,
 				E5B2E6121D34BEAB00396CE8 /* WSFeedbackTableViewController+WSAPIResponseDelegate.swift in Sources */,
+				E5E8E7761D8B489B00CEB78F /* Reachability.swift in Sources */,
 				E57057E01CC8688400FA5D9F /* WSCreateFeedbackTableViewController+UITableViewDelegate.swift in Sources */,
 				E5700C521C44CB64008C8A87 /* WSComposeMessageViewController+UITextViewDelegate.swift in Sources */,
 				E54276881C3E83E500047029 /* WSCreateFeedbackTableViewController+UIPickerViewDataSource.swift in Sources */,
@@ -1781,8 +1795,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1804,7 +1820,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "-DTEST";
@@ -1819,16 +1835,18 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0BA72E0C4A2564ADCD314DE5 /* Pods-Warmshowers.test.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Warmshowers/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rajanfernandez.WarmshowersOrg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Test;
@@ -1841,6 +1859,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.WarmshowersTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Warmshowers.app/Warmshowers";
 			};
 			name = Test;
@@ -1870,8 +1889,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1893,10 +1914,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_SWIFT_FLAGS = "-DDEBUG";
+				OTHER_SWIFT_FLAGS = "-DDEBUG -Xfrontend -debug-time-function-bodies";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1917,8 +1938,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1934,12 +1957,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_SWIFT_FLAGS = "-DRELEASE";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1949,16 +1973,18 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0B8D320A5E3CB59258BC3066 /* Pods-Warmshowers.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Warmshowers/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rajanfernandez.WarmshowersOrg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1967,16 +1993,18 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AC5E586690182D68CCBBE7F9 /* Pods-Warmshowers.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Warmshowers/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rajanfernandez.WarmshowersOrg;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -1989,6 +2017,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.WarmshowersTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Warmshowers.app/Warmshowers";
 			};
 			name = Debug;
@@ -2001,6 +2030,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.WarmshowersTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Warmshowers.app/Warmshowers";
 			};
 			name = Release;

@@ -20,7 +20,7 @@ class WSLocationSearchViewController : UIViewController {
     var navigationDelegate: WSHostSearchNavigationDelegate?
     var clusterController: CCHMapClusterController!
     var mapOverlay: MKTileOverlay?
-    var mapSource: WSMapSource = WSMapSource.AppleMaps
+    var mapSource: WSMapSource = WSMapSource.appleMaps
     
     /** Map tiles that have host downloads in progress. */
     var downloadsInProgress = Set<WSMapTile>()
@@ -54,27 +54,27 @@ class WSLocationSearchViewController : UIViewController {
         statusLabel.text = nil
         
         // This fix removes a shadow line from the top of the toolbar.
-        toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .Any, barMetrics: .Default)
-        toolbar.setShadowImage(UIImage(), forToolbarPosition: .Any)
+        toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .any, barMetrics: .default)
+        toolbar.setShadowImage(UIImage(), forToolbarPosition: .any)
         
         // Ask the users permission to use location services.
-        if CLLocationManager.authorizationStatus() == .NotDetermined {
+        if CLLocationManager.authorizationStatus() == .notDetermined {
             locationManager.requestWhenInUseAuthorization()
         }
         mapView.showsUserLocation = true
-        mapView.setUserTrackingMode(.None, animated: false)
+        mapView.setUserTrackingMode(.none, animated: false)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         assert(navigationDelegate != nil, "The navigation delegate for WSLocationSearchViewController not set. Please ensure the delegate is set before the view appears.")
     }
     
-    override func viewDidAppear(animated: Bool) {
-        if CLLocationManager.authorizationStatus() == .NotDetermined {
+    override func viewDidAppear(_ animated: Bool) {
+        if CLLocationManager.authorizationStatus() == .notDetermined {
             locationManager.requestWhenInUseAuthorization()
         }
-        dispatch_async(dispatch_get_main_queue(), { [weak self] in
-            self?.mapView.showsUserLocation = CLLocationManager.authorizationStatus() == .AuthorizedWhenInUse
+        DispatchQueue.main.async(execute: { [weak self] in
+            self?.mapView.showsUserLocation = CLLocationManager.authorizationStatus() == .authorizedWhenInUse
             })
     }
     
@@ -91,10 +91,10 @@ class WSLocationSearchViewController : UIViewController {
     
     /** Refreshes the status label according to the current controller state. */
     func updateStatus() {
-        dispatch_async(dispatch_get_main_queue(), { [weak self] in
+        DispatchQueue.main.async(execute: { [weak self] in
             let text = self?.textForStatusLabel()
             self?.statusLabel.text = text
-            self?.statusLabel.hidden = text == nil
+            self?.statusLabel.isHidden = text == nil
             })
     }
     
@@ -108,7 +108,7 @@ class WSLocationSearchViewController : UIViewController {
         if downloadsInProgress.count > 0 {
             var highDensityArea = false
             for tile in downloadsInProgress {
-                if tile.z - minimumUpdateZoomLevel > 1 {
+                if tile.z.distance(to: minimumUpdateZoomLevel) > 1 {
                     highDensityArea = true
                 }
             }
@@ -123,7 +123,7 @@ class WSLocationSearchViewController : UIViewController {
     }
     
     /** Returns the tiles in the current view that are known to have less than the maximum number of users on them. */
-    func tilesInMapRegion(region: MKCoordinateRegion) -> Set<WSMapTile>? {
+    func tilesInMapRegion(_ region: MKCoordinateRegion) -> Set<WSMapTile>? {
         guard !region.center.latitude.isNaN && !region.center.longitude.isNaN else { return nil }
         
         // The map tiles at the coarsest zoom level
@@ -132,7 +132,7 @@ class WSLocationSearchViewController : UIViewController {
         }
         
         var tiles = Set<WSMapTile>()
-        store.managedObjectContext.performBlockAndWait { 
+        store.managedObjectContext.performAndWait { 
             while parentTiles.count > 0 {
                 let tile = parentTiles.first!
                 
@@ -145,7 +145,7 @@ class WSLocationSearchViewController : UIViewController {
                 }
                 
                 // Check if the saved tile has sub-tiles. If it does, add the sub tiles to the parent tiles set so that they are checked for sub-tiles. Else, add the tile to the returned tiles.
-                if let subtiles = storedTile?.sub_tiles where subtiles.count > 0 {
+                if let subtiles = storedTile?.sub_tiles , subtiles.count > 0 {
                     for subtile in tile.subtiles {
                         parentTiles.insert(subtile)
                     }
@@ -160,9 +160,9 @@ class WSLocationSearchViewController : UIViewController {
     }
     
     /** Downloads user locations for the given map tiles and adds them as annotations to the map. */
-    func loadAnnotationsForMapTile(tile: WSMapTile) {
+    func loadAnnotationsForMapTile(_ tile: WSMapTile) {
         
-        func shouldDownloadHostsForMapTileMapTile(tile: WSMapTile) -> Bool {
+        func shouldDownloadHostsForMapTileMapTile(_ tile: WSMapTile) -> Bool {
             var storeNeedsUpdating = true
             var firstDownload = true
             let predicate = NSPredicate(format: "%K like %@", "quad_key", tile.quadKey)
@@ -174,7 +174,7 @@ class WSLocationSearchViewController : UIViewController {
         }
         
         /** Returns the users on a given map tile from the store. */
-        func storedUsersForMapTile(tile: WSMapTile) -> Set<WSUserLocation> {
+        func storedUsersForMapTile(_ tile: WSMapTile) -> Set<WSUserLocation> {
             var users = Set<WSUserLocation>()
             let predicate = NSPredicate(format: "%K like %@", "quad_key", tile.quadKey)
             if let storedTile = try! store.retrieve(WSMOMapTile.self, sortBy: nil, isAscending: true, predicate: predicate, context: store.managedObjectContext).first {
@@ -228,7 +228,7 @@ class WSLocationSearchViewController : UIViewController {
     }
     
     /** Unloads unrequired annotation from the map. */
-    func unloadAnnotationsOutOfRegion(region: MKCoordinateRegion) {
+    func unloadAnnotationsOutOfRegion(_ region: MKCoordinateRegion) {
         
         // Create a buffer region around the viewed region that is proportional to the zoom level.
         let regionMultiplier = 1.0 + Double(zoomLevel)
@@ -249,18 +249,18 @@ class WSLocationSearchViewController : UIViewController {
     }
     
     /** Updates the annotations grouped by the cluster controller with those in the current display tiles. */
-    func updateAnnotationsFromDisplayTiles(displayTiles: Set<WSMapTile>) {
+    func updateAnnotationsFromDisplayTiles(_ displayTiles: Set<WSMapTile>) {
         
         // Update the cluster controllers
         var annotationsToDisplay = Set<WSUserLocation>()
         for tile in displayTiles {
-            annotationsToDisplay.unionInPlace(tile.users)
+            annotationsToDisplay.formUnion(tile.users)
         }
         
-        let annotationsToRemove = clusterController.annotations.subtract(annotationsToDisplay as Set<NSObject>)
-        let annotationToAdd = (annotationsToDisplay as Set<NSObject>).subtract(clusterController.annotations)
+        let annotationsToRemove = clusterController.annotations.subtracting(annotationsToDisplay as Set<NSObject>)
+        let annotationToAdd = (annotationsToDisplay as Set<NSObject>).subtracting(clusterController.annotations as Set<NSObject>)
         
-        dispatch_async(dispatch_get_main_queue(), { [weak self] in
+        DispatchQueue.main.async(execute: { [weak self] in
             self?.clusterController.removeAnnotations(Array(annotationsToRemove), withCompletionHandler: {
                 self?.clusterController.addAnnotations(Array(annotationToAdd), withCompletionHandler: nil)
             })
@@ -268,16 +268,16 @@ class WSLocationSearchViewController : UIViewController {
     }
     
     /** Called just before an API request for user locations on the given map tile is made. */
-    func downloadWillStartForMapTile(tile: WSMapTile) {
+    func downloadWillStartForMapTile(_ tile: WSMapTile) {
         downloadsInProgress.insert(tile)
         dimUpdatingTiles()
     }
     
     /** Called after a user locations API request has finished. */
-    func downloadDidEndForMapTile(tile: WSMapTile) {
+    func downloadDidEndForMapTile(_ tile: WSMapTile) {
         downloadsInProgress.remove(tile)
         dimUpdatingTiles()
-        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+        DispatchQueue.main.async { [weak self] in
             self?.statusLabel.text = self?.textForStatusLabel()
         }
     }
@@ -299,7 +299,7 @@ class WSLocationSearchViewController : UIViewController {
             guard existingOverlay == nil else { continue }
             let polygon = tile.polygon()
             polygon.title = tile.quadKey
-            mapView.performSelectorOnMainThread(#selector(MKMapView.addOverlay(_:)), withObject: polygon, waitUntilDone: true)
+            mapView.performSelector(onMainThread: #selector(MKMapView.add(_:)), with: polygon, waitUntilDone: true)
         }
         
         // Undim any tiles not it this set.
@@ -308,7 +308,7 @@ class WSLocationSearchViewController : UIViewController {
             guard let _ = tilesToDim.filter({ (tile) -> Bool in
                 return tile.quadKey == quadKey
             }).first else {
-                mapView.performSelectorOnMainThread(#selector(MKMapView.removeOverlay(_:)), withObject: overlay, waitUntilDone: false)
+                mapView.performSelector(onMainThread: #selector(MKMapView.remove(_:)), with: overlay, waitUntilDone: false)
                 continue
             }
         }

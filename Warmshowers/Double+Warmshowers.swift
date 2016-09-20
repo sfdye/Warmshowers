@@ -11,9 +11,9 @@ import Foundation
 extension Double: JSONParsingType {
     
     typealias DataType = Double
-    static func fromJSON(json: AnyObject, withKey key: String) -> Double? {
-        if json[key] is Double { return json[key] as? Double }
-        guard let valueString = String.fromJSON(json, withKey: key) else { return nil }
+    static func from(JSON json: Any, withKey key: String) -> Double? {
+        if let json = json as? [String: Any], json[key] is Double { return json[key] as? Double }
+        guard let valueString = String.from(JSON: json, withKey: key) else { return nil }
         return Double(valueString)
     }
     

@@ -11,9 +11,9 @@ import Foundation
 protocol WSHostSearchNavigationDelegate {
     
     /** Segues to a user profile view for the given user. */
-    func showUserProfileForHostWithUID(uid: Int)
+    func showUserProfileForHostWithUID(_ uid: Int)
     
     /** Segues to a list of hosts. */
-    func showHostListWithHosts(hosts: [WSUserLocation])
+    func showHostListWithHosts(_ hosts: [WSUserLocation])
     
 }

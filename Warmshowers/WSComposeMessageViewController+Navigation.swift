@@ -10,22 +10,22 @@ import UIKit
 
 extension WSComposeMessageViewController {
     
-    @IBAction func cancelButtonPressed(sender: AnyObject?) {
+    @IBAction func cancelButtonPressed(_ sender: AnyObject?) {
         
         // Show a warning message if the message body has some content
         guard body == nil || body ?? "" == "" else {
-            let alert = UIAlertController(title: nil, message: "Are you sure you want to discard the current message?", preferredStyle: .Alert)
-            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+            let alert = UIAlertController(title: nil, message: "Are you sure you want to discard the current message?", preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
             alert.addAction(cancelAction)
-            let continueAction = UIAlertAction(title: "Continue", style: .Default) { (continueAction) -> Void in
-                self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+            let continueAction = UIAlertAction(title: "Continue", style: .default) { (continueAction) -> Void in
+                self.navigationController?.dismiss(animated: true, completion: nil)
             }
             alert.addAction(continueAction)
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
             return
         }
         
-        navigationController?.dismissViewControllerAnimated(true, completion: nil)
+        navigationController?.dismiss(animated: true, completion: nil)
     }
     
 }

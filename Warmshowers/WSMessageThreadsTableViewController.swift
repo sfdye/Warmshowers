@@ -8,17 +8,16 @@
 
 import UIKit
 import CoreData
-import ReachabilitySwift
 
 class WSMessageThreadsTableViewController: UITableViewController {
     
     // MARK: Properties
     
-    var lastUpdated: NSDate?
+    var lastUpdated: Date?
     var downloadsInProgress = Set<Int>()
-    var errorCache: ErrorType?
-    var fetchedResultsController: NSFetchedResultsController?
-    let formatter = NSDateFormatter()
+    var errorCache: Error?
+    var fetchedResultsController: NSFetchedResultsController<WSMOMessageThread>?
+    let formatter = DateFormatter()
     
     var currentUserUID: Int? { return WSSessionState.sharedSessionState.uid }
     
@@ -40,16 +39,16 @@ class WSMessageThreadsTableViewController: UITableViewController {
         // Navigation bar configuration.
         navigationItem.title = "Messages"
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: WSColor.Green, NSFontAttributeName: WSFont.SueEllenFrancisco(26)]
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: self, action: #selector(WSMessageThreadsTableViewController.update))
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(WSMessageThreadsTableViewController.update))
         
         // Set up the date formatter.
         let template = "dd/MM/yy"
-        let locale = NSLocale.currentLocale()
-        formatter.dateFormat = NSDateFormatter.dateFormatFromTemplate(template, options: 0, locale: locale)
+        let locale = Locale.current
+        formatter.dateFormat = DateFormatter.dateFormat(fromTemplate: template, options: 0, locale: locale)
         
         // Set the refresh controller for the tableview.
         refreshControl = UIRefreshControl()
-        refreshControl?.addTarget(self, action: #selector(WSMessageThreadsTableViewController.update), forControlEvents: UIControlEvents.ValueChanged)
+        refreshControl?.addTarget(self, action: #selector(WSMessageThreadsTableViewController.update), for: UIControlEvents.valueChanged)
         
         // Set up the fetch results controller.
         initialiseFetchResultsControllerWithStore(store)
@@ -58,7 +57,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
         connection.registerForAndStartNotifications(self, selector: #selector(WSMessageThreadsTableViewController.reachabilityChanged(_:)))
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
         // Reset the navigation bar text properties
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: WSColor.Green, NSFontAttributeName: WSFont.SueEllenFrancisco(26)]
@@ -70,26 +69,26 @@ class WSMessageThreadsTableViewController: UITableViewController {
         showReachabilityBannerIfNeeded()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         
         // Update the message threads on loading the view or if more than 10 minutes has elapsed
-        guard let lastUpdated = lastUpdated where lastUpdated.timeIntervalSinceNow < 600 else {
+        guard let lastUpdated = lastUpdated , lastUpdated.timeIntervalSinceNow < 600 else {
             update()
             return
         }
         
-        dispatch_async(dispatch_get_main_queue()) {  [weak self] in
+        DispatchQueue.main.async {  [weak self] in
             self?.tableView.reloadData()
         }
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         // This prevents the fetch results controller from updating while the view is not visible.
         fetchedResultsController = nil
     }
     
-    func initialiseFetchResultsControllerWithStore(store: WSStoreProtocol) {
-        let request = NSFetchRequest(entityName: WSMOMessageThread.entityName)
+    func initialiseFetchResultsControllerWithStore(_ store: WSStoreProtocol) {
+        let request = NSFetchRequest<WSMOMessageThread>(entityName: WSMOMessageThread.entityName)
         request.sortDescriptors = [NSSortDescriptor(key: "last_updated", ascending: false)]
         let moc = store.managedObjectContext
         fetchedResultsController = NSFetchedResultsController(
@@ -108,7 +107,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
     
     // MARK: Reachability
     
-    func reachabilityChanged(note: NSNotification) {
+    func reachabilityChanged(_ note: Notification) {
         showReachabilityBannerIfNeeded()
     }
     
@@ -132,14 +131,14 @@ class WSMessageThreadsTableViewController: UITableViewController {
     func didFinishedUpdates() {
         
         // Hide any activity indicators
-        dispatch_async(dispatch_get_main_queue()) { [weak self] () -> Void in
+        DispatchQueue.main.async { [weak self] () -> Void in
             self?.refreshControl?.endRefreshing()
             WSProgressHUD.hide()
             if let error = self?.errorCache {
                 self?.alert.presentAPIError(error, forDelegator: self)
                 self?.errorCache = nil
             }
-            self?.lastUpdated = NSDate()
+            self?.lastUpdated = Date()
         }
     }
     
@@ -182,7 +181,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
                 if thread.is_new { unread += 1 }
             }
 
-            dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            DispatchQueue.main.async { () -> Void in
                 if unread > 0 {
                     self.navigationController?.tabBarItem.badgeValue = String(unread)
                 } else {
@@ -194,9 +193,9 @@ class WSMessageThreadsTableViewController: UITableViewController {
         }
     }
     
-    func textForMessageThreadDate(date: NSDate?) -> String? {
+    func textForMessageThreadDate(_ date: Date?) -> String? {
         guard let date = date else { return "" }
-        return formatter.stringFromDate(date)
+        return formatter.string(from: date)
     }
     
 }

@@ -11,32 +11,33 @@ import CoreData
 import MapKit
 
 class WSMOUser: NSManagedObject, JSONUpdateable {
-
+    typealias UpdateableType = WSMOUser
+    
     // MARK: Getters and setters
     
     var distance: Double? {
         get { return p_distance?.doubleValue }
-        set(new) { p_distance = new == nil ? nil : NSNumber(double: new!) }
+        set(new) { p_distance = new == nil ? nil : NSNumber(value: new! as Double) }
     }
     
     var latitude: Double? {
         get { return p_latitude?.doubleValue }
-        set(new) { p_latitude = new == nil ? nil : NSNumber(double: new!) }
+        set(new) { p_latitude = new == nil ? nil : NSNumber(value: new! as Double) }
     }
     
     var longitude: Double? {
         get { return p_longitude?.doubleValue }
-        set(new) { p_longitude = new == nil ? nil : NSNumber(double: new!) }
+        set(new) { p_longitude = new == nil ? nil : NSNumber(value: new! as Double) }
     }
     
     var not_currently_available: Bool? {
         get { return p_not_currently_available?.boolValue ?? true }
-        set(new) { p_not_currently_available = new == nil ? nil : NSNumber(bool: new!) }
+        set(new) { p_not_currently_available = new == nil ? nil : NSNumber(value: new! as Bool) }
     }
     
     var uid: Int {
-        get { return p_uid!.integerValue }
-        set(new) { p_uid = NSNumber(integer: new) }
+        get { return p_uid!.intValue }
+        set(new) { p_uid = NSNumber(value: new as Int) }
     }
 
     
@@ -52,7 +53,7 @@ class WSMOUser: NSManagedObject, JSONUpdateable {
         get {
             let lm = CLLocationManager()
             if let location = lm.location {
-                return location.distanceFromLocation(self.location)
+                return location.distance(from: self.location)
             }
             return nil
         }
@@ -62,7 +63,7 @@ class WSMOUser: NSManagedObject, JSONUpdateable {
         var address: String = ""
         address.appendWithComma(city)
         if let country = country {
-            address.appendWithComma(country.uppercaseString)
+            address.appendWithComma(country.uppercased())
         }
         return address
     }
@@ -74,7 +75,7 @@ class WSMOUser: NSManagedObject, JSONUpdateable {
         address.appendWithNewLine(city)
         address.appendWithSpace(post_code)
         if let country = country {
-            address.appendWithNewLine(country.uppercaseString)
+            address.appendWithNewLine(country.uppercased())
         }
         return address
     }
@@ -84,35 +85,40 @@ class WSMOUser: NSManagedObject, JSONUpdateable {
     
     static var entityName: String { return "User" }
     
-    static func predicateFromJSON(json: AnyObject) throws -> NSPredicate {
+    static func predicate(fromJSON json: Any) throws -> NSPredicate {
         do {
-            let uid = try JSON.nonOptionalForKey("uid", fromDict: json, withType: Int.self)
-            return NSPredicate(format: "p_uid == %d", Int32(uid))
+            let uid = try JSON.nonOptional(forKey:"uid", fromJSON: json, withType: Int.self)
+            return NSPredicate(format: "p_uid == %d", Int32(uid!))
         }
     }
     
-    func update(json: AnyObject) throws {
+//    static func fetchRequest() -> NSFetchRequest<UpdateableType> {
+//        let request = NSFetchRequest<UpdateableType>(entityName: entityName)
+//        return request
+//    }
+    
+    func update(withJSON json: Any) throws {
         
-        guard let json = json as? [String: AnyObject] else {
-            throw WSMOUpdateError.CastingError
+        guard let json = json as? [String: Any] else {
+            throw WSMOUpdateError.castingError
         }
         
         do {
-            fullname = try JSON.nonOptionalForKey("fullname", fromDict: json, withType: String.self)
-            name = try JSON.nonOptionalForKey("name", fromDict: json, withType: String.self)
-            uid = try JSON.nonOptionalForKey("uid", fromDict: json, withType: Int.self)
+            fullname = try JSON.nonOptional(forKey:"fullname", fromJSON: json, withType: String.self)
+            name = try JSON.nonOptional(forKey:"name", fromJSON: json, withType: String.self)
+            uid = try JSON.nonOptional(forKey:"uid", fromJSON: json, withType: Int.self)
             // Non essential properties.
-            additional = JSON.optionalForKey("additional", fromDict: json, withType: String.self)
-            city = JSON.optionalForKey("city", fromDict: json, withType: String.self)
-            country = JSON.optionalForKey("country", fromDict: json, withType: String.self)
-            distance = JSON.optionalForKey("distance", fromDict: json, withType: Double.self)
-            image_url = JSON.optionalForKey("profile_image_map_infoWindow", fromDict: json, withType: String.self)
-            latitude = JSON.optionalForKey("latitude", fromDict: json, withType: Double.self)
-            longitude = JSON.optionalForKey("longitude", fromDict: json, withType: Double.self)
-            not_currently_available = JSON.optionalForKey("notcurrentlyavailable", fromDict: json, withType: Bool.self)
-            post_code = JSON.optionalForKey("post_code", fromDict: json, withType: String.self)
-            province = JSON.optionalForKey("province", fromDict: json, withType: String.self)
-            street = JSON.optionalForKey("street", fromDict: json, withType: String.self)
+            additional = JSON.optional(forKey: "additional", fromJSON: json, withType: String.self)
+            city = JSON.optional(forKey: "city", fromJSON: json, withType: String.self)
+            country = JSON.optional(forKey: "country", fromJSON: json, withType: String.self)
+            distance = JSON.optional(forKey: "distance", fromJSON: json, withType: Double.self)
+            image_url = JSON.optional(forKey: "profile_image_map_infoWindow", fromJSON: json, withType: String.self)
+            latitude = JSON.optional(forKey: "latitude", fromJSON: json, withType: Double.self)
+            longitude = JSON.optional(forKey: "longitude", fromJSON: json, withType: Double.self)
+            not_currently_available = JSON.optional(forKey: "notcurrentlyavailable", fromJSON: json, withType: Bool.self)
+            post_code = JSON.optional(forKey: "post_code", fromJSON: json, withType: String.self)
+            province = JSON.optional(forKey: "province", fromJSON: json, withType: String.self)
+            street = JSON.optional(forKey: "street", fromJSON: json, withType: String.self)
         }
     }
 
@@ -120,7 +126,7 @@ class WSMOUser: NSManagedObject, JSONUpdateable {
 
 extension String {
     
-    mutating func appendWithCharacter(character: Character, other: String?) {
+    mutating func appendWithCharacter(_ character: Character, other: String?) {
         
         guard let other = other else {
             return
@@ -137,15 +143,15 @@ extension String {
         }
     }
     
-    mutating func appendWithComma(other: String?) {
+    mutating func appendWithComma(_ other: String?) {
         appendWithCharacter(",", other: other)
     }
     
-    mutating func appendWithNewLine(other: String?) {
+    mutating func appendWithNewLine(_ other: String?) {
         appendWithCharacter("\n", other: other)
     }
     
-    mutating func appendWithSpace(other: String?) {
+    mutating func appendWithSpace(_ other: String?) {
         appendWithCharacter(" ", other: other)
     }
     

@@ -29,15 +29,15 @@ class WSHostListTableViewController: UITableViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 74
         
-        guard let hosts = hosts where hosts.count > 0 else {
+        guard let hosts = hosts , hosts.count > 0 else {
             self.navigationItem.title = "Hosts"
             // No users in the data source. Dismiss the view with an error message
-            let alert = UIAlertController(title: "Sorry, an error occured.", message: nil, preferredStyle: .Alert)
-            let okAction = UIAlertAction(title: "OK", style: .Default, handler: { (okAction) -> Void in
-                self.dismissViewControllerAnimated(true, completion: nil)
+            let alert = UIAlertController(title: "Sorry, an error occured.", message: nil, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: { (okAction) -> Void in
+                self.dismiss(animated: true, completion: nil)
             })
             alert.addAction(okAction)
-            presentViewController(alert, animated: true, completion: nil)
+            present(alert, animated: true, completion: nil)
             return
         }
         
@@ -46,14 +46,14 @@ class WSHostListTableViewController: UITableViewController {
     
     // MARK: Utilities
     
-    func startImageDownloadForIndexPath(indexPath: NSIndexPath) {
+    func startImageDownloadForIndexPath(_ indexPath: IndexPath) {
         
-        guard let hosts = hosts where indexPath.row < numberOfHosts else {
+        guard let hosts = hosts , (indexPath as NSIndexPath).row < numberOfHosts else {
             return
         }
         
-        let user = hosts[indexPath.row]
-        if let url = user.imageURL where user.image == nil {
+        let user = hosts[(indexPath as NSIndexPath).row]
+        if let url = user.imageURL , user.image == nil {
             api.contactEndPoint(.ImageResource, withPathParameters: url, andData: nil, thenNotify: self)
         }
     }
@@ -62,7 +62,7 @@ class WSHostListTableViewController: UITableViewController {
         
         guard
             let visiblePaths = tableView.indexPathsForVisibleRows
-            where hosts != nil && numberOfHosts > 0
+            , hosts != nil && numberOfHosts > 0
             else {
                 return
         }
@@ -73,20 +73,20 @@ class WSHostListTableViewController: UITableViewController {
     }
     
     /** Sets the image for a host in the list with the given image URL. */
-    func setImage(image: UIImage, forHostWithImageURL imageURL: String) {
+    func setImage(_ image: UIImage, forHostWithImageURL imageURL: String) {
         guard let hosts = hosts else { return }
-        for (index, host) in hosts.enumerate() {
+        for (index, host) in hosts.enumerated() {
             if host.imageURL == imageURL {
-                host.image = image ?? placeholderImage
-                dispatch_async(dispatch_get_main_queue(), { [weak self] () -> Void in
-                    self?.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .None)
+                host.image = image 
+                DispatchQueue.main.async(execute: { [weak self] () -> Void in
+                    self?.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
                     })
             }
         }
     }
     
     /** Initiates a download of a users profile. */
-    func showUserProfileForHostWithUID(uid: Int) {
+    func showUserProfileForHostWithUID(_ uid: Int) {
         WSProgressHUD.show(navigationController!.view, label: nil)
         api.contactEndPoint(.UserInfo, withPathParameters: String(uid) as NSString, andData: nil, thenNotify: self)
     }  

@@ -10,13 +10,13 @@ import UIKit
 
 extension WSHostListTableViewController {
     
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         return sender is WSUser
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard sender is WSUser else { return }
-        let accountTVC = segue.destinationViewController as! WSAccountTableViewController
+        let accountTVC = segue.destination as! WSAccountTableViewController
         accountTVC.user = sender as? WSUser
     }
     

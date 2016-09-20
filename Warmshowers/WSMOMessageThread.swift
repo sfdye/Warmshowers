@@ -11,27 +11,28 @@ import CoreData
 
 
 class WSMOMessageThread: NSManagedObject, JSONUpdateable {
+    typealias UpdateableType = WSMOMessageThread
     
     // MARK: Getters and setters
     
     var count: Int? {
-        get { return p_count?.integerValue }
-        set(new) { p_count = new == nil ? nil : NSNumber(integer: new!) }
+        get { return p_count?.intValue }
+        set(new) { p_count = new == nil ? nil : NSNumber(value: new!) }
     }
     
     var has_tokens: Bool {
         get { return p_has_tokens?.boolValue ?? false }
-        set(new) { p_has_tokens = NSNumber(bool: new) }
+        set(new) { p_has_tokens = NSNumber(value: new) }
     }
     
     var is_new: Bool {
         get { return p_is_new?.boolValue ?? false }
-        set(new) { p_is_new = NSNumber(bool: new) }
+        set(new) { p_is_new = NSNumber(value: new) }
     }
     
     var thread_id: Int? {
-        get { return p_thread_id?.integerValue }
-        set(new) { p_thread_id = new == nil ? nil : NSNumber(integer: new!) }
+        get { return p_thread_id?.intValue }
+        set(new) { p_thread_id = new == nil ? nil : NSNumber(value: new!) }
     }
     
     
@@ -39,27 +40,32 @@ class WSMOMessageThread: NSManagedObject, JSONUpdateable {
     
     static var entityName: String { return "MessageThread" }
     
-    static func predicateFromJSON(json: AnyObject) throws -> NSPredicate {
+    static func predicate(fromJSON json: Any) throws -> NSPredicate {
         do {
-            let threadID = try JSON.nonOptionalForKey("thread_id", fromDict: json, withType: Int.self)
-            return NSPredicate(format: "p_thread_id == %d", threadID)
+            let threadID = try JSON.nonOptional(forKey:"thread_id", fromJSON: json, withType: Int.self)
+            return NSPredicate(format: "p_thread_id == %d", threadID!)
         }
     }
     
-    func update(json: AnyObject) throws {
+//    static func fetchRequest() -> NSFetchRequest<UpdateableType> {
+//        let request = NSFetchRequest<UpdateableType>(entityName: entityName)
+//        return request
+//    }
+    
+    func update(withJSON json: Any) throws {
         
         guard let json = json as? [String: AnyObject] else {
-            throw WSMOUpdateError.CastingError
+            throw WSMOUpdateError.castingError
         }
         
         do {
-            count = JSON.optionalForKey("count", fromDict: json, withType: Int.self)
-            has_tokens = try JSON.nonOptionalForKey("has_tokens", fromDict: json, withType: Bool.self)
-            is_new = try JSON.nonOptionalForKey("is_new", fromDict: json, withType: Bool.self)
-            last_updated = try JSON.nonOptionalForKey("last_updated", fromDict: json, withType: NSDate.self)
-            subject = JSON.optionalForKey("subject", fromDict: json, withType: String.self)
-            thread_id = try JSON.nonOptionalForKey("thread_id", fromDict: json, withType: Int.self)
-            thread_started = JSON.optionalForKey("thread_started", fromDict: json, withType: NSDate.self)
+            count = JSON.optional(forKey: "count", fromJSON: json as AnyObject, withType: Int.self)
+            has_tokens = try JSON.nonOptional(forKey:"has_tokens", fromJSON: json, withType: Bool.self)
+            is_new = try JSON.nonOptional(forKey:"is_new", fromJSON: json, withType: Bool.self)
+            last_updated = try JSON.nonOptional(forKey:"last_updated", fromJSON: json as AnyObject, withType: Date.self)
+            subject = JSON.optional(forKey: "subject", fromJSON: json as AnyObject, withType: String.self)
+            thread_id = try JSON.nonOptional(forKey:"thread_id", fromJSON: json as AnyObject, withType: Int.self)
+            thread_started = JSON.optional(forKey: "thread_started", fromJSON: json as AnyObject, withType: Date.self)
         }
     }
 
@@ -99,13 +105,13 @@ class WSMOMessageThread: NSManagedObject, JSONUpdateable {
         }
         
         var index: Int?
-        for (i, user) in users.enumerate() {
+        for (i, user) in users.enumerated() {
             if user.uid == currentUserUID {
                 index = i
             }
         }
         if let index = index {
-            users.removeAtIndex(index)
+            users.remove(at: index)
         }
         
         return users
@@ -119,13 +125,13 @@ class WSMOMessageThread: NSManagedObject, JSONUpdateable {
     /** Returns the lastest message or nil if there are no messages. */
     func lastestMessage() -> WSMOMessage? {
         
-        guard var messages = self.messages?.allObjects as? [WSMOMessage] where messages.count > 0 else {
+        guard var messages = self.messages?.allObjects as? [WSMOMessage] , messages.count > 0 else {
             return nil
         }
         
         // Sort the messages to latest first
-        messages.sortInPlace {
-            return $0.timestamp!.laterDate($1.timestamp!).isEqualToDate($0.timestamp!)
+        messages.sort {
+            return $0.timestamp! > $1.timestamp!
         }
         
         return messages.first

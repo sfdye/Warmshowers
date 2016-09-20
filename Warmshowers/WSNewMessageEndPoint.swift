@@ -14,12 +14,12 @@ class WSNewMessageEndPoint: WSAPIEndPointProtocol {
     
     var httpMethod: HttpMethod = .Post
     
-    func urlWithHostURL(hostURL: NSURL, andParameters parameters: AnyObject?) throws -> NSURL {
-        return hostURL.URLByAppendingPathComponent("/services/rest/message/send")
+    func url(withHostURL hostURL: URL, andParameters parameters: Any?) throws -> URL {
+        return hostURL.appendingPathComponent("/services/rest/message/send")
     }
     
-    func HTTPBodyParametersWithData(data: AnyObject?) throws -> [String: String] {
-        guard let message = data as? WSNewMessageData else { throw WSAPIEndPointError.InvalidOutboundData }
+    func HTTPBodyParameters(withData data: Any?) throws -> [String: String] {
+        guard let message = data as? WSNewMessageData else { throw WSAPIEndPointError.invalidOutboundData }
         var params = [String: String]()
         params["recipients"] = message.recipientsString
         params["subject"] = message.subject
@@ -27,7 +27,7 @@ class WSNewMessageEndPoint: WSAPIEndPointProtocol {
         return params
     }
     
-    func request(request: WSAPIRequest, didRecieveResponseWithJSON json: AnyObject) throws -> AnyObject? {
+    func request(_ request: WSAPIRequest, didRecieveResponseWithJSON json: Any) throws -> Any? {
         // Check for success in response
         return nil
     }

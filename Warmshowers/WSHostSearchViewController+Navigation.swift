@@ -15,7 +15,7 @@ let SIB_ResultsToUserAccount = "SearchResultsToUserAccount"
 
 extension WSHostSearchViewController {
     
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         
         switch identifier {
             
@@ -32,7 +32,7 @@ extension WSHostSearchViewController {
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         guard let segueIdentifier = segue.identifier else { return }
         
@@ -41,13 +41,13 @@ extension WSHostSearchViewController {
         case SID_SearchViewToUserAccount:
             
             guard sender is WSUser else { return }
-            let navVC = segue.destinationViewController as! UINavigationController
+            let navVC = segue.destination as! UINavigationController
             let accountTVC = navVC.viewControllers.first as! WSAccountTableViewController
             accountTVC.user = sender as? WSUser
             
         case SID_MapToHostList:
             
-            let navVC = segue.destinationViewController as! UINavigationController
+            let navVC = segue.destination as! UINavigationController
             let hostListTVC = navVC.viewControllers.first as! WSHostListTableViewController
             hostListTVC.hosts = sender as? [WSUserLocation]
             

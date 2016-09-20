@@ -10,9 +10,9 @@ import UIKit
 
 extension WSCreateFeedbackTableViewController : UIPickerViewDelegate {
     
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
-        guard let pickerRow = pickerIndexPath?.row else {
+        guard let pickerRow = (pickerIndexPath as NSIndexPath?)?.row else {
             return
         }
         
@@ -32,30 +32,29 @@ extension WSCreateFeedbackTableViewController : UIPickerViewDelegate {
             recommendation.rating.setFromRawValue(selectedValue)
         case 2:
             // Feedback date picker
-            if let comps = calendar?.components([.Month, .Year], fromDate: recommendation.date) {
-                switch component {
-                case 0:
-                    comps.month = row + 1
-                case 1:
-                    comps.year = BaseYear + row
-                default:
-                    break
-                }
-                if let date = calendar?.dateFromComponents(comps) {
-                    recommendation.date = date
-                }
+            var comps = calendar.dateComponents([.month, .year], from: recommendation.date as Date)
+            switch component {
+            case 0:
+                comps.month = row + 1
+            case 1:
+                comps.year = BaseYear + row
+            default:
+                break
+            }
+            if let date = calendar.date(from: comps) {
+                recommendation.date = date
             }
             
         default:
             return
         }
         
-        tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: optionCellRow, inSection: 0)], withRowAnimation: .None)
+        tableView.reloadRows(at: [IndexPath(row: optionCellRow, section: 0)], with: .none)
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         
-        guard let modelRow = pickerIndexPath?.row else {
+        guard let modelRow = (pickerIndexPath as NSIndexPath?)?.row else {
             return nil
         }
         
@@ -70,11 +69,11 @@ extension WSCreateFeedbackTableViewController : UIPickerViewDelegate {
             // Feedback date picker
             switch component {
             case 0:
-                let dateComps = NSDateComponents()
+                var dateComps = DateComponents()
                 dateComps.month = row + 1
-                let date = calendar?.dateFromComponents(dateComps)
+                let date = calendar.date(from: dateComps)
                 formatter.dateFormat = monthFormat
-                return formatter.stringFromDate(date!)
+                return formatter.string(from: date!)
             case 1:
                 return String(BaseYear + row)
             default:

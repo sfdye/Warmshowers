@@ -23,25 +23,25 @@ class WSAPIRequest : Hashable {
     var requester: WSAPIResponseDelegate?
     
     /** Parameters submitted with the request that may be required to build the URL for the request. */
-    var parameters: AnyObject?
+    var parameters: Any?
     
     /** Data submitted with the request that may be submitted in the HTTP request body. */
-    var data: AnyObject?
+    var data: Any?
     
     /** The status of the request as it is processed by the API Client. */
-    var status: WSAPIRequestStatus = .Created
+    var status: WSAPIRequestStatus = .created
     
     
     // MARK: Hashable
     
-    var madeAt: NSDate
+    var madeAt: Date
     var hashValue: Int { return Int(self.madeAt.timeIntervalSince1970) }
     
     
     // MARK: Initialiser
     
-    init(endPoint: WSAPIEndPointProtocol, withDelegate delegate: WSAPIRequestDelegate, requester: WSAPIResponseDelegate?, data: AnyObject? = nil, andParameters parameters: AnyObject? = nil) {
-        self.madeAt = NSDate()
+    init(endPoint: WSAPIEndPointProtocol, withDelegate delegate: WSAPIRequestDelegate, requester: WSAPIResponseDelegate?, data: Any? = nil, andParameters parameters: Any? = nil) {
+        self.madeAt = Date()
         self.requester = requester
         self.delegate = delegate
         self.endPoint = endPoint
@@ -49,23 +49,23 @@ class WSAPIRequest : Hashable {
         self.data = data
     }
     
-    func urlRequest() throws -> NSMutableURLRequest {
+    func urlRequest() throws -> URLRequest {
         
         let endPointHTTPScheme = endPoint.httpScheme
         
         guard let hostURL = delegate.hostForRequest(self).hostURLWithHTTPScheme(endPointHTTPScheme) else {
-            throw WSAPIRequestError.InvalidHostURL
+            throw WSAPIRequestError.invalidHostURL
         }
         
         do {
-            let url = try endPoint.urlWithHostURL(hostURL, andParameters: parameters)
-            let urlRequest = NSMutableURLRequest(URL: url)
-            urlRequest.HTTPMethod = endPoint.httpMethod.rawValue
+            let url = try endPoint.url(withHostURL: hostURL, andParameters: parameters)
+            var urlRequest = URLRequest(url: url)
+            urlRequest.httpMethod = endPoint.httpMethod.rawValue
             urlRequest.addValue(endPoint.acceptType.rawValue, forHTTPHeaderField: "Accept")
             if endPoint.httpMethod == .Post {
-                let parameters = try endPoint.HTTPBodyParametersWithData(data)
+                let parameters = try endPoint.HTTPBodyParameters(withData: data)
                 let body = HttpBody.bodyStringWithParameters(parameters)
-                urlRequest.HTTPBody = body.dataUsingEncoding(NSUTF8StringEncoding)
+                urlRequest.httpBody = body.data(using: String.Encoding.utf8)
             }
             return urlRequest
         }

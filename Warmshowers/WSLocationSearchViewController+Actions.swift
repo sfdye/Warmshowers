@@ -12,23 +12,23 @@ import MapKit
 extension WSLocationSearchViewController {
     
     /** Centres the map on the users location. */
-    @IBAction func centerOnUserLocation(sender:AnyObject?) {
-        if CLLocationManager.authorizationStatus() == .AuthorizedWhenInUse {
-            dispatch_async(dispatch_get_main_queue(), { [unowned self] in
-                self.mapView.setCenterCoordinate(self.mapView.userLocation.coordinate, animated: true)
+    @IBAction func centerOnUserLocation(_ sender:AnyObject?) {
+        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+            DispatchQueue.main.async(execute: { [unowned self] in
+                self.mapView.setCenter(self.mapView.userLocation.coordinate, animated: true)
                 })
         } else {
-            let alert = UIAlertController(title: "Enable location services", message: "To centre the map on your location we need to know your location. Please change your location access settings.", preferredStyle: .Alert)
-            let settingsAction = UIAlertAction(title: "Settings", style: .Default, handler: { (action) in
-                if let url = NSURL(string: UIApplicationOpenSettingsURLString) where UIApplication.sharedApplication().canOpenURL(url) {
-                    UIApplication.sharedApplication().openURL(url)
+            let alert = UIAlertController(title: "Enable location services", message: "To centre the map on your location we need to know your location. Please change your location access settings.", preferredStyle: .alert)
+            let settingsAction = UIAlertAction(title: "Settings", style: .default, handler: { (action) in
+                if let url = URL(string: UIApplicationOpenSettingsURLString) , UIApplication.shared.canOpenURL(url) {
+                    UIApplication.shared.open(url, options: [String : Any](), completionHandler: nil)
                 }
             })
             alert.addAction(settingsAction)
-            let okAction = UIAlertAction(title: "Ok", style: .Default, handler: nil)
+            let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
             alert.addAction(okAction)
-            dispatch_async(dispatch_get_main_queue(), { [weak self] in
-                self?.presentViewController(alert, animated: true, completion: nil)
+            DispatchQueue.main.async(execute: { [weak self] in
+                self?.present(alert, animated: true, completion: nil)
                 })
         }
     }

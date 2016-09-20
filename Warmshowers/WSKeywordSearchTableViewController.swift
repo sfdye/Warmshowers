@@ -10,7 +10,7 @@ import UIKit
 
 class WSKeywordSearchTableViewController: UITableViewController {
     
-    var debounceTimer: NSTimer?
+    var debounceTimer: Timer?
     var placeholderImage: UIImage? = UIImage(named: "ThumbnailPlaceholder")
     var hosts: [WSUserLocation]? = [WSUserLocation]()
     var numberOfHosts: Int { return hosts?.count ?? 0 }
@@ -26,13 +26,13 @@ class WSKeywordSearchTableViewController: UITableViewController {
         assert(placeholderImage != nil, "Placeholder image not found while loading WSKeywordSearchTableViewController.")        
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         assert(navigationDelegate != nil, "The navigation delegate for WSKeywordSearchTableViewController not set. Please ensure the delegate is set before the view appears.")
     }
     
     // MARK: Utility methods
     
-    func searchWithKeywordOnTimer(timer: NSTimer) {
+    func searchWithKeywordOnTimer(_ timer: Timer) {
         
         guard let keyword = timer.userInfo as? String else {
             return
@@ -43,10 +43,10 @@ class WSKeywordSearchTableViewController: UITableViewController {
         api.contactEndPoint(.SearchByKeyword, withPathParameters: nil, andData: searchData, thenNotify: self)
     }
     
-    func startImageDownloadForIndexPath(indexPath: NSIndexPath) {
-        guard let hosts = hosts where indexPath.row < numberOfHosts else { return }
-        let user = hosts[indexPath.row]
-        if let url = user.imageURL where user.image == nil {
+    func startImageDownloadForIndexPath(_ indexPath: IndexPath) {
+        guard let hosts = hosts , (indexPath as NSIndexPath).row < numberOfHosts else { return }
+        let user = hosts[(indexPath as NSIndexPath).row]
+        if let url = user.imageURL , user.image == nil {
             api.contactEndPoint(.ImageResource, withPathParameters: url as NSString, andData: nil, thenNotify: self)
         }
     }
@@ -55,7 +55,7 @@ class WSKeywordSearchTableViewController: UITableViewController {
         
         guard
             let visiblePaths = tableView.indexPathsForVisibleRows
-            where hosts != nil && numberOfHosts > 0
+            , hosts != nil && numberOfHosts > 0
             else {
                 return
         }
@@ -66,22 +66,22 @@ class WSKeywordSearchTableViewController: UITableViewController {
     }
     
     /** Sets the image for a host in the list with the given image URL. */
-    func setImage(image: UIImage, forHostWithImageURL imageURL: String) {
+    func setImage(_ image: UIImage, forHostWithImageURL imageURL: String) {
         guard let hosts = hosts else { return }
-        for (index, host) in hosts.enumerate() {
+        for (index, host) in hosts.enumerated() {
             if host.imageURL == imageURL {
-                host.image = image ?? placeholderImage
-                dispatch_async(dispatch_get_main_queue(), { [weak self] () -> Void in
-                    self?.tableView.reloadRowsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)], withRowAnimation: .None)
+                host.image = image
+                DispatchQueue.main.async(execute: { [weak self] () -> Void in
+                    self?.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
                     })
             }
         }
     }
     
     /** Reloads the table view with an array of results. */
-    func reloadTableWithHosts(hosts: [WSUserLocation]?) {
+    func reloadTableWithHosts(_ hosts: [WSUserLocation]?) {
         self.hosts = hosts
-        dispatch_async(dispatch_get_main_queue(), { [weak self] in
+        DispatchQueue.main.async(execute: { [weak self] in
             self?.tableView.reloadData()
             })
     }

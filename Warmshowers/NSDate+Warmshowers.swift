@@ -8,15 +8,15 @@
 
 import Foundation
 
-extension NSDate: JSONParsingType {
+extension Date: JSONParsingType {
     
-    typealias DataType = NSDate
-    static func fromJSON(json: AnyObject, withKey key: String) -> NSDate? {
+    typealias DataType = Date
+    static func from(JSON json: Any, withKey key: String) -> Date? {
         guard
-            let dateString = json[key] as? String,
+            let dateString = String.from(JSON: json, withKey: key),
             let timeInterval = Double(dateString)
             else { return nil }
-        return NSDate(timeIntervalSince1970: timeInterval)
+        return Date(timeIntervalSince1970: timeInterval)
     }
     
 }

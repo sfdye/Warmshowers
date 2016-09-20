@@ -10,22 +10,22 @@ import UIKit
 
 extension WSAccountTableViewController {
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        let cell = tableView.cellForRow(at: indexPath)
         if cell?.reuseIdentifier == SegmentCellID {
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            tableView.deselectRow(at: indexPath, animated: true)
         }
     }
     
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return CGFloat.min
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return CGFloat.leastNormalMagnitude
     }
     
-    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         switch section {
         case 0:
-            return CGFloat.min
+            return CGFloat.leastNormalMagnitude
         case 1:
             return CGFloat.init(8)
         default:
@@ -33,8 +33,8 @@ extension WSAccountTableViewController {
         }
     }
     
-    override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        switch indexPath.section {
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch (indexPath as NSIndexPath).section {
         case 0:
             return 400
         default:

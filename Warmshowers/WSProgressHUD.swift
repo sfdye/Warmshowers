@@ -12,20 +12,20 @@ import MBProgressHUD
 class WSProgressHUD {
     
     /** Shows the progress HUD covering the whole screen. */
-    static func show(label: String?) {
-        if let view = (UIApplication.sharedApplication().delegate as! AppDelegate).window?.rootViewController?.view {
-            dispatch_async(dispatch_get_main_queue(), { [unowned view] in
-                let hud = MBProgressHUD.showHUDAddedTo(view, animated: true)
+    static func show(_ label: String?) {
+        if let view = (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController?.view {
+            DispatchQueue.main.async(execute: { [unowned view] in
+                let hud = MBProgressHUD.showAdded(to: view, animated: true)
                 hud.label.text = label
                 hud.WSStyle()
                 })
         }
     }
     
-    static func show(view: UIView?, label: String?) {
-        dispatch_async(dispatch_get_main_queue(), {
+    static func show(_ view: UIView?, label: String?) {
+        DispatchQueue.main.async(execute: {
             guard let view = view else { return }
-            let hud = MBProgressHUD.showHUDAddedTo(view, animated: true)
+            let hud = MBProgressHUD.showAdded(to: view, animated: true)
             hud.label.text = label
             hud.WSStyle()
             })
@@ -33,17 +33,17 @@ class WSProgressHUD {
     
     /** Hides the progress HUD. */
     static func hide() {
-        if let view = (UIApplication.sharedApplication().delegate as! AppDelegate).window?.rootViewController?.view {
-            dispatch_async(dispatch_get_main_queue(), { [unowned view] in
-                MBProgressHUD.hideHUDForView(view, animated: true)
+        if let view = (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController?.view {
+            DispatchQueue.main.async(execute: { [unowned view] in
+                MBProgressHUD.hide(for: view, animated: true)
             })
         }
     }
     
-    static func hide(view: UIView?) {
-        dispatch_async(dispatch_get_main_queue(), {
+    static func hide(_ view: UIView?) {
+        DispatchQueue.main.async(execute: {
             guard let view = view else { return }
-            MBProgressHUD.hideHUDForView(view, animated: true)
+            MBProgressHUD.hide(for: view, animated: true)
         })
     }
     

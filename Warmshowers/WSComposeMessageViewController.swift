@@ -41,11 +41,11 @@ class WSComposeMessageViewController: UIViewController {
         
         if isReply {
             // Set the body text view as the first responder
-            let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 2, inSection: 0)) as! ComposeMessageBodyTableViewCell
+            let cell = tableView.cellForRow(at: IndexPath(row: 2, section: 0)) as! ComposeMessageBodyTableViewCell
             cell.textView.becomeFirstResponder()
         } else {
             // Set the subject text field as the first responder
-            let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 0)) as! ComposeMessageDetailTableViewCell
+            let cell = tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as! ComposeMessageDetailTableViewCell
             cell.detailTextField.becomeFirstResponder()
         }
     }
@@ -54,13 +54,13 @@ class WSComposeMessageViewController: UIViewController {
     // MARK: Utility methods
     
     /** Sets up the message as a new message to a give set of hosts. */
-    func configureAsNewMessageToUsers(users: [WSMOUser]) {
+    func configureAsNewMessageToUsers(_ users: [WSMOUser]) {
         navigationItem.title = "New Message"
         recipients = users
     }
     
     /** Sets up the message as a reply on a given message thread. */
-    func configureAsReply(threadID: Int?) {
+    func configureAsReply(_ threadID: Int?) {
         
         guard let threadID = threadID else { return }
         
@@ -73,14 +73,14 @@ class WSComposeMessageViewController: UIViewController {
         guard let uid = session.uid else { return }
         self.threadID = threadID
         self.subject = thread.subject
-        self.recipients = thread.otherParticipants(uid)
+        self.recipients = thread.otherParticipants(currentUserUID: uid)
     }
     
     /** Returns a string of comma seperated full names of the message recipients. */
-    func recipientStringForRecipients(recipients: [WSMOUser]?, joiner: String = ",") -> String {
-        guard let recipients = recipients where recipients.count > 0 else { return "" }
+    func recipientStringForRecipients(_ recipients: [WSMOUser]?, joiner: String = ",") -> String {
+        guard let recipients = recipients , recipients.count > 0 else { return "" }
         let names = recipients.map { (user) -> String in user.name! }
-        let recipientString = names.joinWithSeparator(joiner)
+        let recipientString = names.joined(separator: joiner)
         return recipientString
     }
 

@@ -10,21 +10,21 @@ import Foundation
 
 extension WSLocationSearchViewController : WSAPIResponseDelegate {
     
-    func requestDidComplete(request: WSAPIRequest) {
+    func requestDidComplete(_ request: WSAPIRequest) {
         guard let tile = request.data as? WSMapTile else { return }
         downloadDidEndForMapTile(tile)
     }
     
-    func request(request: WSAPIRequest, didSuceedWithData data: AnyObject?) {
+    func request(_ request: WSAPIRequest, didSuceedWithData data: Any?) {
         guard let tile = request.data as? WSMapTile else { return }
         loadAnnotationsForMapTile(tile)
     }
     
-    func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
+    func request(_ request: WSAPIRequest, didFailWithError error: Error) {
         switch error {
         case is WSAPIEndPointError:
             switch (error as! WSAPIEndPointError) {
-            case .ReachedTileLimit:
+            case .reachedTileLimit:
                 // Tile has the maximum number of users on it and needs to sub-divided.
                 guard let tile = request.data as? WSMapTile else { return }
                 let tiles = tile.subtiles

@@ -8,11 +8,22 @@
 
 import UIKit
 import CoreData
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 enum HostProfileTab {
-    case About
-    case Hosting
-    case Contact
+    case about
+    case hosting
+    case contact
 }
 
 class WSAccountTableViewController: UITableViewController {
@@ -34,12 +45,12 @@ class WSAccountTableViewController: UITableViewController {
         super.viewDidLoad()
         assert(user != nil, "Account view loaded with nil user info.")
         guard user != nil else {
-            let alert = UIAlertController(title: "Sorry, an error occured.", message: nil, preferredStyle: .Alert)
-            let okAction = UIAlertAction(title: "OK", style: .Default, handler: { (okAction) -> Void in
-                self.dismissViewControllerAnimated(true, completion: nil)
+            let alert = UIAlertController(title: "Sorry, an error occured.", message: nil, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: { (okAction) -> Void in
+                self.dismiss(animated: true, completion: nil)
             })
             alert.addAction(okAction)
-            presentViewController(alert, animated: true, completion: nil)
+            present(alert, animated: true, completion: nil)
             return
         }
         
@@ -55,7 +66,7 @@ class WSAccountTableViewController: UITableViewController {
         }
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         // Download the users feedback.
         api.contactEndPoint(.UserFeedback, withPathParameters: String(user!.uid) as NSString, andData: nil, thenNotify: self)
     }
@@ -64,26 +75,26 @@ class WSAccountTableViewController: UITableViewController {
     /** Sets up a done button if one is needed. */
     func configureDoneButton() {
         if navigationController?.viewControllers.count < 2 {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(WSAccountTableViewController.doneButtonPressed))
+            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(WSAccountTableViewController.doneButtonPressed))
         }
     }
     
     /** Configures the popover menu for when the action button is pressed. */
-    func actionAlertForUserWithUID(uid: Int) -> UIAlertController? {
+    func actionAlertForUserWithUID(_ uid: Int) -> UIAlertController? {
         
         guard let user = user, let uid = session.uid else { return nil }
         
-        let actionAlert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        let actionAlert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         // Common actions
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         actionAlert.addAction(cancelAction)
         
         if uid == user.uid {
             
             // Options for the logged in user.
             
-            let logoutAction = UIAlertAction(title: "Logout", style: .Default) { (logoutAction) -> Void in
+            let logoutAction = UIAlertAction(title: "Logout", style: .default) { (logoutAction) -> Void in
                 // Logout and return the login screeen.
                 self.api.contactEndPoint(.Logout, withPathParameters: nil, andData: nil, thenNotify: self)
                 WSProgressHUD.show(self.navigationController!.view, label: "Logging out ...")
@@ -94,17 +105,17 @@ class WSAccountTableViewController: UITableViewController {
             
             // Options while viewing other host profiles.
             
-            let messageAction = UIAlertAction(title: "Send Message", style: .Default) { (messageAction) -> Void in
+            let messageAction = UIAlertAction(title: "Send Message", style: .default) { (messageAction) -> Void in
                 // Present compose message view
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.performSegueWithIdentifier(SID_ToSendNewMessage, sender: nil)
+                DispatchQueue.main.async(execute: {
+                    self.performSegue(withIdentifier: SID_ToSendNewMessage, sender: nil)
                 })
             }
             actionAlert.addAction(messageAction)
-            let provideFeedbackAction = UIAlertAction(title: "Provide Feedback", style: .Default) { (messageAction) -> Void in
+            let provideFeedbackAction = UIAlertAction(title: "Provide Feedback", style: .default) { (messageAction) -> Void in
                 // Present provide feeback view
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.performSegueWithIdentifier(SID_ToProvideFeeedback, sender: nil)
+                DispatchQueue.main.async(execute: {
+                    self.performSegue(withIdentifier: SID_ToProvideFeeedback, sender: nil)
                 })
             }
             actionAlert.addAction(provideFeedbackAction)
@@ -117,84 +128,84 @@ class WSAccountTableViewController: UITableViewController {
     
     /** Reloads the view. */
     func reload() {
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+        DispatchQueue.main.async(execute: { () -> Void in
             self.tableView.reloadData()
         })
     }
     
-    func memberForTextForUser(user: WSUser) -> String? {
+    func memberForTextForUser(_ user: WSUser) -> String? {
         guard let membershipDuration = user.membershipDuration else { return "Duration of membership unknown." }
         return "Member for \(membershipDuration.asString)"
     }
     
-    func activeAgoTextForUser(user: WSUser) -> String? {
+    func activeAgoTextForUser(_ user: WSUser) -> String? {
         guard let lastLoggedInAgo = user.lastLoggedInAgo else { return "Last login time unknown." }
         return "Active \(lastLoggedInAgo.asString) ago"
     }
     
-    func languagesSpokenTextForUser(user: WSUser) -> String? {
+    func languagesSpokenTextForUser(_ user: WSUser) -> String? {
         guard let languagesspoken = user.languagesspoken else { return "Languages spoken: - " }
         return "Languages spoken: \(languagesspoken)"
     }
     
-    func feedbackCellTextForUser(user: WSUser) -> String {
+    func feedbackCellTextForUser(_ user: WSUser) -> String {
         guard let feedback = user.feedback else { return "Feedback" }
         return feedback.count > 0 ? "Feedback (\(feedback.count))" : "No feedback"
     }
     
-    func hostingInfoTitleForInfoAtIndex(index: Int, fromUser user: WSUser) -> String? {
+    func hostingInfoTitleForInfoAtIndex(_ index: Int, fromUser user: WSUser) -> String? {
         guard index < user.hostingInfo.count else { return nil }
         let info = user.hostingInfo[index]
         switch info.type {
-        case .MaxCyclists:
+        case .maxCyclists:
             return "Maximum Guests:"
-        case .BikeShop:
+        case .bikeShop:
             return "Distance to nearest bike shop:"
-        case .Campground:
+        case .campground:
             return "Distance to nearest campground:"
-        case .Motel:
+        case .motel:
             return "Distance to nearest hotel/motel:"
         }
     }
     
-    func hostingInfoDetailForInfoAtIndex(index: Int, fromUser user: WSUser) -> String? {
+    func hostingInfoDetailForInfoAtIndex(_ index: Int, fromUser user: WSUser) -> String? {
         guard index < user.hostingInfo.count else { return nil }
         let info = user.hostingInfo[index]
         return info.description
     }
     
-    func offerTextForOfferAtIndex(index: Int, fromUser user: WSUser) -> String? {
+    func offerTextForOfferAtIndex(_ index: Int, fromUser user: WSUser) -> String? {
         guard index < user.offers.count else { return nil }
         let offer = user.offers[index]
         return "\u{2022} " + offer.rawValue
     }
     
-    func phoneNumberForPhoneNumberAtIndex(index: Int, fromUser user: WSUser) -> String? {
+    func phoneNumberForPhoneNumberAtIndex(_ index: Int, fromUser user: WSUser) -> String? {
         guard index < user.phoneNumbers.count else { return nil }
         let phoneNumber = user.phoneNumbers[index]
         return phoneNumber.number
     }
     
-    func phoneNumberDescriptionForPhoneNumberAtIndex(index: Int, fromUser user: WSUser) -> String? {
+    func phoneNumberDescriptionForPhoneNumberAtIndex(_ index: Int, fromUser user: WSUser) -> String? {
         guard index < user.phoneNumbers.count else { return nil }
         let phoneNumber = user.phoneNumbers[index]
         switch phoneNumber.type {
-        case .Home:
+        case .home:
             return "Home"
-        case .Mobile:
+        case .mobile:
             return "Mobile"
-        case .Work:
+        case .work:
             return "Work"
         }
     }
     
-    func phoneNumberTypeForPhoneAtIndex(index: Int, fromUser user: WSUser) -> WSPhoneNumberType? {
+    func phoneNumberTypeForPhoneAtIndex(_ index: Int, fromUser user: WSUser) -> WSPhoneNumberType? {
         guard index < user.phoneNumbers.count else { return nil }
         let phoneNumber = user.phoneNumbers[index]
         return phoneNumber.type
     }
     
-    func addressTextForUser(user: WSUser) -> String? {
+    func addressTextForUser(_ user: WSUser) -> String? {
         return user.address
     }
 

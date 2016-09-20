@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum WSAPIRequestError: ErrorType {
-    case InvalidHostURL
-    case EndPointDescriptorError
+enum WSAPIRequestError: Error {
+    case invalidHostURL
+    case endPointDescriptorError
 }

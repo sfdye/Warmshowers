@@ -14,12 +14,12 @@ class WSCreateFeedbackEndPoint : WSAPIEndPointProtocol {
     
     var httpMethod: HttpMethod = .Post
     
-    func urlWithHostURL(hostURL: NSURL, andParameters parameters: AnyObject?) throws -> NSURL {
-        return hostURL.URLByAppendingPathComponent("/services/rest/node")
+    func url(withHostURL hostURL: URL, andParameters parameters: Any?) throws -> URL {
+        return hostURL.appendingPathComponent("/services/rest/node")
     }
     
-    func HTTPBodyParametersWithData(data: AnyObject?) throws -> [String: String] {
-        guard let recommendation = data as? WSRecommendation else { throw WSAPIEndPointError.InvalidOutboundData }
+    func HTTPBodyParameters(withData data: Any?) throws -> [String: String] {
+        guard let recommendation = data as? WSRecommendation else { throw WSAPIEndPointError.invalidOutboundData }
         var params = [String: String]()
         params["node[type]"] = "trust_referral"
         params["node[field_member_i_trust][0][uid][uid]"] = recommendation.recommendedUserName ?? ""
@@ -31,7 +31,7 @@ class WSCreateFeedbackEndPoint : WSAPIEndPointProtocol {
         return params
     }
     
-    func request(request: WSAPIRequest, didRecieveResponseWithJSON json: AnyObject) throws -> AnyObject? {
+    func request(_ request: WSAPIRequest, didRecieveResponseWithJSON json: Any) throws -> Any? {
         // No need for response data.
         return nil
     }

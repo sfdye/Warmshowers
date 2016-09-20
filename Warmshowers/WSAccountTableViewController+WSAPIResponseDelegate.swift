@@ -10,25 +10,25 @@ import UIKit
 
 extension WSAccountTableViewController: WSAPIResponseDelegate {
     
-    func requestDidComplete(request: WSAPIRequest) {
+    func requestDidComplete(_ request: WSAPIRequest) {
         WSProgressHUD.hide(self.navigationController?.view)
     }
     
-    func request(request: WSAPIRequest, didSuceedWithData data: AnyObject?) {
+    func request(_ request: WSAPIRequest, didSuceedWithData data: Any?) {
         switch request.endPoint.type {
         case .ImageResource:
             guard let image = data as? UIImage else { return }
             user?.profileImage = image
-            dispatch_async(dispatch_get_main_queue(), { [weak self] in
-                let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-                self?.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            DispatchQueue.main.async(execute: { [weak self] in
+                let indexPath = IndexPath(row: 0, section: 0)
+                self?.tableView.reloadRows(at: [indexPath], with: .automatic)
             })
         case .UserFeedback:
             guard let feedback = data as? [WSRecommendation] else { return }
             user?.feedback = feedback
-            dispatch_async(dispatch_get_main_queue(), { [weak self] in
-                let indexPath = NSIndexPath(forRow: 0, inSection: 2)
-                self?.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            DispatchQueue.main.async(execute: { [weak self] in
+                let indexPath = IndexPath(row: 0, section: 2)
+                self?.tableView.reloadRows(at: [indexPath], with: .automatic)
                 })
         case .Logout:
             session.didLogoutFromView(self)
@@ -37,13 +37,13 @@ extension WSAccountTableViewController: WSAPIResponseDelegate {
         }
     }
     
-    func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
+    func request(_ request: WSAPIRequest, didFailWithError error: Error) {
         switch request.endPoint.type {
         case .Logout:
             switch error {
             case is WSAPICommunicatorError:
                 switch (error as! WSAPICommunicatorError) {
-                case .ServerError(let statusCode, _):
+                case .serverError(let statusCode, _):
                     if statusCode == 406 {
                         // 406: user already logged out.
                         session.didLogoutFromView(self)

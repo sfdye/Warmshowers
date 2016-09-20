@@ -10,11 +10,11 @@ import UIKit
 
 extension WSHostListTableViewController : WSAPIResponseDelegate {
     
-    func requestDidComplete(request: WSAPIRequest) {
+    func requestDidComplete(_ request: WSAPIRequest) {
         WSProgressHUD.hide(navigationController?.view)
     }
     
-    func request(request: WSAPIRequest, didSuceedWithData data: AnyObject?) {
+    func request(_ request: WSAPIRequest, didSuceedWithData data: Any?) {
         switch request.endPoint.type {
         case .ImageResource:
             guard
@@ -24,15 +24,15 @@ extension WSHostListTableViewController : WSAPIResponseDelegate {
             setImage(image, forHostWithImageURL: imageURL)
         case .UserInfo:
             guard let host = data as? WSUser else { return }
-            dispatch_async(dispatch_get_main_queue(), { 
-                self.performSegueWithIdentifier(SID_HostListToUserAccount, sender: host)
+            DispatchQueue.main.async(execute: { 
+                self.performSegue(withIdentifier: SID_HostListToUserAccount, sender: host)
             })
         default:
             break
         }
     }
     
-    func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
+    func request(_ request: WSAPIRequest, didFailWithError error: Error) {
         switch request.endPoint.type {
         case .ImageResource:
             // No need for action.

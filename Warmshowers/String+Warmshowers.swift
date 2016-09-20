@@ -11,7 +11,8 @@ import Foundation
 extension String: JSONParsingType {
     
     typealias DataType = String
-    static func fromJSON(json: AnyObject, withKey key: String) -> String? {
+    static func from(JSON json: Any, withKey key: String) -> String? {
+        guard let json = json as? [String: Any] else { return nil }
         return json[key] as? String
     }
     

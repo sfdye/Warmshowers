@@ -24,10 +24,10 @@ class HostListTableViewCell: UITableViewCell {
         profileImage.image = nil
     }
     
-    func setNotAvailible(notAvailible: Bool?) {
+    func setNotAvailible(_ notAvailible: Bool?) {
         
         guard let notAvailible = notAvailible else {
-            availibleDot?.color = UIColor.whiteColor()
+            availibleDot?.color = UIColor.white
             return
         }
         

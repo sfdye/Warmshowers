@@ -15,30 +15,30 @@ let RUI_MessageFromUser = "MessageFromUser"
 
 extension WSMessageThreadTableViewController {
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let sections = fetchedResultsController.sections else { return 0 }
         let sectionInfo = sections[section]
         return sectionInfo.numberOfObjects
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let message = self.fetchedResultsController.objectAtIndexPath(indexPath) as? WSMOMessage else {
-            let cell = tableView.dequeueReusableCellWithIdentifier(RUI_MessageFromSelf, forIndexPath: indexPath) as! MessageTableViewCell
+        guard let message = self.fetchedResultsController.object(at: indexPath) as? WSMOMessage else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: RUI_MessageFromSelf, for: indexPath) as! MessageTableViewCell
             return cell
         }
         
         let cellID = (message.author?.uid ?? 0 == session.uid) ? RUI_MessageFromSelf : RUI_MessageFromUser
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellID, forIndexPath: indexPath) as! MessageTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! MessageTableViewCell
         configureCell(cell, withMessage: message)
         return cell
     }
     
-    func configureCell(cell: MessageTableViewCell, withMessage message: WSMOMessage) {
+    func configureCell(_ cell: MessageTableViewCell, withMessage message: WSMOMessage) {
         cell.fromLabel.text = message.author?.fullname
         cell.dateLabel.text = textForMessageDate(message.timestamp)
         cell.bodyTextView.text = message.body

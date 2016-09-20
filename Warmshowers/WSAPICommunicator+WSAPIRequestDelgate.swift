@@ -10,7 +10,7 @@ import UIKit
 
 extension WSAPICommunicator : WSAPIRequestDelegate {
     
-    func requestShouldBeQueuedWhileOffline(request: WSAPIRequest) -> Bool {
+    func requestShouldBeQueuedWhileOffline(_ request: WSAPIRequest) -> Bool {
         switch request.endPoint.type {
         case .CreateFeedback:
             return true
@@ -19,11 +19,11 @@ extension WSAPICommunicator : WSAPIRequestDelegate {
         }
     }
     
-    func hostForRequest(request: WSAPIRequest) -> WSAPIHost {
+    func hostForRequest(_ request: WSAPIRequest) -> WSAPIHost {
         return host
     }
         
-    func request(request: WSAPIRequest, didSucceedWithData data: AnyObject?) {
+    func request(_ request: WSAPIRequest, didSucceedWithData data: Any?) {
         
         // notify the requester
         request.requester?.requestDidComplete(request)
@@ -33,7 +33,7 @@ extension WSAPICommunicator : WSAPIRequestDelegate {
         removeRequestFromQueue(request)
     }
     
-    func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
+    func request(_ request: WSAPIRequest, didFailWithError error: Error) {
         
         // notify the requester
         request.requester?.requestDidComplete(request)

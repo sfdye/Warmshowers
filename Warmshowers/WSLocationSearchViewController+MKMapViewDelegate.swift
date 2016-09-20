@@ -11,14 +11,14 @@ import CCHMapClusterController
 
 extension WSLocationSearchViewController : MKMapViewDelegate {
     
-    func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         
         if mapOverlay != nil {
             return MKTileOverlayRenderer.init(overlay: overlay)
         }
         
         // Tile coloring overlay.
-        if overlay.isKindOfClass(MKPolygon) {
+        if overlay.isKind(of: MKPolygon.self) {
             let renderer = MKPolygonRenderer(polygon: overlay as! MKPolygon)
             renderer.fillColor = UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: dimLevel)
             return renderer
@@ -28,10 +28,10 @@ extension WSLocationSearchViewController : MKMapViewDelegate {
         return MKTileOverlayRenderer.init();
     }
     
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
-        func pinAnnotationViewForAnnotation(annotation: MKAnnotation, forReuseIdentifier reuseIdentifier: String) -> MKPinAnnotationView? {
-            if let dequeueView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseIdentifier) as? MKPinAnnotationView {
+        func pinAnnotationViewForAnnotation(_ annotation: MKAnnotation, forReuseIdentifier reuseIdentifier: String) -> MKPinAnnotationView? {
+            if let dequeueView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier) as? MKPinAnnotationView {
                 return dequeueView
             } else {
                 return MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseIdentifier)
@@ -49,15 +49,15 @@ extension WSLocationSearchViewController : MKMapViewDelegate {
             if clusterAnnotation.isCluster() {
                 // Clustered host map pins.
                 annotationView = pinAnnotationViewForAnnotation(annotation, forReuseIdentifier: "cluster")
-                annotationView?.pinTintColor = UIColor.purpleColor()
+                annotationView?.pinTintColor = UIColor.purple
             } else {
                 // Single host map pins.
                 annotationView = pinAnnotationViewForAnnotation(annotation, forReuseIdentifier: "single")
-                annotationView?.pinTintColor = UIColor.redColor()
+                annotationView?.pinTintColor = UIColor.red
             }
             
             // Common cluster/non-cluster annotation configurations.
-            let button = UIButton(type: UIButtonType.DetailDisclosure)
+            let button = UIButton(type: UIButtonType.detailDisclosure)
             annotationView?.rightCalloutAccessoryView = button
             annotationView?.canShowCallout = true
         }
@@ -65,11 +65,11 @@ extension WSLocationSearchViewController : MKMapViewDelegate {
         return annotationView
     }
     
-    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         // Callout titles are set by the CCHMapClusterControllerDelegate
     }
     
-    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if let clusterAnnotation = view.annotation as? CCHMapClusterAnnotation {
             if clusterAnnotation.isCluster() {
                 if let hosts = Array(clusterAnnotation.annotations) as? [WSUserLocation] {
@@ -83,7 +83,7 @@ extension WSLocationSearchViewController : MKMapViewDelegate {
         }
     }
     
-    func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         
         // Get the tiles that can be seen in the new screen.
         guard let tiles = tilesInMapRegion(mapView.region) else { return }

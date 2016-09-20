@@ -10,7 +10,7 @@ import UIKit
 
 extension WSFeedbackTableViewController: WSAPIResponseDelegate {
     
-    func request(request: WSAPIRequest, didSuceedWithData data: AnyObject?) {
+    func request(_ request: WSAPIRequest, didSuceedWithData data: Any?) {
         switch request.endPoint.type {
         case .UserInfo:
             if data is WSUser {
@@ -33,7 +33,7 @@ extension WSFeedbackTableViewController: WSAPIResponseDelegate {
         }
     }
     
-    func request(request: WSAPIRequest, didFailWithError error: ErrorType) {
+    func request(_ request: WSAPIRequest, didFailWithError error: Error) {
         // No need for action
     }
     

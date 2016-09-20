@@ -17,10 +17,10 @@ extension WSMOMessageThread {
     @NSManaged var p_count: NSNumber?
     @NSManaged var p_has_tokens: NSNumber?
     @NSManaged var p_is_new: NSNumber?
-    @NSManaged var last_updated: NSDate?
+    @NSManaged var last_updated: Date?
     @NSManaged var subject: String?
     @NSManaged var p_thread_id: NSNumber?
-    @NSManaged var thread_started: NSDate?
+    @NSManaged var thread_started: Date?
     @NSManaged var messages: NSSet?
     @NSManaged var participants: NSSet?
 

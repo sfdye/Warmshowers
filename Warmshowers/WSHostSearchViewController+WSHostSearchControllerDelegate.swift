@@ -10,7 +10,7 @@ import UIKit
 
 extension WSHostSearchViewController : WSHostSearchControllerDelegate {
     
-    func presentErrorAlertWithError(error: ErrorType) {
+    func presentErrorAlertWithError(_ error: Error) {
 //        let delegator: UIViewController = searchController.active ? searchController : self
         
         alert.presentAPIError(error, forDelegator: self) //delegator)
