@@ -100,6 +100,8 @@
 		E574AED41D3196E7008676BC /* WSLoginData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E574AED31D3196E7008676BC /* WSLoginData.swift */; };
 		E574AED61D32D31D008676BC /* WSHostListTableViewController+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E574AED51D32D31D008676BC /* WSHostListTableViewController+Navigation.swift */; };
 		E574AED81D32E6E5008676BC /* WSHostListTableViewController+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E574AED71D32E6E5008676BC /* WSHostListTableViewController+Actions.swift */; };
+		E58BD0621D92149B00FAC5C3 /* SettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58BD0611D92149B00FAC5C3 /* SettingsSection.swift */; };
+		E58BD0641D9214AB00FAC5C3 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58BD0631D9214AB00FAC5C3 /* SettingsCell.swift */; };
 		E58C36781D16778A001B03D5 /* WSLocationSearchViewController+CCHMapClusterControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58C36771D16778A001B03D5 /* WSLocationSearchViewController+CCHMapClusterControllerDelegate.swift */; };
 		E58C37131D28F6A4001B03D5 /* WSComposeMessageViewController+WSAPIResponseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58C37121D28F6A4001B03D5 /* WSComposeMessageViewController+WSAPIResponseDelegate.swift */; };
 		E58C37151D28F741001B03D5 /* WSMessageThreadsTableViewController+WSAPIResponseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58C37141D28F741001B03D5 /* WSMessageThreadsTableViewController+WSAPIResponseDelegate.swift */; };
@@ -346,6 +348,8 @@
 		E574AED31D3196E7008676BC /* WSLoginData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSLoginData.swift; sourceTree = "<group>"; };
 		E574AED51D32D31D008676BC /* WSHostListTableViewController+Navigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSHostListTableViewController+Navigation.swift"; sourceTree = "<group>"; };
 		E574AED71D32E6E5008676BC /* WSHostListTableViewController+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSHostListTableViewController+Actions.swift"; sourceTree = "<group>"; };
+		E58BD0611D92149B00FAC5C3 /* SettingsSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSection.swift; sourceTree = "<group>"; };
+		E58BD0631D9214AB00FAC5C3 /* SettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		E58C36771D16778A001B03D5 /* WSLocationSearchViewController+CCHMapClusterControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSLocationSearchViewController+CCHMapClusterControllerDelegate.swift"; sourceTree = "<group>"; };
 		E58C37121D28F6A4001B03D5 /* WSComposeMessageViewController+WSAPIResponseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSComposeMessageViewController+WSAPIResponseDelegate.swift"; sourceTree = "<group>"; };
 		E58C37141D28F741001B03D5 /* WSMessageThreadsTableViewController+WSAPIResponseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSMessageThreadsTableViewController+WSAPIResponseDelegate.swift"; sourceTree = "<group>"; };
@@ -834,6 +838,8 @@
 				E59FE1E51CD411D30024F354 /* WSSettingsTableViewController+UITableViewDataSource.swift */,
 				E59FE1E71CD412430024F354 /* WSSettingsTableViewController+UITableViewDelegate.swift */,
 				E5ED1E8F1CD41A460017D12F /* WSSettingsTableViewController+WSAPIResponseDelegate.swift */,
+				E58BD0611D92149B00FAC5C3 /* SettingsSection.swift */,
+				E58BD0631D9214AB00FAC5C3 /* SettingsCell.swift */,
 			);
 			name = WSSettingsTableViewController;
 			sourceTree = "<group>";
@@ -1671,6 +1677,7 @@
 				E5700C581C45C057008C8A87 /* WSHostListTableViewController.swift in Sources */,
 				E56CC0921BFD569500AAF973 /* SwitchTableViewCell.swift in Sources */,
 				E57057E81CC879E300FA5D9F /* WSCreateFeedbackTableViewController+WSAPIResponseDelegate.swift in Sources */,
+				E58BD0641D9214AB00FAC5C3 /* SettingsCell.swift in Sources */,
 				E51180C31D3583180021F5F5 /* WSMessageThreadTableViewController+Navigation.swift in Sources */,
 				E59FE1BE1CD0AD630024F354 /* WSAPICommunicatorError.swift in Sources */,
 				E5AF1A881C58A41A0004806A /* WSMessageThreadTableViewController+UITableViewDataSource.swift in Sources */,
@@ -1691,6 +1698,7 @@
 				E590AA591D7EB436000D531A /* WSRoutesTableViewController.swift in Sources */,
 				E52B35711D36CC0A00DD0F44 /* WSPhoneNumber.swift in Sources */,
 				E54276901C44956F00047029 /* WSCreateFeedbackTableViewController+UITextViewDelegate.swift in Sources */,
+				E58BD0621D92149B00FAC5C3 /* SettingsSection.swift in Sources */,
 				E574AED41D3196E7008676BC /* WSLoginData.swift in Sources */,
 				E59FE1E61CD411D30024F354 /* WSSettingsTableViewController+UITableViewDataSource.swift in Sources */,
 				E520C0C61D57C9C20094F716 /* ShortcutIdentifier.swift in Sources */,

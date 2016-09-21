@@ -60,7 +60,9 @@ class WSMapTile: Hashable {
     }
     
     var centerLongitude: Double {
-        return (Double(x) + 0.5) / pow(2.0, Double(z)) * 360.0 - 180.0
+        let x_double = Double(x)
+        let z_double = Double(z)
+        return (x_double + 0.5) / pow(2.0, z_double) * 360.0 - 180.0
     }
     
     var centerLatitude: Double {
@@ -148,6 +150,7 @@ class WSMapTile: Hashable {
         let cospart = cos(lat * Double.pi / 180.0)
         let sub = tanpart + 1.0 / cospart
         let y = UInt(floor((1.0 - log(sub) / Double.pi) / 2.0 * pow(2.0, Double(zoom))))
+        
         self.init(x: x, y: y, z: zoom)
     }
     

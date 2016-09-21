@@ -20,61 +20,54 @@ class WSSettingsTableViewController: UITableViewController {
     var store: WSStoreProtocol = WSStore.sharedStore
     var alert: WSAlertProtocol = WSAlertDelegate.sharedAlertDelegate
     
-    let settings = [
-        [
-            "section_title" : "Warmshowers.org",
-            "cells" : [
-                [
-                    "title" : "Visit the website",
-                    "cell_id": DisclosureCellID,
-                    "tag" : 10
-                ],
-                [
-                    "title": "FAQ",
-                    "cell_id": DisclosureCellID,
-                    "tag" : 11
-                ]
+    lazy var settings: [SettingsSection] = {
+        var sections = [SettingsSection]()
+        let warmshowersSection = SettingsSection(withTitle: "Warmshowers.org", andCells:
+            [
+                SettingsCell(withTitle: "Visit the website",
+                             cellID: DisclosureCellID,
+                             andTag: 10),
+                SettingsCell(withTitle: "FAQ",
+                             cellID: DisclosureCellID,
+                             andTag: 11)
             ]
-        ],
-        [
-            "section_title" : "Help",
-            "cells" : [
-                [
-                    "title" : "Contact",
-                    "cell_id": DisclosureCellID,
-                    "tag" : 20
-                ]
+        )
+        sections.append(warmshowersSection)
+        let helpSection = SettingsSection(withTitle: "Help", andCells:
+            [
+                SettingsCell(withTitle: "Contact",
+                          cellID: DisclosureCellID,
+                          andTag: 20)
             ]
-        ],
-        [
-            "section_title" : "Map",
-            "cells" : [
-                [
-                    "title" : "Routes",
-                    "cell_id": DisclosureCellID,
-                    "tag" : 30
-                ]
+        )
+        sections.append(helpSection)
+        let mapSection = SettingsSection(withTitle: "Map", andCells:
+            [
+                SettingsCell(withTitle: "Routes",
+                             cellID: DisclosureCellID,
+                             andTag: 30)
             ]
-        ],
-        [
-            "cells" : [
-                [
-                    "title" : "Logout",
-                    "cell_id": LogoutCellID,
-                    "tag" : 40
-                ]
+        )
+        sections.append(mapSection)
+        let logoutSection = SettingsSection(withTitle: "", andCells:
+            [
+                SettingsCell(withTitle: "Logout",
+                             cellID: LogoutCellID,
+                             andTag: 40)
             ]
-        ],
-        [
-            "cells" : [
-                [
-                    "title" : "Delete cached data",
-                    "cell_id": LogoutCellID,
-                    "tag" : 50
-                ]
+        )
+        sections.append(logoutSection)
+        let deleteCacheSection = SettingsSection(withTitle: "", andCells:
+            [
+                SettingsCell(withTitle: "Delete cached data",
+                             cellID: LogoutCellID,
+                             andTag: 50)
             ]
-        ]
-    ]
+        )
+        sections.append(deleteCacheSection)
+        
+        return sections
+    }()
     
     override func viewWillAppear(_ animated: Bool) {
         alert.hideAllBanners()

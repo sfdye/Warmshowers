@@ -11,7 +11,7 @@ import UIKit
 extension WSSettingsTableViewController {
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return settings[section]["section_title"] as? String
+        return settings[section].title
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -19,31 +19,28 @@ extension WSSettingsTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let cells = settings[section]["cells"]
-        assert(cells != nil, "No cells found for settings sections \(section).")
-        return (cells as AnyObject).count ?? 0
+        return settings[section].cells.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cells = settings[(indexPath as NSIndexPath).section]["cells"] as? [AnyObject]
-        let contents = cells?[(indexPath as NSIndexPath).row]
-        let cellID = contents?["cell_id"] as! String
+        let content = settings[indexPath.section].cells[indexPath.row]
+        let cellID = content.cellID
         switch cellID  {
         case SwitchCellID:
             let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! SwitchTableViewCell
-            cell.label?.text = contents?["title"] as? String
-            cell.tag = contents!["tag"] as! Int
+            cell.label?.text = content.title
+            cell.tag = content.tag
             return cell
         case DisclosureCellID:
             let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
-            cell.textLabel!.text = contents?["title"] as? String
-            cell.detailTextLabel!.text = contents?["detail"] as? String
-            cell.tag = contents!["tag"] as! Int
+            cell.textLabel!.text = content.title
+            cell.detailTextLabel!.text = content.detail
+            cell.tag = content.tag
             return cell
         case LogoutCellID:
             let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! LogoutTableViewCell
-            cell.label?.text = contents?["title"] as? String
-            cell.tag = contents!["tag"] as! Int
+            cell.label?.text = content.title
+            cell.tag = content.tag
             return cell
         default:
             let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
