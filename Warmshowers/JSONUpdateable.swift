@@ -10,10 +10,6 @@ import Foundation
 import CoreData
 
 public protocol JSONUpdateable {
-    associatedtype UpdateableType: NSFetchRequestResult
-    
-    /** Returns the entity name. */
-    static var entityName: String { get }
     
     /** Returns a predicate from the given JSON that identifies any instances of the type (PSMOType) that exist in the persistance store. */
     static func predicate(fromJSON json: Any) throws -> NSPredicate

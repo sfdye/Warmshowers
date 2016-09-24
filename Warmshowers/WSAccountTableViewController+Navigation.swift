@@ -53,10 +53,10 @@ extension WSAccountTableViewController {
             // Save the user to the store and pass the user object to the compose message view controller
             let json = ["uid": user.uid, "fullname": user.fullname, "name": user.name] as [String : Any]
             
-//            if let recipient = try? store.newOrExisting(WSMOUser.self, withJSON: json, context: store.managedObjectContext) {
-//                composeMessageVC.configureAsNewMessageToUsers([recipient])
-//                try! store.managedObjectContext.save()
-//            }
+            if let recipient = try? store.newOrExisting(ofClass: WSMOUser.self, withJSON: json, context: store.managedObjectContext) {
+                composeMessageVC.configureAsNewMessageToUsers([recipient])
+                try! store.managedObjectContext.save()
+            }
             
         case SID_ToProvideFeeedback:
             

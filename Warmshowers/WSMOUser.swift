@@ -11,7 +11,6 @@ import CoreData
 import MapKit
 
 class WSMOUser: NSManagedObject, JSONUpdateable {
-    typealias UpdateableType = WSMOUser
     
     // MARK: Getters and setters
     
@@ -80,22 +79,17 @@ class WSMOUser: NSManagedObject, JSONUpdateable {
         return address
     }
     
+    static var entityName: String { return "User" }
+    
     
     // MARK: JSONUpdateable
-    
-    static var entityName: String { return "User" }
     
     static func predicate(fromJSON json: Any) throws -> NSPredicate {
         do {
             let uid = try JSON.nonOptional(forKey:"uid", fromJSON: json, withType: Int.self)
-            return NSPredicate(format: "p_uid == %d", Int32(uid!))
+            return NSPredicate(format: "p_uid == %d", Int32(uid))
         }
     }
-    
-//    static func fetchRequest() -> NSFetchRequest<UpdateableType> {
-//        let request = NSFetchRequest<UpdateableType>(entityName: entityName)
-//        return request
-//    }
     
     func update(withJSON json: Any) throws {
         

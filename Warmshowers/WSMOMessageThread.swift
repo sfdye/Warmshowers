@@ -11,7 +11,6 @@ import CoreData
 
 
 class WSMOMessageThread: NSManagedObject, JSONUpdateable {
-    typealias UpdateableType = WSMOMessageThread
     
     // MARK: Getters and setters
     
@@ -35,22 +34,17 @@ class WSMOMessageThread: NSManagedObject, JSONUpdateable {
         set(new) { p_thread_id = new == nil ? nil : NSNumber(value: new!) }
     }
     
+    static var entityName: String { return "MessageThread" }
+    
     
     // MARK: JSONUpdateable
-    
-    static var entityName: String { return "MessageThread" }
     
     static func predicate(fromJSON json: Any) throws -> NSPredicate {
         do {
             let threadID = try JSON.nonOptional(forKey:"thread_id", fromJSON: json, withType: Int.self)
-            return NSPredicate(format: "p_thread_id == %d", threadID!)
+            return NSPredicate(format: "p_thread_id == %d", threadID)
         }
     }
-    
-//    static func fetchRequest() -> NSFetchRequest<UpdateableType> {
-//        let request = NSFetchRequest<UpdateableType>(entityName: entityName)
-//        return request
-//    }
     
     func update(withJSON json: Any) throws {
         

@@ -9,7 +9,6 @@
 import UIKit
 import CoreData
 
-
 let RUI_MessageFromSelf = "MessageFromSelf"
 let RUI_MessageFromUser = "MessageFromUser"
 
@@ -26,12 +25,7 @@ extension WSMessageThreadTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        guard let message = self.fetchedResultsController.object(at: indexPath) as? WSMOMessage else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: RUI_MessageFromSelf, for: indexPath) as! MessageTableViewCell
-            return cell
-        }
-        
+        let message = self.fetchedResultsController.object(at: indexPath)
         let cellID = (message.author?.uid ?? 0 == session.uid) ? RUI_MessageFromSelf : RUI_MessageFromUser
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! MessageTableViewCell
         configureCell(cell, withMessage: message)

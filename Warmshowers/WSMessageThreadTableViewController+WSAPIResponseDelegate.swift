@@ -30,7 +30,7 @@ extension WSMessageThreadTableViewController: WSAPIResponseDelegate {
         case .MarkThreadRead:
             guard let readState = request.data as? WSMessageThreadReadState else { return }
             let predicate = NSPredicate(format: "p_thread_id == %d", readState.threadID)
-            if let messageThread = try! store.retrieve(WSMOMessageThread.self, sortBy: nil, isAscending: true, predicate: predicate, context: store.managedObjectContext).first {
+            if let messageThread = try! store.retrieve(objectsWithClass: WSMOMessageThread.self, sortBy: nil, isAscending: true, predicate: predicate, context: store.managedObjectContext).first {
                 messageThread.is_new = !readState.read
                 try! store.managedObjectContext.save()
             }
@@ -40,7 +40,7 @@ extension WSMessageThreadTableViewController: WSAPIResponseDelegate {
                 let url = user.profileImageURL
                 else { return }
             let predicate = NSPredicate(format: "p_uid == %d", user.uid)
-            if let user = try? store.retrieve(WSMOUser.self, sortBy: nil, isAscending: true, predicate: predicate, context: store.managedObjectContext).first {
+            if let user = try? store.retrieve(objectsWithClass: WSMOUser.self, sortBy: nil, isAscending: true, predicate: predicate, context: store.managedObjectContext).first {
                 user?.image_url = url
                 do {
                     try store.managedObjectContext.save()

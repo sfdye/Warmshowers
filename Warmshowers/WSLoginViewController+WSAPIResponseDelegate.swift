@@ -19,8 +19,9 @@ extension WSLoginViewController : WSAPIResponseDelegate {
                 try session.savePassword(password!, forUsername: username!)
                 navigation.showMainApp()
             } catch {
+                print(error)
                 // This case is very unlikely.
-                alert.presentAlertFor(self, withTitle: "App error", button: "Sorry, an error occured while saving your username. Please report this as a bug, sorry for the inconvenience.")
+                alert.presentAlertFor(self, withTitle: "App error", button: "OK", message: "Sorry, an error occured while saving your username. Please report this as a bug, sorry for the inconvenience.")
             }
         } else {
             // Recieved login response: request a token
@@ -30,7 +31,6 @@ extension WSLoginViewController : WSAPIResponseDelegate {
     
     func request(_ request: WSAPIRequest, didFailWithError error: Error) {
         WSProgressHUD.hide()
-        print(error)
         var title: String?
         var message: String?
         

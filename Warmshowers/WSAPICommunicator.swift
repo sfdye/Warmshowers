@@ -27,7 +27,7 @@ class WSAPICommunicator: WSAPICommunicatorProtocol {
     var session: WSSessionStateProtocol = WSSessionState.sharedSessionState
     
     var mode: WSAPICommunicatorMode
-    var logging: Bool = false
+    var logging: Bool = true
     
     var requests = Set<WSAPIRequest>()
     
@@ -99,8 +99,7 @@ class WSAPICommunicator: WSAPICommunicatorProtocol {
             switch mode {
             case .online:
                 let task = urlSession.dataTask(with: urlRequest, completionHandler: { [weak self] (data, response, error) in
-//                    self.didRecieveHTTPResponseWithData(data, response: response, andError: error, forRequest: request)
-                    self?.didRecieveHTTPResponse(withData: nil, response: nil, andError: nil, forRequest: request)
+                    self?.didRecieveHTTPResponse(withData: data, response: response, andError: error, forRequest: request)
                 })
                 task.resume()
             case .mocking:
@@ -116,7 +115,7 @@ class WSAPICommunicator: WSAPICommunicatorProtocol {
     }
     
     /** Handles network responses and delegates control of the request. */
-    fileprivate func didRecieveHTTPResponse(withData data: Data?, response: URLResponse?, andError error: NSError?, forRequest request: WSAPIRequest) {
+    fileprivate func didRecieveHTTPResponse(withData data: Data?, response: URLResponse?, andError error: Error?, forRequest request: WSAPIRequest) {
         
 //        request.status = .recievedResponse
         
@@ -126,7 +125,10 @@ class WSAPICommunicator: WSAPICommunicatorProtocol {
             return
         }
         
-        let statusCode = (response as! HTTPURLResponse).statusCode
+        guard let statusCode = (response as? HTTPURLResponse)?.statusCode else {
+            request.delegate.request(request, didFailWithError: WSAPICommunicatorError.noResponse)
+            return
+        }
         
         // Handle error responses
         guard request.endPoint.successCodes.contains(statusCode) else {

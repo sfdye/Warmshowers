@@ -37,32 +37,32 @@ class WSSearchByLocationEndPoint: WSAPIEndPointProtocol {
             throw WSAPIEndPointError.parsingError(endPoint: name, key: nil)
         }
         
-        guard let accountsJSON = json["accounts"] as? [AnyObject] else {
+        guard let accountsJSON = json["accounts"] as? [Any] else {
             throw WSAPIEndPointError.parsingError(endPoint: name, key: "accounts")
         }
         
         // If the API has returned the maximum number of hosts, save the map tile and link it to its parent, then throw an error so that to WSLocationSearchViewController can initate loading the subtiles for this tile.
         guard accountsJSON.count < WSSearchByLocationEndPoint.MapSearchLimit else {
             
-//            do {
-//                try store.performBlockInPrivateContextAndWait({ (context) in
-//                    
-//                    let tile: WSMOMapTile = try store.newOrExisting(WSMOMapTile, withJSON: ["quad_key": quadKey], context: context)
-//                    tile.last_updated = Date()
-//                    tile.quad_key = quadKey
-//                    
-//                    // Link the map tile to its parent tile if neccessary
-//                    let index = quadKey.characters.index(quadKey.endIndex, offsetBy: -1)
-//                    let parentQuadKey = quadKey.substring(to: index)
-//                    
-//                    let predicate = NSPredicate(format: "quad_key == %@", parentQuadKey)
-//                    if let parentTile = try! store.retrieve(WSMOMapTile.self, sortBy: nil, isAscending: true, predicate: predicate, context: context).first {
-//                        tile.parent_tile = parentTile
-//                    }
-//                    
-//                    try context.save()
-//                })
-//            }
+            do {
+                try store.performBlockInPrivateContextAndWait({ (context) in
+                    
+                    let tile = try store.newOrExisting(ofClass: WSMOMapTile.self, withJSON: ["quad_key": quadKey], context: context)
+                    tile.last_updated = Date()
+                    tile.quad_key = quadKey
+                    
+                    // Link the map tile to its parent tile if neccessary
+                    let index = quadKey.characters.index(quadKey.endIndex, offsetBy: -1)
+                    let parentQuadKey = quadKey.substring(to: index)
+                    
+                    let predicate = NSPredicate(format: "quad_key == %@", parentQuadKey)
+                    if let parentTile = try! store.retrieve(objectsWithClass: WSMOMapTile.self, sortBy: nil, isAscending: true, predicate: predicate, context: context).first {
+                        tile.parent_tile = parentTile
+                    }
+                    
+                    try context.save()
+                })
+            }
             
             throw WSAPIEndPointError.reachedTileLimit
         }
@@ -70,27 +70,27 @@ class WSSearchByLocationEndPoint: WSAPIEndPointProtocol {
         do {
             try store.performBlockInPrivateContextAndWait({ (context) in
                 
-//                let tile: WSMOMapTile = try store.newOrExisting(WSMOMapTile, withJSON: ["quad_key": quadKey], context: context)
-//                tile.last_updated = Date()
-//                tile.quad_key = quadKey
-//                
-//                // Link the map tile to its parent tile if neccessary
-//                let index = quadKey.characters.index(quadKey.endIndex, offsetBy: -1)
-//                let parentQuadKey = quadKey.substring(to: index)
-//                
-//                let predicate = NSPredicate(format: "quad_key == %@", parentQuadKey)
-//                if let parentTile = try! store.retrieve(WSMOMapTile.self, sortBy: nil, isAscending: true, predicate: predicate, context: context).first {
-//                    tile.parent_tile = parentTile
-//                }
-//                
-//                var users = Set<WSMOUser>()
-//                for accountJSON in accountsJSON {
-//                    let user = try store.newOrExisting(WSMOUser.self, withJSON: accountJSON, context: context)
-//                    users.insert(user)
-//                }
-//                tile.users = users as NSSet?
-//                
-//                try context.save()
+                let tile = try store.newOrExisting(ofClass: WSMOMapTile.self, withJSON: ["quad_key": quadKey], context: context)
+                tile.last_updated = Date()
+                tile.quad_key = quadKey
+                
+                // Link the map tile to its parent tile if neccessary
+                let index = quadKey.characters.index(quadKey.endIndex, offsetBy: -1)
+                let parentQuadKey = quadKey.substring(to: index)
+                
+                let predicate = NSPredicate(format: "quad_key == %@", parentQuadKey)
+                if let parentTile = try! store.retrieve(objectsWithClass: WSMOMapTile.self, sortBy: nil, isAscending: true, predicate: predicate, context: context).first {
+                    tile.parent_tile = parentTile
+                }
+                
+                var users = Set<WSMOUser>()
+                for accountJSON in accountsJSON {
+                    let user = try store.newOrExisting(ofClass: WSMOUser.self, withJSON: accountJSON, context: context)
+                    users.insert(user)
+                }
+                tile.users = users as NSSet?
+                
+                try context.save()
             })
         }
     }

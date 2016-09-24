@@ -147,7 +147,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
         
         // Update the messages if necessary, or just reload if no updates are required
         do {
-            let messageThreads = try store.retrieve(WSMOMessageThread.self, sortBy: nil, isAscending: true, predicate: nil, context: store.managedObjectContext)
+            let messageThreads = try store.retrieve(objectsWithClass: WSMOMessageThread.self, sortBy: nil, isAscending: true, predicate: nil, context: store.managedObjectContext)
             
             var threadsNeedingUpdate = [WSMOMessageThread]()
             for thread in messageThreads {
@@ -174,7 +174,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
     /** Updates the tab bar badge with the number of unread threads. */
     func updateTabBarBadge() {
         do {
-            let messageThreads = try store.retrieve(WSMOMessageThread.self, sortBy: nil, isAscending: true, predicate: nil, context: store.managedObjectContext)
+            let messageThreads = try store.retrieve(objectsWithClass: WSMOMessageThread.self, sortBy: nil, isAscending: true, predicate: nil, context: store.managedObjectContext)
             
             var unread = 0
             for thread in messageThreads {

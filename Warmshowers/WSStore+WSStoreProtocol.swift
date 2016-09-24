@@ -29,8 +29,8 @@ extension WSStore: WSStoreProtocol {
         }
     }
     
-    func retrieve<T: NSManagedObject>(_ entityClass: T.Type, sortBy: String? = nil, isAscending: Bool = true, predicate: NSPredicate? = nil, context: NSManagedObjectContext = WSStore.sharedStore.managedObjectContext) throws -> [T] {
-            let request : NSFetchRequest<T> = T.fetchRequest() as! NSFetchRequest<T>
+    func retrieve<T: NSManagedObject>(objectsWithClass modelClass: T.Type, sortBy: String? = nil, isAscending: Bool = true, predicate: NSPredicate? = nil, context: NSManagedObjectContext = WSStore.sharedStore.managedObjectContext) throws -> [T] {
+            let request : NSFetchRequest<T> = modelClass.fetchRequest() as! NSFetchRequest<T>
             request.returnsObjectsAsFaults = false
             request.predicate = predicate
             
@@ -45,14 +45,14 @@ extension WSStore: WSStoreProtocol {
             }
     }
     
-    func newOrExisting<T: NSManagedObject>(_ entityClass: T.Type, withJSON json: AnyObject, context: NSManagedObjectContext = WSStore.sharedStore.managedObjectContext) throws -> T where T: JSONUpdateable {
+    func newOrExisting<T: NSManagedObject>(ofClass modelClass: T.Type, withJSON json: Any, context: NSManagedObjectContext) throws -> T where T : JSONUpdateable {
         do {
-            let predicate = try T.predicate(fromJSON: json)
-            if let exisitng = try retrieve(entityClass, sortBy: nil, isAscending: true, predicate: predicate, context: context).first {
+            let predicate = try modelClass.predicate(fromJSON: json)
+            if let exisitng = try retrieve(objectsWithClass: modelClass, sortBy: nil, isAscending: true, predicate: predicate, context: context).first {
                 try exisitng.update(withJSON: json)
                 return exisitng
             } else {
-                let newEntry = NSEntityDescription.insertNewObject(forEntityName: entityClass.entityName, into: context) as! T
+                let newEntry = modelClass.init(context: context)
                 try newEntry.update(withJSON: json)
                 return newEntry
             }

@@ -31,34 +31,23 @@ class WSLoginEndPoint : WSAPIEndPointProtocol {
     
     func request(_ request: WSAPIRequest, didRecieveResponseWithJSON json: Any) throws -> Any? {
         
-        guard let json = json as? [String: Any] else {
+        guard let sessionJSON = json as? [String: Any] else {
             throw WSAPIEndPointError.parsingError(endPoint: name, key: nil)
         }
         
-        guard let sessionName = json["session_name"] as? String else {
-            throw WSAPIEndPointError.parsingError(endPoint: name, key: "session_name")
-        }
-        
-        guard let sessid = json["sessid"] as? String else {
-            throw WSAPIEndPointError.parsingError(endPoint: name, key: "sessid")
-        }
-        
-        guard let token = json["token"] as? String else {
-            throw WSAPIEndPointError.parsingError(endPoint: name, key: "token")
-        }
-        
-        guard let user = json["user"] as? [String: Any] else {
+        guard let userJSON = sessionJSON["user"] as? [String: Any] else {
             throw WSAPIEndPointError.parsingError(endPoint: name, key: "user")
         }
         
-        guard let uid = user["uid"] as? Int else {
-            throw WSAPIEndPointError.parsingError(endPoint: name, key: "uid")
+        do {
+            let sessionName = try JSON.nonOptional(forKey: "session_name", fromJSON: sessionJSON, withType: String.self)
+            let sessid = try JSON.nonOptional(forKey: "sessid", fromJSON: sessionJSON, withType: String.self)
+            let sessionCookie = sessionName + "=" + sessid
+            let token = try JSON.nonOptional(forKey: "token", fromJSON: sessionJSON, withType: String.self)
+            let uid = try JSON.nonOptional(forKey: "uid", fromJSON: userJSON, withType: Int.self)
+            WSSessionState.sharedSessionState.saveSessionData(sessionCookie, token: token, uid: uid)
         }
-        
-        // Store the session data
-        let sessionCookie = sessionName + "=" + sessid
-        WSSessionState.sharedSessionState.saveSessionData(sessionCookie, token: token, uid: uid)
-        
+
         return json
     }
 }

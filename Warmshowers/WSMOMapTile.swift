@@ -11,23 +11,18 @@ import CoreData
 
 @objc(WSMOMapTile)
 class WSMOMapTile: NSManagedObject, JSONUpdateable {
-    typealias UpdateableType = WSMOMapTile
 
-    // MARK: JSONUpdateable
-    
     static var entityName: String { return "MapTile" }
+    
+    
+    // MARK: JSONUpdateable
     
     static func predicate(fromJSON json: Any) throws -> NSPredicate {
         do {
             let quad_key = try JSON.nonOptional(forKey:"quad_key", fromJSON: json, withType: String.self)
-            return NSPredicate(format: "quad_key == %@", quad_key!)
+            return NSPredicate(format: "quad_key == %@", quad_key)
         }
     }
-    
-//    static func fetchRequest() -> NSFetchRequest<UpdateableType> {
-//        let request = NSFetchRequest<UpdateableType>(entityName: entityName)
-//        return request
-//    }
     
     func update(withJSON json: Any) throws { }
     

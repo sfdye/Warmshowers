@@ -15,4 +15,5 @@ enum WSAPICommunicatorError : Error {
     case invalidImageResourceURL
     case serverError(statusCode: Int, body: String?)
     case noData
+    case noResponse
 }

@@ -32,40 +32,40 @@ class WSGetAllMessageThreadsEndPoint: WSAPIEndPointProtocol {
         do {
             try store.performBlockInPrivateContextAndWait({ (context) in
                 
-//                var threadIDs = Set<Int>()
-//                for threadJSON in threadsJSON {
-//                    let threadID = try JSON.nonOptional(forKey:"thread_id", fromJSON: threadJSON, withType: Int.self)
-//                    threadIDs.insert(threadID!)
-//                    let thread = try store.newOrExisting(WSMOMessageThread.self, withJSON: threadJSON, context: context)
-//                    
-//                    // Don't need change the message participants if they already exist
-//                    if let existingParticipants = thread.participants , existingParticipants.count == 0 {
-//                        
-//                        guard let participantsJSON = (threadJSON as? AnyObject)?["participants"] as? [AnyObject] else {
-//                            throw WSAPIEndPointError.parsingError(endPoint: self.name, key: "participants")
-//                        }
-//                        
-//                        var participants = Set<WSMOUser>()
-//                        for participantJSON in participantsJSON {
-//                            let participant = try store.newOrExisting(WSMOUser.self, withJSON: participantJSON, context: context)
-//                            participants.insert(participant)
-//                        }
-//                        thread.participants = participants
-//                    }
-//                }
+                var threadIDs = Set<Int>()
+                for threadJSON in threadsJSON {
+                    let threadID = try JSON.nonOptional(forKey:"thread_id", fromJSON: threadJSON, withType: Int.self)
+                    threadIDs.insert(threadID)
+                    let thread = try store.newOrExisting(ofClass: WSMOMessageThread.self, withJSON: threadJSON, context: context)
+                    
+                    // Don't need change the message participants if they already exist
+                    if let existingParticipants = thread.participants , existingParticipants.count == 0 {
+                        
+                        guard let participantsJSON = (threadJSON as AnyObject)["participants"] as? [Any] else {
+                            throw WSAPIEndPointError.parsingError(endPoint: self.name, key: "participants")
+                        }
+                        
+                        var participants = Set<WSMOUser>()
+                        for participantJSON in participantsJSON {
+                            let participant = try store.newOrExisting(ofClass: WSMOUser.self, withJSON: participantJSON, context: context)
+                            participants.insert(participant)
+                        }
+                        thread.participants = participants as NSSet?
+                    }
+                }
                 
-//                try context.save()
-//                
-//                // Delete all threads that are not in the json
-//                let oldMessageThreads = try store.retrieve(WSMOMessageThread.self, sortBy: nil, isAscending: true, predicate: nil, context: context)
-//                
-//                for thread in oldMessageThreads {
-//                    if !threadIDs.contains(thread.thread_id!) {
-//                        thread.managedObjectContext?.delete(thread)
-//                    }
-//                }
-//                
-//                try context.save()
+                try context.save()
+                
+                // Delete all threads that are not in the json
+                let oldMessageThreads = try store.retrieve(objectsWithClass: WSMOMessageThread.self, sortBy: nil, isAscending: true, predicate: nil, context: context)
+                
+                for thread in oldMessageThreads {
+                    if !threadIDs.contains(thread.thread_id!) {
+                        thread.managedObjectContext?.delete(thread)
+                    }
+                }
+                
+                try context.save()
             })
         }
     }

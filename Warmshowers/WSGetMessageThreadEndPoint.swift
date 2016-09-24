@@ -42,28 +42,28 @@ class WSGetMessageThreadEndPoint: WSAPIEndPointProtocol {
             try store.performBlockInPrivateContextAndWait({ (context) in
                 
                 let threadPredicate = NSPredicate(format: "p_thread_id == %d", threadID)
-                guard let thread = try? store.retrieve(WSMOMessageThread.self, sortBy: nil, isAscending: true, predicate: threadPredicate, context: context).first else {
+                guard let thread = try? store.retrieve(objectsWithClass: WSMOMessageThread.self, sortBy: nil, isAscending: true, predicate: threadPredicate, context: context).first else {
                     throw WSAPIEndPointError.noMessageThreadForMessage
                 }
                 
-//                for messageJSON in messagesJSON {
-//                    
-//                    let message = try store.newOrExisting(WSMOMessage.self, withJSON: messageJSON, context: context)
-//                    message.thread = thread
-//                    
-//                    guard let author_uid = JSON.optional(forKey: "author", fromJSON: messageJSON , withType: Int.self)  else {
-//                        throw WSAPIEndPointError.parsingError(endPoint: self.name, key: "author")
-//                    }
-//                    
-//                    let participantPredicate = NSPredicate(format: "p_uid == %d", author_uid)
-//                    guard let author = try? store.retrieve(WSMOUser.self, sortBy: nil, isAscending: true, predicate: participantPredicate, context:  context).first else {
-//                        throw WSAPIEndPointError.noAuthorForMessage
-//                    }
-//                    
-//                    message.author = author
-//                }
-//                
-//                try context.save()
+                for messageJSON in messagesJSON {
+                    
+                    let message = try store.newOrExisting(ofClass: WSMOMessage.self, withJSON: messageJSON, context: context)
+                    message.thread = thread
+                    
+                    guard let author_uid = JSON.optional(forKey: "author", fromJSON: messageJSON , withType: Int.self)  else {
+                        throw WSAPIEndPointError.parsingError(endPoint: self.name, key: "author")
+                    }
+                    
+                    let participantPredicate = NSPredicate(format: "p_uid == %d", author_uid)
+                    guard let author = try? store.retrieve(objectsWithClass: WSMOUser.self, sortBy: nil, isAscending: true, predicate: participantPredicate, context:  context).first else {
+                        throw WSAPIEndPointError.noAuthorForMessage
+                    }
+                    
+                    message.author = author
+                }
+                
+                try context.save()
             })
         }
     }

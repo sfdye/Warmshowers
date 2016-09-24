@@ -54,8 +54,9 @@ class WSLocationSearchViewController : UIViewController {
         statusLabel.text = nil
         
         // This fix removes a shadow line from the top of the toolbar.
-        toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .any, barMetrics: .default)
-        toolbar.setShadowImage(UIImage(), forToolbarPosition: .any)
+//        toolbar.backgroundColor = .clear
+//        toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .any, barMetrics: .default)
+//        toolbar.setShadowImage(UIImage(), forToolbarPosition: .any)
         
         // Ask the users permission to use location services.
         if CLLocationManager.authorizationStatus() == .notDetermined {
@@ -138,7 +139,7 @@ class WSLocationSearchViewController : UIViewController {
                 
                 // Check for a saved tile. If there is none transfer the tile to the returned tiles.
                 let predicate = NSPredicate(format: "%K like %@", "quad_key", tile.quadKey)
-                guard let storedTile = try? self.store.retrieve(WSMOMapTile.self, sortBy: nil, isAscending: true, predicate: predicate, context: self.store.managedObjectContext).first else {
+                guard let storedTile = try? self.store.retrieve(objectsWithClass: WSMOMapTile.self, sortBy: nil, isAscending: true, predicate: predicate, context: self.store.managedObjectContext).first else {
                     tiles.insert(tile)
                     parentTiles.remove(tile)
                     continue
@@ -166,7 +167,7 @@ class WSLocationSearchViewController : UIViewController {
             var storeNeedsUpdating = true
             var firstDownload = true
             let predicate = NSPredicate(format: "%K like %@", "quad_key", tile.quadKey)
-            if let storedTile = try! store.retrieve(WSMOMapTile.self, sortBy: nil, isAscending: true, predicate: predicate, context: store.managedObjectContext).first {
+            if let storedTile = try! store.retrieve(objectsWithClass: WSMOMapTile.self, sortBy: nil, isAscending: true, predicate: predicate, context: store.managedObjectContext).first {
                 storeNeedsUpdating = storedTile.needsUpdating()
                 firstDownload = storedTile.users == nil
             }
@@ -177,7 +178,7 @@ class WSLocationSearchViewController : UIViewController {
         func storedUsersForMapTile(_ tile: WSMapTile) -> Set<WSUserLocation> {
             var users = Set<WSUserLocation>()
             let predicate = NSPredicate(format: "%K like %@", "quad_key", tile.quadKey)
-            if let storedTile = try! store.retrieve(WSMOMapTile.self, sortBy: nil, isAscending: true, predicate: predicate, context: store.managedObjectContext).first {
+            if let storedTile = try! store.retrieve(objectsWithClass: WSMOMapTile.self, sortBy: nil, isAscending: true, predicate: predicate, context: store.managedObjectContext).first {
                 users = storedTile.userLocations ?? Set<WSUserLocation>()
             }
             return users

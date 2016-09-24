@@ -106,7 +106,7 @@ class WSMessageThreadTableViewController: UITableViewController {
     /** Returns the subject of a message thread given the thread ID. */
     func subjectForMessageThreadWithID(_ threadID: Int) -> String? {
         let predicate = NSPredicate(format: "p_thread_id == %d", threadID)
-        guard let thread = try? store.retrieve(WSMOMessageThread.self, sortBy: nil, isAscending: true, predicate: predicate, context: store.managedObjectContext).first else {
+        guard let thread = try? store.retrieve(objectsWithClass: WSMOMessageThread.self, sortBy: nil, isAscending: true, predicate: predicate, context: store.managedObjectContext).first else {
             return nil
         }
         return thread?.subject
@@ -148,7 +148,7 @@ class WSMessageThreadTableViewController: UITableViewController {
         
         let predicate = NSPredicate(format: "image_url LIKE %@", imageURL)
         
-        guard let participant = try? store.retrieve(WSMOUser.self, sortBy: nil, isAscending: true, predicate: predicate, context: store.managedObjectContext).first else {
+        guard let participant = try? store.retrieve(objectsWithClass: WSMOUser.self, sortBy: nil, isAscending: true, predicate: predicate, context: store.managedObjectContext).first else {
             return
         }
         
