@@ -115,6 +115,7 @@
 		E5967BB81C38C0FA0037F4B7 /* FeedbackTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967BB71C38C0FA0037F4B7 /* FeedbackTableViewCell.swift */; };
 		E5967BBB1C3922170037F4B7 /* WSMessageThreadTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967BBA1C3922170037F4B7 /* WSMessageThreadTableViewController.swift */; };
 		E5967BBD1C39BFF30037F4B7 /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5967BBC1C39BFF30037F4B7 /* MessageTableViewCell.swift */; };
+		E59C36611D9759DD003D2563 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = E59C36601D9759DD003D2563 /* Entitlements.plist */; };
 		E59FE1B41CD09F310024F354 /* AcceptType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59FE1B31CD09F310024F354 /* AcceptType.swift */; };
 		E59FE1B61CD0A0C60024F354 /* WSCreateFeedbackTableViewController+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59FE1B51CD0A0C60024F354 /* WSCreateFeedbackTableViewController+Actions.swift */; };
 		E59FE1B81CD0A5A20024F354 /* WSTokenEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59FE1B71CD0A5A20024F354 /* WSTokenEndPoint.swift */; };
@@ -364,6 +365,7 @@
 		E5967BBA1C3922170037F4B7 /* WSMessageThreadTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSMessageThreadTableViewController.swift; sourceTree = "<group>"; };
 		E5967BBC1C39BFF30037F4B7 /* MessageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
 		E598987F1C9A9B4500AFB089 /* CCHMapClusterController-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCHMapClusterController-Bridging-Header.h"; sourceTree = "<group>"; };
+		E59C36601D9759DD003D2563 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		E59FE1B31CD09F310024F354 /* AcceptType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AcceptType.swift; sourceTree = "<group>"; };
 		E59FE1B51CD0A0C60024F354 /* WSCreateFeedbackTableViewController+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSCreateFeedbackTableViewController+Actions.swift"; sourceTree = "<group>"; };
 		E59FE1B71CD0A5A20024F354 /* WSTokenEndPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSTokenEndPoint.swift; sourceTree = "<group>"; };
@@ -1198,6 +1200,7 @@
 				E5D96B001BFB1CA700AFAFEE /* Assets.xcassets */,
 				E5D96B051BFB1CA700AFAFEE /* Info.plist */,
 				E520C0C71D57CBA20094F716 /* InfoPlist.strings */,
+				E59C36601D9759DD003D2563 /* Entitlements.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1430,6 +1433,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E59C36611D9759DD003D2563 /* Entitlements.plist in Resources */,
 				E54A572B1BFD664A000843A9 /* Settings.bundle in Resources */,
 				E5D96B041BFB1CA700AFAFEE /* LaunchScreen.storyboard in Resources */,
 				E5D96B011BFB1CA700AFAFEE /* Assets.xcassets in Resources */,
@@ -1809,6 +1813,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = Warmshowers/Entitlements.plist;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -1903,6 +1908,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = Warmshowers/Entitlements.plist;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -1952,6 +1958,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_ENTITLEMENTS = Warmshowers/Entitlements.plist;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";

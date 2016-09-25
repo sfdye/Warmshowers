@@ -27,7 +27,7 @@ class WSAPICommunicator: WSAPICommunicatorProtocol {
     var session: WSSessionStateProtocol = WSSessionState.sharedSessionState
     
     var mode: WSAPICommunicatorMode
-    var logging: Bool = true
+    var logging: Bool = false
     
     var requests = Set<WSAPIRequest>()
     
