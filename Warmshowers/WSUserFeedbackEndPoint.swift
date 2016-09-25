@@ -25,7 +25,7 @@ class WSUserFeedbackEndPoint: WSAPIEndPointProtocol {
             throw WSAPIEndPointError.parsingError(endPoint: name, key: nil)
         }
         
-        guard let recommendations = json["recommendations"] as? [AnyObject] else {
+        guard let recommendations = json["recommendations"] as? [Any] else {
             throw WSAPIEndPointError.parsingError(endPoint: name, key: "recommendations")
         }
         
@@ -33,14 +33,15 @@ class WSUserFeedbackEndPoint: WSAPIEndPointProtocol {
         for recommendation in recommendations {
             
             guard
-                let recommendationJSON = recommendation["recommendation"],
-                let wsrecommendation = WSRecommendation(json: recommendationJSON! as AnyObject)
+                let json = recommendation as? [String: Any],
+                let recommendationJSON = json["recommendation"],
+                let wsrecommendation = WSRecommendation(json: recommendationJSON)
                 else {
                     throw WSAPIEndPointError.parsingError(endPoint: name, key: "recommendation")
             }
 
             feedback.append(wsrecommendation)
         }
-        return feedback as AnyObject?
+        return feedback
     }
 }

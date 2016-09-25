@@ -41,14 +41,14 @@ class WSSettingsTableViewController: UITableViewController {
             ]
         )
         sections.append(helpSection)
-        let mapSection = SettingsSection(withTitle: "Map", andCells:
-            [
-                SettingsCell(withTitle: "Routes",
-                             cellID: DisclosureCellID,
-                             andTag: 30)
-            ]
-        )
-        sections.append(mapSection)
+//        let mapSection = SettingsSection(withTitle: "Map", andCells:
+//            [
+//                SettingsCell(withTitle: "Routes",
+//                             cellID: DisclosureCellID,
+//                             andTag: 30)
+//            ]
+//        )
+//        sections.append(mapSection)
         let logoutSection = SettingsSection(withTitle: "", andCells:
             [
                 SettingsCell(withTitle: "Logout",

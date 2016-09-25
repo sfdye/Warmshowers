@@ -43,18 +43,17 @@ class WSRecommendation {
     
     init?(json: Any) {
         
-        guard let json = json as? [String: Any] else {
-            return nil
-        }
-        
-        guard let body = json["body"] as? String,
-              let date = json["field_hosting_date"] as? Int,
-              let type = json["field_guest_or_host"] as? String,
-              let rating = json["field_rating"] as? String,
-              let fullname = json["fullname"] as? String,
-              let name = json["name"] as? String,
-              let uid = json["uid"] as? Int,
-              let uid_1 = json["uid_1"] as? Int
+        let json = json as AnyObject
+
+        guard
+            let body = json.value(forKey: "body") as? String,
+            let date = json.value(forKey: "field_hosting_date") as? Int,
+            let type = json.value(forKey: "field_guest_or_host") as? String,
+            let rating = json.value(forKey: "field_rating") as? String,
+            let fullname = json.value(forKey: "fullname") as? String,
+            let name = json.value(forKey: "name") as? String,
+            let uid = Int(json.value(forKey: "uid") as? String ?? ""),
+            let uid_1 = Int(json.value(forKey: "uid_1") as? String ?? "")
         else {
             return nil
         }
