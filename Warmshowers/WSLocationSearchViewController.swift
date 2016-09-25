@@ -208,7 +208,7 @@ class WSLocationSearchViewController : UIViewController {
 //            print("Updating online.")
             if !downloadsInProgress.contains(tile) {
                 downloadWillStartForMapTile(tile)
-                api.contactEndPoint(.SearchByLocation, withPathParameters: nil, andData: tile, thenNotify: self)
+                api.contact(endPoint: .SearchByLocation, withPathParameters: nil, andData: tile, thenNotify: self)
             }
         } else {
 //            print("Loading from the store.")

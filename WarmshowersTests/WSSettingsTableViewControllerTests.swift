@@ -23,7 +23,7 @@ class WSSettingsTableViewControllerTests: XCTestCase {
     override func setUp() {
         super.setUp()
         // Load the view controller
-        settingsTableViewController = storyboard.instantiateViewControllerWithIdentifier(storyboardID) as? WSSettingsTableViewController
+        settingsTableViewController = storyboard.instantiateViewController(withIdentifier: storyboardID) as? WSSettingsTableViewController
         XCTAssertNotNil(settingsTableViewController, "Failed to instantiate with storyboard ID: \(storyboardID).")
         
         // Initialise mocks

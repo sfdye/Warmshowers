@@ -16,7 +16,7 @@ extension WSLoginViewController : WSAPIResponseDelegate {
             WSProgressHUD.hide()
             let username = usernameTextField.text, password = passwordTextField.text
             do {
-                try session.savePassword(password!, forUsername: username!)
+                try session.save(password: password!, forUsername: username!)
                 navigation.showMainApp()
             } catch {
                 print(error)
@@ -25,7 +25,7 @@ extension WSLoginViewController : WSAPIResponseDelegate {
             }
         } else {
             // Recieved login response: request a token
-            api.contactEndPoint(.Token, withPathParameters: nil, andData: nil, thenNotify: self)
+            api.contact(endPoint: .Token, withPathParameters: nil, andData: nil, thenNotify: self)
         }
     }
     

@@ -29,6 +29,16 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       codeCoverageEnabled = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "E5D96B091BFB1CA700AFAFEE"
+               BuildableName = "WarmshowersTests.xctest"
+               BlueprintName = "WarmshowersTests"
+               ReferencedContainer = "container:Warmshowers.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

@@ -22,7 +22,7 @@ class WSCreateFeedbackTableViewControllerTests: XCTestCase {
     override func setUp() {
         super.setUp()
         // Load the view controller
-        createFeedbackViewController = storyboard.instantiateViewControllerWithIdentifier(storyboardID) as? WSCreateFeedbackTableViewController
+        createFeedbackViewController = storyboard.instantiateViewController(withIdentifier: storyboardID) as? WSCreateFeedbackTableViewController
         XCTAssertNotNil(createFeedbackViewController, "Failed to instantiate with storyboard ID: \(storyboardID).")
         
         // Initialise mocks
@@ -43,8 +43,8 @@ class WSCreateFeedbackTableViewControllerTests: XCTestCase {
     
     func testRecommendedUserNameGuard() {
         // given
-        createFeedbackViewController?.feedback.recommendedUserName = nil
-        createFeedbackViewController?.feedback.body = "test"
+        createFeedbackViewController?.recommendation.recommendedUserName = nil
+        createFeedbackViewController?.recommendation.body = "test"
         
         // when - feedback is submitted with no recommended user name
         createFeedbackViewController?.sumbitButtonPressed(nil)
@@ -55,8 +55,8 @@ class WSCreateFeedbackTableViewControllerTests: XCTestCase {
     
     func testFeedbackBodyGuard() {
         // given
-        createFeedbackViewController?.feedback.recommendedUserName = "bob"
-        createFeedbackViewController?.feedback.body = nil
+        createFeedbackViewController?.recommendation.recommendedUserName = "bob"
+        createFeedbackViewController?.recommendation.body = nil
         
         // when - feedback is submitted with no recommended user name
         createFeedbackViewController?.sumbitButtonPressed(nil)
@@ -67,14 +67,15 @@ class WSCreateFeedbackTableViewControllerTests: XCTestCase {
     
     func testSubmitFeedback() {
         // given
-        createFeedbackViewController?.feedback.recommendedUserName = "bob"
-        createFeedbackViewController?.feedback.body = "feedback"
+        createFeedbackViewController?.recommendation.recommendedUserName = "bob"
+        createFeedbackViewController?.recommendation.body = "feedback"
         
         // when - feedback is submitted with no recommended user name
         createFeedbackViewController?.sumbitButtonPressed(nil)
         
         // then
-        XCTAssertTrue(mockAPICommunicator!.createFeedbackCalled, "API not contacted when the create feedback button was pressed.")
+        XCTAssertTrue(mockAPICommunicator!.contactEndPointCalled, "API not contacted when the create feedback button was pressed.")
+        XCTAssertEqual(mockAPICommunicator.contactedEndPoint, .CreateFeedback, "Wrong end point contacted for login.")
     }
 
 }

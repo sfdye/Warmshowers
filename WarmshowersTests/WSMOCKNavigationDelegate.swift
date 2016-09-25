@@ -17,6 +17,7 @@ class WSMOCKNavigationDelegate : WSNavigationProtocol {
     var openWarmshowersSignUpPageCalled = false
     var openWarmshowersFAQPageCalled = false
     var openFeedbackEmailCalled = false
+    var handleShortcutItemCalled = false
     
     func showLoginScreen() {
         showMainAppCalled = true
@@ -40,5 +41,9 @@ class WSMOCKNavigationDelegate : WSNavigationProtocol {
     
     func openFeedbackEmail() {
         openFeedbackEmailCalled = true
+    }
+    
+    func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem, withCompletionHandler completionHandler: (Bool) -> Void) {
+        handleShortcutItemCalled = true
     }
 }

@@ -11,7 +11,7 @@ import XCTest
 
 class WSHostSearchViewControllerTests: XCTestCase {
     
-    let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+    let storyboard = UIStoryboard.init(name: "HostSearch", bundle: nil)
     let storyboardID = SBID_HostSearch
     
     // Test objects
@@ -20,12 +20,12 @@ class WSHostSearchViewControllerTests: XCTestCase {
     var mockNavigationDelegate: WSMOCKNavigationDelegate!
     var mockAPICommunicator: WSMOCKAPICommunicator!
     var mockAlertDelegate: WSMOCKAlertDelegate!
-    let request = WSAPIRequest(endPoint: .Login, withDelegate: WSAPICommunicator.sharedAPICommunicator, andRequester: nil)
+    let request = WSAPIRequest(endPoint: WSAPIEndPoint.Login.instance, withDelegate: WSAPICommunicator.sharedAPICommunicator, requester: nil)
     
     override func setUp() {
         super.setUp()
         // Load the view controller
-        hostSearchViewController = storyboard.instantiateViewControllerWithIdentifier(storyboardID) as? WSHostSearchViewController
+        hostSearchViewController = storyboard.instantiateViewController(withIdentifier: storyboardID) as? WSHostSearchViewController
         XCTAssertNotNil(hostSearchViewController, "Failed to instantiate with storyboard ID: \(storyboardID).")
         
         // Initialise mocks

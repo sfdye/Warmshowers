@@ -37,7 +37,7 @@ extension WSLoginViewController {
         
         // Login
         let loginData = WSLoginData(username: username, password: password)
-        api.contactEndPoint(.Login, withPathParameters: nil, andData: loginData, thenNotify: self)
+        api.contact(endPoint: .Login, withPathParameters: nil, andData: loginData, thenNotify: self)
     }
     
     /**

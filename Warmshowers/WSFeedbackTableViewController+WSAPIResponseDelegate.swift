@@ -19,7 +19,7 @@ extension WSFeedbackTableViewController: WSAPIResponseDelegate {
                     let url = (data as! WSUser).profileImageURL ?? ""
                     setAuthorImageURL(url, forHostWithUID: uid)
                     // Download the authors profile image.
-                    api.contactEndPoint(.ImageResource, withPathParameters: url as NSString, andData: nil, thenNotify: self)
+                    api.contact(endPoint: .ImageResource, withPathParameters: url as NSString, andData: nil, thenNotify: self)
                 }
             }
         case .ImageResource:

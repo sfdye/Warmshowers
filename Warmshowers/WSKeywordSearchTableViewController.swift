@@ -40,14 +40,14 @@ class WSKeywordSearchTableViewController: UITableViewController {
         
         debounceTimer = nil
         let searchData = WSKeywordSearchData(keyword: keyword)
-        api.contactEndPoint(.SearchByKeyword, withPathParameters: nil, andData: searchData, thenNotify: self)
+        api.contact(endPoint: .SearchByKeyword, withPathParameters: nil, andData: searchData, thenNotify: self)
     }
     
     func startImageDownloadForIndexPath(_ indexPath: IndexPath) {
         guard let hosts = hosts , (indexPath as NSIndexPath).row < numberOfHosts else { return }
         let user = hosts[(indexPath as NSIndexPath).row]
         if let url = user.imageURL , user.image == nil {
-            api.contactEndPoint(.ImageResource, withPathParameters: url as NSString, andData: nil, thenNotify: self)
+            api.contact(endPoint: .ImageResource, withPathParameters: url as NSString, andData: nil, thenNotify: self)
         }
     }
     

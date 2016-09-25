@@ -36,10 +36,10 @@ class WSFeedbackTableViewController: UITableViewController {
         let recommendation = feedback[(indexPath as NSIndexPath).row]
         guard recommendation.authorImage == nil else { return }
         if let url = recommendation.authorImageURL {
-            api.contactEndPoint(.ImageResource, withPathParameters: url as NSString, andData: nil, thenNotify: self)
+            api.contact(endPoint: .ImageResource, withPathParameters: url as NSString, andData: nil, thenNotify: self)
         } else if let uid = recommendation.author?.uid {
             // We first need to get the image URL from the authors profile.
-            api.contactEndPoint(.UserInfo, withPathParameters: String(uid) as NSString, andData: nil, thenNotify: self)
+            api.contact(endPoint: .UserInfo, withPathParameters: String(uid) as NSString, andData: nil, thenNotify: self)
         }
     }
     

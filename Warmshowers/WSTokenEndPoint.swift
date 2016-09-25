@@ -21,7 +21,7 @@ class WSTokenEndPoint : WSAPIEndPointProtocol {
     }
     
     func request(_ request: WSAPIRequest, didRecieveResponseWithText text: String) throws -> Any? {
-        WSSessionState.sharedSessionState.setToken(text)
+        WSSessionState.sharedSessionState.set(token: text)
         return text
     }
     

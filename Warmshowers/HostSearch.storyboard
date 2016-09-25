@@ -15,7 +15,7 @@
         <!--Host Search-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
-                <viewController storyboardIdentifier="HostSearch" title="Host Search" definesPresentationContext="YES" id="9pv-A4-QxB" customClass="WSHostSearchViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HostSearchView" title="Host Search" definesPresentationContext="YES" id="9pv-A4-QxB" customClass="WSHostSearchViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="eue-pw-TMU"/>
                         <viewControllerLayoutGuide type="bottom" id="pLQ-OG-6LL"/>

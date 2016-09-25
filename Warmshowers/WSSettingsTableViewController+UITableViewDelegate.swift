@@ -24,7 +24,7 @@ extension WSSettingsTableViewController {
                 performSegue(withIdentifier: SID_SettingsToRoutes, sender: nil)
             case 40:
                 WSProgressHUD.show("Logging out ...")
-                api.contactEndPoint(.Logout, withPathParameters: nil, andData: nil, thenNotify: self)
+                api.contact(endPoint: .Logout, withPathParameters: nil, andData: nil, thenNotify: self)
             case 50:
                 WSProgressHUD.show("Deleting data ...")
                 do {

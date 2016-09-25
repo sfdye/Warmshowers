@@ -12,7 +12,7 @@ extension WSHostSearchViewController: WSHostSearchNavigationDelegate {
     
     func showUserProfileForHostWithUID(_ uid: Int) {
         WSProgressHUD.show(nil)
-        api.contactEndPoint(.UserInfo, withPathParameters: String(uid) as NSString, andData: nil, thenNotify: self)
+        api.contact(endPoint: .UserInfo, withPathParameters: String(uid) as NSString, andData: nil, thenNotify: self)
     }
     
     func showHostListWithHosts(_ hosts: [WSUserLocation]) {

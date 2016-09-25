@@ -31,7 +31,7 @@ extension WSAccountTableViewController: WSAPIResponseDelegate {
                 self?.tableView.reloadRows(at: [indexPath], with: .automatic)
                 })
         case .Logout:
-            session.didLogoutFromView(self)
+            session.didLogout(fromViewContoller: self)
         default:
             break
         }
@@ -46,7 +46,7 @@ extension WSAccountTableViewController: WSAPIResponseDelegate {
                 case .serverError(let statusCode, _):
                     if statusCode == 406 {
                         // 406: user already logged out.
-                        session.didLogoutFromView(self)
+                        session.didLogout(fromViewContoller: self)
                     }
                 default:
                     break

@@ -62,13 +62,13 @@ class WSAccountTableViewController: UITableViewController {
         
         // Get the users profile image if they have one.
         if user?.profileImage == nil && user?.profileImageURL != nil {
-            api.contactEndPoint(.ImageResource, withPathParameters: user?.profileImageURL, andData: nil, thenNotify: self)
+            api.contact(endPoint: .ImageResource, withPathParameters: user?.profileImageURL, andData: nil, thenNotify: self)
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         // Download the users feedback.
-        api.contactEndPoint(.UserFeedback, withPathParameters: String(user!.uid) as NSString, andData: nil, thenNotify: self)
+        api.contact(endPoint: .UserFeedback, withPathParameters: String(user!.uid) as NSString, andData: nil, thenNotify: self)
     }
 
     
@@ -96,7 +96,7 @@ class WSAccountTableViewController: UITableViewController {
             
             let logoutAction = UIAlertAction(title: "Logout", style: .default) { (logoutAction) -> Void in
                 // Logout and return the login screeen.
-                self.api.contactEndPoint(.Logout, withPathParameters: nil, andData: nil, thenNotify: self)
+                self.api.contact(endPoint: .Logout, withPathParameters: nil, andData: nil, thenNotify: self)
                 WSProgressHUD.show(self.navigationController!.view, label: "Logging out ...")
             }
             actionAlert.addAction(logoutAction)

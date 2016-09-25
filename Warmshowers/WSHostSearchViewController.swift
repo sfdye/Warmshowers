@@ -12,6 +12,7 @@ import MapKit
 import CCHMapClusterController
 
 let SID_SearchViewToUserAccount = "SearchViewToUserAccount"
+let SBID_HostSearch = "HostSearchView"
 let SBID_LocationSearchView = "LocationSearchView"
 let SBID_KeywordSearchView = "KeywordSearchView"
 

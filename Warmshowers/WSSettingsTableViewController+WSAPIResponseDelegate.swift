@@ -17,7 +17,7 @@ extension WSSettingsTableViewController : WSAPIResponseDelegate {
     func request(_ request: WSAPIRequest, didSuceedWithData data: Any?) {
         switch request.endPoint.type {
         case .Logout:
-            session.didLogoutFromView(self)
+            session.didLogout(fromViewContoller: self)
         default:
             break
         }
@@ -32,7 +32,7 @@ extension WSSettingsTableViewController : WSAPIResponseDelegate {
                 case .serverError(let statusCode, _):
                     if statusCode == 406 {
                         // 406: user already logged out.
-                        session.didLogoutFromView(self)
+                        session.didLogout(fromViewContoller: self)
                     }
                 default:
                     break

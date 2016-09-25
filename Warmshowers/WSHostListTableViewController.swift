@@ -54,7 +54,7 @@ class WSHostListTableViewController: UITableViewController {
         
         let user = hosts[(indexPath as NSIndexPath).row]
         if let url = user.imageURL , user.image == nil {
-            api.contactEndPoint(.ImageResource, withPathParameters: url, andData: nil, thenNotify: self)
+            api.contact(endPoint: .ImageResource, withPathParameters: url, andData: nil, thenNotify: self)
         }
     }
     
@@ -88,7 +88,7 @@ class WSHostListTableViewController: UITableViewController {
     /** Initiates a download of a users profile. */
     func showUserProfileForHostWithUID(_ uid: Int) {
         WSProgressHUD.show(navigationController!.view, label: nil)
-        api.contactEndPoint(.UserInfo, withPathParameters: String(uid) as NSString, andData: nil, thenNotify: self)
+        api.contact(endPoint: .UserInfo, withPathParameters: String(uid) as NSString, andData: nil, thenNotify: self)
     }  
     
 }

@@ -20,12 +20,12 @@ class WSLoginViewControllerTests: XCTestCase {
     var mockNavigationDelegate: WSMOCKNavigationDelegate!
     var mockAPICommunicator: WSMOCKAPICommunicator!
     var mockAlertDelegate: WSMOCKAlertDelegate!
-    let request = WSAPIRequest(endPoint: .Login, withDelegate: WSAPICommunicator.sharedAPICommunicator, andRequester: nil)
+    let request = WSAPIRequest(endPoint: WSAPIEndPoint.Login.instance, withDelegate: WSAPICommunicator.sharedAPICommunicator, requester: nil)
     
     override func setUp() {
         super.setUp()
         // Load the view controller
-        loginViewController = storyboard.instantiateViewControllerWithIdentifier(storyboardID) as? WSLoginViewController
+        loginViewController = storyboard.instantiateViewController(withIdentifier: storyboardID) as? WSLoginViewController
         XCTAssertNotNil(loginViewController, "Failed to instantiate with storyboard ID: \(storyboardID).")
         
         // Initialise mocks
@@ -71,7 +71,8 @@ class WSLoginViewControllerTests: XCTestCase {
         loginViewController?.loginButton(UIButton())
         
         // then
-        XCTAssertFalse(mockAPICommunicator!.loginCalled, "Login request allowed with no username.")
+        XCTAssertFalse(mockAPICommunicator!.contactEndPointCalled, "Login request allowed with no username.")
+        XCTAssertNil(mockAPICommunicator.contactedEndPoint, "API should not be contacted if the input checking fail.")
         XCTAssertTrue(mockAlertDelegate!.presentAlertCalled, "User not alerted when no password was provided at login.")
     }
     
@@ -85,7 +86,8 @@ class WSLoginViewControllerTests: XCTestCase {
         loginViewController?.loginButton(UIButton())
         
         // then
-        XCTAssertFalse(mockAPICommunicator!.loginCalled, "Login request allowed with no password.")
+        XCTAssertFalse(mockAPICommunicator!.contactEndPointCalled, "Login request allowed with no password.")
+        XCTAssertNil(mockAPICommunicator.contactedEndPoint, "API should not be contacted if the input checking fail.")
         XCTAssertTrue(mockAlertDelegate!.presentAlertCalled, "User not alerted when no username was provided at login.")
     }
     
@@ -99,7 +101,8 @@ class WSLoginViewControllerTests: XCTestCase {
         loginViewController?.loginButton(UIButton())
         
         // then
-        XCTAssertTrue(mockAPICommunicator!.loginCalled, "API not contacted when the login button was pressed.")
+        XCTAssertTrue(mockAPICommunicator!.contactEndPointCalled, "API not contacted when the login button was pressed.")
+        XCTAssertEqual(mockAPICommunicator.contactedEndPoint, .Login, "Wrong end point contacted for login.")
     }
     
     func testCreateAccountButton() {
@@ -120,7 +123,8 @@ class WSLoginViewControllerTests: XCTestCase {
         loginViewController?.request(request, didSuceedWithData: nil)
         
         // then
-        XCTAssertTrue(mockAPICommunicator!.getTokenCalled, "API not contacted with a token request after a successful login.")
+        XCTAssertTrue(mockAPICommunicator!.contactEndPointCalled, "API not contacted with a token request after a successful login.")
+        XCTAssertEqual(mockAPICommunicator.contactedEndPoint, .Token, "Wrong end point contacted for tokens.")
         
         // when
         loginViewController?.request(request, didSuceedWithData: "mock token string")
@@ -135,7 +139,7 @@ class WSLoginViewControllerTests: XCTestCase {
         _ = loginViewController?.view
         
         // when
-        loginViewController?.request(request, didFailWithError: WSAPICommunicatorError.NoData)
+        loginViewController?.request(request, didFailWithError: WSAPICommunicatorError.noData)
         
         // then
         XCTAssertTrue(mockAlertDelegate!.presentAlertCalled, "Alert delegate not notified on API error response.")

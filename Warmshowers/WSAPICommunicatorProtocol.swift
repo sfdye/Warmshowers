@@ -9,5 +9,5 @@
 import Foundation
 
 protocol WSAPICommunicatorProtocol {
-    func contactEndPoint(_ endPoint: WSAPIEndPoint, withPathParameters parameters: Any?, andData data: Any?, thenNotify requester: WSAPIResponseDelegate)
+    func contact(endPoint: WSAPIEndPoint, withPathParameters parameters: Any?, andData data: Any?, thenNotify requester: WSAPIResponseDelegate)
 }

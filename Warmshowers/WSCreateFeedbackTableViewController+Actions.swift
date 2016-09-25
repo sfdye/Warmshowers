@@ -44,7 +44,7 @@ extension WSCreateFeedbackTableViewController {
         }
         
         // Submit the feedback
-        WSProgressHUD.show(navigationController!.view, label: "Submitting feedback ...")
-        api?.contactEndPoint(.CreateFeedback, withPathParameters: nil, andData: recommendation, thenNotify: self)
+        WSProgressHUD.show(navigationController?.view, label: "Submitting feedback ...")
+        api?.contact(endPoint: .CreateFeedback, withPathParameters: nil, andData: recommendation, thenNotify: self)
     }
 }

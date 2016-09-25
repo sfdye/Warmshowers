@@ -16,9 +16,9 @@ import Foundation
     
     extension WSLoginEndPoint {
         
-        func generateMockResponseForURLRequest(urlRequest: NSMutableURLRequest) -> (NSData?, NSURLResponse?, NSError?) {
+        func generateMockResponseForURLRequest(urlRequest: NSMutableURLRequest) -> (NSData?, URLResponse?, NSError?) {
             let (data, response, error) = WSMockNetworkResponse.networkResponseFromFixture()
-            return (data, response, error)
+            return (data as NSData?, response, error)
         }
     }
 #endif

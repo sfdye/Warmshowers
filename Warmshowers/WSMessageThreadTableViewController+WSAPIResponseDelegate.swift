@@ -44,7 +44,7 @@ extension WSMessageThreadTableViewController: WSAPIResponseDelegate {
                 user?.image_url = url
                 do {
                     try store.managedObjectContext.save()
-                    api.contactEndPoint(.ImageResource, withPathParameters: url as NSString, andData: nil, thenNotify: self)
+                    api.contact(endPoint: .ImageResource, withPathParameters: url as NSString, andData: nil, thenNotify: self)
                 } catch {
                     // Not a big deal. The author profile image won't be downloaded.
                 }

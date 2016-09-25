@@ -124,7 +124,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
     
     func update() {
         WSProgressHUD.show("Updating messages ...")
-        api.contactEndPoint(.GetAllMessageThreads, withPathParameters: nil, andData: nil, thenNotify: self)
+        api.contact(endPoint: .GetAllMessageThreads, withPathParameters: nil, andData: nil, thenNotify: self)
     }
     
     /** Called after and update once all API requests have responded. */
@@ -163,7 +163,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
             
             for thread in threadsNeedingUpdate {
                 guard let threadID = thread.thread_id else { continue }
-                api.contactEndPoint(.GetMessageThread, withPathParameters: nil, andData: threadID, thenNotify: self)
+                api.contact(endPoint: .GetMessageThread, withPathParameters: nil, andData: threadID, thenNotify: self)
                 downloadsInProgress.insert(threadID)
             }
         } catch let error as NSError {

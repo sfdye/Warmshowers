@@ -37,13 +37,13 @@ extension WSComposeMessageViewController {
             }
             
             let reply = WSReplyMessageData(threadID: threadID, body: body)
-            api.contactEndPoint(.ReplyToMessage, withPathParameters: nil, andData: reply, thenNotify: self)
+            api.contact(endPoint: .ReplyToMessage, withPathParameters: nil, andData: reply, thenNotify: self)
             
         } else {
             
             let recipientsString = recipientStringForRecipients(recipients)
             let message = WSNewMessageData(recipientsString: recipientsString, subject: subject, body: body)
-            api.contactEndPoint(.NewMessage, withPathParameters: nil, andData: message, thenNotify: self)
+            api.contact(endPoint: .NewMessage, withPathParameters: nil, andData: message, thenNotify: self)
         }
         
         // Show the spinner

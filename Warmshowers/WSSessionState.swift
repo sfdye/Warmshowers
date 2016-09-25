@@ -25,7 +25,7 @@ class WSSessionState : WSSessionStateProtocol {
     var alert: WSAlertProtocol = WSAlertDelegate.sharedAlertDelegate
     
     
-    func setUsername(_ username: String) {
+    func set(username: String) {
         defaults.setValue(username, forKey: WSUserDefaultsKeys.UsernameKey)
         defaults.synchronize()
     }
@@ -33,14 +33,14 @@ class WSSessionState : WSSessionStateProtocol {
     /** 
      Saves a users username and password. The password is saved securely in the users keychain, while the username is store in the the NSUserDefaults.
      */
-    func savePassword(_ password: String, forUsername username: String) throws {
+    func save(password: String, forUsername username: String) throws {
         do {
             try keychain.set(password, key: username)
-            setUsername(username)
+            set(username: username)
         }
     }
     
-    func saveSessionData(_ sessionCookie: String, token: String, uid: Int) {
+    func save(sessionCookie: String, token: String, andUID uid: Int) {
         defaults.setValue(sessionCookie, forKey: WSUserDefaultsKeys.SessionCookieKey)
         defaults.setValue(token, forKey: WSUserDefaultsKeys.TokenKey)
         defaults.setValue(uid, forKey: WSUserDefaultsKeys.UIDKey)
@@ -61,7 +61,7 @@ class WSSessionState : WSSessionStateProtocol {
         defaults.synchronize()
     }
     
-    func setToken(_ token: String) {
+    func set(token: String) {
         defaults.setValue(token, forKey: WSUserDefaultsKeys.TokenKey)
         defaults.synchronize()
     }
@@ -70,15 +70,15 @@ class WSSessionState : WSSessionStateProtocol {
         return defaults.object(forKey: WSUserDefaultsKeys.SessionCookieKey) != nil
     }
     
-    func didLogoutFromView(_ viewContoller: UIViewController?) {
+    func didLogout(fromViewContoller viewController: UIViewController?) {
         do {
             deleteSessionData()
             try store.clearout()
             navigation.showLoginScreen()
         } catch {
             // Suggest that the user delete the app for privacy.
-            guard let viewContoller = viewContoller else { return }
-            alert.presentAlertFor(viewContoller, withTitle: "Data Error", button: "OK", message: "Sorry, an error occured while removing your account data from this iPhone. If you would like to remove your Warmshowers messages from this iPhone please try deleting the Warmshowers app.", andHandler: { [weak self] (action) in
+            guard let viewController = viewController else { return }
+            alert.presentAlertFor(viewController, withTitle: "Data Error", button: "OK", message: "Sorry, an error occured while removing your account data from this iPhone. If you would like to remove your Warmshowers messages from this iPhone please try deleting the Warmshowers app.", andHandler: { [weak self] (action) in
                 self?.navigation.showLoginScreen()
                 })
         }

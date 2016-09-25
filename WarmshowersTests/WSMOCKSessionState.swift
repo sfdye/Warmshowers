@@ -6,7 +6,7 @@
 //  Copyright © 2016 Rajan Fernandez. All rights reserved.
 //
 
-import Foundation
+import UIKit
 @testable import Warmshowers
 
 class WSMOCKSessionState : WSSessionStateProtocol {
@@ -19,6 +19,7 @@ class WSMOCKSessionState : WSSessionStateProtocol {
     var deleteSessionDataCalled = false
     var setTokenCalled = false
     var isLoggedInReturned = false
+    var didLogoutCalled = false
     
     var uid: Int? {
         get {
@@ -34,15 +35,15 @@ class WSMOCKSessionState : WSSessionStateProtocol {
         }
     }
 
-    func setUsername(_ username: String) {
+    func set(username: String) {
         setUsernameCalled = true
     }
     
-    func savePassword(_ password: String, forUsername username: String) throws {
+    func save(password: String, forUsername username: String) throws {
         savePasswordForUsernameCalled = true
     }
     
-    func saveSessionData(_ sessionCookie: String, token: String, uid: Int) {
+    func save(sessionCookie: String, token: String, andUID uid: Int) {
         saveSessionDataCalled = true
     }
     
@@ -50,7 +51,7 @@ class WSMOCKSessionState : WSSessionStateProtocol {
         deleteSessionDataCalled = true
     }
     
-    func setToken(_ token: String) {
+    func set(token: String) {
         setTokenCalled = true
     }
     
@@ -59,6 +60,10 @@ class WSMOCKSessionState : WSSessionStateProtocol {
             isLoggedInReturned = true
             return true
         }
+    }
+    
+    func didLogout(fromViewContoller viewController: UIViewController?) {
+        didLogoutCalled = true
     }
 
 }

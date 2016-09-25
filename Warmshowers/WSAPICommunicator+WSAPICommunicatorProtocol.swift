@@ -21,7 +21,7 @@ extension WSAPICommunicator {
         params["node[field_hosting_date][0][value][year]"] = String(feedback.year)
         params["node[field_hosting_date][0][value][month]"] = String(feedback.month)
         
-        contactEndPoint(.CreateFeedback, withPathParameters: params, thenNotify: requester)
+        contact(endPoint: .CreateFeedback, withPathParameters: params, thenNotify: requester)
     }
     
     func sendNewMessageToRecipients(_ recipients: [WSMOUser], withSubject subject: String, andMessageBody body: String, thenNotify requester: WSAPIResponseDelegate) {

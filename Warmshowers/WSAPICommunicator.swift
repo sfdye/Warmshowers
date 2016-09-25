@@ -50,7 +50,7 @@ class WSAPICommunicator: WSAPICommunicatorProtocol {
     }
     
     /** Creates and executes a request for the given end point with the given data. */
-    func contactEndPoint(_ endPoint: WSAPIEndPoint, withPathParameters parameters: Any? = nil, andData data: Any? = nil, thenNotify requester: WSAPIResponseDelegate) {
+    func contact(endPoint: WSAPIEndPoint, withPathParameters parameters: Any? = nil, andData data: Any? = nil, thenNotify requester: WSAPIResponseDelegate) {
         
         let request = WSAPIRequest(endPoint: endPoint.instance, withDelegate: self, requester: requester, data: data, andParameters: parameters)
         
@@ -135,7 +135,7 @@ class WSAPICommunicator: WSAPICommunicatorProtocol {
             
             // The user is unauthorized and must log in again.
             if statusCode == 403 {
-                session.didLogoutFromView(nil)
+                session.didLogout(fromViewContoller: nil)
             }
             
             var error: WSAPICommunicatorError

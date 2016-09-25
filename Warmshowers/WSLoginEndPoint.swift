@@ -45,7 +45,7 @@ class WSLoginEndPoint : WSAPIEndPointProtocol {
             let sessionCookie = sessionName + "=" + sessid
             let token = try JSON.nonOptional(forKey: "token", fromJSON: sessionJSON, withType: String.self)
             let uid = try JSON.nonOptional(forKey: "uid", fromJSON: userJSON, withType: Int.self)
-            WSSessionState.sharedSessionState.saveSessionData(sessionCookie, token: token, uid: uid)
+            WSSessionState.sharedSessionState.save(sessionCookie: sessionCookie, token: token, andUID: uid)
         }
 
         return json
