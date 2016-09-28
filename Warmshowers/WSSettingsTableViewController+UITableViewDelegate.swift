@@ -15,9 +15,11 @@ extension WSSettingsTableViewController {
         if let cell = tableView.cellForRow(at: indexPath){
             switch cell.tag {
             case 10:
-                navigation.openWarmshowersHomePage()
+                let url = URL(string: "https://www.warmshowers.org")!
+                navigation.open(url: url, fromViewController: self)
             case 11:
-                navigation.openWarmshowersFAQPage()
+                let url = URL(string: "https://www.warmshowers.org/faq")!
+                navigation.open(url: url, fromViewController: self)
             case 20:
                 navigation.openFeedbackEmail()
             case 30:

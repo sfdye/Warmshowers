@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import SafariServices
 
 class WSNavigationDelegate : WSNavigationProtocol {
     
     static let sharedNavigationDelegate = WSNavigationDelegate()
     
     let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+    let loginStoryboard: UIStoryboard = UIStoryboard(name: "Login", bundle: nil)
     
     var appDelegate: AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
@@ -20,30 +22,23 @@ class WSNavigationDelegate : WSNavigationProtocol {
     
     func showLoginScreen() {
         DispatchQueue.main.async { [unowned self] in
-            let loginViewController = self.mainStoryboard.instantiateViewController(withIdentifier: SBID_Login)
+            let loginViewController = self.loginStoryboard.instantiateInitialViewController()
             self.appDelegate.window?.rootViewController = loginViewController
         }
     }
     
     func showMainApp() {
         DispatchQueue.main.async { [unowned self] in
-            self.appDelegate.window?.rootViewController = self.mainStoryboard.instantiateInitialViewController()
+            let tabViewController = self.mainStoryboard.instantiateInitialViewController()
+            self.appDelegate.window?.rootViewController = tabViewController
         }
     }
     
-    func openWarmshowersHomePage() {
-        let url = URL(string: "https://www.warmshowers.org")!
-        UIApplication.shared.open(url, options: [String : Any](), completionHandler: nil)
-    }
-    
-    func openWarmshowersSignUpPage() {
-        let url = URL(string: "https://www.warmshowers.org/user/register")!
-        UIApplication.shared.open(url, options: [String : Any](), completionHandler: nil)
-    }
-    
-    func openWarmshowersFAQPage() {
-        let url = URL(string: "https://www.warmshowers.org/faq")!
-        UIApplication.shared.open(url, options: [String : Any](), completionHandler: nil)
+    func open(url: URL, fromViewController viewController: UIViewController) {
+        let svc = SFSafariViewController(url: url)
+        svc.preferredBarTintColor = .white
+        svc.preferredControlTintColor = WSColor.Blue
+        viewController.present(svc, animated: true, completion: nil)
     }
     
     func openFeedbackEmail() {

@@ -16,6 +16,8 @@
 		E51397671C06945E00FD8EC1 /* WSUserLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51397661C06945E00FD8EC1 /* WSUserLocation.swift */; };
 		E520C0C61D57C9C20094F716 /* ShortcutIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E520C0C51D57C9C20094F716 /* ShortcutIdentifier.swift */; };
 		E520C0C81D57CBA20094F716 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E520C0C71D57CBA20094F716 /* InfoPlist.strings */; };
+		E521011E1D9BAE6400AE8854 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E521011D1D9BAE6400AE8854 /* Login.storyboard */; };
+		E52101201D9BAFBA00AE8854 /* WSLoginViewController+WSAPIResponseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E521011F1D9BAFBA00AE8854 /* WSLoginViewController+WSAPIResponseDelegate.swift */; };
 		E52A07271C580B1C006F80A5 /* WSComposeMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52A07261C580B1C006F80A5 /* WSComposeMessageViewController.swift */; };
 		E52B35711D36CC0A00DD0F44 /* WSPhoneNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52B35701D36CC0A00DD0F44 /* WSPhoneNumber.swift */; };
 		E52B35751D36CF6A00DD0F44 /* WSOfferType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E52B35741D36CF6A00DD0F44 /* WSOfferType.swift */; };
@@ -122,7 +124,6 @@
 		E59FE1BE1CD0AD630024F354 /* WSAPICommunicatorError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59FE1BD1CD0AD630024F354 /* WSAPICommunicatorError.swift */; };
 		E59FE1C21CD0AE640024F354 /* WSAPIEndPointError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59FE1C11CD0AE640024F354 /* WSAPIEndPointError.swift */; };
 		E59FE1C41CD0B1110024F354 /* WSLoginViewController+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59FE1C31CD0B1110024F354 /* WSLoginViewController+Actions.swift */; };
-		E59FE1C61CD0B3650024F354 /* WSLoginViewController+WSAPIResponseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59FE1C51CD0B3650024F354 /* WSLoginViewController+WSAPIResponseDelegate.swift */; };
 		E59FE1CC1CD0C63C0024F354 /* WSLoginEndPoint+Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59FE1C91CD0C5E70024F354 /* WSLoginEndPoint+Testing.swift */; };
 		E59FE1CF1CD1FF900024F354 /* WSMOCKNavigationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59FE1CE1CD1FF900024F354 /* WSMOCKNavigationDelegate.swift */; };
 		E59FE1D51CD206560024F354 /* WSNavigationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59FE1D41CD206560024F354 /* WSNavigationProtocol.swift */; };
@@ -262,6 +263,8 @@
 		E51397661C06945E00FD8EC1 /* WSUserLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSUserLocation.swift; sourceTree = "<group>"; };
 		E520C0C51D57C9C20094F716 /* ShortcutIdentifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortcutIdentifier.swift; sourceTree = "<group>"; };
 		E520C0C71D57CBA20094F716 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
+		E521011D1D9BAE6400AE8854 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
+		E521011F1D9BAFBA00AE8854 /* WSLoginViewController+WSAPIResponseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSLoginViewController+WSAPIResponseDelegate.swift"; sourceTree = "<group>"; };
 		E52A07261C580B1C006F80A5 /* WSComposeMessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSComposeMessageViewController.swift; sourceTree = "<group>"; };
 		E52B35701D36CC0A00DD0F44 /* WSPhoneNumber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSPhoneNumber.swift; sourceTree = "<group>"; };
 		E52B35741D36CF6A00DD0F44 /* WSOfferType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSOfferType.swift; sourceTree = "<group>"; };
@@ -371,7 +374,6 @@
 		E59FE1BD1CD0AD630024F354 /* WSAPICommunicatorError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSAPICommunicatorError.swift; sourceTree = "<group>"; };
 		E59FE1C11CD0AE640024F354 /* WSAPIEndPointError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSAPIEndPointError.swift; sourceTree = "<group>"; };
 		E59FE1C31CD0B1110024F354 /* WSLoginViewController+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSLoginViewController+Actions.swift"; sourceTree = "<group>"; };
-		E59FE1C51CD0B3650024F354 /* WSLoginViewController+WSAPIResponseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSLoginViewController+WSAPIResponseDelegate.swift"; sourceTree = "<group>"; };
 		E59FE1C71CD0C15F0024F354 /* WSLoginViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSLoginViewControllerTests.swift; sourceTree = "<group>"; };
 		E59FE1C91CD0C5E70024F354 /* WSLoginEndPoint+Testing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSLoginEndPoint+Testing.swift"; sourceTree = "<group>"; };
 		E59FE1CE1CD1FF900024F354 /* WSMOCKNavigationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSMOCKNavigationDelegate.swift; sourceTree = "<group>"; };
@@ -848,9 +850,10 @@
 		E573D1781C0E609C004C3BFC /* WSLoginViewController */ = {
 			isa = PBXGroup;
 			children = (
+				E521011D1D9BAE6400AE8854 /* Login.storyboard */,
 				E5D96B271BFC493B00AFAFEE /* WSLoginViewController.swift */,
+				E521011F1D9BAFBA00AE8854 /* WSLoginViewController+WSAPIResponseDelegate.swift */,
 				E59FE1C31CD0B1110024F354 /* WSLoginViewController+Actions.swift */,
-				E59FE1C51CD0B3650024F354 /* WSLoginViewController+WSAPIResponseDelegate.swift */,
 			);
 			name = WSLoginViewController;
 			sourceTree = "<group>";
@@ -1443,6 +1446,7 @@
 				E57057D31CC8557B00FA5D9F /* ComposeMessage.storyboard in Resources */,
 				E57057D51CC855BE00FA5D9F /* Messages.storyboard in Resources */,
 				E5DA03EE1C49C66A00FAD1D7 /* Sue Ellen Francisco.ttf in Resources */,
+				E521011E1D9BAE6400AE8854 /* Login.storyboard in Resources */,
 				E5D96AFF1BFB1CA700AFAFEE /* Main.storyboard in Resources */,
 				E520C0C81D57CBA20094F716 /* InfoPlist.strings in Resources */,
 				E5F4A7A41CE1C67D0010BEC7 /* UserProfile.storyboard in Resources */,
@@ -1529,6 +1533,7 @@
 				E5F6F3131C3124230000A87E /* HostOfferTableViewCell.swift in Sources */,
 				E54FF34E1D4D554C00E81483 /* WSMOMapTile.swift in Sources */,
 				E5DA03FD1C4C947100FAD1D7 /* WSSettings.swift in Sources */,
+				E52101201D9BAFBA00AE8854 /* WSLoginViewController+WSAPIResponseDelegate.swift in Sources */,
 				E56CC08C1BFD2EC300AAF973 /* WSTabBarController.swift in Sources */,
 				E5E920211D3622A100435070 /* WSComposeMessageViewController+Actions.swift in Sources */,
 				E5ED45EE1CE86B86008E3C02 /* WSKeywordSearchTableViewController+UIScrollViewDelegate.swift in Sources */,
@@ -1686,7 +1691,6 @@
 				E51180C31D3583180021F5F5 /* WSMessageThreadTableViewController+Navigation.swift in Sources */,
 				E59FE1BE1CD0AD630024F354 /* WSAPICommunicatorError.swift in Sources */,
 				E5AF1A881C58A41A0004806A /* WSMessageThreadTableViewController+UITableViewDataSource.swift in Sources */,
-				E59FE1C61CD0B3650024F354 /* WSLoginViewController+WSAPIResponseDelegate.swift in Sources */,
 				E542768C1C41B10300047029 /* FeedbackOptionTableViewCell.swift in Sources */,
 				E59FE1B41CD09F310024F354 /* AcceptType.swift in Sources */,
 				E5AF670A1C576C6300AC17A1 /* WSComposeMessageViewController+UITableViewDataSource.swift in Sources */,

@@ -16,14 +16,8 @@ protocol WSNavigationProtocol {
     /** Shows the main app with the tab bar */
     func showMainApp()
     
-    /** Opens the Warmshowers homepage in safari */
-    func openWarmshowersHomePage()
-    
-    /** Opens the Warmshowers sign up page in safari */
-    func openWarmshowersSignUpPage()
-    
-    /** Opens the Warmshowers FAQ page in safari */
-    func openWarmshowersFAQPage()
+    /** Opens a website in a Safari View Controller. */
+    func open(url: URL, fromViewController viewController: UIViewController)
     
     /** Opens mail to compose a feedback email */
     func openFeedbackEmail()

@@ -1,138 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="49e-Tb-3d3">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="49e-Tb-3d3">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Login View Controller-->
-        <scene sceneID="QFQ-Jf-mNM">
-            <objects>
-                <viewController storyboardIdentifier="Login" id="u1K-i7-mGS" customClass="WSLoginViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="3JT-d1-oiz"/>
-                        <viewControllerLayoutGuide type="bottom" id="pud-cq-cJ0"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="zmg-YB-GMD">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username or Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aeg-Nn-qkC">
-                                <rect key="frame" x="103" y="235" width="393" height="30"/>
-                                <accessibility key="accessibilityConfiguration" hint="Username or Email"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress"/>
-                                <variation key="heightClass=compact-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="20" y="112" width="360" height="30"/>
-                                </variation>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="20" y="222" width="360" height="30"/>
-                                </variation>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4VT-hK-Va1">
-                                <rect key="frame" x="103" y="335" width="393" height="30"/>
-                                <color key="backgroundColor" red="0.18823529410000001" green="0.2784313725" blue="0.4039215686" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <state key="normal" title="Login">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <variation key="heightClass=compact-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="20" y="209" width="360" height="30"/>
-                                </variation>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="20" y="319" width="360" height="30"/>
-                                </variation>
-                                <connections>
-                                    <action selector="loginButton:" destination="u1K-i7-mGS" eventType="touchUpInside" id="JW3-u5-TJa"/>
-                                </connections>
-                            </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AEk-9g-Q2M">
-                                <rect key="frame" x="103" y="285" width="393" height="30"/>
-                                <accessibility key="accessibilityConfiguration" hint="Password"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES"/>
-                                <variation key="heightClass=compact-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="20" y="159" width="360" height="30"/>
-                                </variation>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="20" y="272" width="360" height="30"/>
-                                </variation>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kkm-vv-tbZ">
-                                <rect key="frame" x="103" y="385" width="393" height="30"/>
-                                <state key="normal" title="Create an account">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="createAccountButtonPressed:" destination="u1K-i7-mGS" eventType="touchUpInside" id="UmN-kV-Ml6"/>
-                                </connections>
-                            </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="hnu-Ev-rd0">
-                                <rect key="frame" x="103" y="33" width="393" height="186"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="400" id="YAF-33-puY"/>
-                                    <constraint firstAttribute="height" constant="160" id="fpL-ut-raT"/>
-                                    <constraint firstAttribute="height" constant="200" id="nhu-1O-OTY"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="YAF-33-puY"/>
-                                        <exclude reference="fpL-ut-raT"/>
-                                        <exclude reference="nhu-1O-OTY"/>
-                                    </mask>
-                                </variation>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="20" y="37" width="360" height="160"/>
-                                    <mask key="constraints">
-                                        <include reference="fpL-ut-raT"/>
-                                    </mask>
-                                </variation>
-                                <variation key="heightClass=regular-widthClass=regular" misplaced="YES">
-                                    <rect key="frame" x="199" y="110" width="400" height="200"/>
-                                    <mask key="constraints">
-                                        <include reference="nhu-1O-OTY"/>
-                                    </mask>
-                                </variation>
-                            </imageView>
-                        </subviews>
-                        <color key="backgroundColor" red="0.14901960780000001" green="0.41568627450000001" blue="0.81176470590000005" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstItem="4VT-hK-Va1" firstAttribute="centerX" secondItem="zmg-YB-GMD" secondAttribute="centerX" id="7wh-xl-gOl"/>
-                            <constraint firstItem="hnu-Ev-rd0" firstAttribute="leading" secondItem="zmg-YB-GMD" secondAttribute="leading" constant="20" id="DZS-ZD-GOB"/>
-                            <constraint firstItem="AEk-9g-Q2M" firstAttribute="centerX" secondItem="zmg-YB-GMD" secondAttribute="centerX" id="FVD-Mq-9TW"/>
-                            <constraint firstItem="hnu-Ev-rd0" firstAttribute="width" secondItem="aeg-Nn-qkC" secondAttribute="width" id="J8L-4F-V9P"/>
-                            <constraint firstItem="AEk-9g-Q2M" firstAttribute="width" secondItem="4VT-hK-Va1" secondAttribute="width" id="OXO-Uk-6xL"/>
-                            <constraint firstItem="AEk-9g-Q2M" firstAttribute="top" secondItem="aeg-Nn-qkC" secondAttribute="bottom" constant="20" id="R0Q-QO-bHr"/>
-                            <constraint firstItem="aeg-Nn-qkC" firstAttribute="width" secondItem="AEk-9g-Q2M" secondAttribute="width" id="TMr-3r-c6C"/>
-                            <constraint firstItem="aeg-Nn-qkC" firstAttribute="top" secondItem="hnu-Ev-rd0" secondAttribute="bottom" constant="25" id="aRx-6t-irn"/>
-                            <constraint firstItem="AEk-9g-Q2M" firstAttribute="centerY" secondItem="zmg-YB-GMD" secondAttribute="centerY" id="dNF-VE-3oB"/>
-                            <constraint firstItem="4VT-hK-Va1" firstAttribute="top" secondItem="AEk-9g-Q2M" secondAttribute="bottom" constant="20" id="lPv-gZ-jpX"/>
-                            <constraint firstItem="hnu-Ev-rd0" firstAttribute="centerX" secondItem="zmg-YB-GMD" secondAttribute="centerX" id="rsp-zM-pqX"/>
-                            <constraint firstItem="Kkm-vv-tbZ" firstAttribute="top" secondItem="4VT-hK-Va1" secondAttribute="bottom" constant="20" id="tUa-PU-CIp"/>
-                            <constraint firstItem="Kkm-vv-tbZ" firstAttribute="centerX" secondItem="zmg-YB-GMD" secondAttribute="centerX" id="vsP-sF-iGf"/>
-                            <constraint firstItem="aeg-Nn-qkC" firstAttribute="centerX" secondItem="zmg-YB-GMD" secondAttribute="centerX" id="x4M-m4-M2c"/>
-                        </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="DZS-ZD-GOB"/>
-                            </mask>
-                        </variation>
-                        <variation key="heightClass=regular-widthClass=compact">
-                            <mask key="constraints">
-                                <include reference="DZS-ZD-GOB"/>
-                                <include reference="aRx-6t-irn"/>
-                                <include reference="R0Q-QO-bHr"/>
-                            </mask>
-                        </variation>
-                    </view>
-                    <connections>
-                        <outlet property="passwordTextField" destination="AEk-9g-Q2M" id="KHs-5V-V6k"/>
-                        <outlet property="usernameTextField" destination="aeg-Nn-qkC" id="Zvj-bH-qGN"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="NKo-Zy-aov" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="52" y="-741"/>
-        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
             <objects>
@@ -141,7 +14,7 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="YDw-MD-XfA" kind="relationship" relationship="viewControllers" id="6L8-bh-Z6q"/>
@@ -183,8 +56,13 @@
             </objects>
             <point key="canvasLocation" x="801.5" y="-132"/>
         </scene>
+        <!--Login-->
+        <scene sceneID="8qy-51-gRz">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="Login" storyboardName="Login" referencedIdentifier="Login" id="VaJ-8G-A5S" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EbZ-pQ-ocW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-687" y="-846"/>
+        </scene>
     </scenes>
-    <resources>
-        <image name="Logo" width="1183" height="428"/>
-    </resources>
 </document>

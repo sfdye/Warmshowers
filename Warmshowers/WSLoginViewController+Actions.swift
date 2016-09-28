@@ -44,6 +44,8 @@ extension WSLoginViewController {
      Method to take the user to the Warmshowers sign up page when the 'create account' button is pressed.
      */
     @IBAction func createAccountButtonPressed(_: UIButton) {
-        navigation.openWarmshowersSignUpPage()
+        let url = URL(string: "https://www.warmshowers.org/user/register")!
+        navigation.open(url: url, fromViewController: self)
     }
+    
 }
