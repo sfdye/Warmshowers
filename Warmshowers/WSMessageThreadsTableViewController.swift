@@ -139,6 +139,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
                 self?.errorCache = nil
             }
             self?.lastUpdated = Date()
+            self?.tableView.reloadData()
         }
     }
     
