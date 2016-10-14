@@ -15,7 +15,6 @@ extension WSMessageThreadsTableViewController : WSAPIResponseDelegate {
         case .GetMessageThread:
             guard let threadID = request.data as? Int else { return }
             downloadsInProgress.remove(threadID)
-            break
         default:
             break
         }
@@ -25,7 +24,6 @@ extension WSMessageThreadsTableViewController : WSAPIResponseDelegate {
         switch request.endPoint.type {
         case .GetAllMessageThreads:
             updateAllMessages()
-            break
         case .GetMessageThread:
             if downloadsInProgress.count == 0 { didFinishedUpdates() }
         default:
