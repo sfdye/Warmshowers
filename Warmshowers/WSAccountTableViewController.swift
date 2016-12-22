@@ -57,7 +57,7 @@ class WSAccountTableViewController: UITableViewController {
         
         // Configure the view
         navigationItem.title = ""
-        navigationItem.leftBarButtonItem?.tintColor = WSColor.LightGrey
+        navigationItem.leftBarButtonItem?.tintColor = WarmShowersColor.LightGrey
         tableView.rowHeight = UITableViewAutomaticDimension
         configureDoneButton()
         

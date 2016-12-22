@@ -14,12 +14,12 @@ class MessageThreadsTableViewCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var subjectLabel: UILabel!
     @IBOutlet weak var bodyPreviewLabel: UILabel!
-    @IBOutlet weak var newDot: WSColoredDot!
+    @IBOutlet weak var newDot: ColoredDotView!
     var threadID: Int?
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        newDot.color = WSColor.Blue
+        newDot.color = WarmShowersColor.Blue
         newDot.setNeedsDisplay()
     }
     

@@ -28,7 +28,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Participants" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GLC-nj-Xhz">
-                                            <rect key="frame" x="28" y="8" width="96.5" height="24"/>
+                                            <rect key="frame" x="28" y="8" width="97" height="24"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="24" id="zjQ-Pv-Mt7"/>
                                             </constraints>
@@ -51,7 +51,7 @@
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uAU-wd-X2K" customClass="WSColoredDot" customModule="Warmshowers" customModuleProvider="target">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uAU-wd-X2K" customClass="ColoredDotView" customModule="Warmshowers" customModuleProvider="target">
                                             <rect key="frame" x="8" y="14" width="12" height="12"/>
                                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>

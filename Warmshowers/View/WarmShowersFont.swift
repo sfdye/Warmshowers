@@ -1,5 +1,5 @@
 //
-//  WSFont.swift
+//  WarmShowersFont.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 16/01/16.
@@ -8,8 +8,10 @@
 
 import UIKit
 
-struct WSFont {
+struct WarmShowersFont {
+    
     static func SueEllenFrancisco(_ size: CGFloat) -> UIFont {
         return UIFont(name: "SueEllenFrancisco", size: size)!
     }
+    
 }

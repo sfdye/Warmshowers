@@ -1,5 +1,5 @@
 //
-//  WSColouredDot.swift
+//  ColoredDotView.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 19/01/16.
@@ -8,8 +8,7 @@
 
 import UIKit
 
-@IBDesignable
-class WSColoredDot: UIView {
+@IBDesignable class ColoredDotView: UIView {
     
     @IBInspectable var color: UIColor = UIColor.blue
     

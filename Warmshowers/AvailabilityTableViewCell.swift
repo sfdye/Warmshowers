@@ -17,12 +17,12 @@ class AvailabilityTableViewCell: UITableViewCell {
     
     func configureAsAvailable() {
         textLabel?.text = "Currently Available"
-        backgroundColor = WSColor.Available
+        backgroundColor = WarmShowersColor.Available
     }
     
     func configureAsNotAvailable() {
         textLabel?.text = "Unavailable"
-        backgroundColor = WSColor.NotAvailable
+        backgroundColor = WarmShowersColor.NotAvailable
     }
     
 }

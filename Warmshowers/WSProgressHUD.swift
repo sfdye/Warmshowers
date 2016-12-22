@@ -52,9 +52,9 @@ class WSProgressHUD {
 extension MBProgressHUD {
     
     func WSStyle() {
-        self.bezelView.color = WSColor.NavbarGrey
-        self.label.textColor = WSColor.Green
-        self.label.font = WSFont.SueEllenFrancisco(22)
+        self.bezelView.color = WarmShowersColor.NavbarGrey
+        self.label.textColor = WarmShowersColor.Green
+        self.label.font = WarmShowersFont.SueEllenFrancisco(22)
         self.removeFromSuperViewOnHide = true
         backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3)
     }

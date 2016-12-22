@@ -1,5 +1,5 @@
 //
-//  WSColor.swift
+//  WarmShowersColor.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 14/01/16.
@@ -8,30 +8,34 @@
 
 import UIKit
 
-struct WSColor {
+struct WarmShowersColor {
     
     // General styling colors
-    static var LightGrey = WSColor.colorFromHexString("F4F6F6")
+    static var LightGrey = UIColor(hex: "F4F6F6")
     static var MediumGrey = UIColor.gray
     static var DarkGrey = UIColor.darkGray
-    static var Blue = WSColor.colorFromHexString("266ACF")
-    static var DarkBlue = WSColor.colorFromHexString("304767")
-    static var Green = WSColor.colorFromHexString("009835")
+    static var Blue = UIColor(hex: "266ACF")
+    static var DarkBlue = UIColor(hex: "304767")
+    static var Green = UIColor(hex: "009835")
     
     // Positivity colors
-    static var Positive = WSColor.colorFromHexString("019E3C")
+    static var Positive = UIColor(hex: "019E3C")
     static var Neutral = UIColor.orange
     static var Negative = UIColor.red
     
     // Availiblity colors
-    static var Available = WSColor.colorFromHexString("019E3C")
+    static var Available = UIColor(hex: "019E3C")
     static var NotAvailable = UIColor.red
     
     // OS colours
     static var NavbarGrey = UIColor(red: 247.0/255.0, green: 247.0/255.0, blue: 247.0/255.0, alpha: 1)
     
-    // Returns a UIColor from a hex color as a string e.g. "F493A2"
-    static func colorFromHexString(_ hex: String) -> UIColor {
+}
+
+/* UIColor convenience initialiser to generatre colors from hex codes. */
+private extension UIColor {
+    
+    convenience init(hex: String) {
         
         func hexToDecimal(_ hex: String) -> CGFloat {
             return CGFloat(strtoul(hex, nil, 16))
@@ -45,6 +49,8 @@ struct WSColor {
         let green = hexToDecimal(hex.substring(with: greenRange))/255
         let blue = hexToDecimal(hex.substring(with: blueRange))/255
         
-        return UIColor(red: red, green: green, blue: blue, alpha: 1)
+        self.init(red: red, green: green, blue: blue, alpha: 1)
     }
+    
 }
+

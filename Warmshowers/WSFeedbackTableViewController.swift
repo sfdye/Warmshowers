@@ -93,11 +93,11 @@ class WSFeedbackTableViewController: UITableViewController {
     func textColorForRecommedationRating(_ rating: WSRecommendationRating) -> UIColor {
         switch rating {
         case .Positive:
-            return WSColor.Positive
+            return WarmShowersColor.Positive
         case .Negative:
-            return WSColor.Negative
+            return WarmShowersColor.Negative
         case .Neutral:
-            return WSColor.Neutral
+            return WarmShowersColor.Neutral
         }
     }
     

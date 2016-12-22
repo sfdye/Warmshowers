@@ -46,24 +46,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func configureGlobalViewSettings() {
         
         // Tabbar
-        UITabBar.appearance().tintColor = WSColor.Blue
+        UITabBar.appearance().tintColor = WarmShowersColor.Blue
         
         // Navigation bars
-        UINavigationBar.appearance().tintColor = WSColor.Blue
-        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: WSColor.Green,
-            NSFontAttributeName: WSFont.SueEllenFrancisco(26)]
+        UINavigationBar.appearance().tintColor = WarmShowersColor.Blue
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: WarmShowersColor.Green,
+            NSFontAttributeName: WarmShowersFont.SueEllenFrancisco(26)]
         UINavigationBar.appearance().setTitleVerticalPositionAdjustment(6, for: .default)
         UINavigationBar.appearance().isTranslucent = false
         
         // Toolbars
-        UIToolbar.appearance().tintColor = WSColor.Blue
+        UIToolbar.appearance().tintColor = WarmShowersColor.Blue
         
         // Search bars
-        UISearchBar.appearance().tintColor = WSColor.Blue
-        UISearchBar.appearance().barTintColor = WSColor.NavbarGrey
+        UISearchBar.appearance().tintColor = WarmShowersColor.Blue
+        UISearchBar.appearance().barTintColor = WarmShowersColor.NavbarGrey
         
         // Activity indicator
-        UIActivityIndicatorView.appearance().tintColor = WSColor.DarkBlue
+        UIActivityIndicatorView.appearance().tintColor = WarmShowersColor.DarkBlue
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

@@ -38,7 +38,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
         
         // Navigation bar configuration.
         navigationItem.title = "Messages"
-        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: WSColor.Green, NSFontAttributeName: WSFont.SueEllenFrancisco(26)]
+        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: WarmShowersColor.Green, NSFontAttributeName: WarmShowersFont.SueEllenFrancisco(26)]
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(WSMessageThreadsTableViewController.update))
         
         // Set up the date formatter.
@@ -60,7 +60,7 @@ class WSMessageThreadsTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         // Reset the navigation bar text properties
-        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: WSColor.Green, NSFontAttributeName: WSFont.SueEllenFrancisco(26)]
+        navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: WarmShowersColor.Green, NSFontAttributeName: WarmShowersFont.SueEllenFrancisco(26)]
         
         if fetchedResultsController == nil {
             initialiseFetchResultsControllerWithStore(store)

@@ -13,7 +13,7 @@ class HostListTableViewCell: UITableViewCell {
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var locationLabel: UILabel!
     @IBOutlet var profileImage: UIImageView!
-    @IBOutlet var availibleDot: WSColoredDot!
+    @IBOutlet var availibleDot: ColoredDotView!
     
     var uid: Int?
     
@@ -32,9 +32,9 @@ class HostListTableViewCell: UITableViewCell {
         }
         
         if notAvailible {
-            availibleDot?.color = WSColor.NotAvailable
+            availibleDot?.color = WarmShowersColor.NotAvailable
         } else {
-            availibleDot?.color = WSColor.Available
+            availibleDot?.color = WarmShowersColor.Available
         }
     }
 }

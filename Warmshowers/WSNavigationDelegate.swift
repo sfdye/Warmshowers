@@ -37,7 +37,7 @@ class WSNavigationDelegate : WSNavigationProtocol {
     func open(url: URL, fromViewController viewController: UIViewController) {
         let svc = SFSafariViewController(url: url)
         svc.preferredBarTintColor = .white
-        svc.preferredControlTintColor = WSColor.Blue
+        svc.preferredControlTintColor = WarmShowersColor.Blue
         viewController.present(svc, animated: true, completion: nil)
     }
     

@@ -64,7 +64,7 @@ extension WSAccountTableViewController {
                     cell.profileImage.image = photo
                     cell.profileImage.contentMode = .scaleAspectFill
                 } else {
-                    cell.nameLabel.textColor = WSColor.DarkBlue
+                    cell.nameLabel.textColor = WarmShowersColor.DarkBlue
                     cell.profileImage.isHidden = true
                     cell.noImageLabel.isHidden = false
                 }

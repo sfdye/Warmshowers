@@ -14,7 +14,7 @@ class PlaceholderTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         placeholderLabel.text = ""
-        placeholderLabel.font = WSFont.SueEllenFrancisco(22)
-        placeholderLabel.textColor = WSColor.MediumGrey
+        placeholderLabel.font = WarmShowersFont.SueEllenFrancisco(22)
+        placeholderLabel.textColor = WarmShowersColor.MediumGrey
     }
 }
