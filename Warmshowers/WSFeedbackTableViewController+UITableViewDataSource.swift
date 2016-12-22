@@ -19,7 +19,7 @@ extension WSFeedbackTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: FeedbackCellID, for: indexPath) as! FeedbackTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Feedback", for: indexPath) as! FeedbackTableViewCell
         guard let feedback = feedback , (indexPath as NSIndexPath).row < feedback.count else { return cell }
         
         let recommendation = feedback[(indexPath as NSIndexPath).row]

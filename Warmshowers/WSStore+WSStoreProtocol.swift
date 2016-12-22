@@ -30,7 +30,7 @@ extension WSStore: WSStoreProtocol {
     }
     
     func retrieve<T: NSManagedObject>(objectsWithClass modelClass: T.Type, sortBy: String? = nil, isAscending: Bool = true, predicate: NSPredicate? = nil, context: NSManagedObjectContext = WSStore.sharedStore.managedObjectContext) throws -> [T] {
-            let request : NSFetchRequest<T> = modelClass.fetchRequest() as! NSFetchRequest<T>
+            let request: NSFetchRequest<T> = modelClass.fetchRequest() as! NSFetchRequest<T>
             request.returnsObjectsAsFaults = false
             request.predicate = predicate
             

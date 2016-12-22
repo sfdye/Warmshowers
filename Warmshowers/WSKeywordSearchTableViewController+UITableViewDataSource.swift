@@ -22,17 +22,17 @@ extension WSKeywordSearchTableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let hosts = hosts else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: SpinnerCellID, for: indexPath) as! SpinnerTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "Spinner", for: indexPath) as! SpinnerTableViewCell
             cell.startSpinner()
             return cell
         }
         
         if numberOfHosts == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: NoHostsCellID, for: indexPath) as! PlaceholderTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "NoHosts", for: indexPath) as! PlaceholderTableViewCell
             cell.placeholderLabel.text = "No Hosts"
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: HostListCellID, for: indexPath) as! HostListTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "HostList", for: indexPath) as! HostListTableViewCell
             let host = hosts[(indexPath as NSIndexPath).row]
             cell.nameLabel.text = host.fullname
             cell.locationLabel.text = host.shortAddress

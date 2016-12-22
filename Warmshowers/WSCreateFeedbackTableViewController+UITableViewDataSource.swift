@@ -37,7 +37,7 @@ extension WSCreateFeedbackTableViewController {
             
             // configure a picker cell
             if let pickerIndexPath = pickerIndexPath , (pickerIndexPath as NSIndexPath).row == (indexPath as NSIndexPath).row {
-                let cell = tableView.dequeueReusableCell(withIdentifier: FeedbackOptionPickerCellID, for: indexPath) as! FeedbackOptionPickerTableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "FeedbackOptionPicker", for: indexPath) as! FeedbackOptionPickerTableViewCell
                 cell.picker.delegate = self
                 cell.picker.dataSource = self
                 switch modelRow {
@@ -55,7 +55,7 @@ extension WSCreateFeedbackTableViewController {
             }
             
             // configure a option cell
-            let cell = tableView.dequeueReusableCell(withIdentifier: FeedbackOptionCellID, for: indexPath) as! FeedbackOptionTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "FeedbackOption", for: indexPath) as! FeedbackOptionTableViewCell
             switch modelRow {
             case 0:
                 // Feedback guest or host picker
@@ -72,7 +72,7 @@ extension WSCreateFeedbackTableViewController {
         } else {
             
             // Written feedback section
-            let cell = tableView.dequeueReusableCell(withIdentifier: FeedbackBodyCellID, for: indexPath) as! FeedbackBodyTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "FeedbackBody", for: indexPath) as! FeedbackBodyTableViewCell
             cell.textView.delegate = self
             return cell
         }

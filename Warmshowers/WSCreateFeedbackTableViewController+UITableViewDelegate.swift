@@ -18,7 +18,7 @@ extension WSCreateFeedbackTableViewController {
             
             // show a picker
             let cell = tableView.cellForRow(at: indexPath)
-            if cell?.reuseIdentifier == FeedbackOptionCellID {
+            if cell?.reuseIdentifier == "FeedbackOption" {
                 displayInlinePickerForRowAtIndexPath(indexPath)
             } else {
                 tableView.deselectRow(at: indexPath, animated: true)

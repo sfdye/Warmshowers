@@ -12,7 +12,7 @@ extension WSAccountTableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
-        if cell?.reuseIdentifier == FeedbackCellID {
+        if cell?.reuseIdentifier == "Feedback" {
             tableView.deselectRow(at: indexPath, animated: true)
         } else {
             tableView.deselectRow(at: indexPath, animated: false)

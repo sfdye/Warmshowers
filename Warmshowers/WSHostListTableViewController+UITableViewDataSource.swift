@@ -20,7 +20,7 @@ extension WSHostListTableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: HostListCellID, for: indexPath) as! HostListTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "HostList", for: indexPath) as! HostListTableViewCell
         guard let hosts = hosts else { return cell }
         
         let host = hosts[(indexPath as NSIndexPath).row]

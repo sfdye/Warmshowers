@@ -26,18 +26,18 @@ extension WSSettingsTableViewController {
         let content = settings[indexPath.section].cells[indexPath.row]
         let cellID = content.cellID
         switch cellID  {
-        case SwitchCellID:
+        case "Switch":
             let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! SwitchTableViewCell
             cell.label?.text = content.title
             cell.tag = content.tag
             return cell
-        case DisclosureCellID:
+        case "Disclosure":
             let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
             cell.textLabel!.text = content.title
             cell.detailTextLabel!.text = content.detail
             cell.tag = content.tag
             return cell
-        case LogoutCellID:
+        case "Logout":
             let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! LogoutTableViewCell
             cell.label?.text = content.title
             cell.tag = content.tag

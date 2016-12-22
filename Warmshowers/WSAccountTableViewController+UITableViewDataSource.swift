@@ -54,7 +54,7 @@ extension WSAccountTableViewController {
             switch (indexPath as NSIndexPath).row {
             case 0:
                 // Profile image
-                let cell = tableView.dequeueReusableCell(withIdentifier: ImageCellID, for: indexPath) as! ProfileImageTableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "Photo", for: indexPath) as! ProfileImageTableViewCell
                 cell.nameLabel.text = user.fullname
                 // TODO set the photo height to 35% of the screen height
                 if let photo = user.profileImage {
@@ -71,7 +71,7 @@ extension WSAccountTableViewController {
                 return cell
             case 1:
                 // Availiblity
-                let cell = tableView.dequeueReusableCell(withIdentifier: AvailabilityCellID, for: indexPath) as! AvailabilityTableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "Available", for: indexPath) as! AvailabilityTableViewCell
                 if user.notcurrentlyavailable ?? true {
                     cell.configureAsNotAvailable()
                 } else {
@@ -88,17 +88,17 @@ extension WSAccountTableViewController {
             switch (indexPath as NSIndexPath).row {
             case 0:
                 // Memeber for ...
-                let cell = tableView.dequeueReusableCell(withIdentifier: AccountDetailCellID, for: indexPath) as! AccountDetailTableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "AccountDetail", for: indexPath) as! AccountDetailTableViewCell
                 cell.label.text = memberForTextForUser(user)
                 return cell
             case 1:
                 // Active ... ago
-                let cell = tableView.dequeueReusableCell(withIdentifier: AccountDetailCellID, for: indexPath) as! AccountDetailTableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "AccountDetail", for: indexPath) as! AccountDetailTableViewCell
                 cell.label.text = activeAgoTextForUser(user)
                 return cell
             case 2:
                 // Languages spoken: ...
-                let cell = tableView.dequeueReusableCell(withIdentifier: AccountDetailCellID, for: indexPath) as! AccountDetailTableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "AccountDetail", for: indexPath) as! AccountDetailTableViewCell
                 cell.label.text = languagesSpokenTextForUser(user)
                 return cell
             default:
@@ -108,13 +108,13 @@ extension WSAccountTableViewController {
             
         case 2:
             // Feedback
-            let cell = tableView.dequeueReusableCell(withIdentifier: FeedbackCountCellID, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "FeedbackCount", for: indexPath)
             cell.textLabel?.text = feedbackCellTextForUser(user)
             return cell
             
         case 3:
             // About
-            let cell = tableView.dequeueReusableCell(withIdentifier: AboutCellID, for: indexPath) as! AboutTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "About", for: indexPath) as! AboutTableViewCell
             cell.aboutTextView.text = user.comments
             return cell
             
@@ -122,24 +122,24 @@ extension WSAccountTableViewController {
             // Hosting info
             if (indexPath as NSIndexPath).row < user.hostingInfo.count {
                 // Display host info
-                let cell = tableView.dequeueReusableCell(withIdentifier: HostingInfoCellID, for: indexPath) as! HostingInfoTableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "HostingInfo", for: indexPath) as! HostingInfoTableViewCell
                 cell.titleLabel.text = hostingInfoTitleForInfoAtIndex((indexPath as NSIndexPath).row, fromUser: user)
                 cell.infoLabel.text = hostingInfoDetailForInfoAtIndex((indexPath as NSIndexPath).row, fromUser: user)
                 return cell
             } else if (indexPath as NSIndexPath).row == user.hostingInfo.count {
                 // Display "This host may offer"
-                let cell = tableView.dequeueReusableCell(withIdentifier: OfferHeadingCellID, for: indexPath)
+                let cell = tableView.dequeueReusableCell(withIdentifier: "OfferHeading", for: indexPath)
                 return cell
             } else {
                 // Display an offer
-                let cell = tableView.dequeueReusableCell(withIdentifier: OfferCellID, for: indexPath) as! HostOfferTableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "Offer", for: indexPath) as! HostOfferTableViewCell
                 cell.offerLabel.text = offerTextForOfferAtIndex((indexPath as NSIndexPath).row - 5, fromUser: user)
                 return cell
             }
             
         case 5:
             // Contact details
-            let cell = tableView.dequeueReusableCell(withIdentifier: ContactCellID, for: indexPath) as! PhoneNumberTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "Contact", for: indexPath) as! PhoneNumberTableViewCell
             cell.titleLabel.text = phoneNumberDescriptionForPhoneNumberAtIndex((indexPath as NSIndexPath).row, fromUser: user)
             cell.detailLabel.text = phoneNumberForPhoneNumberAtIndex((indexPath as NSIndexPath).row, fromUser: user)
             if let type = phoneNumberTypeForPhoneAtIndex((indexPath as NSIndexPath).row, fromUser: user) {
@@ -156,7 +156,7 @@ extension WSAccountTableViewController {
             
         case 6:
             // Address
-            let cell = tableView.dequeueReusableCell(withIdentifier: ContactCellID, for: indexPath) as! PhoneNumberTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "Contact", for: indexPath) as! PhoneNumberTableViewCell
             cell.titleLabel.numberOfLines = 0
             cell.titleLabel.text = "Address"
             cell.detailLabel.text = addressTextForUser(user)

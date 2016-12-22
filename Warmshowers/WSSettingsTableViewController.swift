@@ -25,10 +25,10 @@ class WSSettingsTableViewController: UITableViewController {
         let warmshowersSection = SettingsSection(withTitle: "Warmshowers.org", andCells:
             [
                 SettingsCell(withTitle: "Visit the website",
-                             cellID: DisclosureCellID,
+                             cellID: "Disclosure",
                              andTag: 10),
                 SettingsCell(withTitle: "FAQ",
-                             cellID: DisclosureCellID,
+                             cellID: "Disclosure",
                              andTag: 11)
             ]
         )
@@ -36,7 +36,7 @@ class WSSettingsTableViewController: UITableViewController {
         let helpSection = SettingsSection(withTitle: "Help", andCells:
             [
                 SettingsCell(withTitle: "Contact",
-                          cellID: DisclosureCellID,
+                          cellID: "Disclosure",
                           andTag: 20)
             ]
         )
@@ -44,7 +44,7 @@ class WSSettingsTableViewController: UITableViewController {
 //        let mapSection = SettingsSection(withTitle: "Map", andCells:
 //            [
 //                SettingsCell(withTitle: "Routes",
-//                             cellID: DisclosureCellID,
+//                             cellID: "Disclosure",
 //                             andTag: 30)
 //            ]
 //        )
@@ -52,7 +52,7 @@ class WSSettingsTableViewController: UITableViewController {
         let logoutSection = SettingsSection(withTitle: "", andCells:
             [
                 SettingsCell(withTitle: "Logout",
-                             cellID: LogoutCellID,
+                             cellID: "Logout",
                              andTag: 40)
             ]
         )
@@ -60,7 +60,7 @@ class WSSettingsTableViewController: UITableViewController {
         let deleteCacheSection = SettingsSection(withTitle: "", andCells:
             [
                 SettingsCell(withTitle: "Delete cached data",
-                             cellID: LogoutCellID,
+                             cellID: "Logout",
                              andTag: 50)
             ]
         )

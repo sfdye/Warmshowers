@@ -9,21 +9,36 @@
 import UIKit
 
 let SID_ReplyToMessageThread = "ToReplyToMessage"
+let SID_MessageThreadToUserProfile = "MessageThreadToUserProfile"
 
 extension WSMessageThreadTableViewController {
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        if identifier == SID_ReplyToMessageThread {
+        switch identifier {
+        case SID_ReplyToMessageThread:
             return threadID != nil
+        case SID_MessageThreadToUserProfile:
+            return false
+        default:
+            return false
         }
-        return false
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == SID_ReplyToMessageThread {
+        guard let identifier = segue.identifier else { return }
+        switch identifier {
+        case SID_ReplyToMessageThread:
             let navVC = segue.destination as! UINavigationController
             let composeMessageVC = navVC.viewControllers.first as! WSComposeMessageViewController
             composeMessageVC.configureAsReply(threadID)
+        case SID_MessageThreadToUserProfile:
+//            guard sender is WSUser else { return }
+//            let navVC = segue.destination as! UINavigationController
+//            let accountTVC = navVC.viewControllers.first as! WSAccountTableViewController
+//            accountTVC.user = sender as? WSUser
+            break
+        default:
+            break
         }
     }
     

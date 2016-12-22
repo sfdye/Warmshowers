@@ -9,9 +9,6 @@
 import UIKit
 import CoreData
 
-let RUI_MessageFromSelf = "MessageFromSelf"
-let RUI_MessageFromUser = "MessageFromUser"
-
 extension WSMessageThreadTableViewController {
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -26,7 +23,7 @@ extension WSMessageThreadTableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let message = self.fetchedResultsController.object(at: indexPath)
-        let cellID = (message.author?.uid ?? 0 == session.uid) ? RUI_MessageFromSelf : RUI_MessageFromUser
+        let cellID = (message.author?.uid ?? 0 == session.uid) ? "MessageFromSelf" : "MessageFromUser"
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! MessageTableViewCell
         configureCell(cell, withMessage: message)
         return cell

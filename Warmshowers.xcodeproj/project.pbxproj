@@ -78,7 +78,6 @@
 		E57057D51CC855BE00FA5D9F /* Messages.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E57057D41CC855BE00FA5D9F /* Messages.storyboard */; };
 		E57057D81CC855EB00FA5D9F /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E57057D61CC855EB00FA5D9F /* Settings.storyboard */; };
 		E57057DA1CC8567800FA5D9F /* HostSearch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E57057D91CC8567800FA5D9F /* HostSearch.storyboard */; };
-		E57057DC1CC85CE100FA5D9F /* WSConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57057DB1CC85CE100FA5D9F /* WSConstants.swift */; };
 		E57057DE1CC867EE00FA5D9F /* WSCreateFeedbackTableViewController+UITableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57057DD1CC867EE00FA5D9F /* WSCreateFeedbackTableViewController+UITableViewDataSource.swift */; };
 		E57057E01CC8688400FA5D9F /* WSCreateFeedbackTableViewController+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57057DF1CC8688400FA5D9F /* WSCreateFeedbackTableViewController+UITableViewDelegate.swift */; };
 		E57057E21CC86C6600FA5D9F /* WSAPICommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57057E11CC86C6600FA5D9F /* WSAPICommunicator.swift */; };
@@ -327,7 +326,6 @@
 		E57057D41CC855BE00FA5D9F /* Messages.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Messages.storyboard; sourceTree = "<group>"; };
 		E57057D71CC855EB00FA5D9F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Settings.storyboard; sourceTree = "<group>"; };
 		E57057D91CC8567800FA5D9F /* HostSearch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HostSearch.storyboard; sourceTree = "<group>"; };
-		E57057DB1CC85CE100FA5D9F /* WSConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSConstants.swift; sourceTree = "<group>"; };
 		E57057DD1CC867EE00FA5D9F /* WSCreateFeedbackTableViewController+UITableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSCreateFeedbackTableViewController+UITableViewDataSource.swift"; sourceTree = "<group>"; };
 		E57057DF1CC8688400FA5D9F /* WSCreateFeedbackTableViewController+UITableViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WSCreateFeedbackTableViewController+UITableViewDelegate.swift"; sourceTree = "<group>"; };
 		E57057E11CC86C6600FA5D9F /* WSAPICommunicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSAPICommunicator.swift; sourceTree = "<group>"; };
@@ -1089,7 +1087,6 @@
 				E54A57321BFE82F9000843A9 /* Model */,
 				E5F6F3041C28EC780000A87E /* Supporting Files */,
 				E5F6F3031C28EC550000A87E /* View */,
-				E57057DB1CC85CE100FA5D9F /* WSConstants.swift */,
 			);
 			path = Warmshowers;
 			sourceTree = "<group>";
@@ -1715,7 +1712,6 @@
 				E5700C541C44EE51008C8A87 /* WSComposeMessageViewController+UITextFieldDelegate.swift in Sources */,
 				E5967BA91C36910C0037F4B7 /* AvailabilityTableViewCell.swift in Sources */,
 				E5ED45EC1CE86640008E3C02 /* WSKeywordSearchTableViewController+UITableViewDelegate.swift in Sources */,
-				E57057DC1CC85CE100FA5D9F /* WSConstants.swift in Sources */,
 				E57057F31CC9895300FA5D9F /* WSAPIRequest.swift in Sources */,
 				E569E7951CF5A3940004B111 /* MKCoordinateRegion+Warmshowers.swift in Sources */,
 				E5ED1E931CD433440017D12F /* WSLogoutEndpoint.swift in Sources */,
@@ -1858,6 +1854,7 @@
 				CODE_SIGN_ENTITLEMENTS = Warmshowers/Warmshowers.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = EF3Z2ZZH58;
 				INFOPLIST_FILE = Warmshowers/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1999,6 +1996,7 @@
 				CODE_SIGN_ENTITLEMENTS = Warmshowers/Warmshowers.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = EF3Z2ZZH58;
 				INFOPLIST_FILE = Warmshowers/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2020,6 +2018,7 @@
 				CODE_SIGN_ENTITLEMENTS = Warmshowers/Warmshowers.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = EF3Z2ZZH58;
 				INFOPLIST_FILE = Warmshowers/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
