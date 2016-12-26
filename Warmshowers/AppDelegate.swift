@@ -19,7 +19,7 @@ import CoreData
 // background message check and app icon bagde/ notifications
 // add google translate feature to account view, translate from 'detect language' to system language
 // search filters, i.e. by country
-// - load gps files on map - start with american adventure routes on WS
+// - load gps files on map - start with american adventure routes on 
 // - facebook integration for finding friends on map
 // - add offline country option: downloads users in one country for offline use for a few days.
 
@@ -28,16 +28,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    var navigation: WSNavigationDelegate = WSNavigationDelegate.sharedNavigationDelegate
+    var navigation: NavigationDelegate = NavigationDelegate.sharedNavigationDelegate
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         configureGlobalViewSettings()
         
         if !WSSessionState.sharedSessionState.isLoggedIn {
-            WSNavigationDelegate.sharedNavigationDelegate.showLoginScreen()
+            NavigationDelegate.sharedNavigationDelegate.showLoginScreen()
         } else {
-            WSNavigationDelegate.sharedNavigationDelegate.showMainApp()
+            NavigationDelegate.sharedNavigationDelegate.showMainApp()
         }
         
         return true
@@ -69,7 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-        WSReachabilityManager.sharedReachabilityManager.stopReachabilityNotifications()
+        ReachabilityManager.sharedReachabilityManager.stopReachabilityNotifications()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -83,12 +83,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        WSReachabilityManager.sharedReachabilityManager.startReachabilityNotifications()
+        ReachabilityManager.sharedReachabilityManager.startReachabilityNotifications()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-        WSReachabilityManager.sharedReachabilityManager.stopReachabilityNotifications()
+        ReachabilityManager.sharedReachabilityManager.stopReachabilityNotifications()
     }
     
     func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
