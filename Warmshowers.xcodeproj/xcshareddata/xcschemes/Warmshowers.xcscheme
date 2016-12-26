@@ -39,6 +39,16 @@
                ReferencedContainer = "container:Warmshowers.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "E537152E1E0C86BF00770305"
+               BuildableName = "WarmshowersDataTests.xctest"
+               BlueprintName = "WarmshowersDataTests"
+               ReferencedContainer = "container:Warmshowers.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

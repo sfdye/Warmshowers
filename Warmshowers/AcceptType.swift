@@ -1,5 +1,5 @@
 //
-//  AcceptType.swift
+//  ContentType.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 27/04/16.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum AcceptType : String {
+enum ContentType : String {
     case PlainText = "text/plain"
     case JSON = "application/json"
     case Image = "image/*"

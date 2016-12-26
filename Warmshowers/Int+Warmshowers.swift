@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Int: JSONParsingType {
+extension Int: JSONParsable {
     
     typealias DataType = Int
     static func from(JSON json: Any, withKey key: String) -> Int? {

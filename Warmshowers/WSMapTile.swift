@@ -323,3 +323,54 @@ class WSMapTile: Hashable {
 func == (lhs: WSMapTile, rhs: WSMapTile) -> Bool {
     return lhs.quadKey == rhs.quadKey
 }
+
+fileprivate extension MKCoordinateRegion {
+    
+    var minimumLatitude: Double {
+        return center.latitude - span.latitudeDelta / 2.0
+    }
+    
+    var maximumLatitude: Double {
+        return center.latitude + span.latitudeDelta / 2.0
+    }
+    
+    var minimumLongitude: Double {
+        return center.longitude - span.longitudeDelta / 2.0
+    }
+    
+    var maximumLongitude: Double {
+        return center.longitude + span.longitudeDelta / 2.0
+    }
+    
+}
+
+fileprivate extension MKMapView {
+    
+    var minimumLatitude: Double {
+        return self.region.center.latitude - self.region.span.latitudeDelta / 2.0
+    }
+    
+    var maximumLatitude: Double {
+        return self.region.center.latitude + self.region.span.latitudeDelta / 2.0
+    }
+    
+    var minimumLongitude: Double {
+        return self.region.center.longitude - self.region.span.longitudeDelta / 2.0
+    }
+    
+    var maximumLongitude: Double {
+        return self.region.center.longitude + self.region.span.longitudeDelta / 2.0
+    }
+    
+    // Returns the current zoom level of the map
+    // Zoom levels are as per google maps. 0 = the whole world, 1 = a quadrant of the whole world, ...
+    //
+    func zoomLevel() -> UInt {
+        
+        // Zoom levels are calculated as the
+        let latitudeZoomLevel = UInt(log2(180.0 / self.region.span.latitudeDelta))
+        let longitudeZoomLevel = UInt(log2(360.0 / self.region.span.longitudeDelta))
+        return latitudeZoomLevel > longitudeZoomLevel ? latitudeZoomLevel : longitudeZoomLevel
+    }
+    
+}

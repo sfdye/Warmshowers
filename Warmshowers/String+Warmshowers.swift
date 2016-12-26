@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension String: JSONParsingType {
+extension String: JSONParsable {
     
     typealias DataType = String
     static func from(JSON json: Any, withKey key: String) -> String? {

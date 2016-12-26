@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Double: JSONParsingType {
+extension Double: JSONParsable {
     
     typealias DataType = Double
     static func from(JSON json: Any, withKey key: String) -> Double? {

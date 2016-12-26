@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15G31" minimumToolsVersion="Xcode 7.0">
+    <entity name="MapTile" representedClassName="WSMOMapTile" syncable="YES">
+        <attribute name="last_updated" attributeType="Date" syncable="YES"/>
+        <attribute name="quad_key" attributeType="String" syncable="YES"/>
+        <relationship name="parent_tile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MapTile" inverseName="sub_tiles" inverseEntity="MapTile" syncable="YES"/>
+        <relationship name="sub_tiles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MapTile" inverseName="parent_tile" inverseEntity="MapTile" syncable="YES"/>
+        <relationship name="users" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="User" inverseName="map_tile" inverseEntity="User" syncable="YES"/>
+    </entity>
+    <entity name="Message" representedClassName=".WSMOMessage" syncable="YES">
+        <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="p_is_new" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="p_message_id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="timestamp" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="author" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="sent_messages" inverseEntity="User" syncable="YES"/>
+        <relationship name="thread" maxCount="1" deletionRule="Nullify" destinationEntity="MessageThread" inverseName="messages" inverseEntity="MessageThread" syncable="YES"/>
+    </entity>
+    <entity name="MessageThread" representedClassName=".WSMOMessageThread" syncable="YES">
+        <attribute name="last_updated" attributeType="Date" syncable="YES"/>
+        <attribute name="p_count" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="p_has_tokens" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="p_is_new" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="p_thread_id" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="thread_started" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="messages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Message" inverseName="thread" inverseEntity="Message" syncable="YES"/>
+        <relationship name="participants" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="threads" inverseEntity="User" syncable="YES"/>
+    </entity>
+    <entity name="User" representedClassName=".WSMOUser" syncable="YES">
+        <attribute name="additional" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fullname" attributeType="String" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="image_url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="p_distance" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="p_latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="p_longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="p_not_currently_available" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="p_uid" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="post_code" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="province" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="street" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="map_tile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MapTile" inverseName="users" inverseEntity="MapTile" syncable="YES"/>
+        <relationship name="sent_messages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" inverseName="author" inverseEntity="Message" syncable="YES"/>
+        <relationship name="threads" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MessageThread" inverseName="participants" inverseEntity="MessageThread" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="MapTile" positionX="-344" positionY="66" width="128" height="120"/>
+        <element name="Message" positionX="-162" positionY="-144" width="128" height="133"/>
+        <element name="MessageThread" positionX="-342" positionY="-144" width="128" height="178"/>
+        <element name="User" positionX="18" positionY="-144" width="128" height="313"/>
+    </elements>
+</model>

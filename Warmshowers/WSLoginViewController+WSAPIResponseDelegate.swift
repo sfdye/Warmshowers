@@ -8,24 +8,30 @@
 
 import UIKit
 
-extension WSLoginViewController : WSAPIResponseDelegate {
+extension WSLoginViewController: WSAPIResponseDelegate {
     
     func request(_ request: WSAPIRequest, didSuceedWithData data: Any?) {
-        if data is String {
-            // Recieved the access token: proceed to the main app
-            WSProgressHUD.hide()
-            let username = usernameTextField.text, password = passwordTextField.text
-            do {
-                try session.save(password: password!, forUsername: username!)
-                navigation.showMainApp()
-            } catch {
-                print(error)
-                // This case is very unlikely.
-                alert.presentAlertFor(self, withTitle: "App error", button: "OK", message: "Sorry, an error occured while saving your username. Please report this as a bug, sorry for the inconvenience.")
-            }
-        } else {
-            // Recieved login response: request a token
+        
+        // Recieved login response: request a token
+        if request.endPoint.type = .login {
             api.contact(endPoint: .Token, withPathParameters: nil, andData: nil, thenNotify: self)
+            return
+        }
+        
+        guard let token = data as? String else {
+            // Handle this error
+            return
+        }
+        
+        // Recieved the access token: proceed to the main app
+        WSProgressHUD.hide()
+        let username = usernameTextField.text, password = passwordTextField.text
+        do {
+            try session.save(password: password!, forUsername: username!)
+            navigation.showMainApp()
+        } catch {
+            // This case is very unlikely.
+            alert.presentAlertFor(self, withTitle: "App error", button: "OK", message: "Sorry, an error occured while saving your username. Please report this as a bug, sorry for the inconvenience.")
         }
     }
     

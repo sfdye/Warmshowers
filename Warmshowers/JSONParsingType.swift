@@ -1,5 +1,5 @@
 //
-//  JSONParsingType.swift
+//  JSONParsable.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 29/07/16.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol JSONParsingType {
+protocol JSONParsable {
     associatedtype DataType
     
     /** Returns a value of it own type from the JSON dictionary for the given key, or nil if the value is nil, or casting to the desired type failed. */

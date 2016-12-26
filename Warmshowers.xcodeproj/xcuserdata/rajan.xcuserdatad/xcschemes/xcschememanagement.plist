@@ -9,9 +9,24 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>WarmshowersData.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>7</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>E53715261E0C86BE00770305</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E537152E1E0C86BF00770305</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>E5D96AF31BFB1CA700AFAFEE</key>
 		<dict>
 			<key>primary</key>

@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Bool: JSONParsingType {
+extension Bool: JSONParsable {
     
     typealias DataType = Bool
     static func from(JSON json: Any, withKey key: String) -> Bool? {

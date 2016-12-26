@@ -25,4 +25,5 @@ extension MKCoordinateRegion {
     var maximumLongitude: Double {
         return center.longitude + span.longitudeDelta / 2.0
     }
+    
 }

@@ -23,7 +23,7 @@ protocol WSAPIEndPointProtocol {
     var httpMethod: HttpMethod { get }
     
     /** Specifies the acceptable response data format. Defaults to JSON. */
-    var acceptType: AcceptType { get }
+    var acceptType: ContentType { get }
     
     /** Specifies if requests for this end point require authorization header fields. Default to true. */
     var requiresAuthorization: Bool { get }
@@ -35,7 +35,7 @@ protocol WSAPIEndPointProtocol {
     func url(withHostURL hostURL: URL, andParameters parameters: Any?) throws -> URL
     
     /** Adds parameters to requests about to be sent to this end point. */
-    func HTTPBodyParameters(withData data: Any?) throws -> [String: String]
+    func httpBody(fromData data: Any?, forMethod method: HTTP.Method) throws -> Data?
     
     /** Defines if responses from the end point are expected to include data. */
     func doesExpectDataWithResponse() -> Bool
@@ -61,11 +61,11 @@ extension WSAPIEndPointProtocol {
     
     var requiresAuthorization: Bool { return type != .Login || type != .Token }
     
-    var acceptType: AcceptType { return .JSON }
+    var acceptType: ContentType { return .JSON }
     
     var successCodes: Set<Int> { return [200] }
     
-    func HTTPBodyParameters(withData data: Any?) throws -> [String: String] {
+    func httpBody(fromData data: Any?, forMethod method: HTTP.Method) throws -> Data? {
         assertionFailure("addParametersToRequest:withData: not implemented for end point \(type.name)")
         return [String: String]()
     }
