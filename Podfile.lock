@@ -3,7 +3,7 @@ PODS:
     - CVKHierarchySearcher (~> 0.2)
   - CCHMapClusterController (1.7.0)
   - CVKHierarchySearcher (0.2.0)
-  - KeychainAccess (3.0.0)
+  - KeychainAccess (3.0.1)
   - MBProgressHUD (1.0.0)
 
 DEPENDENCIES:
@@ -16,9 +16,9 @@ SPEC CHECKSUMS:
   AFMInfoBanner: a7bcfd409faa624f043e604ae4fb789c84b22815
   CCHMapClusterController: d8cd12cd5682ec6cd76d911ac7198f981b6cc1b8
   CVKHierarchySearcher: 7be8d3bcbcc6f86ff07f785e6c632b5e40da2553
-  KeychainAccess: 412bf2650d9aebfc8135a58103b90ec38caad7f8
+  KeychainAccess: 017ea25e313a49eda10bb19b0bb0760fb1edfe1a
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
 
-PODFILE CHECKSUM: 72b73fbfb58e3a832e7f2b3aeb53ed353dd11cf6
+PODFILE CHECKSUM: b507a3b3de818216f7a61cc9d3dd517370c6c825
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.1.1

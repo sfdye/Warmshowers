@@ -7,18 +7,15 @@
 //
 
 import UIKit
+import WarmshowersData
 
 let SID_HostListToUserAccount = "HostListToUserAccount"
 
-class HostListTableViewController: UITableViewController {
+class HostListTableViewController: UITableViewController, Delegator, DataSource {
     
     var placeholderImage: UIImage? = UIImage(named: "ThumbnailPlaceholder")
-    var hosts: [WSUserLocation]?
+    var hosts: [UserLocation]?
     var numberOfHosts: Int { return hosts?.count ?? 0 }
-    
-    // Delegates
-    var alert: AlertDelegate = AlertDelegate.sharedAlertDelegate
-    var api: APICommunicatorProtocol = APICommunicator.sharedAPICommunicator
     
     // MARK: View life cycle
     
@@ -54,7 +51,7 @@ class HostListTableViewController: UITableViewController {
         
         let user = hosts[(indexPath as NSIndexPath).row]
         if let url = user.imageURL , user.image == nil {
-            api.contact(endPoint: .ImageResource, withPathParameters: url, andData: nil, thenNotify: self)
+            api.contact(endPoint: .imageResource, withMethod: .get, andPathParameters: url, andData: nil, thenNotify: self)
         }
     }
     
@@ -88,7 +85,7 @@ class HostListTableViewController: UITableViewController {
     /** Initiates a download of a users profile. */
     func showUserProfileForHostWithUID(_ uid: Int) {
         ProgressHUD.show(navigationController!.view, label: nil)
-        api.contact(endPoint: .UserInfo, withPathParameters: String(uid) as NSString, andData: nil, thenNotify: self)
+        api.contact(endPoint: .user, withMethod: .get, andPathParameters: String(uid) as NSString, andData: nil, thenNotify: self)
     }  
     
 }

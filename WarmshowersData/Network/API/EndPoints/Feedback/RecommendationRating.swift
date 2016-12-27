@@ -8,8 +8,16 @@
 
 import Foundation
 
-enum RecommendationRating: String {
-    case Positive = "Positive"
-    case Neutral = "Neutral"
-    case Negative = "Negative"
+public enum RecommendationRating: String {
+    case positive = "Positive"
+    case neutral = "Neutral"
+    case negative = "Negative"
+    
+    public static var allValues: [RecommendationRating] {
+        return [
+            .positive,
+            .neutral,
+            .negative
+        ]
+    }
 }

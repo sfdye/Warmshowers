@@ -1,5 +1,5 @@
 //
-//  HostSearchViewController+WSAPIResponseDelegate.swift
+//  HostSearchViewController+APIResponseDelegate.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 10/07/16.
@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import WarmshowersData
 
 extension HostSearchViewController: APIResponseDelegate {
     
@@ -14,7 +15,7 @@ extension HostSearchViewController: APIResponseDelegate {
         ProgressHUD.hide()
     }
     
-    func request(_ request: APIRequest, didSuceedWithData data: Any?) {
+    func request(_ request: APIRequest, didSucceedWithData data: Any?) {
         guard let host = data as? User else { return }
         DispatchQueue.main.async { 
             self.performSegue(withIdentifier: SID_SearchViewToUserAccount, sender: host)

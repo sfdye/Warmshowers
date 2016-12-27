@@ -8,6 +8,7 @@
 
 import UIKit
 import CCHMapClusterController
+import WarmshowersData
 
 let SID_MapToUserAccount = "MapToUserAccount"
 let SID_MapToHostList = "MapToHostList"
@@ -25,7 +26,7 @@ extension HostSearchViewController {
             
         case SID_MapToHostList:
             
-            return sender is [WSUserLocation]
+            return sender is [UserLocation]
             
         default:
             return true
@@ -49,7 +50,7 @@ extension HostSearchViewController {
             
             let navVC = segue.destination as! UINavigationController
             let hostListTVC = navVC.viewControllers.first as! HostListTableViewController
-            hostListTVC.hosts = sender as? [WSUserLocation]
+            hostListTVC.hosts = sender as? [UserLocation]
             
         default:
             return

@@ -11,8 +11,6 @@ import CoreData
 
 public class Store: NSObject {
     
-    let jsonParser = JSON.shared
-    
     // MARK: Core Data stack
     
     lazy var applicationDocumentsDirectory: URL = {

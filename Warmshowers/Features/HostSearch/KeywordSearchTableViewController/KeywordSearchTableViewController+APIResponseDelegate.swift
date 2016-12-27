@@ -1,5 +1,5 @@
 //
-//  KeywordSearchTableViewController+WSAPIResponseDelegate.swift
+//  KeywordSearchTableViewController+APIResponseDelegate.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 1/05/16.
@@ -7,14 +7,15 @@
 //
 
 import UIKit
+import WarmshowersData
 
 extension KeywordSearchTableViewController : APIResponseDelegate {
     
-    func request(_ request: APIRequest, didSuceedWithData data: Any?) {
-        switch request.endPoint.type {
-        case .SearchByKeyword:
-            reloadTableWithHosts(data as? [WSUserLocation])
-        case .ImageResource:
+    func request(_ request: APIRequest, didSucceedWithData data: Any?) {
+        switch request.endPointType {
+        case .searchByKeyword:
+            reloadTableWithHosts(data as? [UserLocation])
+        case .imageResource:
             guard
                 let imageURL = request.parameters as? String,
                 let image = data as? UIImage
@@ -26,6 +27,6 @@ extension KeywordSearchTableViewController : APIResponseDelegate {
     }
     
     func request(_ request: APIRequest, didFailWithError error: Error) {
-        reloadTableWithHosts([WSUserLocation]())
+        reloadTableWithHosts([UserLocation]())
     }
 }

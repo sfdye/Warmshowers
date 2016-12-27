@@ -11,11 +11,11 @@ import MapKit
 
 extension UserLocation: MKAnnotation {
     
-    @objc var title: String? {
+    @objc public var title: String? {
         return fullname
     }
     
-    @objc var subtitle: String? {
+    @objc public var subtitle: String? {
         return shortAddress
     }
     

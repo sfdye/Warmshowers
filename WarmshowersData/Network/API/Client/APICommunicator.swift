@@ -22,23 +22,23 @@ public class APICommunicator: APIDelegate {
     
     // Congfuguration and Delegates
     
-    var connection: ReachabilityDelegate
-    public var delegate: APICommunicatorDelegate?
+    public var connection: ReachabilityDelegate = ReachabilityManager()
     public var auth: APIAuthorizationDelegate = APIRequestAuthorizer()
-    public var secureStore: SecureStoreDelegate?
-    var store: StoreUpdateDelegate?
+    public var delegate: APICommunicatorDelegate?
     
+    var secureStore: SecureStoreDelegate? {
+        return DataDelegates.shared.secureStore
+    }
+    
+    var store: StoreUpdateDelegate? {
+        return DataDelegates.shared.store as? StoreUpdateDelegate
+    }
     
     // MARK: Initialisers
-    
-    public init(connection: ReachabilityDelegate) {
-        self.connection = connection
-    }
     
     deinit {
         connection.deregisterFromNotifications(self)
     }
-    
     
     // MARK: Utilities
     
@@ -47,7 +47,7 @@ public class APICommunicator: APIDelegate {
     }
     
     /** Creates and executes a request for the given end point with the given data. */
-    public func contactEndPoint(_ endPoint: APIEndPoint, withMethod method: HTTP.Method, andPathParameters parameters: Any? = nil, andData data: Any? = nil, thenNotify requester: APIResponseDelegate) {
+    public func contact(endPoint: APIEndPoint, withMethod method: HTTP.Method, andPathParameters parameters: Any?, andData data: Any?, thenNotify requester: APIResponseDelegate) {
         
         let request = APIRequest(withEndPoint: endPoint.instance, httpMethod: method, requester: requester, parameters: parameters, andData: data)
         request.delegate = self
@@ -181,7 +181,7 @@ public class APICommunicator: APIDelegate {
                 }
                 
                 // Let the end point update the store with the recieved data field.
-                assert(store != nil, "Attempted to update persisted data without a store delegate. Please ensure the store delegate on the API communicator is non-nill.")
+                assert(store != nil, "Attempted to update persisted data without a store update delegate. Please ensure the store update delegate on the API communicator is non-nill.")
                 try request.endPoint.request(request, updateStore: store!, withJSON: json, parser: jsonParser)
                 
                 // Let the end point parse any data recieved in the data field.

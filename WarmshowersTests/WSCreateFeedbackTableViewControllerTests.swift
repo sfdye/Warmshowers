@@ -1,5 +1,5 @@
 //
-//  WSCreateFeedbackTableViewControllerTests.swift
+//  CreateFeedbackTableViewControllerTests.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 21/04/16.
@@ -8,26 +8,27 @@
 
 import XCTest
 @testable import Warmshowers
+@testable import WarmshowersData
 
-class WSCreateFeedbackTableViewControllerTests: XCTestCase {
+class CreateFeedbackTableViewControllerTests: XCTestCase {
     
     let storyboard = UIStoryboard.init(name: "UserProfile", bundle: nil)
     let storyboardID = SBID_CreateFeedback
     
     // Test objects
-    var createFeedbackViewController: WSCreateFeedbackTableViewController?
-    var mockAPICommunicator: WSMOCKAPICommunicator!
-    var mockAlertDelegate: WSMOCKAlertDelegate!
+    var createFeedbackViewController: CreateFeedbackTableViewController?
+    var mockAPICommunicator: MOCKAPICommunicator!
+    var mockAlertDelegate: MOCKAlert!
     
     override func setUp() {
         super.setUp()
         // Load the view controller
-        createFeedbackViewController = storyboard.instantiateViewController(withIdentifier: storyboardID) as? WSCreateFeedbackTableViewController
+        createFeedbackViewController = storyboard.instantiateViewController(withIdentifier: storyboardID) as? CreateFeedbackTableViewController
         XCTAssertNotNil(createFeedbackViewController, "Failed to instantiate with storyboard ID: \(storyboardID).")
         
         // Initialise mocks
-        mockAPICommunicator = WSMOCKAPICommunicator()
-        mockAlertDelegate = WSMOCKAlertDelegate()
+        mockAPICommunicator = MOCKAPICommunicator()
+        mockAlertDelegate = MOCKAlert()
         
         // Set the mocks that don't require the view
         createFeedbackViewController?.api = mockAPICommunicator
@@ -75,7 +76,7 @@ class WSCreateFeedbackTableViewControllerTests: XCTestCase {
         
         // then
         XCTAssertTrue(mockAPICommunicator!.contactEndPointCalled, "API not contacted when the create feedback button was pressed.")
-        XCTAssertEqual(mockAPICommunicator.contactedEndPoint, .CreateFeedback, "Wrong end point contacted for login.")
+        XCTAssertEqual(mockAPICommunicator.contactedEndPoint, APIEndPoint.createFeedback, "Wrong end point contacted for login.")
     }
 
 }

@@ -8,26 +8,21 @@
 
 import UIKit
 import CoreData
+import WarmshowersData
 
-class ComposeMessageViewController: UIViewController {
+class ComposeMessageViewController: UIViewController, Delegator, DataSource {
     
     @IBOutlet var tableView: UITableView!
     
     let detailCellHeight: CGFloat = 40.0
     
     var threadID: Int?
-    var recipients: [WSMOUser]?
+    var recipients: [MOUser]?
     var subject: String?
     var body: String?
     
     /** Returns true if threadID is not nil and hence the message is a reply on a existing thread. */
     var isReply: Bool { return threadID != nil }
-    
-    // Delegates
-    var store: StoreProtocol = Store.sharedStore
-    let session: SessionStateProtocol = SessionState.sharedSessionState
-    var alert: AlertDelegate = AlertDelegate.sharedAlertDelegate
-    var api: APICommunicatorProtocol = APICommunicator.sharedAPICommunicator
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,7 +49,7 @@ class ComposeMessageViewController: UIViewController {
     // MARK: Utility methods
     
     /** Sets up the message as a new message to a give set of hosts. */
-    func configureAsNewMessageToUsers(_ users: [WSMOUser]) {
+    func configureAsNewMessageToUsers(_ users: [MOUser]) {
         navigationItem.title = "New Message"
         recipients = users
     }
@@ -69,7 +64,8 @@ class ComposeMessageViewController: UIViewController {
         
         // Set up the reply
         let predicate = NSPredicate(format: "p_thread_id == %d", threadID)
-        guard let thread = try! store.retrieve(objectsWithClass: MOMessageThread.self, sortBy: nil, isAscending: true, predicate: predicate, context: store.managedObjectContext).first else { return }
+        guard let thread: MOMessageThread = try! store.retrieve(inContext: store.managedObjectContext, withPredicate: predicate, andSortBy: nil, isAscending: true).first
+            else { return }
         guard let uid = session.uid else { return }
         self.threadID = threadID
         self.subject = thread.subject
@@ -77,7 +73,7 @@ class ComposeMessageViewController: UIViewController {
     }
     
     /** Returns a string of comma seperated full names of the message recipients. */
-    func recipientStringForRecipients(_ recipients: [WSMOUser]?, joiner: String = ",") -> String {
+    func recipientStringForRecipients(_ recipients: [MOUser]?, joiner: String = ",") -> String {
         guard let recipients = recipients , recipients.count > 0 else { return "" }
         let names = recipients.map { (user) -> String in user.name! }
         let recipientString = names.joined(separator: joiner)

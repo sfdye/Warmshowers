@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WarmshowersData
 
 class FeedbackOptionPickerTableViewCell: UITableViewCell {
     

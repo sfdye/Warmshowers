@@ -7,20 +7,14 @@
 //
 
 import UIKit
+import WarmshowersData
 
 let SBID_Login = "Login"
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, Delegator, DataSource {
     
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-
-    // Delegates
-    var session: SessionStateProtocol = SessionState.sharedSessionState
-    var navigation: NavigationProtocol = NavigationDelegate.sharedNavigationDelegate
-    var api: APICommunicatorProtocol = APICommunicator.sharedAPICommunicator
-    var alert: AlertProtocol = AlertDelegate.sharedAlertDelegate
-    
 
     // MARK: View life cycle
     

@@ -8,10 +8,10 @@
 
 import Foundation
 
-class HostInfo {
+public class HostInfo {
     
-    var type: HostInfoType
-    var description: String
+    public var type: HostInfoType
+    public var description: String
     
     init(type: HostInfoType, description: String) {
         self.type = type

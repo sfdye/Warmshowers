@@ -1,5 +1,5 @@
 //
-//  HostSearchViewController+WSHostSearchNavigationDelegate.swift
+//  HostSearchViewController+HostSearchNavigationDelegate.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 9/07/16.
@@ -7,15 +7,16 @@
 //
 
 import Foundation
+import WarmshowersData
 
 extension HostSearchViewController: HostSearchNavigationDelegate {
     
     func showUserProfileForHostWithUID(_ uid: Int) {
         ProgressHUD.show(nil)
-        api.contact(endPoint: .UserInfo, withPathParameters: String(uid) as NSString, andData: nil, thenNotify: self)
+        api.contact(endPoint: .user, withMethod: .get, andPathParameters: String(uid) as NSString, andData: nil, thenNotify: self)
     }
     
-    func showHostListWithHosts(_ hosts: [WSUserLocation]) {
+    func showHostListWithHosts(_ hosts: [UserLocation]) {
         DispatchQueue.main.async { 
             self.performSegue(withIdentifier: SID_MapToHostList, sender: hosts)
         }

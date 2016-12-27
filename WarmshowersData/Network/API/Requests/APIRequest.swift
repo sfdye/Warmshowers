@@ -13,6 +13,8 @@ import Foundation
  */
 public class APIRequest: Hashable {
     
+    public var endPointType: APIEndPoint { return endPoint.type }
+    
     /** An instance of the */
     private(set) var endPoint: APIEndPointProtocol!
     

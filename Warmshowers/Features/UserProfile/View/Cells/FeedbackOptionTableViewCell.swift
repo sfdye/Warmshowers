@@ -7,25 +7,23 @@
 //
 
 import UIKit
+import WarmshowersData
 
 class FeedbackOptionTableViewCell: UITableViewCell {
     
     // Configures the picker for feedback type
-    //
     func configureForTypeWithFeedback(_ feedback: Recommendation) {
         textLabel?.text = "Feedback for"
         detailTextLabel?.text = feedback.type.rawValue
     }
     
     // Configures the picker for feedback ratings
-    //
     func configureForRatingWithFeedback(_ feedback: Recommendation) {
         textLabel?.text = "Overall experiencer"
         detailTextLabel?.text = feedback.rating.rawValue
     }
     
     // Configures the picker for feedback dates
-    //
     func configureForDateWithFeedback(_ feedback: Recommendation) {
         let formatter = DateFormatter()
         let template = "MMMyyyy"

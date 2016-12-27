@@ -8,13 +8,13 @@
 
 import Foundation
 
-class NewMessageData {
+public class NewMessageData {
     
     var recipientsString: String
     var subject: String
     var body: String
     
-    init(recipientsString: String, subject: String, body: String) {
+    public init(recipientsString: String, subject: String, body: String) {
         self.recipientsString = recipientsString
         self.subject = subject
         self.body = body

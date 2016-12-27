@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import WarmshowersData
 
 let RUID_MessageThread = "MessageThreadCell"
 let RUID_NoMessageThreadsCell = "NoMessages"
@@ -43,7 +44,7 @@ extension MessageThreadsTableViewController {
     }
     
     func configureCell(_ cell: MessageThreadsTableViewCell, withMessageThread messageThread: MOMessageThread) {
-        cell.participantsLabel.text = messageThread.getParticipantString(currentUserUID: currentUserUID)
+        cell.participantsLabel.text = messageThread.participantString(withCurrentUserUID: currentUserUID)
         cell.dateLabel.text = textForMessageThreadDate(messageThread.last_updated)
         cell.subjectLabel.text = messageThread.subject ?? ""
         cell.bodyPreviewLabel.text = messageThread.lastestMessagePreview() ?? "\n"

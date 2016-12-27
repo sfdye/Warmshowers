@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct WSTimeInterval {
+public struct WSTimeInterval {
     
     let maxUnitsInString = 2
     
@@ -25,7 +25,7 @@ struct WSTimeInterval {
     // Formats an integer time (in seconds) to a String with the two largest time units
     // i.e. 4 months 6 days
     //      2 hours 3 minutes
-    var asString: String {
+    public var asString: String {
         
         var time = self.time
         var count = 0

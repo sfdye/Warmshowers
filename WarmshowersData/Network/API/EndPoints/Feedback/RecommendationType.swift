@@ -8,9 +8,19 @@
 
 import Foundation
 
-enum RecommendationType: String {
-    case ForGuest = "Guest"
-    case ForHost = "Host"
-    case MetTraveling = "Met Traveling"
-    case Other = "Other"
+public enum RecommendationType: String {
+    case forGuest = "Guest"
+    case forHost = "Host"
+    case metTraveling = "Met Traveling"
+    case other = "Other"
+    
+    public static var allValues: [RecommendationType] {
+        return [
+            .forGuest,
+            .forHost,
+            .metTraveling,
+            .other
+        ]
+    }
+    
 }

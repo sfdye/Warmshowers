@@ -8,3 +8,8 @@ target 'Warmshowers' do
 	pod 'CCHMapClusterController'
 end
 
+target 'WarmshowersData' do
+	pod 'KeychainAccess'
+end
+
+

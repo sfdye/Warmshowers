@@ -8,7 +8,7 @@
 
 import UIKit
 
-class User: Hashable {
+public class User: Hashable {
     
     var url: String?
     var access: Int?
@@ -18,18 +18,18 @@ class User: Hashable {
     var bikeshop: String?
     var campground: String?
     var city: String?
-    var comments: String?
+    public var comments: String?
     var country: String?
     var created: Int?
     var email_opt_out: Bool?
     var fax_number: Bool?
     var food: Bool?
-    var fullname: String
+    public var fullname: String
     var hide_donation_status: Bool?
     var homephone: String?
     var kitchenuse: Bool?
     var language: String?
-    var languagesspoken: String?
+    public var languagesspoken: String?
     var last_unavailability_pester: Int?
     var latitude: Double?
     var laundry: Bool?
@@ -39,9 +39,9 @@ class User: Hashable {
     var maxcyclists: Int?
     var mobilephone: String?
     var motel: String?
-    var name: String
-    var notcurrentlyavailable: Bool?
-    var profileImageURL: String?
+    public var name: String
+    public var notcurrentlyavailable: Bool?
+    public var profileImageURL: String?
     var postal_code: String?
     var preferred_notice: String?
     var province: String?
@@ -56,32 +56,32 @@ class User: Hashable {
     var street: String?
     var theme: String?
     var timezone: String?
-    var uid: Int
+    public var uid: Int
     var workphone: String?
     
-    var feedback: [Recommendation]?
-    var profileImage: UIImage?
+    public var feedback: [Recommendation]?
+    public var profileImage: UIImage?
     
     
     // MARK: Hashable
     
-    var hashValue: Int { return uid }
+    public var hashValue: Int { return uid }
     
     
     // MARK: Convinience properties
     
-    var membershipDuration: TimeInterval? {
+    public var membershipDuration: WSTimeInterval? {
         guard let created = created else { return nil }
         return timeIntervalSinceTime(created)
     }
     
-    var lastLoggedInAgo: TimeInterval? {
+    public var lastLoggedInAgo: WSTimeInterval? {
         guard let login = login else { return nil }
         return timeIntervalSinceTime(login)
     }
     
     /** Returns an array of hosting info points applicable to the users profile. */
-    var hostingInfo: [HostInfo] {
+    public var hostingInfo: [HostInfo] {
         var info = [HostInfo]()
         if maxcyclists != nil {
             let description = maxcyclists! > 4 ? "5 or more" : "\(maxcyclists!)"
@@ -100,7 +100,7 @@ class User: Hashable {
     }
     
     /** Returns an array of types of offers applicable to the users profile. */
-    var offers: [OfferType] {
+    public var offers: [OfferType] {
         var offers = [OfferType]()
         if bed ?? false { offers.append(.Bed) }
         if food ?? false { offers.append(.Food) }
@@ -114,7 +114,7 @@ class User: Hashable {
     }
         
     /** Returns an array of tuples with phone number type and phone number. */
-    var phoneNumbers: [PhoneNumber] {
+    public var phoneNumbers: [PhoneNumber] {
         var phoneNumbers = [PhoneNumber]()
         if homephone ?? "" != "" {
             phoneNumbers.append(PhoneNumber(type: .home, number: homephone!))
@@ -129,7 +129,7 @@ class User: Hashable {
     }
     
     /** The user address as a string with new line characters seperating the street, city, etc. */
-    var address: String {
+    public var address: String {
         var address: String = ""
         address.appendWithNewLine(street)
         address.appendWithNewLine(additional)
@@ -217,14 +217,14 @@ class User: Hashable {
     
     // MARK: Utility methods
     
-    fileprivate func timeIntervalSinceTime(_ time: Int) -> TimeInterval {
+    fileprivate func timeIntervalSinceTime(_ time: Int) -> WSTimeInterval {
         let date = Date(timeIntervalSince1970: TimeInterval(time))
-        return Date().timeIntervalSince1970 - date.timeIntervalSince1970
+        return WSTimeInterval(timeInterval: Date().timeIntervalSince1970 - date.timeIntervalSince1970)
     }
     
 }
 
-func ==(lhs: User, rhs: User) -> Bool {
+public func ==(lhs: User, rhs: User) -> Bool {
     return lhs.hashValue == rhs.hashValue
 }
 

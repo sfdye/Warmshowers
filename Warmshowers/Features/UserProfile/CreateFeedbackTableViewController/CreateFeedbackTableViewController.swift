@@ -8,10 +8,11 @@
 
 import UIKit
 import MBProgressHUD
+import WarmshowersData
 
 let SBID_CreateFeedback = "CreateFeedback"
 
-class CreateFeedbackTableViewController: UITableViewController {
+class CreateFeedbackTableViewController: UITableViewController, Delegator, DataSource {
     
     // MARK: Properties
     
@@ -30,10 +31,6 @@ class CreateFeedbackTableViewController: UITableViewController {
     // View state variables
     var pickerIndexPath: IndexPath? = nil
     let PlaceholderFeedback = "Type your feedback here."
-    
-    // Delegates
-    var api: APICommunicatorProtocol? = APICommunicator.sharedAPICommunicator
-    var alert: AlertProtocol? = AlertDelegate.sharedAlertDelegate
     
     
     // MARK: View life cycle

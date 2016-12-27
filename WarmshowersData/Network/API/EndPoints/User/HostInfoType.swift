@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum HostInfoType {
+public enum HostInfoType {
     case maxCyclists
     case bikeShop
     case campground

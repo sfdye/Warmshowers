@@ -8,6 +8,7 @@
 
 import UIKit
 import CCHMapClusterController
+import WarmshowersData
 
 extension LocationSearchViewController : MKMapViewDelegate {
     
@@ -72,7 +73,7 @@ extension LocationSearchViewController : MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if let clusterAnnotation = view.annotation as? CCHMapClusterAnnotation {
             if clusterAnnotation.isCluster() {
-                if let hosts = Array(clusterAnnotation.annotations) as? [WSUserLocation] {
+                if let hosts = Array(clusterAnnotation.annotations) as? [UserLocation] {
                     navigationDelegate?.showHostListWithHosts(hosts)
                 }
             } else {

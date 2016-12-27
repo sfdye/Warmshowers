@@ -1,5 +1,5 @@
 //
-//  WSMOCKNavigationController.swift
+//  MOCKNavigationController.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 30/04/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WSMOCKNavigationController : UINavigationController {
+class MOCKNavigationController: UINavigationController {
     
     var dismissViewControllerAnimatedCalled = false
     

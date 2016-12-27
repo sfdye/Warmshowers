@@ -10,8 +10,9 @@ import UIKit
 import MapKit
 import CoreData
 import CCHMapClusterController
+import WarmshowersData
 
-class LocationSearchViewController : UIViewController {
+class LocationSearchViewController : UIViewController, Delegator, DataSource {
     
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var toolbar: UIToolbar!
@@ -23,10 +24,10 @@ class LocationSearchViewController : UIViewController {
     var mapSource: MapSource = MapSource.appleMaps
     
     /** Map tiles that have host downloads in progress. */
-    var downloadsInProgress = Set<WSMapTile>()
+    var downloadsInProgress = Set<MapTile>()
     
     /** Tiles currently been displayed on the map. */
-    var displayTiles = Set<WSMapTile>()
+    var displayTiles = Set<MapTile>()
     
     
     // MARK: Constants
@@ -36,17 +37,8 @@ class LocationSearchViewController : UIViewController {
     // The maximum number of tiles that can be on the screen for downloads to start.
     let minimumUpdateZoomLevel: UInt = 6
     
-    // The maximum number of users per map tile.
-    let maximumUsersPerTile = SearchByLocationEndPoint.MapSearchLimit
-    
     // The level of dimming for tiles that are updating. A value between 0 and 1.
     let dimLevel: CGFloat = 0.3
-
-    
-    // Delegates
-    var alert: AlertDelegate = AlertDelegate.sharedAlertDelegate
-    var api: APICommunicator = APICommunicator.sharedAPICommunicator
-    var store: StoreProtocol = Store.sharedStore
     
     override func viewDidLoad() {
         clusterController = CCHMapClusterController(mapView: mapView)
@@ -82,7 +74,7 @@ class LocationSearchViewController : UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dump the display tiles and annotations the reload
-        displayTiles = Set<WSMapTile>()
+        displayTiles = Set<MapTile>()
         clusterController.removeAnnotations(Array(clusterController.annotations), withCompletionHandler: nil)
         mapView.delegate?.mapView!(mapView, regionDidChangeAnimated: false)
     }
@@ -124,7 +116,7 @@ class LocationSearchViewController : UIViewController {
     }
     
     /** Returns the tiles in the current view that are known to have less than the maximum number of users on them. */
-    func tilesInMapRegion(_ region: MKCoordinateRegion) -> Set<WSMapTile>? {
+    func tilesInMapRegion(_ region: MKCoordinateRegion) -> Set<MapTile>? {
         guard !region.center.latitude.isNaN && !region.center.longitude.isNaN else { return nil }
         
         // The map tiles at the coarsest zoom level
@@ -132,21 +124,21 @@ class LocationSearchViewController : UIViewController {
             return nil
         }
         
-        var tiles = Set<WSMapTile>()
+        var tiles = Set<MapTile>()
         store.managedObjectContext.performAndWait { 
             while parentTiles.count > 0 {
                 let tile = parentTiles.first!
                 
                 // Check for a saved tile. If there is none transfer the tile to the returned tiles.
                 let predicate = NSPredicate(format: "%K like %@", "quad_key", tile.quadKey)
-                guard let storedTile = try? self.store.retrieve(objectsWithClass: MOMapTile.self, sortBy: nil, isAscending: true, predicate: predicate, context: self.store.managedObjectContext).first else {
+                guard let storedTile: MOMapTile = try! self.store.retrieve(inContext: self.store.managedObjectContext, withPredicate: predicate, andSortBy: nil, isAscending: true).first else {
                     tiles.insert(tile)
                     parentTiles.remove(tile)
                     continue
                 }
                 
                 // Check if the saved tile has sub-tiles. If it does, add the sub tiles to the parent tiles set so that they are checked for sub-tiles. Else, add the tile to the returned tiles.
-                if let subtiles = storedTile?.sub_tiles , subtiles.count > 0 {
+                if let subtiles = storedTile.sub_tiles , subtiles.count > 0 {
                     for subtile in tile.subtiles {
                         parentTiles.insert(subtile)
                     }
@@ -167,7 +159,7 @@ class LocationSearchViewController : UIViewController {
             var storeNeedsUpdating = true
             var firstDownload = true
             let predicate = NSPredicate(format: "%K like %@", "quad_key", tile.quadKey)
-            if let storedTile = try! store.retrieve(objectsWithClass: MOMapTile.self, sortBy: nil, isAscending: true, predicate: predicate, context: store.managedObjectContext).first {
+            if let storedTile: MOMapTile = try! store.retrieve(inContext: store.managedObjectContext, withPredicate: predicate, andSortBy: nil, isAscending: true).first {
                 storeNeedsUpdating = storedTile.needsUpdating()
                 firstDownload = storedTile.users == nil
             }
@@ -175,11 +167,11 @@ class LocationSearchViewController : UIViewController {
         }
         
         /** Returns the users on a given map tile from the store. */
-        func storedUsersForMapTile(_ tile: MapTile) -> Set<WSUserLocation> {
-            var users = Set<WSUserLocation>()
+        func storedUsersForMapTile(_ tile: MapTile) -> Set<UserLocation> {
+            var users = Set<UserLocation>()
             let predicate = NSPredicate(format: "%K like %@", "quad_key", tile.quadKey)
-            if let storedTile = try! store.retrieve(objectsWithClass: MOMapTile.self, sortBy: nil, isAscending: true, predicate: predicate, context: store.managedObjectContext).first {
-                users = storedTile.userLocations ?? Set<WSUserLocation>()
+            if let storedTile: MOMapTile = try! store.retrieve(inContext: store.managedObjectContext, withPredicate: predicate, andSortBy: nil, isAscending: true).first {
+                users = storedTile.userLocations ?? Set<UserLocation>()
             }
             return users
         }
@@ -208,7 +200,7 @@ class LocationSearchViewController : UIViewController {
 //            print("Updating online.")
             if !downloadsInProgress.contains(tile) {
                 downloadWillStartForMapTile(tile)
-                api.contact(endPoint: .SearchByLocation, withPathParameters: nil, andData: tile, thenNotify: self)
+                api.contact(endPoint: .searchByLocation, withMethod: .post, andPathParameters: nil, andData: tile, thenNotify: self)
             }
         } else {
 //            print("Loading from the store.")
@@ -250,10 +242,10 @@ class LocationSearchViewController : UIViewController {
     }
     
     /** Updates the annotations grouped by the cluster controller with those in the current display tiles. */
-    func updateAnnotationsFromDisplayTiles(_ displayTiles: Set<WSMapTile>) {
+    func updateAnnotationsFromDisplayTiles(_ displayTiles: Set<MapTile>) {
         
         // Update the cluster controllers
-        var annotationsToDisplay = Set<WSUserLocation>()
+        var annotationsToDisplay = Set<UserLocation>()
         for tile in displayTiles {
             annotationsToDisplay.formUnion(tile.users)
         }
@@ -287,7 +279,7 @@ class LocationSearchViewController : UIViewController {
     func dimUpdatingTiles() {
         
         // Get all the tiles to dim at the minimum update zoom level
-        var tilesToDim = Set<WSMapTile>()
+        var tilesToDim = Set<MapTile>()
         for tile in downloadsInProgress {
             tilesToDim.insert(tile.parentAtZoomLevel(minimumUpdateZoomLevel)!)
         }

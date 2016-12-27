@@ -16,10 +16,10 @@ class WSHostSearchViewControllerTests: XCTestCase {
     
     // Test objects
     var hostSearchViewController: WSHostSearchViewController?
-    var mockSessionState: WSMOCKSessionState!
-    var mockNavigationDelegate: WSMOCKNavigationDelegate!
-    var mockAPICommunicator: WSMOCKAPICommunicator!
-    var mockAlertDelegate: WSMOCKAlertDelegate!
+    var mockSessionState: MOCKSessionState!
+    var mockNavigationDelegate: MOCKNavigationDelegate!
+    var mockAPICommunicator: MOCKAPICommunicator!
+    var mockAlertDelegate: MOCKAlertDelegate!
     let request = WSAPIRequest(endPoint: WSAPIEndPoint.Login.instance, withDelegate: WSAPICommunicator.sharedAPICommunicator, requester: nil)
     
     override func setUp() {
@@ -29,10 +29,10 @@ class WSHostSearchViewControllerTests: XCTestCase {
         XCTAssertNotNil(hostSearchViewController, "Failed to instantiate with storyboard ID: \(storyboardID).")
         
         // Initialise mocks
-        mockSessionState = WSMOCKSessionState()
-        mockNavigationDelegate = WSMOCKNavigationDelegate()
-        mockAPICommunicator = WSMOCKAPICommunicator()
-        mockAlertDelegate = WSMOCKAlertDelegate()
+        mockSessionState = MOCKSessionState()
+        mockNavigationDelegate = MOCKNavigationDelegate()
+        mockAPICommunicator = MOCKAPICommunicator()
+        mockAlertDelegate = MOCKAlertDelegate()
         
         // Set the mocks that don't require the view
         hostSearchViewController?.session = mockSessionState

@@ -1,5 +1,5 @@
 //
-//  WSMOCKApplicationDelegate.swift
+//  MOCKApplicationDelegate.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 28/04/16.
@@ -9,13 +9,11 @@
 import UIKit
 @testable import Warmshowers
 
-class WSMOCKNavigationDelegate : WSNavigationProtocol {
+class MOCKNavigation: NavigationDelegate {
     
     var showLoginScreenCalled = false
     var showMainAppCalled = false
-    var openWarmshowersHomePageCalled = false
-    var openWarmshowersSignUpPageCalled = false
-    var openWarmshowersFAQPageCalled = false
+    var openURLFromViewControllerCalled = false
     var openFeedbackEmailCalled = false
     var handleShortcutItemCalled = false
     
@@ -27,16 +25,8 @@ class WSMOCKNavigationDelegate : WSNavigationProtocol {
         showMainAppCalled = true
     }
     
-    func openWarmshowersHomePage() {
-        openWarmshowersHomePageCalled = true
-    }
-    
-    func openWarmshowersSignUpPage() {
-        openWarmshowersSignUpPageCalled = true
-    }
-    
-    func openWarmshowersFAQPage() {
-        openWarmshowersFAQPageCalled = true
+    func open(url: URL, fromViewController viewController: UIViewController) {
+        openURLFromViewControllerCalled = true
     }
     
     func openFeedbackEmail() {

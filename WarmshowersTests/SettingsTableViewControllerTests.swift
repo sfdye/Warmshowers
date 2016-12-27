@@ -1,5 +1,5 @@
 //
-//  WSSettingsTableViewControllerTests.swift
+//  SettingsTableViewControllerTests.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 30/04/16.
@@ -9,27 +9,27 @@
 import XCTest
 @testable import Warmshowers
 
-class WSSettingsTableViewControllerTests: XCTestCase {
+class SettingsTableViewControllerTests: XCTestCase {
     
     let storyboard = UIStoryboard.init(name: "Settings", bundle: nil)
     let storyboardID = SBID_Settings
     
     // Test objects
-    var settingsTableViewController: WSSettingsTableViewController?
-    var mockNavigationDelegate: WSMOCKNavigationDelegate!
-    var mockAPICommunicator: WSMOCKAPICommunicator!
-    var mockAlertDelegate: WSMOCKAlertDelegate!
+    var settingsTableViewController: SettingsTableViewController?
+    var mockNavigationDelegate: MOCKNavigation!
+    var mockAPICommunicator: MOCKAPICommunicator!
+    var mockAlertDelegate: MOCKAlert!
     
     override func setUp() {
         super.setUp()
         // Load the view controller
-        settingsTableViewController = storyboard.instantiateViewController(withIdentifier: storyboardID) as? WSSettingsTableViewController
+        settingsTableViewController = storyboard.instantiateViewController(withIdentifier: storyboardID) as? SettingsTableViewController
         XCTAssertNotNil(settingsTableViewController, "Failed to instantiate with storyboard ID: \(storyboardID).")
         
         // Initialise mocks
-        mockNavigationDelegate = WSMOCKNavigationDelegate()
-        mockAPICommunicator = WSMOCKAPICommunicator()
-        mockAlertDelegate = WSMOCKAlertDelegate()
+        mockNavigationDelegate = MOCKNavigation()
+        mockAPICommunicator = MOCKAPICommunicator()
+        mockAlertDelegate = MOCKAlert()
         
         // Set the mocks that don't require the view
         settingsTableViewController?.navigation = mockNavigationDelegate

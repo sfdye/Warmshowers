@@ -14,10 +14,10 @@ import CoreData
 
 extension MOMapTile {
 
-    @NSManaged var last_updated: Date?
-    @NSManaged var quad_key: String?
-    @NSManaged var parent_tile: MOMapTile?
-    @NSManaged var sub_tiles: NSSet?
-    @NSManaged var users: NSSet?
+    @NSManaged public var last_updated: Date?
+    @NSManaged public var quad_key: String?
+    @NSManaged public var parent_tile: MOMapTile?
+    @NSManaged public var sub_tiles: NSSet?
+    @NSManaged public var users: NSSet?
 
 }

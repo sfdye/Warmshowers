@@ -12,6 +12,10 @@ public protocol ReachabilityDelegate {
     
     var isOnline: Bool { get }
     
+    func startReachabilityNotifications()
+    
+    func stopReachabilityNotifications()
+    
     func registerForNotifications(_ observer: AnyObject, selector aSelector: Selector)
     
     func deregisterFromNotifications(_ observer: AnyObject)

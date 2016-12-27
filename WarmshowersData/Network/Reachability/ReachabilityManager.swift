@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class ReachabilityManager : ReachabilityDelegate {
+public class ReachabilityManager: ReachabilityDelegate {
     
     var reachability: Reachability? = Reachability()
     
@@ -20,7 +20,7 @@ public class ReachabilityManager : ReachabilityDelegate {
         }
     }
     
-    func startReachabilityNotifications() {
+    public func startReachabilityNotifications() {
         do {
             try reachability?.startNotifier()
         } catch {
@@ -28,7 +28,7 @@ public class ReachabilityManager : ReachabilityDelegate {
         }
     }
     
-    func stopReachabilityNotifications() {
+    public func stopReachabilityNotifications() {
         reachability?.stopNotifier()
     }
     

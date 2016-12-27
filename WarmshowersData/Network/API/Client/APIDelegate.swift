@@ -10,7 +10,9 @@ import Foundation
 
 public protocol APIDelegate {
     
+    var connection: ReachabilityDelegate { get }
+    
     /** Creates and executes a request for the given end point with the given data. */
-    func contactEndPoint(_ endPoint: APIEndPoint, withMethod method: HTTP.Method, andPathParameters parameters: Any?, andData data: Any?, thenNotify requester: APIResponseDelegate)
+    func contact(endPoint: APIEndPoint, withMethod method: HTTP.Method, andPathParameters parameters: Any?, andData data: Any?, thenNotify requester: APIResponseDelegate)
     
 }

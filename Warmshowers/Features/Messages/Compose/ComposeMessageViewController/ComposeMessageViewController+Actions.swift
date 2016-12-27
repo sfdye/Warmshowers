@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import WarmshowersData
 
 extension ComposeMessageViewController {
     
@@ -37,13 +38,13 @@ extension ComposeMessageViewController {
             }
             
             let reply = ReplyMessageData(threadID: threadID, body: body)
-            api.contact(endPoint: .ReplyToMessage, withPathParameters: nil, andData: reply, thenNotify: self)
+            api.contact(endPoint: .replyToMessage, withMethod: .post, andPathParameters: nil, andData: reply, thenNotify: self)
             
         } else {
             
             let recipientsString = recipientStringForRecipients(recipients)
             let message = NewMessageData(recipientsString: recipientsString, subject: subject, body: body)
-            api.contact(endPoint: .NewMessage, withPathParameters: nil, andData: message, thenNotify: self)
+            api.contact(endPoint: .newMessage, withMethod: .post, andPathParameters: nil, andData: message, thenNotify: self)
         }
         
         // Show the spinner

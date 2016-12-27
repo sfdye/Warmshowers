@@ -26,7 +26,7 @@ extension SettingsTableViewController {
                 performSegue(withIdentifier: SID_SettingsToRoutes, sender: nil)
             case 40:
                 ProgressHUD.show("Logging out ...")
-                api.contact(endPoint: .Logout, withPathParameters: nil, andData: nil, thenNotify: self)
+                api.contact(endPoint: .logout, withMethod: .post, andPathParameters: nil, andData: nil, thenNotify: self)
             case 50:
                 ProgressHUD.show("Deleting data ...")
                 do {

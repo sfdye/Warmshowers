@@ -8,7 +8,7 @@
 
 import Foundation
 
-class KeywordSearchData {
+public class KeywordSearchData {
     
     var keyword: String
     var offset: Int
@@ -22,7 +22,7 @@ class KeywordSearchData {
         return params
     }
     
-    init(keyword: String, offset: Int = 0, limit: Int = 50) {
+    public init(keyword: String, offset: Int = 0, limit: Int = 50) {
         self.keyword = keyword
         self.offset = offset
         self.limit = limit

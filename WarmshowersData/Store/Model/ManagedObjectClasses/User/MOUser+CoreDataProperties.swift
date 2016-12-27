@@ -14,23 +14,23 @@ import CoreData
 
 extension MOUser {
 
-    @NSManaged var additional: String?
-    @NSManaged var city: String?
-    @NSManaged var country: String?
+    @NSManaged public var additional: String?
+    @NSManaged public var city: String?
+    @NSManaged public var country: String?
     @NSManaged var p_distance: NSNumber?
-    @NSManaged var fullname: String?
-    @NSManaged var image: NSObject?
-    @NSManaged var image_url: String?
+    @NSManaged public var fullname: String?
+    @NSManaged public var image: NSObject?
+    @NSManaged public var image_url: String?
     @NSManaged var p_latitude: NSNumber?
     @NSManaged var p_longitude: NSNumber?
-    @NSManaged var name: String?
+    @NSManaged public var name: String?
     @NSManaged var p_not_currently_available: NSNumber?
-    @NSManaged var post_code: String?
-    @NSManaged var province: String?
-    @NSManaged var street: String?
+    @NSManaged public var post_code: String?
+    @NSManaged public var province: String?
+    @NSManaged public var street: String?
     @NSManaged var p_uid: NSNumber?
-    @NSManaged var sent_messages: NSSet?
-    @NSManaged var threads: NSSet?
-    @NSManaged var map_tile: MOMapTile?
+    @NSManaged public var sent_messages: NSSet?
+    @NSManaged public var threads: NSSet?
+    @NSManaged public var map_tile: MOMapTile?
 
 }

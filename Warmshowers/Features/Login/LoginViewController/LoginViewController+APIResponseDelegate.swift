@@ -1,5 +1,5 @@
 //
-//  LoginViewController+WSAPIResponseDelegate.swift
+//  LoginViewController+APIResponseDelegate.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 27/04/16.
@@ -7,18 +7,19 @@
 //
 
 import UIKit
+import WarmshowersData
 
 extension LoginViewController: APIResponseDelegate {
     
-    func request(_ request: APIRequest, didSuceedWithData data: Any?) {
+    func request(_ request: APIRequest, didSucceedWithData data: Any?) {
         
         // Recieved login response: request a token
-        if request.endPoint.type = .login {
-            api.contact(endPoint: .Token, withPathParameters: nil, andData: nil, thenNotify: self)
+        if request.endPointType == .login {
+            api.contact(endPoint: .token, withMethod: .get, andPathParameters: nil, andData: nil, thenNotify: self)
             return
         }
         
-        guard let token = data as? String else {
+        guard let _ = data as? String else {
             // Handle this error
             return
         }

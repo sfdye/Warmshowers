@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import CoreData
+import WarmshowersData
 
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
@@ -27,20 +27,12 @@ enum HostProfileTab {
     case contact
 }
 
-class UserProfileTableViewController: UITableViewController {
+class UserProfileTableViewController: UITableViewController, Delegator, DataSource {
     
     var user: User?
     var recipient: MOUser?
     
     @IBOutlet var imageHeight: NSLayoutConstraint!
-    
-    // Delegates
-    var navigation: NavigationProtocol = NavigationDelegate.sharedNavigationDelegate
-    let session: SessionStateProtocol = SessionState.sharedSessionState
-    var api: APICommunicatorProtocol = APICommunicator.sharedAPICommunicator
-    var connection: ReachabilityProtocol = ReachabilityManager.sharedReachabilityManager
-    var store: StoreProtocol = Store.sharedStore
-    var alert: AlertProtocol = AlertDelegate.sharedAlertDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,20 +55,20 @@ class UserProfileTableViewController: UITableViewController {
         
         // Get the users profile image if they have one.
         if user?.profileImage == nil && user?.profileImageURL != nil {
-            api.contact(endPoint: .ImageResource, withPathParameters: user?.profileImageURL, andData: nil, thenNotify: self)
+            api.contact(endPoint: .imageResource, withMethod: .get, andPathParameters: user?.profileImageURL, andData: nil, thenNotify: self)
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         // Download the users feedback.
-        api.contact(endPoint: .UserFeedback, withPathParameters: String(user!.uid) as NSString, andData: nil, thenNotify: self)
+        api.contact(endPoint: .feedback, withMethod: .get, andPathParameters: String(user!.uid) as NSString, andData: nil, thenNotify: self)
     }
 
     
     /** Sets up a done button if one is needed. */
     func configureDoneButton() {
         if navigationController?.viewControllers.count < 2 {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(WSUserProfileTableViewController.doneButtonPressed))
+            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(UserProfileTableViewController.doneButtonPressed))
         }
     }
     
@@ -97,7 +89,7 @@ class UserProfileTableViewController: UITableViewController {
             
             let logoutAction = UIAlertAction(title: "Logout", style: .default) { (logoutAction) -> Void in
                 // Logout and return the login screeen.
-                self.api.contact(endPoint: .Logout, withPathParameters: nil, andData: nil, thenNotify: self)
+                self.api.contact(endPoint: .logout, withMethod: .post, andPathParameters: nil, andData: nil, thenNotify: self)
                 ProgressHUD.show(self.navigationController!.view, label: "Logging out ...")
             }
             actionAlert.addAction(logoutAction)

@@ -1,5 +1,5 @@
 //
-//  WSMOCKSessionState.swift
+//  MOCKSessionState.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 30/04/16.
@@ -9,7 +9,7 @@
 import UIKit
 @testable import Warmshowers
 
-class WSMOCKSessionState : WSSessionStateProtocol {
+class MOCKSession: SessionDelegate {
     
     var uidReturned = false
     var usernameReturned = false

@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="u1K-i7-mGS">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="u1K-i7-mGS">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Login View Controller-->
         <scene sceneID="QFQ-Jf-mNM">
             <objects>
-                <viewController storyboardIdentifier="Login" id="u1K-i7-mGS" customClass="WSLoginViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Login" id="u1K-i7-mGS" customClass="LoginViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3JT-d1-oiz"/>
                         <viewControllerLayoutGuide type="bottom" id="pud-cq-cJ0"/>
@@ -19,34 +22,39 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username or Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aeg-Nn-qkC">
+                                <rect key="frame" x="20" y="268.5" width="335" height="30"/>
                                 <accessibility key="accessibilityConfiguration" hint="Username or Email"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4VT-hK-Va1">
+                                <rect key="frame" x="20" y="368.5" width="335" height="33"/>
                                 <color key="backgroundColor" red="0.18823529410000001" green="0.2784313725" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="Login">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="loginButton:" destination="u1K-i7-mGS" eventType="touchUpInside" id="JW3-u5-TJa"/>
+                                    <action selector="loginButton:" destination="u1K-i7-mGS" eventType="touchUpInside" id="MiA-bl-QXR"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AEk-9g-Q2M">
+                                <rect key="frame" x="20" y="318.5" width="335" height="30"/>
                                 <accessibility key="accessibilityConfiguration" hint="Password"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kkm-vv-tbZ">
+                                <rect key="frame" x="124.5" y="421.5" width="126" height="30"/>
                                 <state key="normal" title="Create an account">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="createAccountButtonPressed:" destination="u1K-i7-mGS" eventType="touchUpInside" id="UmN-kV-Ml6"/>
+                                    <action selector="createAccountButtonPressed:" destination="u1K-i7-mGS" eventType="touchUpInside" id="sEl-1o-pa1"/>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="hnu-Ev-rd0">
+                                <rect key="frame" x="20" y="83.5" width="335" height="160"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="400" id="YAF-33-puY"/>
                                     <constraint firstAttribute="height" constant="160" id="fpL-ut-raT"/>
@@ -102,8 +110,8 @@
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="passwordTextField" destination="AEk-9g-Q2M" id="KHs-5V-V6k"/>
-                        <outlet property="usernameTextField" destination="aeg-Nn-qkC" id="Zvj-bH-qGN"/>
+                        <outlet property="passwordTextField" destination="AEk-9g-Q2M" id="tf8-7B-QBh"/>
+                        <outlet property="usernameTextField" destination="aeg-Nn-qkC" id="KBM-QH-upa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NKo-Zy-aov" userLabel="First Responder" sceneMemberID="firstResponder"/>

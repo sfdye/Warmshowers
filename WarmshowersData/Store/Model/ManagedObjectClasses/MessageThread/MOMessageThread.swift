@@ -9,33 +9,29 @@
 import Foundation
 import CoreData
 
-
-class MOMessageThread: NSManagedObject, JSONUpdateable {
+public class MOMessageThread: NSManagedObject, JSONUpdateable {
     
     // MARK: Getters and setters
     
-    var count: Int? {
+    public var count: Int? {
         get { return p_count?.intValue }
         set(new) { p_count = new == nil ? nil : NSNumber(value: new!) }
     }
     
-    var has_tokens: Bool {
+    public var has_tokens: Bool {
         get { return p_has_tokens?.boolValue ?? false }
         set(new) { p_has_tokens = NSNumber(value: new) }
     }
     
-    var is_new: Bool {
+    public var is_new: Bool {
         get { return p_is_new?.boolValue ?? false }
         set(new) { p_is_new = NSNumber(value: new) }
     }
     
-    var thread_id: Int? {
+    public var thread_id: Int? {
         get { return p_thread_id?.intValue }
         set(new) { p_thread_id = new == nil ? nil : NSNumber(value: new!) }
     }
-    
-    static var entityName: String { return "MessageThread" }
-    
     
     // MARK: JSONUpdateable
     
@@ -66,7 +62,7 @@ class MOMessageThread: NSManagedObject, JSONUpdateable {
     // MARK: Instance methods
     
     /** Returns a string of the message thread participant names. */
-    func getParticipantString(currentUserUID: Int?) -> String {
+    public func participantString(withCurrentUserUID currentUserUID: Int?) -> String {
         
         guard let users = participants?.allObjects as? [MOUser] else {
             return ""
@@ -92,7 +88,7 @@ class MOMessageThread: NSManagedObject, JSONUpdateable {
     }
     
     /** Returns the message thread participants with the currently logged-in user removed. */
-    func otherParticipants(currentUserUID: Int) -> [MOUser] {
+    public func otherParticipants(currentUserUID: Int) -> [MOUser] {
         
         guard var users = participants?.allObjects as? [MOUser] else {
             return [MOUser]()
@@ -112,7 +108,7 @@ class MOMessageThread: NSManagedObject, JSONUpdateable {
     }
     
     /** Returns true if the message count doesn't match the number of messages relationships. */
-    func needsUpdating() -> Bool {
+    public func needsUpdating() -> Bool {
         return count != messages!.count
     }
     
@@ -132,7 +128,7 @@ class MOMessageThread: NSManagedObject, JSONUpdateable {
     }
     
     /** Returns a string of the lastest message body. */
-    func lastestMessagePreview() -> String? {
+    public func lastestMessagePreview() -> String? {
         
         if let latestMessage =  self.lastestMessage() {
             if var preview = latestMessage.body {

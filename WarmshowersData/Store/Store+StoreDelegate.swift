@@ -42,7 +42,7 @@ extension Store: StoreDelegate, StoreUpdateDelegate {
     }
     
     func newOrExisting<T: NSManagedObject>(inContext context: NSManagedObjectContext, withJSON json: Any, withParser parser: JSONParser) throws -> T where T : JSONUpdateable {
-        let predicate = try T.predicate(fromJSON: json, withParser: jsonParser)
+        let predicate = try T.predicate(fromJSON: json, withParser: parser)
         if let exisitng: T = try retrieve(inContext: context, withPredicate: predicate, andSortBy: nil, isAscending: true).first {
             try exisitng.update(withJSON: json, withParser: parser)
             return exisitng

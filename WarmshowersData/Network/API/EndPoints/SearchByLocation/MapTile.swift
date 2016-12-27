@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class MapTile: Hashable {
+public class MapTile: Hashable {
     
     /**
      The time (in seconds) at which cached user location data is deemed to old and should be updated from either the store or from downloading fresh data.
@@ -24,17 +24,17 @@ class MapTile: Hashable {
     var y: UInt
     
     /** The tile zoom index */
-    var z: UInt
+    public var z: UInt
     
     /** Hosts whose location is within the bounds of the map tile. */
-    var users: Set<UserLocation> {
+    public var users: Set<UserLocation> {
         didSet {
             last_updated = Date()
         }
     }
     
     /** The quad key (base on Bing maps) to uniquely identify tiles */
-    var quadKey: String
+    public var quadKey: String
     
     /** The time that the users on the tile were last updated. */
     var last_updated: Date?
@@ -82,7 +82,7 @@ class MapTile: Hashable {
     }
     
     /** Returns the four quadrant sub-tiles on the tile. */
-    var subtiles: [MapTile] {
+    public var subtiles: [MapTile] {
         let z = self.z + 1
         let xMin = self.x * 2
         let yMin = self.y * 2
@@ -96,7 +96,7 @@ class MapTile: Hashable {
     }
     
     /** Returns true if the user data on the tile is older that the expiry time. */
-    var needsUpdating: Bool {
+    public var needsUpdating: Bool {
         guard let last_updated = last_updated else { return true }
         return abs(last_updated.timeIntervalSinceNow) > UpdateThresholdTime
     }
@@ -104,7 +104,7 @@ class MapTile: Hashable {
     
     // MARK: Hashable
     
-    var hashValue: Int { return quadKey.hashValue }
+    public var hashValue: Int { return quadKey.hashValue }
     
     
     // MARK: Initialisers
@@ -220,7 +220,7 @@ class MapTile: Hashable {
     }
     
     /** Factory method to return all the map tiles that are it a given map region. */
-    class func tilesForMapRegion(_ region: MKCoordinateRegion, atZoomLevel z: UInt) -> Set<MapTile>? {
+    public class func tilesForMapRegion(_ region: MKCoordinateRegion, atZoomLevel z: UInt) -> Set<MapTile>? {
         
         // Only return tiles within the latitude range pf -85 < lat < 85.
         let minLat = max(region.minimumLatitude, -85.0)
@@ -256,7 +256,7 @@ class MapTile: Hashable {
         return tiles
     }
     
-    func isInRegion(_ region: MKCoordinateRegion) -> Bool {
+    public func isInRegion(_ region: MKCoordinateRegion) -> Bool {
         
         func moveDegrees(_ degrees: inout CLLocationDegrees, intoRangeWithLowerBound lowerBound: Double, andUpperBound upperBound: Double) {
             let range = upperBound - lowerBound
@@ -290,7 +290,7 @@ class MapTile: Hashable {
             && maximumLongitude > minLon
     }
     
-    func parentAtZoomLevel(_ z: UInt) -> MapTile? {
+    public func parentAtZoomLevel(_ z: UInt) -> MapTile? {
         guard z <= UInt(quadKey.characters.count) else { return nil }
         let index = quadKey.characters.index(quadKey.startIndex, offsetBy: Int(z))
         let parentQuadKey = quadKey.substring(to: index)
@@ -299,7 +299,7 @@ class MapTile: Hashable {
     }
     
     /** Returns a polygon that overlays the tile. */
-    func polygon() -> MKPolygon {
+    public func polygon() -> MKPolygon {
         var vertices = [CLLocationCoordinate2D]()
         vertices.append(CLLocationCoordinate2D(latitude: maximumLatitude, longitude: minimumLongitude))
         vertices.append(CLLocationCoordinate2D(latitude: maximumLatitude, longitude: maximumLongitude))
@@ -320,7 +320,7 @@ class MapTile: Hashable {
     
 }
 
-func == (lhs: MapTile, rhs: MapTile) -> Bool {
+public func == (lhs: MapTile, rhs: MapTile) -> Bool {
     return lhs.quadKey == rhs.quadKey
 }
 

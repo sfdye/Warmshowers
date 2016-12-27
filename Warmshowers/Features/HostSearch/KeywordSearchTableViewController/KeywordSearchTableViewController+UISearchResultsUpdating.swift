@@ -1,5 +1,5 @@
 //
-//  KeywordSearchTableViewController+WSKeywordSearchTableViewControllerProtocol.swift
+//  KeywordSearchTableViewController+UISearchResultsUpdating.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 1/05/16.
@@ -26,7 +26,7 @@ extension KeywordSearchTableViewController : UISearchResultsUpdating {
         }
         
         // Search after 0.5 seconds to debounce input
-        debounceTimer = Timer(timeInterval: 0.7, target: self, selector: #selector(WSKeywordSearchTableViewController.searchWithKeywordOnTimer(_:)), userInfo: keyword, repeats: false)
+        debounceTimer = Timer(timeInterval: 0.7, target: self, selector: #selector(KeywordSearchTableViewController.searchWithKeywordOnTimer(_:)), userInfo: keyword, repeats: false)
         RunLoop.current.add(debounceTimer!, forMode: RunLoopMode.defaultRunLoopMode)
         
         // Show the spinner

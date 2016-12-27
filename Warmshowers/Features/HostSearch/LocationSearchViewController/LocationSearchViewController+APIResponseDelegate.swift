@@ -1,5 +1,5 @@
 //
-//  LocationSearchViewController+WSAPIResponseDelegate.swift
+//  LocationSearchViewController+APIResponseDelegate.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 11/05/16.
@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import WarmshowersData
 
 extension LocationSearchViewController : APIResponseDelegate {
     
@@ -15,7 +16,7 @@ extension LocationSearchViewController : APIResponseDelegate {
         downloadDidEndForMapTile(tile)
     }
     
-    func request(_ request: APIRequest, didSuceedWithData data: Any?) {
+    func request(_ request: APIRequest, didSucceedWithData data: Any?) {
         guard let tile = request.data as? MapTile else { return }
         loadAnnotationsForMapTile(tile)
     }

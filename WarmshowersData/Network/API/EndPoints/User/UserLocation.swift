@@ -13,32 +13,32 @@ enum UserLocationError: Error {
     case invalidInput
 }
 
-class UserLocation: NSObject {
+public class UserLocation: NSObject {
     
     // MARK: Properties
     
-    var fullname: String
+    public var fullname: String
     var name: String
-    var uid: Int
+    public var uid: Int
     var additional: String?
     var city: String?
     var country: String?
     var distance: Double?
     var latitude: Double { return coordinate.latitude }
     var longitude: Double { return coordinate.longitude }
-    var coordinate: CLLocationCoordinate2D
-    var notcurrentlyavailable: Bool?
+    public var coordinate: CLLocationCoordinate2D
+    public var notcurrentlyavailable: Bool?
     var postCode: String?
     var province: String?
-    var imageURL: String?
+    public var imageURL: String?
     var street: String? = nil
-    var image: UIImage?
+    public var image: UIImage?
     var tileID: String?
     
     
     // MARK: Calculated Properties
     
-    override var hashValue: Int { return uid }
+    override public var hashValue: Int { return uid }
     
     var location: CLLocation { return CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude) }
     
@@ -52,7 +52,7 @@ class UserLocation: NSObject {
         }
     }
     
-    var shortAddress: String {
+    public var shortAddress: String {
         var address: String = ""
         address.appendWithComma(city)
         if let country = country {

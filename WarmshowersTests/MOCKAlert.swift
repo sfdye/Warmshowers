@@ -1,5 +1,5 @@
 //
-//  WSMOCKAlertDelegate.swift
+//  MOCKAlertDelegate.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 29/04/16.
@@ -9,7 +9,7 @@
 import UIKit
 @testable import Warmshowers
 
-class WSMOCKAlertDelegate : WSAlertProtocol {
+class MOCKAlert: AlertDelegate {
     
     var presentAlertCalled = false
     var title: String?

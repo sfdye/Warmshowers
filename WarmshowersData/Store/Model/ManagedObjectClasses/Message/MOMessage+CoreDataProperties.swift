@@ -14,11 +14,11 @@ import CoreData
 
 extension MOMessage {
 
-    @NSManaged var body: String?
+    @NSManaged public var body: String?
     @NSManaged var p_is_new: NSNumber?
     @NSManaged var p_message_id: NSNumber?
-    @NSManaged var timestamp: Date?
-    @NSManaged var author: MOUser?
-    @NSManaged var thread: MOMessageThread?
+    @NSManaged public var timestamp: Date?
+    @NSManaged public var author: MOUser?
+    @NSManaged public var thread: MOMessageThread?
 
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WarmshowersData
 
 extension LoginViewController {
     
@@ -37,7 +38,7 @@ extension LoginViewController {
         
         // Login
         let loginData = LoginData(username: username, password: password)
-        api.contact(endPoint: .Login, withPathParameters: nil, andData: loginData, thenNotify: self)
+        api.contact(endPoint: .login, withMethod: .post, andPathParameters: nil, andData: loginData, thenNotify: self)
     }
     
     /**

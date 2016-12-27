@@ -1,5 +1,5 @@
 //
-//  SettingsTableViewController+WSAPIResponseDelegate.swift
+//  SettingsTableViewController+APIResponseDelegate.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 30/04/16.
@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import WarmshowersData
 
 extension SettingsTableViewController : APIResponseDelegate {
     
@@ -14,9 +15,9 @@ extension SettingsTableViewController : APIResponseDelegate {
         ProgressHUD.hide()
     }
     
-    func request(_ request: APIRequest, didSuceedWithData data: Any?) {
-        switch request.endPoint.type {
-        case .Logout:
+    func request(_ request: APIRequest, didSucceedWithData data: Any?) {
+        switch request.endPointType {
+        case .logout:
             session.didLogout(fromViewContoller: self)
         default:
             break
@@ -24,8 +25,8 @@ extension SettingsTableViewController : APIResponseDelegate {
     }
     
     func request(_ request: APIRequest, didFailWithError error: Error) {
-        switch request.endPoint.type {
-        case .Logout:
+        switch request.endPointType {
+        case .logout:
             switch error {
             case is APICommunicatorError:
                 switch (error as! APICommunicatorError) {

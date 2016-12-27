@@ -8,29 +8,24 @@
 
 import UIKit
 import CoreData
+import WarmshowersData
 
-class MessageThreadsTableViewController: UITableViewController {
+class MessageThreadsTableViewController: UITableViewController, Delegator, DataSource {
     
     // MARK: Properties
     
     var lastUpdated: Date?
     var downloadsInProgress = Set<Int>()
     var errorCache: Error?
-    var fetchedResultsController: NSFetchedResultsController<WSMOMessageThread>?
+    var fetchedResultsController: NSFetchedResultsController<MOMessageThread>?
     let formatter = DateFormatter()
     
-    var currentUserUID: Int? { return SessionState.sharedSessionState.uid }
-    
-    // Delegates
-    var alert: AlertDelegate = AlertDelegate.sharedAlertDelegate
-    var api: APICommunicator = APICommunicator.sharedAPICommunicator
-    var store: StoreProtocol = Store.sharedStore
-    var connection: ReachabilityProtocol = ReachabilityManager.sharedReachabilityManager
+    var currentUserUID: Int? { return session.uid }
     
     // MARK: View life cycle
     
     deinit {
-        connection.deregisterFromNotifications(self)
+        api.connection.deregisterFromNotifications(self)
     }
     
     override func viewDidLoad() {
@@ -39,7 +34,7 @@ class MessageThreadsTableViewController: UITableViewController {
         // Navigation bar configuration.
         navigationItem.title = "Messages"
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: WarmShowersColor.Green, NSFontAttributeName: WarmShowersFont.SueEllenFrancisco(26)]
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(WSMessageThreadsTableViewController.update))
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(MessageThreadsTableViewController.update))
         
         // Set up the date formatter.
         let template = "dd/MM/yy"
@@ -48,13 +43,13 @@ class MessageThreadsTableViewController: UITableViewController {
         
         // Set the refresh controller for the tableview.
         refreshControl = UIRefreshControl()
-        refreshControl?.addTarget(self, action: #selector(WSMessageThreadsTableViewController.update), for: UIControlEvents.valueChanged)
+        refreshControl?.addTarget(self, action: #selector(MessageThreadsTableViewController.update), for: UIControlEvents.valueChanged)
         
         // Set up the fetch results controller.
         initialiseFetchResultsControllerWithStore(store)
         
         // Reachability notifications
-        connection.registerForAndStartNotifications(self, selector: #selector(WSMessageThreadsTableViewController.reachabilityChanged(_:)))
+        api.connection.registerForAndStartNotifications(self, selector: #selector(MessageThreadsTableViewController.reachabilityChanged(_:)))
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -87,9 +82,11 @@ class MessageThreadsTableViewController: UITableViewController {
         fetchedResultsController = nil
     }
     
-    func initialiseFetchResultsControllerWithStore(_ store: StoreProtocol) {
-        let request = NSFetchRequest<WSMOMessageThread>(entityName: MOMessageThread.entityName)
-        request.sortDescriptors = [NSSortDescriptor(key: "last_updated", ascending: false)]
+    func initialiseFetchResultsControllerWithStore(_ store: StoreDelegate) {
+        let request = NSFetchRequest<MOMessageThread>()
+        request.sortDescriptors = [
+            NSSortDescriptor(key: "last_updated", ascending: false)
+        ]
         let moc = store.managedObjectContext
         fetchedResultsController = NSFetchedResultsController(
             fetchRequest: request,
@@ -112,7 +109,7 @@ class MessageThreadsTableViewController: UITableViewController {
     }
     
     func showReachabilityBannerIfNeeded() {
-        if !connection.isOnline {
+        if !api.connection.isOnline {
             alert.showNoInternetBanner()
         } else {
             alert.hideAllBanners()
@@ -124,7 +121,7 @@ class MessageThreadsTableViewController: UITableViewController {
     
     func update() {
         ProgressHUD.show("Updating messages ...")
-        api.contact(endPoint: .GetAllMessageThreads, withPathParameters: nil, andData: nil, thenNotify: self)
+        api.contact(endPoint: .messageThreads, withMethod: .get, andPathParameters: nil, andData: nil, thenNotify: self)
     }
     
     /** Called after and update once all API requests have responded. */
@@ -148,9 +145,9 @@ class MessageThreadsTableViewController: UITableViewController {
         
         // Update the messages if necessary, or just reload if no updates are required
         do {
-            let messageThreads = try store.retrieve(objectsWithClass: MOMessageThread.self, sortBy: nil, isAscending: true, predicate: nil, context: store.managedObjectContext)
+            let messageThreads: [MOMessageThread] = try store.retrieve(inContext: store.managedObjectContext, withPredicate: nil, andSortBy: nil, isAscending: true)
             
-            var threadsNeedingUpdate = [WSMOMessageThread]()
+            var threadsNeedingUpdate = [MOMessageThread]()
             for thread in messageThreads {
                 if thread.needsUpdating() {
                     threadsNeedingUpdate.append(thread)
@@ -164,7 +161,7 @@ class MessageThreadsTableViewController: UITableViewController {
             
             for thread in threadsNeedingUpdate {
                 guard let threadID = thread.thread_id else { continue }
-                api.contact(endPoint: .GetMessageThread, withPathParameters: nil, andData: threadID, thenNotify: self)
+                api.contact(endPoint: .messageThread, withMethod: .post, andPathParameters: nil, andData: threadID, thenNotify: self)
                 downloadsInProgress.insert(threadID)
             }
         } catch let error as NSError {
@@ -175,7 +172,7 @@ class MessageThreadsTableViewController: UITableViewController {
     /** Updates the tab bar badge with the number of unread threads. */
     func updateTabBarBadge() {
         do {
-            let messageThreads = try store.retrieve(objectsWithClass: MOMessageThread.self, sortBy: nil, isAscending: true, predicate: nil, context: store.managedObjectContext)
+            let messageThreads: [MOMessageThread] = try store.retrieve(inContext: store.managedObjectContext, withPredicate: nil, andSortBy: nil, isAscending: true)
             
             var unread = 0
             for thread in messageThreads {

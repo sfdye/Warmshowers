@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum APIEndPointError : Error {
+public enum APIEndPointError : Error {
     case unsupportedMethod(endPoint: String, method: HTTP.Method)
     case invalidPathParameters(endPoint: String, errorDescription: String?)
     case invalidOutboundData(endPoint: String, errorDescription: String?)

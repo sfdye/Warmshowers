@@ -1,5 +1,5 @@
 //
-//  HostSearchViewController+WSHostSearchControllerDelegate.swift
+//  HostSearchViewController+HostSearchControllerDelegate.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 1/05/16.

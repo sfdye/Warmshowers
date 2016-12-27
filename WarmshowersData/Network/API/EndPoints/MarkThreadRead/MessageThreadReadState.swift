@@ -8,12 +8,12 @@
 
 import Foundation
 
-class MessageThreadReadState {
+public class MessageThreadReadState {
     
-    var threadID: Int
-    var read: Bool
+    public var threadID: Int
+    public var read: Bool
     
-    init(threadID: Int, read: Bool) {
+    public init(threadID: Int, read: Bool) {
         self.threadID = threadID
         self.read = read
     }

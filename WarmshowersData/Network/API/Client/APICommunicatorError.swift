@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum APICommunicatorError : Error {
+public enum APICommunicatorError : Error {
     case offline
     case noDelegate
     case failedToAuthenticateRequest

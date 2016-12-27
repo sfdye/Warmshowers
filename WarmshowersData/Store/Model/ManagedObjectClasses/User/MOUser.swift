@@ -10,31 +10,31 @@ import Foundation
 import CoreData
 import MapKit
 
-class MOUser: NSManagedObject, JSONUpdateable {
+public class MOUser: NSManagedObject, JSONUpdateable {
     
     // MARK: Getters and setters
     
-    var distance: Double? {
+    public var distance: Double? {
         get { return p_distance?.doubleValue }
         set(new) { p_distance = new == nil ? nil : NSNumber(value: new! as Double) }
     }
     
-    var latitude: Double? {
+    public var latitude: Double? {
         get { return p_latitude?.doubleValue }
         set(new) { p_latitude = new == nil ? nil : NSNumber(value: new! as Double) }
     }
     
-    var longitude: Double? {
+    public var longitude: Double? {
         get { return p_longitude?.doubleValue }
         set(new) { p_longitude = new == nil ? nil : NSNumber(value: new! as Double) }
     }
     
-    var not_currently_available: Bool? {
+    public var not_currently_available: Bool? {
         get { return p_not_currently_available?.boolValue ?? true }
         set(new) { p_not_currently_available = new == nil ? nil : NSNumber(value: new! as Bool) }
     }
     
-    var uid: Int {
+    public var uid: Int {
         get { return p_uid!.intValue }
         set(new) { p_uid = NSNumber(value: new as Int) }
     }
@@ -42,13 +42,13 @@ class MOUser: NSManagedObject, JSONUpdateable {
     
     // MARK: Calculated properties
     
-    var coordinate: CLLocationCoordinate2D {
+    public var coordinate: CLLocationCoordinate2D {
         return CLLocationCoordinate2D(latitude: latitude ?? 0.0, longitude: longitude ?? 0.0)
     }
     
-    var location: CLLocation { return CLLocation(latitude: latitude ?? 0.0, longitude: longitude ?? 0.0) }
+    public var location: CLLocation { return CLLocation(latitude: latitude ?? 0.0, longitude: longitude ?? 0.0) }
     
-    var distanceToUser: CLLocationDistance? {
+    public var distanceToUser: CLLocationDistance? {
         get {
             let lm = CLLocationManager()
             if let location = lm.location {
@@ -58,7 +58,7 @@ class MOUser: NSManagedObject, JSONUpdateable {
         }
     }
     
-    var shortAddress: String {
+    public var shortAddress: String {
         var address: String = ""
         address.appendWithComma(city)
         if let country = country {
@@ -67,7 +67,7 @@ class MOUser: NSManagedObject, JSONUpdateable {
         return address
     }
     
-    var address: String {
+    public var address: String {
         var address: String = ""
         address.appendWithNewLine(street)
         address.appendWithNewLine(additional)
@@ -78,9 +78,6 @@ class MOUser: NSManagedObject, JSONUpdateable {
         }
         return address
     }
-    
-    static var entityName: String { return "User" }
-    
     
     // MARK: JSONUpdateable
     

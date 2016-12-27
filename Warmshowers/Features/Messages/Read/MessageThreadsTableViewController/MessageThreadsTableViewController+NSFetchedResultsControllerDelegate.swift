@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import WarmshowersData
 
 extension MessageThreadsTableViewController : NSFetchedResultsControllerDelegate {
     

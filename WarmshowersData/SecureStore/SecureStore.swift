@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import KeychainAccess
 
 public class SecureStore: SecureStoreDelegate {
     

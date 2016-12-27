@@ -8,38 +8,38 @@
 
 import UIKit
 
-class Recommendation {
+public class Recommendation {
     
     // MARK: Properties
     
-    var body: String?
-    var date: Date = Date()
-    var type: RecommendationType = .ForHost
-    var rating: RecommendationRating = .Positive
-    var author: User?
-    var recommendedUserUID: Int?
-    var recommendedUserName: String?
-    var authorImageURL: String?
-    var authorImage: UIImage?
+    public var body: String?
+    public var date: Date = Date()
+    public var type: RecommendationType = .forHost
+    public var rating: RecommendationRating = .positive
+    public var author: User?
+    public var recommendedUserUID: Int?
+    public var recommendedUserName: String?
+    public var authorImageURL: String?
+    public var authorImage: UIImage?
     
-    var month: Int {
+    public var month: Int {
         let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
         return (calendar as NSCalendar).components([.month], from: date).month!
     }
     
-    var year: Int {
+    public var year: Int {
         let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
         return (calendar as NSCalendar).components([.year], from: date).year!
     }
     
-    var hasBody: Bool {
+    public var hasBody: Bool {
         return body != nil && body != ""
     }
     
     
     // MARK: Initialisers
     
-    init() {}
+    public init() {}
     
     init?(json: Any) {
         
@@ -62,23 +62,23 @@ class Recommendation {
         self.date = Date(timeIntervalSince1970: Double(date))
         switch type {
         case "Guest":
-            self.type = .ForGuest
+            self.type = .forGuest
         case "Host":
-            self.type = .ForHost
+            self.type = .forHost
         case "Met Traveling":
-            self.type = .MetTraveling
+            self.type = .metTraveling
         case "Other":
-            self.type = .Other
+            self.type = .other
         default:
             return nil
         }
         switch rating {
         case "Positive":
-            self.rating = .Positive
+            self.rating = .positive
         case "Negative":
-            self.rating = .Negative
+            self.rating = .negative
         case "Neutral":
-            self.rating = .Neutral
+            self.rating = .neutral
         default:
             return nil
         }

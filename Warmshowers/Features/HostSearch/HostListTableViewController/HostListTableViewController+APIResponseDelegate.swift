@@ -1,5 +1,5 @@
 //
-//  HostListTableViewController+WSAPIResponseDelegate.swift
+//  HostListTableViewController+APIResponseDelegate.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 9/07/16.
@@ -7,22 +7,23 @@
 //
 
 import UIKit
+import WarmshowersData
 
-extension HostListTableViewController : APIResponseDelegate {
+extension HostListTableViewController: APIResponseDelegate {
     
     func requestDidComplete(_ request: APIRequest) {
         ProgressHUD.hide(navigationController?.view)
     }
     
-    func request(_ request: APIRequest, didSuceedWithData data: Any?) {
-        switch request.endPoint.type {
-        case .ImageResource:
+    func request(_ request: APIRequest, didSucceedWithData data: Any?) {
+        switch request.endPointType {
+        case .imageResource:
             guard
                 let imageURL = request.parameters as? String,
                 let image = data as? UIImage
                 else { return }
             setImage(image, forHostWithImageURL: imageURL)
-        case .UserInfo:
+        case .user:
             guard let host = data as? User else { return }
             DispatchQueue.main.async(execute: { 
                 self.performSegue(withIdentifier: SID_HostListToUserAccount, sender: host)
@@ -33,11 +34,11 @@ extension HostListTableViewController : APIResponseDelegate {
     }
     
     func request(_ request: APIRequest, didFailWithError error: Error) {
-        switch request.endPoint.type {
-        case .ImageResource:
+        switch request.endPointType {
+        case .imageResource:
             // No need for action.
             break
-        case .UserInfo:
+        case .user:
             alert.presentAlertFor(self, withTitle: "Error", button: "OK", message: "Failed to get user info.")
         default:
             break

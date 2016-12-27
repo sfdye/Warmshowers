@@ -8,12 +8,12 @@
 
 import Foundation
 
-class ReplyMessageData {
+public class ReplyMessageData {
     
     var threadID: Int
     var body: String
     
-    init(threadID: Int, body: String) {
+    public init(threadID: Int, body: String) {
         self.threadID = threadID
         self.body = body
     }

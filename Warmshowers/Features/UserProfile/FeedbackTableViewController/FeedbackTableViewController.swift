@@ -9,14 +9,11 @@
 import UIKit
 import WarmshowersData
 
-class FeedbackTableViewController: UITableViewController {
+class FeedbackTableViewController: UITableViewController, DataSource {
 
     var placeholderImage: UIImage? = UIImage(named: "ThumbnailPlaceholder")
     var feedback: [Recommendation]?
     let formatter = DateFormatter()
-    
-    // Delegates
-    var api: APICommunicatorProtocol = APICommunicator.sharedAPICommunicator
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,10 +34,10 @@ class FeedbackTableViewController: UITableViewController {
         let recommendation = feedback[(indexPath as NSIndexPath).row]
         guard recommendation.authorImage == nil else { return }
         if let url = recommendation.authorImageURL {
-            api.contact(endPoint: .ImageResource, withPathParameters: url as NSString, andData: nil, thenNotify: self)
+            api.contact(endPoint: .imageResource, withMethod: .get, andPathParameters: url as NSString, andData: nil, thenNotify: self)
         } else if let uid = recommendation.author?.uid {
             // We first need to get the image URL from the authors profile.
-            api.contact(endPoint: .UserInfo, withPathParameters: String(uid) as NSString, andData: nil, thenNotify: self)
+            api.contact(endPoint: .user, withMethod: .get, andPathParameters: String(uid) as NSString, andData: nil, thenNotify: self)
         }
     }
     
@@ -93,20 +90,20 @@ class FeedbackTableViewController: UITableViewController {
     
     func textColorForRecommedationRating(_ rating: RecommendationRating) -> UIColor {
         switch rating {
-        case .Positive:
+        case .positive:
             return WarmShowersColor.Positive
-        case .Negative:
+        case .negative:
             return WarmShowersColor.Negative
-        case .Neutral:
+        case .neutral:
             return WarmShowersColor.Neutral
         }
     }
     
     func textForRecommendationType(_ type: RecommendationType) -> String? {
         switch type {
-        case .ForGuest:
+        case .forGuest:
             return "Host, "
-        case .ForHost:
+        case .forHost:
             return "Guest, "
         default:
             return type.rawValue + ", "

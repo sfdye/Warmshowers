@@ -1,5 +1,5 @@
 //
-//  MessageThreadTableViewController+WSAPIResponseDelegate.swift
+//  MessageThreadTableViewController+APIResponseDelegate.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 13/07/16.
@@ -7,17 +7,18 @@
 //
 
 import UIKit
+import WarmshowersData
 
 extension MessageThreadTableViewController: APIResponseDelegate {
     
     func requestDidComplete(_ request: APIRequest) {
-        switch request.endPoint.type {
-        case .GetMessageThread:
+        switch request.endPointType {
+        case .messageThread:
             DispatchQueue.main.async(execute: { [weak self] in
                 self?.refreshControl?.endRefreshing()
                 self?.tableView.reloadData()
             })
-        case .UserInfo:
+        case .user:
             guard let uid = request.parameters as? String else { return }
             downloadsInProgress.remove(uid)
         default:
@@ -25,31 +26,31 @@ extension MessageThreadTableViewController: APIResponseDelegate {
         }
     }
     
-    func request(_ request: APIRequest, didSuceedWithData data: Any?) {
-        switch request.endPoint.type {
-        case .MarkThreadRead:
+    func request(_ request: APIRequest, didSucceedWithData data: Any?) {
+        switch request.endPointType {
+        case .markThreadRead:
             guard let readState = request.data as? MessageThreadReadState else { return }
             let predicate = NSPredicate(format: "p_thread_id == %d", readState.threadID)
-            if let messageThread = try! store.retrieve(objectsWithClass: MOMessageThread.self, sortBy: nil, isAscending: true, predicate: predicate, context: store.managedObjectContext).first {
+            if let messageThread: MOMessageThread = try! store.retrieve(inContext: store.managedObjectContext, withPredicate: predicate, andSortBy: nil, isAscending: true).first {
                 messageThread.is_new = !readState.read
                 try! store.managedObjectContext.save()
             }
-        case .UserInfo:
+        case .user:
             guard
                 let user = data as? User,
                 let url = user.profileImageURL
                 else { return }
             let predicate = NSPredicate(format: "p_uid == %d", user.uid)
-            if let user = try? store.retrieve(objectsWithClass: MOUser.self, sortBy: nil, isAscending: true, predicate: predicate, context: store.managedObjectContext).first {
-                user?.image_url = url
+            if let user: MOUser = try! store.retrieve(inContext: store.managedObjectContext, withPredicate: predicate, andSortBy: nil, isAscending: true).first {
+                user.image_url = url
                 do {
                     try store.managedObjectContext.save()
-                    api.contact(endPoint: .ImageResource, withPathParameters: url as NSString, andData: nil, thenNotify: self)
+                    api.contact(endPoint: .imageResource, withMethod: .get, andPathParameters: url, andData: nil, thenNotify: self)
                 } catch {
                     // Not a big deal. The author profile image won't be downloaded.
                 }
             }
-        case .ImageResource:
+        case .imageResource:
             guard
                 let image = data as? UIImage,
                 let url = request.parameters as? String

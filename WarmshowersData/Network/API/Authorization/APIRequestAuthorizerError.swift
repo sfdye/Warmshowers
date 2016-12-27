@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum APIRequestAuthorizerError: Error {
+public enum APIRequestAuthorizerError: Error {
     case noDelegate
     case invalidHostURL
     case invalidAuthorizationData

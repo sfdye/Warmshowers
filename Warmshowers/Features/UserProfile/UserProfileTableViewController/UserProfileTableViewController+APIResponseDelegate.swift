@@ -1,5 +1,5 @@
 //
-//  UserProfileTableViewController+WSAPIResponseDelegate.swift
+//  UserProfileTableViewController+APIResponseDelegate.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 10/07/16.
@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WarmshowersData
 
 extension UserProfileTableViewController: APIResponseDelegate {
     
@@ -14,23 +15,23 @@ extension UserProfileTableViewController: APIResponseDelegate {
         ProgressHUD.hide(self.navigationController?.view)
     }
     
-    func request(_ request: APIRequest, didSuceedWithData data: Any?) {
-        switch request.endPoint.type {
-        case .ImageResource:
+    func request(_ request: APIRequest, didSucceedWithData data: Any?) {
+        switch request.endPointType {
+        case .imageResource:
             guard let image = data as? UIImage else { return }
             user?.profileImage = image
             DispatchQueue.main.async(execute: { [weak self] in
                 let indexPath = IndexPath(row: 0, section: 0)
                 self?.tableView.reloadRows(at: [indexPath], with: .automatic)
             })
-        case .UserFeedback:
-            guard let feedback = data as? [WSRecommendation] else { return }
+        case .feedback:
+            guard let feedback = data as? [Recommendation] else { return }
             user?.feedback = feedback
             DispatchQueue.main.async(execute: { [weak self] in
                 let indexPath = IndexPath(row: 0, section: 2)
                 self?.tableView.reloadRows(at: [indexPath], with: .automatic)
                 })
-        case .Logout:
+        case .logout:
             session.didLogout(fromViewContoller: self)
         default:
             break
@@ -38,8 +39,8 @@ extension UserProfileTableViewController: APIResponseDelegate {
     }
     
     func request(_ request: APIRequest, didFailWithError error: Error) {
-        switch request.endPoint.type {
-        case .Logout:
+        switch request.endPointType {
+        case .logout:
             switch error {
             case is APICommunicatorError:
                 switch (error as! APICommunicatorError) {

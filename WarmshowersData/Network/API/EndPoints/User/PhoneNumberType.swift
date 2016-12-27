@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum PhoneNumberType {
+public enum PhoneNumberType {
     case home
     case mobile
     case work

@@ -18,7 +18,7 @@
         <!--Host Search-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
-                <viewController storyboardIdentifier="HostSearchView" title="Host Search" definesPresentationContext="YES" id="9pv-A4-QxB" customClass="WSHostSearchViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HostSearchView" title="Host Search" definesPresentationContext="YES" id="9pv-A4-QxB" customClass="HostSearchViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="eue-pw-TMU"/>
                         <viewControllerLayoutGuide type="bottom" id="pLQ-OG-6LL"/>
@@ -106,7 +106,7 @@
         <!--Hosts-->
         <scene sceneID="Uao-jn-H3o">
             <objects>
-                <tableViewController id="3O8-H1-wvc" customClass="WSHostListTableViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="3O8-H1-wvc" customClass="HostListTableViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="76" sectionHeaderHeight="28" sectionFooterHeight="28" id="3f4-vC-WWE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -223,7 +223,7 @@
         <!--Location Search View Controller-->
         <scene sceneID="3Lc-lM-xGW">
             <objects>
-                <viewController storyboardIdentifier="LocationSearchView" id="VMl-c2-Hgr" customClass="WSLocationSearchViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LocationSearchView" id="VMl-c2-Hgr" customClass="LocationSearchViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="N2q-4C-vWX"/>
                         <viewControllerLayoutGuide type="bottom" id="YbP-6p-8pk"/>
@@ -238,8 +238,8 @@
                                     <outlet property="delegate" destination="VMl-c2-Hgr" id="u7X-4C-alt"/>
                                 </connections>
                             </mapView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UNj-rN-h0W" customClass="WSMapLabel" customModule="Warmshowers" customModuleProvider="target">
-                                <rect key="frame" x="170" y="20" width="35.5" height="35"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UNj-rN-h0W" customClass="MapLabel" customModule="Warmshowers" customModuleProvider="target">
+                                <rect key="frame" x="170.5" y="20" width="35.5" height="35"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.74647090517241377" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="SueEllenFrancisco" family="Sue Ellen Francisco" pointSize="18"/>
                                 <color key="textColor" red="0.0039215686269999999" green="0.61960784310000006" blue="0.23529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -284,7 +284,7 @@
         <!--Keyword Search Table View Controller-->
         <scene sceneID="1Rz-1h-Qfm">
             <objects>
-                <tableViewController storyboardIdentifier="KeywordSearchView" id="Ddd-EB-4w4" customClass="WSKeywordSearchTableViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="KeywordSearchView" id="Ddd-EB-4w4" customClass="KeywordSearchTableViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="54" sectionHeaderHeight="28" sectionFooterHeight="28" id="qsF-uI-YXU">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -417,7 +417,7 @@
         <image name="UserIcon" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="dDb-Jv-xbh"/>
         <segue reference="yRc-eW-HTh"/>
+        <segue reference="yA2-nP-TAF"/>
     </inferredMetricsTieBreakers>
 </document>

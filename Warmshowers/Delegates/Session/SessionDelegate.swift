@@ -1,5 +1,5 @@
 //
-//  SessionStateProtocol.swift
+//  SessionDelegate.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 30/04/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol SessionStateProtocol {
+protocol SessionDelegate {
     
     /** Returns the users uid if logged in or nil if no user is logged in. */
     var uid: Int? { get }

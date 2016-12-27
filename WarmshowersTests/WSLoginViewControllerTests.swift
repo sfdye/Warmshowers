@@ -16,10 +16,10 @@ class WSLoginViewControllerTests: XCTestCase {
     
     // Test objects
     var loginViewController: WSLoginViewController!
-    var mockSessionState: WSMOCKSessionState!
-    var mockNavigationDelegate: WSMOCKNavigationDelegate!
-    var mockAPICommunicator: WSMOCKAPICommunicator!
-    var mockAlertDelegate: WSMOCKAlertDelegate!
+    var mockSessionState: MOCKSessionState!
+    var mockNavigationDelegate: MOCKNavigationDelegate!
+    var mockAPICommunicator: MOCKAPICommunicator!
+    var mockAlertDelegate: MOCKAlertDelegate!
     let request = WSAPIRequest(endPoint: WSAPIEndPoint.Login.instance, withDelegate: WSAPICommunicator.sharedAPICommunicator, requester: nil)
     
     override func setUp() {
@@ -29,10 +29,10 @@ class WSLoginViewControllerTests: XCTestCase {
         XCTAssertNotNil(loginViewController, "Failed to instantiate with storyboard ID: \(storyboardID).")
         
         // Initialise mocks
-        mockSessionState = WSMOCKSessionState()
-        mockNavigationDelegate = WSMOCKNavigationDelegate()
-        mockAPICommunicator = WSMOCKAPICommunicator()
-        mockAlertDelegate = WSMOCKAlertDelegate()
+        mockSessionState = MOCKSessionState()
+        mockNavigationDelegate = MOCKNavigationDelegate()
+        mockAPICommunicator = MOCKAPICommunicator()
+        mockAlertDelegate = MOCKAlertDelegate()
         
         // Set the mocks that don't require the view
         loginViewController?.session = mockSessionState
@@ -120,14 +120,14 @@ class WSLoginViewControllerTests: XCTestCase {
         _ = loginViewController?.view
         
         // when
-        loginViewController?.request(request, didSuceedWithData: nil)
+        loginViewController?.request(request, didSucceedWithData: nil)
         
         // then
         XCTAssertTrue(mockAPICommunicator!.contactEndPointCalled, "API not contacted with a token request after a successful login.")
         XCTAssertEqual(mockAPICommunicator.contactedEndPoint, .Token, "Wrong end point contacted for tokens.")
         
         // when
-        loginViewController?.request(request, didSuceedWithData: "mock token string")
+        loginViewController?.request(request, didSucceedWithData: "mock token string")
         
         // then
         XCTAssertTrue(mockSessionState!.savePasswordForUsernameCalled, "Username and password not updated on a successful login.")

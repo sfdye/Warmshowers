@@ -8,6 +8,7 @@
 
 import Foundation
 import CCHMapClusterController
+import WarmshowersData
 
 extension LocationSearchViewController: CCHMapClusterControllerDelegate {
     

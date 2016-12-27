@@ -7,18 +7,12 @@
 //
 
 import UIKit
+import WarmshowersData
 
 let SBID_Settings = "Settings"
 let SID_SettingsToRoutes = "SettingsToRoutes"
 
-class SettingsTableViewController: UITableViewController {
-    
-    // Delegates
-    var navigation: NavigationProtocol = NavigationDelegate.sharedNavigationDelegate
-    var api: APICommunicatorProtocol = APICommunicator.sharedAPICommunicator
-    var session: SessionStateProtocol = SessionState.sharedSessionState
-    var store: StoreProtocol = Store.sharedStore
-    var alert: AlertProtocol = AlertDelegate.sharedAlertDelegate
+class SettingsTableViewController: UITableViewController, Delegator, DataSource {
     
     lazy var settings: [SettingsSection] = {
         var sections = [SettingsSection]()

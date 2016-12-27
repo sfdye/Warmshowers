@@ -10,13 +10,14 @@ import UIKit
 import CoreData
 import MapKit
 import CCHMapClusterController
+import WarmshowersData
 
 let SID_SearchViewToUserAccount = "SearchViewToUserAccount"
 let SBID_HostSearch = "HostSearchView"
 let SBID_LocationSearchView = "LocationSearchView"
 let SBID_KeywordSearchView = "KeywordSearchView"
 
-class HostSearchViewController: UIViewController {
+class HostSearchViewController: UIViewController, Delegator, DataSource {
     
     @IBOutlet var containerView: UIView!
     @IBOutlet var viewSwitcherButton: UIBarButtonItem!
@@ -26,17 +27,11 @@ class HostSearchViewController: UIViewController {
     
     var locationSearchViewController: LocationSearchViewController?
     var keywordSearchTableViewController: KeywordSearchTableViewController?
-
-    // Delegates
-    var alert: AlertProtocol = AlertDelegate.sharedAlertDelegate
-    var api: APICommunicatorProtocol = APICommunicator.sharedAPICommunicator
-    var connection: ReachabilityProtocol = ReachabilityManager.sharedReachabilityManager
-    var session: SessionStateProtocol = SessionState.sharedSessionState
     
     // MARK: View life cycle
     
     deinit {
-        connection.deregisterFromNotifications(self)
+        api.connection.deregisterFromNotifications(self)
     }
     
     override func viewDidLoad() {
@@ -48,7 +43,7 @@ class HostSearchViewController: UIViewController {
         locationSearchViewController?.navigationDelegate = self
         keywordSearchTableViewController = storyboard?.instantiateViewController(withIdentifier: SBID_KeywordSearchView) as? KeywordSearchTableViewController
         assert(keywordSearchTableViewController != nil, "Keyword Search Table View Controller not set while loading the Host Search View Controller.")
-        assert(keywordSearchTableViewController is UISearchResultsUpdating, "WSKeywordSearchTableViewCOntroller must conform to UISearchResultsUpdating.")
+        assert(keywordSearchTableViewController is UISearchResultsUpdating, "KeywordSearchTableViewCOntroller must conform to UISearchResultsUpdating.")
         keywordSearchTableViewController?.navigationDelegate = self
         
         // Search controller
@@ -64,7 +59,7 @@ class HostSearchViewController: UIViewController {
         searchBar.barTintColor = UIColor.white
         
         // Reachability notifications
-        connection.registerForAndStartNotifications(self, selector: #selector(WSHostSearchViewController.reachabilityChanged(_:)))
+        api.connection.registerForAndStartNotifications(self, selector: #selector(HostSearchViewController.reachabilityChanged(_:)))
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -79,7 +74,7 @@ class HostSearchViewController: UIViewController {
     }
     
     func showReachabilityBannerIfNeeded() {
-        if !connection.isOnline {
+        if !api.connection.isOnline {
             alert.showNoInternetBanner()
         } else {
             alert.hideAllBanners()

@@ -1,5 +1,5 @@
 //
-//  CreateFeedbackTableViewController+WSAPIResponseDelegate.swift
+//  CreateFeedbackTableViewController+APIResponseDelegate.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 21/04/16.
@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WarmshowersData
 
 extension CreateFeedbackTableViewController : APIResponseDelegate {
     
@@ -16,7 +17,7 @@ extension CreateFeedbackTableViewController : APIResponseDelegate {
             })
     }
     
-    func request(_ request: APIRequest, didSuceedWithData data: Any?) {
+    func request(_ request: APIRequest, didSucceedWithData data: Any?) {
         DispatchQueue.main.async(execute: { [weak self] in
             self?.navigationController?.dismiss(animated: true, completion: nil)
         })

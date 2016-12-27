@@ -65,7 +65,6 @@ class SearchByLocationEndPoint: APIEndPointProtocol {
                 try context.save()
             })
             
-            
             throw APIEndPointError.reachedTileLimit
         }
         

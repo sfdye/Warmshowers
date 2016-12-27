@@ -8,7 +8,7 @@
 
 import Foundation
 
-class TokenEndPoint : APIEndPointProtocol {
+class TokenEndPoint: APIEndPointProtocol {
     
     var type: APIEndPoint = .token
     

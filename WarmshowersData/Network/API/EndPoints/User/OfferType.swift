@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum OfferType: String {
+public enum OfferType: String {
     case Bed = "Bed"
     case Food = "Food"
     case Laundry = "Laundry"

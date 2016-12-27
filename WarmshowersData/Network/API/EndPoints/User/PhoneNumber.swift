@@ -8,10 +8,10 @@
 
 import Foundation
 
-class PhoneNumber {
+public class PhoneNumber {
     
-    var type: PhoneNumberType
-    var number: String
+    public var type: PhoneNumberType
+    public var number: String
     
     init(type: PhoneNumberType, number: String) {
         self.type = type

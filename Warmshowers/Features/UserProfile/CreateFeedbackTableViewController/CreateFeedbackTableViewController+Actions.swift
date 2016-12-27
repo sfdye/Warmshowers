@@ -34,17 +34,17 @@ extension CreateFeedbackTableViewController {
         self.view.endEditing(true)
         
         guard let _ = recommendation.recommendedUserName else {
-            alert?.presentAlertFor(self, withTitle: "An error occured", button: "OK", message: "Recommended user not set. Please report this as a bug, sorry for the inconvenience.")
+            alert.presentAlertFor(self, withTitle: "An error occured", button: "OK", message: "Recommended user not set. Please report this as a bug, sorry for the inconvenience.")
             return
         }
         
         guard recommendation.hasBody else {
-            alert?.presentAlertFor(self, withTitle: "No feedback to submit", button: "OK", message: "Please enter some feedback before submitting.")
+            alert.presentAlertFor(self, withTitle: "No feedback to submit", button: "OK", message: "Please enter some feedback before submitting.")
             return
         }
         
         // Submit the feedback
         ProgressHUD.show(navigationController?.view, label: "Submitting feedback ...")
-        api?.contact(endPoint: .CreateFeedback, withPathParameters: nil, andData: recommendation, thenNotify: self)
+        api.contact(endPoint: .createFeedback, withMethod: .post, andPathParameters: nil, andData: recommendation, thenNotify: self)
     }
 }

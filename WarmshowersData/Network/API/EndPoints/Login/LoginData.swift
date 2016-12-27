@@ -8,7 +8,7 @@
 
 import Foundation
 
-class LoginData {
+public class LoginData {
     
     var username: String
     var password: String
@@ -20,7 +20,7 @@ class LoginData {
         return params
     }
     
-    init(username: String, password: String) {
+    public init(username: String, password: String) {
         self.username = username
         self.password = password
     }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WarmshowersData
 
 extension CreateFeedbackTableViewController : UIPickerViewDataSource {
     

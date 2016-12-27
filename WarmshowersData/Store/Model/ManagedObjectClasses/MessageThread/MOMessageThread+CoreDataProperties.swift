@@ -17,11 +17,11 @@ extension MOMessageThread {
     @NSManaged var p_count: NSNumber?
     @NSManaged var p_has_tokens: NSNumber?
     @NSManaged var p_is_new: NSNumber?
-    @NSManaged var last_updated: Date?
-    @NSManaged var subject: String?
+    @NSManaged public var last_updated: Date?
+    @NSManaged public var subject: String?
     @NSManaged var p_thread_id: NSNumber?
-    @NSManaged var thread_started: Date?
-    @NSManaged var messages: NSSet?
-    @NSManaged var participants: NSSet?
+    @NSManaged public var thread_started: Date?
+    @NSManaged public var messages: NSSet?
+    @NSManaged public var participants: NSSet?
 
 }

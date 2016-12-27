@@ -9,22 +9,19 @@
 import Foundation
 import CoreData
 
-
-class MOMessage: NSManagedObject, JSONUpdateable {
+public class MOMessage: NSManagedObject, JSONUpdateable {
     
     // MARK: Getters and setters
     
-    var is_new: Bool {
+    public var is_new: Bool {
         get { return p_is_new?.boolValue ?? false }
         set(new) { p_is_new = NSNumber(value: new) }
     }
     
-    var message_id: Int? {
+    public var message_id: Int? {
         get { return p_message_id?.intValue }
         set(new) { p_message_id = new == nil ? nil : NSNumber(value: new!) }
     }
-    
-    static var entityName: String { return "Message" }
     
     
     // MARK: JSONUpdateable

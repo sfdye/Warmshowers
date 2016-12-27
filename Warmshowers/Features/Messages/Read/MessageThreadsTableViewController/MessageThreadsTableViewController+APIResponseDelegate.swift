@@ -1,5 +1,5 @@
 //
-//  MessageThreadsTableViewController+WSAPIResponseDelegate.swift
+//  MessageThreadsTableViewController+APIResponseDelegate.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 3/07/16.
@@ -7,12 +7,13 @@
 //
 
 import Foundation
+import WarmshowersData
 
-extension MessageThreadsTableViewController : APIResponseDelegate {
+extension MessageThreadsTableViewController: APIResponseDelegate {
     
     func requestDidComplete(_ request: APIRequest) {
-        switch request.endPoint.type {
-        case .GetMessageThread:
+        switch request.endPointType {
+        case .messageThread:
             guard let threadID = request.data as? Int else { return }
             downloadsInProgress.remove(threadID)
         default:
@@ -20,11 +21,11 @@ extension MessageThreadsTableViewController : APIResponseDelegate {
         }
     }
     
-    func request(_ request: APIRequest, didSuceedWithData data: Any?) {
-        switch request.endPoint.type {
-        case .GetAllMessageThreads:
+    func request(_ request: APIRequest, didSucceedWithData data: Any?) {
+        switch request.endPointType {
+        case .messageThreads:
             updateAllMessages()
-        case .GetMessageThread:
+        case .messageThread:
             if downloadsInProgress.count == 0 { didFinishedUpdates() }
         default:
             break
@@ -32,11 +33,11 @@ extension MessageThreadsTableViewController : APIResponseDelegate {
     }
     
     func request(_ request: APIRequest, didFailWithError error: Error) {
-        switch request.endPoint.type {
-        case .GetAllMessageThreads:
+        switch request.endPointType {
+        case .messageThreads:
             errorCache = error
             didFinishedUpdates()
-        case .GetMessageThread:
+        case .messageThread:
             errorCache = error
             if downloadsInProgress.count == 0 { didFinishedUpdates() }
         default:

@@ -8,21 +8,17 @@
 
 import UIKit
 import CoreData
+import WarmshowersData
 
 let MessagesViewNeedsUpdateNotificationName = "ws_message_view_needs_update"
 
-class MessageThreadTableViewController: UITableViewController {
+class MessageThreadTableViewController: UITableViewController, Delegator, DataSource {
     
     var threadID: Int?
-    var fetchedResultsController: NSFetchedResultsController<WSMOMessage>!
+    var fetchedResultsController: NSFetchedResultsController<MOMessage>!
     var downloadsInProgress = Set<String>()
     var alert: UIAlertController?
     let formatter = DateFormatter()
-    
-    // Delegates
-    var store: StoreProtocol = Store.sharedStore
-    let session: SessionStateProtocol = SessionState.sharedSessionState
-    var api: APICommunicatorProtocol = APICommunicator.sharedAPICommunicator
     
     
     // MARK: View life cycle
@@ -48,7 +44,7 @@ class MessageThreadTableViewController: UITableViewController {
         
         // Set the refresh controller for the tableview
         refreshControl = UIRefreshControl()
-        refreshControl?.addTarget(self, action: #selector(WSMessageThreadTableViewController.update), for: UIControlEvents.valueChanged)
+        refreshControl?.addTarget(self, action: #selector(MessageThreadTableViewController.update), for: UIControlEvents.valueChanged)
         
         // Set the view title
         navigationItem.title = subjectForMessageThreadWithID(threadID ?? 0)
@@ -61,7 +57,7 @@ class MessageThreadTableViewController: UITableViewController {
         
         // Register for update notifications. This is fired after a reply is sent.
         let notificationCentre = NotificationCenter.default
-        notificationCentre.addObserver(self, selector: #selector(WSMessageThreadTableViewController.update), name: NSNotification.Name(rawValue: MessagesViewNeedsUpdateNotificationName), object: nil)
+        notificationCentre.addObserver(self, selector: #selector(MessageThreadTableViewController.update), name: NSNotification.Name(rawValue: MessagesViewNeedsUpdateNotificationName), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -84,12 +80,12 @@ class MessageThreadTableViewController: UITableViewController {
     }
     
     func initialiseFetchResultsController() {
-        let request = NSFetchRequest<WSMOMessage>(entityName: MOMessage.entityName)
+        let request = MOMessage.fetchRequest() as! NSFetchRequest<MOMessage>
         request.predicate = NSPredicate(format: "thread.p_thread_id==%i", threadID ?? 0)
         request.sortDescriptors = [NSSortDescriptor(key: "timestamp", ascending: true)]
         self.fetchedResultsController = NSFetchedResultsController(
             fetchRequest: request,
-            managedObjectContext: Store.sharedStore.managedObjectContext,
+            managedObjectContext: store.managedObjectContext,
             sectionNameKeyPath: nil,
             cacheName: nil)
         fetchedResultsController.delegate = self
@@ -106,33 +102,34 @@ class MessageThreadTableViewController: UITableViewController {
     /** Returns the subject of a message thread given the thread ID. */
     func subjectForMessageThreadWithID(_ threadID: Int) -> String? {
         let predicate = NSPredicate(format: "p_thread_id == %d", threadID)
-        guard let thread = try? store.retrieve(objectsWithClass: MOMessageThread.self, sortBy: nil, isAscending: true, predicate: predicate, context: store.managedObjectContext).first else {
+        guard let thread: MOMessageThread = try! store.retrieve(inContext: store.managedObjectContext, withPredicate: predicate, andSortBy: nil, isAscending: true).first
+            else {
             return nil
         }
-        return thread?.subject
+        return thread.subject
     }
     
     /** Updates the messages. */
     func update() {
         guard let threadID = threadID else { return }
-        api.contact(endPoint: .GetMessageThread, withPathParameters: nil, andData: threadID, thenNotify: self)
+        api.contact(endPoint: .messageThread, withMethod: .post, andPathParameters: nil, andData: threadID, thenNotify: self)
     }
     
     /** Mark message thread as read. */
     func markThread(_ threadID: Int, asRead read: Bool) {
         let readState = MessageThreadReadState(threadID: threadID, read: true)
-        api.contact(endPoint: .MarkThreadRead, withPathParameters: nil, andData: readState, thenNotify: self)
+        api.contact(endPoint: .markThreadRead, withMethod: .post, andPathParameters: nil, andData: readState, thenNotify: self)
     }
     
     func startImageDownloadForIndexPath(_ indexPath: IndexPath) {
         let message = self.fetchedResultsController.object(at: indexPath)
         guard message.author?.image == nil else { return }
         if let url = message.author?.image_url {
-            api.contact(endPoint: .ImageResource, withPathParameters: url as NSString, andData: nil, thenNotify: self)
+            api.contact(endPoint: .imageResource, withMethod: .get, andPathParameters: url, andData: nil, thenNotify: self)
         } else if let uid = message.author?.uid , !downloadsInProgress.contains(String(uid)) {
             // We first need to get the image URL from the authors profile.
             downloadsInProgress.insert(String(uid))
-            api.contact(endPoint: .UserInfo, withPathParameters: String(uid) as NSString, andData: nil, thenNotify: self)
+            api.contact(endPoint: .user, withMethod: .get, andPathParameters: String(uid), andData: nil, thenNotify: self)
         }
     }
     
@@ -148,11 +145,11 @@ class MessageThreadTableViewController: UITableViewController {
         
         let predicate = NSPredicate(format: "image_url LIKE %@", imageURL)
         
-        guard let participant = try? store.retrieve(objectsWithClass: MOUser.self, sortBy: nil, isAscending: true, predicate: predicate, context: store.managedObjectContext).first else {
+        guard let participant: MOUser = try! store.retrieve(inContext: store.managedObjectContext, withPredicate: predicate, andSortBy: nil, isAscending: true).first else {
             return
         }
         
-        participant?.image = image
+        participant.image = image
         try! store.managedObjectContext.save()
         
         // Set the image in any message table view cells where the user in the author.

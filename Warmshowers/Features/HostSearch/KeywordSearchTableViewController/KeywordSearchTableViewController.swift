@@ -7,19 +7,16 @@
 //
 
 import UIKit
+import WarmshowersData
 
-class KeywordSearchTableViewController: UITableViewController {
+class KeywordSearchTableViewController: UITableViewController, Delegator, DataSource {
     
     var debounceTimer: Timer?
     var placeholderImage: UIImage? = UIImage(named: "ThumbnailPlaceholder")
-    var hosts: [WSUserLocation]? = [WSUserLocation]()
+    var hosts: [UserLocation]? = [UserLocation]()
     var numberOfHosts: Int { return hosts?.count ?? 0 }
     
     var navigationDelegate: HostSearchNavigationDelegate?
-    
-    // Delegates
-    var alert: AlertDelegate = AlertDelegate.sharedAlertDelegate
-    var api: APICommunicatorProtocol = APICommunicator.sharedAPICommunicator
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,14 +37,14 @@ class KeywordSearchTableViewController: UITableViewController {
         
         debounceTimer = nil
         let searchData = KeywordSearchData(keyword: keyword)
-        api.contact(endPoint: .SearchByKeyword, withPathParameters: nil, andData: searchData, thenNotify: self)
+        api.contact(endPoint: .searchByKeyword, withMethod: .post, andPathParameters: nil, andData: searchData, thenNotify: self)
     }
     
     func startImageDownloadForIndexPath(_ indexPath: IndexPath) {
         guard let hosts = hosts , (indexPath as NSIndexPath).row < numberOfHosts else { return }
         let user = hosts[(indexPath as NSIndexPath).row]
         if let url = user.imageURL , user.image == nil {
-            api.contact(endPoint: .ImageResource, withPathParameters: url as NSString, andData: nil, thenNotify: self)
+            api.contact(endPoint: .imageResource, withMethod: .get, andPathParameters: url as NSString, andData: nil, thenNotify: self)
         }
     }
     
@@ -79,7 +76,7 @@ class KeywordSearchTableViewController: UITableViewController {
     }
     
     /** Reloads the table view with an array of results. */
-    func reloadTableWithHosts(_ hosts: [WSUserLocation]?) {
+    func reloadTableWithHosts(_ hosts: [UserLocation]?) {
         self.hosts = hosts
         DispatchQueue.main.async(execute: { [weak self] in
             self?.tableView.reloadData()
@@ -88,7 +85,7 @@ class KeywordSearchTableViewController: UITableViewController {
     
     /** Clears the table view. */
     func clearTable() {
-        reloadTableWithHosts([WSUserLocation]())
+        reloadTableWithHosts([UserLocation]())
     }
     
     /** Clears the table view and shows the spinner/loading table view cell */

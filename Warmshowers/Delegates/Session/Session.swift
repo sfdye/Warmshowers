@@ -7,23 +7,18 @@
 //
 
 import Foundation
+import WarmshowersData
 import KeychainAccess
 
-class SessionState: SessionStateProtocol {
+class Session: SessionDelegate, Delegator, DataSource {
     
-    static let sharedSessionState = SessionState()
+    static let shared = Session()
     
     let defaults = UserDefaults.standard
-    let keychain = Keychain(server: APIHost.sharedAPIHost.hostURLWithHTTPScheme()!, protocolType: .https)
+    let keychain = Keychain(server: "www.warmshowers.org", protocolType: .https)
     
     var uid: Int? { return defaults.integer(forKey: UserDefaultsKeys.UIDKey) }
     var username: String? { return defaults.string(forKey: UserDefaultsKeys.UsernameKey) }
-    
-    // Delegates
-    var navigation: NavigationProtocol = NavigationDelegate.sharedNavigationDelegate
-    var store: StoreProtocol = Store.sharedStore
-    var alert: AlertProtocol = AlertDelegate.sharedAlertDelegate
-    
     
     func set(username: String) {
         defaults.setValue(username, forKey: UserDefaultsKeys.UsernameKey)

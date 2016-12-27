@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import WarmshowersData
 
 extension CreateFeedbackTableViewController : UIPickerViewDelegate {
     
@@ -26,10 +27,10 @@ extension CreateFeedbackTableViewController : UIPickerViewDelegate {
         switch optionCellRow {
         case 0:
             // Feedback guest or host picker
-            recommendation.type.setFromRawValue(selectedValue)
+            recommendation.type = RecommendationType(rawValue: selectedValue)!
         case 1:
             // Feedback rating picker
-            recommendation.rating.setFromRawValue(selectedValue)
+            recommendation.rating = RecommendationRating(rawValue: selectedValue)!
         case 2:
             // Feedback date picker
             var comps = calendar.dateComponents([.month, .year], from: recommendation.date as Date)
