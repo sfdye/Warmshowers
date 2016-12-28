@@ -19,11 +19,6 @@ extension LoginViewController: APIResponseDelegate {
             return
         }
         
-        guard let _ = data as? String else {
-            // Handle this error
-            return
-        }
-        
         // Recieved the access token: proceed to the main app
         ProgressHUD.hide()
         let username = usernameTextField.text, password = passwordTextField.text

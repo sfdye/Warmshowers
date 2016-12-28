@@ -32,7 +32,8 @@ extension Store: StoreDelegate, StoreUpdateDelegate {
             sorter = NSSortDescriptor(key: sortBy, ascending: isAscending)
         }
         
-        let request = T.fetchRequest() as! NSFetchRequest<T>
+        let request: NSFetchRequest<T> = T.fetchRequest() as! NSFetchRequest<T>
+        //let request = NSFetchRequest(entityName: T.entityName)
         request.returnsObjectsAsFaults = false
         request.predicate = predicate
         if (sorter != nil) { request.sortDescriptors = [sorter!] }

@@ -83,7 +83,7 @@ class MessageThreadsTableViewController: UITableViewController, Delegator, DataS
     }
     
     func initialiseFetchResultsControllerWithStore(_ store: StoreDelegate) {
-        let request = NSFetchRequest<MOMessageThread>()
+        let request: NSFetchRequest<MOMessageThread> = NSFetchRequest(entityName: "MessageThread")
         request.sortDescriptors = [
             NSSortDescriptor(key: "last_updated", ascending: false)
         ]
@@ -121,7 +121,7 @@ class MessageThreadsTableViewController: UITableViewController, Delegator, DataS
     
     func update() {
         ProgressHUD.show("Updating messages ...")
-        api.contact(endPoint: .messageThreads, withMethod: .get, andPathParameters: nil, andData: nil, thenNotify: self)
+        api.contact(endPoint: .messageThreads, withMethod: .post, andPathParameters: nil, andData: nil, thenNotify: self)
     }
     
     /** Called after and update once all API requests have responded. */

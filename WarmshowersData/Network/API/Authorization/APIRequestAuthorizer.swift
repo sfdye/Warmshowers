@@ -34,6 +34,11 @@ class APIRequestAuthorizer: APIAuthorizationDelegate {
             }
         }
         
+        // Login requests do not require authorization
+        guard request.endPoint.type != .login else {
+            return urlRequest as URLRequest
+        }
+        
         // Authorise the request.
         var token: String, sessionCookie: String
         do {

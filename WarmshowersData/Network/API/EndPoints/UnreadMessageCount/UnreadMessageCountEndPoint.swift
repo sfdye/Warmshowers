@@ -16,7 +16,12 @@ class UnreadMessageCountEndPoint: APIEndPointProtocol {
         return hostURL.appendingPathComponent("/services/rest/message/unreadCount")
     }
     
-     func request(_ request: APIRequest, didRecieveResponseWithJSON json: Any, parser: JSONParser) throws -> Any? {
+    func httpBody(fromData data: Any?, forMethod method: HTTP.Method, withEncoder encoder: APIRequestDataEncoder) throws -> Data? {
+        // POST but no parameters sent.
+        return nil
+    }
+    
+    func request(_ request: APIRequest, didRecieveResponseWithJSON json: Any, parser: JSONParser) throws -> Any? {
         return nil
     }
     

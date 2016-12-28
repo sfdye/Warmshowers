@@ -12,6 +12,8 @@ public protocol APIDelegate {
     
     var connection: ReachabilityDelegate { get }
     
+    func set(delegate: APICommunicatorDelegate)
+    
     /** Creates and executes a request for the given end point with the given data. */
     func contact(endPoint: APIEndPoint, withMethod method: HTTP.Method, andPathParameters parameters: Any?, andData data: Any?, thenNotify requester: APIResponseDelegate)
     

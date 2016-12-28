@@ -239,13 +239,12 @@
 		E59FE1D71CD208B30024F354 /* WSLoginViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59FE1C71CD0C15F0024F354 /* WSLoginViewControllerTests.swift */; };
 		E59FE1D91CD21F0D0024F354 /* LoginUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59FE1D81CD21F0D0024F354 /* LoginUITests.swift */; };
 		E59FE1E01CD360B90024F354 /* MOCKAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59FE1DF1CD360B90024F354 /* MOCKAlert.swift */; };
+		E5B944381E12574B0089F4A4 /* APICommunicatorConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B944371E12574B0089F4A4 /* APICommunicatorConfiguration.swift */; };
 		E5D96AF81BFB1CA700AFAFEE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5D96AF71BFB1CA700AFAFEE /* AppDelegate.swift */; };
 		E5ED1E951CD45BA90017D12F /* SettingsTableViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5ED1E941CD45BA90017D12F /* SettingsTableViewControllerTests.swift */; };
 		E5ED1E971CD461D80017D12F /* MOCKNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5ED1E961CD461D80017D12F /* MOCKNavigationController.swift */; };
 		E5ED1E9E1CD471E00017D12F /* MOCKSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5ED1E9D1CD471E00017D12F /* MOCKSession.swift */; };
-		E5FC31CD1E11FF8C005BD01C /* WarmshowersData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E53715271E0C86BE00770305 /* WarmshowersData.framework */; };
 		E5FC31CE1E11FF8C005BD01C /* WarmshowersData.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E53715271E0C86BE00770305 /* WarmshowersData.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		E5FC31D31E120AFD005BD01C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FC31D21E120AFD005BD01C /* CoreData.framework */; };
 		E5FC31D41E120B35005BD01C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5FC31D21E120AFD005BD01C /* CoreData.framework */; };
 /* End PBXBuildFile section */
 
@@ -546,6 +545,7 @@
 		E59FE1CE1CD1FF900024F354 /* MOCKNavigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MOCKNavigation.swift; sourceTree = "<group>"; };
 		E59FE1D81CD21F0D0024F354 /* LoginUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginUITests.swift; sourceTree = "<group>"; };
 		E59FE1DF1CD360B90024F354 /* MOCKAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MOCKAlert.swift; sourceTree = "<group>"; };
+		E5B944371E12574B0089F4A4 /* APICommunicatorConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APICommunicatorConfiguration.swift; sourceTree = "<group>"; };
 		E5D96AF41BFB1CA700AFAFEE /* Warmshowers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Warmshowers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5D96AF71BFB1CA700AFAFEE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E5D96B0A1BFB1CA700AFAFEE /* WarmshowersTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WarmshowersTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -581,10 +581,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E5FC31D31E120AFD005BD01C /* CoreData.framework in Frameworks */,
 				E56CC0881BFD166200AAF973 /* MapKit.framework in Frameworks */,
 				CDC80C00DF08E589C71B8996 /* Pods_Warmshowers.framework in Frameworks */,
-				E5FC31CD1E11FF8C005BD01C /* WarmshowersData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -632,6 +630,7 @@
 		E529ECBC1E11BC2700395369 /* Delegates */ = {
 			isa = PBXGroup;
 			children = (
+				E5B944361E1257290089F4A4 /* API */,
 				E529ECBD1E11BC2700395369 /* Alert */,
 				E529ECC01E11BC2700395369 /* Navigation */,
 				E529ECC41E11BC2700395369 /* Session */,
@@ -1544,6 +1543,14 @@
 			name = Mocks;
 			sourceTree = "<group>";
 		};
+		E5B944361E1257290089F4A4 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				E5B944371E12574B0089F4A4 /* APICommunicatorConfiguration.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
 		E5D96AEB1BFB1CA700AFAFEE = {
 			isa = PBXGroup;
 			children = (
@@ -2035,6 +2042,7 @@
 				E529ECDF1E11C48600395369 /* UserDefaultsKeys.swift in Sources */,
 				E529ED9F1E11C6BB00395369 /* ComposeMessageDetailTableViewCell.swift in Sources */,
 				E529EDBE1E11C6BB00395369 /* CreateFeedbackTableViewController+UIPickerViewDelegate.swift in Sources */,
+				E5B944381E12574B0089F4A4 /* APICommunicatorConfiguration.swift in Sources */,
 				E529EDAA1E11C6BB00395369 /* MessageThreadTableViewController+UITableViewDataSource.swift in Sources */,
 				E529ED711E11C6BB00395369 /* HostListTableViewController+Actions.swift in Sources */,
 				E529ECDE1E11C48600395369 /* MapTileServerURLTemplate.swift in Sources */,
