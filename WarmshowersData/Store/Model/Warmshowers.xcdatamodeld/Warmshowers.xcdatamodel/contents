@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11759" systemVersion="16C67" minimumToolsVersion="Xcode 7.0" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
-    <entity name="MapTile" representedClassName="MOMapTile" syncable="YES" codeGenerationType="class">
+    <entity name="MapTile" representedClassName=".MOMapTile" syncable="YES">
         <attribute name="last_updated" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="quad_key" attributeType="String" syncable="YES"/>
         <relationship name="parent_tile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MapTile" inverseName="sub_tiles" inverseEntity="MapTile" syncable="YES"/>
         <relationship name="sub_tiles" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MapTile" inverseName="parent_tile" inverseEntity="MapTile" syncable="YES"/>
         <relationship name="users" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="User" inverseName="map_tile" inverseEntity="User" syncable="YES"/>
     </entity>
-    <entity name="Message" representedClassName="MOMessage" syncable="YES">
+    <entity name="Message" representedClassName=".MOMessage" syncable="YES">
         <attribute name="body" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="p_is_new" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="p_message_id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
@@ -15,7 +15,7 @@
         <relationship name="author" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="sent_messages" inverseEntity="User" syncable="YES"/>
         <relationship name="thread" maxCount="1" deletionRule="Nullify" destinationEntity="MessageThread" inverseName="messages" inverseEntity="MessageThread" syncable="YES"/>
     </entity>
-    <entity name="MessageThread" representedClassName="MOMessageThread" syncable="YES">
+    <entity name="MessageThread" representedClassName=".MOMessageThread" syncable="YES">
         <attribute name="last_updated" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="p_count" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="p_has_tokens" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
@@ -26,7 +26,7 @@
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Message" inverseName="thread" inverseEntity="Message" syncable="YES"/>
         <relationship name="participants" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="threads" inverseEntity="User" syncable="YES"/>
     </entity>
-    <entity name="User" representedClassName="MOUser" syncable="YES">
+    <entity name="User" representedClassName=".MOUser" syncable="YES">
         <attribute name="additional" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>

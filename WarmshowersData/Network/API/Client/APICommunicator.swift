@@ -46,6 +46,10 @@ public class APICommunicator: APIDelegate {
         if logging { print(message) }
     }
     
+    public func set(delegate: APICommunicatorDelegate) {
+        self.delegate = delegate
+    }
+    
     /** Creates and executes a request for the given end point with the given data. */
     public func contact(endPoint: APIEndPoint, withMethod method: HTTP.Method, andPathParameters parameters: Any?, andData data: Any?, thenNotify requester: APIResponseDelegate) {
         
@@ -175,7 +179,7 @@ public class APICommunicator: APIDelegate {
                 // Most Powershop requests return data in the "data" field of the JSON. End points that do not get a data field in the reponse should specify this in their doesExpectDataInResponseForRequest(_:) method.
                 // Abort if this field is not present.
                 guard request.endPoint.doesExpectDataInResponseForRequest(request) else { break }
-                guard let _ = json as? [String: Any] else {
+                guard json is [String: Any] || json is [Any] else {
                         assertionFailure("Receieved a successful API response with no valid JSON in the body. If this end point does not return data for HTTP method \(request.method) set end point's doesExpectDataInResponseForRequest(_:) method to return false in this case.")
                         throw APIEndPointError.parsingError(endPoint: request.endPoint.name, key: nil)
                 }

@@ -9,7 +9,11 @@
 import Foundation
 import CoreData
 
-public class MOMessageThread: NSManagedObject, JSONUpdateable {
+public class MOMessageThread: NSManagedObject, Fetchable, JSONUpdateable {
+    
+    // MARK: Fetchable
+    
+    public static var entityName: String { return "MessageThread" }
     
     // MARK: Getters and setters
     

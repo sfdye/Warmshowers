@@ -13,6 +13,9 @@ protocol SessionDelegate {
     /** Returns the users uid if logged in or nil if no user is logged in. */
     var uid: Int? { get }
     
+    /** Saves a session cookie, token and current user uid to NSUserDefaults. */
+    func save(uid: Int)
+    
     /** Returns latest users username or nil if no username has been saved. */
     var username: String? { get }
     
@@ -22,14 +25,8 @@ protocol SessionDelegate {
     /** Saves a users username and password. */
     func save(password: String, forUsername username: String) throws
     
-    /** Saves a session cookie, token and current user uid to NSUserDefaults. */
-    func save(sessionCookie: String, token: String, andUID uid: Int)
-    
     /** Deletes the session cookie, token and current user uid from NSUserDefaults. */
-    func deleteSessionData()
-    
-    /** Saves a session CSRF token. */
-    func set(token: String)
+    func deleteSessionData() throws
     
     /** Returns true is a user is logged in. */
     var isLoggedIn: Bool { get }

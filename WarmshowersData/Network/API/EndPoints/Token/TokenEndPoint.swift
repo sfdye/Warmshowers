@@ -21,7 +21,7 @@ class TokenEndPoint: APIEndPointProtocol {
     func request(_ request: APIRequest, didRecieveResponseWithText text: String) throws -> Any? {
         let newToken = text
         
-        let (token, secret) = try DataDelegates.shared.secureStore.getTokenAndSecret()
+        let (_, secret) = try DataDelegates.shared.secureStore.getTokenAndSecret()
         
         try DataDelegates.shared.secureStore.setToken(newToken, andSecret: secret)
         return text

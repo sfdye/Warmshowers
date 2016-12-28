@@ -17,8 +17,18 @@ class Session: SessionDelegate, Delegator, DataSource {
     let defaults = UserDefaults.standard
     let keychain = Keychain(server: "www.warmshowers.org", protocolType: .https)
     
-    var uid: Int? { return defaults.integer(forKey: UserDefaultsKeys.UIDKey) }
-    var username: String? { return defaults.string(forKey: UserDefaultsKeys.UsernameKey) }
+    var uid: Int? {
+        return defaults.integer(forKey: UserDefaultsKeys.UIDKey)
+    }
+    
+    func save(uid: Int) {
+        defaults.setValue(uid, forKey: UserDefaultsKeys.UIDKey)
+        defaults.synchronize()
+    }
+    
+    var username: String? {
+        return defaults.string(forKey: UserDefaultsKeys.UsernameKey)
+    }
     
     func set(username: String) {
         defaults.setValue(username, forKey: UserDefaultsKeys.UsernameKey)
@@ -35,39 +45,30 @@ class Session: SessionDelegate, Delegator, DataSource {
         }
     }
     
-    func save(sessionCookie: String, token: String, andUID uid: Int) {
-        defaults.setValue(sessionCookie, forKey: UserDefaultsKeys.SessionCookieKey)
-        defaults.setValue(token, forKey: UserDefaultsKeys.TokenKey)
-        defaults.setValue(uid, forKey: UserDefaultsKeys.UIDKey)
-        defaults.synchronize()
-    }
-    
-    func getSessionData() -> (sessionCookie: String?, token: String?, uid: Int?) {
-        let sessionCookie = defaults.string(forKey: UserDefaultsKeys.SessionCookieKey)
-        let token = defaults.string(forKey: UserDefaultsKeys.TokenKey)
-        let uid = defaults.integer(forKey: UserDefaultsKeys.UIDKey)
-        return (sessionCookie, token, uid)
-    }
-    
-    func deleteSessionData() {
-        defaults.removeObject(forKey: UserDefaultsKeys.SessionCookieKey)
-        defaults.removeObject(forKey: UserDefaultsKeys.TokenKey)
+    func deleteSessionData() throws {
+        
+        // Remove the users password from the keychain.
+        if let username = username {
+            try secureStore.removeValue(forKey: username)
+        }
+        
+        // Delete the current users UID.
         defaults.removeObject(forKey: UserDefaultsKeys.UIDKey)
         defaults.synchronize()
     }
     
-    func set(token: String) {
-        defaults.setValue(token, forKey: UserDefaultsKeys.TokenKey)
-        defaults.synchronize()
-    }
-    
     var isLoggedIn: Bool {
-        return defaults.object(forKey: UserDefaultsKeys.SessionCookieKey) != nil
+        do {
+            let (_, _) = try secureStore.getTokenAndSecret()
+            return true
+        } catch {
+            return false
+        }
     }
     
     func didLogout(fromViewContoller viewController: UIViewController?) {
         do {
-            deleteSessionData()
+            try deleteSessionData()
             try store.clearout()
             navigation.showLoginScreen()
         } catch {

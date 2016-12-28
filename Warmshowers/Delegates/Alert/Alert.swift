@@ -40,8 +40,10 @@ class Alert: AlertDelegate {
             switch (error as! APIEndPointError) {
             case .invalidPathParameters:
                 assertionFailure("Invalid parameters used for request.")
+                break
             case .invalidOutboundData:
                 assertionFailure("Invalid outbound data for request.")
+                break
             case .parsingError(let endPoint, let key):
                 title = "Data Parsing Error"
                 message = "An error occured while parsing data from the Warmshowers API end point \(endPoint). "

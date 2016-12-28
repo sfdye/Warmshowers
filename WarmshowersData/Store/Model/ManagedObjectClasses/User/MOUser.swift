@@ -10,7 +10,11 @@ import Foundation
 import CoreData
 import MapKit
 
-public class MOUser: NSManagedObject, JSONUpdateable {
+public class MOUser: NSManagedObject, Fetchable, JSONUpdateable {
+    
+    // MARK: Fetchable
+    
+    public static var entityName: String { return "User" }
     
     // MARK: Getters and setters
     

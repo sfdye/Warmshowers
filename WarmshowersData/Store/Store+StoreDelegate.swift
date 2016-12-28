@@ -15,7 +15,8 @@ extension Store: StoreDelegate, StoreUpdateDelegate {
         let entities = managedObjectModel.entities
         try performBlockInPrivateContextAndWait { (context) throws in
             for entity in entities {
-                let request = NSFetchRequest<NSManagedObject>(entityName: entity.description)
+                guard let entityName = entity.name else { continue }
+                let request = NSFetchRequest<NSManagedObject>(entityName: entityName)
                 let objects = try context.fetch(request)
                 for object in objects {
                     context.delete(object)
@@ -25,15 +26,14 @@ extension Store: StoreDelegate, StoreUpdateDelegate {
         }
     }
     
-    public func retrieve<T: NSManagedObject>(inContext context: NSManagedObjectContext, withPredicate predicate: NSPredicate? = nil, andSortBy sortBy: String? = nil, isAscending: Bool = true) throws -> [T] {
+    public func retrieve<T: NSManagedObject>(inContext context: NSManagedObjectContext, withPredicate predicate: NSPredicate? = nil, andSortBy sortBy: String? = nil, isAscending: Bool = true) throws -> [T] where T: Fetchable {
         
         var sorter: NSSortDescriptor? = nil
         if (sortBy != nil) {
             sorter = NSSortDescriptor(key: sortBy, ascending: isAscending)
         }
         
-        let request: NSFetchRequest<T> = T.fetchRequest() as! NSFetchRequest<T>
-        //let request = NSFetchRequest(entityName: T.entityName)
+        let request = NSFetchRequest<T>(entityName: T.entityName)
         request.returnsObjectsAsFaults = false
         request.predicate = predicate
         if (sorter != nil) { request.sortDescriptors = [sorter!] }
@@ -42,15 +42,17 @@ extension Store: StoreDelegate, StoreUpdateDelegate {
         return fetchedResult
     }
     
-    func newOrExisting<T: NSManagedObject>(inContext context: NSManagedObjectContext, withJSON json: Any, withParser parser: JSONParser) throws -> T where T : JSONUpdateable {
+    func newOrExisting<T: NSManagedObject>(inContext context: NSManagedObjectContext, withJSON json: Any, withParser parser: JSONParser) throws -> T where T: JSONUpdateable & Fetchable {
         let predicate = try T.predicate(fromJSON: json, withParser: parser)
+        var entry: T
         if let exisitng: T = try retrieve(inContext: context, withPredicate: predicate, andSortBy: nil, isAscending: true).first {
-            try exisitng.update(withJSON: json, withParser: parser)
-            return exisitng
+            entry = exisitng
         } else {
-            let newEntry = T.init(context: context)
-            return newEntry
+            let newEntry: T = T.init(context: context)
+            entry = newEntry
         }
+        try entry.update(withJSON: json, withParser: parser)
+        return entry
     }
     
     public func performBlockInPrivateContextAndWait(_ block: @escaping (NSManagedObjectContext) throws -> Void) throws {

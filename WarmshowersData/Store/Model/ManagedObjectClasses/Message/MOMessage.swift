@@ -9,7 +9,11 @@
 import Foundation
 import CoreData
 
-public class MOMessage: NSManagedObject, JSONUpdateable {
+public class MOMessage: NSManagedObject, Fetchable, JSONUpdateable {
+    
+    // MARK: Fetchable
+    
+    public static var entityName: String { return "Message" }
     
     // MARK: Getters and setters
     

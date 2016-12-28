@@ -10,7 +10,11 @@ import Foundation
 import CoreData
 
 @objc(MOMapTile)
-public class MOMapTile: NSManagedObject, JSONUpdateable {
+public class MOMapTile: NSManagedObject, Fetchable, JSONUpdateable {
+    
+    // MARK: Fetchable
+    
+    public static var entityName: String { return "MapTile" }
     
     // MARK: JSONUpdateable
     

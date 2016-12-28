@@ -83,7 +83,7 @@ class MessageThreadsTableViewController: UITableViewController, Delegator, DataS
     }
     
     func initialiseFetchResultsControllerWithStore(_ store: StoreDelegate) {
-        let request: NSFetchRequest<MOMessageThread> = NSFetchRequest(entityName: "MessageThread")
+        let request: NSFetchRequest<MOMessageThread> = NSFetchRequest(entityName: MOMessageThread.entityName)
         request.sortDescriptors = [
             NSSortDescriptor(key: "last_updated", ascending: false)
         ]

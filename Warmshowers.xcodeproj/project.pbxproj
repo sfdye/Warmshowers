@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		987D918476D47A61CCFBA23B /* Pods_WarmshowersData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1437EFFC40DEEC8EBE45C21C /* Pods_WarmshowersData.framework */; };
 		CDC80C00DF08E589C71B8996 /* Pods_Warmshowers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD5535C83353EC12F549AD0 /* Pods_Warmshowers.framework */; };
+		E51A55671E13824A0004600D /* Fetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51A55661E13824A0004600D /* Fetchable.swift */; };
 		E529ECC71E11BC2700395369 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ECBE1E11BC2700395369 /* Alert.swift */; };
 		E529ECC81E11BC2700395369 /* AlertDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ECBF1E11BC2700395369 /* AlertDelegate.swift */; };
 		E529ECC91E11BC2700395369 /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ECC11E11BC2700395369 /* Navigation.swift */; };
@@ -309,6 +310,7 @@
 		92742EF5E66B8F5D19D2AEA4 /* Pods-WarmshowersData.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WarmshowersData.release.xcconfig"; path = "Pods/Target Support Files/Pods-WarmshowersData/Pods-WarmshowersData.release.xcconfig"; sourceTree = "<group>"; };
 		A17687885A5BDB7132D6EBF2 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC5E586690182D68CCBBE7F9 /* Pods-Warmshowers.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Warmshowers.release.xcconfig"; path = "Pods/Target Support Files/Pods-Warmshowers/Pods-Warmshowers.release.xcconfig"; sourceTree = "<group>"; };
+		E51A55661E13824A0004600D /* Fetchable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fetchable.swift; sourceTree = "<group>"; };
 		E529ECBE1E11BC2700395369 /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		E529ECBF1E11BC2700395369 /* AlertDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertDelegate.swift; sourceTree = "<group>"; };
 		E529ECC11E11BC2700395369 /* Navigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Navigation.swift; sourceTree = "<group>"; };
@@ -1272,6 +1274,7 @@
 				E537157B1E0C8FF700770305 /* Message */,
 				E537157E1E0C8FF700770305 /* MessageThread */,
 				E53715811E0C8FF700770305 /* User */,
+				E51A55661E13824A0004600D /* Fetchable.swift */,
 			);
 			path = ManagedObjectClasses;
 			sourceTree = "<group>";
@@ -2013,6 +2016,7 @@
 				E53716181E0CE82B00770305 /* RecommendationMonth.swift in Sources */,
 				E53715951E0C8FF700770305 /* MOMessageThread+CoreDataProperties.swift in Sources */,
 				E53715911E0C8FF700770305 /* MOMapTile+CoreDataProperties.swift in Sources */,
+				E51A55671E13824A0004600D /* Fetchable.swift in Sources */,
 				E53715E71E0CB1BC00770305 /* APIEndPointError.swift in Sources */,
 				E53716001E0CB1BC00770305 /* APIRequestStatus.swift in Sources */,
 				E53716251E0CE95B00770305 /* OfferType.swift in Sources */,

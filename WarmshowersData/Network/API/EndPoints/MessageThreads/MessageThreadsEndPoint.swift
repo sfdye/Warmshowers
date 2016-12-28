@@ -36,7 +36,7 @@ class MessageThreadsEndPoint: APIEndPointProtocol {
                 let thread: MOMessageThread = try store.newOrExisting(inContext: context, withJSON: threadJSON, withParser: parser)
                 
                 // Don't need change the message participants if they already exist
-                if let existingParticipants = thread.participants , existingParticipants.count == 0 {
+                if let existingParticipants = thread.participants, existingParticipants.count == 0 {
                     
                     guard let participantsJSON = (threadJSON as AnyObject)["participants"] as? [Any] else {
                         throw APIEndPointError.parsingError(endPoint: self.name, key: "participants")

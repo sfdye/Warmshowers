@@ -32,6 +32,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, Delegator, DataSource {
         
         configureGlobalViewSettings()
         
+        api.set(delegate: APICommunicatorConfiguration())
+        
         if !session.isLoggedIn {
             navigation.showLoginScreen()
         } else {

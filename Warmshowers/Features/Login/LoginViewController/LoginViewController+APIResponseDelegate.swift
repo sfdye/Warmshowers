@@ -15,6 +15,14 @@ extension LoginViewController: APIResponseDelegate {
         
         // Recieved login response: request a token
         if request.endPointType == .login {
+            
+            guard let uid = data as? Int else {
+                alert.presentAlertFor(self, withTitle: "App error", button: "OK", message: "Sorry, an error occured during login. Please report this as a bug, sorry for the inconvenience.")
+                return
+            }
+            
+            session.save(uid: uid)
+            
             api.contact(endPoint: .token, withMethod: .get, andPathParameters: nil, andData: nil, thenNotify: self)
             return
         }
@@ -27,7 +35,7 @@ extension LoginViewController: APIResponseDelegate {
             navigation.showMainApp()
         } catch {
             // This case is very unlikely.
-            alert.presentAlertFor(self, withTitle: "App error", button: "OK", message: "Sorry, an error occured while saving your username. Please report this as a bug, sorry for the inconvenience.")
+            alert.presentAlertFor(self, withTitle: "App error", button: "OK", message: "Sorry, an error occured during login. Please report this as a bug, sorry for the inconvenience.")
         }
     }
     
