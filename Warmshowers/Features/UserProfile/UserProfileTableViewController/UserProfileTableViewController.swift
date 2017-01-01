@@ -9,18 +9,6 @@
 import UIKit
 import WarmshowersData
 
-fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
-}
-
-
 enum HostProfileTab {
     case about
     case hosting
@@ -67,7 +55,7 @@ class UserProfileTableViewController: UITableViewController, Delegator, DataSour
     
     /** Sets up a done button if one is needed. */
     func configureDoneButton() {
-        if navigationController?.viewControllers.count < 2 {
+        if navigationController!.viewControllers.count < 2 {
             navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(UserProfileTableViewController.doneButtonPressed))
         }
     }

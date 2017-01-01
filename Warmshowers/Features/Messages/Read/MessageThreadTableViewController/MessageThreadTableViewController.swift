@@ -68,6 +68,13 @@ class MessageThreadTableViewController: UITableViewController, Delegator, DataSo
         if fetchedResultsController == nil {
             initialiseFetchResultsController()
         }
+        
+        // Scroll to the bottom of the thread (i.e. the most recent message)
+        let row = max(tableView.dataSource!.tableView(tableView, numberOfRowsInSection: 0) - 1, 0)
+        let indexPath = IndexPath(row: row, section: 0)
+        DispatchQueue.main.async { [unowned self] in
+            self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

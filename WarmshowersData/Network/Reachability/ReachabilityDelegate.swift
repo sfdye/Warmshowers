@@ -16,12 +16,12 @@ public protocol ReachabilityDelegate {
     
     func stopReachabilityNotifications()
     
-    func registerForNotifications(_ observer: AnyObject, selector aSelector: Selector)
+    func registerForNotifications(_ observer: Any, selector aSelector: Selector)
     
-    func deregisterFromNotifications(_ observer: AnyObject)
+    func deregisterFromNotifications(_ observer: Any)
     
-    func registerForAndStartNotifications(_ observer: AnyObject, selector aSelector: Selector)
+    func registerForAndStartNotifications(_ observer: Any, selector aSelector: Selector)
     
-    func deregisterAndStopNotifications(_ observer: AnyObject)
+    func deregisterAndStopNotifications(_ observer: Any)
     
 }

@@ -27,6 +27,11 @@ extension MessageThreadTableViewController {
         let cellID = (message.author?.uid ?? 0 == session.uid) ? "MessageFromSelf" : "MessageFromUser"
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! MessageTableViewCell
         configureCell(cell, withMessage: message)
+        
+        // Tag the author label and image for segue to identify them for segues.
+        cell.fromLabel.tag = indexPath.row
+        cell.authorImageView.tag = indexPath.row
+        
         return cell
     }
     

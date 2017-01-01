@@ -23,6 +23,7 @@ extension HostSearchViewController: APIResponseDelegate {
     }
     
     func request(_ request: APIRequest, didFailWithError error: Error) {
+        print(error)
         alert.presentAlertFor(self, withTitle: "Error", button: "OK", message: "Failed to get user info.")
     }
     

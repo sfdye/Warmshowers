@@ -35,16 +35,6 @@ class Session: SessionDelegate, Delegator, DataSource {
         defaults.synchronize()
     }
     
-    /** 
-     Saves a users username and password. The password is saved securely in the users keychain, while the username is store in the the NSUserDefaults.
-     */
-    func save(password: String, forUsername username: String) throws {
-        do {
-            try keychain.set(password, key: username)
-            set(username: username)
-        }
-    }
-    
     func deleteSessionData() throws {
         
         // Remove the users password from the keychain.

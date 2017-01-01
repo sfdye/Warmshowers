@@ -48,7 +48,7 @@ extension Store: StoreDelegate, StoreUpdateDelegate {
         if let exisitng: T = try retrieve(inContext: context, withPredicate: predicate, andSortBy: nil, isAscending: true).first {
             entry = exisitng
         } else {
-            let newEntry: T = T.init(context: context)
+            let newEntry: T = NSEntityDescription.insertNewObject(forEntityName: T.entityName, into: context) as! T
             entry = newEntry
         }
         try entry.update(withJSON: json, withParser: parser)

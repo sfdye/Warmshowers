@@ -66,8 +66,8 @@ class Alert: AlertDelegate {
                 title = "API Error"
                 message = "An error occured while contacting the Warmshowers API. Please report this as a bug."
             }
-        case is APIRequestAuthorizerError:
-            switch (error as! APIRequestAuthorizerError) {
+        case is APIAuthorizerError:
+            switch (error as! APIAuthorizerError) {
             case .invalidAuthorizationData:
                 // Do not show errors for these. Auto login is handled by APICommunicator.
                 return

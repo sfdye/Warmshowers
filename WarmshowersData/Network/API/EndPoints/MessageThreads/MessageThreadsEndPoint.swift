@@ -8,7 +8,7 @@
 
 import Foundation
 
-class MessageThreadsEndPoint: APIEndPointProtocol {
+struct MessageThreadsEndPoint: APIEndPointProtocol {
     
     var type: APIEndPoint = .messageThreads
     

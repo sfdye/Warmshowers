@@ -16,10 +16,10 @@
         </array>
     </customFonts>
     <scenes>
-        <!--Account Table View Controller-->
+        <!--User Profile Table View Controller-->
         <scene sceneID="yHk-3J-1rW">
             <objects>
-                <tableViewController storyboardIdentifier="UITableViewController-Hb8-qn-N7z" id="Hb8-qn-N7z" customClass="AccountTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="UITableViewController-Hb8-qn-N7z" id="Hb8-qn-N7z" customClass="UserProfileTableViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="i5W-FB-YBy">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="900"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -40,7 +40,7 @@
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Profile Image" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QfE-XC-Bh4">
-                                            <rect key="frame" x="18.5" y="53.5" width="163.5" height="26"/>
+                                            <rect key="frame" x="43.5" y="45" width="113.5" height="43"/>
                                             <fontDescription key="fontDescription" name="SueEllenFrancisco" family="Sue Ellen Francisco" pointSize="22"/>
                                             <color key="textColor" red="0.46666666666666667" green="0.46666666666666667" blue="0.46666666666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -447,7 +447,7 @@
         <scene sceneID="oow-cd-HOT">
             <objects>
                 <navigationController id="15k-Br-R7U" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="RKc-Xd-PaF">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="RKc-Xd-PaF">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

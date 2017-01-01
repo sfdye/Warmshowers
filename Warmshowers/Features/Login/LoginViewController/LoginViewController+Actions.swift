@@ -26,6 +26,8 @@ extension LoginViewController {
             return
         }
         
+        session.set(username: username)
+        
         guard let password = passwordTextField.text , password != "" else {
             alert.presentAlertFor(self, withTitle: "Missing Password", button: "Dismiss", message: "Please enter your password", andHandler: { [weak self] (action) in
                 self?.passwordTextField.becomeFirstResponder()
@@ -37,8 +39,7 @@ extension LoginViewController {
         ProgressHUD.show("Logging in ...")
         
         // Login
-        let loginData = LoginData(username: username, password: password)
-        api.contact(endPoint: .login, withMethod: .post, andPathParameters: nil, andData: loginData, thenNotify: self)
+        api.login.login(withUsername: username, andPassword: password, thenNotify: self)
     }
     
     /**

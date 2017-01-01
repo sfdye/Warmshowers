@@ -1,5 +1,5 @@
 //
-//  APIRequestAuthorizerError.swift
+//  APIAuthorizerError.swift
 //  Powershop
 //
 //  Created by Rajan Fernandez on 6/12/16.
@@ -8,8 +8,9 @@
 
 import Foundation
 
-public enum APIRequestAuthorizerError: Error {
+public enum APIAuthorizerError: Error {
     case noDelegate
     case invalidHostURL
     case invalidAuthorizationData
+    case currentlyReauthorizing
 }

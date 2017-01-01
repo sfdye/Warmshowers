@@ -19,4 +19,8 @@ class APICommunicatorConfiguration: APICommunicatorDelegate {
         return "warmshowers.org"
     }
     
+    func requestShouldBeQueuedWhileOffline(_ request: APIRequest) -> Bool {
+        return false
+    }
+    
 }

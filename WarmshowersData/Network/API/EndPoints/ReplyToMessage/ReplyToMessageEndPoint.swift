@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ReplyToMessageEndPoint: APIEndPointProtocol {
+struct ReplyToMessageEndPoint: APIEndPointProtocol {
     
     var type: APIEndPoint = .replyToMessage
     

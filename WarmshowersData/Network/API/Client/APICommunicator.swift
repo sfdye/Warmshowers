@@ -9,22 +9,21 @@
 import Foundation
 
 /** A central point of control for all API requests. */
-public class APICommunicator: APIDelegate {
+class APICommunicator: APIDelegate {
     
     // MARK: Properties
     
-    public var mode: APICommunicatorMode = .online
-    public var logging: Bool = false
+    var mode: APICommunicatorMode = .online
+    var logging: Bool = true
     
-    fileprivate var requests = Set<APIRequest>()
-    fileprivate var session = WarmShowersURLSession.shared
-    fileprivate let jsonParser: JSONParser = JSON.shared
+    var requests = Set<APIRequest>()
+    private let jsonParser: JSONParser = JSON.shared
     
     // Congfuguration and Delegates
     
-    public var connection: ReachabilityDelegate = ReachabilityManager()
-    public var auth: APIAuthorizationDelegate = APIRequestAuthorizer()
-    public var delegate: APICommunicatorDelegate?
+    var connection: ReachabilityDelegate = ReachabilityManager()
+    var auth: (APIAuthorizationDelegate & APILoginDelegate)!
+    var delegate: APICommunicatorDelegate?
     
     var secureStore: SecureStoreDelegate? {
         return DataDelegates.shared.secureStore
@@ -36,45 +35,84 @@ public class APICommunicator: APIDelegate {
     
     // MARK: Initialisers
     
+    init() {
+        let auth = APIAuthorizer()
+        auth.delegate = self
+        self.auth = auth
+    }
+    
     deinit {
         connection.deregisterFromNotifications(self)
     }
     
-    // MARK: Utilities
+    // MARK: Debug utilities
     
-    fileprivate func log(_ message: String) {
+    func log(_ message: String) {
         if logging { print(message) }
     }
     
-    public func set(delegate: APICommunicatorDelegate) {
+    func logQueueState() {
+        let created = requests.filter { (request) -> Bool in request.status == .created }
+        let queued = requests.filter { (request) -> Bool in request.status == .queued }
+        let sent = requests.filter { (request) -> Bool in request.status == .sent }
+        let responseReceived = requests.filter { (request) -> Bool in request.status == .recievedResponse }
+        let parsing = requests.filter { (request) -> Bool in request.status == .parsing }
+        log("Created: \(created.count), Queued: \(queued.count), Sent: \(sent.count), Response received: \(responseReceived.count), Parsing: \(parsing.count)")
+    }
+    
+    // MARK: Utilities
+    
+    func error(fromData data: Data?) -> String? {
+        var body: String? = nil
+        
+        if
+            let data = data,
+            let json = try? JSONSerialization.jsonObject(with: data, options: []),
+            let jsonArray = json as? [Any],
+            let message = jsonArray.first as? String
+        {
+            body = message
+        }
+        
+        return body
+    }
+    
+    // MARK: API Delegate
+    
+    var login: APILoginDelegate {
+        return auth
+    }
+    
+    func set(delegate: APICommunicatorDelegate) {
         self.delegate = delegate
     }
     
     /** Creates and executes a request for the given end point with the given data. */
-    public func contact(endPoint: APIEndPoint, withMethod method: HTTP.Method, andPathParameters parameters: Any?, andData data: Any?, thenNotify requester: APIResponseDelegate) {
+    func contact(endPoint: APIEndPoint, withMethod method: HTTP.Method, andPathParameters parameters: Any?, andData data: Any?, thenNotify requester: APIResponseDelegate) {
         
         let request = APIRequest(withEndPoint: endPoint.instance, httpMethod: method, requester: requester, parameters: parameters, andData: data)
         request.delegate = self
         
         // Ensure a delegate is set before proceeding.
         guard delegate != nil else {
+            assertionFailure("API Communicator has no delegate.")
             request.delegate?.request(request, didFailWithError: APICommunicatorError.noDelegate)
             return
         }
         
         addRequestToQueue(request)
-        executeRequest(request)
+        executeQueuedRequests()
     }
-    
     
     // MARK: Request handling
     
     /** Executes an API request. */
-    fileprivate func executeRequest(_ request: APIRequest) {
+    private func execute(_ request: APIRequest) {
+        log("Executing request: \(request.hashValue). \(requests.count) more are queued.")
         
         guard connection.isOnline else {
             // Only keep requests to be processed online later when explicitly specified
-            if !requestShouldBeQueuedWhileOffline(request) {
+            if !(delegate?.requestShouldBeQueuedWhileOffline(request) ?? false) {
                 removeRequestFromQueue(request)
             }
             connection.registerForAndStartNotifications(self, selector: #selector(reachabilityDidChange))
@@ -82,34 +120,46 @@ public class APICommunicator: APIDelegate {
             return
         }
     
+        // Generate an authorized request
+        let urlRequest: URLRequest
         do {
-            // Generate the request and add any parameters if required.
             assert(secureStore != nil, "Attempted to update persisted data without a secure store delegate. Please ensure the secure store delegate on the API communicator is non-nill.")
-            let urlRequest = try auth.authorizedURLRequest(fromAPIRequest: request, withSecureStore: secureStore!)
+            urlRequest = try auth.authorizedURLRequest(fromAPIRequest: request, withSecureStore: secureStore!)
+        } catch let error {
             
-            // Dispatch the request.
-            switch mode {
-            case .online:
-                let task = session.dataTask(with: urlRequest, completionHandler: { [weak self] (data, response, error) in
-                    self?.didRecieveHTTPResponseWithData(data, response: response, andError: error, forRequest: request)
-                })
-                task.resume()
-            case .demo:
-                assertionFailure("Demo bahaviour not yest defined.")
-            case .mocking:
-                assertionFailure("Mocking behaviour not yet defined.")
+            if let error = (error as? APIAuthorizerError), error == .currentlyReauthorizing {
+                // Leave the request in the queue until reauthorization has finished.
+                return
             }
             
-            log("Request dispatched to: \(urlRequest.url)")
-            log("Header: \(urlRequest.allHTTPHeaderFields)")
-            
-        } catch let error {
             request.delegate?.request(request, didFailWithError: error)
+            return
         }
+        
+        // Dispatch the request.
+        switch mode {
+        case .online:
+            let task = WarmShowersURLSession.shared.dataTask(with: urlRequest, completionHandler: { [weak self] (data, response, error) in
+                self?.didRecieveHTTPResponseWithData(data, response: response, andError: error, forRequest: request)
+            })
+            task.resume()
+        case .demo:
+            assertionFailure("Demo bahaviour not yest defined.")
+        case .mocking:
+            assertionFailure("Mocking behaviour not yet defined.")
+        }
+        
+        request.status = .sent
+        
+        log("Request dispatched to: \(urlRequest.url)")
+        log("Header: \(urlRequest.allHTTPHeaderFields)")
+        logQueueState()
     }
     
     /** Handles network responses and delegates control of the request. */
-    fileprivate func didRecieveHTTPResponseWithData(_ data: Data?, response: URLResponse?, andError error: Error?, forRequest request: APIRequest) {
+    private func didRecieveHTTPResponseWithData(_ data: Data?, response: URLResponse?, andError error: Error?, forRequest request: APIRequest) {
+        
+        request.status = .recievedResponse
         
         // Handle HTTP errors.
         guard error == nil else {
@@ -117,38 +167,39 @@ public class APICommunicator: APIDelegate {
             return
         }
         
-        let statusCode = (response as! HTTPURLResponse).statusCode
-        
         // Handle error responses
+        let statusCode = (response as! HTTPURLResponse).statusCode
         guard request.endPoint.successCodes.contains(statusCode) else {
             
-            // The user is unauthorized and must log in again.
+            // 403: Access denied for user anonymous.
+            // The user is unauthorized or the sesison has expired so the user must log in again.
             if statusCode == 403 {
-                // fix this with authorization handling.
-                // session.didLogout(fromViewContoller: nil)
-            }
-            
-            var error: APICommunicatorError
-            var body: String = ""
-            
-            if let data = data {
+                
+                // Try to re-authorize the user with their username and password.
                 do {
-                    let json = try JSONSerialization.jsonObject(with: data, options: [])
-                    if let jsonArray = json as? NSArray {
-                        if let message = jsonArray.object(at: 0) as? String {
-                            body = message
-                        }
-                    }
+                    let (username, password) = try secureStore!.getUsernameAndPassword()
+                    
+                    print("Auto-login triggered.")
+                    auth.login(withUsername: username, andPassword: password, thenNotify: self)
+                    
+                    // Re-queue the request.
+                    request.status = .queued
+                    
+                    
+                    return
                 } catch {
-                    request.delegate.request(request, didFailWithError: error)
+                    assertionFailure("Revoke access behaviour needs fixing.")
+                    // session.didLogout(fromViewContoller: nil)
                 }
             }
-            
-            error = .serverError(statusCode: statusCode, body: body)
+
+            let body = self.error(fromData: data)
+            let error = APICommunicatorError.serverError(statusCode: statusCode, body: body)
             request.delegate.request(request, didFailWithError: error)
             return
         }
         
+        // Handle nil data responses
         guard let data = data, request.endPoint.doesExpectDataInResponseForRequest(request) == true else {
             let error = APICommunicatorError.noData
             request.delegate.request(request, didFailWithError: error)
@@ -156,6 +207,9 @@ public class APICommunicator: APIDelegate {
         }
         
         // Begin parsing data.
+        
+        request.status = .parsing
+        
         do {
             var parsedData: Any? = nil
             switch request.endPoint.acceptType {
@@ -169,7 +223,7 @@ public class APICommunicator: APIDelegate {
                 }
             case .json:
                 let json = try JSONSerialization.jsonObject(with: data, options: [.allowFragments])
-                log("Recieved JSON response: \(json)")
+//                log("Recieved JSON response: \(json)")
                 
                 // Let the end point update the store with the recieved JSON. This is used by the Revoke Access end point.
                 // This is called before the gaurd condition below since the response from the Revoke Access end point does not contain a data field.
@@ -214,6 +268,7 @@ public class APICommunicator: APIDelegate {
     
     /** Adds a request to the request queue. */
     func addRequestToQueue(_ request: APIRequest) {
+        request.status = .queued
         requests.insert(request)
     }
     
@@ -223,21 +278,20 @@ public class APICommunicator: APIDelegate {
     }
     
     /** Executes all queued request. */
-    fileprivate func flushQueue() {
+    func executeQueuedRequests() {
         for request in requests {
             if request.status == .queued {
-                executeRequest(request)
+                execute(request)
             }
         }
     }
-    
     
     // MARK: Reachability
     
     /** This method is called when the reachability status is changed */
     @objc fileprivate func reachabilityDidChange() {
         if connection.isOnline {
-            flushQueue()
+            executeQueuedRequests()
         }
     }
     

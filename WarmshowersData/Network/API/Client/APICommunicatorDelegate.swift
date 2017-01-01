@@ -16,4 +16,15 @@ public protocol APICommunicatorDelegate {
     /** Returns the host URL for API Requests. */
     func hostDomainForRequest(_ request: APIRequest) -> String
     
+    /** Specifies if the http client should queue a request while offline for processing later once online again */
+    func requestShouldBeQueuedWhileOffline(_ request: APIRequest) -> Bool
+    
+}
+
+extension APICommunicatorDelegate {
+
+    func requestShouldBeQueuedWhileOffline(_ request: APIRequest) -> Bool {
+        return false
+    }
+    
 }

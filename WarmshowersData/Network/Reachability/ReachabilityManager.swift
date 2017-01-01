@@ -32,14 +32,14 @@ public class ReachabilityManager: ReachabilityDelegate {
         reachability?.stopNotifier()
     }
     
-    public func registerForNotifications(_ observer: AnyObject, selector aSelector: Selector) {
+    public func registerForNotifications(_ observer: Any, selector aSelector: Selector) {
         NotificationCenter.default.addObserver(observer,
             selector: aSelector,
             name: ReachabilityChangedNotification,
             object: reachability)
     }
     
-    public func deregisterFromNotifications(_ observer: AnyObject) {
+    public func deregisterFromNotifications(_ observer: Any) {
         NotificationCenter.default.removeObserver(observer,
             name: ReachabilityChangedNotification,
             object: reachability)
@@ -48,12 +48,12 @@ public class ReachabilityManager: ReachabilityDelegate {
     
     // MARK: Convenience notification methods
     
-    public func registerForAndStartNotifications(_ observer: AnyObject, selector aSelector: Selector) {
+    public func registerForAndStartNotifications(_ observer: Any, selector aSelector: Selector) {
         registerForNotifications(observer, selector: aSelector)
         startReachabilityNotifications()
     }
     
-    public func deregisterAndStopNotifications(_ observer: AnyObject) {
+    public func deregisterAndStopNotifications(_ observer: Any) {
         stopReachabilityNotifications()
         deregisterFromNotifications(observer)
     }

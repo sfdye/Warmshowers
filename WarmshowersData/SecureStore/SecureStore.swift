@@ -16,10 +16,14 @@ public class SecureStore: SecureStoreDelegate {
     struct PropertyKeys {
         static let TokenKey = "token"
         static let SecretKey = "secret"
+        static let UsernameKey = "username"
+        static let PasswordKey = "password"
         static let PINKey = "pin"
     }
     
     public init() {}
+    
+    // MARK: API Authorization
     
     public func setToken(_ token: String, andSecret secret: String) throws {
         try keychain.set(token, key: PropertyKeys.TokenKey)
@@ -34,10 +38,27 @@ public class SecureStore: SecureStoreDelegate {
         return (token!, secret!)
     }
     
+    public func save(username: String, andPassword password: String) throws {
+        try keychain.set(username, key: PropertyKeys.UsernameKey)
+        try keychain.set(password, key: PropertyKeys.PasswordKey)
+    }
+    
+    public func getUsernameAndPassword() throws -> (String, String) {
+        let username = try keychain.get(PropertyKeys.UsernameKey)
+        guard username != nil else { throw SecureStoreError.noUsername }
+        let password = try keychain.get(PropertyKeys.PasswordKey)
+        guard password != nil else { throw SecureStoreError.noPassword }
+        return (username!, password!)
+    }
+    
     public func revokeAccess() throws {
         try keychain.remove(PropertyKeys.TokenKey)
         try keychain.remove(PropertyKeys.SecretKey)
+        try keychain.remove(PropertyKeys.UsernameKey)
+        try keychain.remove(PropertyKeys.PasswordKey)
     }
+    
+    // MARK: Generic secure storage
     
     public func save(value: String, forKey key: String) throws {
         try keychain.set(value, key: key)

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CreateFeedbackEndPoint : APIEndPointProtocol {
+struct CreateFeedbackEndPoint : APIEndPointProtocol {
     
     var type: APIEndPoint = .createFeedback
     

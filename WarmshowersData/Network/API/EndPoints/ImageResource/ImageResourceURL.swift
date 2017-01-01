@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ImageResourceEndPoint: APIEndPointProtocol {
+struct ImageResourceEndPoint: APIEndPointProtocol {
     
     var type: APIEndPoint = .imageResource
     

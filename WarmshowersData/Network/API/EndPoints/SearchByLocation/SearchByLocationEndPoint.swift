@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SearchByLocationEndPoint: APIEndPointProtocol {
+struct SearchByLocationEndPoint: APIEndPointProtocol {
     
     static let MapSearchLimit: Int = 800
     

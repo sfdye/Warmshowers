@@ -8,7 +8,7 @@
 
 import Foundation
 
-class UnreadMessageCountEndPoint: APIEndPointProtocol {
+struct UnreadMessageCountEndPoint: APIEndPointProtocol {
     
     var type: APIEndPoint = .unreadMessageCount
     

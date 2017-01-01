@@ -18,7 +18,8 @@ extension MessageThreadTableViewController {
         case SID_ReplyToMessageThread:
             return threadID != nil
         case SID_MessageThreadToUserProfile:
-            return false
+            print((sender as! UIView).tag)
+            return true
         default:
             return false
         }
@@ -32,9 +33,17 @@ extension MessageThreadTableViewController {
             let composeMessageVC = navVC.viewControllers.first as! ComposeMessageViewController
             composeMessageVC.configureAsReply(threadID)
         case SID_MessageThreadToUserProfile:
+            print((sender as! UIView).tag)
+            let row = (sender as! UIView).tag
+            guard row >= 0, row < tableView.dataSource!.tableView(tableView, numberOfRowsInSection: 0) else {
+                return
+            }
+            let indexPath = IndexPath(row: row, section: 0)
+            let message = fetchedResultsController.object(at: indexPath)
+            let authorUID = message.author?.uid
+            print(authorUID)
 //            guard sender is User else { return }
-//            let navVC = segue.destination as! UINavigationController
-//            let accountTVC = navVC.viewControllers.first as! UserProfileTableViewController
+//            let accountTVC = segue.destination as! UserProfileTableViewController
 //            accountTVC.user = sender as? User
             break
         default:

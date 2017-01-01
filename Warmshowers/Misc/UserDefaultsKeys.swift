@@ -10,7 +10,5 @@ import UIKit
 
 struct UserDefaultsKeys {
     static let UsernameKey = "ws-current-user-username"
-    static let SessionCookieKey = "ws-session-cookie"
-    static let TokenKey = "ws-token"
     static let UIDKey = "ws-current-user-uid"
 }

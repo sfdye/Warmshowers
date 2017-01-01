@@ -10,14 +10,24 @@ import Foundation
 
 public protocol SecureStoreDelegate {
     
+    // MARK: API Authorization
+    
     /** Saves the users OAuth token and secret. */
     func setToken(_ token: String, andSecret secret: String) throws
  
     /** Returns the users username. */
     func getTokenAndSecret() throws -> (String, String)
     
+    /** Saves a users username and password. */
+    func save(username: String, andPassword: String) throws
+    
+    /** Returns the users username and password. */
+    func getUsernameAndPassword() throws -> (String, String)
+    
     /** Removes the token and secret from the secure store. */
     func revokeAccess() throws
+    
+    // MARK: Generic secure storage
     
     /** Saves the given value in the keychain. */
     func save(value: String, forKey key: String) throws

@@ -1,18 +1,20 @@
 //
-//  APIRequestAuthorizer.swift
-//  Powershop
+//  APIAuthorizer+APIAuthorizationDelegate.swift
+//  Warmshowers
 //
-//  Created by Rajan Fernandez on 14/07/16.
-//  Copyright © 2016 Powershop. All rights reserved.
+//  Created by Rajan Fernandez on 1/01/17.
+//  Copyright © 2017 Rajan Fernandez. All rights reserved.
 //
 
 import Foundation
 
-class APIRequestAuthorizer: APIAuthorizationDelegate {
-    
-    let outboundDataMethods: [HTTP.Method] = [.post, .put, .delete, .patch]
+extension APIAuthorizer: APIAuthorizationDelegate {
     
     public func authorizedURLRequest(fromAPIRequest request: APIRequest, withSecureStore secureStore: SecureStoreDelegate) throws -> URLRequest {
+        
+        if request.endPoint.type != .login && request.endPoint.type != .token && currentlyReauthorizing {
+            throw APIAuthorizerError.currentlyReauthorizing
+        }
         
         let hostURL = try request.delegate.hostURLForRequest(request)
         let url = try request.endPoint.url(withHostURL: hostURL, andParameters: request.parameters)
@@ -44,7 +46,7 @@ class APIRequestAuthorizer: APIAuthorizationDelegate {
         do {
             (token, sessionCookie) = try secureStore.getTokenAndSecret()
         } catch {
-            throw APIRequestAuthorizerError.invalidAuthorizationData
+            throw APIAuthorizerError.invalidAuthorizationData
         }
         
         // Add the session cookie to the header.
@@ -57,4 +59,3 @@ class APIRequestAuthorizer: APIAuthorizationDelegate {
     }
     
 }
-

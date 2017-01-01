@@ -11,4 +11,6 @@ import Foundation
 enum SecureStoreError: Error {
     case noToken
     case noSecret
+    case noUsername
+    case noPassword
 }

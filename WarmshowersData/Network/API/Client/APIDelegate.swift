@@ -12,6 +12,8 @@ public protocol APIDelegate {
     
     var connection: ReachabilityDelegate { get }
     
+    var login: APILoginDelegate { get }
+    
     func set(delegate: APICommunicatorDelegate)
     
     /** Creates and executes a request for the given end point with the given data. */

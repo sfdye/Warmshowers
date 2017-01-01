@@ -8,7 +8,7 @@
 
 import Foundation
 
-class NewMessageEndPoint: APIEndPointProtocol {
+struct NewMessageEndPoint: APIEndPointProtocol {
     
     var type: APIEndPoint = .newMessage
     

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SearchByKeywordEndPoint : APIEndPointProtocol {
+struct SearchByKeywordEndPoint : APIEndPointProtocol {
     
     var type: APIEndPoint = .searchByKeyword
     

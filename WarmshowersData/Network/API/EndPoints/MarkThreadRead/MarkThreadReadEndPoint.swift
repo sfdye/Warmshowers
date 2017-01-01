@@ -8,7 +8,7 @@
 
 import Foundation
 
-class MarkThreadReadEndPoint: APIEndPointProtocol {
+struct MarkThreadReadEndPoint: APIEndPointProtocol {
     
     var type: APIEndPoint = .markThreadRead
     

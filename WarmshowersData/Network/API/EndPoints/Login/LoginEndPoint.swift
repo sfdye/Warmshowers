@@ -8,7 +8,7 @@
 
 import Foundation
 
-class LoginEndPoint : APIEndPointProtocol {
+struct LoginEndPoint : APIEndPointProtocol {
     
     var type: APIEndPoint = .login
     
@@ -20,11 +20,11 @@ class LoginEndPoint : APIEndPointProtocol {
     
     func httpBody(fromData data: Any?, forMethod method: HTTP.Method, withEncoder encoder: APIRequestDataEncoder) throws -> Data? {
         
-        guard data is LoginData else {
-            throw APIEndPointError.invalidOutboundData(endPoint: name, errorDescription: "The \(name) end point must requires LoginData in the request data.")
+        guard data is APILoginRequest else {
+            throw APIEndPointError.invalidOutboundData(endPoint: name, errorDescription: "The \(name) end point must requires APILoginRequest in the request data.")
         }
         
-        let params = (data as! LoginData).asParameters
+        let params = (data as! APILoginRequest).loginCredentialsAsParameters
         let body = try encoder.body(fromParameters: params)
         return body
     }

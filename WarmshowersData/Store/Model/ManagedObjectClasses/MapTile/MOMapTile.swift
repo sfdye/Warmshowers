@@ -9,7 +9,6 @@
 import Foundation
 import CoreData
 
-@objc(MOMapTile)
 public class MOMapTile: NSManagedObject, Fetchable, JSONUpdateable {
     
     // MARK: Fetchable

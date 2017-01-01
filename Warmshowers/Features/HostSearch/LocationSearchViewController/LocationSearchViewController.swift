@@ -45,10 +45,9 @@ class LocationSearchViewController : UIViewController, Delegator, DataSource {
         clusterController.delegate = self
         statusLabel.text = nil
         
-        // This fix removes a shadow line from the top of the toolbar.
-//        toolbar.backgroundColor = .clear
-//        toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .any, barMetrics: .default)
-//        toolbar.setShadowImage(UIImage(), forToolbarPosition: .any)
+        // This fix removes a shadow line from the top of the toolbar and makes the toolbar transparent.
+        toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .any, barMetrics: .default)
+        toolbar.setShadowImage(UIImage(), forToolbarPosition: .any)
         
         // Ask the users permission to use location services.
         if CLLocationManager.authorizationStatus() == .notDetermined {

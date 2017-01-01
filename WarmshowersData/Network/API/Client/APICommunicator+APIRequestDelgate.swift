@@ -10,10 +10,6 @@ import UIKit
 
 extension APICommunicator: APIRequestDelegate {
     
-    func requestShouldBeQueuedWhileOffline(_ request: APIRequest) -> Bool {
-        return false
-    }
-    
     func hostURLForRequest(_ request: APIRequest) throws -> URL {
         guard delegate != nil else { throw APICommunicatorError.noDelegate }
         var urlComponents = URLComponents()
@@ -33,6 +29,9 @@ extension APICommunicator: APIRequestDelegate {
         
         // Remove request from queue.
         removeRequestFromQueue(request)
+        
+        log("Finished request: \(request.hashValue). \(requests.count) remaining requests.")
+        logQueueState()
     }
     
     func request(_ request: APIRequest, didFailWithError error: Error) {
@@ -43,6 +42,9 @@ extension APICommunicator: APIRequestDelegate {
         
         // Remove request from queue.
         removeRequestFromQueue(request)
+        
+        log("Finished request: \(request.hashValue). \(requests.count) remaining requests.")
+        logQueueState()
     }
     
 }
