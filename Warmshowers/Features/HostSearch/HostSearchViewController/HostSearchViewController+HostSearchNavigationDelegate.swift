@@ -12,8 +12,7 @@ import WarmshowersData
 extension HostSearchViewController: HostSearchNavigationDelegate {
     
     func showUserProfileForHostWithUID(_ uid: Int) {
-        ProgressHUD.show(nil)
-        api.contact(endPoint: .user, withMethod: .get, andPathParameters: String(uid) as NSString, andData: nil, thenNotify: self)
+        self.performSegue(withIdentifier: SID_SearchViewToUserAccount, sender: uid)
     }
     
     func showHostListWithHosts(_ hosts: [UserLocation]) {

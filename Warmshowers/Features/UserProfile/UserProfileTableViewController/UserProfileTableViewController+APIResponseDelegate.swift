@@ -17,6 +17,22 @@ extension UserProfileTableViewController: APIResponseDelegate {
     
     func request(_ request: APIRequest, didSucceedWithData data: Any?) {
         switch request.endPointType {
+        case .user:
+            guard let user = data as? User else { return }
+            self.user = user
+            
+            DispatchQueue.main.async { [unowned self] in
+                self.tableView.reloadData()
+            }
+            
+            // Download the users feedback.
+            api.contact(endPoint: .feedback, withMethod: .get, andPathParameters: uid, andData: nil, thenNotify: self)
+            
+            // Get the users profile image if they have one.
+            if user.profileImage == nil && user.profileImageURL != nil {
+                api.contact(endPoint: .imageResource, withMethod: .get, andPathParameters: user.profileImageURL, andData: nil, thenNotify: self)
+            }
+            
         case .imageResource:
             guard let image = data as? UIImage else { return }
             user?.profileImage = image

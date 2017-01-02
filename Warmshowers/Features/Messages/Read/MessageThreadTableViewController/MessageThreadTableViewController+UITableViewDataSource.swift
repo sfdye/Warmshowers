@@ -27,11 +27,6 @@ extension MessageThreadTableViewController {
         let cellID = (message.author?.uid ?? 0 == session.uid) ? "MessageFromSelf" : "MessageFromUser"
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! MessageTableViewCell
         configureCell(cell, withMessage: message)
-        
-        // Tag the author label and image for segue to identify them for segues.
-        cell.fromLabel.tag = indexPath.row
-        cell.authorImageView.tag = indexPath.row
-        
         return cell
     }
     
@@ -40,6 +35,8 @@ extension MessageThreadTableViewController {
         cell.dateLabel.text = textForMessageDate(message.timestamp)
         cell.bodyTextView.text = message.body
         cell.authorImageView.image = message.author?.image as? UIImage ?? UIImage(named: "ThumbnailPlaceholder")
+        cell.uid = message.author?.uid ?? 0
+        cell.delegate = self
     }
     
 }

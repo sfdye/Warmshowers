@@ -16,9 +16,9 @@ extension HostListTableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard sender is User else { return }
-        let accountTVC = segue.destination as! UserProfileTableViewController
-        accountTVC.user = sender as? User
+        guard let uid = sender as? Int else { return }
+        let userProfileTVC = segue.destination as! UserProfileTableViewController
+        userProfileTVC.uid = uid
     }
     
 }

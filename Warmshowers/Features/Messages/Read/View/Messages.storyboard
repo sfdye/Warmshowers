@@ -176,9 +176,6 @@ Second line</string>
                                                 <constraint firstAttribute="width" constant="50" id="1Bc-aP-WcO"/>
                                                 <constraint firstAttribute="height" constant="50" id="gyr-zh-Nlh"/>
                                             </constraints>
-                                            <connections>
-                                                <outletCollection property="gestureRecognizers" destination="NmB-VB-4dd" appends="YES" id="f1S-Q5-5cS"/>
-                                            </connections>
                                         </imageView>
                                         <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sender" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LJD-81-MoP">
                                             <rect key="frame" x="86" y="12" width="52" height="21"/>
@@ -242,9 +239,6 @@ Second line</string>
                                                 <constraint firstAttribute="height" constant="50" id="dGz-e2-A2w"/>
                                                 <constraint firstAttribute="width" constant="50" id="oZY-Ev-Mlq"/>
                                             </constraints>
-                                            <connections>
-                                                <outletCollection property="gestureRecognizers" destination="NmB-VB-4dd" appends="YES" id="MoI-bD-65u"/>
-                                            </connections>
                                         </imageView>
                                         <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sender" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2VM-lA-sR0">
                                             <rect key="frame" x="86" y="12" width="52" height="21"/>
@@ -310,13 +304,11 @@ Second line</string>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <segue destination="fVD-7r-CIw" kind="show" identifier="MessageThreadToUserProfile" id="grX-RV-5s4"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B0I-EY-KtR" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="NmB-VB-4dd">
-                    <connections>
-                        <segue destination="fVD-7r-CIw" kind="show" identifier="MessageThreadToUserProfile" id="CNp-KG-P4q"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="2742" y="102"/>
         </scene>

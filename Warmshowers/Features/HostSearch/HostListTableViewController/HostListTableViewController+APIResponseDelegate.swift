@@ -26,7 +26,7 @@ extension HostListTableViewController: APIResponseDelegate {
         case .user:
             guard let host = data as? User else { return }
             DispatchQueue.main.async(execute: { 
-                self.performSegue(withIdentifier: SID_HostListToUserAccount, sender: host)
+                self.performSegue(withIdentifier: SID_HostListToUserAccount, sender: host.uid)
             })
         default:
             break

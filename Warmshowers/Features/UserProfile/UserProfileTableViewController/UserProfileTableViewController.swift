@@ -17,6 +17,8 @@ enum HostProfileTab {
 
 class UserProfileTableViewController: UITableViewController, Delegator, DataSource {
     
+    var uid: Int?
+    
     var user: User?
     var recipient: MOUser?
     
@@ -24,16 +26,6 @@ class UserProfileTableViewController: UITableViewController, Delegator, DataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        assert(user != nil, "Account view loaded with nil user info.")
-        guard user != nil else {
-            let alert = UIAlertController(title: "Sorry, an error occured.", message: nil, preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "OK", style: .default, handler: { (okAction) -> Void in
-                self.dismiss(animated: true, completion: nil)
-            })
-            alert.addAction(okAction)
-            present(alert, animated: true, completion: nil)
-            return
-        }
         
         // Configure the view
         navigationItem.title = ""
@@ -41,17 +33,9 @@ class UserProfileTableViewController: UITableViewController, Delegator, DataSour
         tableView.rowHeight = UITableViewAutomaticDimension
         configureDoneButton()
         
-        // Get the users profile image if they have one.
-        if user?.profileImage == nil && user?.profileImageURL != nil {
-            api.contact(endPoint: .imageResource, withMethod: .get, andPathParameters: user?.profileImageURL, andData: nil, thenNotify: self)
-        }
+        // Download the users profile.
+        api.contact(endPoint: .user, withMethod: .get, andPathParameters: uid, andData: nil, thenNotify: self)
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        // Download the users feedback.
-        api.contact(endPoint: .feedback, withMethod: .get, andPathParameters: String(user!.uid) as NSString, andData: nil, thenNotify: self)
-    }
-
     
     /** Sets up a done button if one is needed. */
     func configureDoneButton() {

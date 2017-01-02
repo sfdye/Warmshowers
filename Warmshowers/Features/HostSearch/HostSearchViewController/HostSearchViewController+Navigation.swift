@@ -41,10 +41,10 @@ extension HostSearchViewController {
             
         case SID_SearchViewToUserAccount:
             
-            guard sender is User else { return }
+            guard let uid = sender as? Int else { return }
             let navVC = segue.destination as! UINavigationController
-            let accountTVC = navVC.viewControllers.first as! UserProfileTableViewController
-            accountTVC.user = sender as? User
+            let userProfileTVC = navVC.viewControllers.first as! UserProfileTableViewController
+            userProfileTVC.uid = uid
             
         case SID_MapToHostList:
             

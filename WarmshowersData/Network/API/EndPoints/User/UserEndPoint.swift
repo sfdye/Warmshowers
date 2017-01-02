@@ -14,11 +14,11 @@ struct UserEndPoint: APIEndPointProtocol {
     
     func url(withHostURL hostURL: URL, andParameters parameters: Any?) throws -> URL {
         
-        guard let uidString = parameters as? String else {
+        guard let uid = parameters as? Int else {
             throw APIEndPointError.invalidPathParameters(endPoint: name, errorDescription: "The user end point must receieve a valid user UID in the path parameters.")
         }
         
-        return hostURL.appendingPathComponent("/services/rest/user/\(uidString)")
+        return hostURL.appendingPathComponent("/services/rest/user/\(uid)")
     }
     
      func request(_ request: APIRequest, didRecieveResponseWithJSON json: Any, parser: JSONParser) throws -> Any? {
