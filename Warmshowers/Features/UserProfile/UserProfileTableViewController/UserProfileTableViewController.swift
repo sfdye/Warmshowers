@@ -20,7 +20,6 @@ class UserProfileTableViewController: UITableViewController, Delegator, DataSour
     var uid: Int?
     
     var user: User?
-    var recipient: MOUser?
     
     @IBOutlet var imageHeight: NSLayoutConstraint!
     
@@ -125,11 +124,11 @@ class UserProfileTableViewController: UITableViewController, Delegator, DataSour
         case .maxCyclists:
             return "Maximum Guests:"
         case .bikeShop:
-            return "Distance to nearest bike shop:"
+            return "Nearest bike shop:"
         case .campground:
-            return "Distance to nearest campground:"
+            return "Nearest campground:"
         case .motel:
-            return "Distance to nearest hotel/motel:"
+            return "Nearest hotel/motel:"
         }
     }
     

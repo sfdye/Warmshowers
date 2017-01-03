@@ -11,6 +11,7 @@
 		CDC80C00DF08E589C71B8996 /* Pods_Warmshowers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD5535C83353EC12F549AD0 /* Pods_Warmshowers.framework */; };
 		E50239681E1B64C30013B40D /* ComposeMessageViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50239671E1B64C30013B40D /* ComposeMessageViewControllerDelegate.swift */; };
 		E502396A1E1B674A0013B40D /* MessageThreadTableViewController+ComposeMessageViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50239691E1B674A0013B40D /* MessageThreadTableViewController+ComposeMessageViewControllerDelegate.swift */; };
+		E502396C1E1B841D0013B40D /* MessageThreadsTableViewController+ComposeMessageViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E502396B1E1B841D0013B40D /* MessageThreadsTableViewController+ComposeMessageViewControllerDelegate.swift */; };
 		E51A55671E13824A0004600D /* Fetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51A55661E13824A0004600D /* Fetchable.swift */; };
 		E529ECC71E11BC2700395369 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ECBE1E11BC2700395369 /* Alert.swift */; };
 		E529ECC81E11BC2700395369 /* AlertDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ECBF1E11BC2700395369 /* AlertDelegate.swift */; };
@@ -326,6 +327,7 @@
 		AC5E586690182D68CCBBE7F9 /* Pods-Warmshowers.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Warmshowers.release.xcconfig"; path = "Pods/Target Support Files/Pods-Warmshowers/Pods-Warmshowers.release.xcconfig"; sourceTree = "<group>"; };
 		E50239671E1B64C30013B40D /* ComposeMessageViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeMessageViewControllerDelegate.swift; sourceTree = "<group>"; };
 		E50239691E1B674A0013B40D /* MessageThreadTableViewController+ComposeMessageViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadTableViewController+ComposeMessageViewControllerDelegate.swift"; sourceTree = "<group>"; };
+		E502396B1E1B841D0013B40D /* MessageThreadsTableViewController+ComposeMessageViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadsTableViewController+ComposeMessageViewControllerDelegate.swift"; sourceTree = "<group>"; };
 		E51A55661E13824A0004600D /* Fetchable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fetchable.swift; sourceTree = "<group>"; };
 		E529ECBE1E11BC2700395369 /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		E529ECBF1E11BC2700395369 /* AlertDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertDelegate.swift; sourceTree = "<group>"; };
@@ -941,6 +943,7 @@
 				E529ED2C1E11C6BB00395369 /* MessageThreadsTableViewController+UITableViewDelegate.swift */,
 				E529ED2D1E11C6BB00395369 /* MessageThreadsTableViewController+APIResponseDelegate.swift */,
 				E529ED2E1E11C6BB00395369 /* MessageThreadsTableViewController.swift */,
+				E502396B1E1B841D0013B40D /* MessageThreadsTableViewController+ComposeMessageViewControllerDelegate.swift */,
 			);
 			path = MessageThreadsTableViewController;
 			sourceTree = "<group>";
@@ -2157,6 +2160,7 @@
 				E529ED9B1E11C6BB00395369 /* ComposeMessageViewController+UITextViewDelegate.swift in Sources */,
 				E529ED791E11C6BB00395369 /* HostSearchNavigationDelegate.swift in Sources */,
 				E502396A1E1B674A0013B40D /* MessageThreadTableViewController+ComposeMessageViewControllerDelegate.swift in Sources */,
+				E502396C1E1B841D0013B40D /* MessageThreadsTableViewController+ComposeMessageViewControllerDelegate.swift in Sources */,
 				E53715211E0C83D100770305 /* WarmShowersFont.swift in Sources */,
 				E529EDD31E11C6BB00395369 /* FeedbackOptionTableViewCell.swift in Sources */,
 				E529EDAE1E11C6BB00395369 /* MessageThreadsTableViewCell.swift in Sources */,

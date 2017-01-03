@@ -25,7 +25,7 @@ extension UserProfileTableViewController {
         case SID_ToFeedback:
             return user.feedback?.count ?? 0 > 0
         case SID_ToSendNewMessage:
-            return recipient != nil
+            return user.name != ""
         case SID_ToProvideFeeedback:
             return user.name != ""
         default:
@@ -54,6 +54,10 @@ extension UserProfileTableViewController {
             // Save the user to the store and pass the user object to the compose message view controller
             let recipientUsername = user.name
             composeMessageVC.configureAsNewMessage(toRecipientsWithUsernames: [recipientUsername])
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let mainTabBarController = appDelegate.window?.rootViewController as? MainTabBarController
+            let messageThreadsTableViewController = mainTabBarController?.messageThreadsTableViewController as? ComposeMessageViewControllerDelegate
+            composeMessageVC.delegate = messageThreadsTableViewController
             
         case SID_ToProvideFeeedback:
             

@@ -30,15 +30,30 @@ struct MarkThreadReadEndPoint: APIEndPointProtocol {
     
      func request(_ request: APIRequest, didRecieveResponseWithJSON json: Any, parser: JSONParser) throws -> Any? {
         
-        guard let json = json as? [Any] else { return nil }
+        guard let json = json as? [Any], json.count == 1 else { return nil }
         
         // Successful requests get a response with "1" in the body
-        if json.count == 1 {
-            if let success = json[0] as? Bool {
-                return success
-            }
+        if let success = json[0] as? Bool {
+            return success
         }
         
         return nil
+    }
+    
+    func request(_ request: APIRequest, updateStore store: StoreUpdateDelegate, withJSON json: Any, parser: JSONParser) throws {
+        guard let readState = request.data as? MessageThreadReadState else { return }
+        guard let json = json as? [Any], json.count == 1 else { return }
+        
+        // Successful requests get a response with "1" in the body
+        if let _ = json[0] as? Bool {
+            // Update the message state in the store.
+            let predicate = NSPredicate(format: "p_thread_id == %d", readState.threadID)
+            try store.performBlockInPrivateContextAndWait({ (context) in
+                if let messageThread: MOMessageThread = try store.retrieve(inContext: context, withPredicate: predicate, andSortBy: nil, isAscending: true).first {
+                    messageThread.is_new = !readState.read
+                    try context.save()
+                }
+            })
+        }
     }
 }

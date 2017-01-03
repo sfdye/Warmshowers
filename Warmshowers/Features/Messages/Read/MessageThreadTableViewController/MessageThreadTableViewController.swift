@@ -53,7 +53,9 @@ class MessageThreadTableViewController: UITableViewController, Delegator, DataSo
         initialiseFetchResultsController()
         
         // Mark the thread as read.
-        markThread(threadID ?? 0, asRead: true)
+        if let threadID = threadID {
+            markThread(threadID, asRead: true)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

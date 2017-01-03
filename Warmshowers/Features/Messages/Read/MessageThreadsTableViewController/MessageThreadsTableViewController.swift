@@ -22,6 +22,9 @@ class MessageThreadsTableViewController: UITableViewController, Delegator, DataS
     
     var currentUserUID: Int? { return session.uid }
     
+    var needsUpdate: Bool = false
+    
+    
     // MARK: View life cycle
     
     deinit {
@@ -62,6 +65,14 @@ class MessageThreadsTableViewController: UITableViewController, Delegator, DataS
         }
         
         showReachabilityBannerIfNeeded()
+        
+        if needsUpdate {
+            DispatchQueue.main.async { [unowned self] in
+                self.refreshControl?.beginRefreshing()
+            }
+            update()
+            needsUpdate = false
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -120,7 +131,6 @@ class MessageThreadsTableViewController: UITableViewController, Delegator, DataS
     // MARK: Utility methods
     
     func update() {
-        ProgressHUD.show("Updating messages ...")
         api.contact(endPoint: .messageThreads, withMethod: .post, andPathParameters: nil, andData: nil, thenNotify: self)
     }
     
@@ -128,15 +138,14 @@ class MessageThreadsTableViewController: UITableViewController, Delegator, DataS
     func didFinishedUpdates() {
         
         // Hide any activity indicators
-        DispatchQueue.main.async { [weak self] () -> Void in
-            self?.refreshControl?.endRefreshing()
-            ProgressHUD.hide()
-            if let error = self?.errorCache {
-                self?.alert.presentAPIError(error, forDelegator: self)
-                self?.errorCache = nil
+        DispatchQueue.main.async { [unowned self] () -> Void in
+            self.refreshControl?.endRefreshing()
+            if let error = self.errorCache {
+                self.alert.presentAPIError(error, forDelegator: self)
+                self.errorCache = nil
             }
-            self?.lastUpdated = Date()
-            self?.tableView.reloadData()
+            self.lastUpdated = Date()
+            self.tableView.reloadData()
         }
     }
     

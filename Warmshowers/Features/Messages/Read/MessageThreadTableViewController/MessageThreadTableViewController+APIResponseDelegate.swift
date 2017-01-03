@@ -29,12 +29,8 @@ extension MessageThreadTableViewController: APIResponseDelegate {
     func request(_ request: APIRequest, didSucceedWithData data: Any?) {
         switch request.endPointType {
         case .markThreadRead:
-            guard let readState = request.data as? MessageThreadReadState else { return }
-            let predicate = NSPredicate(format: "p_thread_id == %d", readState.threadID)
-            if let messageThread: MOMessageThread = try! store.retrieve(inContext: store.managedObjectContext, withPredicate: predicate, andSortBy: nil, isAscending: true).first {
-                messageThread.is_new = !readState.read
-                try! store.managedObjectContext.save()
-            }
+            // No futher action required.
+            break
         case .user:
             guard
                 let user = data as? User,
@@ -62,7 +58,7 @@ extension MessageThreadTableViewController: APIResponseDelegate {
     }
     
     func request(_ request: APIRequest, didFailWithError error: Error) {
-        //
+        // Not a big deal if requests fail here.
     }
     
 }
