@@ -92,23 +92,21 @@ public class MOMessageThread: NSManagedObject, Fetchable, JSONUpdateable {
     }
     
     /** Returns the message thread participants with the currently logged-in user removed. */
-    public func otherParticipants(currentUserUID: Int) -> [MOUser] {
+    public func namesOfParticipants(excludingUserWithUID uid: Int) -> [String] {
         
-        guard var users = participants?.allObjects as? [MOUser] else {
-            return [MOUser]()
+        guard let users = participants?.allObjects as? [MOUser] else {
+            return [String]()
         }
         
-        var index: Int?
-        for (i, user) in users.enumerated() {
-            if user.uid == currentUserUID {
-                index = i
-            }
-        }
-        if let index = index {
-            users.remove(at: index)
+        let otherParticipants = users.filter { (user) -> Bool in
+            return user.uid != uid && user.name != nil
         }
         
-        return users
+        let names: [String] = otherParticipants.map { (user) -> String in
+            user.name ?? ""
+        }
+
+        return names
     }
     
     /** Returns true if the message count doesn't match the number of messages relationships. */

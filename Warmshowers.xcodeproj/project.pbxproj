@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		987D918476D47A61CCFBA23B /* Pods_WarmshowersData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1437EFFC40DEEC8EBE45C21C /* Pods_WarmshowersData.framework */; };
 		CDC80C00DF08E589C71B8996 /* Pods_Warmshowers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD5535C83353EC12F549AD0 /* Pods_Warmshowers.framework */; };
+		E50239681E1B64C30013B40D /* ComposeMessageViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50239671E1B64C30013B40D /* ComposeMessageViewControllerDelegate.swift */; };
+		E502396A1E1B674A0013B40D /* MessageThreadTableViewController+ComposeMessageViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50239691E1B674A0013B40D /* MessageThreadTableViewController+ComposeMessageViewControllerDelegate.swift */; };
 		E51A55671E13824A0004600D /* Fetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51A55661E13824A0004600D /* Fetchable.swift */; };
 		E529ECC71E11BC2700395369 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ECBE1E11BC2700395369 /* Alert.swift */; };
 		E529ECC81E11BC2700395369 /* AlertDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ECBF1E11BC2700395369 /* AlertDelegate.swift */; };
@@ -322,6 +324,8 @@
 		92742EF5E66B8F5D19D2AEA4 /* Pods-WarmshowersData.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WarmshowersData.release.xcconfig"; path = "Pods/Target Support Files/Pods-WarmshowersData/Pods-WarmshowersData.release.xcconfig"; sourceTree = "<group>"; };
 		A17687885A5BDB7132D6EBF2 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC5E586690182D68CCBBE7F9 /* Pods-Warmshowers.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Warmshowers.release.xcconfig"; path = "Pods/Target Support Files/Pods-Warmshowers/Pods-Warmshowers.release.xcconfig"; sourceTree = "<group>"; };
+		E50239671E1B64C30013B40D /* ComposeMessageViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeMessageViewControllerDelegate.swift; sourceTree = "<group>"; };
+		E50239691E1B674A0013B40D /* MessageThreadTableViewController+ComposeMessageViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadTableViewController+ComposeMessageViewControllerDelegate.swift"; sourceTree = "<group>"; };
 		E51A55661E13824A0004600D /* Fetchable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fetchable.swift; sourceTree = "<group>"; };
 		E529ECBE1E11BC2700395369 /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		E529ECBF1E11BC2700395369 /* AlertDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertDelegate.swift; sourceTree = "<group>"; };
@@ -895,6 +899,7 @@
 				E529ED1F1E11C6BB00395369 /* ComposeMessageViewController+UITextViewDelegate.swift */,
 				E529ED201E11C6BB00395369 /* ComposeMessageViewController+APIResponseDelegate.swift */,
 				E529ED211E11C6BB00395369 /* ComposeMessageViewController.swift */,
+				E50239671E1B64C30013B40D /* ComposeMessageViewControllerDelegate.swift */,
 			);
 			path = ComposeMessageViewController;
 			sourceTree = "<group>";
@@ -950,6 +955,7 @@
 				E529ED341E11C6BB00395369 /* MessageThreadTableViewController+APIResponseDelegate.swift */,
 				E529ED351E11C6BB00395369 /* MessageThreadTableViewController.swift */,
 				E5E573341E19A8EC00D54445 /* MessageThreadTableViewController+MessageTableViewCellDelegate.swift */,
+				E50239691E1B674A0013B40D /* MessageThreadTableViewController+ComposeMessageViewControllerDelegate.swift */,
 			);
 			path = MessageThreadTableViewController;
 			sourceTree = "<group>";
@@ -2150,6 +2156,7 @@
 				E529ED871E11C6BB00395369 /* LocationSearchViewController+CCHMapClusterControllerDelegate.swift in Sources */,
 				E529ED9B1E11C6BB00395369 /* ComposeMessageViewController+UITextViewDelegate.swift in Sources */,
 				E529ED791E11C6BB00395369 /* HostSearchNavigationDelegate.swift in Sources */,
+				E502396A1E1B674A0013B40D /* MessageThreadTableViewController+ComposeMessageViewControllerDelegate.swift in Sources */,
 				E53715211E0C83D100770305 /* WarmShowersFont.swift in Sources */,
 				E529EDD31E11C6BB00395369 /* FeedbackOptionTableViewCell.swift in Sources */,
 				E529EDAE1E11C6BB00395369 /* MessageThreadsTableViewCell.swift in Sources */,
@@ -2187,6 +2194,7 @@
 				E529ED841E11C6BB00395369 /* KeywordSearchTableViewController+APIResponseDelegate.swift in Sources */,
 				E529EDD21E11C6BB00395369 /* FeedbackOptionPickerTableViewCell.swift in Sources */,
 				E529EDB01E11C6BB00395369 /* ProgressHUD.swift in Sources */,
+				E50239681E1B64C30013B40D /* ComposeMessageViewControllerDelegate.swift in Sources */,
 				E529ECDD1E11C48600395369 /* MapSource.swift in Sources */,
 				E529EDD71E11C6BB00395369 /* PhoneNumberTableViewCell.swift in Sources */,
 				E529ECCC1E11BC2700395369 /* Session.swift in Sources */,

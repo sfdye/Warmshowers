@@ -17,9 +17,11 @@ class ComposeMessageViewController: UIViewController, Delegator, DataSource {
     let detailCellHeight: CGFloat = 40.0
     
     var threadID: Int?
-    var recipients: [MOUser]?
+    var recipients: [String]?
     var subject: String?
     var body: String?
+    
+    weak var delegate: ComposeMessageViewControllerDelegate?
     
     /** Returns true if threadID is not nil and hence the message is a reply on a existing thread. */
     var isReply: Bool { return threadID != nil }
@@ -49,9 +51,9 @@ class ComposeMessageViewController: UIViewController, Delegator, DataSource {
     // MARK: Utility methods
     
     /** Sets up the message as a new message to a give set of hosts. */
-    func configureAsNewMessageToUsers(_ users: [MOUser]) {
+    func configureAsNewMessage(toRecipientsWithUsernames usernames: [String]) {
         navigationItem.title = "New Message"
-        recipients = users
+        recipients = usernames
     }
     
     /** Sets up the message as a reply on a given message thread. */
@@ -69,14 +71,13 @@ class ComposeMessageViewController: UIViewController, Delegator, DataSource {
         guard let uid = session.uid else { return }
         self.threadID = threadID
         self.subject = thread.subject
-        self.recipients = thread.otherParticipants(currentUserUID: uid)
+        self.recipients = thread.namesOfParticipants(excludingUserWithUID: uid)
     }
     
     /** Returns a string of comma seperated full names of the message recipients. */
-    func recipientStringForRecipients(_ recipients: [MOUser]?, joiner: String = ",") -> String {
-        guard let recipients = recipients , recipients.count > 0 else { return "" }
-        let names = recipients.map { (user) -> String in user.name! }
-        let recipientString = names.joined(separator: joiner)
+    func recipientString(forRecipientUsernames usernames: [String]?, joiner: String = ",") -> String {
+        guard let usernames = usernames, usernames.count > 0 else { return "" }
+        let recipientString = usernames.joined(separator: joiner)
         return recipientString
     }
 

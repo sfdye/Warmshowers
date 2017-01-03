@@ -52,12 +52,8 @@ extension UserProfileTableViewController {
             let composeMessageVC = navVC.viewControllers.first as! ComposeMessageViewController
             
             // Save the user to the store and pass the user object to the compose message view controller
-            let json = ["uid": user.uid, "fullname": user.fullname, "name": user.name] as [String : Any]
-            assertionFailure("refactor")
-//            if let recipient: MOUser = try? store.newOrExisting(ofClass: MOUser.self, withJSON: json, context: store.managedObjectContext) {
-//                composeMessageVC.configureAsNewMessageToUsers([recipient])
-//                try! store.managedObjectContext.save()
-//            }
+            let recipientUsername = user.name
+            composeMessageVC.configureAsNewMessage(toRecipientsWithUsernames: [recipientUsername])
             
         case SID_ToProvideFeeedback:
             

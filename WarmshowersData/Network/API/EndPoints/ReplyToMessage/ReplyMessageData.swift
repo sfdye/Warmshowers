@@ -10,8 +10,8 @@ import Foundation
 
 public class ReplyMessageData {
     
-    var threadID: Int
-    var body: String
+    public private(set) var threadID: Int
+    public private(set) var body: String
     
     public init(threadID: Int, body: String) {
         self.threadID = threadID

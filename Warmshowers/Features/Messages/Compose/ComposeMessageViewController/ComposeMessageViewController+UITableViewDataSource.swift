@@ -26,7 +26,7 @@ extension ComposeMessageViewController : UITableViewDataSource {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: RUID_ComposeMessageDetail, for: indexPath) as! ComposeMessageDetailTableViewCell
             cell.detailLabel!.text = "To:"
-            cell.detailTextField!.text = recipientStringForRecipients(recipients, joiner: ", ")
+            cell.detailTextField!.text = recipientString(forRecipientUsernames: recipients, joiner: ", ")
             cell.isUserInteractionEnabled = false
             return cell
         case 1:

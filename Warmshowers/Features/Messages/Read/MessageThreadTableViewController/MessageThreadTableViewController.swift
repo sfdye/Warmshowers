@@ -10,8 +10,6 @@ import UIKit
 import CoreData
 import WarmshowersData
 
-let MessagesViewNeedsUpdateNotificationName = "ws_message_view_needs_update"
-
 class MessageThreadTableViewController: UITableViewController, Delegator, DataSource {
     
     var threadID: Int?
@@ -19,6 +17,8 @@ class MessageThreadTableViewController: UITableViewController, Delegator, DataSo
     var downloadsInProgress = Set<String>()
     var alert: UIAlertController?
     let formatter = DateFormatter()
+    
+    var needsUpdate: Bool = false
     
     
     // MARK: View life cycle
@@ -54,10 +54,6 @@ class MessageThreadTableViewController: UITableViewController, Delegator, DataSo
         
         // Mark the thread as read.
         markThread(threadID ?? 0, asRead: true)
-        
-        // Register for update notifications. This is fired after a reply is sent.
-        let notificationCentre = NotificationCenter.default
-        notificationCentre.addObserver(self, selector: #selector(MessageThreadTableViewController.update), name: NSNotification.Name(rawValue: MessagesViewNeedsUpdateNotificationName), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -74,6 +70,14 @@ class MessageThreadTableViewController: UITableViewController, Delegator, DataSo
         let indexPath = IndexPath(row: row, section: 0)
         DispatchQueue.main.async { [unowned self] in
             self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+        }
+        
+        if needsUpdate {
+            DispatchQueue.main.async { [unowned self] in
+                self.refreshControl?.beginRefreshing()
+            }
+            update()
+            needsUpdate = false
         }
     }
     
@@ -118,7 +122,14 @@ class MessageThreadTableViewController: UITableViewController, Delegator, DataSo
     
     /** Updates the messages. */
     func update() {
-        guard let threadID = threadID else { return }
+        
+        guard let threadID = threadID else {
+            DispatchQueue.main.async { [unowned self] in
+                self.refreshControl?.endRefreshing()
+            }
+            return
+        }
+        
         api.contact(endPoint: .messageThread, withMethod: .post, andPathParameters: nil, andData: threadID, thenNotify: self)
     }
     

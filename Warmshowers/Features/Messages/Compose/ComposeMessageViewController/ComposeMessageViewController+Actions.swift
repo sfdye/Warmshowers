@@ -42,7 +42,7 @@ extension ComposeMessageViewController {
             
         } else {
             
-            let recipientsString = recipientStringForRecipients(recipients)
+            let recipientsString = recipientString(forRecipientUsernames: recipients)
             let message = NewMessageData(recipientsString: recipientsString, subject: subject, body: body)
             api.contact(endPoint: .newMessage, withMethod: .post, andPathParameters: nil, andData: message, thenNotify: self)
         }

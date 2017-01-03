@@ -16,7 +16,16 @@ extension ComposeMessageViewController: APIResponseDelegate {
     }
     
     func request(_ request: APIRequest, didSucceedWithData data: Any?) {
-        NotificationCenter.default.post(Notification(name: Notification.Name(rawValue: MessagesViewNeedsUpdateNotificationName), object: nil))
+        switch request.endPointType {
+        case .newMessage:
+            delegate?.composeMessageViewControllerDidSendANewMessage(self)
+        case .replyToMessage:
+            guard let reply = request.data as? ReplyMessageData else { break }
+            delegate?.composeMessageViewController(self, didReplyOnThreadWithThreadID: reply.threadID)
+        default:
+            break
+        }
+        
         DispatchQueue.main.async(execute: { () -> Void in
             self.navigationController?.dismiss(animated: true, completion: nil)
         })

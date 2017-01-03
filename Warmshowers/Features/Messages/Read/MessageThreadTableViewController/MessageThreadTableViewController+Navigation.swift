@@ -32,6 +32,7 @@ extension MessageThreadTableViewController {
             let navVC = segue.destination as! UINavigationController
             let composeMessageVC = navVC.viewControllers.first as! ComposeMessageViewController
             composeMessageVC.configureAsReply(threadID)
+            composeMessageVC.delegate = self
         case SID_MessageThreadToUserProfile:
             guard let uid = sender as? Int, uid > 0 else { return }
             let userProfileTVC = segue.destination as! UserProfileTableViewController

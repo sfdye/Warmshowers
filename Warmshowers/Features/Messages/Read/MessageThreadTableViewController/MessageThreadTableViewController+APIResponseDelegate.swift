@@ -14,9 +14,9 @@ extension MessageThreadTableViewController: APIResponseDelegate {
     func requestDidComplete(_ request: APIRequest) {
         switch request.endPointType {
         case .messageThread:
-            DispatchQueue.main.async(execute: { [weak self] in
-                self?.refreshControl?.endRefreshing()
-                self?.tableView.reloadData()
+            DispatchQueue.main.async(execute: { [unowned self] in
+                self.refreshControl?.endRefreshing()
+                self.tableView.reloadData()
             })
         case .user:
             guard let uid = request.parameters as? String else { return }
