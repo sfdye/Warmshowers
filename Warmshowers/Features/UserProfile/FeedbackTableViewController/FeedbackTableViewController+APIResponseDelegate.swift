@@ -15,12 +15,12 @@ extension FeedbackTableViewController: APIResponseDelegate {
         switch request.endPointType {
         case .user:
             if data is User {
-                if let uidString = request.parameters as? String, let uid = Int(uidString) {
+                if let uid = request.parameters as? Int {
                     // Set the authors profile image URL as the URL or an empty string so that the download is not retried.
                     let url = (data as! User).profileImageURL ?? ""
                     setAuthorImageURL(url, forHostWithUID: uid)
                     // Download the authors profile image.
-                    api.contact(endPoint: .imageResource, withMethod: .get, andPathParameters: url as NSString, andData: nil, thenNotify: self)
+                    api.contact(endPoint: .imageResource, withMethod: .get, andPathParameters: url, andData: nil, thenNotify: self)
                 }
             }
         case .imageResource:

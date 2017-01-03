@@ -34,10 +34,10 @@ class FeedbackTableViewController: UITableViewController, DataSource {
         let recommendation = feedback[(indexPath as NSIndexPath).row]
         guard recommendation.authorImage == nil else { return }
         if let url = recommendation.authorImageURL {
-            api.contact(endPoint: .imageResource, withMethod: .get, andPathParameters: url as NSString, andData: nil, thenNotify: self)
+            api.contact(endPoint: .imageResource, withMethod: .get, andPathParameters: url, andData: nil, thenNotify: self)
         } else if let uid = recommendation.author?.uid {
             // We first need to get the image URL from the authors profile.
-            api.contact(endPoint: .user, withMethod: .get, andPathParameters: String(uid) as NSString, andData: nil, thenNotify: self)
+            api.contact(endPoint: .user, withMethod: .get, andPathParameters: uid, andData: nil, thenNotify: self)
         }
     }
     

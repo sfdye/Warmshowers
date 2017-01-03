@@ -136,7 +136,7 @@ class MessageThreadTableViewController: UITableViewController, Delegator, DataSo
         } else if let uid = message.author?.uid , !downloadsInProgress.contains(String(uid)) {
             // We first need to get the image URL from the authors profile.
             downloadsInProgress.insert(String(uid))
-            api.contact(endPoint: .user, withMethod: .get, andPathParameters: String(uid), andData: nil, thenNotify: self)
+            api.contact(endPoint: .user, withMethod: .get, andPathParameters: uid, andData: nil, thenNotify: self)
         }
     }
     

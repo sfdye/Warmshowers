@@ -44,15 +44,15 @@ class KeywordSearchTableViewController: UITableViewController, Delegator, DataSo
         guard let hosts = hosts , (indexPath as NSIndexPath).row < numberOfHosts else { return }
         let user = hosts[(indexPath as NSIndexPath).row]
         if let url = user.imageURL , user.image == nil {
-            api.contact(endPoint: .imageResource, withMethod: .get, andPathParameters: url as NSString, andData: nil, thenNotify: self)
+            api.contact(endPoint: .imageResource, withMethod: .get, andPathParameters: url, andData: nil, thenNotify: self)
         }
     }
     
     func loadImagesForObjectsOnScreen() {
         
         guard
-            let visiblePaths = tableView.indexPathsForVisibleRows
-            , hosts != nil && numberOfHosts > 0
+            let visiblePaths = tableView.indexPathsForVisibleRows,
+            hosts != nil && numberOfHosts > 0
             else {
                 return
         }
