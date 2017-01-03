@@ -17,40 +17,45 @@ class Session: SessionDelegate, Delegator, DataSource {
     let defaults = UserDefaults.standard
     let keychain = Keychain(server: "www.warmshowers.org", protocolType: .https)
     
+    var isFirstLaunch: Bool {
+        // On first lauch, there is no last used username stored in the defaults.
+        guard let _ = defaults.string(forKey: UserDefaultsKeys.usernameKey) else { return true }
+        return false
+    }
+    
     var uid: Int? {
-        return defaults.integer(forKey: UserDefaultsKeys.UIDKey)
+        return defaults.integer(forKey: UserDefaultsKeys.uidKey)
     }
     
     func save(uid: Int) {
-        defaults.setValue(uid, forKey: UserDefaultsKeys.UIDKey)
+        defaults.setValue(uid, forKey: UserDefaultsKeys.uidKey)
         defaults.synchronize()
     }
     
     var username: String? {
-        return defaults.string(forKey: UserDefaultsKeys.UsernameKey)
+        return defaults.string(forKey: UserDefaultsKeys.usernameKey)
     }
     
     func set(username: String) {
-        defaults.setValue(username, forKey: UserDefaultsKeys.UsernameKey)
+        defaults.setValue(username, forKey: UserDefaultsKeys.usernameKey)
         defaults.synchronize()
     }
     
     func deleteSessionData() throws {
         
         // Remove the users password from the keychain.
-        if let username = username {
-            try secureStore.removeValue(forKey: username)
-        }
+        try secureStore.revokeAccess()
         
         // Delete the current users UID.
-        defaults.removeObject(forKey: UserDefaultsKeys.UIDKey)
+        defaults.removeObject(forKey: UserDefaultsKeys.uidKey)
         defaults.synchronize()
     }
     
     var isLoggedIn: Bool {
         do {
-            let (_, _) = try secureStore.getTokenAndSecret()
-            return true
+            let (token, secret) = try secureStore.getTokenAndSecret()
+            print("token: \(token), secret: \(secret)")
+            return true && !isFirstLaunch
         } catch {
             return false
         }

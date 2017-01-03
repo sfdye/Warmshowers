@@ -54,13 +54,31 @@ public class APIRequest: Hashable {
         self.madeAt = Date()
     }
     
-    static func shouldAddBodyToURLRequest(withHttpMethod httpMethod: HTTP.Method) -> Bool {
-        switch httpMethod {
-        case .get, .head, .trace, .options, .connect:
-            return false
-        default:
-            return true
+    static func urlRequest(fromRequest request: APIRequest) throws -> URLRequest {
+        
+        let hostURL = try request.delegate.hostURLForRequest(request)
+        let url = try request.endPoint.url(withHostURL: hostURL, andParameters: request.parameters)
+        
+        // URL Request
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = request.method.rawValue
+        urlRequest.cachePolicy = request.endPoint.cachePolicyForRequest(request)
+        
+        // Add header parameters
+        urlRequest.addValue(request.endPoint.acceptType.rawValue, forHTTPHeaderField: "Accept")
+        
+        // Add body parameters.
+        let outboundDataMethods: [HTTP.Method] = [.post, .put, .delete, .patch]
+        if outboundDataMethods.contains(request.method) {
+            urlRequest.httpBody = try request.endPoint.httpBody(fromData: request.data, forMethod: request.method, withEncoder: ParameterEncoding())
+            if let contentType = request.endPoint.contentType(forMethod: request.method)?.rawValue {
+                urlRequest.setValue(contentType, forHTTPHeaderField: "Content-Type")
+            } else {
+                assertionFailure("A valid content type must be specified for requests with body parameters.")
+            }
         }
+        
+        return urlRequest
     }
     
 }

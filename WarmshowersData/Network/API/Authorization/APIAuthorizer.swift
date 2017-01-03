@@ -10,11 +10,13 @@ import Foundation
 
 class APIAuthorizer {
     
-    let outboundDataMethods: [HTTP.Method] = [.post, .put, .delete, .patch]
-    
     var currentlyReauthorizing = false
     
     weak var delegate: APILoginResponseDelegate?
+    
+    init(delegate: APILoginResponseDelegate? = nil) {
+        self.delegate = delegate
+    }
     
 }
 

@@ -27,15 +27,15 @@ public protocol SecureStoreDelegate {
     /** Removes the token and secret from the secure store. */
     func revokeAccess() throws
     
-    // MARK: Generic secure storage
-    
-    /** Saves the given value in the keychain. */
-    func save(value: String, forKey key: String) throws
-    
-    /** Returns the value for the key from the keychain. */
-    func getValue(forKey key: String) throws -> String?
-    
-    /** Removes an values for the given key form the keychain. */
-    func removeValue(forKey key: String) throws
+//    // MARK: Generic secure storage
+//    
+//    /** Saves the given value in the keychain. */
+//    func save(value: String, forKey key: String) throws
+//    
+//    /** Returns the value for the key from the keychain. */
+//    func getValue(forKey key: String) throws -> String?
+//    
+//    /** Removes an values for the given key form the keychain. */
+//    func removeValue(forKey key: String) throws
     
 }

@@ -28,7 +28,7 @@ extension HostSearchViewController {
         if let uid = session.uid, uid != 0 {
             showUserProfileForHostWithUID(uid)
         } else {
-            alert.presentAlertFor(self, withTitle: "Error", button: "Sorry, this request could not be made. Please try logging out and back in again.")
+            alert.presentAlertFor(self, withTitle: "Error", button: "OK", message: "Sorry, this request could not be made. Please try logging out and back in again.")
         }
     }
     

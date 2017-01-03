@@ -21,25 +21,46 @@ class APICommunicator: APIDelegate {
     
     // Congfuguration and Delegates
     
-    var connection: ReachabilityDelegate = ReachabilityManager()
-    var auth: (APIAuthorizationDelegate & APILoginDelegate)!
+    lazy var connection: ReachabilityDelegate = {
+        let connection = ReachabilityManager()
+        return connection
+    }()
+    
+    lazy var cache: URLCache = {
+        let cachesDirectoryURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
+        let cacheURL = cachesDirectoryURL.appendingPathComponent("WarmshowersCache")
+        let diskPath = cacheURL.path
+        let cache = URLCache(memoryCapacity: 5 * 1048576, diskCapacity: 50 * 1048576, diskPath: diskPath)
+        return cache
+    }()
+    
+    lazy var sessionConfiguration: URLSessionConfiguration = {
+        let sessionConfiguration = URLSessionConfiguration.default
+        sessionConfiguration.urlCache = self.cache
+        return sessionConfiguration
+    }()
+    
+    lazy var session: URLSession = {
+        let session = URLSession(configuration: self.sessionConfiguration)
+        return session
+    }()
+    
+    lazy var auth: (APIAuthorizationDelegate & APILoginDelegate)! = {
+        let auth = APIAuthorizer(delegate: self)
+        return auth
+    }()
+    
+    lazy var secureStore: SecureStoreDelegate? = {
+        return DataDelegates.shared.secureStore
+    }()
+    
+    lazy var store: StoreUpdateDelegate? = {
+        return DataDelegates.shared.store as? StoreUpdateDelegate
+    }()
+    
     var delegate: APICommunicatorDelegate?
     
-    var secureStore: SecureStoreDelegate? {
-        return DataDelegates.shared.secureStore
-    }
-    
-    var store: StoreUpdateDelegate? {
-        return DataDelegates.shared.store as? StoreUpdateDelegate
-    }
-    
     // MARK: Initialisers
-    
-    init() {
-        let auth = APIAuthorizer()
-        auth.delegate = self
-        self.auth = auth
-    }
     
     deinit {
         connection.deregisterFromNotifications(self)
@@ -47,17 +68,18 @@ class APICommunicator: APIDelegate {
     
     // MARK: Debug utilities
     
-    func log(_ message: String) {
+    func log(_ message: String, logQueueState: Bool = false) {
         if logging { print(message) }
+        if logging && logQueueState { self.logQueueState() }
     }
     
-    func logQueueState() {
+    private func logQueueState() {
         let created = requests.filter { (request) -> Bool in request.status == .created }
         let queued = requests.filter { (request) -> Bool in request.status == .queued }
         let sent = requests.filter { (request) -> Bool in request.status == .sent }
         let responseReceived = requests.filter { (request) -> Bool in request.status == .recievedResponse }
         let parsing = requests.filter { (request) -> Bool in request.status == .parsing }
-        log("Created: \(created.count), Queued: \(queued.count), Sent: \(sent.count), Response received: \(responseReceived.count), Parsing: \(parsing.count)")
+        log("Created: \(created.count), Queued: \(queued.count), Sent: \(sent.count), Response received: \(responseReceived.count), Parsing: \(parsing.count)\n")
     }
     
     // MARK: Utilities
@@ -108,7 +130,7 @@ class APICommunicator: APIDelegate {
     
     /** Executes an API request. */
     private func execute(_ request: APIRequest) {
-        log("Executing request: \(request.hashValue). \(requests.count) more are queued.")
+        log("Executing request: \(request.hashValue). (\(request.endPointType.rawValue) end point.)", logQueueState: true)
         
         guard connection.isOnline else {
             // Only keep requests to be processed online later when explicitly specified
@@ -139,10 +161,9 @@ class APICommunicator: APIDelegate {
         // Dispatch the request.
         switch mode {
         case .online:
-            let task = WarmShowersURLSession.shared.dataTask(with: urlRequest, completionHandler: { [weak self] (data, response, error) in
+            (session.dataTask(with: urlRequest, completionHandler: { [weak self] (data, response, error) in
                 self?.didRecieveHTTPResponseWithData(data, response: response, andError: error, forRequest: request)
-            })
-            task.resume()
+            })).resume()
         case .demo:
             assertionFailure("Demo bahaviour not yest defined.")
         case .mocking:
@@ -152,14 +173,14 @@ class APICommunicator: APIDelegate {
         request.status = .sent
         
         log("Request dispatched to: \(urlRequest.url)")
-        log("Header: \(urlRequest.allHTTPHeaderFields)")
-        logQueueState()
+        log("Header: \(urlRequest.allHTTPHeaderFields)", logQueueState: true)
     }
     
     /** Handles network responses and delegates control of the request. */
     private func didRecieveHTTPResponseWithData(_ data: Data?, response: URLResponse?, andError error: Error?, forRequest request: APIRequest) {
         
         request.status = .recievedResponse
+        log("Received response for request: \(request.hashValue).", logQueueState: true)
         
         // Handle HTTP errors.
         guard error == nil else {
@@ -209,13 +230,14 @@ class APICommunicator: APIDelegate {
         // Begin parsing data.
         
         request.status = .parsing
+        log("Parsing response for request: \(request.hashValue).", logQueueState: true)
         
         do {
             var parsedData: Any? = nil
             switch request.endPoint.acceptType {
             case .plainText:
                 if let text = String.init(data: data, encoding: String.Encoding.utf8) {
-                    log("Recieved text response: \(text)")
+                    //log("Recieved text response: \(text)")
                     parsedData = try request.endPoint.request(request, didRecieveResponseWithText: text)
                 } else {
                     request.delegate.request(request, didFailWithError: APIEndPointError.parsingError(endPoint: request.endPoint.name, key: nil))
@@ -223,7 +245,7 @@ class APICommunicator: APIDelegate {
                 }
             case .json:
                 let json = try JSONSerialization.jsonObject(with: data, options: [.allowFragments])
-//                log("Recieved JSON response: \(json)")
+                //log("Recieved JSON response: \(json)")
                 
                 // Let the end point update the store with the recieved JSON. This is used by the Revoke Access end point.
                 // This is called before the gaurd condition below since the response from the Revoke Access end point does not contain a data field.

@@ -30,9 +30,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, Delegator, DataSource {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+        // Clear any data stored in the keychain from previous installations.
+        if session.isFirstLaunch {
+            try! secureStore.revokeAccess()
+        }
+        
+        // Configure the API Client
+        api.set(delegate: APICommunicatorConfiguration())
+        
+        // Configure app appearance proxies.
         configureGlobalViewSettings()
         
-        api.set(delegate: APICommunicatorConfiguration())
         
         if !session.isLoggedIn {
             navigation.showLoginScreen()

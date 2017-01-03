@@ -66,8 +66,8 @@ class MessageThreadsTableViewController: UITableViewController, Delegator, DataS
     
     override func viewDidAppear(_ animated: Bool) {
         
-        // Update the message threads on loading the view or if more than 10 minutes has elapsed
-        guard let lastUpdated = lastUpdated , lastUpdated.timeIntervalSinceNow < 600 else {
+        // Update the message threads on loading the view or if more than 1 hour has elapsed
+        guard let lastUpdated = lastUpdated , lastUpdated.timeIntervalSinceNow < 6000 else {
             update()
             return
         }

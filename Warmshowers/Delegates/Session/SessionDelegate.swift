@@ -10,6 +10,9 @@ import UIKit
 
 protocol SessionDelegate {
     
+    /** Returns true if it is the first time the user has lauched the app since installation. */
+    var isFirstLaunch: Bool { get }
+    
     /** Returns the users uid if logged in or nil if no user is logged in. */
     var uid: Int? { get }
     

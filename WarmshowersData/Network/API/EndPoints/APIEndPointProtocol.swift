@@ -46,6 +46,9 @@ protocol APIEndPointProtocol {
      */
     func httpBody(fromData data: Any?, forMethod method: HTTP.Method, withEncoder encoder: APIRequestDataEncoder) throws -> Data?
     
+    /** Returns the cache policy to use for the given request. */
+    func cachePolicyForRequest(_ request: APIRequest) -> URLRequest.CachePolicy
+    
     /** Describes how plain text recieved from this endpoint should be parsed. */
     func request(_ request: APIRequest, didRecieveResponseWithText text: String) throws -> Any?
     
@@ -83,6 +86,8 @@ extension APIEndPointProtocol {
         assertionFailure("bodyParameters(withData:forMethod:) not implemented for end point \(type.name) and HTTP method \(method)")
         return nil
     }
+    
+    func cachePolicyForRequest(_ request: APIRequest) -> URLRequest.CachePolicy { return .reloadIgnoringLocalAndRemoteCacheData }
     
     func request(_ request: APIRequest, didRecieveResponseWithText text: String) throws -> Any? { return nil }
     

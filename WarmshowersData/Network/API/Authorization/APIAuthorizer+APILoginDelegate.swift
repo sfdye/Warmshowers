@@ -22,7 +22,17 @@ extension APIAuthorizer: APILoginDelegate, DataSource {
         print("Login started")
         currentlyReauthorizing = true
         
-        api.contact(endPoint: .login, withMethod: .post, andPathParameters: nil, andData: loginRequest, thenNotify: self)
+        do {
+            print("Checking for session cookie.")
+            let (_, _) = try secureStore.getTokenAndSecret()
+            print("Refreshing token")
+            api.contact(endPoint: .token, withMethod: .post, andPathParameters: nil, andData: loginRequest, thenNotify: self)
+        } catch {
+            print("Login in with username and password.")
+            api.contact(endPoint: .login, withMethod: .post, andPathParameters: nil, andData: loginRequest, thenNotify: self)
+        }
+        
+//        api.contact(endPoint: .login, withMethod: .post, andPathParameters: nil, andData: loginRequest, thenNotify: self)
     }
     
 }

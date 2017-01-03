@@ -58,19 +58,19 @@ public class SecureStore: SecureStoreDelegate {
         try keychain.remove(PropertyKeys.PasswordKey)
     }
     
-    // MARK: Generic secure storage
-    
-    public func save(value: String, forKey key: String) throws {
-        try keychain.set(value, key: key)
-    }
-    
-    public func getValue(forKey key: String) throws -> String?  {
-        let value = try keychain.get(key)
-        return value
-    }
-    
-    public func removeValue(forKey key: String) throws {
-        try keychain.remove(key)
-    }
+//    // MARK: Generic secure storage
+//    
+//    public func save(value: String, forKey key: String) throws {
+//        try keychain.set(value, key: key)
+//    }
+//    
+//    public func getValue(forKey key: String) throws -> String?  {
+//        let value = try keychain.get(key)
+//        return value
+//    }
+//    
+//    public func removeValue(forKey key: String) throws {
+//        try keychain.remove(key)
+//    }
     
 }

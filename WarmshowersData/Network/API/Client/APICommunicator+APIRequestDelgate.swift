@@ -30,8 +30,7 @@ extension APICommunicator: APIRequestDelegate {
         // Remove request from queue.
         removeRequestFromQueue(request)
         
-        log("Finished request: \(request.hashValue). \(requests.count) remaining requests.")
-        logQueueState()
+        log("Finished request: \(request.hashValue). \(requests.count) remaining requests.", logQueueState: true)
     }
     
     func request(_ request: APIRequest, didFailWithError error: Error) {
@@ -43,8 +42,7 @@ extension APICommunicator: APIRequestDelegate {
         // Remove request from queue.
         removeRequestFromQueue(request)
         
-        log("Finished request: \(request.hashValue). \(requests.count) remaining requests.")
-        logQueueState()
+        log("Finished request: \(request.hashValue). \(requests.count) remaining requests.", logQueueState: true)
     }
     
 }

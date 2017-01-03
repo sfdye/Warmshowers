@@ -21,7 +21,11 @@ struct UserEndPoint: APIEndPointProtocol {
         return hostURL.appendingPathComponent("/services/rest/user/\(uid)")
     }
     
-     func request(_ request: APIRequest, didRecieveResponseWithJSON json: Any, parser: JSONParser) throws -> Any? {
+    func cachePolicyForRequest(_ request: APIRequest) -> URLRequest.CachePolicy {
+        return .returnCacheDataElseLoad
+    }
+    
+    func request(_ request: APIRequest, didRecieveResponseWithJSON json: Any, parser: JSONParser) throws -> Any? {
         
         guard let userInfo = User(json: json) else {
             throw APIEndPointError.parsingError(endPoint: name, key: nil)

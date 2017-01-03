@@ -31,4 +31,8 @@ struct ImageResourceEndPoint: APIEndPointProtocol {
         }
     }
     
+    func cachePolicyForRequest(_ request: APIRequest) -> URLRequest.CachePolicy {
+        return .returnCacheDataElseLoad
+    }
+    
 }

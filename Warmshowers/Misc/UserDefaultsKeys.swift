@@ -9,6 +9,6 @@
 import UIKit
 
 struct UserDefaultsKeys {
-    static let UsernameKey = "ws-current-user-username"
-    static let UIDKey = "ws-current-user-uid"
+    static let usernameKey = "ws-current-user-username"
+    static let uidKey = "ws-current-user-uid"
 }
