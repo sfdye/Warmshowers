@@ -14,7 +14,6 @@ extension LoginViewController: APILoginResponseDelegate {
     func loginRequestDidSucceed(_ loginRequest: APILoginRequest) {
         
         session.save(uid: loginRequest.uid)
-        print(loginRequest.uid)
         
         ProgressHUD.hide()
         do {

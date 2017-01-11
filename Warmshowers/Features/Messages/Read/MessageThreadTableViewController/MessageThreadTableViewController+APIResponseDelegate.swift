@@ -41,7 +41,7 @@ extension MessageThreadTableViewController: APIResponseDelegate {
                 user.image_url = url
                 do {
                     try store.managedObjectContext.save()
-                    api.contact(endPoint: .imageResource, withMethod: .get, andPathParameters: url, andData: nil, thenNotify: self)
+                    api.contact(endPoint: .imageResource, withMethod: .get, andPathParameters: url, andData: nil, thenNotify: self, ignoreCache: false)
                 } catch {
                     // Not a big deal. The author profile image won't be downloaded.
                 }

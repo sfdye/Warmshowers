@@ -17,6 +17,7 @@ extension APICommunicator: APILoginResponseDelegate {
     
     func loginRequest(_ loginRequest: APILoginRequest, didFailWithError error: Error) {
         // No response required.
+        log("Login already in progress.")
     }
     
 }

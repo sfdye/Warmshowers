@@ -188,7 +188,6 @@
 		E53715E21E0CB1BC00770305 /* APICommunicatorMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53715AB1E0CB1BC00770305 /* APICommunicatorMode.swift */; };
 		E53715E31E0CB1BC00770305 /* APIDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53715AC1E0CB1BC00770305 /* APIDelegate.swift */; };
 		E53715E41E0CB1BC00770305 /* APIResponseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53715AD1E0CB1BC00770305 /* APIResponseDelegate.swift */; };
-		E53715E51E0CB1BC00770305 /* WarmShowersURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53715AE1E0CB1BC00770305 /* WarmShowersURLSession.swift */; };
 		E53715E61E0CB1BC00770305 /* APIEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53715B01E0CB1BC00770305 /* APIEndPoint.swift */; };
 		E53715E71E0CB1BC00770305 /* APIEndPointError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53715B11E0CB1BC00770305 /* APIEndPointError.swift */; };
 		E53715E81E0CB1BC00770305 /* APIEndPointProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53715B21E0CB1BC00770305 /* APIEndPointProtocol.swift */; };
@@ -257,6 +256,7 @@
 		E5E5733E1E1A178C00D54445 /* DataSourceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E5733D1E1A178C00D54445 /* DataSourceError.swift */; };
 		E5E573401E1A182600D54445 /* UserProfileTableViewController+DataSourceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E5733F1E1A182600D54445 /* UserProfileTableViewController+DataSourceDelegate.swift */; };
 		E5E573421E1A4E3400D54445 /* UserProfileTableViewController+APIResponseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E573411E1A4E3400D54445 /* UserProfileTableViewController+APIResponseDelegate.swift */; };
+		E5E697891E2370DE0053AD60 /* APICommunicator+URLSessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E697881E2370DE0053AD60 /* APICommunicator+URLSessionDelegate.swift */; };
 		E5ED1E951CD45BA90017D12F /* SettingsTableViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5ED1E941CD45BA90017D12F /* SettingsTableViewControllerTests.swift */; };
 		E5ED1E971CD461D80017D12F /* MOCKNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5ED1E961CD461D80017D12F /* MOCKNavigationController.swift */; };
 		E5ED1E9E1CD471E00017D12F /* MOCKSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5ED1E9D1CD471E00017D12F /* MOCKSession.swift */; };
@@ -510,7 +510,6 @@
 		E53715AB1E0CB1BC00770305 /* APICommunicatorMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APICommunicatorMode.swift; sourceTree = "<group>"; };
 		E53715AC1E0CB1BC00770305 /* APIDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIDelegate.swift; sourceTree = "<group>"; };
 		E53715AD1E0CB1BC00770305 /* APIResponseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIResponseDelegate.swift; sourceTree = "<group>"; };
-		E53715AE1E0CB1BC00770305 /* WarmShowersURLSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WarmShowersURLSession.swift; sourceTree = "<group>"; };
 		E53715B01E0CB1BC00770305 /* APIEndPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIEndPoint.swift; sourceTree = "<group>"; };
 		E53715B11E0CB1BC00770305 /* APIEndPointError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIEndPointError.swift; sourceTree = "<group>"; };
 		E53715B21E0CB1BC00770305 /* APIEndPointProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIEndPointProtocol.swift; sourceTree = "<group>"; };
@@ -584,6 +583,7 @@
 		E5E5733D1E1A178C00D54445 /* DataSourceError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSourceError.swift; sourceTree = "<group>"; };
 		E5E5733F1E1A182600D54445 /* UserProfileTableViewController+DataSourceDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserProfileTableViewController+DataSourceDelegate.swift"; sourceTree = "<group>"; };
 		E5E573411E1A4E3400D54445 /* UserProfileTableViewController+APIResponseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserProfileTableViewController+APIResponseDelegate.swift"; sourceTree = "<group>"; };
+		E5E697881E2370DE0053AD60 /* APICommunicator+URLSessionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "APICommunicator+URLSessionDelegate.swift"; sourceTree = "<group>"; };
 		E5ED1E941CD45BA90017D12F /* SettingsTableViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewControllerTests.swift; sourceTree = "<group>"; };
 		E5ED1E961CD461D80017D12F /* MOCKNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MOCKNavigationController.swift; sourceTree = "<group>"; };
 		E5ED1E9D1CD471E00017D12F /* MOCKSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MOCKSession.swift; sourceTree = "<group>"; };
@@ -1380,8 +1380,8 @@
 				E53715AB1E0CB1BC00770305 /* APICommunicatorMode.swift */,
 				E53715AC1E0CB1BC00770305 /* APIDelegate.swift */,
 				E53715AD1E0CB1BC00770305 /* APIResponseDelegate.swift */,
-				E53715AE1E0CB1BC00770305 /* WarmShowersURLSession.swift */,
 				E5E573301E1888A100D54445 /* APICommunicator+APILoginResponseDelegate.swift */,
+				E5E697881E2370DE0053AD60 /* APICommunicator+URLSessionDelegate.swift */,
 			);
 			path = Client;
 			sourceTree = "<group>";
@@ -1979,7 +1979,6 @@
 			files = (
 				E53716331E0E3A5900770305 /* MapTile.swift in Sources */,
 				E53715F01E0CB1BC00770305 /* MessageThreadEndPoint.swift in Sources */,
-				E53715E51E0CB1BC00770305 /* WarmShowersURLSession.swift in Sources */,
 				E53715E01E0CB1BC00770305 /* APICommunicatorDelegate.swift in Sources */,
 				E53715DE1E0CB1BC00770305 /* APICommunicator+APIRequestDelgate.swift in Sources */,
 				E53715681E0C8AA800770305 /* String+JSONParsable.swift in Sources */,
@@ -1994,6 +1993,7 @@
 				E53715F21E0CB1BC00770305 /* NewMessageData.swift in Sources */,
 				E53715DB1E0CB1BC00770305 /* APIAuthorizationDelegate.swift in Sources */,
 				E53715691E0C8AA800770305 /* JSONParser.swift in Sources */,
+				E5E697891E2370DE0053AD60 /* APICommunicator+URLSessionDelegate.swift in Sources */,
 				E53716171E0CE82B00770305 /* Recommendation.swift in Sources */,
 				E53715DD1E0CB1BC00770305 /* APIAuthorizerError.swift in Sources */,
 				E53715F41E0CB1BC00770305 /* ReplyMessageData.swift in Sources */,

@@ -38,13 +38,13 @@ extension ComposeMessageViewController {
             }
             
             let reply = ReplyMessageData(threadID: threadID, body: body)
-            api.contact(endPoint: .replyToMessage, withMethod: .post, andPathParameters: nil, andData: reply, thenNotify: self)
+            api.contact(endPoint: .replyToMessage, withMethod: .post, andPathParameters: nil, andData: reply, thenNotify: self, ignoreCache: false)
             
         } else {
             
             let recipientsString = recipientString(forRecipientUsernames: recipients)
             let message = NewMessageData(recipientsString: recipientsString, subject: subject, body: body)
-            api.contact(endPoint: .newMessage, withMethod: .post, andPathParameters: nil, andData: message, thenNotify: self)
+            api.contact(endPoint: .newMessage, withMethod: .post, andPathParameters: nil, andData: message, thenNotify: self, ignoreCache: false)
         }
         
         // Show the spinner

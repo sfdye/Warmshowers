@@ -15,24 +15,21 @@ extension APIAuthorizer: APILoginDelegate, DataSource {
         
         guard !currentlyReauthorizing else {
             requester.loginRequest(loginRequest, didFailWithError: APILoginError.loginAlreadyInProgress)
-            print("Login already in progress.")
             return
         }
         
-        print("Login started")
         currentlyReauthorizing = true
         
         do {
-            print("Checking for session cookie.")
+            // Checking for a session cookie.
             let (_, _) = try secureStore.getTokenAndSecret()
-            print("Refreshing token")
-            api.contact(endPoint: .token, withMethod: .post, andPathParameters: nil, andData: loginRequest, thenNotify: self)
+            // Refresh the CSRF token
+            api.contact(endPoint: .token, withMethod: .get, andPathParameters: nil, andData: loginRequest, thenNotify: self, ignoreCache: true)
         } catch {
-            print("Login in with username and password.")
-            api.contact(endPoint: .login, withMethod: .post, andPathParameters: nil, andData: loginRequest, thenNotify: self)
+            // Login again if there is no session cookie.
+            api.contact(endPoint: .login, withMethod: .post, andPathParameters: nil, andData: loginRequest, thenNotify: self, ignoreCache: true)
         }
         
-//        api.contact(endPoint: .login, withMethod: .post, andPathParameters: nil, andData: loginRequest, thenNotify: self)
     }
     
 }

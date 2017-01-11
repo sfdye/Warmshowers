@@ -54,7 +54,6 @@ class Session: SessionDelegate, Delegator, DataSource {
     var isLoggedIn: Bool {
         do {
             let (token, secret) = try secureStore.getTokenAndSecret()
-            print("token: \(token), secret: \(secret)")
             return true && !isFirstLaunch
         } catch {
             return false

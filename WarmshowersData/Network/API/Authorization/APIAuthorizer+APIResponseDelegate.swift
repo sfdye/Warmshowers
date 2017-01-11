@@ -30,7 +30,7 @@ extension APIAuthorizer: APIResponseDelegate {
             loginRequest.uid = uid
             
             // Request an access token.
-            api.contact(endPoint: .token, withMethod: .get, andPathParameters: nil, andData: loginRequest, thenNotify: self)
+            api.contact(endPoint: .token, withMethod: .get, andPathParameters: nil, andData: loginRequest, thenNotify: self, ignoreCache: true)
             return
         }
         

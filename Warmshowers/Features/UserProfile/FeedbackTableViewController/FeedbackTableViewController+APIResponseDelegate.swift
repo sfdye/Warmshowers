@@ -20,7 +20,7 @@ extension FeedbackTableViewController: APIResponseDelegate {
                     let url = (data as! User).profileImageURL ?? ""
                     setAuthorImageURL(url, forHostWithUID: uid)
                     // Download the authors profile image.
-                    api.contact(endPoint: .imageResource, withMethod: .get, andPathParameters: url, andData: nil, thenNotify: self)
+                    api.contact(endPoint: .imageResource, withMethod: .get, andPathParameters: url, andData: nil, thenNotify: self, ignoreCache: false)
                 }
             }
         case .imageResource:

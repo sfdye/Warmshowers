@@ -25,12 +25,6 @@ class TokenEndPoint: APIEndPointProtocol {
     
     func request(_ request: APIRequest, didRecieveResponseWithText text: String) throws -> Any? {
         
-        // DEBUG
-        print("Last token received at \(lastTokenReceived). New token recieved no (\(Date())).")
-        print("Interval: \(Date().timeIntervalSince(lastTokenReceived))")
-        self.lastTokenReceived = Date()
-        //
-        
         let newToken = text
         
         let (_, secret) = try DataDelegates.shared.secureStore.getTokenAndSecret()

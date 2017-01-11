@@ -33,7 +33,7 @@ class UserProfileTableViewController: UITableViewController, Delegator, DataSour
         configureDoneButton()
         
         // Download the users profile.
-        api.contact(endPoint: .user, withMethod: .get, andPathParameters: uid, andData: nil, thenNotify: self)
+        api.contact(endPoint: .user, withMethod: .get, andPathParameters: uid, andData: nil, thenNotify: self, ignoreCache: false)
     }
     
     /** Sets up a done button if one is needed. */
@@ -60,7 +60,7 @@ class UserProfileTableViewController: UITableViewController, Delegator, DataSour
             
             let logoutAction = UIAlertAction(title: "Logout", style: .default) { (logoutAction) -> Void in
                 // Logout and return the login screeen.
-                self.api.contact(endPoint: .logout, withMethod: .post, andPathParameters: nil, andData: nil, thenNotify: self)
+                self.api.contact(endPoint: .logout, withMethod: .post, andPathParameters: nil, andData: nil, thenNotify: self, ignoreCache: false)
                 ProgressHUD.show(self.navigationController!.view, label: "Logging out ...")
             }
             actionAlert.addAction(logoutAction)

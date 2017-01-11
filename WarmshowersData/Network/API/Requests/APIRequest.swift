@@ -21,6 +21,9 @@ public class APIRequest: Hashable {
     /** Specifies the http method that the end point accepts. */
     private(set) var method: HTTP.Method
     
+    /** Specifies if the request should ignore cached data and force loading from the network. */
+    private(set) var ignoreCache: Bool
+    
     /** The object that initiated the request. The final response for the request will be sent to this object. */
     var requester: APIResponseDelegate?
     
@@ -40,18 +43,19 @@ public class APIRequest: Hashable {
     // MARK: Hashable
     
     var madeAt: Date
-    public var hashValue: Int { return madeAt.hashValue }
+    public var hashValue: Int { return Int(madeAt.timeIntervalSince1970 * 1000000) }
     
     
     // MARK: Initialiser
     
-    init(withEndPoint endPoint: APIEndPointProtocol, httpMethod method: HTTP.Method, requester: APIResponseDelegate?, parameters: Any? = nil, andData data: Any? = nil) {
+    init(withEndPoint endPoint: APIEndPointProtocol, httpMethod method: HTTP.Method, requester: APIResponseDelegate?, parameters: Any? = nil, andData data: Any? = nil, ignoreCache: Bool = false) {
         self.endPoint = endPoint
         self.method = method
         self.requester = requester
         self.parameters = parameters
         self.data = data
         self.madeAt = Date()
+        self.ignoreCache = ignoreCache
     }
     
     static func urlRequest(fromRequest request: APIRequest) throws -> URLRequest {
@@ -62,7 +66,12 @@ public class APIRequest: Hashable {
         // URL Request
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = request.method.rawValue
-        urlRequest.cachePolicy = request.endPoint.cachePolicyForRequest(request)
+        
+        if request.ignoreCache {
+            urlRequest.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
+        } else {
+            urlRequest.cachePolicy = request.endPoint.cachePolicyForRequest(request)
+        }
         
         // Add header parameters
         urlRequest.addValue(request.endPoint.acceptType.rawValue, forHTTPHeaderField: "Accept")

@@ -37,14 +37,14 @@ class KeywordSearchTableViewController: UITableViewController, Delegator, DataSo
         
         debounceTimer = nil
         let searchData = KeywordSearchData(keyword: keyword)
-        api.contact(endPoint: .searchByKeyword, withMethod: .post, andPathParameters: nil, andData: searchData, thenNotify: self)
+        api.contact(endPoint: .searchByKeyword, withMethod: .post, andPathParameters: nil, andData: searchData, thenNotify: self, ignoreCache: false)
     }
     
     func startImageDownloadForIndexPath(_ indexPath: IndexPath) {
         guard let hosts = hosts , (indexPath as NSIndexPath).row < numberOfHosts else { return }
         let user = hosts[(indexPath as NSIndexPath).row]
         if let url = user.imageURL , user.image == nil {
-            api.contact(endPoint: .imageResource, withMethod: .get, andPathParameters: url, andData: nil, thenNotify: self)
+            api.contact(endPoint: .imageResource, withMethod: .get, andPathParameters: url, andData: nil, thenNotify: self, ignoreCache: false)
         }
     }
     

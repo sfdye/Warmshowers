@@ -132,24 +132,24 @@ class MessageThreadTableViewController: UITableViewController, Delegator, DataSo
             return
         }
         
-        api.contact(endPoint: .messageThread, withMethod: .post, andPathParameters: nil, andData: threadID, thenNotify: self)
+        api.contact(endPoint: .messageThread, withMethod: .post, andPathParameters: nil, andData: threadID, thenNotify: self, ignoreCache: false)
     }
     
     /** Mark message thread as read. */
     func markThread(_ threadID: Int, asRead read: Bool) {
         let readState = MessageThreadReadState(threadID: threadID, read: true)
-        api.contact(endPoint: .markThreadRead, withMethod: .post, andPathParameters: nil, andData: readState, thenNotify: self)
+        api.contact(endPoint: .markThreadRead, withMethod: .post, andPathParameters: nil, andData: readState, thenNotify: self, ignoreCache: false)
     }
     
     func startImageDownloadForIndexPath(_ indexPath: IndexPath) {
         let message = self.fetchedResultsController.object(at: indexPath)
         guard message.author?.image == nil else { return }
         if let url = message.author?.image_url {
-            api.contact(endPoint: .imageResource, withMethod: .get, andPathParameters: url, andData: nil, thenNotify: self)
+            api.contact(endPoint: .imageResource, withMethod: .get, andPathParameters: url, andData: nil, thenNotify: self, ignoreCache: false)
         } else if let uid = message.author?.uid , !downloadsInProgress.contains(String(uid)) {
             // We first need to get the image URL from the authors profile.
             downloadsInProgress.insert(String(uid))
-            api.contact(endPoint: .user, withMethod: .get, andPathParameters: uid, andData: nil, thenNotify: self)
+            api.contact(endPoint: .user, withMethod: .get, andPathParameters: uid, andData: nil, thenNotify: self, ignoreCache: false)
         }
     }
     

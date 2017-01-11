@@ -45,6 +45,6 @@ extension CreateFeedbackTableViewController {
         
         // Submit the feedback
         ProgressHUD.show(navigationController?.view, label: "Submitting feedback ...")
-        api.contact(endPoint: .createFeedback, withMethod: .post, andPathParameters: nil, andData: recommendation, thenNotify: self)
+        api.contact(endPoint: .createFeedback, withMethod: .post, andPathParameters: nil, andData: recommendation, thenNotify: self, ignoreCache: false)
     }
 }

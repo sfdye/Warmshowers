@@ -30,6 +30,10 @@ struct SearchByLocationEndPoint: APIEndPointProtocol {
         return body
     }
     
+    func cachePolicyForRequest(_ request: APIRequest) -> URLRequest.CachePolicy {
+        return .reloadIgnoringLocalAndRemoteCacheData
+    }
+    
     func request(_ request: APIRequest, updateStore store: StoreUpdateDelegate, withJSON json: Any, parser: JSONParser) throws {
         
         guard let quadKey = (request.data as? MapTile)?.quadKey else {

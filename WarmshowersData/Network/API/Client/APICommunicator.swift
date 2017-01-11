@@ -9,12 +9,11 @@
 import Foundation
 
 /** A central point of control for all API requests. */
-class APICommunicator: APIDelegate {
+class APICommunicator: NSObject, APIDelegate {
     
     // MARK: Properties
     
     var mode: APICommunicatorMode = .online
-    var logging: Bool = true
     
     var requests = Set<APIRequest>()
     private let jsonParser: JSONParser = JSON.shared
@@ -37,6 +36,7 @@ class APICommunicator: APIDelegate {
     lazy var sessionConfiguration: URLSessionConfiguration = {
         let sessionConfiguration = URLSessionConfiguration.default
         sessionConfiguration.urlCache = self.cache
+        sessionConfiguration.requestCachePolicy = .returnCacheDataElseLoad
         return sessionConfiguration
     }()
     
@@ -67,6 +67,12 @@ class APICommunicator: APIDelegate {
     }
     
     // MARK: Debug utilities
+    
+    #if DEBUG
+    var logging: Bool = true
+    #else
+    var logging: Bool = false
+    #endif
     
     func log(_ message: String, logQueueState: Bool = false) {
         if logging { print(message) }
@@ -110,7 +116,7 @@ class APICommunicator: APIDelegate {
     }
     
     /** Creates and executes a request for the given end point with the given data. */
-    func contact(endPoint: APIEndPoint, withMethod method: HTTP.Method, andPathParameters parameters: Any?, andData data: Any?, thenNotify requester: APIResponseDelegate) {
+    func contact(endPoint: APIEndPoint, withMethod method: HTTP.Method, andPathParameters parameters: Any?, andData data: Any?, thenNotify requester: APIResponseDelegate, ignoreCache: Bool = false) {
         
         let request = APIRequest(withEndPoint: endPoint.instance, httpMethod: method, requester: requester, parameters: parameters, andData: data)
         request.delegate = self
@@ -122,6 +128,7 @@ class APICommunicator: APIDelegate {
             return
         }
         
+        log("Queuing request: \(request.hashValue). (\(request.endPointType.rawValue) end point.)", logQueueState: true)
         addRequestToQueue(request)
         executeQueuedRequests()
     }
@@ -130,6 +137,7 @@ class APICommunicator: APIDelegate {
     
     /** Executes an API request. */
     private func execute(_ request: APIRequest) {
+        
         log("Executing request: \(request.hashValue). (\(request.endPointType.rawValue) end point.)", logQueueState: true)
         
         guard connection.isOnline else {
@@ -157,6 +165,7 @@ class APICommunicator: APIDelegate {
             request.delegate?.request(request, didFailWithError: error)
             return
         }
+        
         
         // Dispatch the request.
         switch mode {
@@ -200,7 +209,7 @@ class APICommunicator: APIDelegate {
                 do {
                     let (username, password) = try secureStore!.getUsernameAndPassword()
                     
-                    print("Auto-login triggered.")
+                    log("Auto-login triggered.")
                     auth.login(withUsername: username, andPassword: password, thenNotify: self)
                     
                     // Re-queue the request.
@@ -301,6 +310,7 @@ class APICommunicator: APIDelegate {
     
     /** Executes all queued request. */
     func executeQueuedRequests() {
+        
         for request in requests {
             if request.status == .queued {
                 execute(request)

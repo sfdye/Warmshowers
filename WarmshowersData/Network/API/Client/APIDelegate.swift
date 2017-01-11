@@ -17,6 +17,6 @@ public protocol APIDelegate {
     func set(delegate: APICommunicatorDelegate)
     
     /** Creates and executes a request for the given end point with the given data. */
-    func contact(endPoint: APIEndPoint, withMethod method: HTTP.Method, andPathParameters parameters: Any?, andData data: Any?, thenNotify requester: APIResponseDelegate)
+    func contact(endPoint: APIEndPoint, withMethod method: HTTP.Method, andPathParameters parameters: Any?, andData data: Any?, thenNotify requester: APIResponseDelegate, ignoreCache: Bool)
     
 }

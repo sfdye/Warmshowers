@@ -10,6 +10,8 @@ import Foundation
 
 public protocol APIAuthorizationDelegate {
     
+    var isAvailible: Bool { get }
+    
     /** Generates an authorized URL request given an API request and access to the secure store. */
     func authorizedURLRequest(fromAPIRequest request: APIRequest, withSecureStore secureStore: SecureStoreDelegate) throws -> URLRequest
 

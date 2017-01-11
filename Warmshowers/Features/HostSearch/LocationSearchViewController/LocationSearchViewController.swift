@@ -199,7 +199,7 @@ class LocationSearchViewController : UIViewController, Delegator, DataSource {
 //            print("Updating online.")
             if !downloadsInProgress.contains(tile) {
                 downloadWillStartForMapTile(tile)
-                api.contact(endPoint: .searchByLocation, withMethod: .post, andPathParameters: nil, andData: tile, thenNotify: self)
+                api.contact(endPoint: .searchByLocation, withMethod: .post, andPathParameters: nil, andData: tile, thenNotify: self, ignoreCache: false)
             }
         } else {
 //            print("Loading from the store.")

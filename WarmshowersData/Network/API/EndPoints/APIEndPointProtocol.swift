@@ -83,7 +83,7 @@ extension APIEndPointProtocol {
     func contentType(forMethod method: HTTP.Method) -> ContentType? { return .xWWWFormURLEncoded }
     
     func httpBody(fromData data: Any?, forMethod method: HTTP.Method, withEncoder encoder: APIRequestDataEncoder) throws -> Data? {
-        assertionFailure("bodyParameters(withData:forMethod:) not implemented for end point \(type.name) and HTTP method \(method)")
+        assertionFailure("httpBody(fromData:forMethod:withEncoder:) not implemented for end point \(type.name) and HTTP method \(method)")
         return nil
     }
     

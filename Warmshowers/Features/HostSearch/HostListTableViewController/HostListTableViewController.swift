@@ -51,7 +51,7 @@ class HostListTableViewController: UITableViewController, Delegator, DataSource 
         
         let user = hosts[(indexPath as NSIndexPath).row]
         if let url = user.imageURL , user.image == nil {
-            api.contact(endPoint: .imageResource, withMethod: .get, andPathParameters: url, andData: nil, thenNotify: self)
+            api.contact(endPoint: .imageResource, withMethod: .get, andPathParameters: url, andData: nil, thenNotify: self, ignoreCache: false)
         }
     }
     
@@ -85,7 +85,7 @@ class HostListTableViewController: UITableViewController, Delegator, DataSource 
     /** Initiates a download of a users profile. */
     func showUserProfileForHostWithUID(_ uid: Int) {
         ProgressHUD.show(navigationController!.view, label: nil)
-        api.contact(endPoint: .user, withMethod: .get, andPathParameters: uid, andData: nil, thenNotify: self)
+        api.contact(endPoint: .user, withMethod: .get, andPathParameters: uid, andData: nil, thenNotify: self, ignoreCache: false)
     }  
     
 }

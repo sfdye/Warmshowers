@@ -26,11 +26,11 @@ extension UserProfileTableViewController: APIResponseDelegate {
             }
             
             // Download the users feedback.
-            api.contact(endPoint: .feedback, withMethod: .get, andPathParameters: uid, andData: nil, thenNotify: self)
+            api.contact(endPoint: .feedback, withMethod: .get, andPathParameters: uid, andData: nil, thenNotify: self, ignoreCache: false)
             
             // Get the users profile image if they have one.
             if user.profileImage == nil && user.profileImageURL != nil {
-                api.contact(endPoint: .imageResource, withMethod: .get, andPathParameters: user.profileImageURL, andData: nil, thenNotify: self)
+                api.contact(endPoint: .imageResource, withMethod: .get, andPathParameters: user.profileImageURL, andData: nil, thenNotify: self, ignoreCache: false)
             }
             
         case .imageResource:

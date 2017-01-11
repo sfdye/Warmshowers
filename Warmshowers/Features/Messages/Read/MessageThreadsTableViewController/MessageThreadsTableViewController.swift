@@ -131,7 +131,7 @@ class MessageThreadsTableViewController: UITableViewController, Delegator, DataS
     // MARK: Utility methods
     
     func update() {
-        api.contact(endPoint: .messageThreads, withMethod: .post, andPathParameters: nil, andData: nil, thenNotify: self)
+        api.contact(endPoint: .messageThreads, withMethod: .post, andPathParameters: nil, andData: nil, thenNotify: self, ignoreCache: false)
     }
     
     /** Called after and update once all API requests have responded. */
@@ -170,7 +170,7 @@ class MessageThreadsTableViewController: UITableViewController, Delegator, DataS
             
             for thread in threadsNeedingUpdate {
                 guard let threadID = thread.thread_id else { continue }
-                api.contact(endPoint: .messageThread, withMethod: .post, andPathParameters: nil, andData: threadID, thenNotify: self)
+                api.contact(endPoint: .messageThread, withMethod: .post, andPathParameters: nil, andData: threadID, thenNotify: self, ignoreCache: false)
                 downloadsInProgress.insert(threadID)
             }
         } catch let error as NSError {
