@@ -11,7 +11,11 @@ import Foundation
 extension UserProfileTableViewController {
     
     @IBAction func actionButtonPressed(_ sender: AnyObject) {
-        guard let uid = session.uid, let actionAlert = actionAlertForUserWithUID(uid) else { return }
+        guard
+            let uid = session.uid,
+            let actionAlert = actionAlertForUserWithUID(uid)
+            else { return }
+        actionAlert.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         present(actionAlert, animated: true, completion: nil)
     }
     
