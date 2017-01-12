@@ -20,30 +20,7 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="QYr-ub-Gtg">
-                                <rect key="frame" x="42" y="0.0" width="517" height="600"/>
-                                <color key="backgroundColor" red="0.14901960784313725" green="0.41568627450980394" blue="0.80784313725490198" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </imageView>
-                        </subviews>
                         <color key="backgroundColor" red="0.14901960784313725" green="0.41568627450980389" blue="0.81176470588235294" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="QYr-ub-Gtg" firstAttribute="height" secondItem="Ze5-6b-2t3" secondAttribute="height" id="3PT-p5-gAn"/>
-                            <constraint firstItem="QYr-ub-Gtg" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="50" id="JpP-UL-cBG"/>
-                            <constraint firstItem="QYr-ub-Gtg" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="20" id="Wxn-aj-CvS"/>
-                            <constraint firstItem="QYr-ub-Gtg" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="o0C-2E-das"/>
-                            <constraint firstItem="QYr-ub-Gtg" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="qp8-T2-8CV"/>
-                        </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="JpP-UL-cBG"/>
-                            </mask>
-                        </variation>
-                        <variation key="heightClass=regular-widthClass=regular">
-                            <mask key="constraints">
-                                <exclude reference="JpP-UL-cBG"/>
-                            </mask>
-                        </variation>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -51,7 +28,4 @@
             <point key="canvasLocation" x="52.5" y="375"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="Logo" width="1183" height="428"/>
-    </resources>
 </document>

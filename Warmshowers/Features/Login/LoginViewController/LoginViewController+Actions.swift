@@ -50,4 +50,10 @@ extension LoginViewController {
         navigation.open(url: url, fromViewController: self)
     }
     
+    @IBAction func backgroundTapped(_ sender: Any?) {
+        DispatchQueue.main.async { [unowned self] in
+            self.view.endEditing(false)
+        }
+    }
+    
 }
