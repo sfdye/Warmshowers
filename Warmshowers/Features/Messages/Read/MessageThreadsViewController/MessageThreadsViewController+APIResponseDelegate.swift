@@ -1,5 +1,5 @@
 //
-//  MessageThreadsTableViewController+APIResponseDelegate.swift
+//  MessageThreadsViewController+APIResponseDelegate.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 3/07/16.
@@ -9,7 +9,7 @@
 import Foundation
 import WarmshowersData
 
-extension MessageThreadsTableViewController: APIResponseDelegate {
+extension MessageThreadsViewController: APIResponseDelegate {
     
     func requestDidComplete(_ request: APIRequest) {
         switch request.endPointType {

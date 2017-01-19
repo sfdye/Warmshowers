@@ -215,7 +215,6 @@ class APICommunicator: NSObject, APIDelegate {
                     // Re-queue the request.
                     request.status = .queued
                     
-                    
                     return
                 } catch {
                     assertionFailure("Revoke access behaviour needs fixing.")

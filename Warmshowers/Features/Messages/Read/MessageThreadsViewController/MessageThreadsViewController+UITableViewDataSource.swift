@@ -1,5 +1,5 @@
 //
-//  MessageThreadsTableViewController+UITableViewDataSource.swift
+//  MessageThreadsViewController+UITableViewDataSource.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 27/01/16.
@@ -10,24 +10,22 @@ import UIKit
 import CoreData
 import WarmshowersData
 
-let RUID_MessageThread = "MessageThreadCell"
-let RUID_NoMessageThreadsCell = "NoMessages"
-
-extension MessageThreadsTableViewController {
+extension MessageThreadsViewController: UITableViewDataSource {
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+    func numberOfSections(in tableView: UITableView) -> Int {
+        guard let sections = fetchedResultsController?.sections else { return 0 }
+        return sections.count
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let sections = fetchedResultsController?.sections else { return 0 }
         let sectionInfo = sections[section]
         return sectionInfo.numberOfObjects
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: RUID_MessageThread, for: indexPath) as! MessageThreadsTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MessageThreadCell", for: indexPath) as! MessageThreadsTableViewCell
         
         guard let messageThread = self.fetchedResultsController?.object(at: indexPath) else {
             cell.participantsLabel.text = ""

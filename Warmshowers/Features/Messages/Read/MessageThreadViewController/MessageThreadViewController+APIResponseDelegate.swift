@@ -1,5 +1,5 @@
 //
-//  MessageThreadTableViewController+APIResponseDelegate.swift
+//  MessageThreadViewController+APIResponseDelegate.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 13/07/16.
@@ -9,13 +9,13 @@
 import UIKit
 import WarmshowersData
 
-extension MessageThreadTableViewController: APIResponseDelegate {
+extension MessageThreadViewController: APIResponseDelegate {
     
     func requestDidComplete(_ request: APIRequest) {
         switch request.endPointType {
         case .messageThread:
             DispatchQueue.main.async(execute: { [unowned self] in
-                self.refreshControl?.endRefreshing()
+                self.tableView.refreshControl?.endRefreshing()
                 self.tableView.reloadData()
             })
         case .user:

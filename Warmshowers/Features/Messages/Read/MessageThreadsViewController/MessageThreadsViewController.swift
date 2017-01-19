@@ -1,5 +1,5 @@
 //
-//  MessageThreadsTableViewController.swift
+//  MessageThreadsViewController.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 1/12/15.
@@ -10,7 +10,10 @@ import UIKit
 import CoreData
 import WarmshowersData
 
-class MessageThreadsTableViewController: UITableViewController, Delegator, DataSource {
+class MessageThreadsViewController: UIViewController, Delegator, DataSource {
+    
+    @IBOutlet var tableView: UITableView!
+    @IBOutlet var errorView: MessageThreadsErrorView!
     
     // MARK: Properties
     
@@ -37,22 +40,25 @@ class MessageThreadsTableViewController: UITableViewController, Delegator, DataS
         // Navigation bar configuration.
         navigationItem.title = "Messages"
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: WarmShowersColor.Green, NSFontAttributeName: WarmShowersFont.SueEllenFrancisco(26)]
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(MessageThreadsTableViewController.update))
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(MessageThreadsViewController.update))
         
         // Set up the date formatter.
         let template = "dd/MM/yy"
         let locale = Locale.current
         formatter.dateFormat = DateFormatter.dateFormat(fromTemplate: template, options: 0, locale: locale)
         
+        // Set up the error view
+        errorView.delegate = self
+        
         // Set the refresh controller for the tableview.
-        refreshControl = UIRefreshControl()
-        refreshControl?.addTarget(self, action: #selector(MessageThreadsTableViewController.update), for: UIControlEvents.valueChanged)
+        tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl?.addTarget(self, action: #selector(MessageThreadsViewController.update), for: UIControlEvents.valueChanged)
         
         // Set up the fetch results controller.
-        initialiseFetchResultsControllerWithStore(store)
+        initialiseFetchResultsController(withStore: store)
         
         // Reachability notifications
-        api.connection.registerForAndStartNotifications(self, selector: #selector(MessageThreadsTableViewController.reachabilityChanged(_:)))
+        api.connection.registerForAndStartNotifications(self, selector: #selector(MessageThreadsViewController.reachabilityChanged(_:)))
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -60,15 +66,29 @@ class MessageThreadsTableViewController: UITableViewController, Delegator, DataS
         // Reset the navigation bar text properties
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: WarmShowersColor.Green, NSFontAttributeName: WarmShowersFont.SueEllenFrancisco(26)]
         
-        if fetchedResultsController == nil {
-            initialiseFetchResultsControllerWithStore(store)
+        if fetchedResultsController == nil { initialiseFetchResultsController(withStore: store) }
+        do {
+            try fetchedResultsController?.performFetch()
+        } catch {
+            fatalError("MessageThreadsViewController Fetched results controller failed with error: \(error)")
+        }
+        
+        // If the data has been deleted show an error view.
+        hide(errorView)
+        guard
+            let sections = fetchedResultsController?.sections,
+            sections.count > 0,
+            sections[0].numberOfObjects > 0
+            else {
+                show(errorView)
+                return
         }
         
         showReachabilityBannerIfNeeded()
         
         if needsUpdate {
             DispatchQueue.main.async { [unowned self] in
-                self.refreshControl?.beginRefreshing()
+                self.tableView.refreshControl?.beginRefreshing()
             }
             update()
             needsUpdate = false
@@ -80,6 +100,7 @@ class MessageThreadsTableViewController: UITableViewController, Delegator, DataS
         // Update the message threads on loading the view or if more than 1 hour has elapsed
         guard let lastUpdated = lastUpdated , lastUpdated.timeIntervalSinceNow < 6000 else {
             update()
+            if view.subviews.contains(errorView) { errorView.showLoadingState() }
             return
         }
         
@@ -93,22 +114,27 @@ class MessageThreadsTableViewController: UITableViewController, Delegator, DataS
         fetchedResultsController = nil
     }
     
-    func initialiseFetchResultsControllerWithStore(_ store: StoreDelegate) {
+    func initialiseFetchResultsController(withStore store: StoreDelegate) {
         let request: NSFetchRequest<MOMessageThread> = NSFetchRequest(entityName: MOMessageThread.entityName)
-        request.sortDescriptors = [
-            NSSortDescriptor(key: "last_updated", ascending: false)
-        ]
-        let moc = store.managedObjectContext
+        request.sortDescriptors = [NSSortDescriptor(key: "last_updated", ascending: false)]
         fetchedResultsController = NSFetchedResultsController(
             fetchRequest: request,
-            managedObjectContext: moc,
+            managedObjectContext: store.managedObjectContext,
             sectionNameKeyPath: nil,
             cacheName: nil)
-        fetchedResultsController!.delegate = self
-        do {
-            try fetchedResultsController!.performFetch()
-        } catch {
-            fatalError("Failed to initialize FetchedResultsController: \(error)")
+        fetchedResultsController?.delegate = self
+    }
+    
+    func show(_ errorView: UIView) {
+        DispatchQueue.main.async { [unowned self] in
+            self.errorView.frame = self.tableView.frame
+            self.view.addSubview(errorView)
+        }
+    }
+    
+    func hide(_ errorView: UIView) {
+        DispatchQueue.main.async {
+            errorView.removeFromSuperview()
         }
     }
     
@@ -136,10 +162,23 @@ class MessageThreadsTableViewController: UITableViewController, Delegator, DataS
     
     /** Called after and update once all API requests have responded. */
     func didFinishedUpdates() {
+        self.errorView.reset()
         
         // Hide any activity indicators
         DispatchQueue.main.async { [unowned self] () -> Void in
-            self.refreshControl?.endRefreshing()
+            self.tableView.refreshControl?.endRefreshing()
+            
+            guard
+                let sections = self.fetchedResultsController?.sections,
+                sections.count > 0,
+                sections[0].numberOfObjects > 0
+                else {
+                    self.errorView.frame = self.tableView.frame
+                    self.view.addSubview(self.errorView)
+                    return
+            }
+            self.hide(self.errorView)
+            
             if let error = self.errorCache {
                 self.alert.presentAPIError(error, forDelegator: self)
                 self.errorCache = nil

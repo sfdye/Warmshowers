@@ -1,5 +1,5 @@
 //
-//  MessageThreadTableViewController+ComposeMessageViewControllerDelegate.swift
+//  MessageThreadViewController+ComposeMessageViewControllerDelegate.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 3/01/17.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension MessageThreadTableViewController: ComposeMessageViewControllerDelegate {
+extension MessageThreadViewController: ComposeMessageViewControllerDelegate {
     
     func composeMessageViewControllerDidSendANewMessage(_ controller: ComposeMessageViewController) { }
     
