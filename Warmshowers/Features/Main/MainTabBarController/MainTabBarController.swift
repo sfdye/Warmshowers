@@ -10,9 +10,9 @@ import UIKit
 
 class MainTabBarController: UITabBarController {
     
-    var messageThreadsTableViewController: MessageThreadsTableViewController? {
-        let messageThreadsTableViewController = (self.viewControllers?[1] as? UINavigationController)?.viewControllers.first as? MessageThreadsTableViewController
-        assert(messageThreadsTableViewController != nil, "Main tab bar will return nil instead of the MessageThreadsTableViewController. Check this getter.")
+    var messageThreadsTableViewController: MessageThreadsViewController? {
+        let messageThreadsTableViewController = (self.viewControllers?[1] as? UINavigationController)?.viewControllers.first as? MessageThreadsViewController
+        assert(messageThreadsTableViewController != nil, "Main tab bar will return nil instead of the MessageThreadsViewController. Check this getter.")
         return messageThreadsTableViewController
     }
 

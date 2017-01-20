@@ -1,5 +1,5 @@
 //
-//  MessageThreadTableViewController.swift
+//  MessageThreadViewController.swift
 //  Warmshowers
 //
 //  Created by Rajan Fernandez on 3/01/16.
@@ -10,16 +10,33 @@ import UIKit
 import CoreData
 import WarmshowersData
 
-class MessageThreadTableViewController: UITableViewController, Delegator, DataSource {
+class MessageThreadViewController: UIViewController, Delegator, DataSource {
+    
+    @IBOutlet var tableView: UITableView!
+    @IBOutlet var errorView: UIView!
     
     var threadID: Int?
-    var fetchedResultsController: NSFetchedResultsController<MOMessage>!
+    var fetchedResultsController: NSFetchedResultsController<MOMessage>?
     var downloadsInProgress = Set<String>()
     var alert: UIAlertController?
     let formatter = DateFormatter()
     
     var needsUpdate: Bool = false
     
+    weak var delegate: MessageThreadViewControllerDelegate?
+    
+    lazy var previewActions: [UIPreviewActionItem] = {
+        let replyAction = UIPreviewAction(title: "Reply", style: .default, handler: { (action, viewController) in
+            // Get the message threads table view controller to show the reply to message view modally.
+            guard let viewController = viewController as? MessageThreadViewController else { return }
+            viewController.delegate?.replyToMessageForMessageThreadViewController(viewController)
+        })
+        return [replyAction]
+    }()
+    
+    override var previewActionItems : [UIPreviewActionItem] {
+        return previewActions
+    }
     
     // MARK: View life cycle
     
@@ -33,24 +50,20 @@ class MessageThreadTableViewController: UITableViewController, Delegator, DataSo
         // Set the view title
         navigationItem.title = ""
         
-        // Configure the table view
-        tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 104
-        
         // Set up the date formatter.
         let template = "HHmmddMMMyyyy"
         let locale = Locale.current
         formatter.dateFormat = DateFormatter.dateFormat(fromTemplate: template, options: 0, locale: locale)
         
         // Set the refresh controller for the tableview
-        refreshControl = UIRefreshControl()
-        refreshControl?.addTarget(self, action: #selector(MessageThreadTableViewController.update), for: UIControlEvents.valueChanged)
+        tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl?.addTarget(self, action: #selector(MessageThreadViewController.update), for: UIControlEvents.valueChanged)
         
         // Set the view title
         navigationItem.title = subjectForMessageThreadWithID(threadID ?? 0)
         
         // Set up the fetch results controller
-        initialiseFetchResultsController()
+        initialiseFetchResultsController(withStore: store)
         
         // Mark the thread as read.
         if let threadID = threadID {
@@ -63,20 +76,37 @@ class MessageThreadTableViewController: UITableViewController, Delegator, DataSo
         
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: WarmShowersColor.Green, NSFontAttributeName: WarmShowersFont.SueEllenFrancisco(18)]
         
-        if fetchedResultsController == nil {
-            initialiseFetchResultsController()
+        if fetchedResultsController == nil { initialiseFetchResultsController(withStore: store) }
+        do {
+            try self.fetchedResultsController?.performFetch()
+        } catch {
+            fatalError("MessageThreadViewController Fetched results controller failed with error: \(error)")
+        }
+        
+        // If the data has been deleted show an error view.
+        hide(errorView)
+        guard
+            let sections = fetchedResultsController?.sections,
+            sections.count > 0,
+            sections[0].numberOfObjects > 0
+        else {
+            fetchedResultsController = nil
+            show(errorView)
+            return
         }
         
         // Scroll to the bottom of the thread (i.e. the most recent message)
-        let row = max(tableView.dataSource!.tableView(tableView, numberOfRowsInSection: 0) - 1, 0)
-        let indexPath = IndexPath(row: row, section: 0)
-        DispatchQueue.main.async { [unowned self] in
-            self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+        let row = tableView.dataSource!.tableView(tableView, numberOfRowsInSection: 0) - 1
+        if row >= 0 {
+            let indexPath = IndexPath(row: row, section: 0)
+            DispatchQueue.main.async { [unowned self] in
+                self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+            }
         }
         
         if needsUpdate {
             DispatchQueue.main.async { [unowned self] in
-                self.refreshControl?.beginRefreshing()
+                self.tableView.refreshControl?.beginRefreshing()
             }
             update()
             needsUpdate = false
@@ -84,15 +114,25 @@ class MessageThreadTableViewController: UITableViewController, Delegator, DataSo
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        guard
+            let sections = fetchedResultsController?.sections,
+            sections.count > 0,
+            sections[0].numberOfObjects > 0
+            else { return }
+        
         loadImagesForObjectsOnScreen()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
         // This prevents the fetch results controller from updating while the view is not visible.
         fetchedResultsController = nil
     }
     
-    func initialiseFetchResultsController() {
+    func initialiseFetchResultsController(withStore store: StoreDelegate) {
         let request = MOMessage.fetchRequest() as! NSFetchRequest<MOMessage>
         request.predicate = NSPredicate(format: "thread.p_thread_id==%i", threadID ?? 0)
         request.sortDescriptors = [NSSortDescriptor(key: "timestamp", ascending: true)]
@@ -101,11 +141,19 @@ class MessageThreadTableViewController: UITableViewController, Delegator, DataSo
             managedObjectContext: store.managedObjectContext,
             sectionNameKeyPath: nil,
             cacheName: nil)
-        fetchedResultsController.delegate = self
-        do {
-            try self.fetchedResultsController.performFetch()
-        } catch {
-            fatalError("Failed to initialize FetchedResultsController: \(error)")
+        fetchedResultsController?.delegate = self
+    }
+    
+    func show(_ errorView: UIView) {
+        DispatchQueue.main.async { [unowned self] in
+            self.errorView.frame = self.tableView.frame
+            self.view.addSubview(errorView)
+        }
+    }
+    
+    func hide(_ errorView: UIView) {
+        DispatchQueue.main.async {
+            errorView.removeFromSuperview()
         }
     }
     
@@ -127,7 +175,7 @@ class MessageThreadTableViewController: UITableViewController, Delegator, DataSo
         
         guard let threadID = threadID else {
             DispatchQueue.main.async { [unowned self] in
-                self.refreshControl?.endRefreshing()
+                self.tableView.refreshControl?.endRefreshing()
             }
             return
         }
@@ -142,8 +190,17 @@ class MessageThreadTableViewController: UITableViewController, Delegator, DataSo
     }
     
     func startImageDownloadForIndexPath(_ indexPath: IndexPath) {
-        let message = self.fetchedResultsController.object(at: indexPath)
-        guard message.author?.image == nil else { return }
+        
+        // Check the section and row still exist. 
+        // This check is necessary in case the user has deleted the cached data.
+        guard
+            let sections = fetchedResultsController?.sections,
+            indexPath.section < sections.count,
+            indexPath.row < sections[indexPath.section].numberOfObjects,
+            let message = self.fetchedResultsController?.object(at: indexPath),
+            message.author?.image == nil
+            else { return }
+        
         if let url = message.author?.image_url {
             api.contact(endPoint: .imageResource, withMethod: .get, andPathParameters: url, andData: nil, thenNotify: self, ignoreCache: false)
         } else if let uid = message.author?.uid , !downloadsInProgress.contains(String(uid)) {
@@ -173,14 +230,16 @@ class MessageThreadTableViewController: UITableViewController, Delegator, DataSo
         try! store.managedObjectContext.save()
         
         // Set the image in any message table view cells where the user in the author.
-        DispatchQueue.main.async { [unowned self] in
-            guard let visiblePaths = self.tableView.indexPathsForVisibleRows else { return }
+        DispatchQueue.main.async { [weak self] in
+            guard let visiblePaths = self?.tableView.indexPathsForVisibleRows else { return }
             for indexPath in visiblePaths {
-                if let cell = self.tableView.cellForRow(at: indexPath) as? MessageTableViewCell {
-                    let message = self.fetchedResultsController.object(at: indexPath)
-                    if let url = message.author?.image_url, url == imageURL {
-                        cell.authorImageView.image = image
-                    }
+                if
+                    let cell = self?.tableView.cellForRow(at: indexPath) as? MessageTableViewCell,
+                    let message = self?.fetchedResultsController?.object(at: indexPath),
+                    let url = message.author?.image_url,
+                    url == imageURL
+                {
+                    cell.authorImageView.image = image
                 }
             }
         }

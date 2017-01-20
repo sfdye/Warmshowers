@@ -10,8 +10,6 @@
 		987D918476D47A61CCFBA23B /* Pods_WarmshowersData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1437EFFC40DEEC8EBE45C21C /* Pods_WarmshowersData.framework */; };
 		CDC80C00DF08E589C71B8996 /* Pods_Warmshowers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD5535C83353EC12F549AD0 /* Pods_Warmshowers.framework */; };
 		E50239681E1B64C30013B40D /* ComposeMessageViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50239671E1B64C30013B40D /* ComposeMessageViewControllerDelegate.swift */; };
-		E502396A1E1B674A0013B40D /* MessageThreadTableViewController+ComposeMessageViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50239691E1B674A0013B40D /* MessageThreadTableViewController+ComposeMessageViewControllerDelegate.swift */; };
-		E502396C1E1B841D0013B40D /* MessageThreadsTableViewController+ComposeMessageViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E502396B1E1B841D0013B40D /* MessageThreadsTableViewController+ComposeMessageViewControllerDelegate.swift */; };
 		E51A55671E13824A0004600D /* Fetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51A55661E13824A0004600D /* Fetchable.swift */; };
 		E529ECC71E11BC2700395369 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ECBE1E11BC2700395369 /* Alert.swift */; };
 		E529ECC81E11BC2700395369 /* AlertDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ECBF1E11BC2700395369 /* AlertDelegate.swift */; };
@@ -74,18 +72,6 @@
 		E529ED9E1E11C6BB00395369 /* ComposeMessageBodyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED241E11C6BB00395369 /* ComposeMessageBodyTableViewCell.swift */; };
 		E529ED9F1E11C6BB00395369 /* ComposeMessageDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED251E11C6BB00395369 /* ComposeMessageDetailTableViewCell.swift */; };
 		E529EDA01E11C6BB00395369 /* ComposeMessage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E529ED261E11C6BB00395369 /* ComposeMessage.storyboard */; };
-		E529EDA11E11C6BB00395369 /* MessageThreadsTableViewController+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED291E11C6BB00395369 /* MessageThreadsTableViewController+Navigation.swift */; };
-		E529EDA21E11C6BB00395369 /* MessageThreadsTableViewController+NSFetchedResultsControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED2A1E11C6BB00395369 /* MessageThreadsTableViewController+NSFetchedResultsControllerDelegate.swift */; };
-		E529EDA31E11C6BB00395369 /* MessageThreadsTableViewController+UITableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED2B1E11C6BB00395369 /* MessageThreadsTableViewController+UITableViewDataSource.swift */; };
-		E529EDA41E11C6BB00395369 /* MessageThreadsTableViewController+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED2C1E11C6BB00395369 /* MessageThreadsTableViewController+UITableViewDelegate.swift */; };
-		E529EDA51E11C6BB00395369 /* MessageThreadsTableViewController+APIResponseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED2D1E11C6BB00395369 /* MessageThreadsTableViewController+APIResponseDelegate.swift */; };
-		E529EDA61E11C6BB00395369 /* MessageThreadsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED2E1E11C6BB00395369 /* MessageThreadsTableViewController.swift */; };
-		E529EDA71E11C6BB00395369 /* MessageThreadTableViewController+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED301E11C6BB00395369 /* MessageThreadTableViewController+Navigation.swift */; };
-		E529EDA81E11C6BB00395369 /* MessageThreadTableViewController+NSFetchedResultsControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED311E11C6BB00395369 /* MessageThreadTableViewController+NSFetchedResultsControllerDelegate.swift */; };
-		E529EDA91E11C6BB00395369 /* MessageThreadTableViewController+UIScrollViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED321E11C6BB00395369 /* MessageThreadTableViewController+UIScrollViewDelegate.swift */; };
-		E529EDAA1E11C6BB00395369 /* MessageThreadTableViewController+UITableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED331E11C6BB00395369 /* MessageThreadTableViewController+UITableViewDataSource.swift */; };
-		E529EDAB1E11C6BB00395369 /* MessageThreadTableViewController+APIResponseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED341E11C6BB00395369 /* MessageThreadTableViewController+APIResponseDelegate.swift */; };
-		E529EDAC1E11C6BB00395369 /* MessageThreadTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED351E11C6BB00395369 /* MessageThreadTableViewController.swift */; };
 		E529EDAD1E11C6BB00395369 /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED381E11C6BB00395369 /* MessageTableViewCell.swift */; };
 		E529EDAE1E11C6BB00395369 /* MessageThreadsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED391E11C6BB00395369 /* MessageThreadsTableViewCell.swift */; };
 		E529EDAF1E11C6BB00395369 /* Messages.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E529ED3A1E11C6BB00395369 /* Messages.storyboard */; };
@@ -230,11 +216,32 @@
 		E537162F1E0CEC1100770305 /* ParameterEncodingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E537162D1E0CEC1100770305 /* ParameterEncodingError.swift */; };
 		E53716311E0CEC3900770305 /* APIRequestDataEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53716301E0CEC3900770305 /* APIRequestDataEncoder.swift */; };
 		E53716331E0E3A5900770305 /* MapTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E53716321E0E3A5900770305 /* MapTile.swift */; };
+		E54215891E3172D100568059 /* MessageThreadViewController+APIResponseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E542157F1E3172D100568059 /* MessageThreadViewController+APIResponseDelegate.swift */; };
+		E542158A1E3172D100568059 /* MessageThreadViewController+ComposeMessageViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54215801E3172D100568059 /* MessageThreadViewController+ComposeMessageViewControllerDelegate.swift */; };
+		E542158B1E3172D100568059 /* MessageThreadViewController+MessageTableViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54215811E3172D100568059 /* MessageThreadViewController+MessageTableViewCellDelegate.swift */; };
+		E542158C1E3172D100568059 /* MessageThreadViewController+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54215821E3172D100568059 /* MessageThreadViewController+Navigation.swift */; };
+		E542158D1E3172D100568059 /* MessageThreadViewController+NSFetchedResultsControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54215831E3172D100568059 /* MessageThreadViewController+NSFetchedResultsControllerDelegate.swift */; };
+		E542158E1E3172D100568059 /* MessageThreadViewController+UIScrollViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54215841E3172D100568059 /* MessageThreadViewController+UIScrollViewDelegate.swift */; };
+		E542158F1E3172D100568059 /* MessageThreadViewController+UITableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54215851E3172D100568059 /* MessageThreadViewController+UITableViewDataSource.swift */; };
+		E54215901E3172D100568059 /* MessageThreadViewController+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54215861E3172D100568059 /* MessageThreadViewController+UITableViewDelegate.swift */; };
+		E54215911E3172D100568059 /* MessageThreadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54215871E3172D100568059 /* MessageThreadViewController.swift */; };
+		E54215921E3172D100568059 /* MessageThreadViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54215881E3172D100568059 /* MessageThreadViewControllerDelegate.swift */; };
+		E542159C1E31731600568059 /* MessageThreadsViewController+APIResponseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54215941E31731600568059 /* MessageThreadsViewController+APIResponseDelegate.swift */; };
+		E542159D1E31731600568059 /* MessageThreadsViewController+ComposeMessageViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54215951E31731600568059 /* MessageThreadsViewController+ComposeMessageViewControllerDelegate.swift */; };
+		E542159E1E31731600568059 /* MessageThreadsViewController+MessageThreadTableViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54215961E31731600568059 /* MessageThreadsViewController+MessageThreadTableViewControllerDelegate.swift */; };
+		E542159F1E31731600568059 /* MessageThreadsViewController+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54215971E31731600568059 /* MessageThreadsViewController+Navigation.swift */; };
+		E54215A01E31731600568059 /* MessageThreadsViewController+NSFetchedResultsControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54215981E31731600568059 /* MessageThreadsViewController+NSFetchedResultsControllerDelegate.swift */; };
+		E54215A11E31731600568059 /* MessageThreadsViewController+UITableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54215991E31731600568059 /* MessageThreadsViewController+UITableViewDataSource.swift */; };
+		E54215A21E31731600568059 /* MessageThreadsViewController+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E542159A1E31731600568059 /* MessageThreadsViewController+UITableViewDelegate.swift */; };
+		E54215A31E31731600568059 /* MessageThreadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E542159B1E31731600568059 /* MessageThreadsViewController.swift */; };
 		E54A572B1BFD664A000843A9 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E54A572A1BFD664A000843A9 /* Settings.bundle */; };
 		E569E7971CF5A7230004B111 /* WSMapTileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E569E7961CF5A7230004B111 /* WSMapTileTests.swift */; };
 		E56CC0881BFD166200AAF973 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E56CC0871BFD166200AAF973 /* MapKit.framework */; };
 		E57057EA1CC8845300FA5D9F /* WSCreateFeedbackTableViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57057E91CC8845300FA5D9F /* WSCreateFeedbackTableViewControllerTests.swift */; };
 		E57057ED1CC88D7000FA5D9F /* MOCKAPICommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57057EC1CC88D7000FA5D9F /* MOCKAPICommunicator.swift */; };
+		E580E8421E317AE600D09D10 /* MessageThreadsErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E580E8411E317AE600D09D10 /* MessageThreadsErrorView.swift */; };
+		E580E8441E317B4000D09D10 /* MessageThreadsErrorViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E580E8431E317B4000D09D10 /* MessageThreadsErrorViewDelegate.swift */; };
+		E580E8461E317C5400D09D10 /* MessageThreadsViewController+MessageThreadsErrorViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E580E8451E317C5400D09D10 /* MessageThreadsViewController+MessageThreadsErrorViewDelegate.swift */; };
 		E58C37311D2FA087001B03D5 /* WSHostSearchViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58C37301D2FA087001B03D5 /* WSHostSearchViewControllerTests.swift */; };
 		E59FE1CF1CD1FF900024F354 /* MOCKNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59FE1CE1CD1FF900024F354 /* MOCKNavigation.swift */; };
 		E59FE1D71CD208B30024F354 /* WSLoginViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59FE1C71CD0C15F0024F354 /* WSLoginViewControllerTests.swift */; };
@@ -251,7 +258,6 @@
 		E5E049C01E1869A300C99FBC /* APILoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E049BF1E1869A300C99FBC /* APILoginRequest.swift */; };
 		E5E573311E1888A100D54445 /* APICommunicator+APILoginResponseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E573301E1888A100D54445 /* APICommunicator+APILoginResponseDelegate.swift */; };
 		E5E573331E19A67C00D54445 /* MessageTableViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E573321E19A67C00D54445 /* MessageTableViewCellDelegate.swift */; };
-		E5E573351E19A8EC00D54445 /* MessageThreadTableViewController+MessageTableViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E573341E19A8EC00D54445 /* MessageThreadTableViewController+MessageTableViewCellDelegate.swift */; };
 		E5E5733C1E1A160C00D54445 /* DataSourceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E5733B1E1A160C00D54445 /* DataSourceDelegate.swift */; };
 		E5E5733E1E1A178C00D54445 /* DataSourceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E5733D1E1A178C00D54445 /* DataSourceError.swift */; };
 		E5E573401E1A182600D54445 /* UserProfileTableViewController+DataSourceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5E5733F1E1A182600D54445 /* UserProfileTableViewController+DataSourceDelegate.swift */; };
@@ -326,8 +332,6 @@
 		A17687885A5BDB7132D6EBF2 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC5E586690182D68CCBBE7F9 /* Pods-Warmshowers.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Warmshowers.release.xcconfig"; path = "Pods/Target Support Files/Pods-Warmshowers/Pods-Warmshowers.release.xcconfig"; sourceTree = "<group>"; };
 		E50239671E1B64C30013B40D /* ComposeMessageViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeMessageViewControllerDelegate.swift; sourceTree = "<group>"; };
-		E50239691E1B674A0013B40D /* MessageThreadTableViewController+ComposeMessageViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadTableViewController+ComposeMessageViewControllerDelegate.swift"; sourceTree = "<group>"; };
-		E502396B1E1B841D0013B40D /* MessageThreadsTableViewController+ComposeMessageViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadsTableViewController+ComposeMessageViewControllerDelegate.swift"; sourceTree = "<group>"; };
 		E51A55661E13824A0004600D /* Fetchable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fetchable.swift; sourceTree = "<group>"; };
 		E529ECBE1E11BC2700395369 /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		E529ECBF1E11BC2700395369 /* AlertDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertDelegate.swift; sourceTree = "<group>"; };
@@ -390,18 +394,6 @@
 		E529ED241E11C6BB00395369 /* ComposeMessageBodyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeMessageBodyTableViewCell.swift; sourceTree = "<group>"; };
 		E529ED251E11C6BB00395369 /* ComposeMessageDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeMessageDetailTableViewCell.swift; sourceTree = "<group>"; };
 		E529ED261E11C6BB00395369 /* ComposeMessage.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ComposeMessage.storyboard; sourceTree = "<group>"; };
-		E529ED291E11C6BB00395369 /* MessageThreadsTableViewController+Navigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadsTableViewController+Navigation.swift"; sourceTree = "<group>"; };
-		E529ED2A1E11C6BB00395369 /* MessageThreadsTableViewController+NSFetchedResultsControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadsTableViewController+NSFetchedResultsControllerDelegate.swift"; sourceTree = "<group>"; };
-		E529ED2B1E11C6BB00395369 /* MessageThreadsTableViewController+UITableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadsTableViewController+UITableViewDataSource.swift"; sourceTree = "<group>"; };
-		E529ED2C1E11C6BB00395369 /* MessageThreadsTableViewController+UITableViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadsTableViewController+UITableViewDelegate.swift"; sourceTree = "<group>"; };
-		E529ED2D1E11C6BB00395369 /* MessageThreadsTableViewController+APIResponseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadsTableViewController+APIResponseDelegate.swift"; sourceTree = "<group>"; };
-		E529ED2E1E11C6BB00395369 /* MessageThreadsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageThreadsTableViewController.swift; sourceTree = "<group>"; };
-		E529ED301E11C6BB00395369 /* MessageThreadTableViewController+Navigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadTableViewController+Navigation.swift"; sourceTree = "<group>"; };
-		E529ED311E11C6BB00395369 /* MessageThreadTableViewController+NSFetchedResultsControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadTableViewController+NSFetchedResultsControllerDelegate.swift"; sourceTree = "<group>"; };
-		E529ED321E11C6BB00395369 /* MessageThreadTableViewController+UIScrollViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadTableViewController+UIScrollViewDelegate.swift"; sourceTree = "<group>"; };
-		E529ED331E11C6BB00395369 /* MessageThreadTableViewController+UITableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadTableViewController+UITableViewDataSource.swift"; sourceTree = "<group>"; };
-		E529ED341E11C6BB00395369 /* MessageThreadTableViewController+APIResponseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadTableViewController+APIResponseDelegate.swift"; sourceTree = "<group>"; };
-		E529ED351E11C6BB00395369 /* MessageThreadTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageThreadTableViewController.swift; sourceTree = "<group>"; };
 		E529ED381E11C6BB00395369 /* MessageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
 		E529ED391E11C6BB00395369 /* MessageThreadsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageThreadsTableViewCell.swift; sourceTree = "<group>"; };
 		E529ED3A1E11C6BB00395369 /* Messages.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Messages.storyboard; sourceTree = "<group>"; };
@@ -552,11 +544,32 @@
 		E537162D1E0CEC1100770305 /* ParameterEncodingError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParameterEncodingError.swift; sourceTree = "<group>"; };
 		E53716301E0CEC3900770305 /* APIRequestDataEncoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequestDataEncoder.swift; sourceTree = "<group>"; };
 		E53716321E0E3A5900770305 /* MapTile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapTile.swift; sourceTree = "<group>"; };
+		E542157F1E3172D100568059 /* MessageThreadViewController+APIResponseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadViewController+APIResponseDelegate.swift"; sourceTree = "<group>"; };
+		E54215801E3172D100568059 /* MessageThreadViewController+ComposeMessageViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadViewController+ComposeMessageViewControllerDelegate.swift"; sourceTree = "<group>"; };
+		E54215811E3172D100568059 /* MessageThreadViewController+MessageTableViewCellDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadViewController+MessageTableViewCellDelegate.swift"; sourceTree = "<group>"; };
+		E54215821E3172D100568059 /* MessageThreadViewController+Navigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadViewController+Navigation.swift"; sourceTree = "<group>"; };
+		E54215831E3172D100568059 /* MessageThreadViewController+NSFetchedResultsControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadViewController+NSFetchedResultsControllerDelegate.swift"; sourceTree = "<group>"; };
+		E54215841E3172D100568059 /* MessageThreadViewController+UIScrollViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadViewController+UIScrollViewDelegate.swift"; sourceTree = "<group>"; };
+		E54215851E3172D100568059 /* MessageThreadViewController+UITableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadViewController+UITableViewDataSource.swift"; sourceTree = "<group>"; };
+		E54215861E3172D100568059 /* MessageThreadViewController+UITableViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadViewController+UITableViewDelegate.swift"; sourceTree = "<group>"; };
+		E54215871E3172D100568059 /* MessageThreadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageThreadViewController.swift; sourceTree = "<group>"; };
+		E54215881E3172D100568059 /* MessageThreadViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageThreadViewControllerDelegate.swift; sourceTree = "<group>"; };
+		E54215941E31731600568059 /* MessageThreadsViewController+APIResponseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadsViewController+APIResponseDelegate.swift"; sourceTree = "<group>"; };
+		E54215951E31731600568059 /* MessageThreadsViewController+ComposeMessageViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadsViewController+ComposeMessageViewControllerDelegate.swift"; sourceTree = "<group>"; };
+		E54215961E31731600568059 /* MessageThreadsViewController+MessageThreadTableViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadsViewController+MessageThreadTableViewControllerDelegate.swift"; sourceTree = "<group>"; };
+		E54215971E31731600568059 /* MessageThreadsViewController+Navigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadsViewController+Navigation.swift"; sourceTree = "<group>"; };
+		E54215981E31731600568059 /* MessageThreadsViewController+NSFetchedResultsControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadsViewController+NSFetchedResultsControllerDelegate.swift"; sourceTree = "<group>"; };
+		E54215991E31731600568059 /* MessageThreadsViewController+UITableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadsViewController+UITableViewDataSource.swift"; sourceTree = "<group>"; };
+		E542159A1E31731600568059 /* MessageThreadsViewController+UITableViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadsViewController+UITableViewDelegate.swift"; sourceTree = "<group>"; };
+		E542159B1E31731600568059 /* MessageThreadsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageThreadsViewController.swift; sourceTree = "<group>"; };
 		E54A572A1BFD664A000843A9 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		E569E7961CF5A7230004B111 /* WSMapTileTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSMapTileTests.swift; sourceTree = "<group>"; };
 		E56CC0871BFD166200AAF973 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		E57057E91CC8845300FA5D9F /* WSCreateFeedbackTableViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSCreateFeedbackTableViewControllerTests.swift; sourceTree = "<group>"; };
 		E57057EC1CC88D7000FA5D9F /* MOCKAPICommunicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MOCKAPICommunicator.swift; sourceTree = "<group>"; };
+		E580E8411E317AE600D09D10 /* MessageThreadsErrorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageThreadsErrorView.swift; sourceTree = "<group>"; };
+		E580E8431E317B4000D09D10 /* MessageThreadsErrorViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageThreadsErrorViewDelegate.swift; sourceTree = "<group>"; };
+		E580E8451E317C5400D09D10 /* MessageThreadsViewController+MessageThreadsErrorViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadsViewController+MessageThreadsErrorViewDelegate.swift"; sourceTree = "<group>"; };
 		E58C37301D2FA087001B03D5 /* WSHostSearchViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSHostSearchViewControllerTests.swift; sourceTree = "<group>"; };
 		E59FE1C71CD0C15F0024F354 /* WSLoginViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSLoginViewControllerTests.swift; sourceTree = "<group>"; };
 		E59FE1CE1CD1FF900024F354 /* MOCKNavigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MOCKNavigation.swift; sourceTree = "<group>"; };
@@ -578,7 +591,6 @@
 		E5E049BF1E1869A300C99FBC /* APILoginRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APILoginRequest.swift; sourceTree = "<group>"; };
 		E5E573301E1888A100D54445 /* APICommunicator+APILoginResponseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "APICommunicator+APILoginResponseDelegate.swift"; sourceTree = "<group>"; };
 		E5E573321E19A67C00D54445 /* MessageTableViewCellDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageTableViewCellDelegate.swift; sourceTree = "<group>"; };
-		E5E573341E19A8EC00D54445 /* MessageThreadTableViewController+MessageTableViewCellDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadTableViewController+MessageTableViewCellDelegate.swift"; sourceTree = "<group>"; };
 		E5E5733B1E1A160C00D54445 /* DataSourceDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSourceDelegate.swift; sourceTree = "<group>"; };
 		E5E5733D1E1A178C00D54445 /* DataSourceError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSourceError.swift; sourceTree = "<group>"; };
 		E5E5733F1E1A182600D54445 /* UserProfileTableViewController+DataSourceDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserProfileTableViewController+DataSourceDelegate.swift"; sourceTree = "<group>"; };
@@ -927,40 +939,11 @@
 		E529ED271E11C6BB00395369 /* Read */ = {
 			isa = PBXGroup;
 			children = (
-				E529ED281E11C6BB00395369 /* MessageThreadsTableViewController */,
-				E529ED2F1E11C6BB00395369 /* MessageThreadTableViewController */,
+				E54215931E31731600568059 /* MessageThreadsViewController */,
+				E542157E1E3172D100568059 /* MessageThreadViewController */,
 				E529ED361E11C6BB00395369 /* View */,
 			);
 			path = Read;
-			sourceTree = "<group>";
-		};
-		E529ED281E11C6BB00395369 /* MessageThreadsTableViewController */ = {
-			isa = PBXGroup;
-			children = (
-				E529ED291E11C6BB00395369 /* MessageThreadsTableViewController+Navigation.swift */,
-				E529ED2A1E11C6BB00395369 /* MessageThreadsTableViewController+NSFetchedResultsControllerDelegate.swift */,
-				E529ED2B1E11C6BB00395369 /* MessageThreadsTableViewController+UITableViewDataSource.swift */,
-				E529ED2C1E11C6BB00395369 /* MessageThreadsTableViewController+UITableViewDelegate.swift */,
-				E529ED2D1E11C6BB00395369 /* MessageThreadsTableViewController+APIResponseDelegate.swift */,
-				E529ED2E1E11C6BB00395369 /* MessageThreadsTableViewController.swift */,
-				E502396B1E1B841D0013B40D /* MessageThreadsTableViewController+ComposeMessageViewControllerDelegate.swift */,
-			);
-			path = MessageThreadsTableViewController;
-			sourceTree = "<group>";
-		};
-		E529ED2F1E11C6BB00395369 /* MessageThreadTableViewController */ = {
-			isa = PBXGroup;
-			children = (
-				E529ED301E11C6BB00395369 /* MessageThreadTableViewController+Navigation.swift */,
-				E529ED311E11C6BB00395369 /* MessageThreadTableViewController+NSFetchedResultsControllerDelegate.swift */,
-				E529ED321E11C6BB00395369 /* MessageThreadTableViewController+UIScrollViewDelegate.swift */,
-				E529ED331E11C6BB00395369 /* MessageThreadTableViewController+UITableViewDataSource.swift */,
-				E529ED341E11C6BB00395369 /* MessageThreadTableViewController+APIResponseDelegate.swift */,
-				E529ED351E11C6BB00395369 /* MessageThreadTableViewController.swift */,
-				E5E573341E19A8EC00D54445 /* MessageThreadTableViewController+MessageTableViewCellDelegate.swift */,
-				E50239691E1B674A0013B40D /* MessageThreadTableViewController+ComposeMessageViewControllerDelegate.swift */,
-			);
-			path = MessageThreadTableViewController;
 			sourceTree = "<group>";
 		};
 		E529ED361E11C6BB00395369 /* View */ = {
@@ -1579,6 +1562,40 @@
 			path = DataEncoding;
 			sourceTree = "<group>";
 		};
+		E542157E1E3172D100568059 /* MessageThreadViewController */ = {
+			isa = PBXGroup;
+			children = (
+				E542157F1E3172D100568059 /* MessageThreadViewController+APIResponseDelegate.swift */,
+				E54215801E3172D100568059 /* MessageThreadViewController+ComposeMessageViewControllerDelegate.swift */,
+				E54215811E3172D100568059 /* MessageThreadViewController+MessageTableViewCellDelegate.swift */,
+				E54215821E3172D100568059 /* MessageThreadViewController+Navigation.swift */,
+				E54215831E3172D100568059 /* MessageThreadViewController+NSFetchedResultsControllerDelegate.swift */,
+				E54215841E3172D100568059 /* MessageThreadViewController+UIScrollViewDelegate.swift */,
+				E54215851E3172D100568059 /* MessageThreadViewController+UITableViewDataSource.swift */,
+				E54215861E3172D100568059 /* MessageThreadViewController+UITableViewDelegate.swift */,
+				E54215871E3172D100568059 /* MessageThreadViewController.swift */,
+				E54215881E3172D100568059 /* MessageThreadViewControllerDelegate.swift */,
+			);
+			path = MessageThreadViewController;
+			sourceTree = "<group>";
+		};
+		E54215931E31731600568059 /* MessageThreadsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				E580E8401E317ADC00D09D10 /* MessageThreadsErrorView */,
+				E54215941E31731600568059 /* MessageThreadsViewController+APIResponseDelegate.swift */,
+				E54215951E31731600568059 /* MessageThreadsViewController+ComposeMessageViewControllerDelegate.swift */,
+				E54215961E31731600568059 /* MessageThreadsViewController+MessageThreadTableViewControllerDelegate.swift */,
+				E54215971E31731600568059 /* MessageThreadsViewController+Navigation.swift */,
+				E54215981E31731600568059 /* MessageThreadsViewController+NSFetchedResultsControllerDelegate.swift */,
+				E54215991E31731600568059 /* MessageThreadsViewController+UITableViewDataSource.swift */,
+				E542159A1E31731600568059 /* MessageThreadsViewController+UITableViewDelegate.swift */,
+				E542159B1E31731600568059 /* MessageThreadsViewController.swift */,
+				E580E8451E317C5400D09D10 /* MessageThreadsViewController+MessageThreadsErrorViewDelegate.swift */,
+			);
+			path = MessageThreadsViewController;
+			sourceTree = "<group>";
+		};
 		E57057EB1CC88D5F00FA5D9F /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1589,6 +1606,15 @@
 				E5ED1E9D1CD471E00017D12F /* MOCKSession.swift */,
 			);
 			name = Mocks;
+			sourceTree = "<group>";
+		};
+		E580E8401E317ADC00D09D10 /* MessageThreadsErrorView */ = {
+			isa = PBXGroup;
+			children = (
+				E580E8411E317AE600D09D10 /* MessageThreadsErrorView.swift */,
+				E580E8431E317B4000D09D10 /* MessageThreadsErrorViewDelegate.swift */,
+			);
+			path = MessageThreadsErrorView;
 			sourceTree = "<group>";
 		};
 		E5B944361E1257290089F4A4 /* API */ = {
@@ -2096,30 +2122,33 @@
 				E529EDD51E11C6BB00395369 /* HostingInfoTableViewCell.swift in Sources */,
 				E529ED7F1E11C6BB00395369 /* HostSearchViewController.swift in Sources */,
 				E529EDC51E11C6BB00395369 /* FeedbackTableViewController+UITableViewDataSource.swift in Sources */,
+				E54215901E3172D100568059 /* MessageThreadViewController+UITableViewDelegate.swift in Sources */,
 				E529EDC11E11C6BB00395369 /* CreateFeedbackTableViewController+UITextViewDelegate.swift in Sources */,
 				E529ECDF1E11C48600395369 /* UserDefaultsKeys.swift in Sources */,
 				E529ED9F1E11C6BB00395369 /* ComposeMessageDetailTableViewCell.swift in Sources */,
 				E529EDBE1E11C6BB00395369 /* CreateFeedbackTableViewController+UIPickerViewDelegate.swift in Sources */,
 				E5B944381E12574B0089F4A4 /* APICommunicatorConfiguration.swift in Sources */,
-				E529EDAA1E11C6BB00395369 /* MessageThreadTableViewController+UITableViewDataSource.swift in Sources */,
+				E542158D1E3172D100568059 /* MessageThreadViewController+NSFetchedResultsControllerDelegate.swift in Sources */,
 				E529ED711E11C6BB00395369 /* HostListTableViewController+Actions.swift in Sources */,
+				E54215A21E31731600568059 /* MessageThreadsViewController+UITableViewDelegate.swift in Sources */,
 				E529ECDE1E11C48600395369 /* MapTileServerURLTemplate.swift in Sources */,
 				E529ECC91E11BC2700395369 /* Navigation.swift in Sources */,
 				E529ED7C1E11C6BB00395369 /* HostSearchViewController+APIResponseDelegate.swift in Sources */,
 				E529ED751E11C6BB00395369 /* HostListTableViewController+UITableViewDelegate.swift in Sources */,
 				E529ED8A1E11C6BB00395369 /* LocationSearchViewController.swift in Sources */,
 				E529EDE81E11D4D600395369 /* DelegateManager.swift in Sources */,
+				E542159D1E31731600568059 /* MessageThreadsViewController+ComposeMessageViewControllerDelegate.swift in Sources */,
 				E529ED9E1E11C6BB00395369 /* ComposeMessageBodyTableViewCell.swift in Sources */,
 				E529ED991E11C6BB00395369 /* ComposeMessageViewController+UITableViewDelegate.swift in Sources */,
 				E529ECDC1E11C48600395369 /* Distance.swift in Sources */,
 				E529ED9A1E11C6BB00395369 /* ComposeMessageViewController+UITextFieldDelegate.swift in Sources */,
 				E529ED811E11C6BB00395369 /* KeywordSearchTableViewController+UISearchResultsUpdating.swift in Sources */,
 				E529EDCD1E11C6BB00395369 /* UserProfileTableViewController.swift in Sources */,
-				E529EDA61E11C6BB00395369 /* MessageThreadsTableViewController.swift in Sources */,
 				E529EDCF1E11C6BB00395369 /* AccountDetailTableViewCell.swift in Sources */,
 				E529EDD81E11C6BB00395369 /* ProfileImageTableViewCell.swift in Sources */,
 				E529ED941E11C6BB00395369 /* MainTabBarController.swift in Sources */,
 				E529ED971E11C6BB00395369 /* ComposeMessageViewController+Navigation.swift in Sources */,
+				E54215911E3172D100568059 /* MessageThreadViewController.swift in Sources */,
 				E529EDB21E11C6BB00395369 /* Settings.swift in Sources */,
 				E529ED9D1E11C6BB00395369 /* ComposeMessageViewController.swift in Sources */,
 				E529ED7D1E11C6BB00395369 /* HostSearchViewController+HostSearchControllerDelegate.swift in Sources */,
@@ -2127,13 +2156,14 @@
 				E529EDB31E11C6BB00395369 /* SettingsCell.swift in Sources */,
 				E529EDBF1E11C6BB00395369 /* CreateFeedbackTableViewController+UITableViewDataSource.swift in Sources */,
 				E529ED8D1E11C6BB00395369 /* SpinnerTableViewCell.swift in Sources */,
+				E54215A11E31731600568059 /* MessageThreadsViewController+UITableViewDataSource.swift in Sources */,
 				E529EDC21E11C6BB00395369 /* CreateFeedbackTableViewController+APIResponseDelegate.swift in Sources */,
-				E529EDA21E11C6BB00395369 /* MessageThreadsTableViewController+NSFetchedResultsControllerDelegate.swift in Sources */,
 				E529ED921E11C6BB00395369 /* LoginViewController.swift in Sources */,
 				E529ED881E11C6BB00395369 /* LocationSearchViewController+MKMapViewDelegate.swift in Sources */,
 				E529ED721E11C6BB00395369 /* HostListTableViewController+Navigation.swift in Sources */,
+				E54215A31E31731600568059 /* MessageThreadsViewController.swift in Sources */,
+				E542159F1E31731600568059 /* MessageThreadsViewController+Navigation.swift in Sources */,
 				E529ECCA1E11BC2700395369 /* NavigationDelegate.swift in Sources */,
-				E5E573351E19A8EC00D54445 /* MessageThreadTableViewController+MessageTableViewCellDelegate.swift in Sources */,
 				E529EDD01E11C6BB00395369 /* AvailabilityTableViewCell.swift in Sources */,
 				E529ED741E11C6BB00395369 /* HostListTableViewController+UITableViewDataSource.swift in Sources */,
 				E529ED8C1E11C6BB00395369 /* PlaceholderTableViewCell.swift in Sources */,
@@ -2147,9 +2177,10 @@
 				E529ED861E11C6BB00395369 /* LocationSearchViewController+Actions.swift in Sources */,
 				E529EDC91E11C6BB00395369 /* UserProfileTableViewController+Navigation.swift in Sources */,
 				E529EDB71E11C6BB00395369 /* SettingsTableViewController+APIResponseDelegate.swift in Sources */,
-				E529EDAB1E11C6BB00395369 /* MessageThreadTableViewController+APIResponseDelegate.swift in Sources */,
 				E529ED851E11C6BB00395369 /* KeywordSearchTableViewController.swift in Sources */,
+				E54215891E3172D100568059 /* MessageThreadViewController+APIResponseDelegate.swift in Sources */,
 				E529EDD41E11C6BB00395369 /* FeedbackTableViewCell.swift in Sources */,
+				E542158E1E3172D100568059 /* MessageThreadViewController+UIScrollViewDelegate.swift in Sources */,
 				E5E573401E1A182600D54445 /* UserProfileTableViewController+DataSourceDelegate.swift in Sources */,
 				E529ED8B1E11C6BB00395369 /* HostListTableViewCell.swift in Sources */,
 				E529ED781E11C6BB00395369 /* HostSearchControllerDelegate.swift in Sources */,
@@ -2159,46 +2190,47 @@
 				E529ED871E11C6BB00395369 /* LocationSearchViewController+CCHMapClusterControllerDelegate.swift in Sources */,
 				E529ED9B1E11C6BB00395369 /* ComposeMessageViewController+UITextViewDelegate.swift in Sources */,
 				E529ED791E11C6BB00395369 /* HostSearchNavigationDelegate.swift in Sources */,
-				E502396A1E1B674A0013B40D /* MessageThreadTableViewController+ComposeMessageViewControllerDelegate.swift in Sources */,
-				E502396C1E1B841D0013B40D /* MessageThreadsTableViewController+ComposeMessageViewControllerDelegate.swift in Sources */,
 				E53715211E0C83D100770305 /* WarmShowersFont.swift in Sources */,
 				E529EDD31E11C6BB00395369 /* FeedbackOptionTableViewCell.swift in Sources */,
 				E529EDAE1E11C6BB00395369 /* MessageThreadsTableViewCell.swift in Sources */,
 				E529EDDD1E11CEE800395369 /* Delegates.swift in Sources */,
 				E529ED961E11C6BB00395369 /* ComposeMessageViewController+Actions.swift in Sources */,
+				E542159E1E31731600568059 /* MessageThreadsViewController+MessageThreadTableViewControllerDelegate.swift in Sources */,
+				E580E8421E317AE600D09D10 /* MessageThreadsErrorView.swift in Sources */,
 				E529EDBD1E11C6BB00395369 /* CreateFeedbackTableViewController+UIPickerViewDataSource.swift in Sources */,
 				E53715201E0C83D100770305 /* WarmShowersColor.swift in Sources */,
-				E529EDA71E11C6BB00395369 /* MessageThreadTableViewController+Navigation.swift in Sources */,
+				E580E8441E317B4000D09D10 /* MessageThreadsErrorViewDelegate.swift in Sources */,
 				E5E573331E19A67C00D54445 /* MessageTableViewCellDelegate.swift in Sources */,
-				E529EDAC1E11C6BB00395369 /* MessageThreadTableViewController.swift in Sources */,
-				E529EDA51E11C6BB00395369 /* MessageThreadsTableViewController+APIResponseDelegate.swift in Sources */,
 				E529ED801E11C6BB00395369 /* KeywordSearchTableViewController+UIScrollViewDelegate.swift in Sources */,
 				E529EDBC1E11C6BB00395369 /* CreateFeedbackTableViewController+Actions.swift in Sources */,
+				E580E8461E317C5400D09D10 /* MessageThreadsViewController+MessageThreadsErrorViewDelegate.swift in Sources */,
 				E529ECC81E11BC2700395369 /* AlertDelegate.swift in Sources */,
 				E529ED891E11C6BB00395369 /* LocationSearchViewController+APIResponseDelegate.swift in Sources */,
+				E54215A01E31731600568059 /* MessageThreadsViewController+NSFetchedResultsControllerDelegate.swift in Sources */,
 				E529ED831E11C6BB00395369 /* KeywordSearchTableViewController+UITableViewDelegate.swift in Sources */,
+				E542159C1E31731600568059 /* MessageThreadsViewController+APIResponseDelegate.swift in Sources */,
 				E529EDC41E11C6BB00395369 /* FeedbackTableViewController+UIScrollViewDelegate.swift in Sources */,
-				E529EDA41E11C6BB00395369 /* MessageThreadsTableViewController+UITableViewDelegate.swift in Sources */,
 				E529EDCB1E11C6BB00395369 /* UserProfileTableViewController+UITableViewDelegate.swift in Sources */,
-				E529EDA91E11C6BB00395369 /* MessageThreadTableViewController+UIScrollViewDelegate.swift in Sources */,
 				E5E573421E1A4E3400D54445 /* UserProfileTableViewController+APIResponseDelegate.swift in Sources */,
 				E529EDB11E11C6BB00395369 /* RoutesTableViewController.swift in Sources */,
-				E529EDA11E11C6BB00395369 /* MessageThreadsTableViewController+Navigation.swift in Sources */,
+				E542158A1E3172D100568059 /* MessageThreadViewController+ComposeMessageViewControllerDelegate.swift in Sources */,
 				E5D96AF81BFB1CA700AFAFEE /* AppDelegate.swift in Sources */,
-				E529EDA81E11C6BB00395369 /* MessageThreadTableViewController+NSFetchedResultsControllerDelegate.swift in Sources */,
 				E529ECCD1E11BC2700395369 /* SessionDelegate.swift in Sources */,
 				E529ED901E11C6BB00395369 /* LoginViewController+Actions.swift in Sources */,
-				E529EDA31E11C6BB00395369 /* MessageThreadsTableViewController+UITableViewDataSource.swift in Sources */,
 				E529EDBA1E11C6BB00395369 /* SwitchTableViewCell.swift in Sources */,
 				E529EDC81E11C6BB00395369 /* UserProfileTableViewController+Actions.swift in Sources */,
 				E529ED821E11C6BB00395369 /* KeywordSearchTableViewController+UITableViewDataSource.swift in Sources */,
 				E529ECC71E11BC2700395369 /* Alert.swift in Sources */,
+				E54215921E3172D100568059 /* MessageThreadViewControllerDelegate.swift in Sources */,
+				E542158F1E3172D100568059 /* MessageThreadViewController+UITableViewDataSource.swift in Sources */,
 				E529ED7B1E11C6BB00395369 /* HostSearchViewController+Navigation.swift in Sources */,
 				E529EDB41E11C6BB00395369 /* SettingsSection.swift in Sources */,
 				E529ED841E11C6BB00395369 /* KeywordSearchTableViewController+APIResponseDelegate.swift in Sources */,
 				E529EDD21E11C6BB00395369 /* FeedbackOptionPickerTableViewCell.swift in Sources */,
 				E529EDB01E11C6BB00395369 /* ProgressHUD.swift in Sources */,
 				E50239681E1B64C30013B40D /* ComposeMessageViewControllerDelegate.swift in Sources */,
+				E542158C1E3172D100568059 /* MessageThreadViewController+Navigation.swift in Sources */,
+				E542158B1E3172D100568059 /* MessageThreadViewController+MessageTableViewCellDelegate.swift in Sources */,
 				E529ECDD1E11C48600395369 /* MapSource.swift in Sources */,
 				E529EDD71E11C6BB00395369 /* PhoneNumberTableViewCell.swift in Sources */,
 				E529ECCC1E11BC2700395369 /* Session.swift in Sources */,
