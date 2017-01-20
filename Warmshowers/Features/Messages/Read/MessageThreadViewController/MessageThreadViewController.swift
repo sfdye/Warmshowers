@@ -76,7 +76,6 @@ class MessageThreadViewController: UIViewController, Delegator, DataSource {
         
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: WarmShowersColor.Green, NSFontAttributeName: WarmShowersFont.SueEllenFrancisco(18)]
         
-        if fetchedResultsController == nil { initialiseFetchResultsController(withStore: store) }
         do {
             try self.fetchedResultsController?.performFetch()
         } catch {
@@ -90,7 +89,6 @@ class MessageThreadViewController: UIViewController, Delegator, DataSource {
             sections.count > 0,
             sections[0].numberOfObjects > 0
         else {
-            fetchedResultsController = nil
             show(errorView)
             return
         }
@@ -123,13 +121,6 @@ class MessageThreadViewController: UIViewController, Delegator, DataSource {
             else { return }
         
         loadImagesForObjectsOnScreen()
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        // This prevents the fetch results controller from updating while the view is not visible.
-        fetchedResultsController = nil
     }
     
     func initialiseFetchResultsController(withStore store: StoreDelegate) {
