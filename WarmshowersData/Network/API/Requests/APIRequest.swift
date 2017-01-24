@@ -43,7 +43,7 @@ public class APIRequest: Hashable {
     // MARK: Hashable
     
     var madeAt: Date
-    public var hashValue: Int { return Int(madeAt.timeIntervalSince1970 * 1000000) }
+    public var hashValue: Int{ return Int(madeAt.timeIntervalSince1970.truncatingRemainder(dividingBy: 1.0) * pow(10,6)) }
     
     
     // MARK: Initialiser
