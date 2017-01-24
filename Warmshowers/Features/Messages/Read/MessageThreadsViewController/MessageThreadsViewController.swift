@@ -66,7 +66,6 @@ class MessageThreadsViewController: UIViewController, Delegator, DataSource {
         // Reset the navigation bar text properties
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: WarmShowersColor.Green, NSFontAttributeName: WarmShowersFont.SueEllenFrancisco(26)]
         
-        if fetchedResultsController == nil { initialiseFetchResultsController(withStore: store) }
         do {
             try fetchedResultsController?.performFetch()
         } catch {
@@ -107,11 +106,6 @@ class MessageThreadsViewController: UIViewController, Delegator, DataSource {
         DispatchQueue.main.async {  [weak self] in
             self?.tableView.reloadData()
         }
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        // This prevents the fetch results controller from updating while the view is not visible.
-        fetchedResultsController = nil
     }
     
     func initialiseFetchResultsController(withStore store: StoreDelegate) {
