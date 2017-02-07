@@ -130,7 +130,7 @@ class APICommunicator: NSObject, APIDelegate {
         
         log("Queuing request: \(request.hashValue). (\(request.endPointType.rawValue) end point.)", logQueueState: true)
         addRequestToQueue(request)
-        executeQueuedRequests()
+        execute(request)
     }
     
     // MARK: Request handling
@@ -147,6 +147,11 @@ class APICommunicator: NSObject, APIDelegate {
             }
             connection.registerForAndStartNotifications(self, selector: #selector(reachabilityDidChange))
             request.requester?.request(request, didFailWithError: APICommunicatorError.offline)
+            return
+        }
+        
+        guard auth.canAuthorize(request) else {
+            log("Currently authorizing. Aborting request execution and leaving the request in the queue.")
             return
         }
     

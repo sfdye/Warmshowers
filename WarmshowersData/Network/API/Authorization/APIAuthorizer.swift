@@ -10,7 +10,7 @@ import Foundation
 
 class APIAuthorizer {
     
-    var currentlyReauthorizing = false
+    var isCurrentlyAuthorizing = false
     
     weak var delegate: APILoginResponseDelegate?
     

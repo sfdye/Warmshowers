@@ -10,11 +10,13 @@ import Foundation
 
 extension APIAuthorizer: APIAuthorizationDelegate {
     
-    var isAvailible: Bool { return !currentlyReauthorizing }
+    func canAuthorize(_ request: APIRequest) -> Bool {
+        return !isCurrentlyAuthorizing || request.endPointType == .login || request.endPointType == .token
+    }
     
     public func authorizedURLRequest(fromAPIRequest request: APIRequest, withSecureStore secureStore: SecureStoreDelegate) throws -> URLRequest {
         
-        if request.endPoint.type != .login && request.endPoint.type != .token && currentlyReauthorizing {
+        if request.endPoint.type != .login && request.endPoint.type != .token && isCurrentlyAuthorizing {
             throw APIAuthorizerError.currentlyReauthorizing
         }
         

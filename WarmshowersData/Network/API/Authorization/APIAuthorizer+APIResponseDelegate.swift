@@ -21,7 +21,7 @@ extension APIAuthorizer: APIResponseDelegate {
         if request.endPointType == .login {
             
             guard let uid = data as? Int else {
-                currentlyReauthorizing = false
+                isCurrentlyAuthorizing = false
                 loginRequest.requester.loginRequest(loginRequest, didFailWithError: APILoginError.invalidUIDRecieved)
                 return
             }
@@ -35,7 +35,7 @@ extension APIAuthorizer: APIResponseDelegate {
         }
         
         // 2. Recieved the access token: notifiy the requester.
-        currentlyReauthorizing = false
+        isCurrentlyAuthorizing = false
         loginRequest.requester.loginRequestDidSucceed(loginRequest)
         delegate?.loginRequestDidSucceed(loginRequest)
     }
@@ -59,20 +59,8 @@ extension APIAuthorizer: APIResponseDelegate {
             break
         }
         
-        currentlyReauthorizing = false
+        isCurrentlyAuthorizing = false
         loginRequest.requester.loginRequest(loginRequest, didFailWithError: loginError)
-    }
-    
-}
-
-extension APIAuthorizer {
-    
-    func loginRequestDidSucceed(_ loginRequest: APILoginRequest) {
-        
-    }
-    
-    func loginRequest(_ loginRequest: APILoginRequest, didFailWithError error: Error) {
-        
     }
     
 }

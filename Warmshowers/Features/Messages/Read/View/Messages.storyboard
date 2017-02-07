@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="HgN-Bq-lCr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="HgN-Bq-lCr">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -140,16 +140,16 @@ Second line</string>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FZ8-Go-oX9">
-                            <rect key="frame" x="93" y="44.5" width="180" height="105.5"/>
+                            <rect key="frame" x="93" y="44" width="180" height="106"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You have no messages." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yKG-BC-Ftj">
-                                    <rect key="frame" x="0.0" y="0.0" width="179.5" height="20.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="180" height="21"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" red="0.18823529410000001" green="0.2784313725" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KMs-CU-DRy">
-                                    <rect key="frame" x="64" y="60.5" width="51" height="30"/>
+                                    <rect key="frame" x="64" y="61" width="51" height="30"/>
                                     <state key="normal" title="Update">
                                         <color key="titleColor" red="0.0" green="0.59607843140000005" blue="0.20784313730000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </state>
@@ -158,7 +158,7 @@ Second line</string>
                                     </connections>
                                 </button>
                                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="sse-EN-hPI">
-                                    <rect key="frame" x="60" y="45.5" width="60" height="60"/>
+                                    <rect key="frame" x="60" y="46" width="60" height="60"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="sse-EN-hPI" secondAttribute="height" multiplier="1:1" id="I0z-p8-ubb"/>
                                         <constraint firstAttribute="height" constant="60" id="WiM-3u-KNF"/>
@@ -200,7 +200,7 @@ Second line</string>
                 <navigationController id="HgN-Bq-lCr" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Messages" image="MessagesBarButtonIcon" selectedImage="MessagesBarButtonIconSelected" id="gE7-0F-sqZ"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="LKe-Tr-nlo">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="LKe-Tr-nlo">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -211,20 +211,6 @@ Second line</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s0f-G7-51o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="954" y="102"/>
-        </scene>
-        <!--Message Thread View Controller-->
-        <scene sceneID="6eX-Nx-4IN">
-            <objects>
-                <tableViewController id="MJt-qp-NJY" customClass="MessageThreadViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <outlet property="errorView" destination="J45-I0-Pgb" id="sVT-lW-ouC"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="B0I-EY-KtR" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4524" y="28"/>
         </scene>
         <!--UserProfile-->
         <scene sceneID="zSv-zt-EtB">
@@ -349,7 +335,7 @@ Second line</string>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XFb-9k-Sj1">
-                            <rect key="frame" x="21.5" y="56" width="323.5" height="81.5"/>
+                            <rect key="frame" x="21" y="56" width="324" height="82"/>
                             <string key="text">Sorry this message is missing.  
 
 Please go back and refresh your message threads.</string>
@@ -384,6 +370,6 @@ Please go back and refresh your message threads.</string>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="wrL-tf-Ys7"/>
-        <segue reference="csU-t0-yeY"/>
+        <segue reference="9JC-rN-RsA"/>
     </inferredMetricsTieBreakers>
 </document>
