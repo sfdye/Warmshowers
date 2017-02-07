@@ -239,6 +239,9 @@
 		E56CC0881BFD166200AAF973 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E56CC0871BFD166200AAF973 /* MapKit.framework */; };
 		E57057EA1CC8845300FA5D9F /* WSCreateFeedbackTableViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57057E91CC8845300FA5D9F /* WSCreateFeedbackTableViewControllerTests.swift */; };
 		E57057ED1CC88D7000FA5D9F /* MOCKAPICommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57057EC1CC88D7000FA5D9F /* MOCKAPICommunicator.swift */; };
+		E571A7BA1E49B56C001C3AEB /* PhoneNumberTableViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E571A7B91E49B56C001C3AEB /* PhoneNumberTableViewCellDelegate.swift */; };
+		E571A7BC1E49B5CE001C3AEB /* UserProfileTableViewController+PhoneNumberTableViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E571A7BB1E49B5CE001C3AEB /* UserProfileTableViewController+PhoneNumberTableViewCellDelegate.swift */; };
+		E571A7BE1E49B9DA001C3AEB /* UserProfileTableViewController+MFMessageComposeViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E571A7BD1E49B9DA001C3AEB /* UserProfileTableViewController+MFMessageComposeViewControllerDelegate.swift */; };
 		E580E8421E317AE600D09D10 /* MessageThreadsErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E580E8411E317AE600D09D10 /* MessageThreadsErrorView.swift */; };
 		E580E8441E317B4000D09D10 /* MessageThreadsErrorViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E580E8431E317B4000D09D10 /* MessageThreadsErrorViewDelegate.swift */; };
 		E580E8461E317C5400D09D10 /* MessageThreadsViewController+MessageThreadsErrorViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E580E8451E317C5400D09D10 /* MessageThreadsViewController+MessageThreadsErrorViewDelegate.swift */; };
@@ -567,6 +570,9 @@
 		E56CC0871BFD166200AAF973 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		E57057E91CC8845300FA5D9F /* WSCreateFeedbackTableViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSCreateFeedbackTableViewControllerTests.swift; sourceTree = "<group>"; };
 		E57057EC1CC88D7000FA5D9F /* MOCKAPICommunicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MOCKAPICommunicator.swift; sourceTree = "<group>"; };
+		E571A7B91E49B56C001C3AEB /* PhoneNumberTableViewCellDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneNumberTableViewCellDelegate.swift; sourceTree = "<group>"; };
+		E571A7BB1E49B5CE001C3AEB /* UserProfileTableViewController+PhoneNumberTableViewCellDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserProfileTableViewController+PhoneNumberTableViewCellDelegate.swift"; sourceTree = "<group>"; };
+		E571A7BD1E49B9DA001C3AEB /* UserProfileTableViewController+MFMessageComposeViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserProfileTableViewController+MFMessageComposeViewControllerDelegate.swift"; sourceTree = "<group>"; };
 		E580E8411E317AE600D09D10 /* MessageThreadsErrorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageThreadsErrorView.swift; sourceTree = "<group>"; };
 		E580E8431E317B4000D09D10 /* MessageThreadsErrorViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageThreadsErrorViewDelegate.swift; sourceTree = "<group>"; };
 		E580E8451E317C5400D09D10 /* MessageThreadsViewController+MessageThreadsErrorViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MessageThreadsViewController+MessageThreadsErrorViewDelegate.swift"; sourceTree = "<group>"; };
@@ -1070,6 +1076,8 @@
 				E5E573411E1A4E3400D54445 /* UserProfileTableViewController+APIResponseDelegate.swift */,
 				E5E5733F1E1A182600D54445 /* UserProfileTableViewController+DataSourceDelegate.swift */,
 				E529ED621E11C6BB00395369 /* UserProfileTableViewController.swift */,
+				E571A7BB1E49B5CE001C3AEB /* UserProfileTableViewController+PhoneNumberTableViewCellDelegate.swift */,
+				E571A7BD1E49B9DA001C3AEB /* UserProfileTableViewController+MFMessageComposeViewControllerDelegate.swift */,
 			);
 			path = UserProfileTableViewController;
 			sourceTree = "<group>";
@@ -1097,6 +1105,7 @@
 				E529ED6D1E11C6BB00395369 /* HostOfferTableViewCell.swift */,
 				E529ED6E1E11C6BB00395369 /* PhoneNumberTableViewCell.swift */,
 				E529ED6F1E11C6BB00395369 /* ProfileImageTableViewCell.swift */,
+				E571A7B91E49B56C001C3AEB /* PhoneNumberTableViewCellDelegate.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -2173,6 +2182,7 @@
 				E529EDCA1E11C6BB00395369 /* UserProfileTableViewController+UITableViewDataSource.swift in Sources */,
 				E529EDE61E11D47E00395369 /* Delegator.swift in Sources */,
 				E537151F1E0C83D100770305 /* ColoredDotView.swift in Sources */,
+				E571A7BA1E49B56C001C3AEB /* PhoneNumberTableViewCellDelegate.swift in Sources */,
 				E529ED761E11C6BB00395369 /* HostListTableViewController+APIResponseDelegate.swift in Sources */,
 				E529ED861E11C6BB00395369 /* LocationSearchViewController+Actions.swift in Sources */,
 				E529EDC91E11C6BB00395369 /* UserProfileTableViewController+Navigation.swift in Sources */,
@@ -2238,10 +2248,12 @@
 				E529EDC31E11C6BB00395369 /* CreateFeedbackTableViewController.swift in Sources */,
 				E529EDB91E11C6BB00395369 /* LogoutTableViewCell.swift in Sources */,
 				E529ED771E11C6BB00395369 /* HostListTableViewController.swift in Sources */,
+				E571A7BE1E49B9DA001C3AEB /* UserProfileTableViewController+MFMessageComposeViewControllerDelegate.swift in Sources */,
 				E529EDD61E11C6BB00395369 /* HostOfferTableViewCell.swift in Sources */,
 				E529EDC71E11C6BB00395369 /* FeedbackTableViewController.swift in Sources */,
 				E529ED731E11C6BB00395369 /* HostListTableViewController+UIScrollViewDelegate.swift in Sources */,
 				E529ED911E11C6BB00395369 /* LoginViewController+APILoginResponseDelegate.swift in Sources */,
+				E571A7BC1E49B5CE001C3AEB /* UserProfileTableViewController+PhoneNumberTableViewCellDelegate.swift in Sources */,
 				E529ED8F1E11C6BB00395369 /* MapLabel.swift in Sources */,
 				E529EDD11E11C6BB00395369 /* FeedbackBodyTableViewCell.swift in Sources */,
 				E529EDB81E11C6BB00395369 /* SettingsTableViewController.swift in Sources */,

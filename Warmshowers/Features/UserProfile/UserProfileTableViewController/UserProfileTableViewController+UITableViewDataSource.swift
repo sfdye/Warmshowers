@@ -142,6 +142,7 @@ extension UserProfileTableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "Contact", for: indexPath) as! PhoneNumberTableViewCell
             cell.titleLabel.text = phoneNumberDescriptionForPhoneNumberAtIndex((indexPath as NSIndexPath).row, fromUser: user)
             cell.detailLabel.text = phoneNumberForPhoneNumberAtIndex((indexPath as NSIndexPath).row, fromUser: user)
+            cell.delegate = self
             if let type = phoneNumberTypeForPhoneAtIndex((indexPath as NSIndexPath).row, fromUser: user) {
                 switch type {
                 case .home, .work:

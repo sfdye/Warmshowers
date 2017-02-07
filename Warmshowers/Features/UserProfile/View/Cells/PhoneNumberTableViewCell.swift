@@ -10,6 +10,8 @@ import UIKit
 
 class PhoneNumberTableViewCell: UITableViewCell {
     
+    weak var delegate: PhoneNumberTableViewCellDelegate?
+    
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var detailLabel: UILabel!
     @IBOutlet var phoneIcon: UIImageView!
@@ -32,42 +34,12 @@ class PhoneNumberTableViewCell: UITableViewCell {
     
     /** Opens the phone app when the user taps the phone icon. */
     func phoneIconTapped() {
-        
-        guard let url = phoneNumberURL(detailLabel.text) else {
-            return
-        }
-        
-        UIApplication.shared.open(url, options: [String : Any](), completionHandler: nil)
+        delegate?.didSelectPhoneIcon(in: self)
     }
     
     /** Opens the messages app when the user taps the message bubble icon. */
     func messageIconTapped() {
-        
-        guard let url = messageNumberURL(detailLabel.text) else {
-            return
-        }
-        
-        UIApplication.shared.open(url, options: [String : Any](), completionHandler: nil)
-    }
-    
-    /** Returns the url to call the the phone number displayed in the cell. */
-    fileprivate func phoneNumberURL(_ number: String?) -> URL? {
-        
-        guard let number = detailLabel.text else {
-            return nil
-        }
-        
-        return URL(string: "tel://" + number)
-    }
-    
-    /** Returns the url to message the the phone number displayed in the cell. */
-    fileprivate func messageNumberURL(_ number: String?) -> URL? {
-        
-        guard let number = detailLabel.text else {
-            return nil
-        }
-        
-        return URL(string: "sms:" + number)
+        delegate?.didSelectMessageIcon(in: self)
     }
 
 }
