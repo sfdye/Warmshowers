@@ -19,19 +19,19 @@ class SettingsTableViewController: UITableViewController, Delegator, DataSource 
         let warmshowersSection = SettingsSection(withTitle: "Warmshowers.org",
                                                  andCells:
             [
-                SettingsCell(withTitle: NSLocalizedString("Visit the website", tableName: "Settings", comment: "Settings option title"),
+                SettingsCell(withTitle: NSLocalizedString("Visit the website", comment: "Settings option title"),
                              cellID: "Disclosure",
                              andTag: 10),
-                SettingsCell(withTitle: NSLocalizedString("FAQ", tableName: "Settings", comment: "Settings option title"),
+                SettingsCell(withTitle: NSLocalizedString("FAQ", comment: "Settings option title"),
                              cellID: "Disclosure",
                              andTag: 11)
             ]
         )
         sections.append(warmshowersSection)
-        let helpSection = SettingsSection(withTitle: NSLocalizedString("Help", tableName: "Settings", comment: "Settings option title"),
+        let helpSection = SettingsSection(withTitle: NSLocalizedString("Help", comment: "Settings option title"),
                                           andCells:
             [
-                SettingsCell(withTitle: NSLocalizedString("Contact", tableName: "Settings", comment: "Settings option title"),
+                SettingsCell(withTitle: NSLocalizedString("Contact", comment: "Settings option title"),
                           cellID: "Disclosure",
                           andTag: 20)
             ]
@@ -47,7 +47,7 @@ class SettingsTableViewController: UITableViewController, Delegator, DataSource 
 //        sections.append(mapSection)
         let logoutSection = SettingsSection(withTitle: "", andCells:
             [
-                SettingsCell(withTitle: NSLocalizedString("Logout", tableName: "Settings", comment: "Settings option title"),
+                SettingsCell(withTitle: NSLocalizedString("Logout", comment: "Settings option title"),
                              cellID: "Logout",
                              andTag: 40)
             ]
@@ -55,7 +55,7 @@ class SettingsTableViewController: UITableViewController, Delegator, DataSource 
         sections.append(logoutSection)
         let deleteCacheSection = SettingsSection(withTitle: "", andCells:
             [
-                SettingsCell(withTitle: NSLocalizedString("Delete cached data", tableName: "Settings", comment: "Settings option title"),
+                SettingsCell(withTitle: NSLocalizedString("Delete cached data", comment: "Settings option title"),
                              cellID: "Logout",
                              andTag: 50)
             ]

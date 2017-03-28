@@ -1,11 +1,20 @@
+/* (No Commment) */
+"3Ly-Kp-uhT.text" = "Type";
+
 /* Class = "UILabel"; text = "Currently Available"; ObjectID = "AAP-cR-5l6"; */
 "AAP-cR-5l6.text" = "Currently Available";
 
 /* Class = "UILabel"; text = "Title"; ObjectID = "Bhq-ms-epa"; */
 "Bhq-ms-epa.text" = "Title";
 
+/* (No Commment) */
+"Dcc-z7-w4W.text" = "Detail";
+
 /* Class = "UILabel"; text = "Info"; ObjectID = "E2X-by-ruN"; */
 "E2X-by-ruN.text" = "Info";
+
+/* (No Commment) */
+"PeB-cU-THw.text" = "Title";
 
 /* Class = "UITextView"; text = "About"; ObjectID = "Q3K-XS-pYs"; */
 "Q3K-XS-pYs.text" = "About";
@@ -25,11 +34,29 @@
 /* Class = "UILabel"; text = "Account detail"; ObjectID = "ctg-Rr-GTT"; */
 "ctg-Rr-GTT.text" = "Account detail";
 
-/* Class = "UILabel"; text = " • Label"; ObjectID = "fdr-P1-SPC"; */
-"fdr-P1-SPC.text" = " • Label";
+/* (No Commment) */
+"cy0-Yn-3nj.text" = "1 January 2000";
 
 /* Class = "UILabel"; text = "+00 000 000 0000"; ObjectID = "hzd-Ch-Wm1"; */
 "hzd-Ch-Wm1.text" = "+00 000 000 0000";
+
+/* (No Commment) */
+"j3A-HC-5TB.text" = "Feedback";
+
+/* (No Commment) */
+"jcJ-CK-SJq.text" = "Type your feedback here.";
+
+/* (No Commment) */
+"q12-R7-LFy.text" = "Recommender Name";
+
+/* (No Commment) */
+"rdh-De-bc6.text" = "Positive";
+
+/* (No Commment) */
+"sFh-jC-TjZ.title" = "Create Feedback";
+
+/* (No Commment) */
+"teB-yT-jGH.title" = "Submit";
 
 /* Class = "UILabel"; text = "Phone"; ObjectID = "tfp-P3-SnZ"; */
 "tfp-P3-SnZ.text" = "Phone";

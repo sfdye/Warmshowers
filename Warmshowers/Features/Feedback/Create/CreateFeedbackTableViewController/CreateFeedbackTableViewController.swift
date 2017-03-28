@@ -30,7 +30,7 @@ class CreateFeedbackTableViewController: UITableViewController, Delegator, DataS
     
     // View state variables
     var pickerIndexPath: IndexPath? = nil
-    let PlaceholderFeedback = NSLocalizedString("Type your feedback here.", tableName: "CreateFeedBack", comment: "Feedback text field place holder")
+    let PlaceholderFeedback = NSLocalizedString("Type your feedback here.", comment: "Feedback text field place holder")
     
     
     // MARK: View life cycle

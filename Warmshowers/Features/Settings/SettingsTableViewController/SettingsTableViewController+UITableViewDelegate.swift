@@ -35,7 +35,7 @@ extension SettingsTableViewController {
                     try store.clearout()
                 } catch {
                     let title = NSLocalizedString("Data Error", comment: "Alert title for a data error")
-                    let message = NSLocalizedString("Sorry, an error occured while removing your account data from your device. Please try deleting and re-installing the Warmshowers app and report this as a bug.", tableName: "Settings", comment: "Alert message for a data error")
+                    let message = NSLocalizedString("Sorry, an error occured while removing your account data from your device. Please try deleting and re-installing the Warmshowers app and report this as a bug.", comment: "Alert message for a data error")
                     let button = NSLocalizedString("OK", comment: "OK button title")
                     alert.presentAlertFor(self, withTitle: title, button: button, message: message, andHandler: nil)
                 }

@@ -59,7 +59,7 @@ class UserProfileTableViewController: UITableViewController, Delegator, DataSour
             
             // Options for the logged in user.
             
-            let logoutOptionTitle = NSLocalizedString("Logout", tableName: "UserProfile", comment: "User profile menu option title")
+            let logoutOptionTitle = NSLocalizedString("Logout", comment: "User profile menu option title")
             let logoutAction = UIAlertAction(title: logoutOptionTitle, style: .default) { (logoutAction) -> Void in
                 // Logout and return the login screeen.
                 self.api.contact(endPoint: .logout, withMethod: .post, andPathParameters: nil, andData: nil, thenNotify: self, ignoreCache: false)
@@ -72,7 +72,7 @@ class UserProfileTableViewController: UITableViewController, Delegator, DataSour
             
             // Options while viewing other host profiles.
             
-            let sendMessageOptionTitle = NSLocalizedString("Send Message", tableName: "UserProfile", comment: "User profile menu option title")
+            let sendMessageOptionTitle = NSLocalizedString("Send Message", comment: "User profile menu option title")
             let messageAction = UIAlertAction(title: sendMessageOptionTitle, style: .default) { (messageAction) -> Void in
                 // Present compose message view
                 DispatchQueue.main.async(execute: {
@@ -81,7 +81,7 @@ class UserProfileTableViewController: UITableViewController, Delegator, DataSour
             }
             actionAlert.addAction(messageAction)
             
-            let provideFeedbackOptionTitle = NSLocalizedString("Provide Feedback", tableName: "UserProfile", comment: "User profile menu option title")
+            let provideFeedbackOptionTitle = NSLocalizedString("Provide Feedback", comment: "User profile menu option title")
             let provideFeedbackAction = UIAlertAction(title: provideFeedbackOptionTitle, style: .default) { (messageAction) -> Void in
                 // Present provide feeback view
                 DispatchQueue.main.async(execute: {
@@ -162,19 +162,19 @@ class UserProfileTableViewController: UITableViewController, Delegator, DataSour
         func stringValue(forQuantity quantity: Int, ofTimeUnit timeUnit: TimeUnit) -> String {
             switch timeUnit {
             case .seconds:
-                return String(format: NSLocalizedString("%d seconds", tableName: "UserProfile", comment: "Time format specified in stringsdict"), quantity)
+                return String(format: NSLocalizedString("%d seconds", comment: "Time format specified in stringsdict"), quantity)
             case .minutes:
-                return String(format: NSLocalizedString("%d minutes", tableName: "UserProfile", comment: "Time format specified in stringsdict"), quantity)
+                return String(format: NSLocalizedString("%d minutes", comment: "Time format specified in stringsdict"), quantity)
             case .hours:
-                return String(format: NSLocalizedString("%d hours", tableName: "UserProfile", comment: "Time format specified in stringsdict"), quantity)
+                return String(format: NSLocalizedString("%d hours", comment: "Time format specified in stringsdict"), quantity)
             case .days:
-                return String(format: NSLocalizedString("%d days", tableName: "UserProfile", comment: "Time format specified in stringsdict"), quantity)
+                return String(format: NSLocalizedString("%d days", comment: "Time format specified in stringsdict"), quantity)
             case .weeks:
-                return String(format: NSLocalizedString("%d weeks", tableName: "UserProfile", comment: "Time format specified in stringsdict"), quantity)
+                return String(format: NSLocalizedString("%d weeks", comment: "Time format specified in stringsdict"), quantity)
             case .months:
-                return String(format: NSLocalizedString("%d months", tableName: "UserProfile", comment: "Time format specified in stringsdict"), quantity)
+                return String(format: NSLocalizedString("%d months", comment: "Time format specified in stringsdict"), quantity)
             case .years:
-                return String(format: NSLocalizedString("%d years", tableName: "UserProfile", comment: "Time format specified in stringsdict"), quantity)
+                return String(format: NSLocalizedString("%d years", comment: "Time format specified in stringsdict"), quantity)
             }
         }
         
@@ -196,30 +196,30 @@ class UserProfileTableViewController: UITableViewController, Delegator, DataSour
     
     func memberForTextForUser(_ user: User) -> String? {
         guard let membershipDuration = user.membershipDuration else {
-            return NSLocalizedString("Duration of membership unknown.", tableName: "UserProfile", comment: "Unkown membership duration label on user profile")
+            return NSLocalizedString("Duration of membership unknown.", comment: "Unkown membership duration label on user profile")
         }
         let time = timeIntervalAsString(membershipDuration)
-        return String(format: NSLocalizedString("Member for %@", tableName: "UserProfile", comment: "Membership duration format. The specifier is filled with a time value with up to two time units, i.e. 4 months and 3 weeks"), time)
+        return String(format: NSLocalizedString("Member for %@", comment: "Membership duration format. The specifier is filled with a time value with up to two time units, i.e. 4 months and 3 weeks"), time)
     }
     
     func activeAgoTextForUser(_ user: User) -> String? {
         guard let lastLoggedInAgo = user.lastLoggedInAgo else {
-            return NSLocalizedString("Last login time unknown.", tableName: "UserProfile", comment: "Unknown last login time label on user profile")
+            return NSLocalizedString("Last login time unknown.", comment: "Unknown last login time label on user profile")
         }
         let time = timeIntervalAsString(lastLoggedInAgo)
-        return String(format: NSLocalizedString("Active %@ ago", tableName: "UserProfile", comment: "Time interval since the user was last logged in. The specifier is filled with a time value with up to two time units, i.e. 4 months and 3 weeks"), time)
+        return String(format: NSLocalizedString("Active %@ ago", comment: "Time interval since the user was last logged in. The specifier is filled with a time value with up to two time units, i.e. 4 months and 3 weeks"), time)
     }
     
     func languagesSpokenTextForUser(_ user: User) -> String? {
         var value = "-"
         if let languagesspoken = user.languagesspoken { value = languagesspoken }
-        return NSLocalizedString("Languages spoken", tableName: "UserProfile", comment: "Languages spoken label on user profile") + ": \(value)"
+        return NSLocalizedString("Languages spoken", comment: "Languages spoken label on user profile") + ": \(value)"
     }
     
     func feedbackCellTextForUser(_ user: User) -> String {
-        let feedbackLabel = NSLocalizedString("Feedback", tableName: "UserProfile", comment: "Feedback link text")
+        let feedbackLabel = NSLocalizedString("Feedback", comment: "Feedback link text")
         guard let feedback = user.feedback else { return feedbackLabel }
-        return feedback.count > 0 ? feedbackLabel + "(\(feedback.count))" : NSLocalizedString("No feedback", tableName: "UserProfile", comment: "Feedback link placholder text")
+        return feedback.count > 0 ? feedbackLabel + "(\(feedback.count))" : NSLocalizedString("No feedback", comment: "Feedback link placholder text")
     }
     
     func hostingInfoTitleForInfoAtIndex(_ index: Int, fromUser user: User) -> String? {
@@ -227,13 +227,13 @@ class UserProfileTableViewController: UITableViewController, Delegator, DataSour
         let info = user.hostingInfo[index]
         switch info.type {
         case .maxCyclists:
-            return NSLocalizedString("Maximum Guests", tableName: "UserProfile", comment: "Hosting info label") + ":"
+            return NSLocalizedString("Maximum Guests", comment: "Hosting info label") + ":"
         case .bikeShop:
-            return NSLocalizedString("Nearest bike shop", tableName: "UserProfile", comment: "Hosting info label") + ":"
+            return NSLocalizedString("Nearest bike shop", comment: "Hosting info label") + ":"
         case .campground:
-            return NSLocalizedString("Nearest campground", tableName: "UserProfile", comment: "Hosting info label") + ":"
+            return NSLocalizedString("Nearest campground", comment: "Hosting info label") + ":"
         case .motel:
-            return NSLocalizedString("Nearest hotel/motel", tableName: "UserProfile", comment: "Hosting info label") + ":"
+            return NSLocalizedString("Nearest hotel/motel", comment: "Hosting info label") + ":"
         }
     }
     
@@ -249,21 +249,21 @@ class UserProfileTableViewController: UITableViewController, Delegator, DataSour
         var offerLabel: String = ""
         switch offer {
         case .Bed:
-            offerLabel = NSLocalizedString("Bed", tableName: "UserProfile", comment: "Host offering catagory")
+            offerLabel = NSLocalizedString("Bed", comment: "Host offering catagory")
         case .Food:
-            offerLabel = NSLocalizedString("Food", tableName: "UserProfile", comment: "Host offering catagory")
+            offerLabel = NSLocalizedString("Food", comment: "Host offering catagory")
         case .Laundry:
-            offerLabel = NSLocalizedString("Laundry", tableName: "UserProfile", comment: "Host offering catagory")
+            offerLabel = NSLocalizedString("Laundry", comment: "Host offering catagory")
         case .LawnSpace:
-            offerLabel = NSLocalizedString("Lawn Space (for camping)", tableName: "UserProfile", comment: "Host offering catagory")
+            offerLabel = NSLocalizedString("Lawn Space (for camping)", comment: "Host offering catagory")
         case .SAG:
-            offerLabel = NSLocalizedString("SAG (vehicle support)", tableName: "UserProfile", comment: "Host offering catagory")
+            offerLabel = NSLocalizedString("SAG (vehicle support)", comment: "Host offering catagory")
         case .Shower:
-            offerLabel = NSLocalizedString("Shower", tableName: "UserProfile", comment: "Host offering catagory")
+            offerLabel = NSLocalizedString("Shower", comment: "Host offering catagory")
         case .Storage:
-            offerLabel = NSLocalizedString("Storage", tableName: "UserProfile", comment: "Host offering catagory")
+            offerLabel = NSLocalizedString("Storage", comment: "Host offering catagory")
         case .KitchenUse:
-            offerLabel = NSLocalizedString("Use of Kitchen", tableName: "UserProfile", comment: "Host offering catagory")
+            offerLabel = NSLocalizedString("Use of Kitchen", comment: "Host offering catagory")
         }
         return "\u{2022} " + offerLabel
     }

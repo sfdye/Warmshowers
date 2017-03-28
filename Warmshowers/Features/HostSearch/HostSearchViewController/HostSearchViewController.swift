@@ -55,7 +55,7 @@ class HostSearchViewController: UIViewController, Delegator, DataSource {
         
         // Search bar
         searchBar = searchController.searchBar
-        searchBar.placeholder = NSLocalizedString("Search by name, email or town", tableName: "HostSearch", comment: "Host search placeholder")
+        searchBar.placeholder = NSLocalizedString("Search by name, email or town", comment: "Host search placeholder")
         searchBar.barTintColor = UIColor.white
         
         // Reachability notifications

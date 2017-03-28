@@ -15,7 +15,7 @@ extension UserProfileTableViewController: MFMessageComposeViewControllerDelegate
                                       didFinishWith result: MessageComposeResult){
         switch result {            
         case .failed:
-            let title = NSLocalizedString("Sorry, your message failed to send.", tableName: "UserProfile", comment: "ALert title shown after a message fails to send")
+            let title = NSLocalizedString("Sorry, your message failed to send.", comment: "ALert title shown after a message fails to send")
             let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
             let button = NSLocalizedString("OK", comment: "OK button title")
             let okAction = UIAlertAction(title: button, style: .default, handler: nil)

@@ -1,11 +1,30 @@
+/* (No Commment) */
+"CFBundleDisplayName" = "Warmshowers";
+
+/* (No Commment) */
+"CFBundleName" = "$(PRODUCT_NAME)";
+
+/* (No Commment) */
+"CFBundleShortVersionString" = "1.2.3";
+
+/* (No Commment) */
 "NSLocationWhenInUseUsageDescription" = "This is required to show your location on the map.";
 
-shortcutTitle1 = "Location Search";
-shortcutSubtitle1 = "Shows hosts on a map";
+/* (No Commment) */
+"shortcutSubtitle1" = "Shows hosts on a map";
 
-shortcutTitle2 = "Keyword Search";
-shortcutSubtitle2 = "Search by city or email";
+/* (No Commment) */
+"shortcutSubtitle2" = "Search by city or email";
 
-shortcutTitle3 = "Messages";
-shortcutSubtitle3 = "Your warmshowers mail";
+/* (No Commment) */
+"shortcutSubtitle3" = "Your warmshowers mail";
+
+/* (No Commment) */
+"shortcutTitle1" = "Location Search";
+
+/* (No Commment) */
+"shortcutTitle2" = "Keyword Search";
+
+/* (No Commment) */
+"shortcutTitle3" = "Messages";
 

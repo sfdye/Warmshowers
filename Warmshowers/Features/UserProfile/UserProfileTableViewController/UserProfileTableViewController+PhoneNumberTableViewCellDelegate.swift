@@ -17,7 +17,7 @@ extension UserProfileTableViewController: PhoneNumberTableViewCellDelegate {
             let url = URL(string: "tel://" + number)
             else { return }
         if UIApplication.shared.canOpenURL(url) {
-            let title = String(format: NSLocalizedString("Call %@ now?", tableName: "UserProfile", comment: "Call host action sheet title format"), "\(number)")
+            let title = String(format: NSLocalizedString("Call %@ now?", comment: "Call host action sheet title format"), "\(number)")
             let alert = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
             let callButtonTitle = NSLocalizedString("Call", comment: "Call button title")
             let callAction = UIAlertAction(title: callButtonTitle, style: .default, handler: { (action) in
@@ -45,7 +45,7 @@ extension UserProfileTableViewController: PhoneNumberTableViewCellDelegate {
                 self.present(composeVC, animated: true, completion: nil)
             }
         } else {
-            let title = NSLocalizedString("Sorry, your device is not set up for SMS services", tableName: "UserProfile", comment: "Alert informing the user that their device is not setup to use SMS services.")
+            let title = NSLocalizedString("Sorry, your device is not set up for SMS services", comment: "Alert informing the user that their device is not setup to use SMS services.")
             let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
             let button = NSLocalizedString("OK", comment: "OK button title")
             let okAction = UIAlertAction(title: button, style: .default, handler: nil)

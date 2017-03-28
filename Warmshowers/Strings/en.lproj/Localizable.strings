@@ -1,8 +1,38 @@
+/* Title for a set of hosts */
+"%d Host(s)" = "%d Host(s)";
+
+/* Time format specified in stringsdict */
+"%d days" = "%d days";
+
+/* Time format specified in stringsdict */
+"%d hours" = "%d hours";
+
+/* Time format specified in stringsdict */
+"%d minutes" = "%d minutes";
+
+/* Time format specified in stringsdict */
+"%d months" = "%d months";
+
+/* Time format specified in stringsdict */
+"%d seconds" = "%d seconds";
+
+/* Time format specified in stringsdict */
+"%d weeks" = "%d weeks";
+
+/* Time format specified in stringsdict */
+"%d years" = "%d years";
+
 /* Authorization error alert title */
 "API Authorization Error" = "API Authorization Error";
 
 /* API error alert title */
 "API Error" = "API Error";
+
+/* Time interval since the user was last logged in. The specifier is filled with a time value with up to two time units, i.e. 4 months and 3 weeks */
+"Active %@ ago" = "Active %@ ago";
+
+/* Table cell label in user profile */
+"Address" = "Address";
 
 /* API error alert message */
 "An error occured while contacting the Warmshowers API. Please report this as a bug." = "An error occured while contacting the Warmshowers API. Please report this as a bug.";
@@ -10,17 +40,44 @@
 /* Data parsing error details format */
 "An error occured while parsing data from the Warmshowers API end point %@. " = "An error occured while parsing data from the Warmshowers API end point %@. ";
 
+/* Alert title for an unknown login error. */
+"An unknown error occured" = "An unknown error occured";
+
 /* General error message */
 "An unknown error ocurred" = "An unknown error ocurred";
+
+/* Alert message for checking if the user wants to discard their drafted feedback */
+"Are you sure you want to discard the current feedback?" = "Are you sure you want to discard the current feedback?";
+
+/* Alert message shown when when the user navigates away from a draft message */
+"Are you sure you want to discard the current message?" = "Are you sure you want to discard the current message?";
+
+/* Host offering catagory */
+"Bed" = "Bed";
 
 /* Call button title */
 "Call" = "Call";
 
+/* Call host action sheet title format */
+"Call %@ now?" = "Call %@ now?";
+
 /* Cancel button title */
 "Cancel" = "Cancel";
 
+/* Settings option title */
+"Contact" = "Contact";
+
 /* Continue button title */
 "Continue" = "Continue";
+
+/* Title for the alert shown when a message could not be sent. */
+"Could not send message." = "Could not send message.";
+
+/* Alert title shown there was an API issue submitting feedback */
+"Could not submit feedback" = "Could not submit feedback";
+
+/* Currently availible message */
+"Currently Available" = "Currently Available";
 
 /* Alert title for a data error */
 "Data Error" = "Data Error";
@@ -28,36 +85,211 @@
 /* Data parsing error alert title */
 "Data Parsing Error" = "Data Parsing Error";
 
+/* Create feedback field label */
+"Date we met" = "Date we met";
+
+/* Settings option title */
+"Delete cached data" = "Delete cached data";
+
 /* Label shown with the spinner while deleting cached data */
 "Deleting data ..." = "Deleting data ...";
 
 /* Dismiss button title */
 "Dismiss" = "Dismiss";
 
+/* Unkown membership duration label on user profile */
+"Duration of membership unknown." = "Duration of membership unknown.";
+
+/* Title for the alert shown when the user tries to centre the map without location services enabled */
+"Enable location services" = "Enable location services";
+
 /* General error alert title */
 "Error" = "Error";
 
+/* Settings option title */
+"FAQ" = "FAQ";
+
+/* Alert message when the app fails to recieve user info from the API
+   The alert message shown when there was an error retrieving a hosts info from the API */
+"Failed to get user info." = "Failed to get user info.";
+
+/* Create feedback section header
+   Feedback link text */
+"Feedback" = "Feedback";
+
+/* Create feedback field label */
+"Feedback for" = "Feedback for";
+
+/* Host offering catagory */
+"Food" = "Food";
+
+/* Recommendation type for guests */
+"Guest" = "Guest";
+
+/* Settings option title */
+"Help" = "Help";
+
 /* Home phone label */
 "Home" = "Home";
+
+/* Recommendation type for hosts */
+"Host" = "Host";
+
+/* Host search navigation bar title */
+"Hosts" = "Hosts";
+
+/* Alert message for a known login error. */
+"Incorrect username or password." = "Incorrect username or password.";
+
+/* Languages spoken label on user profile */
+"Languages spoken" = "Languages spoken";
+
+/* Unknown last login time label on user profile */
+"Last login time unknown." = "Last login time unknown.";
+
+/* Host offering catagory */
+"Laundry" = "Laundry";
+
+/* Host offering catagory */
+"Lawn Space (for camping)" = "Lawn Space (for camping)";
+
+/* Message shown with the spinner during the login process. */
+"Logging in ..." = "Logging in ...";
 
 /* Label shown with the spinner while logging out
    Message shown with the spinner during the logout process. */
 "Logging out ..." = "Logging out ...";
 
+/* Alert title for a known login error. */
+"Login error" = "Login error";
+
+/* Settings option title
+   User profile menu option title */
+"Logout" = "Logout";
+
+/* Title for the alert shown after a failed logout */
+"Logout failed" = "Logout failed";
+
+/* Hosting info label */
+"Maximum Guests" = "Maximum Guests";
+
+/* Membership duration format. The specifier is filled with a time value with up to two time units, i.e. 4 months and 3 weeks */
+"Member for %@" = "Member for %@";
+
+/* Message for the alert shown when a message could not be sent due to it having no content. */
+"Message has no content." = "Message has no content.";
+
+/* Message for the alert shown when a message could not be sent due to it having no recipients. */
+"Message has no recipients." = "Message has no recipients.";
+
+/* Message for the alert shown when a message could not be sent due to it having no subject. */
+"Message has no subject." = "Message has no subject.";
+
+/* Message thread view navigation bar title */
+"Messages" = "Messages";
+
+/* Recommendation type of met travelling */
+"Met Traveling" = "Met Traveling";
+
+/* Alert title for a missing password at login. */
+"Missing Password" = "Missing Password";
+
+/* Alert title for a missing username at login. */
+"Missing Username" = "Missing Username";
+
 /* Mobile phone label */
 "Mobile" = "Mobile";
+
+/* Hosting info label */
+"Nearest bike shop" = "Nearest bike shop";
+
+/* Hosting info label */
+"Nearest campground" = "Nearest campground";
+
+/* Hosting info label */
+"Nearest hotel/motel" = "Nearest hotel/motel";
+
+/* New message view navigation bar title */
+"New Message" = "New Message";
+
+/* Text displayed when no hosts are returned for a keyword search */
+"No Hosts" = "No Hosts";
 
 /* Text shown in a banner when there is no internet connection */
 "No Internet Connection" = "No Internet Connection";
 
+/* Feedback link placholder text */
+"No feedback" = "No feedback";
+
+/* Alert title shown when the users tries to sumbit feedback before writing any */
+"No feedback to submit" = "No feedback to submit";
+
 /* OK button title */
 "OK" = "OK";
+
+/* Create feedback section header */
+"Options" = "Options";
+
+/* Recommendation type of other */
+"Other" = "Other";
+
+/* Create feedback field label */
+"Overall experiencer" = "Overall experiencer";
+
+/* Alert message shown when the users tries to sumbit feedback before writing any */
+"Please enter some feedback before submitting." = "Please enter some feedback before submitting.";
+
+/* Alert message for a missing password at login. */
+"Please enter your password" = "Please enter your password";
+
+/* Alert message for a missing username at login. */
+"Please enter your username or email" = "Please enter your username or email";
 
 /* Bug reporting request */
 "Please report this as a bug." = "Please report this as a bug.";
 
+/* Message for the alert shown after a failed logout */
+"Please try again." = "Please try again.";
+
+/* Alert message for an unknown login error. */
+"Please try login again." = "Please try login again.";
+
+/* Instruction shown on the host search map */
+"Please zoom in to update." = "Please zoom in to update.";
+
+/* User profile menu option title */
+"Provide Feedback" = "Provide Feedback";
+
+/* Alert message shown with the recommended user is not set. This should never occur */
+"Recommended user not set. Please report this as a bug, sorry for the inconvenience." = "Recommended user not set. Please report this as a bug, sorry for the inconvenience.";
+
+/* 3D touch menu item for replying to messages.
+   Message reply view navigation bar title */
+"Reply" = "Reply";
+
+/* Host offering catagory */
+"SAG (vehicle support)" = "SAG (vehicle support)";
+
+/* Host search placeholder */
+"Search by name, email or town" = "Search by name, email or town";
+
+/* User profile menu option title */
+"Send Message" = "Send Message";
+
+/* Message shown with the spinner while a message is being sent. */
+"Sending message ..." = "Sending message ...";
+
 /* Server error alert title */
 "Server Error" = "Server Error";
+
+/* Alert button the take the user to the settings app */
+"Settings" = "Settings";
+
+/* Host offering catagory */
+"Shower" = "Shower";
+
+/* The alert message when a host list is shown with no hosts accidentally */
+"Sorry, an error occured displaying the hosts." = "Sorry, an error occured displaying the hosts.";
 
 /* Alert message for generic app error. */
 "Sorry, an error occured during login. Please report this as a bug, sorry for the inconvenience." = "Sorry, an error occured during login. Please report this as a bug, sorry for the inconvenience.";
@@ -65,9 +297,63 @@
 /* Alert message explaining persisted data problems */
 "Sorry, an error occured while removing your account data from this iPhone. If you would like to remove your Warmshowers messages from this iPhone please try deleting the Warmshowers app." = "Sorry, an error occured while removing your account data from this iPhone. If you would like to remove your Warmshowers messages from this iPhone please try deleting the Warmshowers app.";
 
+/* Alert message for a data error */
+"Sorry, an error occured while removing your account data from your device. Please try deleting and re-installing the Warmshowers app and report this as a bug." = "Sorry, an error occured while removing your account data from your device. Please try deleting and re-installing the Warmshowers app and report this as a bug.";
+
+/* Alert message shown there was an API issue submitting feedback */
+"Sorry, an error occured while submitting your feedback. Please check you are connected to the internet and try again later." = "Sorry, an error occured while submitting your feedback. Please check you are connected to the internet and try again later.";
+
+/* Alert message when a reply to an unknown message is trying to be sent. */
+"Sorry, an error occured while trying to send your message. Please reload the view and try again." = "Sorry, an error occured while trying to send your message. Please reload the view and try again.";
+
+/* The alert message shown when the users account details can not be displayed, because the user ID for the API request is not knowm */
+"Sorry, this request could not be made. Please try logging out and back in again." = "Sorry, this request could not be made. Please try logging out and back in again.";
+
+/* Alert informing the user that their device is not setup to use SMS services. */
+"Sorry, your device is not set up for SMS services" = "Sorry, your device is not set up for SMS services";
+
+/* ALert title shown after a message fails to send */
+"Sorry, your message failed to send." = "Sorry, your message failed to send.";
+
+/* Host offering catagory */
+"Storage" = "Storage";
+
+/* Label before the subject in the compose message screen */
+"Subject:" = "Subject:";
+
+/* Label shown with the spinner while feedback is being submitted */
+"Submitting feedback ..." = "Submitting feedback ...";
+
 /* Server error message format */
 "The server responded with %d." = "The server responded with %d.";
 
+/* Message for the alert shown when the user tries to centre the map without location services enabled */
+"To centre the map on your location we need to know your location. Please change your location access settings." = "To centre the map on your location we need to know your location. Please change your location access settings.";
+
+/* Label before the recipients in the compose message screen */
+"To:" = "To:";
+
+/* Feedback text field place holder */
+"Type your feedback here." = "Type your feedback here.";
+
+/* Currently not availible message */
+"Unavailable" = "Unavailable";
+
+/* Status shown on the host search map */
+"Updating ..." = "Updating ...";
+
+/* Status shown on the host search map */
+"Updating ... There are a lot of hosts in this area so this update may take a while." = "Updating ... There are a lot of hosts in this area so this update may take a while.";
+
+/* Host offering catagory */
+"Use of Kitchen" = "Use of Kitchen";
+
+/* Settings option title */
+"Visit the website" = "Visit the website";
+
 /* Work phone label */
 "Work" = "Work";
+
+/* Title for an alert presented when the user makes a request but is offline */
+"You are currently offline" = "You are currently offline";
 

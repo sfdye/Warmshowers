@@ -16,20 +16,11 @@
 /* Class = "UINavigationItem"; title = "Title"; ObjectID = "Vae-sb-mrG"; */
 "Vae-sb-mrG.title" = "Title";
 
-/* Class = "UILabel"; text = "Sorry this message is missing.  \n\nPlease go back and refresh your message threads."; ObjectID = "XFb-9k-Sj1"; */
-"XFb-9k-Sj1.text" = "Sorry this message is missing.  
-
-Please go back and refresh your message threads.";
-
 /* Class = "UILabel"; text = "1 January 2000"; ObjectID = "eif-EX-td2"; */
 "eif-EX-td2.text" = "1 January 2000";
 
 /* Class = "UITabBarItem"; title = "Messages"; ObjectID = "gE7-0F-sqZ"; */
 "gE7-0F-sqZ.title" = "Messages";
-
-/* Class = "UILabel"; text = "Message preview\nSecond line"; ObjectID = "q7c-xx-uI1"; */
-"q7c-xx-uI1.text" = "Message preview
-Second line";
 
 /* Class = "UILabel"; text = "You have no messages."; ObjectID = "yKG-BC-Ftj"; */
 "yKG-BC-Ftj.text" = "You have no messages.";

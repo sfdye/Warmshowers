@@ -81,9 +81,9 @@ extension CreateFeedbackTableViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case 0:
-            return NSLocalizedString("Options", tableName: "CreateFeedBack", comment: "Create feedback section header")
+            return NSLocalizedString("Options", comment: "Create feedback section header")
         case 1:
-            return NSLocalizedString("Feedback", tableName: "CreateFeedBack", comment: "Create feedback section header")
+            return NSLocalizedString("Feedback", comment: "Create feedback section header")
         default:
             return ""
         }

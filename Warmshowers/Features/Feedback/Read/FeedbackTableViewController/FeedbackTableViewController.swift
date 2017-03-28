@@ -102,13 +102,13 @@ class FeedbackTableViewController: UITableViewController, DataSource {
     func textForRecommendationType(_ type: RecommendationType) -> String? {
         switch type {
         case .forGuest:
-            return NSLocalizedString("Host", tableName: "ReadFeedback", comment: "Recommendation type for hosts")
+            return NSLocalizedString("Host", comment: "Recommendation type for hosts")
         case .forHost:
-            return NSLocalizedString("Guest", tableName: "ReadFeedback", comment: "Recommendation type for guests")
+            return NSLocalizedString("Guest", comment: "Recommendation type for guests")
         case .metTraveling:
-            return NSLocalizedString("Met Traveling", tableName: "ReadFeedback", comment: "Recommendation type of met travelling")
+            return NSLocalizedString("Met Traveling", comment: "Recommendation type of met travelling")
         case .other:
-            return NSLocalizedString("Other", tableName: "ReadFeedback", comment: "Recommendation type of other")
+            return NSLocalizedString("Other", comment: "Recommendation type of other")
         }
     }
 

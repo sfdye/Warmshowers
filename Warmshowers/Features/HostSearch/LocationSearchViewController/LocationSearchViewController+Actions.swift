@@ -18,9 +18,9 @@ extension LocationSearchViewController {
                 self.mapView.setCenter(self.mapView.userLocation.coordinate, animated: true)
                 })
         } else {
-            let title = NSLocalizedString("Enable location services", tableName: "HostSearch", comment: "Title for the alert shown when the user tries to centre the map without location services enabled")
-            let message = NSLocalizedString("To centre the map on your location we need to know your location. Please change your location access settings.", tableName: "HostSearch", comment: "Message for the alert shown when the user tries to centre the map without location services enabled")
-            let settingsButton = NSLocalizedString("Settings", tableName: "HostSearch", comment: "Alert button the take the user to the settings app")
+            let title = NSLocalizedString("Enable location services", comment: "Title for the alert shown when the user tries to centre the map without location services enabled")
+            let message = NSLocalizedString("To centre the map on your location we need to know your location. Please change your location access settings.", comment: "Message for the alert shown when the user tries to centre the map without location services enabled")
+            let settingsButton = NSLocalizedString("Settings", comment: "Alert button the take the user to the settings app")
             let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
             let settingsAction = UIAlertAction(title: settingsButton, style: .default, handler: { (action) in
                 if let url = URL(string: UIApplicationOpenSettingsURLString) , UIApplication.shared.canOpenURL(url) {

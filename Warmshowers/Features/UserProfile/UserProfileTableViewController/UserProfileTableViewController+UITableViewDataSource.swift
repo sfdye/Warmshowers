@@ -159,7 +159,7 @@ extension UserProfileTableViewController {
             // Address
             let cell = tableView.dequeueReusableCell(withIdentifier: "Contact", for: indexPath) as! PhoneNumberTableViewCell
             cell.titleLabel.numberOfLines = 0
-            cell.titleLabel.text = NSLocalizedString("Address", tableName: "UserProfile", comment: "Table cell label in user profile")
+            cell.titleLabel.text = NSLocalizedString("Address", comment: "Table cell label in user profile")
             cell.detailLabel.text = addressTextForUser(user)
             cell.phoneIcon.isHidden = true
             cell.messageIcon.isHidden = true

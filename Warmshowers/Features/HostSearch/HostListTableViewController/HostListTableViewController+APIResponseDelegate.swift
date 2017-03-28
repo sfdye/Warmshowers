@@ -41,7 +41,7 @@ extension HostListTableViewController: APIResponseDelegate {
         case .user:
             let title = NSLocalizedString("Error", comment: "General error alert title")
             let button = NSLocalizedString("OK", comment: "OK button title")
-            let message = NSLocalizedString("Failed to get user info.", tableName: "HostSearch", comment: "Alert message when the app fails to recieve user info from the API")
+            let message = NSLocalizedString("Failed to get user info.", comment: "Alert message when the app fails to recieve user info from the API")
             alert.presentAlertFor(self, withTitle: title, button: button, message: message)
         default:
             break

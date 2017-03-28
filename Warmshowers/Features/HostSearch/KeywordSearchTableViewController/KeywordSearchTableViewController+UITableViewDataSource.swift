@@ -29,7 +29,7 @@ extension KeywordSearchTableViewController {
         
         if numberOfHosts == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "NoHosts", for: indexPath) as! PlaceholderTableViewCell
-            cell.placeholderLabel.text = NSLocalizedString("No Hosts", tableName: "HostSearch",
+            cell.placeholderLabel.text = NSLocalizedString("No Hosts",
                                                            comment: "Text displayed when no hosts are returned for a keyword search")
             return cell
         } else {

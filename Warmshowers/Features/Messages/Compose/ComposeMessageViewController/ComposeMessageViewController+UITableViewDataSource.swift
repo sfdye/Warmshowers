@@ -25,13 +25,13 @@ extension ComposeMessageViewController : UITableViewDataSource {
         switch (indexPath as NSIndexPath).row {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: RUID_ComposeMessageDetail, for: indexPath) as! ComposeMessageDetailTableViewCell
-            cell.detailLabel!.text = NSLocalizedString("To:", tableName: "Compose", comment: "Label before the recipients in the compose message screen")
+            cell.detailLabel!.text = NSLocalizedString("To:", comment: "Label before the recipients in the compose message screen")
             cell.detailTextField!.text = recipientString(forRecipientUsernames: recipients, joiner: ", ")
             cell.isUserInteractionEnabled = false
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: RUID_ComposeMessageDetail, for: indexPath) as! ComposeMessageDetailTableViewCell
-            cell.detailLabel!.text = NSLocalizedString("Subject:", tableName: "Compose", comment: "Label before the subject in the compose message screen")
+            cell.detailLabel!.text = NSLocalizedString("Subject:", comment: "Label before the subject in the compose message screen")
             cell.detailTextField!.text = subject
             cell.detailTextField!.delegate = self
             return cell

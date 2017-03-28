@@ -69,8 +69,8 @@ extension UserProfileTableViewController: APIResponseDelegate {
                     break
                 }
             default:
-                let title = NSLocalizedString("Logout failed", tableName: "Settings", comment: "Title for the alert shown after a failed logout")
-                let message = NSLocalizedString("Please try again.", tableName: "Settings", comment: "Message for the alert shown after a failed logout")
+                let title = NSLocalizedString("Logout failed", comment: "Title for the alert shown after a failed logout")
+                let message = NSLocalizedString("Please try again.", comment: "Message for the alert shown after a failed logout")
                 let button = NSLocalizedString("Dismiss", comment: "Dismiss button title")
                 alert.presentAlertFor(self, withTitle: title, button: button, message: message)
             }

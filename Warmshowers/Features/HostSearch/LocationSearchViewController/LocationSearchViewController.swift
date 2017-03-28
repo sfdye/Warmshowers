@@ -94,7 +94,7 @@ class LocationSearchViewController : UIViewController, Delegator, DataSource {
     func textForStatusLabel() -> String? {
         
         if zoomLevel < minimumUpdateZoomLevel {
-            return NSLocalizedString("Please zoom in to update.", tableName: "HostSearch", comment: "Instruction shown on the host search map")
+            return NSLocalizedString("Please zoom in to update.", comment: "Instruction shown on the host search map")
         }
         
         if downloadsInProgress.count > 0 {
@@ -105,9 +105,9 @@ class LocationSearchViewController : UIViewController, Delegator, DataSource {
                 }
             }
             if highDensityArea {
-                return NSLocalizedString("Updating ... There are a lot of hosts in this area so this update may take a while.", tableName: "HostSearch", comment: "Status shown on the host search map")
+                return NSLocalizedString("Updating ... There are a lot of hosts in this area so this update may take a while.", comment: "Status shown on the host search map")
             } else {
-                return NSLocalizedString("Updating ...", tableName: "HostSearch", comment: "Status shown on the host search map")
+                return NSLocalizedString("Updating ...", comment: "Status shown on the host search map")
             }
         }
         

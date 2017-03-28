@@ -36,11 +36,11 @@ extension LoginViewController: APILoginResponseDelegate {
         
         switch error {
         case is APILoginError:
-            title = NSLocalizedString("Login error", tableName: "Login", comment: "Alert title for a known login error.")
-            message = NSLocalizedString("Incorrect username or password.", tableName: "Login", comment: "Alert message for a known login error.")
+            title = NSLocalizedString("Login error", comment: "Alert title for a known login error.")
+            message = NSLocalizedString("Incorrect username or password.", comment: "Alert message for a known login error.")
         default:
-            title = NSLocalizedString("An unknown error occured", tableName: "Login", comment: "Alert title for an unknown login error.")
-            message = NSLocalizedString("Please try login again.", tableName: "Login", comment: "Alert message for an unknown login error.")
+            title = NSLocalizedString("An unknown error occured", comment: "Alert title for an unknown login error.")
+            message = NSLocalizedString("Please try login again.", comment: "Alert message for an unknown login error.")
         }
         
         let buttonTitle = NSLocalizedString("Dismiss", comment: "Dismiss button title")

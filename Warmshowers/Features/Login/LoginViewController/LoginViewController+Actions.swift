@@ -20,8 +20,8 @@ extension LoginViewController {
         self.view.endEditing(true)
         
         guard let username = usernameTextField.text , username != "" else {
-            let title = NSLocalizedString("Missing Username", tableName: "Login", comment: "Alert title for a missing username at login.")
-            let message = NSLocalizedString("Please enter your username or email", tableName: "Login", comment: "Alert message for a missing username at login.")
+            let title = NSLocalizedString("Missing Username", comment: "Alert title for a missing username at login.")
+            let message = NSLocalizedString("Please enter your username or email", comment: "Alert message for a missing username at login.")
             let buttonTitle = NSLocalizedString("OK", comment: "OK button title")
             alert.presentAlertFor(self, withTitle: title, button: buttonTitle, message: message, andHandler: { [weak self] (action) in
                 self?.usernameTextField.becomeFirstResponder()
@@ -32,8 +32,8 @@ extension LoginViewController {
         session.set(username: username)
         
         guard let password = passwordTextField.text , password != "" else {
-            let title = NSLocalizedString("Missing Password", tableName: "Login", comment: "Alert title for a missing password at login.")
-            let message = NSLocalizedString("Please enter your password", tableName: "Login", comment: "Alert message for a missing password at login.")
+            let title = NSLocalizedString("Missing Password", comment: "Alert title for a missing password at login.")
+            let message = NSLocalizedString("Please enter your password", comment: "Alert message for a missing password at login.")
             let buttonTitle = NSLocalizedString("OK", comment: "OK button title")
             alert.presentAlertFor(self, withTitle: title, button: buttonTitle, message: message, andHandler: { [weak self] (action) in
                 self?.passwordTextField.becomeFirstResponder()
@@ -42,7 +42,7 @@ extension LoginViewController {
         }
         
         // Show the spinner
-        let loginMessage = NSLocalizedString("Logging in ...", tableName: "Login", comment: "Message shown with the spinner during the login process.")
+        let loginMessage = NSLocalizedString("Logging in ...", comment: "Message shown with the spinner during the login process.")
         ProgressHUD.show(loginMessage)
         
         // Login

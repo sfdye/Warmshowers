@@ -38,7 +38,7 @@ class MessageThreadsViewController: UIViewController, Delegator, DataSource {
         super.viewDidLoad()
         
         // Navigation bar configuration.
-        navigationItem.title = NSLocalizedString("Messages", tableName: "Read", comment: "Message thread view navigation bar title")
+        navigationItem.title = NSLocalizedString("Messages", comment: "Message thread view navigation bar title")
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: WarmShowersColor.Green, NSFontAttributeName: WarmShowersFont.SueEllenFrancisco(26)]
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(MessageThreadsViewController.update))
         
