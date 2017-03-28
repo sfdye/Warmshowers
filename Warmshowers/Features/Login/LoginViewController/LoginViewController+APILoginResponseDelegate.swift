@@ -21,7 +21,7 @@ extension LoginViewController: APILoginResponseDelegate {
             navigation.showMainApp()
         } catch {
             // This case is very unlikely.
-            let title = NSLocalizedString("App Error", comment: "Alert title for generic app error.")
+            let title = NSLocalizedString("Error", comment: "General error alert title")
             let message = NSLocalizedString("Sorry, an error occured during login. Please report this as a bug, sorry for the inconvenience.", comment: "Alert message for generic app error.")
             let buttonTitle = NSLocalizedString("OK", comment: "OK button title")
             alert.presentAlertFor(self, withTitle: title, button: buttonTitle, message: message)

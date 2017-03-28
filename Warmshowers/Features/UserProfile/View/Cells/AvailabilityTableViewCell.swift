@@ -16,12 +16,12 @@ class AvailabilityTableViewCell: UITableViewCell {
     }
     
     func configureAsAvailable() {
-        textLabel?.text = "Currently Available"
+        textLabel?.text = NSLocalizedString("Currently Available", tableName: "UserProfile", comment: "Currently availible message")
         backgroundColor = WarmShowersColor.Available
     }
     
     func configureAsNotAvailable() {
-        textLabel?.text = "Unavailable"
+        textLabel?.text = NSLocalizedString("Unavailable", tableName: "UserProfile", comment: "Currently not availible message")
         backgroundColor = WarmShowersColor.NotAvailable
     }
     

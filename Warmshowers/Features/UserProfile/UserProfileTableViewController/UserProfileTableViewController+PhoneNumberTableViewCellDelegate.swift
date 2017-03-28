@@ -17,12 +17,15 @@ extension UserProfileTableViewController: PhoneNumberTableViewCellDelegate {
             let url = URL(string: "tel://" + number)
             else { return }
         if UIApplication.shared.canOpenURL(url) {
-            let alert = UIAlertController(title: "Call \(number) now?", message: nil, preferredStyle: .actionSheet)
-            let callAction = UIAlertAction(title: "Call", style: .default, handler: { (action) in
+            let title = String(format: NSLocalizedString("Call %@ now?", tableName: "UserProfile", comment: "Call host action sheet title format"), "\(number)")
+            let alert = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
+            let callButtonTitle = NSLocalizedString("Call", comment: "Call button title")
+            let callAction = UIAlertAction(title: callButtonTitle, style: .default, handler: { (action) in
                 UIApplication.shared.open(url, options: [String : Any](), completionHandler: nil)
             })
             alert.addAction(callAction)
-            let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
+            let cancelButtonTitle = NSLocalizedString("Cancel", comment: "Cancel button title")
+            let cancelAction = UIAlertAction(title: cancelButtonTitle, style: .destructive, handler: nil)
             alert.addAction(cancelAction)
             DispatchQueue.main.async { [unowned self] in
                 self.present(alert, animated: true, completion: nil)
@@ -42,8 +45,10 @@ extension UserProfileTableViewController: PhoneNumberTableViewCellDelegate {
                 self.present(composeVC, animated: true, completion: nil)
             }
         } else {
-            let alert = UIAlertController(title: "Sorry, your device is not set up for SMS services", message: nil, preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            let title = NSLocalizedString("Sorry, your device is not set up for SMS services", tableName: "UserProfile", comment: "Alert informing the user that their device is not setup to use SMS services.")
+            let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+            let button = NSLocalizedString("OK", comment: "OK button title")
+            let okAction = UIAlertAction(title: button, style: .default, handler: nil)
             alert.addAction(okAction)
             DispatchQueue.main.async { [unowned self] in
                 self.present(alert, animated: true, completion: nil)

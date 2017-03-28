@@ -1,0 +1,18 @@
+/* 
+  InfoPlist.strings
+  Warmshowers
+
+  Created by Rajan Fernandez on 8/08/16.
+  Copyright © 2016 Rajan Fernandez. All rights reserved.
+*/
+
+"NSLocationWhenInUseUsageDescription" = "This is required to show your location on the map.";
+
+shortcutTitle1 = "Location Search";
+shortcutSubtitle1 = "Shows hosts on a map";
+
+shortcutTitle2 = "Keyword Search";
+shortcutSubtitle2 = "Search by city or email";
+
+shortcutTitle3 = "Messages";
+shortcutSubtitle3 = "Your warmshowers mail";

@@ -1,0 +1,18 @@
+/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "4VT-hK-Va1"; */
+"4VT-hK-Va1.normalTitle" = "TEST Login";
+
+/* Class = "UITextField"; accessibilityHint = "Password"; ObjectID = "AEk-9g-Q2M"; */
+"AEk-9g-Q2M.accessibilityHint" = "Password";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "AEk-9g-Q2M"; */
+"AEk-9g-Q2M.placeholder" = "Password";
+
+/* Class = "UIButton"; normalTitle = "Create an account"; ObjectID = "Kkm-vv-tbZ"; */
+"Kkm-vv-tbZ.normalTitle" = "Create an account";
+
+/* Class = "UITextField"; accessibilityHint = "Username or Email"; ObjectID = "aeg-Nn-qkC"; */
+"aeg-Nn-qkC.accessibilityHint" = "Username or Email";
+
+/* Class = "UITextField"; placeholder = "Username or Email"; ObjectID = "aeg-Nn-qkC"; */
+"aeg-Nn-qkC.placeholder" = "Username or Email";
+

@@ -1,9 +1,11 @@
-/* (No Commment) */
-"CFBundleDisplayName" = "Warmshowers";
+"NSLocationWhenInUseUsageDescription" = "This is required to show your location on the map.";
 
-/* (No Commment) */
-"CFBundleName" = "$(PRODUCT_NAME)";
+shortcutTitle1 = "Location Search";
+shortcutSubtitle1 = "Shows hosts on a map";
 
-/* (No Commment) */
-"CFBundleShortVersionString" = "1.2.3";
+shortcutTitle2 = "Keyword Search";
+shortcutSubtitle2 = "Search by city or email";
+
+shortcutTitle3 = "Messages";
+shortcutSubtitle3 = "Your warmshowers mail";
 

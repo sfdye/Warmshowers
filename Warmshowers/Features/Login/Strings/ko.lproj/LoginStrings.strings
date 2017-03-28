@@ -1,0 +1,26 @@
+/* Alert title for an unknown login error. */
+"An unknown error occured" = "An unknown error occured";
+
+/* Alert message for a known login error. */
+"Incorrect username or password." = "Incorrect username or password.";
+
+/* Message shown with the spinner during the login process. */
+"Logging in ..." = "Logging in ...";
+
+/* Alert title for a known login error. */
+"Login error" = "Login error";
+
+/* Alert title for a missing password at login. */
+"Missing Password" = "TEST Missing Password";
+
+/* Alert title for a missing username at login. */
+"Missing Username" = "TEST Missing Username";
+
+/* Alert message for a missing password at login. */
+"Please enter your password" = "Please enter your password";
+
+/* Alert message for a missing username at login. */
+"Please enter your username or email" = "Please enter your username or email";
+
+/* Alert message for an unknown login error. */
+"Please try login again." = "Please try login again.";

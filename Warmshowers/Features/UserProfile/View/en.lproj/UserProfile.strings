@@ -1,4 +1,4 @@
-/* Class = "UILabel"; text = "Type"; ObjectID = "3Ly-Kp-uhT"; */
+/* (No Commment) */
 "3Ly-Kp-uhT.text" = "Type";
 
 /* Class = "UILabel"; text = "Currently Available"; ObjectID = "AAP-cR-5l6"; */
@@ -7,13 +7,13 @@
 /* Class = "UILabel"; text = "Title"; ObjectID = "Bhq-ms-epa"; */
 "Bhq-ms-epa.text" = "Title";
 
-/* Class = "UILabel"; text = "Detail"; ObjectID = "Dcc-z7-w4W"; */
+/* (No Commment) */
 "Dcc-z7-w4W.text" = "Detail";
 
 /* Class = "UILabel"; text = "Info"; ObjectID = "E2X-by-ruN"; */
 "E2X-by-ruN.text" = "Info";
 
-/* Class = "UILabel"; text = "Title"; ObjectID = "PeB-cU-THw"; */
+/* (No Commment) */
 "PeB-cU-THw.text" = "Title";
 
 /* Class = "UITextView"; text = "About"; ObjectID = "Q3K-XS-pYs"; */
@@ -34,7 +34,7 @@
 /* Class = "UILabel"; text = "Account detail"; ObjectID = "ctg-Rr-GTT"; */
 "ctg-Rr-GTT.text" = "Account detail";
 
-/* Class = "UILabel"; text = "1 January 2000"; ObjectID = "cy0-Yn-3nj"; */
+/* (No Commment) */
 "cy0-Yn-3nj.text" = "1 January 2000";
 
 /* Class = "UILabel"; text = " • Label"; ObjectID = "fdr-P1-SPC"; */
@@ -43,22 +43,22 @@
 /* Class = "UILabel"; text = "+00 000 000 0000"; ObjectID = "hzd-Ch-Wm1"; */
 "hzd-Ch-Wm1.text" = "+00 000 000 0000";
 
-/* Class = "UILabel"; text = "Feedback"; ObjectID = "j3A-HC-5TB"; */
+/* (No Commment) */
 "j3A-HC-5TB.text" = "Feedback";
 
-/* Class = "UITextView"; text = "Type your feedback here."; ObjectID = "jcJ-CK-SJq"; */
+/* (No Commment) */
 "jcJ-CK-SJq.text" = "Type your feedback here.";
 
-/* Class = "UILabel"; text = "Recommender Name"; ObjectID = "q12-R7-LFy"; */
+/* (No Commment) */
 "q12-R7-LFy.text" = "Recommender Name";
 
-/* Class = "UILabel"; text = "Positive"; ObjectID = "rdh-De-bc6"; */
+/* (No Commment) */
 "rdh-De-bc6.text" = "Positive";
 
-/* Class = "UINavigationItem"; title = "Create Feedback"; ObjectID = "sFh-jC-TjZ"; */
+/* (No Commment) */
 "sFh-jC-TjZ.title" = "Create Feedback";
 
-/* Class = "UIBarButtonItem"; title = "Submit"; ObjectID = "teB-yT-jGH"; */
+/* (No Commment) */
 "teB-yT-jGH.title" = "Submit";
 
 /* Class = "UILabel"; text = "Phone"; ObjectID = "tfp-P3-SnZ"; */

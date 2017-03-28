@@ -1,0 +1,39 @@
+/* Class = "UILabel"; text = "Participants"; ObjectID = "GLC-nj-Xhz"; */
+"GLC-nj-Xhz.text" = "Participants";
+
+/* Class = "UIButton"; normalTitle = "Update"; ObjectID = "KMs-CU-DRy"; */
+"KMs-CU-DRy.normalTitle" = "Update";
+
+/* Class = "UILabel"; text = "Sender"; ObjectID = "LJD-81-MoP"; */
+"LJD-81-MoP.text" = "Sender";
+
+/* Class = "UILabel"; text = "Subject"; ObjectID = "T7v-7U-ynR"; */
+"T7v-7U-ynR.text" = "Subject";
+
+/* Class = "UITextView"; text = "Message body"; ObjectID = "Ti4-3w-KlQ"; */
+"Ti4-3w-KlQ.text" = "Message body";
+
+/* Class = "UINavigationItem"; title = "Title"; ObjectID = "Vae-sb-mrG"; */
+"Vae-sb-mrG.title" = "Title";
+
+/* Class = "UILabel"; text = "Sorry this message is missing.  \n\nPlease go back and refresh your message threads."; ObjectID = "XFb-9k-Sj1"; */
+"XFb-9k-Sj1.text" = "Sorry this message is missing.  
+
+Please go back and refresh your message threads.";
+
+/* Class = "UILabel"; text = "1 January 2000"; ObjectID = "eif-EX-td2"; */
+"eif-EX-td2.text" = "1 January 2000";
+
+/* Class = "UITabBarItem"; title = "Messages"; ObjectID = "gE7-0F-sqZ"; */
+"gE7-0F-sqZ.title" = "Messages";
+
+/* Class = "UILabel"; text = "Message preview\nSecond line"; ObjectID = "q7c-xx-uI1"; */
+"q7c-xx-uI1.text" = "Message preview
+Second line";
+
+/* Class = "UILabel"; text = "You have no messages."; ObjectID = "yKG-BC-Ftj"; */
+"yKG-BC-Ftj.text" = "You have no messages.";
+
+/* Class = "UILabel"; text = "30/01/2015"; ObjectID = "yzh-PZ-B1Z"; */
+"yzh-PZ-B1Z.text" = "30/01/2015";
+

@@ -10,6 +10,20 @@
 		987D918476D47A61CCFBA23B /* Pods_WarmshowersData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1437EFFC40DEEC8EBE45C21C /* Pods_WarmshowersData.framework */; };
 		CDC80C00DF08E589C71B8996 /* Pods_Warmshowers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BD5535C83353EC12F549AD0 /* Pods_Warmshowers.framework */; };
 		E50239681E1B64C30013B40D /* ComposeMessageViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50239671E1B64C30013B40D /* ComposeMessageViewControllerDelegate.swift */; };
+		E505243B1E8A43820021DDD5 /* FeedbackTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E505243A1E8A43820021DDD5 /* FeedbackTableViewCell.swift */; };
+		E50524401E8A43AA0021DDD5 /* FeedbackBodyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E505243D1E8A43AA0021DDD5 /* FeedbackBodyTableViewCell.swift */; };
+		E50524411E8A43AA0021DDD5 /* FeedbackOptionPickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E505243E1E8A43AA0021DDD5 /* FeedbackOptionPickerTableViewCell.swift */; };
+		E50524421E8A43AA0021DDD5 /* FeedbackOptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E505243F1E8A43AA0021DDD5 /* FeedbackOptionTableViewCell.swift */; };
+		E50524491E8A48620021DDD5 /* HostSearch.strings in Resources */ = {isa = PBXBuildFile; fileRef = E505244B1E8A48620021DDD5 /* HostSearch.strings */; };
+		E505244E1E8A50D70021DDD5 /* HostSearch.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = E50524501E8A50D70021DDD5 /* HostSearch.stringsdict */; };
+		E50524531E8A51400021DDD5 /* UserProfile.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = E50524551E8A51400021DDD5 /* UserProfile.stringsdict */; };
+		E505247F1E8A5CA70021DDD5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E50524811E8A5CA70021DDD5 /* InfoPlist.strings */; };
+		E50524841E8A5CA80021DDD5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E50524861E8A5CA80021DDD5 /* InfoPlist.strings */; };
+		E50524891E8A5CA90021DDD5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E505248B1E8A5CA90021DDD5 /* InfoPlist.strings */; };
+		E505248E1E8A5CAB0021DDD5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E50524901E8A5CAB0021DDD5 /* InfoPlist.strings */; };
+		E50524921E8ADC030021DDD5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E53B705E1E88E92100F21438 /* Localizable.strings */; };
+		E50524931E8ADC090021DDD5 /* Login.strings in Resources */ = {isa = PBXBuildFile; fileRef = E53B70641E88E9C700F21438 /* Login.strings */; };
+		E50524961E8ADDDA0021DDD5 /* LoginStrings.strings in Resources */ = {isa = PBXBuildFile; fileRef = E50524981E8ADDDA0021DDD5 /* LoginStrings.strings */; };
 		E51A55671E13824A0004600D /* Fetchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E51A55661E13824A0004600D /* Fetchable.swift */; };
 		E529ECC71E11BC2700395369 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ECBE1E11BC2700395369 /* Alert.swift */; };
 		E529ECC81E11BC2700395369 /* AlertDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ECBF1E11BC2700395369 /* AlertDelegate.swift */; };
@@ -19,7 +33,6 @@
 		E529ECCC1E11BC2700395369 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ECC51E11BC2700395369 /* Session.swift */; };
 		E529ECCD1E11BC2700395369 /* SessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ECC61E11BC2700395369 /* SessionDelegate.swift */; };
 		E529ECD21E11BDE900395369 /* TimeUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ECD01E11BDE900395369 /* TimeUnit.swift */; };
-		E529ECD31E11BDE900395369 /* WSTimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ECD11E11BDE900395369 /* WSTimeInterval.swift */; };
 		E529ECDC1E11C48600395369 /* Distance.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ECD71E11C48600395369 /* Distance.swift */; };
 		E529ECDD1E11C48600395369 /* MapSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ECD91E11C48600395369 /* MapSource.swift */; };
 		E529ECDE1E11C48600395369 /* MapTileServerURLTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ECDA1E11C48600395369 /* MapTileServerURLTemplate.swift */; };
@@ -82,18 +95,6 @@
 		E529EDB81E11C6BB00395369 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED471E11C6BB00395369 /* SettingsTableViewController.swift */; };
 		E529EDB91E11C6BB00395369 /* LogoutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED4A1E11C6BB00395369 /* LogoutTableViewCell.swift */; };
 		E529EDBA1E11C6BB00395369 /* SwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED4B1E11C6BB00395369 /* SwitchTableViewCell.swift */; };
-		E529EDBC1E11C6BB00395369 /* CreateFeedbackTableViewController+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED4F1E11C6BB00395369 /* CreateFeedbackTableViewController+Actions.swift */; };
-		E529EDBD1E11C6BB00395369 /* CreateFeedbackTableViewController+UIPickerViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED501E11C6BB00395369 /* CreateFeedbackTableViewController+UIPickerViewDataSource.swift */; };
-		E529EDBE1E11C6BB00395369 /* CreateFeedbackTableViewController+UIPickerViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED511E11C6BB00395369 /* CreateFeedbackTableViewController+UIPickerViewDelegate.swift */; };
-		E529EDBF1E11C6BB00395369 /* CreateFeedbackTableViewController+UITableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED521E11C6BB00395369 /* CreateFeedbackTableViewController+UITableViewDataSource.swift */; };
-		E529EDC01E11C6BB00395369 /* CreateFeedbackTableViewController+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED531E11C6BB00395369 /* CreateFeedbackTableViewController+UITableViewDelegate.swift */; };
-		E529EDC11E11C6BB00395369 /* CreateFeedbackTableViewController+UITextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED541E11C6BB00395369 /* CreateFeedbackTableViewController+UITextViewDelegate.swift */; };
-		E529EDC21E11C6BB00395369 /* CreateFeedbackTableViewController+APIResponseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED551E11C6BB00395369 /* CreateFeedbackTableViewController+APIResponseDelegate.swift */; };
-		E529EDC31E11C6BB00395369 /* CreateFeedbackTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED561E11C6BB00395369 /* CreateFeedbackTableViewController.swift */; };
-		E529EDC41E11C6BB00395369 /* FeedbackTableViewController+UIScrollViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED581E11C6BB00395369 /* FeedbackTableViewController+UIScrollViewDelegate.swift */; };
-		E529EDC51E11C6BB00395369 /* FeedbackTableViewController+UITableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED591E11C6BB00395369 /* FeedbackTableViewController+UITableViewDataSource.swift */; };
-		E529EDC61E11C6BB00395369 /* FeedbackTableViewController+APIResponseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED5A1E11C6BB00395369 /* FeedbackTableViewController+APIResponseDelegate.swift */; };
-		E529EDC71E11C6BB00395369 /* FeedbackTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED5B1E11C6BB00395369 /* FeedbackTableViewController.swift */; };
 		E529EDC81E11C6BB00395369 /* UserProfileTableViewController+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED5D1E11C6BB00395369 /* UserProfileTableViewController+Actions.swift */; };
 		E529EDC91E11C6BB00395369 /* UserProfileTableViewController+Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED5E1E11C6BB00395369 /* UserProfileTableViewController+Navigation.swift */; };
 		E529EDCA1E11C6BB00395369 /* UserProfileTableViewController+UITableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED5F1E11C6BB00395369 /* UserProfileTableViewController+UITableViewDataSource.swift */; };
@@ -102,10 +103,6 @@
 		E529EDCE1E11C6BB00395369 /* AboutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED651E11C6BB00395369 /* AboutTableViewCell.swift */; };
 		E529EDCF1E11C6BB00395369 /* AccountDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED661E11C6BB00395369 /* AccountDetailTableViewCell.swift */; };
 		E529EDD01E11C6BB00395369 /* AvailabilityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED671E11C6BB00395369 /* AvailabilityTableViewCell.swift */; };
-		E529EDD11E11C6BB00395369 /* FeedbackBodyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED681E11C6BB00395369 /* FeedbackBodyTableViewCell.swift */; };
-		E529EDD21E11C6BB00395369 /* FeedbackOptionPickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED691E11C6BB00395369 /* FeedbackOptionPickerTableViewCell.swift */; };
-		E529EDD31E11C6BB00395369 /* FeedbackOptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED6A1E11C6BB00395369 /* FeedbackOptionTableViewCell.swift */; };
-		E529EDD41E11C6BB00395369 /* FeedbackTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED6B1E11C6BB00395369 /* FeedbackTableViewCell.swift */; };
 		E529EDD51E11C6BB00395369 /* HostingInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED6C1E11C6BB00395369 /* HostingInfoTableViewCell.swift */; };
 		E529EDD61E11C6BB00395369 /* HostOfferTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED6D1E11C6BB00395369 /* HostOfferTableViewCell.swift */; };
 		E529EDD71E11C6BB00395369 /* PhoneNumberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E529ED6E1E11C6BB00395369 /* PhoneNumberTableViewCell.swift */; };
@@ -215,8 +212,6 @@
 		E53B70501E88B5D600F21438 /* Messages.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E53B70521E88B5D600F21438 /* Messages.storyboard */; };
 		E53B70531E88B5DF00F21438 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E53B70551E88B5DF00F21438 /* Settings.storyboard */; };
 		E53B70561E88B5FA00F21438 /* UserProfile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E53B70581E88B5FA00F21438 /* UserProfile.storyboard */; };
-		E53B705C1E88E92100F21438 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E53B705E1E88E92100F21438 /* Localizable.strings */; };
-		E53B70621E88E9C700F21438 /* Login.strings in Resources */ = {isa = PBXBuildFile; fileRef = E53B70641E88E9C700F21438 /* Login.strings */; };
 		E53B70881E88FE5C00F21438 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E53B708A1E88FE5C00F21438 /* InfoPlist.strings */; };
 		E54215891E3172D100568059 /* MessageThreadViewController+APIResponseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E542157F1E3172D100568059 /* MessageThreadViewController+APIResponseDelegate.swift */; };
 		E542158A1E3172D100568059 /* MessageThreadViewController+ComposeMessageViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E54215801E3172D100568059 /* MessageThreadViewController+ComposeMessageViewControllerDelegate.swift */; };
@@ -250,14 +245,24 @@
 		E58C37311D2FA087001B03D5 /* WSHostSearchViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58C37301D2FA087001B03D5 /* WSHostSearchViewControllerTests.swift */; };
 		E59BC6371E89C8F30058EA85 /* Compose.strings in Resources */ = {isa = PBXBuildFile; fileRef = E59BC6391E89C8F30058EA85 /* Compose.strings */; };
 		E59BC63E1E89CA810058EA85 /* Read.strings in Resources */ = {isa = PBXBuildFile; fileRef = E59BC6401E89CA810058EA85 /* Read.strings */; };
-		E59BC66B1E89F2EA0058EA85 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E59BC66D1E89F2EA0058EA85 /* InfoPlist.strings */; };
-		E59BC6701E89F2EB0058EA85 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E59BC6721E89F2EB0058EA85 /* InfoPlist.strings */; };
-		E59BC6771E89F2ED0058EA85 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E59BC6791E89F2ED0058EA85 /* InfoPlist.strings */; };
-		E59BC67E1E89F2EF0058EA85 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E59BC6801E89F2EF0058EA85 /* InfoPlist.strings */; };
 		E59BC6901E8A01010058EA85 /* Settings.strings in Resources */ = {isa = PBXBuildFile; fileRef = E59BC6921E8A01010058EA85 /* Settings.strings */; };
-		E59BC6961E8A0BDD0058EA85 /* HostSearch.strings in Resources */ = {isa = PBXBuildFile; fileRef = E59BC6951E8A0BDC0058EA85 /* HostSearch.strings */; };
-		E59BC6991E8A13470058EA85 /* HostSearch.stringsdict.plist in Resources */ = {isa = PBXBuildFile; fileRef = E59BC69B1E8A13470058EA85 /* HostSearch.stringsdict.plist */; };
-		E59BC69E1E8A193E0058EA85 /* HostSearch.strings in Resources */ = {isa = PBXBuildFile; fileRef = E59BC6A01E8A193E0058EA85 /* HostSearch.strings */; };
+		E59BC6A51E8A1BBB0058EA85 /* UserProfile.strings in Resources */ = {isa = PBXBuildFile; fileRef = E59BC6A71E8A1BBB0058EA85 /* UserProfile.strings */; };
+		E59BC6BD1E8A1F630058EA85 /* CreateFeedbackTableViewController+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59BC6AB1E8A1F630058EA85 /* CreateFeedbackTableViewController+Actions.swift */; };
+		E59BC6BE1E8A1F630058EA85 /* CreateFeedbackTableViewController+APIResponseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59BC6AC1E8A1F630058EA85 /* CreateFeedbackTableViewController+APIResponseDelegate.swift */; };
+		E59BC6BF1E8A1F630058EA85 /* CreateFeedbackTableViewController+UIPickerViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59BC6AD1E8A1F630058EA85 /* CreateFeedbackTableViewController+UIPickerViewDataSource.swift */; };
+		E59BC6C01E8A1F630058EA85 /* CreateFeedbackTableViewController+UIPickerViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59BC6AE1E8A1F630058EA85 /* CreateFeedbackTableViewController+UIPickerViewDelegate.swift */; };
+		E59BC6C11E8A1F630058EA85 /* CreateFeedbackTableViewController+UITableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59BC6AF1E8A1F630058EA85 /* CreateFeedbackTableViewController+UITableViewDataSource.swift */; };
+		E59BC6C21E8A1F630058EA85 /* CreateFeedbackTableViewController+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59BC6B01E8A1F630058EA85 /* CreateFeedbackTableViewController+UITableViewDelegate.swift */; };
+		E59BC6C31E8A1F630058EA85 /* CreateFeedbackTableViewController+UITextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59BC6B11E8A1F630058EA85 /* CreateFeedbackTableViewController+UITextViewDelegate.swift */; };
+		E59BC6C41E8A1F630058EA85 /* CreateFeedbackTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59BC6B21E8A1F630058EA85 /* CreateFeedbackTableViewController.swift */; };
+		E59BC6C51E8A1F630058EA85 /* FeedbackTableViewController+APIResponseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59BC6B71E8A1F630058EA85 /* FeedbackTableViewController+APIResponseDelegate.swift */; };
+		E59BC6C61E8A1F630058EA85 /* FeedbackTableViewController+UIScrollViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59BC6B81E8A1F630058EA85 /* FeedbackTableViewController+UIScrollViewDelegate.swift */; };
+		E59BC6C71E8A1F630058EA85 /* FeedbackTableViewController+UITableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59BC6B91E8A1F630058EA85 /* FeedbackTableViewController+UITableViewDataSource.swift */; };
+		E59BC6C81E8A1F630058EA85 /* FeedbackTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59BC6BA1E8A1F630058EA85 /* FeedbackTableViewController.swift */; };
+		E59BC6CA1E8A1F900058EA85 /* Feedback.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E59BC6C91E8A1F900058EA85 /* Feedback.storyboard */; };
+		E59BC6CC1E8A1FE90058EA85 /* CreateFeedback.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E59BC6CB1E8A1FE90058EA85 /* CreateFeedback.storyboard */; };
+		E59BC6D11E8A206C0058EA85 /* ReadFeedback.strings in Resources */ = {isa = PBXBuildFile; fileRef = E59BC6D31E8A206C0058EA85 /* ReadFeedback.strings */; };
+		E59BC6D41E8A20710058EA85 /* CreateFeedback.strings in Resources */ = {isa = PBXBuildFile; fileRef = E59BC6D61E8A20710058EA85 /* CreateFeedback.strings */; };
 		E59FE1CF1CD1FF900024F354 /* MOCKNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59FE1CE1CD1FF900024F354 /* MOCKNavigation.swift */; };
 		E59FE1D71CD208B30024F354 /* WSLoginViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59FE1C71CD0C15F0024F354 /* WSLoginViewControllerTests.swift */; };
 		E59FE1D91CD21F0D0024F354 /* LoginUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59FE1D81CD21F0D0024F354 /* LoginUITests.swift */; };
@@ -347,6 +352,56 @@
 		A17687885A5BDB7132D6EBF2 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC5E586690182D68CCBBE7F9 /* Pods-Warmshowers.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Warmshowers.release.xcconfig"; path = "Pods/Target Support Files/Pods-Warmshowers/Pods-Warmshowers.release.xcconfig"; sourceTree = "<group>"; };
 		E50239671E1B64C30013B40D /* ComposeMessageViewControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeMessageViewControllerDelegate.swift; sourceTree = "<group>"; };
+		E505243A1E8A43820021DDD5 /* FeedbackTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackTableViewCell.swift; sourceTree = "<group>"; };
+		E505243D1E8A43AA0021DDD5 /* FeedbackBodyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackBodyTableViewCell.swift; sourceTree = "<group>"; };
+		E505243E1E8A43AA0021DDD5 /* FeedbackOptionPickerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackOptionPickerTableViewCell.swift; sourceTree = "<group>"; };
+		E505243F1E8A43AA0021DDD5 /* FeedbackOptionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackOptionTableViewCell.swift; sourceTree = "<group>"; };
+		E505244A1E8A48620021DDD5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/HostSearch.strings; sourceTree = "<group>"; };
+		E505244F1E8A50D70021DDD5 /* en */ = {isa = PBXFileReference; explicitFileType = text.plist.xml; name = en; path = en.lproj/HostSearch.stringsdict; sourceTree = "<group>"; };
+		E50524541E8A51400021DDD5 /* en */ = {isa = PBXFileReference; explicitFileType = text.plist.xml; name = en; path = en.lproj/UserProfile.stringsdict; sourceTree = "<group>"; };
+		E50524561E8A572F0021DDD5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E50524591E8A593A0021DDD5 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/HostSearch.strings; sourceTree = "<group>"; };
+		E505245A1E8A593A0021DDD5 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Login.strings; sourceTree = "<group>"; };
+		E505245B1E8A593A0021DDD5 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/ComposeMessage.strings; sourceTree = "<group>"; };
+		E505245C1E8A593A0021DDD5 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Messages.strings; sourceTree = "<group>"; };
+		E505245D1E8A593A0021DDD5 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Settings.strings; sourceTree = "<group>"; };
+		E505245E1E8A593A0021DDD5 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/UserProfile.strings; sourceTree = "<group>"; };
+		E505245F1E8A593B0021DDD5 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E50524601E8A593B0021DDD5 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/CreateFeedback.strings; sourceTree = "<group>"; };
+		E50524611E8A593B0021DDD5 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/ReadFeedback.strings; sourceTree = "<group>"; };
+		E50524621E8A593B0021DDD5 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/HostSearch.strings; sourceTree = "<group>"; };
+		E50524631E8A593B0021DDD5 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ko; path = ko.lproj/HostSearch.stringsdict; sourceTree = "<group>"; };
+		E50524651E8A593B0021DDD5 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Compose.strings; sourceTree = "<group>"; };
+		E50524661E8A593B0021DDD5 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Read.strings; sourceTree = "<group>"; };
+		E50524671E8A593B0021DDD5 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Settings.strings; sourceTree = "<group>"; };
+		E50524681E8A593B0021DDD5 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/UserProfile.strings; sourceTree = "<group>"; };
+		E50524691E8A593C0021DDD5 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ko; path = ko.lproj/UserProfile.stringsdict; sourceTree = "<group>"; };
+		E505246A1E8A593C0021DDD5 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E505246B1E8A5B540021DDD5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/HostSearch.strings"; sourceTree = "<group>"; };
+		E505246C1E8A5B550021DDD5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Login.strings"; sourceTree = "<group>"; };
+		E505246D1E8A5B550021DDD5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Messages.strings"; sourceTree = "<group>"; };
+		E505246E1E8A5B550021DDD5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Settings.strings"; sourceTree = "<group>"; };
+		E505246F1E8A5B550021DDD5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/UserProfile.strings"; sourceTree = "<group>"; };
+		E50524701E8A5B560021DDD5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/ComposeMessage.strings"; sourceTree = "<group>"; };
+		E50524711E8A5B560021DDD5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		E50524721E8A5B560021DDD5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/CreateFeedback.strings"; sourceTree = "<group>"; };
+		E50524731E8A5B560021DDD5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/ReadFeedback.strings"; sourceTree = "<group>"; };
+		E50524741E8A5B560021DDD5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/HostSearch.strings"; sourceTree = "<group>"; };
+		E50524751E8A5B560021DDD5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "zh-Hans"; path = "zh-Hans.lproj/HostSearch.stringsdict"; sourceTree = "<group>"; };
+		E50524761E8A5B570021DDD5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Login.strings"; sourceTree = "<group>"; };
+		E50524771E8A5B570021DDD5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Compose.strings"; sourceTree = "<group>"; };
+		E50524781E8A5B570021DDD5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Read.strings"; sourceTree = "<group>"; };
+		E50524791E8A5B570021DDD5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Settings.strings"; sourceTree = "<group>"; };
+		E505247A1E8A5B570021DDD5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/UserProfile.strings"; sourceTree = "<group>"; };
+		E505247B1E8A5B570021DDD5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "zh-Hans"; path = "zh-Hans.lproj/UserProfile.stringsdict"; sourceTree = "<group>"; };
+		E505247C1E8A5B570021DDD5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		E50524801E8A5CA70021DDD5 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E50524851E8A5CA80021DDD5 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E505248A1E8A5CA90021DDD5 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E505248F1E8A5CAB0021DDD5 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		E50524911E8A61880021DDD5 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Login.strings; sourceTree = "<group>"; };
+		E50524971E8ADDDA0021DDD5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LoginStrings.strings; sourceTree = "<group>"; };
+		E50524991E8ADDEA0021DDD5 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LoginStrings.strings; sourceTree = "<group>"; };
 		E51A55661E13824A0004600D /* Fetchable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fetchable.swift; sourceTree = "<group>"; };
 		E529ECBE1E11BC2700395369 /* Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		E529ECBF1E11BC2700395369 /* AlertDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertDelegate.swift; sourceTree = "<group>"; };
@@ -356,7 +411,6 @@
 		E529ECC51E11BC2700395369 /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		E529ECC61E11BC2700395369 /* SessionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionDelegate.swift; sourceTree = "<group>"; };
 		E529ECD01E11BDE900395369 /* TimeUnit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeUnit.swift; sourceTree = "<group>"; };
-		E529ECD11E11BDE900395369 /* WSTimeInterval.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSTimeInterval.swift; sourceTree = "<group>"; };
 		E529ECD71E11C48600395369 /* Distance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Distance.swift; sourceTree = "<group>"; };
 		E529ECD91E11C48600395369 /* MapSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapSource.swift; sourceTree = "<group>"; };
 		E529ECDA1E11C48600395369 /* MapTileServerURLTemplate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapTileServerURLTemplate.swift; sourceTree = "<group>"; };
@@ -419,18 +473,6 @@
 		E529ED471E11C6BB00395369 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		E529ED4A1E11C6BB00395369 /* LogoutTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutTableViewCell.swift; sourceTree = "<group>"; };
 		E529ED4B1E11C6BB00395369 /* SwitchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchTableViewCell.swift; sourceTree = "<group>"; };
-		E529ED4F1E11C6BB00395369 /* CreateFeedbackTableViewController+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CreateFeedbackTableViewController+Actions.swift"; sourceTree = "<group>"; };
-		E529ED501E11C6BB00395369 /* CreateFeedbackTableViewController+UIPickerViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CreateFeedbackTableViewController+UIPickerViewDataSource.swift"; sourceTree = "<group>"; };
-		E529ED511E11C6BB00395369 /* CreateFeedbackTableViewController+UIPickerViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CreateFeedbackTableViewController+UIPickerViewDelegate.swift"; sourceTree = "<group>"; };
-		E529ED521E11C6BB00395369 /* CreateFeedbackTableViewController+UITableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CreateFeedbackTableViewController+UITableViewDataSource.swift"; sourceTree = "<group>"; };
-		E529ED531E11C6BB00395369 /* CreateFeedbackTableViewController+UITableViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CreateFeedbackTableViewController+UITableViewDelegate.swift"; sourceTree = "<group>"; };
-		E529ED541E11C6BB00395369 /* CreateFeedbackTableViewController+UITextViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CreateFeedbackTableViewController+UITextViewDelegate.swift"; sourceTree = "<group>"; };
-		E529ED551E11C6BB00395369 /* CreateFeedbackTableViewController+APIResponseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CreateFeedbackTableViewController+APIResponseDelegate.swift"; sourceTree = "<group>"; };
-		E529ED561E11C6BB00395369 /* CreateFeedbackTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateFeedbackTableViewController.swift; sourceTree = "<group>"; };
-		E529ED581E11C6BB00395369 /* FeedbackTableViewController+UIScrollViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FeedbackTableViewController+UIScrollViewDelegate.swift"; sourceTree = "<group>"; };
-		E529ED591E11C6BB00395369 /* FeedbackTableViewController+UITableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FeedbackTableViewController+UITableViewDataSource.swift"; sourceTree = "<group>"; };
-		E529ED5A1E11C6BB00395369 /* FeedbackTableViewController+APIResponseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FeedbackTableViewController+APIResponseDelegate.swift"; sourceTree = "<group>"; };
-		E529ED5B1E11C6BB00395369 /* FeedbackTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackTableViewController.swift; sourceTree = "<group>"; };
 		E529ED5D1E11C6BB00395369 /* UserProfileTableViewController+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserProfileTableViewController+Actions.swift"; sourceTree = "<group>"; };
 		E529ED5E1E11C6BB00395369 /* UserProfileTableViewController+Navigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserProfileTableViewController+Navigation.swift"; sourceTree = "<group>"; };
 		E529ED5F1E11C6BB00395369 /* UserProfileTableViewController+UITableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserProfileTableViewController+UITableViewDataSource.swift"; sourceTree = "<group>"; };
@@ -439,10 +481,6 @@
 		E529ED651E11C6BB00395369 /* AboutTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutTableViewCell.swift; sourceTree = "<group>"; };
 		E529ED661E11C6BB00395369 /* AccountDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountDetailTableViewCell.swift; sourceTree = "<group>"; };
 		E529ED671E11C6BB00395369 /* AvailabilityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvailabilityTableViewCell.swift; sourceTree = "<group>"; };
-		E529ED681E11C6BB00395369 /* FeedbackBodyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackBodyTableViewCell.swift; sourceTree = "<group>"; };
-		E529ED691E11C6BB00395369 /* FeedbackOptionPickerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackOptionPickerTableViewCell.swift; sourceTree = "<group>"; };
-		E529ED6A1E11C6BB00395369 /* FeedbackOptionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackOptionTableViewCell.swift; sourceTree = "<group>"; };
-		E529ED6B1E11C6BB00395369 /* FeedbackTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackTableViewCell.swift; sourceTree = "<group>"; };
 		E529ED6C1E11C6BB00395369 /* HostingInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostingInfoTableViewCell.swift; sourceTree = "<group>"; };
 		E529ED6D1E11C6BB00395369 /* HostOfferTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostOfferTableViewCell.swift; sourceTree = "<group>"; };
 		E529ED6E1E11C6BB00395369 /* PhoneNumberTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneNumberTableViewCell.swift; sourceTree = "<group>"; };
@@ -590,13 +628,9 @@
 		E58C37301D2FA087001B03D5 /* WSHostSearchViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSHostSearchViewControllerTests.swift; sourceTree = "<group>"; };
 		E59BC6261E8902850058EA85 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E59BC6681E89F2E80058EA85 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E59BC66C1E89F2EA0058EA85 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		E59BC6711E89F2EB0058EA85 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E59BC6731E89F2EB0058EA85 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Settings.strings; sourceTree = "<group>"; };
 		E59BC6741E89F2EC0058EA85 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/HostSearch.strings; sourceTree = "<group>"; };
-		E59BC6781E89F2ED0058EA85 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E59BC67B1E89F2EF0058EA85 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/UserProfile.strings; sourceTree = "<group>"; };
-		E59BC67F1E89F2EF0058EA85 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E59BC6811E89F2F00058EA85 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Login.strings; sourceTree = "<group>"; };
 		E59BC6821E89F2F10058EA85 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ComposeMessage.strings; sourceTree = "<group>"; };
 		E59BC6831E89F2F10058EA85 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Compose.strings; sourceTree = "<group>"; };
@@ -604,9 +638,23 @@
 		E59BC6851E89F2F20058EA85 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Login.strings; sourceTree = "<group>"; };
 		E59BC6861E89FCD20058EA85 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Read.strings; sourceTree = "<group>"; };
 		E59BC6911E8A01010058EA85 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Settings.strings; sourceTree = "<group>"; };
-		E59BC6951E8A0BDC0058EA85 /* HostSearch.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = HostSearch.strings; sourceTree = "<group>"; };
-		E59BC69A1E8A13470058EA85 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/HostSearch.stringsdict.plist; sourceTree = "<group>"; };
-		E59BC69F1E8A193E0058EA85 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/HostSearch.strings; sourceTree = "<group>"; };
+		E59BC6A61E8A1BBB0058EA85 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/UserProfile.strings; sourceTree = "<group>"; };
+		E59BC6AB1E8A1F630058EA85 /* CreateFeedbackTableViewController+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CreateFeedbackTableViewController+Actions.swift"; sourceTree = "<group>"; };
+		E59BC6AC1E8A1F630058EA85 /* CreateFeedbackTableViewController+APIResponseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CreateFeedbackTableViewController+APIResponseDelegate.swift"; sourceTree = "<group>"; };
+		E59BC6AD1E8A1F630058EA85 /* CreateFeedbackTableViewController+UIPickerViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CreateFeedbackTableViewController+UIPickerViewDataSource.swift"; sourceTree = "<group>"; };
+		E59BC6AE1E8A1F630058EA85 /* CreateFeedbackTableViewController+UIPickerViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CreateFeedbackTableViewController+UIPickerViewDelegate.swift"; sourceTree = "<group>"; };
+		E59BC6AF1E8A1F630058EA85 /* CreateFeedbackTableViewController+UITableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CreateFeedbackTableViewController+UITableViewDataSource.swift"; sourceTree = "<group>"; };
+		E59BC6B01E8A1F630058EA85 /* CreateFeedbackTableViewController+UITableViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CreateFeedbackTableViewController+UITableViewDelegate.swift"; sourceTree = "<group>"; };
+		E59BC6B11E8A1F630058EA85 /* CreateFeedbackTableViewController+UITextViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CreateFeedbackTableViewController+UITextViewDelegate.swift"; sourceTree = "<group>"; };
+		E59BC6B21E8A1F630058EA85 /* CreateFeedbackTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateFeedbackTableViewController.swift; sourceTree = "<group>"; };
+		E59BC6B71E8A1F630058EA85 /* FeedbackTableViewController+APIResponseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FeedbackTableViewController+APIResponseDelegate.swift"; sourceTree = "<group>"; };
+		E59BC6B81E8A1F630058EA85 /* FeedbackTableViewController+UIScrollViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FeedbackTableViewController+UIScrollViewDelegate.swift"; sourceTree = "<group>"; };
+		E59BC6B91E8A1F630058EA85 /* FeedbackTableViewController+UITableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FeedbackTableViewController+UITableViewDataSource.swift"; sourceTree = "<group>"; };
+		E59BC6BA1E8A1F630058EA85 /* FeedbackTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedbackTableViewController.swift; sourceTree = "<group>"; };
+		E59BC6C91E8A1F900058EA85 /* Feedback.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Feedback.storyboard; path = Warmshowers/Features/Feedback/Read/View/Feedback.storyboard; sourceTree = SOURCE_ROOT; };
+		E59BC6CB1E8A1FE90058EA85 /* CreateFeedback.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = CreateFeedback.storyboard; path = Warmshowers/Features/Feedback/Create/View/CreateFeedback.storyboard; sourceTree = SOURCE_ROOT; };
+		E59BC6D21E8A206C0058EA85 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ReadFeedback.strings; sourceTree = "<group>"; };
+		E59BC6D51E8A20710058EA85 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/CreateFeedback.strings; sourceTree = "<group>"; };
 		E59FE1C71CD0C15F0024F354 /* WSLoginViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSLoginViewControllerTests.swift; sourceTree = "<group>"; };
 		E59FE1CE1CD1FF900024F354 /* MOCKNavigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MOCKNavigation.swift; sourceTree = "<group>"; };
 		E59FE1D81CD21F0D0024F354 /* LoginUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginUITests.swift; sourceTree = "<group>"; };
@@ -707,6 +755,24 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		E50524391E8A43820021DDD5 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				E505243A1E8A43820021DDD5 /* FeedbackTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		E505243C1E8A43AA0021DDD5 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				E505243D1E8A43AA0021DDD5 /* FeedbackBodyTableViewCell.swift */,
+				E505243E1E8A43AA0021DDD5 /* FeedbackOptionPickerTableViewCell.swift */,
+				E505243F1E8A43AA0021DDD5 /* FeedbackOptionTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		E529ECBC1E11BC2700395369 /* Delegates */ = {
 			isa = PBXGroup;
 			children = (
@@ -771,6 +837,7 @@
 		E529ECE21E11C6BB00395369 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				E59BC6A81E8A1F630058EA85 /* Feedback */,
 				E529ECE51E11C6BB00395369 /* HostSearch */,
 				E529ED0B1E11C6BB00395369 /* Login */,
 				E529ED121E11C6BB00395369 /* Main */,
@@ -1067,38 +1134,11 @@
 		E529ED4D1E11C6BB00395369 /* UserProfile */ = {
 			isa = PBXGroup;
 			children = (
-				E529ED4E1E11C6BB00395369 /* CreateFeedbackTableViewController */,
-				E529ED571E11C6BB00395369 /* FeedbackTableViewController */,
+				E59BC6A21E8A1BA20058EA85 /* Strings */,
 				E529ED5C1E11C6BB00395369 /* UserProfileTableViewController */,
 				E529ED631E11C6BB00395369 /* View */,
 			);
 			path = UserProfile;
-			sourceTree = "<group>";
-		};
-		E529ED4E1E11C6BB00395369 /* CreateFeedbackTableViewController */ = {
-			isa = PBXGroup;
-			children = (
-				E529ED4F1E11C6BB00395369 /* CreateFeedbackTableViewController+Actions.swift */,
-				E529ED501E11C6BB00395369 /* CreateFeedbackTableViewController+UIPickerViewDataSource.swift */,
-				E529ED511E11C6BB00395369 /* CreateFeedbackTableViewController+UIPickerViewDelegate.swift */,
-				E529ED521E11C6BB00395369 /* CreateFeedbackTableViewController+UITableViewDataSource.swift */,
-				E529ED531E11C6BB00395369 /* CreateFeedbackTableViewController+UITableViewDelegate.swift */,
-				E529ED541E11C6BB00395369 /* CreateFeedbackTableViewController+UITextViewDelegate.swift */,
-				E529ED551E11C6BB00395369 /* CreateFeedbackTableViewController+APIResponseDelegate.swift */,
-				E529ED561E11C6BB00395369 /* CreateFeedbackTableViewController.swift */,
-			);
-			path = CreateFeedbackTableViewController;
-			sourceTree = "<group>";
-		};
-		E529ED571E11C6BB00395369 /* FeedbackTableViewController */ = {
-			isa = PBXGroup;
-			children = (
-				E529ED581E11C6BB00395369 /* FeedbackTableViewController+UIScrollViewDelegate.swift */,
-				E529ED591E11C6BB00395369 /* FeedbackTableViewController+UITableViewDataSource.swift */,
-				E529ED5A1E11C6BB00395369 /* FeedbackTableViewController+APIResponseDelegate.swift */,
-				E529ED5B1E11C6BB00395369 /* FeedbackTableViewController.swift */,
-			);
-			path = FeedbackTableViewController;
 			sourceTree = "<group>";
 		};
 		E529ED5C1E11C6BB00395369 /* UserProfileTableViewController */ = {
@@ -1132,10 +1172,6 @@
 				E529ED651E11C6BB00395369 /* AboutTableViewCell.swift */,
 				E529ED661E11C6BB00395369 /* AccountDetailTableViewCell.swift */,
 				E529ED671E11C6BB00395369 /* AvailabilityTableViewCell.swift */,
-				E529ED681E11C6BB00395369 /* FeedbackBodyTableViewCell.swift */,
-				E529ED691E11C6BB00395369 /* FeedbackOptionPickerTableViewCell.swift */,
-				E529ED6A1E11C6BB00395369 /* FeedbackOptionTableViewCell.swift */,
-				E529ED6B1E11C6BB00395369 /* FeedbackTableViewCell.swift */,
 				E529ED6C1E11C6BB00395369 /* HostingInfoTableViewCell.swift */,
 				E529ED6D1E11C6BB00395369 /* HostOfferTableViewCell.swift */,
 				E529ED6E1E11C6BB00395369 /* PhoneNumberTableViewCell.swift */,
@@ -1177,7 +1213,6 @@
 		E53715131E0C809300770305 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				E59BC6A01E8A193E0058EA85 /* HostSearch.strings */,
 				E53B708A1E88FE5C00F21438 /* InfoPlist.strings */,
 				E59BC6261E8902850058EA85 /* Info.plist */,
 				E53715161E0C809300770305 /* LaunchScreen.storyboard */,
@@ -1199,7 +1234,7 @@
 		E53715281E0C86BF00770305 /* WarmshowersData */ = {
 			isa = PBXGroup;
 			children = (
-				E59BC66D1E89F2EA0058EA85 /* InfoPlist.strings */,
+				E505248B1E8A5CA90021DDD5 /* InfoPlist.strings */,
 				E529EDDE1E11CF4900395369 /* DataDelegates */,
 				E537156F1E0C8FF700770305 /* SecureStore */,
 				E53715751E0C8FF700770305 /* Store */,
@@ -1213,7 +1248,7 @@
 		E53715351E0C86BF00770305 /* WarmshowersDataTests */ = {
 			isa = PBXGroup;
 			children = (
-				E59BC6721E89F2EB0058EA85 /* InfoPlist.strings */,
+				E50524901E8A5CAB0021DDD5 /* InfoPlist.strings */,
 				E53715361E0C86BF00770305 /* WarmshowersDataTests.swift */,
 				E53715381E0C86BF00770305 /* Info.plist */,
 			);
@@ -1565,7 +1600,6 @@
 				E53716221E0CE95B00770305 /* UserLocation+MKAnnotation.swift */,
 				E537160A1E0CE7F900770305 /* UserEndPoint.swift */,
 				E529ECD01E11BDE900395369 /* TimeUnit.swift */,
-				E529ECD11E11BDE900395369 /* WSTimeInterval.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -1621,6 +1655,7 @@
 			isa = PBXGroup;
 			children = (
 				E53B70641E88E9C700F21438 /* Login.strings */,
+				E50524981E8ADDDA0021DDD5 /* LoginStrings.strings */,
 			);
 			path = Strings;
 			sourceTree = "<group>";
@@ -1707,10 +1742,108 @@
 		E59BC6941E8A0BD40058EA85 /* Strings */ = {
 			isa = PBXGroup;
 			children = (
-				E59BC6951E8A0BDC0058EA85 /* HostSearch.strings */,
-				E59BC69B1E8A13470058EA85 /* HostSearch.stringsdict.plist */,
+				E505244B1E8A48620021DDD5 /* HostSearch.strings */,
+				E50524501E8A50D70021DDD5 /* HostSearch.stringsdict */,
 			);
 			path = Strings;
+			sourceTree = "<group>";
+		};
+		E59BC6A21E8A1BA20058EA85 /* Strings */ = {
+			isa = PBXGroup;
+			children = (
+				E59BC6A71E8A1BBB0058EA85 /* UserProfile.strings */,
+				E50524551E8A51400021DDD5 /* UserProfile.stringsdict */,
+			);
+			path = Strings;
+			sourceTree = "<group>";
+		};
+		E59BC6A81E8A1F630058EA85 /* Feedback */ = {
+			isa = PBXGroup;
+			children = (
+				E59BC6A91E8A1F630058EA85 /* Create */,
+				E59BC6B51E8A1F630058EA85 /* Read */,
+			);
+			path = Feedback;
+			sourceTree = "<group>";
+		};
+		E59BC6A91E8A1F630058EA85 /* Create */ = {
+			isa = PBXGroup;
+			children = (
+				E59BC6AA1E8A1F630058EA85 /* CreateFeedbackTableViewController */,
+				E59BC6B31E8A1F630058EA85 /* Strings */,
+				E59BC6B41E8A1F630058EA85 /* View */,
+			);
+			path = Create;
+			sourceTree = "<group>";
+		};
+		E59BC6AA1E8A1F630058EA85 /* CreateFeedbackTableViewController */ = {
+			isa = PBXGroup;
+			children = (
+				E59BC6AB1E8A1F630058EA85 /* CreateFeedbackTableViewController+Actions.swift */,
+				E59BC6AC1E8A1F630058EA85 /* CreateFeedbackTableViewController+APIResponseDelegate.swift */,
+				E59BC6AD1E8A1F630058EA85 /* CreateFeedbackTableViewController+UIPickerViewDataSource.swift */,
+				E59BC6AE1E8A1F630058EA85 /* CreateFeedbackTableViewController+UIPickerViewDelegate.swift */,
+				E59BC6AF1E8A1F630058EA85 /* CreateFeedbackTableViewController+UITableViewDataSource.swift */,
+				E59BC6B01E8A1F630058EA85 /* CreateFeedbackTableViewController+UITableViewDelegate.swift */,
+				E59BC6B11E8A1F630058EA85 /* CreateFeedbackTableViewController+UITextViewDelegate.swift */,
+				E59BC6B21E8A1F630058EA85 /* CreateFeedbackTableViewController.swift */,
+			);
+			path = CreateFeedbackTableViewController;
+			sourceTree = "<group>";
+		};
+		E59BC6B31E8A1F630058EA85 /* Strings */ = {
+			isa = PBXGroup;
+			children = (
+				E59BC6D61E8A20710058EA85 /* CreateFeedback.strings */,
+			);
+			path = Strings;
+			sourceTree = "<group>";
+		};
+		E59BC6B41E8A1F630058EA85 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E505243C1E8A43AA0021DDD5 /* Cells */,
+				E59BC6CB1E8A1FE90058EA85 /* CreateFeedback.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E59BC6B51E8A1F630058EA85 /* Read */ = {
+			isa = PBXGroup;
+			children = (
+				E59BC6B61E8A1F630058EA85 /* FeedbackTableViewController */,
+				E59BC6BB1E8A1F630058EA85 /* Strings */,
+				E59BC6BC1E8A1F630058EA85 /* View */,
+			);
+			path = Read;
+			sourceTree = "<group>";
+		};
+		E59BC6B61E8A1F630058EA85 /* FeedbackTableViewController */ = {
+			isa = PBXGroup;
+			children = (
+				E59BC6B71E8A1F630058EA85 /* FeedbackTableViewController+APIResponseDelegate.swift */,
+				E59BC6B81E8A1F630058EA85 /* FeedbackTableViewController+UIScrollViewDelegate.swift */,
+				E59BC6B91E8A1F630058EA85 /* FeedbackTableViewController+UITableViewDataSource.swift */,
+				E59BC6BA1E8A1F630058EA85 /* FeedbackTableViewController.swift */,
+			);
+			path = FeedbackTableViewController;
+			sourceTree = "<group>";
+		};
+		E59BC6BB1E8A1F630058EA85 /* Strings */ = {
+			isa = PBXGroup;
+			children = (
+				E59BC6D31E8A206C0058EA85 /* ReadFeedback.strings */,
+			);
+			path = Strings;
+			sourceTree = "<group>";
+		};
+		E59BC6BC1E8A1F630058EA85 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E50524391E8A43820021DDD5 /* Cells */,
+				E59BC6C91E8A1F900058EA85 /* Feedback.storyboard */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		E5B944361E1257290089F4A4 /* API */ = {
@@ -1767,7 +1900,7 @@
 		E5D96B0D1BFB1CA700AFAFEE /* WarmshowersTests */ = {
 			isa = PBXGroup;
 			children = (
-				E59BC6791E89F2ED0058EA85 /* InfoPlist.strings */,
+				E50524861E8A5CA80021DDD5 /* InfoPlist.strings */,
 				E57057EB1CC88D5F00FA5D9F /* Mocks */,
 				E58C37301D2FA087001B03D5 /* WSHostSearchViewControllerTests.swift */,
 				E569E7961CF5A7230004B111 /* WSMapTileTests.swift */,
@@ -1782,7 +1915,7 @@
 		E5D96B181BFB1CA700AFAFEE /* WarmshowersUITests */ = {
 			isa = PBXGroup;
 			children = (
-				E59BC6801E89F2EF0058EA85 /* InfoPlist.strings */,
+				E50524811E8A5CA70021DDD5 /* InfoPlist.strings */,
 				E59FE1D81CD21F0D0024F354 /* LoginUITests.swift */,
 				E5D96B1B1BFB1CA700AFAFEE /* Info.plist */,
 			);
@@ -1954,6 +2087,8 @@
 			knownRegions = (
 				en,
 				Base,
+				ko,
+				"zh-Hans",
 			);
 			mainGroup = E5D96AEB1BFB1CA700AFAFEE;
 			productRefGroup = E5D96AF51BFB1CA700AFAFEE /* Products */;
@@ -1974,7 +2109,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E59BC66B1E89F2EA0058EA85 /* InfoPlist.strings in Resources */,
+				E50524891E8A5CA90021DDD5 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1982,7 +2117,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E59BC6701E89F2EB0058EA85 /* InfoPlist.strings in Resources */,
+				E505248E1E8A5CAB0021DDD5 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1992,23 +2127,29 @@
 			files = (
 				E53B70441E889CD800F21438 /* Login.storyboard in Resources */,
 				E53B70881E88FE5C00F21438 /* InfoPlist.strings in Resources */,
-				E59BC6991E8A13470058EA85 /* HostSearch.stringsdict.plist in Resources */,
+				E505244E1E8A50D70021DDD5 /* HostSearch.stringsdict in Resources */,
 				E54A572B1BFD664A000843A9 /* Settings.bundle in Resources */,
 				E59BC63E1E89CA810058EA85 /* Read.strings in Resources */,
+				E50524961E8ADDDA0021DDD5 /* LoginStrings.strings in Resources */,
 				E53B70531E88B5DF00F21438 /* Settings.storyboard in Resources */,
-				E53B70621E88E9C700F21438 /* Login.strings in Resources */,
+				E50524531E8A51400021DDD5 /* UserProfile.stringsdict in Resources */,
 				E53B704D1E88B5D100F21438 /* ComposeMessage.storyboard in Resources */,
 				E53715101E0C800100770305 /* Assets.xcassets in Resources */,
+				E50524921E8ADC030021DDD5 /* Localizable.strings in Resources */,
+				E59BC6CA1E8A1F900058EA85 /* Feedback.storyboard in Resources */,
 				E53B704A1E88B5BF00F21438 /* HostSearch.storyboard in Resources */,
-				E59BC69E1E8A193E0058EA85 /* HostSearch.strings in Resources */,
 				E59BC6901E8A01010058EA85 /* Settings.strings in Resources */,
+				E59BC6D11E8A206C0058EA85 /* ReadFeedback.strings in Resources */,
 				E537151A1E0C809300770305 /* LaunchScreen.storyboard in Resources */,
-				E59BC6961E8A0BDD0058EA85 /* HostSearch.strings in Resources */,
+				E50524491E8A48620021DDD5 /* HostSearch.strings in Resources */,
 				E529ED951E11C6BB00395369 /* Main.storyboard in Resources */,
-				E53B705C1E88E92100F21438 /* Localizable.strings in Resources */,
+				E59BC6A51E8A1BBB0058EA85 /* UserProfile.strings in Resources */,
 				E53B70561E88B5FA00F21438 /* UserProfile.storyboard in Resources */,
+				E59BC6CC1E8A1FE90058EA85 /* CreateFeedback.storyboard in Resources */,
+				E59BC6D41E8A20710058EA85 /* CreateFeedback.strings in Resources */,
 				E59BC6371E89C8F30058EA85 /* Compose.strings in Resources */,
 				E53715111E0C800100770305 /* Sue Ellen Francisco.ttf in Resources */,
+				E50524931E8ADC090021DDD5 /* Login.strings in Resources */,
 				E53B70501E88B5D600F21438 /* Messages.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2017,7 +2158,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E59BC6771E89F2ED0058EA85 /* InfoPlist.strings in Resources */,
+				E50524841E8A5CA80021DDD5 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2025,7 +2166,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E59BC67E1E89F2EF0058EA85 /* InfoPlist.strings in Resources */,
+				E505247F1E8A5CA70021DDD5 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2199,7 +2340,6 @@
 				E53715941E0C8FF700770305 /* MOMessage.swift in Sources */,
 				E53715F11E0CB1BC00770305 /* MessageThreadsEndPoint.swift in Sources */,
 				E53715661E0C8AA800770305 /* Double+JSONParsable.swift in Sources */,
-				E529ECD31E11BDE900395369 /* WSTimeInterval.swift in Sources */,
 				E537156E1E0C8AA800770305 /* Reachability.swift in Sources */,
 				E53715F31E0CB1BC00770305 /* NewMessageEndPoint.swift in Sources */,
 				E5E049BC1E18677300C99FBC /* APIAuthorizer+APIAuthorizationDelegate.swift in Sources */,
@@ -2231,14 +2371,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				E529EDD51E11C6BB00395369 /* HostingInfoTableViewCell.swift in Sources */,
+				E59BC6BE1E8A1F630058EA85 /* CreateFeedbackTableViewController+APIResponseDelegate.swift in Sources */,
 				E529ED7F1E11C6BB00395369 /* HostSearchViewController.swift in Sources */,
-				E529EDC51E11C6BB00395369 /* FeedbackTableViewController+UITableViewDataSource.swift in Sources */,
 				E54215901E3172D100568059 /* MessageThreadViewController+UITableViewDelegate.swift in Sources */,
-				E529EDC11E11C6BB00395369 /* CreateFeedbackTableViewController+UITextViewDelegate.swift in Sources */,
 				E529ECDF1E11C48600395369 /* UserDefaultsKeys.swift in Sources */,
 				E529ED9F1E11C6BB00395369 /* ComposeMessageDetailTableViewCell.swift in Sources */,
-				E529EDBE1E11C6BB00395369 /* CreateFeedbackTableViewController+UIPickerViewDelegate.swift in Sources */,
 				E5B944381E12574B0089F4A4 /* APICommunicatorConfiguration.swift in Sources */,
+				E50524421E8A43AA0021DDD5 /* FeedbackOptionTableViewCell.swift in Sources */,
 				E542158D1E3172D100568059 /* MessageThreadViewController+NSFetchedResultsControllerDelegate.swift in Sources */,
 				E529ED711E11C6BB00395369 /* HostListTableViewController+Actions.swift in Sources */,
 				E54215A21E31731600568059 /* MessageThreadsViewController+UITableViewDelegate.swift in Sources */,
@@ -2248,7 +2387,9 @@
 				E529ED751E11C6BB00395369 /* HostListTableViewController+UITableViewDelegate.swift in Sources */,
 				E529ED8A1E11C6BB00395369 /* LocationSearchViewController.swift in Sources */,
 				E529EDE81E11D4D600395369 /* DelegateManager.swift in Sources */,
+				E59BC6BF1E8A1F630058EA85 /* CreateFeedbackTableViewController+UIPickerViewDataSource.swift in Sources */,
 				E542159D1E31731600568059 /* MessageThreadsViewController+ComposeMessageViewControllerDelegate.swift in Sources */,
+				E59BC6C31E8A1F630058EA85 /* CreateFeedbackTableViewController+UITextViewDelegate.swift in Sources */,
 				E529ED9E1E11C6BB00395369 /* ComposeMessageBodyTableViewCell.swift in Sources */,
 				E529ED991E11C6BB00395369 /* ComposeMessageViewController+UITableViewDelegate.swift in Sources */,
 				E529ECDC1E11C48600395369 /* Distance.swift in Sources */,
@@ -2263,12 +2404,10 @@
 				E529EDB21E11C6BB00395369 /* Settings.swift in Sources */,
 				E529ED9D1E11C6BB00395369 /* ComposeMessageViewController.swift in Sources */,
 				E529ED7D1E11C6BB00395369 /* HostSearchViewController+HostSearchControllerDelegate.swift in Sources */,
-				E529EDC61E11C6BB00395369 /* FeedbackTableViewController+APIResponseDelegate.swift in Sources */,
 				E529EDB31E11C6BB00395369 /* SettingsCell.swift in Sources */,
-				E529EDBF1E11C6BB00395369 /* CreateFeedbackTableViewController+UITableViewDataSource.swift in Sources */,
 				E529ED8D1E11C6BB00395369 /* SpinnerTableViewCell.swift in Sources */,
+				E59BC6C81E8A1F630058EA85 /* FeedbackTableViewController.swift in Sources */,
 				E54215A11E31731600568059 /* MessageThreadsViewController+UITableViewDataSource.swift in Sources */,
-				E529EDC21E11C6BB00395369 /* CreateFeedbackTableViewController+APIResponseDelegate.swift in Sources */,
 				E529ED921E11C6BB00395369 /* LoginViewController.swift in Sources */,
 				E529ED881E11C6BB00395369 /* LocationSearchViewController+MKMapViewDelegate.swift in Sources */,
 				E529ED721E11C6BB00395369 /* HostListTableViewController+Navigation.swift in Sources */,
@@ -2289,39 +2428,37 @@
 				E529ED861E11C6BB00395369 /* LocationSearchViewController+Actions.swift in Sources */,
 				E529EDC91E11C6BB00395369 /* UserProfileTableViewController+Navigation.swift in Sources */,
 				E529EDB71E11C6BB00395369 /* SettingsTableViewController+APIResponseDelegate.swift in Sources */,
+				E505243B1E8A43820021DDD5 /* FeedbackTableViewCell.swift in Sources */,
 				E529ED851E11C6BB00395369 /* KeywordSearchTableViewController.swift in Sources */,
 				E54215891E3172D100568059 /* MessageThreadViewController+APIResponseDelegate.swift in Sources */,
-				E529EDD41E11C6BB00395369 /* FeedbackTableViewCell.swift in Sources */,
 				E542158E1E3172D100568059 /* MessageThreadViewController+UIScrollViewDelegate.swift in Sources */,
 				E5E573401E1A182600D54445 /* UserProfileTableViewController+DataSourceDelegate.swift in Sources */,
 				E529ED8B1E11C6BB00395369 /* HostListTableViewCell.swift in Sources */,
+				E59BC6C21E8A1F630058EA85 /* CreateFeedbackTableViewController+UITableViewDelegate.swift in Sources */,
 				E529ED781E11C6BB00395369 /* HostSearchControllerDelegate.swift in Sources */,
 				E529ED7A1E11C6BB00395369 /* HostSearchViewController+Actions.swift in Sources */,
-				E529EDC01E11C6BB00395369 /* CreateFeedbackTableViewController+UITableViewDelegate.swift in Sources */,
 				E529EDCE1E11C6BB00395369 /* AboutTableViewCell.swift in Sources */,
 				E529ED871E11C6BB00395369 /* LocationSearchViewController+CCHMapClusterControllerDelegate.swift in Sources */,
 				E529ED9B1E11C6BB00395369 /* ComposeMessageViewController+UITextViewDelegate.swift in Sources */,
+				E59BC6C61E8A1F630058EA85 /* FeedbackTableViewController+UIScrollViewDelegate.swift in Sources */,
 				E529ED791E11C6BB00395369 /* HostSearchNavigationDelegate.swift in Sources */,
 				E53715211E0C83D100770305 /* WarmShowersFont.swift in Sources */,
-				E529EDD31E11C6BB00395369 /* FeedbackOptionTableViewCell.swift in Sources */,
 				E529EDAE1E11C6BB00395369 /* MessageThreadsTableViewCell.swift in Sources */,
 				E529EDDD1E11CEE800395369 /* Delegates.swift in Sources */,
 				E529ED961E11C6BB00395369 /* ComposeMessageViewController+Actions.swift in Sources */,
 				E542159E1E31731600568059 /* MessageThreadsViewController+MessageThreadTableViewControllerDelegate.swift in Sources */,
 				E580E8421E317AE600D09D10 /* MessageThreadsErrorView.swift in Sources */,
-				E529EDBD1E11C6BB00395369 /* CreateFeedbackTableViewController+UIPickerViewDataSource.swift in Sources */,
 				E53715201E0C83D100770305 /* WarmShowersColor.swift in Sources */,
 				E580E8441E317B4000D09D10 /* MessageThreadsErrorViewDelegate.swift in Sources */,
 				E5E573331E19A67C00D54445 /* MessageTableViewCellDelegate.swift in Sources */,
 				E529ED801E11C6BB00395369 /* KeywordSearchTableViewController+UIScrollViewDelegate.swift in Sources */,
-				E529EDBC1E11C6BB00395369 /* CreateFeedbackTableViewController+Actions.swift in Sources */,
 				E580E8461E317C5400D09D10 /* MessageThreadsViewController+MessageThreadsErrorViewDelegate.swift in Sources */,
+				E59BC6C51E8A1F630058EA85 /* FeedbackTableViewController+APIResponseDelegate.swift in Sources */,
 				E529ECC81E11BC2700395369 /* AlertDelegate.swift in Sources */,
 				E529ED891E11C6BB00395369 /* LocationSearchViewController+APIResponseDelegate.swift in Sources */,
 				E54215A01E31731600568059 /* MessageThreadsViewController+NSFetchedResultsControllerDelegate.swift in Sources */,
 				E529ED831E11C6BB00395369 /* KeywordSearchTableViewController+UITableViewDelegate.swift in Sources */,
 				E542159C1E31731600568059 /* MessageThreadsViewController+APIResponseDelegate.swift in Sources */,
-				E529EDC41E11C6BB00395369 /* FeedbackTableViewController+UIScrollViewDelegate.swift in Sources */,
 				E529EDCB1E11C6BB00395369 /* UserProfileTableViewController+UITableViewDelegate.swift in Sources */,
 				E5E573421E1A4E3400D54445 /* UserProfileTableViewController+APIResponseDelegate.swift in Sources */,
 				E529EDB11E11C6BB00395369 /* RoutesTableViewController.swift in Sources */,
@@ -2334,31 +2471,34 @@
 				E529ED821E11C6BB00395369 /* KeywordSearchTableViewController+UITableViewDataSource.swift in Sources */,
 				E529ECC71E11BC2700395369 /* Alert.swift in Sources */,
 				E54215921E3172D100568059 /* MessageThreadViewControllerDelegate.swift in Sources */,
+				E50524401E8A43AA0021DDD5 /* FeedbackBodyTableViewCell.swift in Sources */,
+				E50524411E8A43AA0021DDD5 /* FeedbackOptionPickerTableViewCell.swift in Sources */,
 				E542158F1E3172D100568059 /* MessageThreadViewController+UITableViewDataSource.swift in Sources */,
 				E529ED7B1E11C6BB00395369 /* HostSearchViewController+Navigation.swift in Sources */,
+				E59BC6C41E8A1F630058EA85 /* CreateFeedbackTableViewController.swift in Sources */,
 				E529EDB41E11C6BB00395369 /* SettingsSection.swift in Sources */,
 				E529ED841E11C6BB00395369 /* KeywordSearchTableViewController+APIResponseDelegate.swift in Sources */,
-				E529EDD21E11C6BB00395369 /* FeedbackOptionPickerTableViewCell.swift in Sources */,
 				E529EDB01E11C6BB00395369 /* ProgressHUD.swift in Sources */,
 				E50239681E1B64C30013B40D /* ComposeMessageViewControllerDelegate.swift in Sources */,
 				E542158C1E3172D100568059 /* MessageThreadViewController+Navigation.swift in Sources */,
 				E542158B1E3172D100568059 /* MessageThreadViewController+MessageTableViewCellDelegate.swift in Sources */,
 				E529ECDD1E11C48600395369 /* MapSource.swift in Sources */,
+				E59BC6C71E8A1F630058EA85 /* FeedbackTableViewController+UITableViewDataSource.swift in Sources */,
+				E59BC6C11E8A1F630058EA85 /* CreateFeedbackTableViewController+UITableViewDataSource.swift in Sources */,
 				E529EDD71E11C6BB00395369 /* PhoneNumberTableViewCell.swift in Sources */,
 				E529ECCC1E11BC2700395369 /* Session.swift in Sources */,
 				E529ED7E1E11C6BB00395369 /* HostSearchViewController+HostSearchNavigationDelegate.swift in Sources */,
-				E529EDC31E11C6BB00395369 /* CreateFeedbackTableViewController.swift in Sources */,
 				E529EDB91E11C6BB00395369 /* LogoutTableViewCell.swift in Sources */,
 				E529ED771E11C6BB00395369 /* HostListTableViewController.swift in Sources */,
 				E571A7BE1E49B9DA001C3AEB /* UserProfileTableViewController+MFMessageComposeViewControllerDelegate.swift in Sources */,
 				E529EDD61E11C6BB00395369 /* HostOfferTableViewCell.swift in Sources */,
-				E529EDC71E11C6BB00395369 /* FeedbackTableViewController.swift in Sources */,
+				E59BC6BD1E8A1F630058EA85 /* CreateFeedbackTableViewController+Actions.swift in Sources */,
 				E529ED731E11C6BB00395369 /* HostListTableViewController+UIScrollViewDelegate.swift in Sources */,
 				E529ED911E11C6BB00395369 /* LoginViewController+APILoginResponseDelegate.swift in Sources */,
 				E571A7BC1E49B5CE001C3AEB /* UserProfileTableViewController+PhoneNumberTableViewCellDelegate.swift in Sources */,
 				E529ED8F1E11C6BB00395369 /* MapLabel.swift in Sources */,
-				E529EDD11E11C6BB00395369 /* FeedbackBodyTableViewCell.swift in Sources */,
 				E529EDB81E11C6BB00395369 /* SettingsTableViewController.swift in Sources */,
+				E59BC6C01E8A1F630058EA85 /* CreateFeedbackTableViewController+UIPickerViewDelegate.swift in Sources */,
 				E529ED9C1E11C6BB00395369 /* ComposeMessageViewController+APIResponseDelegate.swift in Sources */,
 				E529ECCB1E11BC2700395369 /* ShortcutIdentifier.swift in Sources */,
 				E529EDB61E11C6BB00395369 /* SettingsTableViewController+UITableViewDelegate.swift in Sources */,
@@ -2421,11 +2561,84 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		E505244B1E8A48620021DDD5 /* HostSearch.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E505244A1E8A48620021DDD5 /* en */,
+				E50524621E8A593B0021DDD5 /* ko */,
+				E50524741E8A5B560021DDD5 /* zh-Hans */,
+			);
+			name = HostSearch.strings;
+			sourceTree = "<group>";
+		};
+		E50524501E8A50D70021DDD5 /* HostSearch.stringsdict */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E505244F1E8A50D70021DDD5 /* en */,
+				E50524631E8A593B0021DDD5 /* ko */,
+				E50524751E8A5B560021DDD5 /* zh-Hans */,
+			);
+			name = HostSearch.stringsdict;
+			sourceTree = "<group>";
+		};
+		E50524551E8A51400021DDD5 /* UserProfile.stringsdict */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E50524541E8A51400021DDD5 /* en */,
+				E50524691E8A593C0021DDD5 /* ko */,
+				E505247B1E8A5B570021DDD5 /* zh-Hans */,
+			);
+			name = UserProfile.stringsdict;
+			sourceTree = "<group>";
+		};
+		E50524811E8A5CA70021DDD5 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E50524801E8A5CA70021DDD5 /* ko */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		E50524861E8A5CA80021DDD5 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E50524851E8A5CA80021DDD5 /* ko */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		E505248B1E8A5CA90021DDD5 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E505248A1E8A5CA90021DDD5 /* ko */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		E50524901E8A5CAB0021DDD5 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E505248F1E8A5CAB0021DDD5 /* ko */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		E50524981E8ADDDA0021DDD5 /* LoginStrings.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E50524971E8ADDDA0021DDD5 /* en */,
+				E50524991E8ADDEA0021DDD5 /* ko */,
+			);
+			name = LoginStrings.strings;
+			sourceTree = "<group>";
+		};
 		E53B70461E889CD800F21438 /* Login.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				E53B70451E889CD800F21438 /* Base */,
 				E59BC6811E89F2F00058EA85 /* en */,
+				E505245A1E8A593A0021DDD5 /* ko */,
+				E505246C1E8A5B550021DDD5 /* zh-Hans */,
 			);
 			name = Login.storyboard;
 			sourceTree = "<group>";
@@ -2435,6 +2648,8 @@
 			children = (
 				E53B704B1E88B5BF00F21438 /* Base */,
 				E59BC6741E89F2EC0058EA85 /* en */,
+				E50524591E8A593A0021DDD5 /* ko */,
+				E505246B1E8A5B540021DDD5 /* zh-Hans */,
 			);
 			name = HostSearch.storyboard;
 			sourceTree = "<group>";
@@ -2444,6 +2659,8 @@
 			children = (
 				E53B704E1E88B5D100F21438 /* Base */,
 				E59BC6821E89F2F10058EA85 /* en */,
+				E505245B1E8A593A0021DDD5 /* ko */,
+				E50524701E8A5B560021DDD5 /* zh-Hans */,
 			);
 			name = ComposeMessage.storyboard;
 			sourceTree = "<group>";
@@ -2453,6 +2670,8 @@
 			children = (
 				E53B70511E88B5D600F21438 /* Base */,
 				E59BC6841E89F2F10058EA85 /* en */,
+				E505245C1E8A593A0021DDD5 /* ko */,
+				E505246D1E8A5B550021DDD5 /* zh-Hans */,
 			);
 			name = Messages.storyboard;
 			sourceTree = "<group>";
@@ -2462,6 +2681,8 @@
 			children = (
 				E53B70541E88B5DF00F21438 /* Base */,
 				E59BC6731E89F2EB0058EA85 /* en */,
+				E505245D1E8A593A0021DDD5 /* ko */,
+				E505246E1E8A5B550021DDD5 /* zh-Hans */,
 			);
 			name = Settings.storyboard;
 			sourceTree = "<group>";
@@ -2471,6 +2692,8 @@
 			children = (
 				E53B70571E88B5FA00F21438 /* Base */,
 				E59BC67B1E89F2EF0058EA85 /* en */,
+				E505245E1E8A593A0021DDD5 /* ko */,
+				E505246F1E8A5B550021DDD5 /* zh-Hans */,
 			);
 			name = UserProfile.storyboard;
 			sourceTree = "<group>";
@@ -2479,6 +2702,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				E59BC6681E89F2E80058EA85 /* en */,
+				E505245F1E8A593B0021DDD5 /* ko */,
+				E50524711E8A5B560021DDD5 /* zh-Hans */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -2487,6 +2712,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				E59BC6851E89F2F20058EA85 /* en */,
+				E50524761E8A5B570021DDD5 /* zh-Hans */,
+				E50524911E8A61880021DDD5 /* ko */,
 			);
 			name = Login.strings;
 			sourceTree = "<group>";
@@ -2495,6 +2722,9 @@
 			isa = PBXVariantGroup;
 			children = (
 				E53B70891E88FE5C00F21438 /* Base */,
+				E50524561E8A572F0021DDD5 /* en */,
+				E505246A1E8A593C0021DDD5 /* ko */,
+				E505247C1E8A5B570021DDD5 /* zh-Hans */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -2503,6 +2733,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				E59BC6831E89F2F10058EA85 /* en */,
+				E50524651E8A593B0021DDD5 /* ko */,
+				E50524771E8A5B570021DDD5 /* zh-Hans */,
 			);
 			name = Compose.strings;
 			sourceTree = "<group>";
@@ -2511,64 +2743,50 @@
 			isa = PBXVariantGroup;
 			children = (
 				E59BC6861E89FCD20058EA85 /* en */,
+				E50524661E8A593B0021DDD5 /* ko */,
+				E50524781E8A5B570021DDD5 /* zh-Hans */,
 			);
 			name = Read.strings;
-			sourceTree = "<group>";
-		};
-		E59BC66D1E89F2EA0058EA85 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E59BC66C1E89F2EA0058EA85 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		E59BC6721E89F2EB0058EA85 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E59BC6711E89F2EB0058EA85 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		E59BC6791E89F2ED0058EA85 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E59BC6781E89F2ED0058EA85 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		E59BC6801E89F2EF0058EA85 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E59BC67F1E89F2EF0058EA85 /* en */,
-			);
-			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 		E59BC6921E8A01010058EA85 /* Settings.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				E59BC6911E8A01010058EA85 /* en */,
+				E50524671E8A593B0021DDD5 /* ko */,
+				E50524791E8A5B570021DDD5 /* zh-Hans */,
 			);
 			name = Settings.strings;
 			sourceTree = "<group>";
 		};
-		E59BC69B1E8A13470058EA85 /* HostSearch.stringsdict.plist */ = {
+		E59BC6A71E8A1BBB0058EA85 /* UserProfile.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				E59BC69A1E8A13470058EA85 /* en */,
+				E59BC6A61E8A1BBB0058EA85 /* en */,
+				E50524681E8A593B0021DDD5 /* ko */,
+				E505247A1E8A5B570021DDD5 /* zh-Hans */,
 			);
-			name = HostSearch.stringsdict.plist;
+			name = UserProfile.strings;
 			sourceTree = "<group>";
 		};
-		E59BC6A01E8A193E0058EA85 /* HostSearch.strings */ = {
+		E59BC6D31E8A206C0058EA85 /* ReadFeedback.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				E59BC69F1E8A193E0058EA85 /* en */,
+				E59BC6D21E8A206C0058EA85 /* en */,
+				E50524611E8A593B0021DDD5 /* ko */,
+				E50524731E8A5B560021DDD5 /* zh-Hans */,
 			);
-			name = HostSearch.strings;
+			name = ReadFeedback.strings;
+			sourceTree = "<group>";
+		};
+		E59BC6D61E8A20710058EA85 /* CreateFeedback.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E59BC6D51E8A20710058EA85 /* en */,
+				E50524601E8A593B0021DDD5 /* ko */,
+				E50524721E8A5B560021DDD5 /* zh-Hans */,
+			);
+			name = CreateFeedback.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

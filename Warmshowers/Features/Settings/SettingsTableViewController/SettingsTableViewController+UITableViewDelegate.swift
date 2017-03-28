@@ -25,11 +25,11 @@ extension SettingsTableViewController {
             case 30:
                 performSegue(withIdentifier: SID_SettingsToRoutes, sender: nil)
             case 40:
-                let label = NSLocalizedString("Logging out ...", tableName: "Settings", comment: "Label shown with the spinner while logging out")
+                let label = NSLocalizedString("Logging out ...", comment: "Label shown with the spinner while logging out")
                 ProgressHUD.show(label)
                 api.contact(endPoint: .logout, withMethod: .post, andPathParameters: nil, andData: nil, thenNotify: self, ignoreCache: false)
             case 50:
-                let label = NSLocalizedString("Deleting data ...", tableName: "Settings", comment: "Label shown with the spinner while deleting cached data")
+                let label = NSLocalizedString("Deleting data ...", comment: "Label shown with the spinner while deleting cached data")
                 ProgressHUD.show(label)
                 do {
                     try store.clearout()

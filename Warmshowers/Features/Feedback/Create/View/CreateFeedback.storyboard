@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Zua-CD-4dt">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Create Feedback-->
+        <scene sceneID="zGa-sl-WSc">
+            <objects>
+                <tableViewController storyboardIdentifier="CreateFeedback" id="Zua-CD-4dt" customClass="CreateFeedbackTableViewController" customModule="Warmshowers" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="1NB-62-ukS">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <gestureRecognizers/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="FeedbackOption" textLabel="PeB-cU-THw" detailTextLabel="Dcc-z7-w4W" style="IBUITableViewCellStyleValue1" id="QuO-ix-oBo" customClass="FeedbackOptionTableViewCell" customModule="Warmshowers" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="56" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QuO-ix-oBo" id="dh6-oJ-e3i">
+                                    <rect key="frame" x="0.0" y="0.0" width="342" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PeB-cU-THw">
+                                            <rect key="frame" x="15" y="12" width="32" height="20"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Dcc-z7-w4W">
+                                            <rect key="frame" x="298" y="12" width="42" height="20"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedbackOptionPicker" rowHeight="100" id="0F1-te-mxy" customClass="FeedbackOptionPickerTableViewCell" customModule="Warmshowers" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="100" width="375" height="100"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0F1-te-mxy" id="KkL-Ss-6nd">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="99"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wHI-Wd-CQj">
+                                            <rect key="frame" x="-12.5" y="1" width="400" height="97.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="400" id="V8b-fO-uwf"/>
+                                            </constraints>
+                                        </pickerView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="wHI-Wd-CQj" secondAttribute="bottom" constant="1" id="0yM-9A-idW"/>
+                                        <constraint firstItem="wHI-Wd-CQj" firstAttribute="top" secondItem="KkL-Ss-6nd" secondAttribute="top" constant="1" id="5Rd-Sr-tja"/>
+                                        <constraint firstItem="wHI-Wd-CQj" firstAttribute="centerX" secondItem="KkL-Ss-6nd" secondAttribute="centerX" id="5o9-xW-k1W"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="picker" destination="wHI-Wd-CQj" id="clT-R4-ANS"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedbackBody" rowHeight="76" id="oOi-y7-vaH" customClass="FeedbackBodyTableViewCell" customModule="Warmshowers" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="200" width="375" height="76"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oOi-y7-vaH" id="WwP-6g-NLY">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="75"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" text="Type your feedback here." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="jcJ-CK-SJq">
+                                            <rect key="frame" x="12" y="12" width="351" height="43.5"/>
+                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        </textView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="jcJ-CK-SJq" firstAttribute="top" secondItem="WwP-6g-NLY" secondAttribute="top" constant="12" id="Nb4-dN-C2y"/>
+                                        <constraint firstAttribute="trailing" secondItem="jcJ-CK-SJq" secondAttribute="trailing" constant="12" id="VYd-ic-0Ib"/>
+                                        <constraint firstAttribute="bottom" secondItem="jcJ-CK-SJq" secondAttribute="bottom" constant="20" id="ojN-9c-ala"/>
+                                        <constraint firstItem="jcJ-CK-SJq" firstAttribute="leading" secondItem="WwP-6g-NLY" secondAttribute="leading" constant="12" id="yg9-DF-Nv6"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="textView" destination="jcJ-CK-SJq" id="398-8d-6CS"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Zua-CD-4dt" id="Rq1-sz-d2v"/>
+                            <outlet property="delegate" destination="Zua-CD-4dt" id="dYZ-s4-k4O"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Create Feedback" id="sFh-jC-TjZ">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="fB9-8H-3rC">
+                            <connections>
+                                <action selector="cancelButtonPressed:" destination="Zua-CD-4dt" id="RTl-ph-cBQ"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Submit" style="done" id="teB-yT-jGH">
+                            <connections>
+                                <action selector="sumbitButtonPressed:" destination="Zua-CD-4dt" id="6I2-jk-tMP"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3Rl-ng-Tvb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6222" y="-2034"/>
+        </scene>
+    </scenes>
+</document>

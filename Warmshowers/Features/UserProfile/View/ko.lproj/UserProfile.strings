@@ -1,0 +1,36 @@
+/* Class = "UILabel"; text = "Currently Available"; ObjectID = "AAP-cR-5l6"; */
+"AAP-cR-5l6.text" = "Currently Available";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "Bhq-ms-epa"; */
+"Bhq-ms-epa.text" = "Title";
+
+/* Class = "UILabel"; text = "Info"; ObjectID = "E2X-by-ruN"; */
+"E2X-by-ruN.text" = "Info";
+
+/* Class = "UITextView"; text = "About"; ObjectID = "Q3K-XS-pYs"; */
+"Q3K-XS-pYs.text" = "About";
+
+/* Class = "UILabel"; text = "No Profile Image"; ObjectID = "QfE-XC-Bh4"; */
+"QfE-XC-Bh4.text" = "No Profile Image";
+
+/* Class = "UILabel"; text = "Feedback (0)"; ObjectID = "Vwj-MB-gj2"; */
+"Vwj-MB-gj2.text" = "Feedback (0)";
+
+/* Class = "UILabel"; text = "This host may offer"; ObjectID = "WX7-Aq-kGD"; */
+"WX7-Aq-kGD.text" = "This host may offer";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "ZOa-3l-Unm"; */
+"ZOa-3l-Unm.text" = "Name";
+
+/* Class = "UILabel"; text = "Account detail"; ObjectID = "ctg-Rr-GTT"; */
+"ctg-Rr-GTT.text" = "Account detail";
+
+/* Class = "UILabel"; text = " • Label"; ObjectID = "fdr-P1-SPC"; */
+"fdr-P1-SPC.text" = " • Label";
+
+/* Class = "UILabel"; text = "+00 000 000 0000"; ObjectID = "hzd-Ch-Wm1"; */
+"hzd-Ch-Wm1.text" = "+00 000 000 0000";
+
+/* Class = "UILabel"; text = "Phone"; ObjectID = "tfp-P3-SnZ"; */
+"tfp-P3-SnZ.text" = "Phone";
+

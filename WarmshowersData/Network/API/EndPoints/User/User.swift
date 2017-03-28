@@ -70,12 +70,12 @@ public class User: Hashable {
     
     // MARK: Convinience properties
     
-    public var membershipDuration: WSTimeInterval? {
+    public var membershipDuration: Int? {
         guard let created = created else { return nil }
         return timeIntervalSinceTime(created)
     }
     
-    public var lastLoggedInAgo: WSTimeInterval? {
+    public var lastLoggedInAgo: Int? {
         guard let login = login else { return nil }
         return timeIntervalSinceTime(login)
     }
@@ -83,18 +83,18 @@ public class User: Hashable {
     /** Returns an array of hosting info points applicable to the users profile. */
     public var hostingInfo: [HostInfo] {
         var info = [HostInfo]()
-        if maxcyclists != nil {
-            let description = maxcyclists! > 4 ? "5 or more" : "\(maxcyclists!)"
+        if let maxcyclists = maxcyclists {
+            let description = maxcyclists > 4 ? "5+" : "\(maxcyclists)"
             info.append(HostInfo(type: .maxCyclists, description: description))
         }
-        if bikeshop != nil {
-            info.append(HostInfo(type: .bikeShop, description: bikeshop!))
+        if let bikeshop = bikeshop {
+            info.append(HostInfo(type: .bikeShop, description: bikeshop))
         }
-        if campground != nil {
-            info.append(HostInfo(type: .campground, description: campground!))
+        if let campground = campground {
+            info.append(HostInfo(type: .campground, description: campground))
         }
-        if motel != nil {
-            info.append(HostInfo(type: .motel, description: motel!))
+        if let motel = motel {
+            info.append(HostInfo(type: .motel, description: motel))
         }
         return info
     }
@@ -217,9 +217,9 @@ public class User: Hashable {
     
     // MARK: Utility methods
     
-    fileprivate func timeIntervalSinceTime(_ time: Int) -> WSTimeInterval {
+    fileprivate func timeIntervalSinceTime(_ time: Int) -> Int {
         let date = Date(timeIntervalSince1970: TimeInterval(time))
-        return WSTimeInterval(timeInterval: Date().timeIntervalSince1970 - date.timeIntervalSince1970)
+        return Int(Date().timeIntervalSince1970 - date.timeIntervalSince1970)
     }
     
 }

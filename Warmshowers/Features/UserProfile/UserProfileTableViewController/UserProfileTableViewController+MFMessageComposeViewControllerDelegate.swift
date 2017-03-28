@@ -15,8 +15,10 @@ extension UserProfileTableViewController: MFMessageComposeViewControllerDelegate
                                       didFinishWith result: MessageComposeResult){
         switch result {            
         case .failed:
-            let alert = UIAlertController(title: "Sorry, your message failed to send.", message: nil, preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            let title = NSLocalizedString("Sorry, your message failed to send.", tableName: "UserProfile", comment: "ALert title shown after a message fails to send")
+            let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+            let button = NSLocalizedString("OK", comment: "OK button title")
+            let okAction = UIAlertAction(title: button, style: .default, handler: nil)
             alert.addAction(okAction)
             DispatchQueue.main.async { [unowned self] in
                 self.present(alert, animated: true, completion: nil)
