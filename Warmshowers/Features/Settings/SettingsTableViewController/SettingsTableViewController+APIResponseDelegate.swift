@@ -39,7 +39,10 @@ extension SettingsTableViewController : APIResponseDelegate {
                     break
                 }
             default:
-                alert.presentAlertFor(self, withTitle: "Logout failed", button: "Dismiss", message: "Please try again.")
+                let title = NSLocalizedString("Logout failed", tableName: "Settings", comment: "Title for the alert shown after a failed logout")
+                let message = NSLocalizedString("Please try again.", tableName: "Settings", comment: "Message for the alert shown after a failed logout")
+                let button = NSLocalizedString("Dismiss", comment: "Dismiss button title")
+                alert.presentAlertFor(self, withTitle: title, button: button, message: message)
             }
         default:
             break

@@ -38,14 +38,13 @@ class MessageThreadsViewController: UIViewController, Delegator, DataSource {
         super.viewDidLoad()
         
         // Navigation bar configuration.
-        navigationItem.title = "Messages"
+        navigationItem.title = NSLocalizedString("Messages", tableName: "Read", comment: "Message thread view navigation bar title")
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: WarmShowersColor.Green, NSFontAttributeName: WarmShowersFont.SueEllenFrancisco(26)]
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(MessageThreadsViewController.update))
         
         // Set up the date formatter.
-        let template = "dd/MM/yy"
-        let locale = Locale.current
-        formatter.dateFormat = DateFormatter.dateFormat(fromTemplate: template, options: 0, locale: locale)
+        formatter.dateStyle = .short
+        formatter.locale = Locale.current
         
         // Set up the error view
         errorView.delegate = self
@@ -207,6 +206,8 @@ class MessageThreadsViewController: UIViewController, Delegator, DataSource {
                 downloadsInProgress.insert(threadID)
             }
         } catch let error as NSError {
+            let title = NSLocalizedString("Error", comment: "General error alert title")
+            let button = NSLocalizedString("OK", comment: "OK button title")
             alert.presentAlertFor(self, withTitle: "Error", button: "OK", message: error.localizedDescription)
         }
     }

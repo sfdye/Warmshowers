@@ -1,0 +1,33 @@
+
+/* Class = "UILabel"; text = "No Hosts"; ObjectID = "7Ux-ii-EKB"; */
+"7Ux-ii-EKB.text" = "No Hosts";
+
+/* Class = "UIViewController"; title = "Host Search"; ObjectID = "9pv-A4-QxB"; */
+"9pv-A4-QxB.title" = "Host Search";
+
+/* Class = "UILabel"; text = "Address"; ObjectID = "GnD-0k-OfA"; */
+"GnD-0k-OfA.text" = "Address";
+
+/* Class = "UILabel"; text = "Address"; ObjectID = "LpK-Va-oN3"; */
+"LpK-Va-oN3.text" = "Address";
+
+/* Class = "UILabel"; text = "Status"; ObjectID = "UNj-rN-h0W"; */
+"UNj-rN-h0W.text" = "Status";
+
+/* Class = "UILabel"; text = "Host Name"; ObjectID = "Y4R-V8-Pc8"; */
+"Y4R-V8-Pc8.text" = "Host Name";
+
+/* Class = "UITabBarItem"; title = "Hosts"; ObjectID = "acW-dT-cKf"; */
+"acW-dT-cKf.title" = "Hosts";
+
+/* Class = "UINavigationItem"; title = "Host Search"; ObjectID = "cHc-7U-xFe"; */
+"cHc-7U-xFe.title" = "Host Search";
+
+/* Class = "UILabel"; text = "Host Name"; ObjectID = "nnu-er-vnC"; */
+"nnu-er-vnC.text" = "Host Name";
+
+/* Class = "UINavigationController"; title = "Host Search"; ObjectID = "pYF-jY-7y6"; */
+"pYF-jY-7y6.title" = "Host Search";
+
+/* Class = "UINavigationItem"; title = "Hosts"; ObjectID = "r69-G1-P4v"; */
+"r69-G1-P4v.title" = "Hosts";

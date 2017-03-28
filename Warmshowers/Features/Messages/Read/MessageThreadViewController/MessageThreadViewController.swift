@@ -26,7 +26,8 @@ class MessageThreadViewController: UIViewController, Delegator, DataSource {
     weak var delegate: MessageThreadViewControllerDelegate?
     
     lazy var previewActions: [UIPreviewActionItem] = {
-        let replyAction = UIPreviewAction(title: "Reply", style: .default, handler: { (action, viewController) in
+        let title = NSLocalizedString("Reply", tableName: "Read", comment: "3D touch menu item for replying to messages.")
+        let replyAction = UIPreviewAction(title: title, style: .default, handler: { (action, viewController) in
             // Get the message threads table view controller to show the reply to message view modally.
             guard let viewController = viewController as? MessageThreadViewController else { return }
             viewController.delegate?.replyToMessageForMessageThreadViewController(viewController)

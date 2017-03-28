@@ -1,0 +1,24 @@
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "0Xc-j7-AEG"; */
+"0Xc-j7-AEG.text" = "Title";
+
+/* Class = "UINavigationItem"; title = "Settings"; ObjectID = "68q-GR-O7K"; */
+"68q-GR-O7K.title" = "Settings";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "B04-xl-oYw"; */
+"B04-xl-oYw.text" = "Title";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "M9e-Hs-MCy"; */
+"M9e-Hs-MCy.text" = "Detail";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "Qf6-AS-WfI"; */
+"Qf6-AS-WfI.text" = "Title";
+
+/* Class = "UILabel"; text = "Logout"; ObjectID = "eS0-NS-D4d"; */
+"eS0-NS-D4d.text" = "Logout";
+
+/* Class = "UITableViewController"; title = "Settings"; ObjectID = "iSN-ac-MXf"; */
+"iSN-ac-MXf.title" = "Settings";
+
+/* Class = "UITabBarItem"; title = "Settings"; ObjectID = "j1h-s9-OQS"; */
+"j1h-s9-OQS.title" = "Settings";

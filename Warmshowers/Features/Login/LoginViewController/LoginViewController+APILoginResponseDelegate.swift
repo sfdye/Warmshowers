@@ -21,7 +21,10 @@ extension LoginViewController: APILoginResponseDelegate {
             navigation.showMainApp()
         } catch {
             // This case is very unlikely.
-            alert.presentAlertFor(self, withTitle: "App error", button: "OK", message: "Sorry, an error occured during login. Please report this as a bug, sorry for the inconvenience.")
+            let title = NSLocalizedString("App Error", comment: "Alert title for generic app error.")
+            let message = NSLocalizedString("Sorry, an error occured during login. Please report this as a bug, sorry for the inconvenience.", comment: "Alert message for generic app error.")
+            let buttonTitle = NSLocalizedString("OK", comment: "OK button title")
+            alert.presentAlertFor(self, withTitle: title, button: buttonTitle, message: message)
         }
     }
     
@@ -33,14 +36,15 @@ extension LoginViewController: APILoginResponseDelegate {
         
         switch error {
         case is APILoginError:
-            title = "Login error"
-            message = "Incorrect username or password."
+            title = NSLocalizedString("Login error", tableName: "Login", comment: "Alert title for a known login error.")
+            message = NSLocalizedString("Incorrect username or password.", tableName: "Login", comment: "Alert message for a known login error.")
         default:
-            title = "An unknown error occured"
-            message = "Please try login again."
+            title = NSLocalizedString("An unknown error occured", tableName: "Login", comment: "Alert title for an unknown login error.")
+            message = NSLocalizedString("Please try login again.", tableName: "Login", comment: "Alert message for an unknown login error.")
         }
         
-        alert.presentAlertFor(self, withTitle: title, button: "Dismiss", message: message)
+        let buttonTitle = NSLocalizedString("Dismiss", comment: "Dismiss button title")
+        alert.presentAlertFor(self, withTitle: title, button: buttonTitle, message: message)
     }
 
 }

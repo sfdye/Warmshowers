@@ -2,121 +2,16 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleDevelopmentRegion</key>
-	<string>en</string>
-	<key>CFBundleDisplayName</key>
-	<string>Warmshowers</string>
-	<key>CFBundleDocumentTypes</key>
-	<array/>
-	<key>CFBundleExecutable</key>
-	<string>$(EXECUTABLE_NAME)</string>
-	<key>CFBundleIdentifier</key>
-	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>$(PRODUCT_NAME)</string>
-	<key>CFBundlePackageType</key>
-	<string>APPL</string>
-	<key>CFBundleShortVersionString</key>
-	<string>1.2.3</string>
-	<key>CFBundleSignature</key>
-	<string>????</string>
-	<key>CFBundleVersion</key>
-	<string>9</string>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSExceptionDomains</key>
-		<dict>
-			<key>tile.opencyclemap.org</key>
-			<dict>
-				<key>NSExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
-				<key>NSExceptionMinimumTLSVersion</key>
-				<string>TLSv1.2</string>
-				<key>NSExceptionRequiresForwardSecrecy</key>
-				<true/>
-				<key>NSIncludesSubdomains</key>
-				<true/>
-				<key>NSRequiresCertificateTransparency</key>
-				<false/>
-				<key>NSThirdPartyExceptionAllowsInsecureHTTPLoads</key>
-				<false/>
-				<key>NSThirdPartyExceptionMinimumTLSVersion</key>
-				<string>TLSv1.2</string>
-				<key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
-				<true/>
-			</dict>
-		</dict>
-	</dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This is required to show your location on the map.</string>
-	<key>UIAppFonts</key>
-	<array>
-		<string>Sue Ellen Francisco.ttf</string>
-	</array>
-	<key>UIApplicationShortcutItems</key>
-	<array>
-		<dict>
-			<key>UIApplicationShortcutItemIconType</key>
-			<string>UIApplicationShortcutIconTypeSearch</string>
-			<key>UIApplicationShortcutItemSubtitle</key>
-			<string>shortcutSubtitle1</string>
-			<key>UIApplicationShortcutItemTitle</key>
-			<string>shortcutTitle1</string>
-			<key>UIApplicationShortcutItemType</key>
-			<string>$(PRODUCT_BUNDLE_IDENTIFIER).LocationSearch</string>
-			<key>UIApplicationShortcutItemUserInfo</key>
-			<dict>
-				<key></key>
-				<string></string>
-			</dict>
-		</dict>
-		<dict>
-			<key>UIApplicationShortcutItemIconType</key>
-			<string>UIApplicationShortcutIconTypeSearch</string>
-			<key>UIApplicationShortcutItemSubtitle</key>
-			<string>shortcutSubtitle2</string>
-			<key>UIApplicationShortcutItemTitle</key>
-			<string>shortcutTitle2</string>
-			<key>UIApplicationShortcutItemType</key>
-			<string>$(PRODUCT_BUNDLE_IDENTIFIER).KeywordSearch</string>
-			<key>UIApplicationShortcutItemUserInfo</key>
-			<dict>
-				<key></key>
-				<string></string>
-			</dict>
-		</dict>
-		<dict>
-			<key>UIApplicationShortcutItemIconType</key>
-			<string>UIApplicationShortcutIconTypeMail</string>
-			<key>UIApplicationShortcutItemSubtitle</key>
-			<string>shortcutSubtitle3</string>
-			<key>UIApplicationShortcutItemTitle</key>
-			<string>shortcutTitle3</string>
-			<key>UIApplicationShortcutItemType</key>
-			<string>$(PRODUCT_BUNDLE_IDENTIFIER).Messages</string>
-			<key>UIApplicationShortcutItemUserInfo</key>
-			<dict>
-				<key></key>
-				<string></string>
-			</dict>
-		</dict>
-	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
-	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
-	<key>UIRequiredDeviceCapabilities</key>
-	<array>
-		<string>armv7</string>
-	</array>
-	<key>UIRequiresFullScreen</key>
-	<true/>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleVersion</key>
+	<string>9</string>
 	<key>UIStatusBarTintParameters</key>
 	<dict>
 		<key>UINavigationBar</key>
@@ -127,12 +22,115 @@
 			<false/>
 		</dict>
 	</dict>
-	<key>UISupportedInterfaceOrientations</key>
+	<key>CFBundleDocumentTypes</key>
+	<array/>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.2.3</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>tile.opencyclemap.org</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSExceptionRequiresForwardSecrecy</key>
+				<true/>
+				<key>NSRequiresCertificateTransparency</key>
+				<false/>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<key>NSThirdPartyExceptionAllowsInsecureHTTPLoads</key>
+				<false/>
+				<key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+				<true/>
+				<key>NSThirdPartyExceptionMinimumTLSVersion</key>
+				<string>TLSv1.2</string>
+				<key>NSExceptionMinimumTLSVersion</key>
+				<string>TLSv1.2</string>
+			</dict>
+		</dict>
+	</dict>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>armv7</string>
+	</array>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
-	<key>UISupportedInterfaceOrientations~ipad</key>
+	<key>UIRequiresFullScreen</key>
+	<true/>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Sue Ellen Francisco.ttf</string>
+	</array>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>UIApplicationShortcutItems</key>
+	<array>
+		<dict>
+			<key>UIApplicationShortcutItemIconType</key>
+			<string>UIApplicationShortcutIconTypeSearch</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>shortcutTitle1</string>
+			<key>UIApplicationShortcutItemSubtitle</key>
+			<string>shortcutSubtitle1</string>
+			<key>UIApplicationShortcutItemUserInfo</key>
+			<dict>
+				<key></key>
+				<string></string>
+			</dict>
+			<key>UIApplicationShortcutItemType</key>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER).LocationSearch</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemIconType</key>
+			<string>UIApplicationShortcutIconTypeSearch</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>shortcutTitle2</string>
+			<key>UIApplicationShortcutItemSubtitle</key>
+			<string>shortcutSubtitle2</string>
+			<key>UIApplicationShortcutItemUserInfo</key>
+			<dict>
+				<key></key>
+				<string></string>
+			</dict>
+			<key>UIApplicationShortcutItemType</key>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER).KeywordSearch</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemIconType</key>
+			<string>UIApplicationShortcutIconTypeMail</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>shortcutTitle3</string>
+			<key>UIApplicationShortcutItemSubtitle</key>
+			<string>shortcutSubtitle3</string>
+			<key>UIApplicationShortcutItemUserInfo</key>
+			<dict>
+				<key></key>
+				<string></string>
+			</dict>
+			<key>UIApplicationShortcutItemType</key>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER).Messages</string>
+		</dict>
+	</array>
+	<key>CFBundleDisplayName</key>
+	<string>Warmshowers</string>
+	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>

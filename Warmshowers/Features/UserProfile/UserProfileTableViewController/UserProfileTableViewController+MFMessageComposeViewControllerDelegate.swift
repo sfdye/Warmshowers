@@ -22,7 +22,7 @@ extension UserProfileTableViewController: MFMessageComposeViewControllerDelegate
                 self.present(alert, animated: true, completion: nil)
             }
         case .cancelled, .sent:
-            DispatchQueue.main.async { [unowned self] in
+            DispatchQueue.main.async { [unowned controller] in
                 controller.dismiss(animated: true, completion: nil)
             }
         }

@@ -6,6 +6,8 @@
   Copyright © 2016 Rajan Fernandez. All rights reserved.
 */
 
+"NSLocationWhenInUseUsageDescription" = "This is required to show your location on the map.";
+
 shortcutTitle1 = "Location Search";
 shortcutSubtitle1 = "Shows hosts on a map";
 

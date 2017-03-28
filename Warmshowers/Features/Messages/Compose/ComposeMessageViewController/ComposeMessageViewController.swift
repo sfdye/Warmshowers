@@ -52,7 +52,7 @@ class ComposeMessageViewController: UIViewController, Delegator, DataSource {
     
     /** Sets up the message as a new message to a give set of hosts. */
     func configureAsNewMessage(toRecipientsWithUsernames usernames: [String]) {
-        navigationItem.title = "New Message"
+        navigationItem.title = NSLocalizedString("New Message", tableName: "Compose", comment: "New message view navigation bar title")
         recipients = usernames
     }
     
@@ -62,7 +62,7 @@ class ComposeMessageViewController: UIViewController, Delegator, DataSource {
         guard let threadID = threadID else { return }
         
         // Set the navigation title
-        navigationItem.title = "Reply"
+        navigationItem.title = NSLocalizedString("Reply", tableName: "Compose", comment: "Message reply view navigation bar title")
         
         // Set up the reply
         let predicate = NSPredicate(format: "p_thread_id == %d", threadID)

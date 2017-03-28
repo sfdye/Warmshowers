@@ -25,14 +25,19 @@ extension SettingsTableViewController {
             case 30:
                 performSegue(withIdentifier: SID_SettingsToRoutes, sender: nil)
             case 40:
-                ProgressHUD.show("Logging out ...")
+                let label = NSLocalizedString("Logging out ...", tableName: "Settings", comment: "Label shown with the spinner while logging out")
+                ProgressHUD.show(label)
                 api.contact(endPoint: .logout, withMethod: .post, andPathParameters: nil, andData: nil, thenNotify: self, ignoreCache: false)
             case 50:
-                ProgressHUD.show("Deleting data ...")
+                let label = NSLocalizedString("Deleting data ...", tableName: "Settings", comment: "Label shown with the spinner while deleting cached data")
+                ProgressHUD.show(label)
                 do {
                     try store.clearout()
                 } catch {
-                    alert.presentAlertFor(self, withTitle: "Data Error", button: "OK", message: "Sorry, an error occured while removing your account data from your device. Please try deleting and re-installing the Warmshowers app and report this as a bug.", andHandler: nil)
+                    let title = NSLocalizedString("Data Error", tableName: "Settings", comment: "Alert title for a data error")
+                    let message = NSLocalizedString("Sorry, an error occured while removing your account data from your device. Please try deleting and re-installing the Warmshowers app and report this as a bug.", tableName: "Settings", comment: "Alert message for a data error")
+                    let button = NSLocalizedString("OK", comment: "OK button title")
+                    alert.presentAlertFor(self, withTitle: title, button: button, message: message, andHandler: nil)
                 }
                 ProgressHUD.hide()
             default:

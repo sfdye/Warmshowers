@@ -1,0 +1,21 @@
+/* Alert title for generic app error. */
+"App Error" = "App Error";
+
+/* Cancel button title */
+"Cancel" = "Cancel";
+
+/* Continue button title */
+"Continue" = "Continue";
+
+/* Dismiss button title */
+"Dismiss" = "Dismiss";
+
+/* General error alert title */
+"Error" = "Error";
+
+/* OK button title */
+"OK" = "OK";
+
+/* Alert message for generic app error. */
+"Sorry, an error occured during login. Please report this as a bug, sorry for the inconvenience." = "Sorry, an error occured during login. Please report this as a bug, sorry for the inconvenience.";
+
