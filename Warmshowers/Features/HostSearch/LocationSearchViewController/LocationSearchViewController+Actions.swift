@@ -18,14 +18,18 @@ extension LocationSearchViewController {
                 self.mapView.setCenter(self.mapView.userLocation.coordinate, animated: true)
                 })
         } else {
-            let alert = UIAlertController(title: "Enable location services", message: "To centre the map on your location we need to know your location. Please change your location access settings.", preferredStyle: .alert)
-            let settingsAction = UIAlertAction(title: "Settings", style: .default, handler: { (action) in
+            let title = NSLocalizedString("Enable location services", tableName: "HostSearch", comment: "Title for the alert shown when the user tries to centre the map without location services enabled")
+            let message = NSLocalizedString("To centre the map on your location we need to know your location. Please change your location access settings.", tableName: "HostSearch", comment: "Message for the alert shown when the user tries to centre the map without location services enabled")
+            let settingsButton = NSLocalizedString("Settings", tableName: "HostSearch", comment: "Alert button the take the user to the settings app")
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            let settingsAction = UIAlertAction(title: settingsButton, style: .default, handler: { (action) in
                 if let url = URL(string: UIApplicationOpenSettingsURLString) , UIApplication.shared.canOpenURL(url) {
                     UIApplication.shared.open(url, options: [String : Any](), completionHandler: nil)
                 }
             })
             alert.addAction(settingsAction)
-            let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+            let okButton = NSLocalizedString("OK", comment: "OK button title")
+            let okAction = UIAlertAction(title: okButton, style: .default, handler: nil)
             alert.addAction(okAction)
             DispatchQueue.main.async(execute: { [weak self] in
                 self?.present(alert, animated: true, completion: nil)

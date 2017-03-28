@@ -21,14 +21,19 @@ extension HostSearchViewController {
     @IBAction func accountButtonPressed(_ sender: UIBarButtonItem?) {
         
         guard api.connection.isOnline else {
-            alert.presentAlertFor(self, withTitle: "You are currently offline", button: "OK")
+            let title = NSLocalizedString("You are currently offline", tableName: "HostSearch", comment: "Title for an alert presented when the user makes a request but is offline")
+            let button = NSLocalizedString("OK", comment: "OK button title")
+            alert.presentAlertFor(self, withTitle: title, button: button)
             return
         }
         
         if let uid = session.uid, uid != 0 {
             showUserProfileForHostWithUID(uid)
         } else {
-            alert.presentAlertFor(self, withTitle: "Error", button: "OK", message: "Sorry, this request could not be made. Please try logging out and back in again.")
+            let title = NSLocalizedString("Error", comment: "General error alert title")
+            let button = NSLocalizedString("OK", comment: "OK button title")
+            let message = NSLocalizedString("Sorry, this request could not be made. Please try logging out and back in again.", tableName: "HostSearch", comment: "The alert message shown when the users account details can not be displayed, because the user ID for the API request is not knowm")
+            alert.presentAlertFor(self, withTitle: title, button: button, message: message)
         }
     }
     

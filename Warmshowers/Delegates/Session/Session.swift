@@ -68,7 +68,10 @@ class Session: SessionDelegate, Delegator, DataSource {
         } catch {
             // Suggest that the user delete the app for privacy.
             guard let viewController = viewController else { return }
-            alert.presentAlertFor(viewController, withTitle: "Data Error", button: "OK", message: "Sorry, an error occured while removing your account data from this iPhone. If you would like to remove your Warmshowers messages from this iPhone please try deleting the Warmshowers app.", andHandler: { [weak self] (action) in
+            let title = NSLocalizedString("Data Error", comment: "Alert title for a data error")
+            let button = NSLocalizedString("OK", comment: "OK button title")
+            let message = NSLocalizedString("Sorry, an error occured while removing your account data from this iPhone. If you would like to remove your Warmshowers messages from this iPhone please try deleting the Warmshowers app.", comment: "Alert message explaining persisted data problems")
+            alert.presentAlertFor(viewController, withTitle: title, button: button, message: message, andHandler: { [weak self] (action) in
                 self?.navigation.showLoginScreen()
                 })
         }

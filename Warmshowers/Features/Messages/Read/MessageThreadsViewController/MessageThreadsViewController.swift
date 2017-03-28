@@ -208,7 +208,7 @@ class MessageThreadsViewController: UIViewController, Delegator, DataSource {
         } catch let error as NSError {
             let title = NSLocalizedString("Error", comment: "General error alert title")
             let button = NSLocalizedString("OK", comment: "OK button title")
-            alert.presentAlertFor(self, withTitle: "Error", button: "OK", message: error.localizedDescription)
+            alert.presentAlertFor(self, withTitle: title, button: button, message: error.localizedDescription)
         }
     }
     

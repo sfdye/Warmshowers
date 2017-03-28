@@ -15,7 +15,7 @@ extension LocationSearchViewController: CCHMapClusterControllerDelegate {
     func mapClusterController(_ mapClusterController: CCHMapClusterController!, titleFor mapClusterAnnotation: CCHMapClusterAnnotation!) -> String! {
         let numberOfHosts = mapClusterAnnotation.annotations.count
         if numberOfHosts > 1 {
-            return "\(numberOfHosts) Hosts"
+            return String(format: NSLocalizedString("%d Host(s)", tableName: "HostSearch", comment: "Title for a set of hosts"), numberOfHosts)
         } else {
             return (mapClusterAnnotation.annotations.first as? UserLocation)?.title ?? ""
         }

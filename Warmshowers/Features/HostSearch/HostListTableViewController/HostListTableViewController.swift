@@ -27,10 +27,13 @@ class HostListTableViewController: UITableViewController, Delegator, DataSource 
         tableView.estimatedRowHeight = 74
         
         guard let hosts = hosts , hosts.count > 0 else {
-            self.navigationItem.title = "Hosts"
+            self.navigationItem.title = NSLocalizedString("Hosts", tableName: "HostSearch", comment: "Host search navigation bar title")
             // No users in the data source. Dismiss the view with an error message
-            let alert = UIAlertController(title: "Sorry, an error occured.", message: nil, preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "OK", style: .default, handler: { (okAction) -> Void in
+            let title = NSLocalizedString("Error", comment: "General error alert title")
+            let button = NSLocalizedString("OK", comment: "OK button title")
+            let message = NSLocalizedString("Sorry, an error occured displaying the hosts.", tableName: "HostSearch", comment: "The alert message when a host list is shown with no hosts accidentally")
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: button, style: .default, handler: { (okAction) -> Void in
                 self.dismiss(animated: true, completion: nil)
             })
             alert.addAction(okAction)
@@ -38,7 +41,7 @@ class HostListTableViewController: UITableViewController, Delegator, DataSource 
             return
         }
         
-        self.navigationItem.title = "\(hosts.count) Hosts"
+        self.navigationItem.title = String(format: NSLocalizedString("%d Host(s)", tableName: "HostSearch", comment: "Title for a set of hosts"), hosts.count)
     }
     
     // MARK: Utilities

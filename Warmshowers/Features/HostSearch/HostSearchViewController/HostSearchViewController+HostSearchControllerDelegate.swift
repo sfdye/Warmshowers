@@ -11,9 +11,7 @@ import UIKit
 extension HostSearchViewController : HostSearchControllerDelegate {
     
     func presentErrorAlertWithError(_ error: Error) {
-//        let delegator: UIViewController = searchController.active ? searchController : self
-        
-        alert.presentAPIError(error, forDelegator: self) //delegator)
+        alert.presentAPIError(error, forDelegator: self)
     }
     
 }

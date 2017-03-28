@@ -33,8 +33,8 @@ class Alert: AlertDelegate {
     }
     
     func presentAPIError(_ error: Error, forDelegator delegator: UIViewController?) {
-        var title: String = "Error"
-        var message: String = "An unknown error ocurred."
+        var title: String = NSLocalizedString("Error", comment: "General error alert title")
+        var message: String = NSLocalizedString("An unknown error ocurred", comment: "General error message")
         switch error {
         case is APIEndPointError:
             switch (error as! APIEndPointError) {
@@ -45,12 +45,12 @@ class Alert: AlertDelegate {
                 assertionFailure("Invalid outbound data for request.")
                 break
             case .parsingError(let endPoint, let key):
-                title = "Data Parsing Error"
-                message = "An error occured while parsing data from the Warmshowers API end point \(endPoint). "
+                title = NSLocalizedString("Data Parsing Error", comment: "Data parsing error alert title")
+                message = String(format: NSLocalizedString("An error occured while parsing data from the Warmshowers API end point %@. ", comment: "Data parsing error details format"), endPoint)
                 if key != nil {
                     message += "The error occured while parsing key: '\(key)'. "
                 }
-                message += "Please report this as a bug."
+                message += NSLocalizedString("Please report this as a bug.", comment: "Bug reporting request")
             default:
                 break
             }
@@ -59,12 +59,12 @@ class Alert: AlertDelegate {
             case .offline:
                 // Case is handled by the reachability banner.
                 return
-            case .serverError(let statusCode):
-                title = "Server Error"
-                message = "The server responded with \(statusCode)."
+            case .serverError(let statusCode, _):
+                title = NSLocalizedString("Server Error", comment: "Server error alert title")
+                message = String(format: NSLocalizedString("The server responded with %d.", comment: "Server error message format"), statusCode)
             default:
-                title = "API Error"
-                message = "An error occured while contacting the Warmshowers API. Please report this as a bug."
+                title = NSLocalizedString("API Error", comment: "API error alert title")
+                message = NSLocalizedString("An error occured while contacting the Warmshowers API. Please report this as a bug.", comment: "API error alert message")
             }
         case is APIAuthorizerError:
             switch (error as! APIAuthorizerError) {
@@ -72,18 +72,19 @@ class Alert: AlertDelegate {
                 // Do not show errors for these. Auto login is handled by APICommunicator.
                 return
             default:
-                title = "API Authorization Error"
+                title = NSLocalizedString("API Authorization Error", comment: "Authorization error alert title")
             }
         default:
             break
         }
-        presentAlertFor(delegator, withTitle: title, button: "OK", message: message)
+        let button = NSLocalizedString("OK", comment: "OK button title")
+        presentAlertFor(delegator, withTitle: title, button: button, message: message)
     }
     
     func showNoInternetBanner() {
         DispatchQueue.main.async { () -> Void in
             let banner = AFMInfoBanner()
-            banner.text = "No Internet Connection"
+            banner.text = NSLocalizedString("No Internet Connection", comment: "Text shown in a banner when there is no internet connection")
             banner.style = .error
             banner.show(true)
         }

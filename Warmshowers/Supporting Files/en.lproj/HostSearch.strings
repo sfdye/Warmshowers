@@ -1,0 +1,45 @@
+/* Title for a set of hosts */
+"%d Host(s)" = "%d Host(s)";
+
+/* Title for the alert shown when the user tries to centre the map without location services enabled */
+"Enable location services" = "Enable location services";
+
+/* Alert message when the app fails to recieve user info from the API
+   The alert message shown when there was an error retrieving a hosts info from the API */
+"Failed to get user info." = "Failed to get user info.";
+
+/* Host search navigation bar title */
+"Hosts" = "Hosts";
+
+/* Text displayed when no hosts are returned for a keyword search */
+"No Hosts" = "No Hosts";
+
+/* Instruction shown on the host search map */
+"Please zoom in to update." = "Please zoom in to update.";
+
+/* Host search placeholder */
+"Search by name, email or town" = "Search by name, email or town";
+
+/* Alert button the take the user to the settings app */
+"Settings" = "Settings";
+
+/* The alert message when a host list is shown with no hosts accidentally */
+"Sorry, an error occured displaying the hosts." = "Sorry, an error occured displaying the hosts.";
+
+/* The alert message shown when the users account details can not be displayed, because the user ID for the API request is not knowm */
+"Sorry, this request could not be made. Please try logging out and back in again." = "Sorry, this request could not be made. Please try logging out and back in again.";
+
+/* Message for the alert shown when the user tries to centre the map without location services enabled */
+"To centre the map on your location we need to know your location. Please change your location access settings." = "To centre the map on your location we need to know your location. Please change your location access settings.";
+
+/* Status shown on the host search map */
+"Updating ..." = "Updating ...";
+
+/* Status shown on the host search map */
+"Updating ...
+There are a lot of hosts in this area so this update may take a while." = "Updating ...
+There are a lot of hosts in this area so this update may take a while.";
+
+/* Title for an alert presented when the user makes a request but is offline */
+"You are currently offline" = "You are currently offline";
+

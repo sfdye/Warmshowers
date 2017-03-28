@@ -248,7 +248,6 @@
 		E580E8441E317B4000D09D10 /* MessageThreadsErrorViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E580E8431E317B4000D09D10 /* MessageThreadsErrorViewDelegate.swift */; };
 		E580E8461E317C5400D09D10 /* MessageThreadsViewController+MessageThreadsErrorViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E580E8451E317C5400D09D10 /* MessageThreadsViewController+MessageThreadsErrorViewDelegate.swift */; };
 		E58C37311D2FA087001B03D5 /* WSHostSearchViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58C37301D2FA087001B03D5 /* WSHostSearchViewControllerTests.swift */; };
-		E59BC6271E8902850058EA85 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E59BC6261E8902850058EA85 /* Info.plist */; };
 		E59BC6371E89C8F30058EA85 /* Compose.strings in Resources */ = {isa = PBXBuildFile; fileRef = E59BC6391E89C8F30058EA85 /* Compose.strings */; };
 		E59BC63E1E89CA810058EA85 /* Read.strings in Resources */ = {isa = PBXBuildFile; fileRef = E59BC6401E89CA810058EA85 /* Read.strings */; };
 		E59BC66B1E89F2EA0058EA85 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E59BC66D1E89F2EA0058EA85 /* InfoPlist.strings */; };
@@ -256,6 +255,9 @@
 		E59BC6771E89F2ED0058EA85 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E59BC6791E89F2ED0058EA85 /* InfoPlist.strings */; };
 		E59BC67E1E89F2EF0058EA85 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E59BC6801E89F2EF0058EA85 /* InfoPlist.strings */; };
 		E59BC6901E8A01010058EA85 /* Settings.strings in Resources */ = {isa = PBXBuildFile; fileRef = E59BC6921E8A01010058EA85 /* Settings.strings */; };
+		E59BC6961E8A0BDD0058EA85 /* HostSearch.strings in Resources */ = {isa = PBXBuildFile; fileRef = E59BC6951E8A0BDC0058EA85 /* HostSearch.strings */; };
+		E59BC6991E8A13470058EA85 /* HostSearch.stringsdict.plist in Resources */ = {isa = PBXBuildFile; fileRef = E59BC69B1E8A13470058EA85 /* HostSearch.stringsdict.plist */; };
+		E59BC69E1E8A193E0058EA85 /* HostSearch.strings in Resources */ = {isa = PBXBuildFile; fileRef = E59BC6A01E8A193E0058EA85 /* HostSearch.strings */; };
 		E59FE1CF1CD1FF900024F354 /* MOCKNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59FE1CE1CD1FF900024F354 /* MOCKNavigation.swift */; };
 		E59FE1D71CD208B30024F354 /* WSLoginViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59FE1C71CD0C15F0024F354 /* WSLoginViewControllerTests.swift */; };
 		E59FE1D91CD21F0D0024F354 /* LoginUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59FE1D81CD21F0D0024F354 /* LoginUITests.swift */; };
@@ -602,6 +604,9 @@
 		E59BC6851E89F2F20058EA85 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Login.strings; sourceTree = "<group>"; };
 		E59BC6861E89FCD20058EA85 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Read.strings; sourceTree = "<group>"; };
 		E59BC6911E8A01010058EA85 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Settings.strings; sourceTree = "<group>"; };
+		E59BC6951E8A0BDC0058EA85 /* HostSearch.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = HostSearch.strings; sourceTree = "<group>"; };
+		E59BC69A1E8A13470058EA85 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/HostSearch.stringsdict.plist; sourceTree = "<group>"; };
+		E59BC69F1E8A193E0058EA85 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/HostSearch.strings; sourceTree = "<group>"; };
 		E59FE1C71CD0C15F0024F354 /* WSLoginViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WSLoginViewControllerTests.swift; sourceTree = "<group>"; };
 		E59FE1CE1CD1FF900024F354 /* MOCKNavigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MOCKNavigation.swift; sourceTree = "<group>"; };
 		E59FE1D81CD21F0D0024F354 /* LoginUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginUITests.swift; sourceTree = "<group>"; };
@@ -780,6 +785,7 @@
 		E529ECE51E11C6BB00395369 /* HostSearch */ = {
 			isa = PBXGroup;
 			children = (
+				E59BC6941E8A0BD40058EA85 /* Strings */,
 				E529ECE61E11C6BB00395369 /* HostListTableViewController */,
 				E529ECEE1E11C6BB00395369 /* HostSearchViewController */,
 				E529ECF71E11C6BB00395369 /* KeywordSearchTableViewController */,
@@ -1171,6 +1177,7 @@
 		E53715131E0C809300770305 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E59BC6A01E8A193E0058EA85 /* HostSearch.strings */,
 				E53B708A1E88FE5C00F21438 /* InfoPlist.strings */,
 				E59BC6261E8902850058EA85 /* Info.plist */,
 				E53715161E0C809300770305 /* LaunchScreen.storyboard */,
@@ -1697,6 +1704,15 @@
 			path = Strings;
 			sourceTree = "<group>";
 		};
+		E59BC6941E8A0BD40058EA85 /* Strings */ = {
+			isa = PBXGroup;
+			children = (
+				E59BC6951E8A0BDC0058EA85 /* HostSearch.strings */,
+				E59BC69B1E8A13470058EA85 /* HostSearch.stringsdict.plist */,
+			);
+			path = Strings;
+			sourceTree = "<group>";
+		};
 		E5B944361E1257290089F4A4 /* API */ = {
 			isa = PBXGroup;
 			children = (
@@ -1976,6 +1992,7 @@
 			files = (
 				E53B70441E889CD800F21438 /* Login.storyboard in Resources */,
 				E53B70881E88FE5C00F21438 /* InfoPlist.strings in Resources */,
+				E59BC6991E8A13470058EA85 /* HostSearch.stringsdict.plist in Resources */,
 				E54A572B1BFD664A000843A9 /* Settings.bundle in Resources */,
 				E59BC63E1E89CA810058EA85 /* Read.strings in Resources */,
 				E53B70531E88B5DF00F21438 /* Settings.storyboard in Resources */,
@@ -1983,9 +2000,10 @@
 				E53B704D1E88B5D100F21438 /* ComposeMessage.storyboard in Resources */,
 				E53715101E0C800100770305 /* Assets.xcassets in Resources */,
 				E53B704A1E88B5BF00F21438 /* HostSearch.storyboard in Resources */,
+				E59BC69E1E8A193E0058EA85 /* HostSearch.strings in Resources */,
 				E59BC6901E8A01010058EA85 /* Settings.strings in Resources */,
-				E59BC6271E8902850058EA85 /* Info.plist in Resources */,
 				E537151A1E0C809300770305 /* LaunchScreen.storyboard in Resources */,
+				E59BC6961E8A0BDD0058EA85 /* HostSearch.strings in Resources */,
 				E529ED951E11C6BB00395369 /* Main.storyboard in Resources */,
 				E53B705C1E88E92100F21438 /* Localizable.strings in Resources */,
 				E53B70561E88B5FA00F21438 /* UserProfile.storyboard in Resources */,
@@ -2535,6 +2553,22 @@
 				E59BC6911E8A01010058EA85 /* en */,
 			);
 			name = Settings.strings;
+			sourceTree = "<group>";
+		};
+		E59BC69B1E8A13470058EA85 /* HostSearch.stringsdict.plist */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E59BC69A1E8A13470058EA85 /* en */,
+			);
+			name = HostSearch.stringsdict.plist;
+			sourceTree = "<group>";
+		};
+		E59BC6A01E8A193E0058EA85 /* HostSearch.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E59BC69F1E8A193E0058EA85 /* en */,
+			);
+			name = HostSearch.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

@@ -23,7 +23,10 @@ extension HostSearchViewController: APIResponseDelegate {
     }
     
     func request(_ request: APIRequest, didFailWithError error: Error) {
-        alert.presentAlertFor(self, withTitle: "Error", button: "OK", message: "Failed to get user info.")
+        let title = NSLocalizedString("Error", comment: "General error alert title")
+        let button = NSLocalizedString("OK", comment: "OK button title")
+        let message = NSLocalizedString("Failed to get user info.", tableName: "HostSearch", comment: "The alert message shown when there was an error retrieving a hosts info from the API")
+        alert.presentAlertFor(self, withTitle: title, button: button, message: message)
     }
     
 }

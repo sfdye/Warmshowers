@@ -20,7 +20,7 @@ extension ComposeMessageViewController {
             let cancelAction = UIAlertAction(title: cancelButtonTitle, style: .cancel, handler: nil)
             alert.addAction(cancelAction)
             let continueButtonTitle = NSLocalizedString("Continue", comment: "Continue button title")
-            let continueAction = UIAlertAction(title: "Continue", style: .default) { (continueAction) -> Void in
+            let continueAction = UIAlertAction(title: continueButtonTitle, style: .default) { (continueAction) -> Void in
                 self.navigationController?.dismiss(animated: true, completion: nil)
             }
             alert.addAction(continueAction)

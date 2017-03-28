@@ -1,3 +1,18 @@
+/* Authorization error alert title */
+"API Authorization Error" = "API Authorization Error";
+
+/* API error alert title */
+"API Error" = "API Error";
+
+/* API error alert message */
+"An error occured while contacting the Warmshowers API. Please report this as a bug." = "An error occured while contacting the Warmshowers API. Please report this as a bug.";
+
+/* Data parsing error details format */
+"An error occured while parsing data from the Warmshowers API end point %@. " = "An error occured while parsing data from the Warmshowers API end point %@. ";
+
+/* General error message */
+"An unknown error ocurred" = "An unknown error ocurred";
+
 /* Alert title for generic app error. */
 "App Error" = "App Error";
 
@@ -7,15 +22,36 @@
 /* Continue button title */
 "Continue" = "Continue";
 
+/* Alert title for a data error */
+"Data Error" = "Data Error";
+
+/* Data parsing error alert title */
+"Data Parsing Error" = "Data Parsing Error";
+
 /* Dismiss button title */
 "Dismiss" = "Dismiss";
 
 /* General error alert title */
 "Error" = "Error";
 
+/* Text shown in a banner when there is no internet connection */
+"No Internet Connection" = "No Internet Connection";
+
 /* OK button title */
 "OK" = "OK";
 
+/* Bug reporting request */
+"Please report this as a bug." = "Please report this as a bug.";
+
+/* Server error alert title */
+"Server Error" = "Server Error";
+
 /* Alert message for generic app error. */
 "Sorry, an error occured during login. Please report this as a bug, sorry for the inconvenience." = "Sorry, an error occured during login. Please report this as a bug, sorry for the inconvenience.";
+
+/* Alert message explaining persisted data problems */
+"Sorry, an error occured while removing your account data from this iPhone. If you would like to remove your Warmshowers messages from this iPhone please try deleting the Warmshowers app." = "Sorry, an error occured while removing your account data from this iPhone. If you would like to remove your Warmshowers messages from this iPhone please try deleting the Warmshowers app.";
+
+/* Server error message format */
+"The server responded with %d." = "The server responded with %d.";
 

@@ -74,7 +74,7 @@
                     <tabBarItem key="tabBarItem" title="Hosts" image="HostBarButtonIcon" selectedImage="HostBarButtonIconSelected" id="acW-dT-cKf"/>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="HDK-B8-wgk">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="HDK-B8-wgk">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -417,7 +417,7 @@
         <image name="UserIcon" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="TeR-0V-B6Y"/>
         <segue reference="yA2-nP-TAF"/>
+        <segue reference="yRc-eW-HTh"/>
     </inferredMetricsTieBreakers>
 </document>
